@@ -9,13 +9,14 @@ hello(nam = NULL)
 \arguments{
 \item{nam}{name to say hello}
 }
+\value{
+a message
+}
 \description{
 It says hello to whoever you want, by default world.
 }
 \examples{
-#'
-\dontrun{
-library(EmptyPackage)
+library(omopViewer)
 hello()
-}
+
 }
