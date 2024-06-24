@@ -16,7 +16,7 @@ CONSTS <- use("constants/constants.R")
 # Table UI Function
 ui <- function(id) {
   ns <- NS(id)
-  
+
   div(
     class = "table",
     DTOutput(ns("statetable"))
@@ -27,7 +27,7 @@ ui <- function(id) {
 init_server <- function(id, dataset, filter_input) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
-    
+
     filtered_data <- reactive({
       df <- dataset()  # Use the reactive dataset
       flt <- filter_input()
@@ -38,19 +38,19 @@ init_server <- function(id, dataset, filter_input) {
           }
         }
       }
-      
+
       df
     })
-    
+
     non_unique_columns <- reactive({
-      df <- filtered_data()
+      df <- filtered_data() %>% omopgenerics::newSummarisedResult()
       non_unique_cols <- names(df)[sapply(df, function(x) length(unique(x)) > 1)]
       non_unique_cols
     })
-    
+
     # Render the DataTable using only non-unique columns
     output$statetable <- renderDT({
-      df <- filtered_data()  # Get the full filtered dataset
+      df <- filtered_data() %>% omopgenerics::newSummarisedResult() # Get the full filtered dataset
       df_display <- df[, non_unique_columns(), drop = FALSE]  # Only display non-unique columns
       datatable(
         df_display,
@@ -75,9 +75,9 @@ init_server <- function(id, dataset, filter_input) {
     #     write.csv(filtered_data(), file, row.names = FALSE)
     #   }
     # )
-    # 
+    #
     # Return selected row data if needed outside this module
-    
+
     return(list(state_selected = reactive({
       state_data <- filtered_data()  # Get the current state of filtered data
       selected_data <- state_data[input$statetable_rows_selected, ]  # Get selected rows
