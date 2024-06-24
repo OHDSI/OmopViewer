@@ -1,5 +1,4 @@
-# Helper function to create cards
-createCard <- function(id, title, setting_filter_ui, filter_ui, table_ui,extra_ui = NULL) {
+createCard <- function(id, title, setting_filter_ui, filter_ui, table_ui, extra_ui = NULL) {
   div(
     class = "card",
     div(
@@ -16,9 +15,12 @@ createCard <- function(id, title, setting_filter_ui, filter_ui, table_ui,extra_u
       style = "margin-bottom: 5px;",
       filter_ui,
       style = "margin-bottom: 5px;",
-      table_ui,
-      style = "margin-top: 5px;",
-      extra_ui
+      # Use tabsetPanel to organize table_ui and extra_ui into separate tabs
+      tabsetPanel(
+        tabPanel("Table", table_ui),
+        if (!is.null(extra_ui)) tabPanel("Plot", extra_ui),
+        id = paste0(id, "_tabs")
+      )
     ),
     options = list(handles = 's, e, se', containment = "parent")
   )
