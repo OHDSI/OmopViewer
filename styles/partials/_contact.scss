@@ -1,0 +1,10 @@
+.contact {
+  @include flexCenter;
+  flex-direction: column;
+  height: 100%;
+  padding: 100px;
+
+  .logo-img {
+    width: 400px;
+  }
+}

@@ -1,0 +1,29 @@
+.wrapper .main-sidebar {
+  background-color: $color-secondary;
+  margin-top: $header-height;
+  padding-top: 30px;
+  z-index: 0;
+
+  .sidebar > .sidebar-menu > li {
+
+    & > a {
+      border: none;
+      color: $color-white;
+      font-size: 16px;
+      padding: 15px;
+      transition:
+        background-color $hover-normal,
+        padding $hover-slow;
+
+      &:hover {
+        background-color: rgba($color: $color-primary, $alpha: 50%);
+      }
+    }
+
+    &.active > a {
+      background-color: $color-primary;
+      font-weight: 600;
+      padding-left: 25px;
+    }
+  }  
+}

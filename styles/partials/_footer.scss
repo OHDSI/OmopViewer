@@ -1,0 +1,40 @@
+.footer {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 100;
+  justify-content: flex-end;
+  margin-top: 20px;
+  padding-bottom: 10px;
+
+  @media (max-width: 787px) {
+    align-items: center;
+    justify-content: center;
+  }
+
+  &-heading {
+    @include flexCenter;
+
+    color: $color-grey;
+    font-size: 13px;
+    font-weight: normal;
+    margin: 0;
+    text-align: center;
+
+    @media (max-width: 787px) {
+      flex-direction: column;
+    }
+  }
+
+  &-link {
+    color: $color-grey;
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.2s;
+    margin: 5px;
+
+    &:hover {
+      color: $color-primary;
+    }
+  }
+}

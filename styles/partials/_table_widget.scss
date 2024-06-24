@@ -1,0 +1,66 @@
+.datatables > .dataTables_wrapper {
+  overflow: auto;
+  margin-top: 0px;
+  max-width: 100%; // Limits the width to prevent overflow
+
+  > .dataTables_filter {
+    float: right;
+    margin-top: 4px; //this is for the search box
+    > label {
+      .form-control {
+        border-radius: 4px;
+        font-size: 14px;
+
+        &:focus {
+          border-color: $color-primary;
+          box-shadow: 0 0 8px rgba($color: $color-primary, $alpha: 0.3);
+        }
+      }
+    }
+  }
+
+  > .dataTables_paginate {
+    float: right;
+    text-align: right;
+    padding-top: 0.25em;
+
+    > ul.pagination {
+      > li.paginate_button {
+        &.active {
+          > a {
+            background-color: $color-primary;
+          }
+        }
+      }
+    }
+  }
+
+  > .table.dataTable {
+    > thead, tfoot {
+      > tr > th {
+        white-space: nowrap;
+      }
+    }
+
+    > tbody {
+      > tr {
+        > td {
+          border: none;
+          transition: background-color 0.3s;
+        }
+
+        &.odd:hover > td, &.even:hover > td {
+          background-color: rgba($color: $color-primary, $alpha: 0.5);
+        }
+
+        &.odd > td {
+          background-color: rgba($color: $color-ash-light, $alpha: 0.5);
+        }
+
+        &.active > td, &.active:hover > td {
+          background-color: $color-primary;
+        }
+      }
+    }
+  }
+}

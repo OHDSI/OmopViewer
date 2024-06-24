@@ -1,0 +1,9 @@
+@mixin background-image-container {
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+@mixin flexCenter {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
