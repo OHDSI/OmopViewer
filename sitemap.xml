@@ -13,9 +13,81 @@
     <loc>https://oxford-pharmacoepi.github.io/omopViewer/index.html</loc>
   </url>
   <url>
-    <loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/hello.html</loc>
+    <loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/app_server.html</loc>
+  </url>
+  <url>
+    <loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/apply_filters.html</loc>
+  </url>
+  <url>
+    <loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/createCard.html</loc>
+  </url>
+  <url>
+    <loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/createDynamicTabs.html</loc>
+  </url>
+  <url>
+    <loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/filter_setting_init_server.html</loc>
+  </url>
+  <url>
+    <loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/filter_setting_ui.html</loc>
+  </url>
+  <url>
+    <loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/graphCohortOverlap_init_server.html</loc>
+  </url>
+  <url>
+    <loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/graphCohortOverlap_ui.html</loc>
+  </url>
+  <url>
+    <loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/graphCohortTiming_init_server.html</loc>
+  </url>
+  <url>
+    <loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/graphCohortTiming_ui.html</loc>
+  </url>
+  <url>
+    <loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/graphIncidence_init_server.html</loc>
+  </url>
+  <url>
+    <loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/graphIncidence_ui.html</loc>
+  </url>
+  <url>
+    <loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/graphLargeScaleCharacteristics_init_server.html</loc>
+  </url>
+  <url>
+    <loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/graphLargeScaleCharacteristics_ui.html</loc>
+  </url>
+  <url>
+    <loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/graphPrevalence_init_server.html</loc>
+  </url>
+  <url>
+    <loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/graphPrevalence_ui.html</loc>
+  </url>
+  <url>
+    <loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/graphSummarisedCharacteristics_init_server.html</loc>
+  </url>
+  <url>
+    <loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/graphSummarisedCharacteristics_ui.html</loc>
   </url>
   <url>
     <loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/launchApp.html</loc>
+  </url>
+  <url>
+    <loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/sidebarMenuDynamic.html</loc>
+  </url>
+  <url>
+    <loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/studySelect_init_server.html</loc>
+  </url>
+  <url>
+    <loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/studySelect_server.html</loc>
+  </url>
+  <url>
+    <loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/studySelect_ui.html</loc>
+  </url>
+  <url>
+    <loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/uploadData_init_server.html</loc>
+  </url>
+  <url>
+    <loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/uploadData_ui.html</loc>
   </url>
 </urlset>
