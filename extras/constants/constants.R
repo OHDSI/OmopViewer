@@ -45,7 +45,7 @@ hds_logo <- tags$a(
   target = "_blank",
   rel = "nofollow noreferrer",
   class = "logo-link",
-  img(src = "images/hds_logo_noline.svg", class = "logo-img", alt = "HDS Logo",
+  img(src = here::here("extras/www/images/hds_logo_noline.svg"), class = "logo-img", alt = "HDS Logo",
       width="20", height="20")
 )
 
