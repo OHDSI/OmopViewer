@@ -54,8 +54,8 @@ filter_module_server <- function(id, dataset) {
       lapply(input$filter_col, function(col) {
         values = input[[paste0("filter_values_", col)]]
         if (is.null(values) || length(values) == 0) {
-          print(names(input))
-          print(col)
+          # print(names(input))
+          # print(col)
           if ("filter_values_cohort_name" %in% names(input)) {
             print(input$filter_values_cohort_name)
           }

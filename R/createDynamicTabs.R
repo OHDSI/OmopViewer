@@ -31,12 +31,13 @@ createDynamicTabs <- function(complete_data, incomplete_data, plot_config, sessi
       tabName <- paste0("tab_", table_name)
 
       result_ids <- unique(result_tables$result_id[result_tables$estimate_value == table_name])
-      table_data <- complete_data |> dplyr::filter(.data$result_id %in% result_ids)
+
+      table_data <- complete_data |> filter() |>
+        dplyr::filter(.data$result_id %in% result_ids)
 
 
       sr <- table_data |>
         omopgenerics::newSummarisedResult()
-
 
       filter_setting_init_server(
         paste0(tabName, "filter_setting_id"), shiny::reactive({
@@ -52,11 +53,11 @@ createDynamicTabs <- function(complete_data, incomplete_data, plot_config, sessi
           dplyr::filter(.data$result_id %in% selected_result_id)
       })
 
-      table_data_withsetting <- shiny::reactive({
-        table_data() |>
-          omopgenerics::newSummarisedResult() |>
-          visOmopResults::addSettings()
-      })
+      # table_data_withsetting <- shiny::reactive({
+      #   table_data() |>
+      #     omopgenerics::newSummarisedResult() |>
+      #     visOmopResults::addSettings()
+      # })
 
 
       # Initialize the server for filters and tables

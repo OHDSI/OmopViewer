@@ -63,20 +63,29 @@ app_server <- function(input, output, session) {
 
     datasets <- cohort_data()
 
-    print(names(datasets))
+    # print(names(datasets))
     # List for datasets missing required columns
     missing_required_columns <- list()
 
     # List for datasets with all required columns
     complete_datasets <- list()
 
+    unique_result_ids <- numeric()
+
     # Iterate over each dataset to classify
     names <- names(datasets)
-    print(names)
+    # print(names)
 
     for (i in seq_along(names)) {
       data <- datasets[[i]]
       if (all(summarisedResultColumns %in% colnames(data))) {
+        duplicated_ids <- data$result_id %in% unique_result_ids
+        while (any(duplicated_ids)) {
+          data$result_id[duplicated_ids] <- data$result_id[duplicated_ids] + 1
+          duplicated_ids <- data$result_id %in% unique_result_ids
+        }
+        unique_result_ids <- c(unique_result_ids, data$result_id)
+
         complete_datasets[[length(complete_datasets) + 1]] <- data
       } else {
         missing_required_columns[[names[i]]] <- data  # Store with dataset name as key
@@ -85,7 +94,6 @@ app_server <- function(input, output, session) {
 
     # Combine datasets with all required columns into one dataframe
     combined_data <- do.call(rbind, complete_datasets)
-
     # Return both results as a list
     list(complete = combined_data, incomplete = missing_required_columns)
   })
