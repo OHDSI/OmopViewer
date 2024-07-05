@@ -76,25 +76,16 @@ graphCohortTimingDensity_init_server <- function(id, dataset, filter_input) {
       shinyWidgets::updatePickerInput(session, inputId = "ctd_plot_color", choices = choices)
     })
 
-
-    prepared_plot_data <- shiny::reactive({
+    prepared_plot_data <- reactive({
       # Get result IDs from filtered data to include only relevant settings
       result_ids <- filtered_data() |>
-        dplyr::pull("result_id") |>
-        unique()
+        # filter(variable_name == input$sc_plot_variable) |>
+        pull("result_id") |> unique()
 
-      # Get settings for included result_ids
-      inc_setting <- dataset() |>
-        dplyr::filter(.data$result_id %in% result_ids,
-                      .data$variable_name == "settings")
-
-      # Combine settings with filtered data and reapply summarization
-      rbind(inc_setting, filtered_data() |>
-              omopgenerics::newSummarisedResult()) |>
-        dplyr::mutate(estimate_type = dplyr::if_else(.data$estimate_type == "integer", "numeric",
-                                                     .data$estimate_type)) |>
-        omopgenerics::newSummarisedResult()
+      return(dataset() |>
+               visOmopResults::filterSettings(.data$result_id %in% result_ids))
     })
+
 
 
 

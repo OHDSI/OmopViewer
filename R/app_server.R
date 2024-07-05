@@ -63,39 +63,37 @@ app_server <- function(input, output, session) {
 
     datasets <- cohort_data()
 
-    # print(names(datasets))
-    # List for datasets missing required columns
-    missing_required_columns <- list()
+    # Check if datasets are defined and not empty
+    if (!is.null(datasets) && length(datasets) > 0) {
 
-    # List for datasets with all required columns
-    complete_datasets <- list()
+      # Initialize lists for storing datasets
+      missing_required_columns <- list()
+      complete_datasets <- list()
+      unique_result_ids <- numeric()
 
-    unique_result_ids <- numeric()
+      # Iterate over each dataset to classify
+      names <- names(datasets)
 
-    # Iterate over each dataset to classify
-    names <- names(datasets)
-    # print(names)
-
-    for (i in seq_along(names)) {
-      data <- datasets[[i]]
-      if (all(summarisedResultColumns %in% colnames(data))) {
-        duplicated_ids <- data$result_id %in% unique_result_ids
-        while (any(duplicated_ids)) {
-          data$result_id[duplicated_ids] <- data$result_id[duplicated_ids] + 1
-          duplicated_ids <- data$result_id %in% unique_result_ids
+      for (i in seq_along(names)) {
+        data <- datasets[[i]]
+        if (all(summarisedResultColumns %in% colnames(data))) {
+          data <- omopgenerics::newSummarisedResult(data)
+          complete_datasets[[length(complete_datasets) + 1]] <- data
+        } else {
+          missing_required_columns[[names[i]]] <- data  # Store with dataset name as key
         }
-        unique_result_ids <- c(unique_result_ids, data$result_id)
-
-        complete_datasets[[length(complete_datasets) + 1]] <- data
-      } else {
-        missing_required_columns[[names[i]]] <- data  # Store with dataset name as key
       }
-    }
 
-    # Combine datasets with all required columns into one dataframe
-    combined_data <- do.call(rbind, complete_datasets)
-    # Return both results as a list
-    list(complete = combined_data, incomplete = missing_required_columns)
+      # Combine datasets with all required columns into one dataframe
+      combined_data <- do.call(omopgenerics::bind, complete_datasets)
+
+      # Return both results as a list
+      return(list(complete = combined_data, incomplete = missing_required_columns))
+
+    } else {
+      # Return NULL or an empty list if datasets are not defined or empty
+      return(NULL)
+    }
   })
 
 

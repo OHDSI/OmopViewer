@@ -73,7 +73,6 @@ graphCohortOverlap_init_server <- function(id, dataset, filter_input) {
       shiny::req(filtered_data())
       # Calculate columns with more than one unique value
       valid_cols <- sapply(filtered_data(), function(x) length(unique(x)) > 1)
-      print(valid_cols)
       choices <- names(valid_cols)[valid_cols]
       # Update picker inputs
       choices <- choices[!(choices %in% c("estimate_value", "estimate_name",
@@ -86,30 +85,21 @@ graphCohortOverlap_init_server <- function(id, dataset, filter_input) {
     prepared_plot_data <- shiny::reactive({
       # Get result IDs from filtered data to include only relevant settings
       result_ids <- filtered_data() |>
-        # filter(variable_name == input$sc_plot_variable) |>
         dplyr::pull("result_id") |> unique()
 
-      # Get settings for included result_ids
-      inc_setting <- dataset() |>
-        dplyr::filter(.data$result_id %in% result_ids,
-                      .data$variable_name == "settings")
-      utils::write.csv(inc_setting,"test_setting.csv")
-
       # Combine settings with filtered data and reapply summarization
-      rbind(inc_setting, filtered_data() |>
-              # filter(variable_name == input$sc_plot_variable) |>
-              omopgenerics::newSummarisedResult()) |>
-        dplyr::mutate(estimate_type = dplyr::if_else(.data$estimate_type == "integer", "numeric",
-                                                     .data$estimate_type)) |>
-        omopgenerics::newSummarisedResult()
+      return(dataset() |>
+      visOmopResults::filterSettings(.data$result_id %in% result_ids) |>
+      dplyr::mutate(estimate_type = dplyr::if_else(.data$estimate_type == "integer", "numeric",
+                                                   .data$estimate_type)))
+
     })
 
 
     output$co_plot <- plotly::renderPlotly({
-
-      utils::write.csv(prepared_plot_data(),"test.csv")
+      saveRDS(prepared_plot_data() , "test.rds")
       p <- CohortCharacteristics::plotCohortOverlap(
-        result = prepared_plot_data(),
+        result = prepared_plot_data() %>% omopgenerics::newSummarisedResult(),
         facet = input$co_plot_facet,
         uniqueCombinations = as.logical(input$co_unique_comb)
       )

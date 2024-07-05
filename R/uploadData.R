@@ -34,7 +34,7 @@ process_zip_file <- function(zip_path, zip_name, dataFolder, existing_studies) {
   # List all files recursively, include their paths
   unzip_files <- list.files(unzip_dir, full.names = TRUE, recursive = TRUE)
   print("Files and directories extracted:")
-  print(unzip_files)
+  # print(unzip_files)
   # Filter out directories and specific Mac artifacts like __MACOSX or .DS_Store
   unzip_files <- Filter(function(f) {
     file.info(f)$isdir == FALSE && !grepl("__MACOSX|\\.DS_Store", f)
@@ -122,7 +122,7 @@ uploadData_init_server <- function(id, dataFolder) {
       file_path <- input$fileUpload$datapath
       file_name <- input$fileUpload$name
       print(paste("Received file:", file_path, "with name:", file_name))
-      print(file_path)
+      # print(file_path)
       process_zip_file(file_path, file_name, dataFolder, existing_studies)
 
       # Update the status text upon file processing

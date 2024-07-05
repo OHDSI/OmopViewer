@@ -96,17 +96,8 @@ graphCohortTiming_init_server <- function(id, dataset, filter_input) {
         # filter(variable_name == input$sc_plot_variable) |>
         pull("result_id") |> unique()
 
-      # Get settings for included result_ids
-      inc_setting <- dataset() |> filter(.data$result_id %in% result_ids,
-                                          .data$variable_name == "settings")
-
-      # Combine settings with filtered data and reapply summarization
-      rbind(inc_setting, filtered_data() |>
-        # filter(variable_name == input$sc_plot_variable) |>
-        omopgenerics::newSummarisedResult()) |>
-        dplyr::mutate(estimate_type = if_else(.data$estimate_type == "integer", "numeric",
-                                       .data$estimate_type)) |>
-        omopgenerics::newSummarisedResult()
+      return(dataset() |>
+               visOmopResults::filterSettings(.data$result_id %in% result_ids))
     })
 
 

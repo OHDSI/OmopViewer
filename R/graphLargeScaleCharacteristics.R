@@ -130,7 +130,6 @@ graphLargeScaleCharacteristics_init_server <- function(id, dataset, filter_input
       shiny::req(filtered_data())
       # Calculate columns with more than one unique value
       valid_cols <- sapply(filtered_data(), function(x) length(unique(x)) > 1)
-      print(valid_cols)
       choices <- names(valid_cols)[valid_cols]
       # Update picker inputs
       choices <- choices[!(choices %in% c("estimate_value", "estimate_name",
@@ -187,11 +186,9 @@ graphLargeScaleCharacteristics_init_server <- function(id, dataset, filter_input
 
     prepared_plot_data <- shiny::reactive({
 
-      current_filtered_data <- filtered_data() |>
-        dplyr::filter(!is.na(.data$estimate_value))
-
       # Find relevant result IDs based on current table input
-      result_ids <- current_filtered_data |>
+      result_ids <- filtered_data() |>
+        dplyr::filter(!is.na(.data$estimate_value)) |>
         dplyr::filter(.data$variable_name %in% input$lsc_plot_variable) |>
         # filter(table_name %in% input$lsc_plot_table_filter) |>
         dplyr::filter(.data$variable_level %in% input$lsc_plot_var_level
@@ -199,25 +196,19 @@ graphLargeScaleCharacteristics_init_server <- function(id, dataset, filter_input
         ) |>
         dplyr::pull("result_id")
 
-      # Fetch settings only once based on the relevant result IDs
-      inc_setting <- dataset() |>
-        dplyr::filter(.data$result_id %in% result_ids,
-                      .data$variable_name == "settings")
 
       # Combine and re-summarize the data only once
-      combined_data <- rbind(
-        inc_setting,
-        current_filtered_data |>
-          # filter(table_name == input$lsc_plot_table_filter)|>
-          dplyr::filter(.data$variable_name %in% input$lsc_plot_variable) |>
-          dplyr::filter(.data$variable_level %in% input$lsc_plot_var_level
-                 # additional_level %in% input$lsc_plot_add_level, type %in% input$lsc_plot_type
-          ) |>
-          dplyr::filter(!is.na(.data$estimate_value)) |>
-          omopgenerics::newSummarisedResult()
-      )
 
-      omopgenerics::newSummarisedResult(combined_data)
+      return(
+        dataset() |>
+          dplyr::filter(!is.na(.data$estimate_value)) |>
+          dplyr::filter(.data$variable_name %in% input$lsc_plot_variable) |>
+          dplyr::filter(.data$variable_level %in% input$lsc_plot_var_level) |>
+          omopgenerics::newSummarisedResult() |>
+          visOmopResults::filterSettings(.data$result_id %in% result_ids)
+        )
+
+
 
     })
 

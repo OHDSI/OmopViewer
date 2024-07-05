@@ -43,7 +43,7 @@ filter_setting_init_server <- function(id, dataset, global_store) {
       df <- dataset()
       # Calculate which columns have more than one unique value
       valid_cols <- names(df)[sapply(df, function(x) length(unique(x)) > 1)]
-      valid_cols[!(valid_cols %in% c("result_id", "cohort_definition_id"))]
+      valid_cols#[!(valid_cols %in% c("result_id", "cohort_definition_id"))]
     })
 
     # Render dynamic filter UI based on the dataset columns with more than one unique value

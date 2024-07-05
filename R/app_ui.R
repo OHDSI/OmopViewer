@@ -14,6 +14,9 @@ app_ui <- function() {
       shiny::tags$li(class = "dropdown logo", CONSTS$hds_logo)
     ),
     shinydashboard::dashboardSidebar(
+      tags$head(
+        tags$link(rel = "stylesheet", type = "text/css", href = "extras/www/css/sass.min.css")
+      ),
       shiny::uiOutput("dynamic_sidebar") # Changed from uiOutput
     ),
     shinydashboard::dashboardBody(
@@ -21,7 +24,7 @@ app_ui <- function() {
         # Reset favicon
         shiny::tags$link(rel = "shortcut icon", href = "#"),
         # Compiled css file
-        shiny::tags$link(rel = "stylesheet", type = "text/css", href = here::here("extras/css/sass.min.css"))
+        shiny::tags$link(rel = "stylesheet", type = "text/css", href = here::here("extras/www/css/sass.min.css"))
       ),
       shiny::uiOutput("dynamic_tabs_output")
     )

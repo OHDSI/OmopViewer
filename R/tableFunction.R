@@ -59,8 +59,8 @@ table_init_server <- function(id, dataset, filter_input) {
     return(list(state_selected = shiny::reactive({
       state_data <- filtered_data() # Get the current state of filtered data
       selected_data <- state_data[input$statetable_rows_selected, ] # Get selected rows
-      print("Selected data rows:")
-      print(selected_data)
+      # print("Selected data rows:")
+      # print(selected_data)
       selected_data
     })))
   })

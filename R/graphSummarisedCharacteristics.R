@@ -119,27 +119,16 @@ graphSummarisedCharacteristics_init_server <- function(id, dataset, filter_input
         dplyr::filter(.data$variable_name == input$sc_plot_variable) |>
         dplyr::pull("result_id") |> unique()
 
-      # Get settings for included result_ids
-      inc_setting <- dataset() |>
-        dplyr::filter(.data$result_id %in% result_ids,
-                      .data$variable_name == "settings")
 
       # Combine settings with filtered data and reapply summarization
-      rbind(inc_setting, filtered_data() |>
-              dplyr::filter(.data$variable_name == input$sc_plot_variable) |>
-              omopgenerics::newSummarisedResult()) |>
-        omopgenerics::newSummarisedResult()
+      return(dataset() |>
+               dplyr::filter(.data$variable_name == input$sc_plot_variable) |>
+               omopgenerics::newSummarisedResult()) |>
+        visOmopResults::filterSettings(.data$result_id %in% result_ids)
+
     })
 
     output$sc_plot <- plotly::renderPlotly({
-      # Check if the input style is 'barplot' and handle accordingly
-      # inc <- filtered_data() |>
-      #   filter(variable_name == input$sc_plot_variable)
-      #
-      # result_ids <- filtered_data() |> pull("result_id") |> unique()
-      #
-      # inc_setting <- dataset() |> filter(result_id %in% result_ids) |> filter(variable_name == "settings")
-      # inc_tbl <- rbind(inc_setting, filtered_data()|> omopgenerics::newSummarisedResult())
       p <- CohortCharacteristics::plotCharacteristics(data = prepared_plot_data(),
                                facet = input$sc_plot_facet,
                                colour = input$sc_plot_color,

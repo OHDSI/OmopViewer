@@ -21,23 +21,27 @@ createDynamicTabs <- function(complete_data, incomplete_data, plot_config, sessi
       .data$estimate_name != "result_type.x" &
         .data$estimate_name != "result_type.y"
     )
-    result_tables <- complete_data[complete_data$variable_name == "settings" &
-      complete_data$estimate_name == "result_type", ]
-    complete_tables_name <- unique(result_tables$estimate_value)
+    result_tables_setting <- omopgenerics::settings(complete_data)
+    result_tables <- result_tables_setting$result_type
+
+    complete_tables_name <- unique(result_tables)
+
+    # print(complete_tables_name)
 
     dynamic_tabs_complete <- lapply(complete_tables_name, function(table_name) {
       local_store <- shiny::reactiveVal(list())
 
       tabName <- paste0("tab_", table_name)
 
-      result_ids <- unique(result_tables$result_id[result_tables$estimate_value == table_name])
+      result_ids <- unique(result_tables_setting$result_id[result_tables_setting$result_type == table_name])
+        # unique(result_tables$result_id[result_tables$estimate_value == table_name])
 
-      table_data <- complete_data |> filter() |>
-        dplyr::filter(.data$result_id %in% result_ids)
-
+      table_data <- complete_data |>
+        visOmopResults::filterSettings(.data$result_id %in% result_ids)
 
       sr <- table_data |>
         omopgenerics::newSummarisedResult()
+
 
       filter_setting_init_server(
         paste0(tabName, "filter_setting_id"), shiny::reactive({
@@ -50,7 +54,7 @@ createDynamicTabs <- function(complete_data, incomplete_data, plot_config, sessi
       table_data <- shiny::reactive({
         selected_result_id <- local_store() |> unique()
         complete_data |>
-          dplyr::filter(.data$result_id %in% selected_result_id)
+          visOmopResults::filterSettings(.data$result_id %in% selected_result_id)
       })
 
       # table_data_withsetting <- shiny::reactive({
@@ -72,7 +76,7 @@ createDynamicTabs <- function(complete_data, incomplete_data, plot_config, sessi
       )
 
       # Plotting logic
-      extra_ui <- if (any(plot_config$plot_type == table_name)) {
+      extra_ui <- if (table_name %in% plot_config$plot_type) {
         plot_module_ui_name <- plot_config$module_ui[plot_config$plot_type == table_name]
         plot_module_server_name <- plot_config$module_server[plot_config$plot_type == table_name]
 

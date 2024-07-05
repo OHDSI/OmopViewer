@@ -56,9 +56,9 @@ filter_module_server <- function(id, dataset) {
         if (is.null(values) || length(values) == 0) {
           # print(names(input))
           # print(col)
-          if ("filter_values_cohort_name" %in% names(input)) {
-            print(input$filter_values_cohort_name)
-          }
+          # if ("filter_values_cohort_name" %in% names(input)) {
+          #   print(input$filter_values_cohort_name)
+          # }
           print(paste("No values selected for column", col))
         } else {
           print(paste("Values selected for", col, ":", paste(values, collapse = ", ")))
