@@ -20,46 +20,13 @@ COLORS <- list(
   ash_light = "#e3e7e9"
 )
 
-##### From old template
-# metrics_list <- list(
-#   shipments = list(
-#     label = "Total shipments",
-#     value = paste(sum(APP_DATA$state_data$total.shipments), "trips")
-#   ),
-#   weight = list(
-#     label = "Total weight",
-#     value = paste(format(sum(APP_DATA$state_data$total.weight), big.mark = ","), "tons")
-#   ),
-#   locations = list(
-#     label = "Number of locations",
-#     value = paste(sum(APP_DATA$state_data$number.of.locations), "locations")
-#   ),
-#   shipments_day = list(
-#     label = "Shipments per day",
-#     value = paste(sum(APP_DATA$state_data$shipments.day), "trips")
-#   )
-# )
-
 hds_logo <- tags$a(
   href = hds_website,
   target = "_blank",
   rel = "nofollow noreferrer",
   class = "logo-link",
-  img(src = here::here("extras/www/images/hds_logo_noline.svg"),
+  shiny::tags$img(src = system.file("www/images/hds_logo_noline.svg", package = "omopViewer"),
       class = "logo-img", alt = "HDS Logo",
       width="20", height="20")
 )
 
-
-##### From old template - footer
-# hds_footer <- tags$h4(
-#   class = "footer-heading",
-#   tags$span("Footer"),
-#   tags$a(
-#     class = "footer-link",
-#     href = marketplace_website,
-#     target = "_blank",
-#     rel = "nofollow noreferrer",
-#     marketplace_name
-#   )
-# )

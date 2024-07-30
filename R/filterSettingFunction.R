@@ -9,13 +9,12 @@
 #'
 #' @return A filtered data frame.
 #'
-#' @import dplyr
 #' @export
 apply_filters <- function(df, input, ns, cols_to_filter) {
   for (col in cols_to_filter) {
-    filter_values <- input[[paste0(col, "_filter")]]
+    filter_values <- input[[ns(paste0(col, "_filter"))]]
     if (!is.null(filter_values) && length(filter_values) > 0) {
-      df <- df %>% filter((!!sym(col)) %in% filter_values)
+      df <- df |> dplyr::filter((!!rlang::sym(col)) %in% filter_values)
     }
   }
   df
@@ -30,9 +29,6 @@ apply_filters <- function(df, input, ns, cols_to_filter) {
 #' @param dataset A reactive expression that returns the dataset to be used.
 #' @param global_store A reactive value or function to store the unique result IDs.
 #'
-#' @import shiny
-#' @import dplyr
-#' @import DT
 #' @export
 filter_setting_init_server <- function(id, dataset, global_store) {
   shiny::moduleServer(id, function(input, output, session) {
@@ -95,9 +91,6 @@ filter_setting_init_server <- function(id, dataset, global_store) {
 #' This function creates the UI for the Shiny module that includes dynamic filters and a data table.
 #'
 #' @param id The module id.
-#'
-#' @import shiny
-#' @import DT
 #' @export
 filter_setting_ui <- function(id) {
   ns <- shiny::NS(id)

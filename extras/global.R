@@ -18,7 +18,7 @@ library(visOmopResults)
 # plan(multisession)
 # Compile sass to css
 sass(
-  sass::sass_file("styles/main.scss"),
+  sass::sass_file("inst/styles/main.scss"),
   cache = NULL,
   options = sass_options(output_style = "compressed"),
   output = "www/css/sass.min.css"

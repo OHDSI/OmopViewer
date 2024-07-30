@@ -24,11 +24,13 @@ Suggests:
     zip
 Imports:
     dplyr,
+    rlang,
     DT,
     shiny,
     CohortCharacteristics,
-    IncidencePrevalence,
     shinydashboard,
     omopgenerics (>= 0.2.0),
     visOmopResults (>= 0.3.0)
 URL: https://oxford-pharmacoepi.github.io/omopViewer/
+Depends: 
+    R (>= 2.10)

@@ -3,7 +3,7 @@
 #' This function creates the UI components for the study selection module.
 #'
 #' @param id A string. The namespace identifier for the module.
-#'
+#' @rawNamespace import(shiny, except=c(dataTableOutput, renderDataTable))
 #' @return A UI definition to select uploaded study
 #' @export
 studySelect_ui <- function(id) {
@@ -24,7 +24,7 @@ studySelect_ui <- function(id) {
 #' This function initializes the server-side logic for the study selection module.
 #'
 #' @param id A string. The namespace identifier for the module.
-#'
+#' @rawNamespace import(shiny, except=c(dataTableOutput, renderDataTable))
 #' @return Initialise the study select module
 #' @export
 studySelect_init_server <- function(id) {

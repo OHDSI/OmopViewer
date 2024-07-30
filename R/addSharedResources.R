@@ -1,4 +1,5 @@
 # Helper function to include shared styles and scripts
+#' @rawNamespace import(shiny, except=c(dataTableOutput, renderDataTable))
 addSharedResources <- function() {
   shiny::tagList(
     shiny::tags$head(

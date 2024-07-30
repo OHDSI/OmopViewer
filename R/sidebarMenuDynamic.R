@@ -7,13 +7,13 @@ sidebarMenuDynamic <- function(complete_data, incomplet_data) {
     incomplete_tables_name <- names(incomplet_data)
 
     menu_items <- lapply(c(complete_tables_name, incomplete_tables_name), function(table_name) {
-      shinydashboard::menuItem(gsub("_", " ", table_name), tabName = paste0("tab_", table_name), icon = shiny::icon("table"))
+      shinydashboard::menuItem(gsub("_", " ", table_name), tabName = table_name, icon = shiny::icon("table"))
     })
   }
 
   sidebar <- do.call(shinydashboard::sidebarMenu, c(
     list(
-      shinydashboard::menuItem("About", tabName = "About", icon = shiny::icon("circle-info")),
+      shinydashboard::menuItem("About", tabName = "about", icon = shiny::icon("circle-info")),
       shinydashboard::menuItem("Upload Data", tabName = "UploadData", icon = shiny::icon("upload")),
       shinydashboard::menuItem("Load Data", tabName = "LoadData", icon = shiny::icon("bars-progress"))
     ),

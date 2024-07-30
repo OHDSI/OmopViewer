@@ -1,4 +1,4 @@
-
+#' @rawNamespace import(shiny, except=c(dataTableOutput, renderDataTable))
 dataLoad_ui <- function(id) {
   ns <- shiny::NS(id)
 
@@ -16,7 +16,7 @@ dataLoad_ui <- function(id) {
 
 
 }
-
+#' @rawNamespace import(shiny, except=c(dataTableOutput, renderDataTable))
 dataLoad_myModuleServer <- function(id, dataFolder) {
   shiny::moduleServer(
     id,
