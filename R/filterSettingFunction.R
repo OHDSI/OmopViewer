@@ -30,7 +30,7 @@ applyFilters <- function(df, input, ns, cols_to_filter) {
 #' @param global_store A reactive value or function to store the unique result IDs.
 #'
 #' @export
-filter_setting_init_server <- function(id, dataset, global_store) {
+filterSettingInitServer <- function(id, dataset, global_store) {
   shiny::moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
@@ -92,7 +92,7 @@ filter_setting_init_server <- function(id, dataset, global_store) {
 #'
 #' @param id The module id.
 #' @export
-filter_setting_ui <- function(id) {
+filterSettingUi <- function(id) {
   ns <- shiny::NS(id)
 
   shiny::fluidPage(

@@ -6,7 +6,7 @@
 #' @rawNamespace import(shiny, except=c(dataTableOutput, renderDataTable))
 #' @return A UI definition to select uploaded study
 #' @export
-studySelect_ui <- function(id) {
+studySelectUi <- function(id) {
   ns <- shiny::NS(id)
 
   shinydashboard::box(
@@ -27,8 +27,8 @@ studySelect_ui <- function(id) {
 #' @rawNamespace import(shiny, except=c(dataTableOutput, renderDataTable))
 #' @return Initialise the study select module
 #' @export
-studySelect_init_server <- function(id) {
-  shiny::callModule(studySelect_server, id)
+studySelectInitServer <- function(id) {
+  shiny::callModule(studySelectServer, id)
 }
 #' Server function for the Study Selection Module
 #'
@@ -40,7 +40,7 @@ studySelect_init_server <- function(id) {
 #'
 #' @return A list with a reactive expression that returns the selected study.
 #' @export
-studySelect_server <- function(input, output, session) {
+studySelectServer <- function(input, output, session) {
   ns <- session$ns
 
   studies <- shiny::reactive({

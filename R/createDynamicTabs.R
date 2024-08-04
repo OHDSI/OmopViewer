@@ -45,7 +45,7 @@ createDynamicTabs <- function(complete_data, incomplete_data, plot_config, sessi
       if(result_type == "cohort_timing_density"){
         omopgenerics::exportSummarisedResult(sr, fileName = "test.csv")
       }
-      filter_setting_init_server(
+      filterSettingInitServer(
         paste0(tabName, "filter_setting_id"), shiny::reactive({
           omopgenerics::settings(sr)
         }),
@@ -93,7 +93,7 @@ createDynamicTabs <- function(complete_data, incomplete_data, plot_config, sessi
       }
 
       # UI elements: settings and filters
-      setting_filter_ui_component <- filter_setting_ui(paste0(tabName, "filter_setting_id"))
+      setting_filter_ui_component <- filterSettingUi(paste0(tabName, "filter_setting_id"))
       filter_ui_component <- filter_module_ui(paste0(tabName, "filter_id"))
       table_ui_component <- table_ui(paste0(tabName, "table_id"))
 
@@ -151,7 +151,7 @@ createDynamicTabs <- function(complete_data, incomplete_data, plot_config, sessi
 #         omopgenerics::newSummarisedResult()
 #
 #
-#       filter_setting_init_server(
+#       filterSettingInitServer(
 #         paste0(tabName, "filter_setting_id"), shiny::reactive({
 #           omopgenerics::settings(sr)
 #         }),
@@ -213,7 +213,7 @@ createDynamicTabs <- function(complete_data, incomplete_data, plot_config, sessi
 #                 createCard(
 #                   id = paste0("summarisedResult_", tabName),
 #                   title = table_name,
-#                   setting_filter_ui = filter_setting_ui(paste0(tabName, "filter_setting_id")),
+#                   setting_filter_ui = filterSettingUi(paste0(tabName, "filter_setting_id")),
 #                   filter_ui = filter_module_ui(paste0(tabName, "filter_id")),
 #                   table_ui = table_ui(paste0(tabName, "table_id")),
 #                   extra_ui = extra_ui

@@ -83,7 +83,7 @@ process_zip_file <- function(zip_path, zip_name, dataFolder, existing_studies) {
 #' @return A UI definition for use in a Shiny application.
 #' @export
 
-uploadData_ui <- function(id) {
+uploadDataUi <- function(id) {
   ns <- NS(id)
 
   tagList(
@@ -102,7 +102,7 @@ uploadData_ui <- function(id) {
 #' @param dataFolder The folder path to save uploaded data
 #' @export
 
-uploadData_init_server <- function(id, dataFolder) {
+uploadDataInitServer <- function(id, dataFolder) {
   shiny::moduleServer(id, function(input, output, session) {
     ns <- session$ns
 

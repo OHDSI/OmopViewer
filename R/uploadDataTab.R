@@ -9,7 +9,7 @@ UploadDataTab <- function(){
       collapsible = FALSE,
       solidHeader = FALSE,
       width = 12,
-      uploadData_ui("uploadData")  # Include uploadData UI here
+      uploadDataUi("uploadData")  # Include uploadData UI here
     )
   )
 )}

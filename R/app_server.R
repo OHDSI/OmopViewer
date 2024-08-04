@@ -142,7 +142,7 @@ app_server <- function(input, output, session) {
   )
 
   # Initialize the uploadData module
-  uploadData_init_server("uploadData", dataFolder)
+  uploadDataInitServer("uploadData", dataFolder)
 
   # Monitor changes in the studies.rds file
   studies_path <- file.path(here::here(dataFolder), "studies.rds")
@@ -155,8 +155,8 @@ app_server <- function(input, output, session) {
   shiny::observe({
     # print("Studies updated")  # Debug print
     studies()
-    session$userData$studySelect_upload <- studySelect_init_server("available_studies_upload")
-    session$userData$studySelect <- studySelect_init_server("available_studies")
+    session$userData$studySelect_upload <- studySelectInitServer("available_studies_upload")
+    session$userData$studySelect <- studySelectInitServer("available_studies")
     session$userData$app_data <- dataLoad_myModuleServer("dataLoad", dataFolder)
   })
 
