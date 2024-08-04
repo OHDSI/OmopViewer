@@ -4,9 +4,9 @@
 \name{omopViewer-package}
 \alias{omopViewer}
 \alias{omopViewer-package}
-\title{omopViewer: What the Package Does (Title Case)}
+\title{omopViewer: Visualise OMOP Results in a Shiny App}
 \description{
-More about what it does (maybe more than one line) Use four spaces when indenting paragraphs within the Description.
+Visualise results obtained from analysing data mapped to the Observational Medical Outcomes Partnership (OMOP) common data model using Shiny Apps.
 }
 \seealso{
 Useful links:
