@@ -228,3 +228,31 @@ serverDynamic <- function(input, output, session) {
 
   })
 }
+
+#' Provides the static server of the shiny app for a given set of resultType(s).
+#'
+#' @param resultType Character vector indicating the result_type of interest.
+#' @param asText Whether to output a text object or to eval it.
+#'
+#' @return The server of interest.
+#' @export
+#'
+serverStatic <- function(resultType = character(),
+                         asText = FALSE) {
+  # initial checks
+  omopgenerics::assertCharacter(resultType, unique = TRUE)
+  omopgenerics::assertLogical(asText, length = 1)
+
+  # create server
+  x <- 'function(input, output, session) {}'
+
+  if (asText) {
+    x <- paste0("server <- ", x) |>
+      styler::style_text()
+  } else {
+    x <- x |>
+      rlang::parse_expr() |>
+      rlang::eval_tidy()
+  }
+  return(x)
+}

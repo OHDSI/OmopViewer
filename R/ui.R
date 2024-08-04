@@ -37,7 +37,6 @@ uiDynamic <- function() {
   )
 }
 
-
 #' Provides the static UI of the shiny app for a given set of resultType(s).
 #'
 #' @param resultType Character vector indicating the result_type of interest.
@@ -64,10 +63,12 @@ uiStatic <- function(resultType = character(),
   # create ui
   x <- paste0(
     'shinydashboard::dashboardPage(
-    shinydashboard::dashboardHeader(title = "omopViewer"),
+    shinydashboard::dashboardHeader(title = "My study"),
     shinydashboard::dashboardSidebar(
       shinydashboard::menuItem(
-        text = "About", tabName = "about", icon = shiny::icon("circle-info"))',
+        text = "About", tabName = "about", icon = shiny::icon("circle-info")),
+      shinydashboard::menuItem(
+        text = "Background", tabName = "background", icon = shiny::icon("magnifying-glass"))',
     sidebar,
     '),
     shinydashboard::dashboardBody(
@@ -81,15 +82,20 @@ uiStatic <- function(resultType = character(),
           href = system.file("www/css/sass.min.css", package = "omopViewer"))
       ),
       shinydashboard::tabItems(
-        shinydashboard::tabItem(tabName = "about", omopViewer::aboutTab())',
-    body,
-    ')
+        shinydashboard::tabItem(tabName = "about", omopViewer::aboutTab()),
+        shinydashboard::tabItem(
+          tabName = "background",
+          shiny::h4("Study background"),
+          shiny::p("You can use this section to add some background of your study")
+        )',
+        body,
+     ')
     )
   )'
   )
 
   if (asText) {
-    x <- x |>
+    x <- paste0("ui <- ", x) |>
       styler::style_text()
   } else {
     x <- x |>
