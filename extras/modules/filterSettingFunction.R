@@ -14,7 +14,7 @@ apply_filters <- function(df, input, ns, cols_to_filter) {
   for (col in cols_to_filter) {
     filter_values <- input[[paste0(col, "_filter")]]
     if (!is.null(filter_values) && length(filter_values) > 0) {
-      df <- df %>% filter((!!sym(col)) %in% filter_values)
+      df <- df |> filter((!!sym(col)) %in% filter_values)
     }
   }
   df

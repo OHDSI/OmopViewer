@@ -99,7 +99,7 @@ graphCohortOverlap_init_server <- function(id, dataset, filter_input) {
     output$co_plot <- plotly::renderPlotly({
       saveRDS(prepared_plot_data() , "test.rds")
       p <- CohortCharacteristics::plotCohortOverlap(
-        result = prepared_plot_data() %>% omopgenerics::newSummarisedResult(),
+        result = prepared_plot_data() |> omopgenerics::newSummarisedResult(),
         facet = input$co_plot_facet,
         uniqueCombinations = as.logical(input$co_unique_comb)
       )

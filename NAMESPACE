@@ -13,4 +13,6 @@ export(studySelect_ui)
 export(uploadData_init_server)
 export(uploadData_ui)
 import(shiny, except=c(dataTableOutput, renderDataTable))
+import(shiny, except=c(dataTableOutput, renderDataTable))
 
+importFrom(rlang,.data)

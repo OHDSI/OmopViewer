@@ -50,7 +50,7 @@ genericServer <- function(id, moduleType, dataset, filter_input) {
       for (key in names(plot_config[[moduleType]]$updatePickerInputIDs)) {
         id <- plot_config[[moduleType]]$updatePickerInputIDs[[key]]
         if (key %in% c("facet", "colour", "colorVars")) {
-          valid_cols <- sapply(filtered_data(), function(x) length(unique(na.omit(x))) > 1)
+          valid_cols <- sapply(filtered_data(), function(x) length(unique(stats::na.omit(x))) > 1)
           choices <- names(valid_cols)
           #please review these
           choices <- choices[!(choices %in% c("estimate_value", "estimate_name",
@@ -100,18 +100,18 @@ genericServer <- function(id, moduleType, dataset, filter_input) {
         input_id <- relevant_filters[[filter]]
         filtered_df <- filtered_df[filtered_df[[filter]] %in% input[[input_id]], ]
       }
-      result_ids <- filtered_df %>%
-        dplyr::pull("result_id") %>%
+      result_ids <- filtered_df |>
+        dplyr::pull("result_id") |>
         unique()
 
       # Use the filtered result IDs to fetch and summarize the data again
       if(any(filter_columns %in% c("variable_name", "variable_level"))){
-        return(filtered_df %>%
+        return(filtered_df |>
                  omopgenerics::newSummarisedResult())
       }
       else{
-      return(dataset() %>%
-        # omopgenerics::newSummarisedResult() %>%
+      return(dataset() |>
+        # omopgenerics::newSummarisedResult() |>
         visOmopResults::filterSettings(.data$result_id %in% result_ids))
         }
 

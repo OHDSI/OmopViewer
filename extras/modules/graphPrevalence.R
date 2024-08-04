@@ -47,7 +47,7 @@ graphPrevalence_ui <- function(id) {
       )
     ),
     shiny::downloadButton(ns("prevalence_plot_download_png"), "Download PNG"),
-    plotly::plotlyOutput(ns("prevalence_plot")) %>%
+    plotly::plotlyOutput(ns("prevalence_plot")) |>
       shinycssloaders::withSpinner()
   )
 }

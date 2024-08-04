@@ -39,7 +39,7 @@ server <- function(input, output, session) {
   # DataTable object
   output$available_studies <- DT::renderDT({
     DT::datatable(
-      studies() %>% select(study_name,uploaded_by, date_uploaded),
+      studies() |> select(study_name,uploaded_by, date_uploaded),
       rownames = FALSE,
       style = "bootstrap",
       selection = 'single',
@@ -54,7 +54,7 @@ server <- function(input, output, session) {
         #    stateSave = TRUE ,
         #columnDefs = list(list(visible = FALSE, targets = c(1)))
       )
-    ) %>%  formatDate(columns = 3, method =  "toLocaleDateString", 
+    ) |>  formatDate(columns = 3, method =  "toLocaleDateString", 
                       params = 'en-GB')
   })
   
