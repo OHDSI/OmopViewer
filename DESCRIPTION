@@ -47,3 +47,5 @@ Suggests:
     testthat (>= 3.1.5),
     utils,
     zip
+Remotes:
+    darwin-eu-dev/omopgenerics
