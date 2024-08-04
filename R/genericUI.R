@@ -8,7 +8,6 @@
 #' Shiny application, aligning with the modular design dictated by `plot_config`. It
 #' automatically generates UI components such as picker inputs for facets, colours, and
 #' other configurable options, as well as output slots for plots and download buttons.
-#' @rawNamespace import(shiny, except=c(dataTableOutput, renderDataTable))
 #' @return A Shiny UI definition that can be integrated into the application layout.
 #' @export
 genericUI <- function(id, moduleType) {

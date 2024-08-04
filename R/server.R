@@ -1,3 +1,4 @@
+
 #' Server Function for Shiny Application
 #'
 #' This function contains the server logic for a Shiny application designed to manage and
@@ -7,9 +8,12 @@
 #' @param input Standard Shiny server input parameter
 #' @param output Standard Shiny server output parameter
 #' @param session Standard Shiny session parameter
+#'
 #' @return The function sets up a series of reactive expressions and
 #'   observers to manage app state.
-app_server <- function(input, output, session) {
+#' @export
+#'
+serverDynamic <- function(input, output, session) {
   # Configuration for plot types and their corresponding modules
   plot_config <- list(
     summarised_large_scale_characteristics = list(
@@ -224,5 +228,3 @@ app_server <- function(input, output, session) {
 
   })
 }
-
-

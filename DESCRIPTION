@@ -22,14 +22,19 @@ URL: https://oxford-pharmacoepi.github.io/omopViewer/
 Depends: 
     R (>= 2.10)
 Imports: 
+    cli,
     CohortCharacteristics,
     dplyr,
     DT,
+    glue,
     modules,
     omopgenerics (>= 0.2.3),
     rlang,
     shiny,
     shinydashboard,
+    stringr,
+    styler,
+    tidyr,
     visOmopResults (>= 0.3.0)
 Suggests: 
     duckdb,

@@ -1,7 +1,9 @@
 
-# INTERNAL
-# About tab is defined here. This is the first tab that appears in all shiny
-# apps.
+#' Code for the tab 'about'.
+#'
+#' @return The html code for the about tab.
+#' @export
+#'
 aboutTab <- function() {
   title <- shiny::tagList(shiny::strong("omopViewer"), "shiny app")
   subtitle <- shiny::tagList(

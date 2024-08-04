@@ -20,7 +20,6 @@
 #' UI components (`updatePickerInputIDs`).
 #' @return A Shiny module server function, which can be use in omopViewer
 #' to add the functionality of specified module types to the shiny
-#' @rawNamespace import(shiny, except=c(dataTableOutput, renderDataTable))
 #' @export
 #'
 genericServer <- function(id, moduleType, dataset, filter_input) {

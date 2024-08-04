@@ -13,8 +13,6 @@
 #'
 #' @return A `div` element containing the card structure for use in a Shiny UI.
 #'
-#' @rawNamespace import(shiny, except=c(dataTableOutput, renderDataTable))
-#'
 #' @examples
 #' \dontrun{
 #' createCard(
