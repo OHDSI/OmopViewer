@@ -28,8 +28,8 @@ The goal of omopViewer is to allow the user to easily create interactive Shiny A
 
 You can install the development version of omopViewer from [GitHub](https://github.com/) with:
 
-``` r
-# install.packages("devtools")
+``` {r, eval = FALSE}
+install.packages("devtools")
 devtools::install_github("oxford-pharmacoepi/omopViewer")
 ```
 

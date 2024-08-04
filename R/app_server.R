@@ -133,13 +133,8 @@ app_server <- function(input, output, session) {
 
   options(shiny.maxRequestSize=30*1024^3)
   dataFolder <- "extras/data"
-  summarisedResultColumns <- c(
-    "result_id", "cdm_name", "group_name",
-    "group_level", "strata_name", "strata_level",
-    "variable_name", "variable_level", "estimate_name",
-    "estimate_type", "estimate_value", "additional_name",
-    "additional_level"
-  )
+  summarisedResultColumns <- omopgenerics::resultColumns(
+    table = "summarised_result")
 
   # Initialize the uploadData module
   uploadDataInitServer("uploadData", dataFolder)

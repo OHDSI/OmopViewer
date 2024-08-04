@@ -23,7 +23,7 @@ You can install the development version of omopViewer from
 [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("devtools")
+install.packages("devtools")
 devtools::install_github("oxford-pharmacoepi/omopViewer")
 ```
 

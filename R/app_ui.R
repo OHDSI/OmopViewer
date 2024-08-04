@@ -1,4 +1,3 @@
-#' @rawNamespace import(shiny, except=c(dataTableOutput, renderDataTable))
 app_ui <- function() {
   CONSTS <- modules::use("extras/constants/constants.R")
   shinydashboard::dashboardPage(
@@ -22,8 +21,10 @@ app_ui <- function() {
         # Reset favicon
         shiny::tags$link(rel = "shortcut icon", href = "#"),
         # Compiled css file
-        shiny::tags$link(rel = "stylesheet", type = "text/css",
-                         href =system.file("www/css/sass.min.css", package = "omopViewer"))
+        shiny::tags$link(
+          rel = "stylesheet",
+          type = "text/css",
+          href = system.file("www/css/sass.min.css", package = "omopViewer"))
       ),
       shiny::uiOutput("dynamic_tabs_output")
     )
