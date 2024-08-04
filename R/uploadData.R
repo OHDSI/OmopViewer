@@ -84,9 +84,9 @@ process_zip_file <- function(zip_path, zip_name, dataFolder, existing_studies) {
 #' @export
 
 uploadDataUi <- function(id) {
-  ns <- NS(id)
+  ns <- shiny::NS(id)
 
-  tagList(
+  shiny::tagList(
     shiny::fileInput(ns("fileUpload"), "Choose ZIP File", accept = ".zip"),
     shiny::actionButton(ns("uploadButton"), "Upload and Process File",
                         icon = shiny::icon("upload")),

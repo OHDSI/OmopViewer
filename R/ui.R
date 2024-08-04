@@ -11,11 +11,11 @@ uiDynamic <- function() {
       # App title visible in browser tab
       title = CONSTS$APP_TITLE,
       # App title visible
-      shiny::tags$li(class = "dropdown title", tags$h1(CONSTS$APP_TITLE)),
+      shiny::tags$li(class = "dropdown title", shiny::tags$h1(CONSTS$APP_TITLE)),
       # App current version
-      shiny::tags$li(class = "dropdown version", tags$p(CONSTS$APP_VERSION)),
+      shiny::tags$li(class = "dropdown version", shiny::tags$p(CONSTS$APP_VERSION)),
       # App time range
-      shiny::tags$li(class = "dropdown time-range", tags$p(CONSTS$APP_TIME_RANGE)),
+      shiny::tags$li(class = "dropdown time-range", shiny::tags$p(CONSTS$APP_TIME_RANGE)),
       # App logo
       shiny::tags$li(class = "dropdown logo", CONSTS$hds_logo)
     ),

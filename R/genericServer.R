@@ -29,11 +29,11 @@ genericServer <- function(id, moduleType, dataset, filter_input) {
     ns <- shiny::NS(id)
 
     # Process and filter data
-    processed_data <- reactive({
+    processed_data <- shiny::reactive({
       dataset() |> omopgenerics::newSummarisedResult() |> visOmopResults::addSettings()
     })
 
-    filtered_data <- reactive({
+    filtered_data <- shiny::reactive({
       df <- processed_data()
       flt <- filter_input()
       if (!is.null(flt)) {
@@ -86,7 +86,7 @@ genericServer <- function(id, moduleType, dataset, filter_input) {
 
 
     # Prepare data specifically for the plot, based on user interaction with UI elements
-    prepared_plot_data <- reactive({
+    prepared_plot_data <- shiny::reactive({
 
       relevant_filters <- plot_config[[moduleType]]$updatePickerInputIDs
       filter_columns <- setdiff(names(relevant_filters), c("facet", "colour",
@@ -144,7 +144,7 @@ genericServer <- function(id, moduleType, dataset, filter_input) {
 
 
     # Download handling
-    output[[paste0(moduleType, "_download_png")]] <- downloadHandler(
+    output[[paste0(moduleType, "_download_png")]] <- shiny::downloadHandler(
       filename = function() { paste0(moduleType, "_", Sys.Date(), ".png") },
       content = function(file) {
         plot <- do.call(plot_config[[moduleType]]$plotFunc, c(list(data = filtered_data()), plot_args))

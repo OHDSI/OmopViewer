@@ -33,7 +33,7 @@ createCard <- function(id, title, setting_filter_ui, filter_ui, table_ui, extra_
       `data-toggle` = "collapse",
       `data-target` = paste0("#", id),
       title,
-      tags$i(class = "fas fa-chevron-down collapse-toggle")
+      shiny::tags$i(class = "fas fa-chevron-down collapse-toggle")
     ),
     shiny::div(
       id = id,

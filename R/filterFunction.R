@@ -4,8 +4,8 @@ filter_module_ui <- function(id) {
   ns <- shiny::NS(id)
   shiny::fluidRow(
     class = "filter-row",  # a class for styling
-    column(3, uiOutput(ns("filter_col_ui"))),
-    column(9, uiOutput(ns("value_filters")))
+    shiny::column(3, shiny::uiOutput(ns("filter_col_ui"))),
+    shiny::column(9, shiny::uiOutput(ns("value_filters")))
   )
 }
 # Filter Module Server

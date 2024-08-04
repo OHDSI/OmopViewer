@@ -75,7 +75,7 @@ studySelectServer <- function(input, output, session) {
 
 
   return(list(studySelected = shiny::reactive({
-    req(input$available_studies_rows_selected)
+    shiny::req(input$available_studies_rows_selected)
     studies()[input$available_studies_rows_selected, ]
   })))
 }
