@@ -9,7 +9,7 @@
 #' @return The filtered result.
 #' @export
 #'
-filterData <- function(result, rt, input) {
+filterData <- function(result, resultType, input) {
   # filter settings
 
   # filter groupping

@@ -5,14 +5,14 @@
 \title{This function is used to filter data in shinys that inputs are defined
 following.}
 \usage{
-filterData(result, rt, input)
+filterData(result, resultType, input)
 }
 \arguments{
 \item{result}{A summarised_result object.}
 
-\item{input}{Input of the shiny to filter by.}
-
 \item{resultType}{A resultType of interest to filter by.}
+
+\item{input}{Input of the shiny to filter by.}
 }
 \value{
 The filtered result.

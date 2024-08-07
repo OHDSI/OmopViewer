@@ -39,7 +39,7 @@ uiDynamic <- function() {
 
 #' Provides the static UI of the shiny app for a given set of resultType(s).
 #'
-#' @param resultType Character vector indicating the result_type of interest.
+#' @param data Summarised_result to build the shiny.
 #' @param asText Whether to output a text object or to eval it.
 #'
 #' @return The ui of interest.

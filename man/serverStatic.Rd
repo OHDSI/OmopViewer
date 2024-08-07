@@ -7,9 +7,9 @@
 serverStatic(data = omopgenerics::emptySummarisedResult(), asText = FALSE)
 }
 \arguments{
-\item{asText}{Whether to output a text object or to eval it.}
+\item{data}{Summarised_result to build the shiny.}
 
-\item{resultType}{Character vector indicating the result_type of interest.}
+\item{asText}{Whether to output a text object or to eval it.}
 }
 \value{
 The server of interest.
