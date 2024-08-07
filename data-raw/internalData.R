@@ -1,8 +1,8 @@
 ## code to prepare `DATASET` dataset goes here
 
 resultTypeTabs <- dplyr::tribble(
-  ~result_type, ~title, ~icon,
-  "summarise_cohort_characteristics", "Cohort characteristics", "people-group"
+  ~result_type, ~title, ~icon, ~raw, ~formatted, ~plot,
+  "summarise_cohort_characteristics", "Cohort characteristics", "people-group", TRUE, TRUE, TRUE
 )
 
 proj <- c(

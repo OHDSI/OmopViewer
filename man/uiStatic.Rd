@@ -4,12 +4,12 @@
 \alias{uiStatic}
 \title{Provides the static UI of the shiny app for a given set of resultType(s).}
 \usage{
-uiStatic(resultType = character(), asText = FALSE)
+uiStatic(data = omopgenerics::emptySummarisedResult(), asText = FALSE)
 }
 \arguments{
-\item{resultType}{Character vector indicating the result_type of interest.}
-
 \item{asText}{Whether to output a text object or to eval it.}
+
+\item{resultType}{Character vector indicating the result_type of interest.}
 }
 \value{
 The ui of interest.

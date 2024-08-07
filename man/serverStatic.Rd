@@ -4,12 +4,12 @@
 \alias{serverStatic}
 \title{Provides the static server of the shiny app for a given set of resultType(s).}
 \usage{
-serverStatic(resultType = character(), asText = FALSE)
+serverStatic(data = omopgenerics::emptySummarisedResult(), asText = FALSE)
 }
 \arguments{
-\item{resultType}{Character vector indicating the result_type of interest.}
-
 \item{asText}{Whether to output a text object or to eval it.}
+
+\item{resultType}{Character vector indicating the result_type of interest.}
 }
 \value{
 The server of interest.

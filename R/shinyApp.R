@@ -48,8 +48,8 @@ exportStaticApp <- function(data = list(),
 
   # create shiny
   cli::cli_inform(c("i" = "Creating shiny from provided data"))
-  ui <- c(messageShiny(), uiStatic(resultType = resType, asText = TRUE))
-  server <- c(messageShiny(), serverStatic(resultType = resType, asText = TRUE))
+  ui <- c(messageShiny(), uiStatic(data = data, asText = TRUE))
+  server <- c(messageShiny(), serverStatic(data = data, asText = TRUE))
   global <- c(messageShiny(), global)
   directory <- paste0(directory, "/shiny")
   dir.create(paste0(directory, "/data"), recursive = TRUE)

@@ -237,14 +237,22 @@ serverDynamic <- function(input, output, session) {
 #' @return The server of interest.
 #' @export
 #'
-serverStatic <- function(resultType = character(),
+serverStatic <- function(data = omopgenerics::emptySummarisedResult(),
                          asText = FALSE) {
   # initial checks
-  omopgenerics::assertCharacter(resultType, unique = TRUE)
+  data <- omopgenerics::validateResultArguemnt(data)
   omopgenerics::assertLogical(asText, length = 1)
 
+  set <- omopgenerics::settings(data)
+  resultType <- unique(set$result_type)
+
+  serv <- ""
+  for (rt in resultType) {
+
+  }
+
   # create server
-  x <- 'function(input, output, session) {}'
+  x <- paste0('function(input, output, session) {', serv,'}')
 
   if (asText) {
     x <- paste0("server <- ", x) |>
@@ -255,4 +263,8 @@ serverStatic <- function(resultType = character(),
       rlang::eval_tidy()
   }
   return(x)
+}
+
+getRawData <- function(rt) {
+
 }
