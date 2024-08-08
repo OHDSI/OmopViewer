@@ -4,7 +4,7 @@ LoadDataTab <- function() {
     class = "load-data-grid",
     shiny::div(
       class = "study-select-wrapper",
-      studySelect_ui("available_studies")
+      studySelectUi("available_studies")
     ),
     shiny::div(
       class = "data-load-wrapper",

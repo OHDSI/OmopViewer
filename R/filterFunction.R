@@ -4,8 +4,8 @@ filter_module_ui <- function(id) {
   ns <- shiny::NS(id)
   shiny::fluidRow(
     class = "filter-row",  # a class for styling
-    column(3, uiOutput(ns("filter_col_ui"))),
-    column(9, uiOutput(ns("value_filters")))
+    shiny::column(3, shiny::uiOutput(ns("filter_col_ui"))),
+    shiny::column(9, shiny::uiOutput(ns("value_filters")))
   )
 }
 # Filter Module Server
@@ -54,11 +54,11 @@ filter_module_server <- function(id, dataset) {
       lapply(input$filter_col, function(col) {
         values = input[[paste0("filter_values_", col)]]
         if (is.null(values) || length(values) == 0) {
-          print(names(input))
-          print(col)
-          if ("filter_values_cohort_name" %in% names(input)) {
-            print(input$filter_values_cohort_name)
-          }
+          # print(names(input))
+          # print(col)
+          # if ("filter_values_cohort_name" %in% names(input)) {
+          #   print(input$filter_values_cohort_name)
+          # }
           print(paste("No values selected for column", col))
         } else {
           print(paste("Values selected for", col, ":", paste(values, collapse = ", ")))

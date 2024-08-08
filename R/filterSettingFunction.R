@@ -9,13 +9,12 @@
 #'
 #' @return A filtered data frame.
 #'
-#' @import dplyr
 #' @export
-apply_filters <- function(df, input, ns, cols_to_filter) {
+applyFilters <- function(df, input, ns, cols_to_filter) {
   for (col in cols_to_filter) {
-    filter_values <- input[[paste0(col, "_filter")]]
+    filter_values <- input[[ns(paste0(col, "_filter"))]]
     if (!is.null(filter_values) && length(filter_values) > 0) {
-      df <- df %>% filter((!!sym(col)) %in% filter_values)
+      df <- df |> dplyr::filter((!!rlang::sym(col)) %in% filter_values)
     }
   }
   df
@@ -30,11 +29,8 @@ apply_filters <- function(df, input, ns, cols_to_filter) {
 #' @param dataset A reactive expression that returns the dataset to be used.
 #' @param global_store A reactive value or function to store the unique result IDs.
 #'
-#' @import shiny
-#' @import dplyr
-#' @import DT
 #' @export
-filter_setting_init_server <- function(id, dataset, global_store) {
+filterSettingInitServer <- function(id, dataset, global_store) {
   shiny::moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
@@ -43,7 +39,7 @@ filter_setting_init_server <- function(id, dataset, global_store) {
       df <- dataset()
       # Calculate which columns have more than one unique value
       valid_cols <- names(df)[sapply(df, function(x) length(unique(x)) > 1)]
-      valid_cols[!(valid_cols %in% c("result_id", "cohort_definition_id"))]
+      valid_cols#[!(valid_cols %in% c("result_id", "cohort_definition_id"))]
     })
 
     # Render dynamic filter UI based on the dataset columns with more than one unique value
@@ -66,7 +62,7 @@ filter_setting_init_server <- function(id, dataset, global_store) {
     reactive_data <- shiny::reactive({
       df <- dataset()
       # Apply filters dynamically based on input selections
-      apply_filters(df, input, ns, multi_value_cols())
+      applyFilters(df, input, ns, multi_value_cols())
     })
 
     # Store unique result_ids for later use
@@ -95,11 +91,8 @@ filter_setting_init_server <- function(id, dataset, global_store) {
 #' This function creates the UI for the Shiny module that includes dynamic filters and a data table.
 #'
 #' @param id The module id.
-#'
-#' @import shiny
-#' @import DT
 #' @export
-filter_setting_ui <- function(id) {
+filterSettingUi <- function(id) {
   ns <- shiny::NS(id)
 
   shiny::fluidPage(

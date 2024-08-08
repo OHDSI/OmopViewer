@@ -1,4 +1,3 @@
-
 dataLoad_ui <- function(id) {
   ns <- shiny::NS(id)
 
@@ -16,7 +15,6 @@ dataLoad_ui <- function(id) {
 
 
 }
-
 dataLoad_myModuleServer <- function(id, dataFolder) {
   shiny::moduleServer(
     id,

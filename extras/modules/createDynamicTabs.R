@@ -5,7 +5,7 @@ createDynamicTabs <- function(complete_data, incomplete_data, plot_config, sessi
   
   # Handle complete data with specific plot types
   if (!is.null(complete_data)) {
-    complete_data <- complete_data %>% filter(estimate_name !="result_type.x" &
+    complete_data <- complete_data |> filter(estimate_name !="result_type.x" &
                                estimate_name !="result_type.y")
     result_tables <- complete_data[complete_data$variable_name == "settings" & complete_data$estimate_name == "result_type", ]
     complete_tables_name <- unique(result_tables$estimate_value)
@@ -16,10 +16,10 @@ createDynamicTabs <- function(complete_data, incomplete_data, plot_config, sessi
       tabName <- paste0("tab_", table_name)
 
       result_ids <- unique(result_tables$result_id[result_tables$estimate_value == table_name])
-      table_data <- complete_data %>% dplyr::filter(result_id %in% result_ids)
+      table_data <- complete_data |> dplyr::filter(result_id %in% result_ids)
 
       
-      sr <- table_data %>%
+      sr <- table_data |>
         omopgenerics::newSummarisedResult()
       
       
@@ -29,14 +29,14 @@ createDynamicTabs <- function(complete_data, incomplete_data, plot_config, sessi
       
     
       table_data <- reactive({
-        selected_result_id <- local_store() %>% unique()
-        complete_data %>% 
+        selected_result_id <- local_store() |> unique()
+        complete_data |> 
           filter(result_id %in% selected_result_id)
       })
       
       table_data_withsetting <- reactive({
-        table_data() %>%
-          omopgenerics::newSummarisedResult() %>%
+        table_data() |>
+          omopgenerics::newSummarisedResult() |>
           visOmopResults::addSettings()
       })
       

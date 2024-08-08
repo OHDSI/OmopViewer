@@ -43,14 +43,14 @@ init_server <- function(id, dataset, filter_input) {
     })
 
     non_unique_columns <- reactive({
-      df <- filtered_data() %>% omopgenerics::newSummarisedResult()
+      df <- filtered_data() |> omopgenerics::newSummarisedResult()
       non_unique_cols <- names(df)[sapply(df, function(x) length(unique(x)) > 1)]
       non_unique_cols
     })
 
     # Render the DataTable using only non-unique columns
     output$statetable <- renderDT({
-      df <- filtered_data() %>% omopgenerics::newSummarisedResult()  # Get the full filtered dataset
+      df <- filtered_data() |> omopgenerics::newSummarisedResult()  # Get the full filtered dataset
       df_display <- df[, non_unique_columns(), drop = FALSE]  # Only display non-unique columns
       datatable(
         df_display,

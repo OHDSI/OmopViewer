@@ -2,9 +2,8 @@ contactTab <- function() {
   shiny::div(
   class = "contact",
   shiny::img(
-    src = here::here("extras/www/images/hds_logo.svg"),
+    src = system.file("www/images/hds_logo.svg", package = "omopViewer"),
     class = "logo-img",
-    alt = "Appsilon Logo",
     height = "50%",
     width = "50%"
   ),

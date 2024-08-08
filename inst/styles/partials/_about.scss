@@ -1,0 +1,17 @@
+.about {
+  @include flexCenter;
+  flex-direction: column;
+  height: 100%;
+  padding: 50px;  // Adjust padding based on your design needs
+
+  h2, h4 {
+    color: #333;  // Specify the color for headings
+    margin-bottom: 20px;  // Space between the headings and any other content
+  }
+
+  .logo-img {
+    width: 200px;  // Adjust logo size as needed
+    margin-top: 20px;  // Space above the logo
+    float: right;  // Align to the right of the container
+  }
+}

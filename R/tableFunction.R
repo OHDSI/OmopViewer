@@ -4,6 +4,7 @@ table_ui <- function(id) {
 
   shiny::div(
     class = "table",
+    style = "overflow-x: auto;", # horizontal scroll
     DT::DTOutput(ns("statetable"))
   )
 }
@@ -28,7 +29,7 @@ table_init_server <- function(id, dataset, filter_input) {
     })
 
     non_unique_columns <- shiny::reactive({
-      df <- filtered_data() %>% omopgenerics::newSummarisedResult()
+      df <- filtered_data() |> omopgenerics::newSummarisedResult()
       non_unique_cols <- names(df)[sapply(df, function(x) length(unique(x)) > 1)]
       # no need to be non unique value for estimate_value column
       if ("estimate_value" %in% names(df)) {
@@ -39,7 +40,7 @@ table_init_server <- function(id, dataset, filter_input) {
 
     # Render table using only non-unique columns
     output$statetable <- DT::renderDT({
-      df <- filtered_data() %>% omopgenerics::newSummarisedResult() # Get the full filtered dataset
+      df <- filtered_data() |> omopgenerics::newSummarisedResult() # Get the full filtered dataset
       df_display <- df[, non_unique_columns(), drop = FALSE] # Only display non-unique columns
       DT::datatable(
         df_display,
@@ -51,7 +52,8 @@ table_init_server <- function(id, dataset, filter_input) {
           pageLength = 10,
           pagingType = "full_numbers",
           ordering = TRUE,
-          stateSave = TRUE
+          stateSave = TRUE,
+          scrollX = TRUE # Enable horizontal scroll
         )
       )
     })
@@ -59,8 +61,8 @@ table_init_server <- function(id, dataset, filter_input) {
     return(list(state_selected = shiny::reactive({
       state_data <- filtered_data() # Get the current state of filtered data
       selected_data <- state_data[input$statetable_rows_selected, ] # Get selected rows
-      print("Selected data rows:")
-      print(selected_data)
+      # print("Selected data rows:")
+      # print(selected_data)
       selected_data
     })))
   })

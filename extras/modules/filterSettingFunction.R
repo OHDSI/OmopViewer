@@ -10,11 +10,11 @@ import("dplyr")
 
 # Helper function to apply the filters to the data frame
 # Helper function to apply the filters to the data frame
-apply_filters <- function(df, input, ns, cols_to_filter) {
+applyFilters <- function(df, input, ns, cols_to_filter) {
   for (col in cols_to_filter) {
     filter_values <- input[[paste0(col, "_filter")]]
     if (!is.null(filter_values) && length(filter_values) > 0) {
-      df <- df %>% filter((!!sym(col)) %in% filter_values)
+      df <- df |> filter((!!sym(col)) %in% filter_values)
     }
   }
   df
@@ -52,7 +52,7 @@ init_server <- function(id, dataset, global_store) {
     reactive_data <- reactive({
       df <- dataset()
       # Apply filters dynamically based on input selections
-      apply_filters(df, input, ns, multi_value_cols())
+      applyFilters(df, input, ns, multi_value_cols())
     })
     
     # Store unique result_ids for later use

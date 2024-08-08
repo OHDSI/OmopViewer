@@ -1,54 +1,45 @@
-import("shiny")
-import("plotly")
-import("modules")
-import("shinydashboard")
-import("ggplot2")
-import("DT")
-import("utils")
-import("dplyr")
-import("shinyWidgets")
-import("shinycssloaders")
-import("IncidencePrevalence")
-export("ui")
-export("init_server")
-
-CONSTS <- use("constants/constants.R")
-
-
-# Module UI Function
-ui <- function(id) {
-  ns <- NS(id)
-  fluidPage(
-    div(
+#' UI function for the Incidence Graph Module
+#'
+#' This function creates the UI components for the Incidence graph module.
+#'
+#' @param id A string. The namespace identifier for the module.
+#'
+#' @return A UI definition for Incidence plot
+#' @rawNamespace import(shiny, except=c(dataTableOutput, renderDataTable))
+#' @export
+graphIncidence_ui <- function(id) {
+  ns <- shiny::NS(id)
+  shiny::fluidPage(
+    shiny::div(
       style = "display: inline-block; vertical-align: top; width: 150px;",
-      pickerInput(
+      shinyWidgets::pickerInput(
         ns("inc_estimates_plot_facet"),
         label = "Facet by",
-        choices = c("group","cdm_name", "outcome_cohort_name", 
+        choices = c("group","cdm_name", "outcome_cohort_name",
                     "denominator_target_cohort_name", "denominator_age_group",
-                    "denominator_sex", "denominator_days_prior_observation", 
-                    "denominator_start_date", "denominator_end_date", 
+                    "denominator_sex", "denominator_days_prior_observation",
+                    "denominator_start_date", "denominator_end_date",
                     "analysis_outcome_washout", "analysis_repeated_events",
-                    "analysis_complete_database_intervals", 
-                    "analysis_min_cell_count", "analysis_interval", 
+                    "analysis_complete_database_intervals",
+                    "analysis_min_cell_count", "analysis_interval",
                     "incidence_start_date"),
         selected = c("outcome_cohort_name"),
         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3"),
         multiple = TRUE
       )
     ),
-    div(
+    shiny::div(
       style = "display: inline-block; vertical-align: top; width: 150px;",
-      pickerInput(
+      shinyWidgets::pickerInput(
         ns("inc_estimates_plot_colour"),
         label = "Colour by",
-        choices = c("cdm_name", "outcome_cohort_name", 
-                    "denominator_target_cohort_name", 
-                    "denominator_age_group", "denominator_sex", 
-                    "denominator_days_prior_observation", 
+        choices = c("cdm_name", "outcome_cohort_name",
+                    "denominator_target_cohort_name",
+                    "denominator_age_group", "denominator_sex",
+                    "denominator_days_prior_observation",
                     "denominator_start_date", "denominator_end_date",
                     "analysis_outcome_washout", "analysis_repeated_events",
-                    "analysis_complete_database_intervals", 
+                    "analysis_complete_database_intervals",
                     "analysis_min_cell_count", "analysis_interval",
                     "incidence_start_date"),
         selected = "cdm_name",
@@ -56,18 +47,28 @@ ui <- function(id) {
         multiple = TRUE
       )
     ),
-    downloadButton(ns("incidence_plot_download_png"), "Download PNG"),
-    plotlyOutput(ns("incidence_plot")) %>% withSpinner()
+    shiny::downloadButton(ns("incidence_plot_download_png"), "Download PNG"),
+    plotly::plotlyOutput(ns("incidence_plot")) |>
+      shinycssloaders::withSpinner()
   )
 }
 
-# Module Server Function
-init_server <- function(id, dataset, filter_input) {
-  moduleServer(id, function(input, output, session) {
+#' Server function for the Incidence Graph Module
+#'
+#' This function initializes the server-side logic for the incidence graph module.
+#'
+#' @param id A string. The namespace identifier for the module.
+#' @param dataset A reactive expression that returns the dataset.
+#' @param filter_input A reactive expression that returns the filter input.
+#' @rawNamespace import(shiny, except=c(dataTableOutput, renderDataTable))
+#' @return A module server function.
+#' @export
+graphIncidence_init_server <- function(id, dataset, filter_input) {
+  shiny::moduleServer(id, function(input, output, session) {
     ns <- session$ns
     # filtered_data <- reactive({dataset()})  # Use the reactive dataset
-    
-    filtered_data <- reactive({
+
+    filtered_data <- shiny::reactive({
       df <- dataset()  # Use the reactive dataset
       flt <- filter_input()
       if (length(flt) > 0) {
@@ -81,21 +82,21 @@ init_server <- function(id, dataset, filter_input) {
       df
     })
 
-    output$incidence_plot <- renderPlotly({
+    output$incidence_plot <- plotly::renderPlotly({
       inc <- filtered_data()
       class(inc) <- c("IncidencePrevalenceResult", "IncidenceResult", class(inc))
-      p <- plotIncidence(result = inc,
+      p <- IncidencePrevalence::plotIncidence(result = inc,
                     facet = input$inc_estimates_plot_facet,
                     colour = input$inc_estimates_plot_colour)
       p
     })
-    output$incidence_plot_download_png <- downloadHandler(
+    output$incidence_plot_download_png <- shiny::downloadHandler(
       filename = "incidence.png",
       content = function(file) {
         inc <- filtered_data()
         class(inc) <- c("IncidencePrevalenceResult", "IncidenceResult", class(inc))
-        p <- plotIncidence(result = inc, colour = c("denominator_age_group", "denominator_sex", "outcome_cohort_name"))
-        ggsave(filename = file, plot = p)
+        p <-IncidencePrevalence:: plotIncidence(result = inc, colour = c("denominator_age_group", "denominator_sex", "outcome_cohort_name"))
+        ggplot2::ggsave(filename = file, plot = p)
       }
     )
   })

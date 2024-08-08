@@ -31,14 +31,25 @@ process_zip_file <- function(zip_path, zip_name, dataFolder, existing_studies) {
     stringsAsFactors = FALSE
   )
 
-  # Filter out directories and ensure only processing files
-  unzip_files <- list.files(unzip_dir, full.names = TRUE)
-  for (file in unzip_files) {
-    print(file)
-  }
-  unzip_files <- Filter(function(f) { file.info(f)$isdir == FALSE && basename(f) != "__MACOSX"}, unzip_files)
-  print(paste("Found", length(unzip_files), "files in the ZIP."))
+  # List all files recursively, include their paths
+  unzip_files <- list.files(unzip_dir, full.names = TRUE, recursive = TRUE)
+  print("Files and directories extracted:")
+  # print(unzip_files)
+  # Filter out directories and specific Mac artifacts like __MACOSX or .DS_Store
+  unzip_files <- Filter(function(f) {
+    file.info(f)$isdir == FALSE && !grepl("__MACOSX|\\.DS_Store", f)
+  }, unzip_files)
+  # print("Filtered files to process:")
+  # print(unzip_files)
 
+  # # Filter out directories and ensure only processing files
+  # unzip_files <- list.files(unzip_dir, full.names = TRUE)
+  # for (file in unzip_files) {
+  #   print(file)
+  # }
+  # unzip_files <- Filter(function(f) { file.info(f)$isdir == FALSE && !grepl("__MACOSX|\\.DS_Store$", basename(f)) }, unzip_files)
+  # print(paste("Found", length(unzip_files), "files in the ZIP."))
+  #
 
   data_list <- list()
   for (file in unzip_files) {
@@ -72,10 +83,10 @@ process_zip_file <- function(zip_path, zip_name, dataFolder, existing_studies) {
 #' @return A UI definition for use in a Shiny application.
 #' @export
 
-uploadData_ui <- function(id) {
-  ns <- NS(id)
+uploadDataUi <- function(id) {
+  ns <- shiny::NS(id)
 
-  tagList(
+  shiny::tagList(
     shiny::fileInput(ns("fileUpload"), "Choose ZIP File", accept = ".zip"),
     shiny::actionButton(ns("uploadButton"), "Upload and Process File",
                         icon = shiny::icon("upload")),
@@ -91,7 +102,7 @@ uploadData_ui <- function(id) {
 #' @param dataFolder The folder path to save uploaded data
 #' @export
 
-uploadData_init_server <- function(id, dataFolder) {
+uploadDataInitServer <- function(id, dataFolder) {
   shiny::moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
@@ -111,6 +122,7 @@ uploadData_init_server <- function(id, dataFolder) {
       file_path <- input$fileUpload$datapath
       file_name <- input$fileUpload$name
       print(paste("Received file:", file_path, "with name:", file_name))
+      # print(file_path)
       process_zip_file(file_path, file_name, dataFolder, existing_studies)
 
       # Update the status text upon file processing

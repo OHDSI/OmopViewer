@@ -2,7 +2,7 @@
 addSharedResources <- function() {
   shiny::tagList(
     shiny::tags$head(
-      tags$script(HTML("
+      shiny::tags$script(shiny::HTML("
         $(document).ready(function() {
           $('.card-header').click(function() {
             var icon = $(this).find('.collapse-toggle');

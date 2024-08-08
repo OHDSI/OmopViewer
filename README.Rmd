@@ -16,40 +16,60 @@ knitr::opts_chunk$set(
 # omopViewer
 
 <!-- badges: start -->
+[![R-CMD-check](https://github.com/oxford-pharmacoepi/omopViewer/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/oxford-pharmacoepi/omopViewer/actions/workflows/R-CMD-check.yaml)
+[![CRAN status](https://www.r-pkg.org/badges/version/omopViewer)](https://CRAN.R-project.org/package=omopViewer)
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![Codecov test coverage](https://codecov.io/gh/oxford-pharmacoepi/omopViewer/branch/main/graph/badge.svg)](https://app.codecov.io/gh/oxford-pharmacoepi/omopViewer?branch=main)
 <!-- badges: end -->
 
-The goal of omopViewer is to ...
+The goal of omopViewer is to allow the user to easily create interactive Shiny Apps.
 
 ## Installation
 
 You can install the development version of omopViewer from [GitHub](https://github.com/) with:
 
-``` r
-# install.packages("devtools")
+``` {r, eval = FALSE}
+install.packages("devtools")
 devtools::install_github("oxford-pharmacoepi/omopViewer")
 ```
 
-## Example
+## Main functionalities
 
-This is a basic example which shows you how to solve a common problem:
-
-```{r example}
+```{r}
 library(omopViewer)
-## basic example code
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+The package can be divided in 3 main functionalities:
+- Dynamic shiny app
+- Static shiny app
+- Utility functions
 
-```{r cars}
-summary(cars)
+## Dynamic shiny app
+
+The dynamic shiny app can be easily launched with `launchDynamicApp()` function. This function creates a shinyApp where you can upload multiple results sets and visualise them.
+
+```{r, eval = FALSE}
+launchDynamicApp()
 ```
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/v1/examples>.
+## Static shiny app
 
-You can also embed plots, for example:
+The static shiny app functionality creates a static shiny from a list of `summarised_result` objects. This shiny is specific to the set of results and can be modified later locally.
 
-```{r pressure, echo = FALSE}
-plot(pressure)
+```{r, message = TRUE}
+# lets generate some results
+library(CohortCharacteristics)
+cdm <- mockCohortCharacteristics()
+result <- cdm$cohort1 |>
+  summariseCharacteristics() |>
+  omopgenerics::bind( # should be reexported by CohortCharacteristics
+    cdm$cohort1 |>
+      summariseCohortAttrition()
+  )
+
+exportStaticApp(data = result)
 ```
 
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
+## Utility functions
+
+These functions are used inside the static shiny app.
