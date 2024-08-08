@@ -248,7 +248,11 @@ serverStatic <- function(data = omopgenerics::emptySummarisedResult(),
 
   serv <- ""
   for (rt in resultType) {
-
+    filterRt <- ""
+    rawRt <- ""
+    formattedRt <- ""
+    plotRt <- ""
+    serv <- "{serv}\n# {rt} ----\n{filterRt}{rawRt}{formattedRt}{plotRt}"
   }
 
   # create server
@@ -265,6 +269,13 @@ serverStatic <- function(data = omopgenerics::emptySummarisedResult(),
   return(x)
 }
 
-getRawData <- function(rt) {
-
+getRawRt <- function(rt) {
+  raw <- getRaw(rt)
+  if (raw) {
+    raw <- "" |>
+      glue::glue()
+  } else {
+    raw <- ""
+  }
+  return(raw)
 }
