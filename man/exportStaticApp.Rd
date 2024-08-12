@@ -4,14 +4,18 @@
 \alias{exportStaticApp}
 \title{Export and launch a static shiny specific to the provided results.}
 \usage{
-exportStaticApp(data = list(), directory = getwd(), launch = TRUE)
+exportStaticApp(
+  data = list(),
+  directory = getwd(),
+  open = rlang::is_interactive()
+)
 }
 \arguments{
 \item{data}{List of summarised_result objects to build the shiny app.}
 
 \item{directory}{Directory to create the shiny.}
 
-\item{launch}{Whether to launch the shiny app.}
+\item{open}{Whether to open the shiny app project.}
 }
 \value{
 The shiny app will be created in directory.
