@@ -35,6 +35,7 @@ Imports:
     stringr,
     styler,
     tidyr,
+    usethis,
     visOmopResults (>= 0.3.0)
 Suggests: 
     duckdb,

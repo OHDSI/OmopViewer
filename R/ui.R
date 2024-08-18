@@ -103,7 +103,7 @@ uiStatic <- function(data = omopgenerics::emptySummarisedResult(),
       {getFilters(setOpts, rt, "Settings")},
       {getFilters(grOpts, rt, "Groupping")},
       {getFilters(vrOpts, rt, "Variables and estimates")},
-      {getTabsetPanel(rt)}
+      {getTabsetPanel(rt, unique(setOpts$name), unique(grOpts$name))}
     )' |>
       glue::glue()
   }
@@ -165,6 +165,13 @@ formatTit <- function(x) {
     stringr::str_replace_all(pattern = "_", replacement = " ") |>
     stringr::str_to_sentence()
 }
+formatCamel <- function(x) {
+  x |>
+    stringr::str_split(pattern = "_") |>
+    unlist() |>
+    stringr::str_to_sentence() |>
+    stringr::str_flatten()
+}
 cast <- function(x) {
   if (length(x) == 0) return(character())
   paste0("c('", paste0(x, collapse = "', '"), "')")
@@ -203,34 +210,95 @@ getFilters <- function(opts, rt, tit) {
   }
   return(res)
 }
-getTabsetPanel <- function(rt) {
+getTabsetPanel <- function(rt, setCols, groupCols) {
   raw <- getRaw(rt)
   if (raw) {
-    raw <- ",
+    raw <- rawPanel(rt)
+  } else {
+    raw <- ""
+  }
+  formatted <- getFormatted(rt)
+  if (formatted) {
+    formatted <- formattedPanel(rt, setCols, groupCols)
+  } else {
+    formatted <- ""
+  }
+  plot <- getPlot(rt)
+  plot <- ""
+  x <- "shiny::tabsetPanel(type = 'tabs'{raw}{formatted}{plot})" |>
+    glue::glue()
+  return(x)
+}
+rawPanel <- function(rt) {
+  ",
     shiny::tabPanel(
       title = 'Raw table',
       shiny::checkboxInput(
-        inputId = '{rt}_pivot_estimates',
-        label = 'Pivot estimates',
-        value = FALSE
+        inputId = '{rt}_show_groupping',
+        label = 'Show groupping',
+        value = TRUE
       ),
       shiny::checkboxInput(
         inputId = '{rt}_show_settings',
         label = 'Show settings',
         value = FALSE
       ),
+      shiny::checkboxInput(
+        inputId = '{rt}_pivot_estimates',
+        label = 'Pivot estimates',
+        value = FALSE
+      ),
       shiny::downloadButton(outputId = '{rt}_raw_download', label = 'Download as csv'),
       DT::DTOutput(outputId = '{rt}_raw_table') |>
         shinycssloaders::withSpinner()
     )" |>
-      glue::glue()
+    glue::glue()
+}
+formattedPanel <- function(rt, setCols, groupCols) {
+  op <- c(groupCols, "variable_name", "variable_level", "estimate_name", setCols)
+  if ("cohort_name" %in% op) {
+    group <- "'cohort_name'"
   } else {
-    raw <- ""
+    group <- "character()"
   }
-  formatted <- getFormatted(rt)
-  formatted <- ""
-  plot <- getPlot(rt)
-  plot <- ""
-  x <- "shiny::tabsetPanel(type = 'tabs'{raw}{formatted}{plot})" |>
+  if (length(setCols) > 0) {
+    set <- cast(setCols)
+  } else {
+    set <- "character()"
+  }
+  ",
+    shiny::tabPanel(
+      title = 'Formatted table',
+      shinyWidgets::pickerInput(
+        inputId = '{rt}_header',
+        label = 'Header',
+        choices = {cast(op)},
+        selected = 'cdm_name',
+        width = '160px',
+        multiple = TRUE,
+        inline = TRUE
+      ),
+      shinyWidgets::pickerInput(
+        inputId = '{rt}_group',
+        label = 'Group',
+        choices = {cast(op)},
+        selected = {group},
+        width = '160px',
+        multiple = TRUE,
+        inline = TRUE
+      ),
+      shinyWidgets::pickerInput(
+        inputId = '{rt}_hide',
+        label = 'Hide',
+        choices = {cast(op)},
+        selected = {set},
+        width = '160px',
+        multiple = TRUE,
+        inline = TRUE
+      ),
+      shiny::downloadButton(outputId = '{rt}_formatted_download', label = 'Download as word'),
+      gt::gt_output(outputId = '{rt}_formatted_table') |>
+        shinycssloaders::withSpinner()
+    )" |>
     glue::glue()
 }

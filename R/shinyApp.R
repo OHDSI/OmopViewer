@@ -12,19 +12,19 @@ launchDynamicApp <- function() {
 #'
 #' @param data List of summarised_result objects to build the shiny app.
 #' @param directory Directory to create the shiny.
-#' @param launch Whether to launch the shiny app.
+#' @param open Whether to open the shiny app project.
 #'
 #' @return The shiny app will be created in directory.
 #' @export
 #'
 exportStaticApp <- function(data = list(),
                             directory = getwd(),
-                            launch = TRUE) {
+                            open = rlang::is_interactive()) {
   # input check
   if (!rlang::is_bare_list(data)) data <- list(data)
   omopgenerics::assertList(data, class = "data.frame")
   omopgenerics::assertCharacter(directory, length = 1)
-  omopgenerics::assertLogical(launch, length = 1)
+  omopgenerics::assertLogical(open, length = 1)
 
   # create directory if it does not exit
   if (!dir.exists(directory)) {
@@ -64,11 +64,10 @@ exportStaticApp <- function(data = list(),
     path = paste0(directory, "/data"))
   cli::cli_inform(c("v" = "Shiny created in: {.pkg {directory}}"))
 
-  # launch shiny
-  if (launch) {
+  # open shiny
+  if (open) {
     cli::cli_inform(c("i" = "Launching shiny"))
-    # still does not work
-    shiny::shinyAppDir(directory)
+    usethis::proj_activate(directory)
   }
 
   return(invisible())
