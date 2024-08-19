@@ -53,14 +53,32 @@ visTable <- function(result,
   return(result)
 }
 
-# default:
+# # facet
+# # colour
+# visPlot <- function(result,
+#                     facet = NULL,
+#                     colour = NULL) {
 #
-# header = c("cdm_name")
-# hide = "settings"
-# group = "cohort_name" (if exists)
-# none = c(group, variable_name, variable_level, estimate_name)
-
-# scatterPlot
-# barPlot
-# boxplot
-# densityPlot
+# }
+# # scatterPlot
+# x -> groupping/settings/variable/estimate_name
+# facet -> groupping/settings/variable
+# group -> groupping/settings/variable
+# y -> estimate_name
+# ymin -> estimate_name
+# ymax -> estimate_name
+# line -> TRUE/FALSE
+# point -> TRUE/FALSE
+# # barPlot
+# x -> groupping/settings/variable
+# facet -> groupping/settings/variable
+# group -> groupping/settings/variable
+# y -> estimate_name
+# # boxplot
+# facet -> groupping/settings/variable
+# group -> groupping/settings/variable
+# lower -> estimate_name
+# middle -> estimate_name
+# upper -> estimate_name
+# ymin -> estimate_name
+# ymax -> estimate_name
