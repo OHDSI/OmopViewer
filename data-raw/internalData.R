@@ -1,8 +1,30 @@
 ## code to prepare `DATASET` dataset goes here
 
 resultTypeTabs <- dplyr::tribble(
-  ~result_type, ~title, ~icon, ~raw, ~formatted, ~plot,
-  "summarised_characteristics", "Cohort characteristics", "people-group", TRUE, TRUE, TRUE
+  ~result_type, ~title, ~icon,
+  "summarised_characteristics", "Cohort characteristics", "people-group"
+)
+
+plotType = boxplot/density
+# timeScale = days/years
+# facet = <groupping/settings/variable>
+# colour = <groupping/settungs/variable>
+# uniqueCombinations = #check#
+
+resultTypePlots <- list(
+  "functions" = dplyr::tribble(
+    ~plot_id, ~result_type, ~package, ~fun, ~output,
+    1L, "cohort_overlap", "CohortCharacteristics", "plotCohortOverlap", "ggplot2",
+    2L, "cohort_attrition", "CohortCharacteristics", "plotCohortAttrition", "grViz",
+    3L, "cohort_timing", "CohortCharacteristics", "plotCohortTimming", "ggplot2"
+  ),
+  "arguments" = dplyr::tribble(
+    ~plot_id, ~argument, ~type, ~opts,
+    1L, "facet", "selector", "<groupping>, <variable>, <settings>",
+    1L, "uniqueCombinations", "check", "",
+    3L, "plotType", "selector", "boxplot, density",
+    3L, "timeScale", "selector", "days, years"
+  )
 )
 
 proj <- c(
@@ -147,4 +169,6 @@ plot_config <- list(
 )
 # end plot config ----
 
-usethis::use_data(resultTypeTabs, proj, global, plot_config, overwrite = TRUE, internal = TRUE)
+usethis::use_data(
+  resultTypeTabs, resultTypePlots, proj, global, plot_config, overwrite = TRUE,
+  internal = TRUE)

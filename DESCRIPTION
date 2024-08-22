@@ -42,7 +42,9 @@ Suggests:
     ggplot2,
     here,
     htmlwidgets,
+    knitr,
     plotly,
+    rmarkdown,
     shinycssloaders,
     shinyWidgets,
     testthat (>= 3.1.5),
@@ -50,3 +52,4 @@ Suggests:
     zip
 Remotes:
     darwin-eu-dev/omopgenerics
+VignetteBuilder: knitr

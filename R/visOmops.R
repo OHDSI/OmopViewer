@@ -53,7 +53,16 @@ visTable <- function(result,
   return(result)
 }
 
-# # facet
+# warning if default plot tab
+
+# plotCohortTiming() ----
+#
+# plotCohortCharacteristics() ----
+# facet = <groupping, settings, variable>
+# x = <groupping, settings, variable>
+# plotType = boxplot/barplot
+# colour = <groupping, settings, variable> -> NULL
+# # facet ----
 # # colour
 # visPlot <- function(result,
 #                     facet = NULL,

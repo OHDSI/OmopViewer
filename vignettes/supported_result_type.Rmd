@@ -1,0 +1,34 @@
+---
+title: "Plot tabs in omopViewer"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{supported_result_type}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r, echo=FALSE}
+x <- omopViewer:::resultTypePlots$functions
+```
+
+
+The **omopViewer** package supports `r x$result_type |> unique() |> length()` result types of `r x$package |> unique() |> length()` packages: `r cli::cli_text("{.pkg {unique(x$package)}}") |> cli::cli_fmt()`.
+
+You can see the plot functions that have been configured in the package per result type in the following table:
+
+```{r, echo = FALSE}
+x |>
+  dplyr::select(
+    "Result type" = "result_type", "package", "Plot function" = "fun") |>
+  visOmopResults::gtTable(
+    groupColumn = "package", colsToMergeRows = "Result type")
+  
+```
+
