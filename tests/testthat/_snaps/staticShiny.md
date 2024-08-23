@@ -5,6 +5,7 @@
     Output
       ui <- shinydashboard::dashboardPage(
         shinydashboard::dashboardHeader(title = "My study"),
+        # sidebar ----
         shinydashboard::dashboardSidebar(
           shinydashboard::sidebarMenu(
             shinydashboard::menuItem(
@@ -21,6 +22,7 @@
             )
           )
         ),
+        # body ----
         shinydashboard::dashboardBody(
           shiny::tags$head(
             # Reset favicon
@@ -33,12 +35,16 @@
             )
           ),
           shinydashboard::tabItems(
+            ## about ----
             shinydashboard::tabItem(tabName = "about", omopViewer::aboutTab()),
+            ## background ----
             shinydashboard::tabItem(
               tabName = "background",
               shiny::h4("Study background"),
               shiny::p("You can use this section to add some background of your study")
-            ), shinydashboard::tabItem(
+            ),
+            ## summarised_characteristics ----
+            shinydashboard::tabItem(
               tabName = "summarised_characteristics",
               shiny::p(),
               shiny::h4("Groupping"), shinyWidgets::pickerInput(
@@ -170,7 +176,9 @@
                     shinycssloaders::withSpinner()
                 )
               )
-            ), shinydashboard::tabItem(
+            ),
+            ## cohort_attrition ----
+            shinydashboard::tabItem(
               tabName = "cohort_attrition",
               shiny::h4("Settings"), shinyWidgets::pickerInput(
                 inputId = "cohort_attrition_settings_cohort_definition_id",
@@ -303,6 +311,7 @@
                 )
               )
             )
+            ## end ----
           )
         )
       )
