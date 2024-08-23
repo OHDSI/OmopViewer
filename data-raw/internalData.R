@@ -1,40 +1,43 @@
-## code to prepare `DATASET` dataset goes here
 
-resultTypeTabs <- dplyr::tribble(
-  ~result_type, ~title, ~icon,
-  "summarised_characteristics", "Cohort characteristics", "people-group"
+omopViewerTabs <- dplyr::tribble(
+  ~result_tab_id, ~result_type, ~package, ~title, ~icon,
+  1L, "cohort_overlap", "CohortCharacteristics", "Cohort count", "person",
+  2L, "cohort_attrition", "CohortCharacteristics", "Cohort Attrition", "person",
+  3L, "cohort_timing", "CohortCharacteristics", "Cohort timing", "person",
+  4L, "summarised_characteristics", "CohortCharacteristics", "Cohort characteristics", "people-group"
 )
 
-plotType = boxplot/density
-# timeScale = days/years
-# facet = <groupping/settings/variable>
-# colour = <groupping/settungs/variable>
-# uniqueCombinations = #check#
-
-resultTypePlots <- list(
-  "functions" = dplyr::tribble(
-    ~plot_id, ~result_type, ~package, ~fun, ~output,
-    1L, "cohort_overlap", "CohortCharacteristics", "plotCohortOverlap", "ggplot2",
-    2L, "cohort_attrition", "CohortCharacteristics", "plotCohortAttrition", "grViz",
-    3L, "cohort_timing", "CohortCharacteristics", "plotCohortTimming", "ggplot2"
-  ),
-  "arguments" = dplyr::tribble(
-    ~plot_id, ~argument, ~type, ~opts,
-    1L, "facet", "selector", "<groupping>, <variable>, <settings>",
-    1L, "uniqueCombinations", "check", "",
-    3L, "plotType", "selector", "boxplot, density",
-    3L, "timeScale", "selector", "days, years"
-  )
+omopViewerPlots <- dplyr::tribble(
+  ~plot_id, ~result_tab_id, ~title, ~fun, ~output,
+  1L, 1L, "Plot cohort overlap", "plotCohortOverlap", "ggplot2",
+  2L, 2L, "Diagram", "plotCohortAttrition", "grViz",
+  3L, 3L, "plot cohort timing", "plotCohortTimming", "ggplot2",
+  4L, 4L, "Plot characteristics", "plotCharacteristics", "ggplot2"
 )
 
-proj <- c(
+omopViewerPlotArguments <- dplyr::tribble(
+  ~plot_id, ~argument, ~type, ~opts, ~multiple,
+  1L, "facet", "selector", "<groupping>, <variable>, <settings>", TRUE,
+  1L, "uniqueCombinations", "check", "", NA,
+  3L, "plotType", "selector", "boxplot, density", FALSE,
+  3L, "timeScale", "selector", "days, years", FALSE,
+  3L, "facet", "selector", "<groupping>, <variable>, <settings>", TRUE,
+  3L, "colour", "selector", "<groupping>, <variable>, <settings>", TRUE,
+  3L, "uniqueCombinations", "check", "", NA,
+  4L, "x", "selector", "<groupping>, <variable>, <settings>", TRUE,
+  4L, "facet", "selector", "<groupping>, <variable>, <settings>", TRUE,
+  4L, "colour", "selector", "<groupping>, <variable>, <settings>", TRUE,
+  4L, "plotStyle", "selector", "boxplot, barplot", FALSE
+)
+
+omopViewerProj <- c(
   "Version: 1.0", "", "RestoreWorkspace: Default", "SaveWorkspace: Default",
   "AlwaysSaveHistory: Default", "", "EnableCodeIndexing: Yes",
   "UseSpacesForTab: Yes", "NumSpacesForTab: 2", "Encoding: UTF-8", "",
   "RnwWeave: Sweave", "LaTeX: pdfLaTeX"
 )
 
-global <- c(
+omopViewerGlobal <- c(
   "library(shiny)", "library(omopViewer)", "",
   "data <- importSummarisedResult(here::here(\"data\")) |>
     prepareData()"
@@ -170,5 +173,6 @@ plot_config <- list(
 # end plot config ----
 
 usethis::use_data(
-  resultTypeTabs, resultTypePlots, proj, global, plot_config, overwrite = TRUE,
+  omopViewerTabs, omopViewerPlots, omopViewerPlotArguments, omopViewerProj,
+  omopViewerGlobal, plot_config, overwrite = TRUE,
   internal = TRUE)

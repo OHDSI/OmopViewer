@@ -98,7 +98,9 @@ uiStatic <- function(data = omopgenerics::emptySummarisedResult(),
       dplyr::select(!"result_id") |>
       tidyr::pivot_longer(dplyr::everything()) |>
       dplyr::distinct()
-    body <- '{body}, shinydashboard::tabItem(
+    body <- '{body},
+    ## {rt} ----
+    shinydashboard::tabItem(
       tabName = "{rt}",
       {getFilters(setOpts, rt, "Settings")},
       {getFilters(grOpts, rt, "Groupping")},
@@ -112,6 +114,7 @@ uiStatic <- function(data = omopgenerics::emptySummarisedResult(),
   x <- paste0(
     'shinydashboard::dashboardPage(
     shinydashboard::dashboardHeader(title = "My study"),
+    # sidebar ----
     shinydashboard::dashboardSidebar(
       shinydashboard::sidebarMenu(
         shinydashboard::menuItem(
@@ -121,6 +124,7 @@ uiStatic <- function(data = omopgenerics::emptySummarisedResult(),
         sidebar,
      ')
     ),
+    # body ----
     shinydashboard::dashboardBody(
       shiny::tags$head(
         # Reset favicon
@@ -132,13 +136,16 @@ uiStatic <- function(data = omopgenerics::emptySummarisedResult(),
           href = system.file("www/css/sass.min.css", package = "omopViewer"))
       ),
       shinydashboard::tabItems(
+        ## about ----
         shinydashboard::tabItem(tabName = "about", omopViewer::aboutTab()),
+        ## background ----
         shinydashboard::tabItem(
           tabName = "background",
           shiny::h4("Study background"),
           shiny::p("You can use this section to add some background of your study")
         )',
         body,
+        '\n## end ----\n',
      ')
     )
   )'
@@ -156,7 +163,7 @@ uiStatic <- function(data = omopgenerics::emptySummarisedResult(),
 }
 
 getInfo <- function(rt, info, def) {
-  x <- resultTypeTabs[[info]][resultTypeTabs$result_type == rt]
+  x <- omopViewerTabs[[info]][omopViewerTabs$result_type == rt]
   if (length(x) == 1 && !is.na(x)) return(x)
   def
 }
@@ -172,6 +179,9 @@ formatCamel <- function(x) {
     stringr::str_to_sentence() |>
     stringr::str_flatten()
 }
+formatSnake <- function(x) {
+  omopgenerics::toSnakeCase(x)
+}
 cast <- function(x) {
   if (length(x) == 0) return(character())
   paste0("c('", paste0(x, collapse = "', '"), "')")
@@ -183,13 +193,13 @@ getIcon <- function(resultType) {
   getInfo(resultType, "icon", "table")
 }
 getRaw <- function(resultType) {
-  getInfo(resultType, "raw", TRUE)
+  TRUE
 }
 getFormatted <- function(resultType) {
-  getInfo(resultType, "formatted", TRUE)
+  TRUE
 }
 getPlot <- function(resultType) {
-  getInfo(resultType, "plot", TRUE)
+  TRUE
 }
 getFilters <- function(opts, rt, tit) {
   if (nrow(opts) == 0) return("shiny::p()")
@@ -224,7 +234,11 @@ getTabsetPanel <- function(rt, setCols, groupCols) {
     formatted <- ""
   }
   plot <- getPlot(rt)
-  plot <- ""
+  if (plot) {
+    plot <- plotPanel(rt, setCols, groupCols)
+  } else {
+    plot <- ""
+  }
   x <- "shiny::tabsetPanel(type = 'tabs'{raw}{formatted}{plot})" |>
     glue::glue()
   return(x)
@@ -301,4 +315,122 @@ formattedPanel <- function(rt, setCols, groupCols) {
         shinycssloaders::withSpinner()
     )" |>
     glue::glue()
+}
+plotPanel <- function(rt, setCols, groupCols) {
+  varCols <- c("variable_name", "variable_level", "estimate_name")
+  plots <- getPlots(rt)
+  panel <- ""
+  for (id in plots) {
+    tit <- getPlotTitle(id)
+    buttons <- getPlotButtons(rt, id, setCols, groupCols, varCols)
+    out <- getPlotOutput(id)
+    panel <- "{panel},
+      shiny::tabPanel(
+        title = '{tit}',
+        {buttons}
+        shiny::downloadButton(outputId = '{rt}_plot_{id}_download', label = 'Download'),
+        {out}(outputId = '{rt}_plot_{id}') |>
+          shinycssloaders::withSpinner()
+      )" |>
+      glue::glue()
+  }
+  return(panel)
+}
+getRtId <- function(rt) {
+  omopViewerTabs |>
+    dplyr::filter(.data$result_type == .env$rt) |>
+    dplyr::pull("result_tab_id")
+}
+getPlots <- function(rt) {
+  id <- getRtId(rt)
+  omopViewerPlots |>
+    dplyr::filter(.data$result_tab_id == .env$id) |>
+    dplyr::pull("plot_id")
+}
+getPlotTitle <- function(id) {
+  omopViewerPlots$title[omopViewerPlots$plot_id == id]
+}
+getPlotOutput <- function(id) {
+  output <- omopViewerPlots$output[omopViewerPlots$plot_id == id]
+  switch(output,
+         "ggplot2" = "shiny::plotOutput",
+         "grViz" = "shiny::imageOutput")
+}
+getPlotButtons <- function(rt, plotId, setCols, groupCols, varCols) {
+  buts <- omopViewerPlotArguments |>
+    dplyr::filter(.data$plot_id == .env$plotId)
+  but <- ""
+  args <- omopViewerPlots |>
+    dplyr::filter(.data$plot_id == .env$plotId) |>
+    dplyr::select("result_tab_id", "fun") |>
+    dplyr::inner_join(
+      omopViewerTabs |>
+        dplyr::select("result_tab_id", "package"),
+      by = "result_tab_id"
+    ) |>
+    dplyr::distinct() |>
+    dplyr::mutate(x = paste0(.data$package, "::", .data$fun)) |>
+    dplyr::pull("x") |>
+    rlang::parse_expr() |>
+    eval() |>
+    formals()
+  for (k in seq_len(nrow(buts))) {
+    arg <- buts$argument[k]
+    type <- buts$type[k]
+    opts <- getButtonOpts(buts$opts[k], setCols, groupCols, varCols) |>
+      writeVect()
+    def <- writeVect(args[[arg]])
+    multiple <- buts$multiple[k]
+    but <- "{but}
+      {getButton(type)}," |>
+      glue::glue() |>
+      glue::glue()
+  }
+  return(but)
+}
+getButtonOpts <- function(opts, setCols, groupCols, varCols) {
+  stringr::str_split_1(opts, pattern = ", ") |>
+    subs("<groupping>", groupCols) |>
+    subs("<settings>", setCols) |>
+    subs("<variable>", varCols)
+}
+getButton <- function(type) {
+  switch(type,
+         "selector" = "shinyWidgets::pickerInput(
+           inputId = '{rt}_plot_{plotId}_{formatSnake(arg)}',
+           label = '{arg}',
+           choices = {opts},
+           selected = {def},
+           multiple = {multiple},
+           inline = TRUE
+         )",
+         "check" = "shiny::checkboxInput(
+           inputId = '{rt}_plot_{plotId}_{formatSnake(arg)}',
+           label = '{arg}',
+           value = {def}
+         )")
+}
+subs <- function(x, pat, subst) {
+  id <- which(x == pat)
+  if (length(id) == 1) {
+    n <- length(x)
+    if (id == 1) {
+      x <- c(subst, x[-1])
+    } else if (id == n) {
+      x <- c(x[-n], subst)
+    } else {
+      x <- c(x[1:(id-1)], subst, x[(id+1):n])
+    }
+  }
+  return(x)
+}
+writeVect <- function(x) {
+  if (is.character(x)) {
+    x <- paste0('c("', paste0(x, collapse = '", "'), '")')
+  } else if (is.null(x)) {
+    x <- "NULL"
+  } else {
+    x <- paste0('c(', paste0(x, collapse = ', '), ')')
+  }
+  return(x)
 }

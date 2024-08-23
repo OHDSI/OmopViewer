@@ -1,5 +1,5 @@
 test_that("multiplication works", {
-  cdm <- CohortCharacteristics::mockCohortCharacteristics()
+  cdm <- CohortCharacteristics::mockCohortCharacteristics(seed = 1L)
   result <- cdm$cohort1 |>
     CohortCharacteristics::summariseCharacteristics() |>
     omopgenerics::bind(
@@ -11,5 +11,10 @@ test_that("multiplication works", {
   result <- result |>
     omopgenerics::newSummarisedResult(settings = set)
 
-  expect_no_error(exportStaticApp(data = result))
+  tdir <- tempdir()
+  #tdir <- here::here()
+  expect_no_error(exportStaticApp(data = result, directory = tdir))
+  expect_true("shiny" %in% list.files(tdir))
+  expect_snapshot(uiStatic(data = result, asText = TRUE))
+  unlink(tdir)
 })

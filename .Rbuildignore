@@ -9,3 +9,4 @@
 ^pkgdown$
 ^codecov\.yml$
 ^data-raw$
+^shiny$

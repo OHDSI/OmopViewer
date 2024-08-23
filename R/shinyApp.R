@@ -50,13 +50,13 @@ exportStaticApp <- function(data = list(),
   cli::cli_inform(c("i" = "Creating shiny from provided data"))
   ui <- c(messageShiny(), uiStatic(data = data, asText = TRUE))
   server <- c(messageShiny(), serverStatic(data = data, asText = TRUE))
-  global <- c(messageShiny(), global)
+  global <- c(messageShiny(), omopViewerGlobal)
   directory <- paste0(directory, "/shiny")
   dir.create(paste0(directory, "/data"), recursive = TRUE)
   writeLines(ui, con = paste0(directory, "/ui.R"))
   writeLines(server, con = paste0(directory, "/server.R"))
   writeLines(global, con = paste0(directory, "/global.R"))
-  writeLines(proj, con = paste0(directory, "/shiny.Rproj"))
+  writeLines(omopViewerProj, con = paste0(directory, "/shiny.Rproj"))
   omopgenerics::exportSummarisedResult(
     data,
     minCellCount = 0,

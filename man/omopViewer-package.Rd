@@ -16,11 +16,11 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Yuchen Guo \email{yuchen.guo@ndorms.ox.ac.uk} (\href{https://orcid.org/0000-0002-0847-4855}{ORCID})
+\strong{Maintainer}: Martí Català \email{marti.catalasabate@ndorms.ox.ac.uk} (\href{https://orcid.org/0000-0003-3308-9905}{ORCID})
 
 Authors:
 \itemize{
-  \item Martí Català \email{marti.catalasabate@ndorms.ox.ac.uk} (\href{https://orcid.org/0000-0003-3308-9905}{ORCID})
+  \item Yuchen Guo \email{yuchen.guo@ndorms.ox.ac.uk} (\href{https://orcid.org/0000-0002-0847-4855}{ORCID})
 }
 
 }
