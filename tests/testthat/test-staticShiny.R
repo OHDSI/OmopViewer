@@ -15,6 +15,6 @@ test_that("multiplication works", {
   #tdir <- here::here()
   expect_no_error(exportStaticApp(data = result, directory = tdir))
   expect_true("shiny" %in% list.files(tdir))
-  expect_snapshot(uiStatic(data = result, asText = TRUE))
+  expect_snapshot(uiStatic(data = result, asText = TRUE) |> cat(sep = "\n"))
   unlink(tdir)
 })

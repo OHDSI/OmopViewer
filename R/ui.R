@@ -153,7 +153,8 @@ uiStatic <- function(data = omopgenerics::emptySummarisedResult(),
 
   if (asText) {
     x <- paste0("ui <- ", x) |>
-      styler::style_text()
+      styler::style_text() |>
+      as.character()
   } else {
     x <- x |>
       rlang::parse_expr() |>

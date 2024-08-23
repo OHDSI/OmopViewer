@@ -1,7 +1,7 @@
 # multiplication works
 
     Code
-      uiStatic(data = result, asText = TRUE)
+      cat(uiStatic(data = result, asText = TRUE), sep = "\n")
     Output
       ui <- shinydashboard::dashboardPage(
         shinydashboard::dashboardHeader(title = "My study"),
