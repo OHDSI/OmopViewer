@@ -33,7 +33,6 @@ Imports:
     shiny,
     shinydashboard,
     stringr,
-    styler,
     tidyr,
     usethis,
     visOmopResults (>= 0.3.0)
@@ -48,6 +47,7 @@ Suggests:
     rmarkdown,
     shinycssloaders,
     shinyWidgets,
+    styler,
     testthat (>= 3.1.5),
     utils,
     zip

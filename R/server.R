@@ -262,8 +262,7 @@ serverStatic <- function(data = omopgenerics::emptySummarisedResult(),
 
   if (asText) {
     x <- paste0("server <- ", x) |>
-      styler::style_text() |>
-      as.character()
+      styleCode()
   } else {
     x <- x |>
       rlang::parse_expr() |>

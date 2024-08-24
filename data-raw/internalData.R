@@ -42,7 +42,7 @@ omopViewerGlobal <- c(
   "data <- importSummarisedResult(here::here(\"data\")) |>
     prepareData()"
 ) |>
-  styler::style_text()
+  styleCode()
 
 # plot_config ----
 plot_config <- list(
