@@ -252,7 +252,7 @@ serverStatic <- function(result = omopgenerics::emptySummarisedResult(),
   for (rt in resultType) {
     rawRt <- getRawRt(rt)
     formattedRt <- getFormattedRt(rt)
-    plotRt <- ""
+    plotRt <- getPlotRt(rt)
     serv <- "{serv}\n# {rt} ----{rawRt}{formattedRt}{plotRt}" |>
       glue::glue()
   }
@@ -321,4 +321,67 @@ getFormattedRt <- function(rt) {
     }
   )\n" |>
     glue::glue(.open = "[", .close = "]")
+}
+# get server for plot panel(s) ----
+getPlotRt <- function(rt) {
+  plots <- getPlots(rt)
+  if (length(plots) > 0) {
+    plotServer <- "\n
+      getPlotData[formatCamel(rt)] <- shiny::reactive({
+        data |>
+          omopViewer::filterData('[rt]', input)
+      })" |>
+      glue::glue(.open = "[", .close = "]")
+  } else {
+    return("")
+  }
+  for (id in plots) {
+    plotServer <- "[plotServer]\n
+    createPlot[id] <- shiny::reactive({
+      result <- getPlotData[formatCamel(rt)]()
+      [createPlotFunction(id)]
+    })
+    output$[rt]_plot_[id] <- [renderPlotFunction(id)]({
+      createPlot[id]()
+    })
+    output$[rt]_plot_[id]_download <- shiny::downloadHandler(
+      filename = 'plot_[rt].png',
+      content = function(file) {
+        plt <- createPlot[id]()
+        [savePlotFunction(id)]
+      }
+    )\n" |>
+      glue::glue(.open = "[", .close = "]")
+  }
+  return(plotServer)
+}
+createPlotFunction <- function(id) {
+  fun <- omopViewerPlots$fun[omopViewerPlots$plot_id == id]
+  resultTabId <- omopViewerPlots$result_tab_id[omopViewerPlots$plot_id == id]
+  pkg <- omopViewerTabs$package[omopViewerTabs$result_tab_id == resultTabId]
+  rt <- omopViewerTabs$result_type[omopViewerTabs$result_tab_id == resultTabId]
+  arguments <- omopViewerPlotArguments |>
+    dplyr::filter(.data$plot_id == .env$id) |>
+    dplyr::pull("argument")
+  if (length(arguments) == 0) {
+    args <- ""
+  } else {
+    args <- paste0(
+      ",\n ", arguments, " = input$", rt, "_plot_", id, "_", formatSnake(arguments), collapse = "")
+  }
+  "{pkg}::{fun}(
+    result{args})" |>
+    glue::glue()
+}
+savePlotFunction <- function(id) {
+  output <- omopViewerPlots$output[omopViewerPlots$plot_id == id]
+  switch(output,
+         "ggplot2" = "ggplot2::ggsave(filename = file, plot = plt)",
+         "grViz" = "DiagrammeR::export_graph(graph = plt, file_name = file, fily_type = 'png', width = 800)")
+}
+renderPlotFunction <- function(id) {
+  output <- omopViewerPlots$output[omopViewerPlots$plot_id == id]
+  switch(output,
+         "ggplot2" = "shiny::renderPlot",
+         "grViz" = "DiagrammeR::renderGrViz")
 }

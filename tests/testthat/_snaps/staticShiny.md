@@ -184,7 +184,7 @@
                 shiny::tabPanel(
                   title = "Diagram",
                   shiny::downloadButton(outputId = "cohort_attrition_plot_2_download", label = "Download"),
-                  shiny::imageOutput(outputId = "cohort_attrition_plot_2") |>
+                  DiagrammeR::grVizOutput(outputId = "cohort_attrition_plot_2") |>
                     shinycssloaders::withSpinner()
                 )
               )

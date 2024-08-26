@@ -375,6 +375,7 @@ getRtId <- function(rt) {
 }
 getPlots <- function(rt) {
   id <- getRtId(rt)
+  if (length(id) == 0) return(integer())
   omopViewerPlots |>
     dplyr::filter(.data$result_tab_id == .env$id) |>
     dplyr::pull("plot_id")
@@ -386,7 +387,7 @@ getPlotOutput <- function(id) {
   output <- omopViewerPlots$output[omopViewerPlots$plot_id == id]
   switch(output,
          "ggplot2" = "shiny::plotOutput",
-         "grViz" = "shiny::imageOutput")
+         "grViz" = "DiagrammeR::grVizOutput")
 }
 getPlotButtons <- function(rt, plotId, setCols, groupCols, varCols) {
   buts <- omopViewerPlotArguments |>
