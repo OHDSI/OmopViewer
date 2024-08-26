@@ -13,8 +13,8 @@ test_that("multiplication works", {
 
   tdir <- tempdir()
   #tdir <- here::here()
-  expect_no_error(exportStaticApp(data = result, directory = tdir))
+  expect_no_error(exportStaticApp(result = result, directory = tdir))
   expect_true("shiny" %in% list.files(tdir))
-  expect_snapshot(uiStatic(data = result, asText = TRUE) |> cat(sep = "\n"))
+  expect_snapshot(uiStatic(result = result, asText = TRUE) |> cat(sep = "\n"))
   unlink(tdir)
 })

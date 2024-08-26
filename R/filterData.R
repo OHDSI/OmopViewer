@@ -22,11 +22,16 @@ filterData <- function(result,
                        showSettings = TRUE,
                        showGroupping = TRUE,
                        pivotEstimates = FALSE) {
-  x <- result[[resultType]]
-  inputs <- names(input)
+  result <- result |>
+    visOmopResults::filterSettings(.data$result_type == .env$resultType)
+  if (length(input) == 0) {
+    inputs <- character()
+  } else {
+    inputs <- names(input)
+  }
 
   # filter settings
-  set <- attr(x, "settings")
+  set <- omopgenerics::settings(result)
   setPrefix <- paste0(resultType, "_settings_")
   toFilter <- inputs[startsWith(inputs, setPrefix)]
   for (fil in toFilter) {
@@ -38,49 +43,49 @@ filterData <- function(result,
   }
 
   if (isTRUE(showSettings)) {
-    set <- set |>
-      dplyr::rename_with(~ paste0(prefixSet, .x), !"result_id")
     colsSet <- set |>
       dplyr::mutate(dplyr::across(dplyr::everything(), as.character)) |>
       tidyr::pivot_longer(!"result_id") |>
       dplyr::filter(!is.na(.data$value)) |>
       dplyr::pull("name") |>
       unique()
-    x <- x |>
-      dplyr::inner_join(
-        set |>
-          dplyr::select(dplyr::all_of(c("result_id", colsSet))),
-        by = "result_id"
-      ) |>
-      dplyr::relocate(dplyr::all_of(colsSet), .after = "result_id") |>
+    colsSet <- colsSet[!colsSet %in% c("result_type", "package_name", "package_version")]
+    result <- set |>
+      dplyr::select(dplyr::all_of(c("result_id", colsSet))) |>
+      dplyr::rename_with(~ paste0(prefixSet, .x), !"result_id") |>
+      dplyr::inner_join(result, by = "result_id") |>
       dplyr::select(-"result_id")
   } else {
-    x <- x |>
+    result <- result |>
       dplyr::filter(.data$result_id %in% set$result_id)
   }
 
+  groupCols <- c(
+    "cdm_name",
+    visOmopResults::groupColumns(result),
+    visOmopResults::strataColumns(result),
+    visOmopResults::additionalColumns(result)
+  )
+  result <- result |>
+    visOmopResults::splitAll()
+
   # filter groupping
-  group <- attr(x, "groupping")
   groupPrefix <- paste0(resultType, "_groupping_")
   toFilter <- inputs[startsWith(inputs, groupPrefix)]
   for (fil in toFilter) {
     nm <- substr(fil, nchar(groupPrefix)+1, nchar(fil))
-    if (nm %in% colnames(group)) {
-      group <- group |>
+    if (nm %in% colnames(result)) {
+      result <- result |>
         dplyr::filter(.data[[nm]] %in% input[[fil]])
     }
   }
   if (isTRUE(showGroupping)) {
-    group <- group |>
-      dplyr::rename_with(~ paste0(prefixGroup, .x), !"group_id")
-    colsGroup <- colnames(group)[colnames(group) != "group_id"]
-    x <- x |>
-      dplyr::inner_join(group, by = "group_id") |>
-      dplyr::relocate(dplyr::all_of(colsGroup), .after = "group_id") |>
-      dplyr::select(-"group_id")
+    result <- result |>
+      dplyr::relocate(dplyr::all_of(groupCols), .before = "variable_name") |>
+      dplyr::rename_with(~ paste0(prefixGroup, .x), dplyr::all_of(groupCols))
   } else {
-    x <- x |>
-      dplyr::filter(.data$group_id %in% group$group_id)
+    result <- result |>
+      dplyr::select(!dplyr::all_of(groupCols))
   }
 
   # filter variables and estimates
@@ -89,59 +94,17 @@ filterData <- function(result,
   for (fil in toFilter) {
     nm <- substr(fil, nchar(varPrefix)+1, nchar(fil))
     if (nm %in% c("variable_name", "estimate_name")) {
-      x <- x |>
+      result <- result |>
         dplyr::filter(.data[[nm]] %in% input[[fil]])
     }
   }
 
   if (isTRUE(pivotEstimates)) {
-    x <- x |>
+    result <- result |>
       pivotEstimatesTemp()
   }
 
-  return(x)
-}
-
-#' Prepare the results for the shiny
-#'
-#' @description
-#' Split the data by result_type, so it is easier to use inside the shiny app.
-#'
-#' @param result A summarised_result object.
-#'
-#' @return A list of summarised_result split by result_type.
-#' @export
-#'
-prepareData <- function(result) {
-  result <- omopgenerics::validateResultArguemnt(result)
-  set <- omopgenerics::settings(result)
-  resultType <- set$result_type |> unique()
-  colsGroup <- c("cdm_name", "group_name", "group_level", "strata_name",
-                 "strata_level", "additional_name", "additional_level")
-  x <- list()
-  for (rt in resultType) {
-    sety <- set |>
-      dplyr::filter(.data$result_type == .env$rt)
-    y <- result |>
-      dplyr::filter(.data$result_id %in% sety$result_id) |>
-      dplyr::as_tibble()
-    groupy <- y |>
-      dplyr::select(dplyr::all_of(colsGroup)) |>
-      dplyr::distinct() |>
-      dplyr::mutate("group_id" = dplyr::row_number()) |>
-      dplyr::relocate("group_id")
-    y <- y |>
-      dplyr::inner_join(groupy, by = colsGroup) |>
-      dplyr::select(!dplyr::all_of(colsGroup)) |>
-      dplyr::relocate("result_id", "group_id") |>
-      dplyr::arrange(.data$result_id, .data$group_id)
-    groupy <- groupy |>
-      visOmopResults::splitAll()
-    attr(y, "settings") <- sety
-    attr(y, "groupping") <- groupy
-    x[[rt]] <- y
-  }
-  return(x)
+  return(result)
 }
 
 pivotEstimatesTemp <- function(result) {

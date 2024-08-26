@@ -18,6 +18,8 @@ visTable <- function(result,
   if (is.null(header)) header <- character()
   if (is.null(group)) group <- character()
   if (is.null(hide)) hide <- character()
+  result <- result |>
+    visOmopResults::splitAll()
   omopgenerics::assertCharacter(header)
   omopgenerics::assertCharacter(group)
   omopgenerics::assertCharacter(hide)
@@ -54,33 +56,3 @@ visTable <- function(result,
 }
 
 # warning if default plot tab
-
-# # facet ----
-# # colour
-# visPlot <- function(result,
-#                     facet = NULL,
-#                     colour = NULL) {
-#
-# }
-# # scatterPlot
-# x -> groupping/settings/variable/estimate_name
-# facet -> groupping/settings/variable
-# group -> groupping/settings/variable
-# y -> estimate_name
-# ymin -> estimate_name
-# ymax -> estimate_name
-# line -> TRUE/FALSE
-# point -> TRUE/FALSE
-# # barPlot
-# x -> groupping/settings/variable
-# facet -> groupping/settings/variable
-# group -> groupping/settings/variable
-# y -> estimate_name
-# # boxplot
-# facet -> groupping/settings/variable
-# group -> groupping/settings/variable
-# lower -> estimate_name
-# middle -> estimate_name
-# upper -> estimate_name
-# ymin -> estimate_name
-# ymax -> estimate_name

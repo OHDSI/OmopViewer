@@ -10,19 +10,18 @@ launchDynamicApp <- function() {
 
 #' Export and launch a static shiny specific to the provided results.
 #'
-#' @param data List of summarised_result objects to build the shiny app.
+#' @param result A summarised_result object.
 #' @param directory Directory to create the shiny.
 #' @param open Whether to open the shiny app project.
 #'
 #' @return The shiny app will be created in directory.
 #' @export
 #'
-exportStaticApp <- function(data = list(),
+exportStaticApp <- function(result = omopgenerics::emptySummarisedResult(),
                             directory = getwd(),
                             open = rlang::is_interactive()) {
   # input check
-  if (!rlang::is_bare_list(data)) data <- list(data)
-  omopgenerics::assertList(data, class = "data.frame")
+  result <- omopgenerics::validateResultArguemnt(result)
   omopgenerics::assertCharacter(directory, length = 1)
   omopgenerics::assertLogical(open, length = 1)
 
@@ -35,8 +34,7 @@ exportStaticApp <- function(data = list(),
 
   # processing data
   cli::cli_inform(c("i" = "Processing data"))
-  data <- bindData(data)
-  resType <- omopgenerics::settings(data)[["result_type"]] |> unique()
+  resType <- omopgenerics::settings(result)[["result_type"]] |> unique()
   mes <- "Data processed: {length(resType)} result type{?s} idenfied"
   if (length(resType) == 0) {
     resType <- character()
@@ -48,8 +46,8 @@ exportStaticApp <- function(data = list(),
 
   # create shiny
   cli::cli_inform(c("i" = "Creating shiny from provided data"))
-  ui <- c(messageShiny(), uiStatic(data = data, asText = TRUE))
-  server <- c(messageShiny(), serverStatic(data = data, asText = TRUE))
+  ui <- c(messageShiny(), uiStatic(result = result, asText = TRUE))
+  server <- c(messageShiny(), serverStatic(result = result, asText = TRUE))
   global <- c(messageShiny(), omopViewerGlobal)
   directory <- paste0(directory, "/shiny")
   dir.create(paste0(directory, "/data"), recursive = TRUE)
@@ -58,7 +56,7 @@ exportStaticApp <- function(data = list(),
   writeLines(global, con = paste0(directory, "/global.R"))
   writeLines(omopViewerProj, con = paste0(directory, "/shiny.Rproj"))
   omopgenerics::exportSummarisedResult(
-    data,
+    result,
     minCellCount = 0,
     fileName = "results.csv",
     path = paste0(directory, "/data"))

@@ -5,13 +5,13 @@
 \title{Export and launch a static shiny specific to the provided results.}
 \usage{
 exportStaticApp(
-  data = list(),
+  result = omopgenerics::emptySummarisedResult(),
   directory = getwd(),
   open = rlang::is_interactive()
 )
 }
 \arguments{
-\item{data}{List of summarised_result objects to build the shiny app.}
+\item{result}{A summarised_result object.}
 
 \item{directory}{Directory to create the shiny.}
 

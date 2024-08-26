@@ -1,4 +1,7 @@
 
+# you need to load the package before running these lines of code as styleCode()
+# is required.
+
 omopViewerTabs <- dplyr::tribble(
   ~result_tab_id, ~result_type, ~package, ~title, ~icon,
   1L, "cohort_overlap", "CohortCharacteristics", "Cohort count", "person",
@@ -38,9 +41,10 @@ omopViewerProj <- c(
 )
 
 omopViewerGlobal <- c(
-  "library(shiny)", "library(omopViewer)", "",
-  "data <- importSummarisedResult(here::here(\"data\")) |>
-    prepareData()"
+  "library(shiny)",
+  "library(omopViewer)",
+  "",
+  "data <- importSummarisedResult(here::here(\"data\"))"
 ) |>
   styleCode()
 

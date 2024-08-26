@@ -29,12 +29,15 @@ Imports:
     gt,
     modules,
     omopgenerics (>= 0.2.3),
+    purrr,
     rlang,
     shiny,
     shinydashboard,
+    snakecase,
     stringr,
     tidyr,
     usethis,
+    vctrs,
     visOmopResults (>= 0.3.0)
 Suggests: 
     CohortCharacteristics,
@@ -51,8 +54,6 @@ Suggests:
     testthat (>= 3.1.5),
     utils,
     zip
-Remotes:
-    darwin-eu-dev/omopgenerics
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 Config/testthat/parallel: true

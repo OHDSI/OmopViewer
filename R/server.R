@@ -231,28 +231,29 @@ serverDynamic <- function(input, output, session) {
 
 #' Provides the static server of the shiny app for a given set of resultType(s).
 #'
-#' @param data Summarised_result to build the shiny.
+#' @param result A summarised_result object.
 #' @param asText Whether to output a text object or to eval it.
 #'
 #' @return The server of interest.
 #' @export
 #'
-serverStatic <- function(data = omopgenerics::emptySummarisedResult(),
+serverStatic <- function(result = omopgenerics::emptySummarisedResult(),
                          asText = FALSE) {
   # initial checks
-  data <- omopgenerics::validateResultArguemnt(data)
+  result <- omopgenerics::validateResultArguemnt(result)
   omopgenerics::assertLogical(asText, length = 1)
 
-  set <- omopgenerics::settings(data)
-  resultType <- unique(set$result_type)
+  resultType <- omopgenerics::settings(result) |>
+    dplyr::select("result_type") |>
+    dplyr::distinct() |>
+    dplyr::pull()
 
   serv <- ""
   for (rt in resultType) {
-    filterRt <- getFilterRt(rt)
     rawRt <- getRawRt(rt)
     formattedRt <- getFormattedRt(rt)
     plotRt <- ""
-    serv <- "{serv}\n# {rt} ----{filterRt}{rawRt}{formattedRt}{plotRt}" |>
+    serv <- "{serv}\n# {rt} ----{rawRt}{formattedRt}{plotRt}" |>
       glue::glue()
   }
 
@@ -271,68 +272,53 @@ serverStatic <- function(data = omopgenerics::emptySummarisedResult(),
   return(x)
 }
 
-getFilterRt <- function(rt) {
+# get server for raw panel ----
+getRawRt <- function(rt) {
   "\n
-  " |>
+  getRawData[formatCamel(rt)] <- shiny::reactive({
+    omopViewer::filterData(
+      data, '[rt]', input,
+      prefixSet = 'set:',
+      prefixGroup = 'group: ',
+      showSettings = input$[rt]_show_settings,
+      showGroupping = input$[rt]_show_groupping,
+      pivotEstimates = input$[rt]_pivot_estimates)
+  })
+  output$[rt]_raw_table <- DT::renderDT({
+    DT::datatable(getRawData[formatCamel(rt)](), options = list(scrollX = TRUE))
+  })\n" |>
     glue::glue(.open = "[", .close = "]")
 }
-getRawRt <- function(rt) {
-  raw <- getRaw(rt)
-  if (raw) {
-    raw <- "\n
-    getRawData[formatCamel(rt)] <- shiny::reactive({
-      omopViewer::filterData(
-        data, '[rt]', input,
-        prefixSet = 'set:',
-        prefixGroup = 'group: ',
-        showSettings = input$[rt]_show_settings,
-        showGroupping = input$[rt]_show_groupping,
-        pivotEstimates = input$[rt]_pivot_estimates)
-    })
-    output$[rt]_raw_table <- DT::renderDT({
-      DT::datatable(getRawData[formatCamel(rt)](), options = list(scrollX = TRUE))
-    })\n" |>
-      glue::glue(.open = "[", .close = "]")
-  } else {
-    raw <- ""
-  }
-  return(raw)
-}
+# get server for formatted panel ----
 getFormattedRt <- function(rt) {
-  formatted <- getFormatted(rt)
-  if (formatted) {
-    formatted <- "\n
-    getFormattedData[formatCamel(rt)] <- shiny::reactive({
-      x <- omopViewer::filterData(data, '[rt]', input) |>
-        dplyr::select(!dplyr::any_of(c(
-          'package_name', 'package_version', 'result_type', 'min_cell_count')))
-      header <- input$[rt]_header
-      group <- input$[rt]_group
-      hide <- input$[rt]_hide
-      all <- c(header, group, hide)
-      shiny::validate(shiny::need(
-        length(all) == length(unique(all)),
-        'there must not be overlap between `header`, `group` and `hide`'))
-      omopViewer::visTable(
-        result = x,
-        header = header,
-        group = group,
-        hide = hide
-      )
-    })
-    output$[rt]_formatted_table <- gt::render_gt({
-      getFormattedData[formatCamel(rt)]()
-    })
-    output$[rt]_formatted_download <- shiny::downloadHandler(
-      filename = 'gt_table_[rt].docx',
-      content = function(file) {
-        getFormattedData[formatCamel(rt)]() |>
-          gt::gtsave(filename = file)
-      }
-    )\n" |>
-      glue::glue(.open = "[", .close = "]")
-  } else {
-    formatted <- ""
-  }
-  return(formatted)
+  "\n
+  getFormattedData[formatCamel(rt)] <- shiny::reactive({
+    x <- omopViewer::filterData(data, '[rt]', input) |>
+      dplyr::select(!dplyr::any_of(c(
+        'package_name', 'package_version', 'result_type', 'min_cell_count')))
+    header <- input$[rt]_header
+    group <- input$[rt]_group
+    hide <- input$[rt]_hide
+    all <- c(header, group, hide)
+    shiny::validate(shiny::need(
+      length(all) == length(unique(all)),
+      'there must not be overlap between `header`, `group` and `hide`'))
+    omopViewer::visTable(
+      result = x,
+      header = header,
+      group = group,
+      hide = hide
+    )
+  })
+  output$[rt]_formatted_table <- gt::render_gt({
+    getFormattedData[formatCamel(rt)]()
+  })
+  output$[rt]_formatted_download <- shiny::downloadHandler(
+    filename = 'gt_table_[rt].docx',
+    content = function(file) {
+      getFormattedData[formatCamel(rt)]() |>
+        gt::gtsave(filename = file)
+    }
+  )\n" |>
+    glue::glue(.open = "[", .close = "]")
 }
