@@ -14,17 +14,20 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 coverage](https://codecov.io/gh/oxford-pharmacoepi/omopViewer/branch/main/graph/badge.svg)](https://app.codecov.io/gh/oxford-pharmacoepi/omopViewer?branch=main)
 <!-- badges: end -->
 
+**WARNING**: *This package is under construction and it is not for user
+use yet.*
+
 The goal of omopViewer is to allow the user to easily create interactive
 Shiny Apps.
 
 ## Installation
 
 You can install the development version of omopViewer from
-[GitHub](https://github.com/) with:
+[GitHub](https://github.com/oxford-pharmacoepi/omopViewer) with:
 
 ``` r
-install.packages("devtools")
-devtools::install_github("oxford-pharmacoepi/omopViewer")
+install.packages("pak")
+pak::pkg_install("oxford-pharmacoepi/omopViewer")
 ```
 
 ## Main functionalities
@@ -59,6 +62,10 @@ cdm <- mockCohortCharacteristics()
 #> Note: method with signature 'DBIConnection#Id' chosen for function 'dbExistsTable',
 #>  target signature 'duckdb_connection#Id'.
 #>  "duckdb_connection#ANY" would also be valid
+#> ! cohort columns will be reordered to match the expected order:
+#>   cohort_definition_id, subject_id, cohort_start_date, and cohort_end_date.
+#> ! cohort columns will be reordered to match the expected order:
+#>   cohort_definition_id, subject_id, cohort_start_date, and cohort_end_date.
 result <- cdm$cohort1 |>
   summariseCharacteristics() |>
   omopgenerics::bind( # should be reexported by CohortCharacteristics
@@ -74,8 +81,9 @@ exportStaticApp(data = result)
 #> ✔ Data processed: 2 result types idenfied: `summarised_characteristics` and
 #>   `cohort_attrition`.
 #> ℹ Creating shiny from provided data
-#> ✔ Shiny created in: /Users/martics/Documents/GitHub/omopViewer
-#> ℹ Launching shiny
+#> Warning in dir.create(paste0(directory, "/data"), recursive = TRUE):
+#> '/Users/martics/Documents/GitHub/omopViewer/shiny/data' already exists
+#> ✔ Shiny created in: /Users/martics/Documents/GitHub/omopViewer/shiny
 ```
 
 ## Utility functions

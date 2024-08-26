@@ -231,28 +231,29 @@ serverDynamic <- function(input, output, session) {
 
 #' Provides the static server of the shiny app for a given set of resultType(s).
 #'
-#' @param data Summarised_result to build the shiny.
+#' @param result A summarised_result object.
 #' @param asText Whether to output a text object or to eval it.
 #'
 #' @return The server of interest.
 #' @export
 #'
-serverStatic <- function(data = omopgenerics::emptySummarisedResult(),
+serverStatic <- function(result = omopgenerics::emptySummarisedResult(),
                          asText = FALSE) {
   # initial checks
-  data <- omopgenerics::validateResultArguemnt(data)
+  result <- omopgenerics::validateResultArguemnt(result)
   omopgenerics::assertLogical(asText, length = 1)
 
-  set <- omopgenerics::settings(data)
-  resultType <- unique(set$result_type)
+  resultType <- omopgenerics::settings(result) |>
+    dplyr::select("result_type") |>
+    dplyr::distinct() |>
+    dplyr::pull()
 
   serv <- ""
   for (rt in resultType) {
-    filterRt <- getFilterRt(rt)
     rawRt <- getRawRt(rt)
     formattedRt <- getFormattedRt(rt)
-    plotRt <- ""
-    serv <- "{serv}\n# {rt} ----{filterRt}{rawRt}{formattedRt}{plotRt}" |>
+    plotRt <- getPlotRt(rt)
+    serv <- "{serv}\n# {rt} ----{rawRt}{formattedRt}{plotRt}" |>
       glue::glue()
   }
 
@@ -262,7 +263,7 @@ serverStatic <- function(data = omopgenerics::emptySummarisedResult(),
 
   if (asText) {
     x <- paste0("server <- ", x) |>
-      styler::style_text()
+      styleCode()
   } else {
     x <- x |>
       rlang::parse_expr() |>
@@ -271,68 +272,116 @@ serverStatic <- function(data = omopgenerics::emptySummarisedResult(),
   return(x)
 }
 
-getFilterRt <- function(rt) {
-  "\n
-  " |>
-    glue::glue(.open = "[", .close = "]")
-}
+# get server for raw panel ----
 getRawRt <- function(rt) {
-  raw <- getRaw(rt)
-  if (raw) {
-    raw <- "\n
-    getRawData[formatCamel(rt)] <- shiny::reactive({
-      omopViewer::filterData(
-        data, '[rt]', input,
+  "\n
+  getRawData[formatCamel(rt)] <- shiny::reactive({
+    data |>
+      omopViewer::filterData('[rt]', input) |>
+      omopViewer::tidyData(
         prefixSet = 'set:',
         prefixGroup = 'group: ',
         showSettings = input$[rt]_show_settings,
         showGroupping = input$[rt]_show_groupping,
         pivotEstimates = input$[rt]_pivot_estimates)
-    })
-    output$[rt]_raw_table <- DT::renderDT({
-      DT::datatable(getRawData[formatCamel(rt)](), options = list(scrollX = TRUE))
-    })\n" |>
+  })
+  output$[rt]_raw_table <- DT::renderDT({
+    DT::datatable(getRawData[formatCamel(rt)](), options = list(scrollX = TRUE))
+  })\n" |>
+    glue::glue(.open = "[", .close = "]")
+}
+# get server for formatted panel ----
+getFormattedRt <- function(rt) {
+  "\n
+  getFormattedData[formatCamel(rt)] <- shiny::reactive({
+    x <- data |>
+      omopViewer::filterData('[rt]', input)
+    header <- input$[rt]_header
+    group <- input$[rt]_group
+    hide <- input$[rt]_hide
+    all <- c(header, group, hide)
+    shiny::validate(shiny::need(
+      length(all) == length(unique(all)),
+      'there must not be overlap between `header`, `group` and `hide`'))
+    omopViewer::visTable(
+      result = x,
+      header = header,
+      group = group,
+      hide = hide
+    )
+  })
+  output$[rt]_formatted_table <- gt::render_gt({
+    getFormattedData[formatCamel(rt)]()
+  })
+  output$[rt]_formatted_download <- shiny::downloadHandler(
+    filename = 'gt_table_[rt].docx',
+    content = function(file) {
+      getFormattedData[formatCamel(rt)]() |>
+        gt::gtsave(filename = file)
+    }
+  )\n" |>
+    glue::glue(.open = "[", .close = "]")
+}
+# get server for plot panel(s) ----
+getPlotRt <- function(rt) {
+  plots <- getPlots(rt)
+  if (length(plots) > 0) {
+    plotServer <- "\n
+      getPlotData[formatCamel(rt)] <- shiny::reactive({
+        data |>
+          omopViewer::filterData('[rt]', input)
+      })" |>
       glue::glue(.open = "[", .close = "]")
   } else {
-    raw <- ""
+    return("")
   }
-  return(raw)
-}
-getFormattedRt <- function(rt) {
-  formatted <- getFormatted(rt)
-  if (formatted) {
-    formatted <- "\n
-    getFormattedData[formatCamel(rt)] <- shiny::reactive({
-      x <- omopViewer::filterData(data, '[rt]', input) |>
-        dplyr::select(!dplyr::any_of(c(
-          'package_name', 'package_version', 'result_type', 'min_cell_count')))
-      header <- input$[rt]_header
-      group <- input$[rt]_group
-      hide <- input$[rt]_hide
-      all <- c(header, group, hide)
-      shiny::validate(shiny::need(
-        length(all) == length(unique(all)),
-        'there must not be overlap between `header`, `group` and `hide`'))
-      omopViewer::visTable(
-        result = x,
-        header = header,
-        group = group,
-        hide = hide
-      )
+  for (id in plots) {
+    plotServer <- "[plotServer]\n
+    createPlot[id] <- shiny::reactive({
+      result <- getPlotData[formatCamel(rt)]()
+      [createPlotFunction(id)]
     })
-    output$[rt]_formatted_table <- gt::render_gt({
-      getFormattedData[formatCamel(rt)]()
+    output$[rt]_plot_[id] <- [renderPlotFunction(id)]({
+      createPlot[id]()
     })
-    output$[rt]_formatted_download <- shiny::downloadHandler(
-      filename = 'gt_table_[rt].docx',
+    output$[rt]_plot_[id]_download <- shiny::downloadHandler(
+      filename = 'plot_[rt].png',
       content = function(file) {
-        getFormattedData[formatCamel(rt)]() |>
-          gt::gtsave(filename = file)
+        plt <- createPlot[id]()
+        [savePlotFunction(id)]
       }
     )\n" |>
       glue::glue(.open = "[", .close = "]")
-  } else {
-    formatted <- ""
   }
-  return(formatted)
+  return(plotServer)
+}
+createPlotFunction <- function(id) {
+  fun <- omopViewerPlots$fun[omopViewerPlots$plot_id == id]
+  resultTabId <- omopViewerPlots$result_tab_id[omopViewerPlots$plot_id == id]
+  pkg <- omopViewerTabs$package[omopViewerTabs$result_tab_id == resultTabId]
+  rt <- omopViewerTabs$result_type[omopViewerTabs$result_tab_id == resultTabId]
+  arguments <- omopViewerPlotArguments |>
+    dplyr::filter(.data$plot_id == .env$id) |>
+    dplyr::pull("argument")
+  if (length(arguments) == 0) {
+    args <- ""
+  } else {
+    args <- paste0(
+      ",\n ", arguments, " = input$", rt, "_plot_", id, "_", formatSnake(arguments), collapse = "")
+  }
+  "{pkg}::{fun}(
+    result{args})" |>
+    glue::glue()
+}
+savePlotFunction <- function(id) {
+  output <- omopViewerPlots$output[omopViewerPlots$plot_id == id]
+  switch(output,
+         "ggplot2" = "ggplot2::ggsave(filename = file, plot = plt)",
+         "grViz" = "DiagrammeR::export_graph(graph = plt, file_name = file, fily_type = 'png', width = 800)")
+}
+renderPlotFunction <- function(id) {
+  output <- omopViewerPlots$output[omopViewerPlots$plot_id == id]
+  switch(output,
+         "ggplot2" = "shiny::renderPlot",
+         "grViz" = "DiagrammeR::renderGrViz")
 }

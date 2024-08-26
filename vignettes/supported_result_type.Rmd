@@ -1,0 +1,45 @@
+---
+title: "Plot tabs in omopViewer"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{supported_result_type}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The **omopViewer** package supports `r omopViewer:::omopViewerTabs$result_type |> unique() |> length()` different result types of the following packages:
+
+```{r, results='asis', echo=FALSE}
+pkgs <- omopViewer:::omopViewerTabs$package |> unique() |> sort()
+for (k in seq_along(pkgs)) {
+  cat(paste0("* ", pkgs[k], "\n"))
+}
+```
+
+You can see the plot functions that have been configured in the package per result type in the following table:
+
+```{r, echo = FALSE}
+omopViewer:::omopViewerPlots |>
+  dplyr::inner_join(
+    omopViewer:::omopViewerTabs, by = "result_tab_id"
+  ) |>
+  dplyr::select(
+    "Result type" = "result_type", "package", "Plot function" = "fun") |>
+  visOmopResults::gtTable(
+    groupColumn = "package", colsToMergeRows = "Result type")
+  
+```
+
+## Note for developers
+
+There exist a default design for an "unconfigured" `result_type` if you wish to configure a new `result_type` this can be done editing the internal data: *omopViewerTabs*, *omopViewerPlots* and *omopViewerPlotArguments* in file [internalData.R](https://github.com/oxford-pharmacoepi/omopViewer/blob/main/data-raw/internalData.R). Please feel free to submit your PR.
+
+<!-- :::{callout} -->
+<!-- ::: -->

@@ -18,6 +18,13 @@ visTable <- function(result,
   if (is.null(header)) header <- character()
   if (is.null(group)) group <- character()
   if (is.null(hide)) hide <- character()
+  setCols <- colnames(omopgenerics::settings(result))
+  setCols <- setCols[!setCols %in% c(
+    "result_id", "result_type", "package_name", "package_version",
+    "min_cell_count"
+  )]
+  result <- result |>
+    tidyData(pivotEstimates = FALSE)
   omopgenerics::assertCharacter(header)
   omopgenerics::assertCharacter(group)
   omopgenerics::assertCharacter(hide)
@@ -53,14 +60,4 @@ visTable <- function(result,
   return(result)
 }
 
-# default:
-#
-# header = c("cdm_name")
-# hide = "settings"
-# group = "cohort_name" (if exists)
-# none = c(group, variable_name, variable_level, estimate_name)
-
-# scatterPlot
-# barPlot
-# boxplot
-# densityPlot
+# warning if default plot tab

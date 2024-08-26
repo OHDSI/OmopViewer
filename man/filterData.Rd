@@ -5,16 +5,7 @@
 \title{This function is used to filter data in shinys that inputs are defined
 following.}
 \usage{
-filterData(
-  result,
-  resultType,
-  input,
-  prefixSet = "",
-  prefixGroup = "",
-  showSettings = TRUE,
-  showGroupping = TRUE,
-  pivotEstimates = FALSE
-)
+filterData(result, resultType, input)
 }
 \arguments{
 \item{result}{A summarised_result object.}
@@ -22,16 +13,6 @@ filterData(
 \item{resultType}{A resultType of interest to filter by.}
 
 \item{input}{Input of the shiny to filter by.}
-
-\item{prefixSet}{Prefix for setting columns.}
-
-\item{prefixGroup}{Prefix for groupping columns.}
-
-\item{showSettings}{Whether to show settings columns.}
-
-\item{showGroupping}{Whether to show groupping columns.}
-
-\item{pivotEstimates}{Whether to pivot estimates.}
 }
 \value{
 The filtered result.

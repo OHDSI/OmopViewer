@@ -4,10 +4,10 @@
 \alias{uiStatic}
 \title{Provides the static UI of the shiny app for a given set of resultType(s).}
 \usage{
-uiStatic(data = omopgenerics::emptySummarisedResult(), asText = FALSE)
+uiStatic(result = omopgenerics::emptySummarisedResult(), asText = FALSE)
 }
 \arguments{
-\item{data}{Summarised_result to build the shiny.}
+\item{result}{A summarised_result object.}
 
 \item{asText}{Whether to output a text object or to eval it.}
 }
