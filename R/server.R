@@ -276,13 +276,14 @@ serverStatic <- function(result = omopgenerics::emptySummarisedResult(),
 getRawRt <- function(rt) {
   "\n
   getRawData[formatCamel(rt)] <- shiny::reactive({
-    omopViewer::filterData(
-      data, '[rt]', input,
-      prefixSet = 'set:',
-      prefixGroup = 'group: ',
-      showSettings = input$[rt]_show_settings,
-      showGroupping = input$[rt]_show_groupping,
-      pivotEstimates = input$[rt]_pivot_estimates)
+    data |>
+      omopViewer::filterData('[rt]', input) |>
+      omopViewer::tidyData(
+        prefixSet = 'set:',
+        prefixGroup = 'group: ',
+        showSettings = input$[rt]_show_settings,
+        showGroupping = input$[rt]_show_groupping,
+        pivotEstimates = input$[rt]_pivot_estimates)
   })
   output$[rt]_raw_table <- DT::renderDT({
     DT::datatable(getRawData[formatCamel(rt)](), options = list(scrollX = TRUE))
@@ -293,9 +294,8 @@ getRawRt <- function(rt) {
 getFormattedRt <- function(rt) {
   "\n
   getFormattedData[formatCamel(rt)] <- shiny::reactive({
-    x <- omopViewer::filterData(data, '[rt]', input) |>
-      dplyr::select(!dplyr::any_of(c(
-        'package_name', 'package_version', 'result_type', 'min_cell_count')))
+    x <- data |>
+      omopViewer::filterData('[rt]', input)
     header <- input$[rt]_header
     group <- input$[rt]_group
     hide <- input$[rt]_hide

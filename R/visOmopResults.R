@@ -18,8 +18,13 @@ visTable <- function(result,
   if (is.null(header)) header <- character()
   if (is.null(group)) group <- character()
   if (is.null(hide)) hide <- character()
+  setCols <- colnames(omopgenerics::settings(result))
+  setCols <- setCols[!setCols %in% c(
+    "result_id", "result_type", "package_name", "package_version",
+    "min_cell_count"
+  )]
   result <- result |>
-    visOmopResults::splitAll()
+    tidyData(pivotEstimates = FALSE)
   omopgenerics::assertCharacter(header)
   omopgenerics::assertCharacter(group)
   omopgenerics::assertCharacter(hide)

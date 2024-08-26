@@ -28,84 +28,12 @@ test_that("check filterData functionality", {
     x <- result |>
       filterData(
         resultType = "custom",
-        input = input,
-        prefixSet = "",
-        prefixGroup = "",
-        showSettings = TRUE,
-        showGroupping = TRUE,
-        pivotEstimates = FALSE)
+        input = input)
   )
-  expect_identical(colnames(x), c(
-    "my_param", "analysis", "cdm_name", "cohort_name", "age_group", "sex",
-    "time", "variable_name", "variable_level", "estimate_name", "estimate_type",
-    "estimate_value"
-  ))
   idCustom <- omopgenerics::settings(result) |>
     dplyr::filter(.data$result_type == "custom") |>
     dplyr::pull("result_id")
   expect_true(nrow(x) == sum(result$result_id %in% idCustom))
-  expect_no_error(
-    x <- result |>
-      filterData(
-        resultType = "custom",
-        input = input,
-        prefixSet = "pref_set_",
-        showSettings = TRUE,
-        showGroupping = FALSE,
-        pivotEstimates = FALSE)
-  )
-  expect_identical(colnames(x), c(
-    "pref_set_my_param", "pref_set_analysis", "variable_name", "variable_level",
-    "estimate_name", "estimate_type", "estimate_value"
-  ))
-  expect_true(nrow(x) == sum(result$result_id %in% idCustom))
-  expect_no_error(
-    x <- result |>
-      filterData(
-        resultType = "custom",
-        input = input,
-        prefixGroup = "pref_group_",
-        showSettings = FALSE,
-        showGroupping = TRUE,
-        pivotEstimates = FALSE)
-  )
-  expect_identical(colnames(x), c(
-    "result_id", "pref_group_cdm_name", "pref_group_cohort_name",
-    "pref_group_age_group", "pref_group_sex", "pref_group_time",
-    "variable_name", "variable_level", "estimate_name", "estimate_type",
-    "estimate_value"
-  ))
-  expect_true(nrow(x) == sum(result$result_id %in% idCustom))
-  expect_no_error(
-    x <- result |>
-      filterData(
-        resultType = "custom",
-        input = input,
-        showSettings = FALSE,
-        showGroupping = FALSE,
-        pivotEstimates = FALSE)
-  )
-  expect_identical(colnames(x), c(
-    "result_id", "variable_name", "variable_level", "estimate_name",
-    "estimate_type", "estimate_value"
-  ))
-  expect_true(nrow(x) == sum(result$result_id %in% idCustom))
-  expect_no_error(
-    x <- result |>
-      filterData(
-        resultType = "custom",
-        input = input,
-        showSettings = TRUE,
-        showGroupping = TRUE,
-        pivotEstimates = TRUE)
-  )
-  expect_identical(colnames(x), c(
-    "my_param", "analysis", "cdm_name", "cohort_name", "age_group", "sex",
-    "time", "variable_name", "variable_level", "count", "blood_type"
-  ))
-  expect_true(nrow(x) == sum(result$result_id %in% idCustom))
-  expect_identical(x$count |> dplyr::type_sum(), "int")
-  expect_identical(x$blood_type |> dplyr::type_sum(), "chr")
 
   # filtering works
   input <- list(custom_groupping_cdm_name = "cdm1")
