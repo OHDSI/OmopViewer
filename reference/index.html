@@ -16,6 +16,10 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/supported_result_type.html">Plot tabs in omopViewer</a></li>
+  </ul></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
       </ul></div>
@@ -114,12 +118,6 @@
         <dd>Launch a dynamic shiny app wher you can upload results.</dd>
       </dl><dl><dt>
 
-          <code><a href="prepareData.html">prepareData()</a></code>
-
-        </dt>
-        <dd>Prepare the results for the shiny</dd>
-      </dl><dl><dt>
-
           <code><a href="serverDynamic.html">serverDynamic()</a></code>
 
         </dt>
@@ -154,6 +152,12 @@
 
         </dt>
         <dd>UI function for the Study Selection Module</dd>
+      </dl><dl><dt>
+
+          <code><a href="tidyData.html">tidyData()</a></code>
+
+        </dt>
+        <dd>Get a tidy tibble from a `summarised_result` object.</dd>
       </dl><dl><dt>
 
           <code><a href="uiDynamic.html">uiDynamic()</a></code>

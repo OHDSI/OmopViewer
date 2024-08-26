@@ -32,6 +32,12 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
+<li><a class="dropdown-item" href="articles/supported_result_type.html">Plot tabs in omopViewer</a></li>
+  </ul>
+</li>
       </ul>
 <ul class="navbar-nav">
 <li class="nav-item"><form class="form-inline" role="search">
@@ -49,14 +55,15 @@
 </h1></div>
 <!-- badges: start -->
 
+<p><strong>WARNING</strong>: <em>This package is under construction and it is not for user use yet.</em></p>
 <p>The goal of omopViewer is to allow the user to easily create interactive Shiny Apps.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the development version of omopViewer from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
+<p>You can install the development version of omopViewer from <a href="https://github.com/oxford-pharmacoepi/omopViewer" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"oxford-pharmacoepi/omopViewer"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"pak"</span><span class="op">)</span></span>
+<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pkg_install.html" class="external-link">pkg_install</a></span><span class="op">(</span><span class="st">"oxford-pharmacoepi/omopViewer"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="main-functionalities">Main functionalities<a class="anchor" aria-label="anchor" href="#main-functionalities"></a>
@@ -83,6 +90,10 @@
 <span><span class="co">#&gt; Note: method with signature 'DBIConnection#Id' chosen for function 'dbExistsTable',</span></span>
 <span><span class="co">#&gt;  target signature 'duckdb_connection#Id'.</span></span>
 <span><span class="co">#&gt;  "duckdb_connection#ANY" would also be valid</span></span>
+<span><span class="co">#&gt; ! cohort columns will be reordered to match the expected order:</span></span>
+<span><span class="co">#&gt;   cohort_definition_id, subject_id, cohort_start_date, and cohort_end_date.</span></span>
+<span><span class="co">#&gt; ! cohort columns will be reordered to match the expected order:</span></span>
+<span><span class="co">#&gt;   cohort_definition_id, subject_id, cohort_start_date, and cohort_end_date.</span></span>
 <span><span class="va">result</span> <span class="op">&lt;-</span> <span class="va">cdm</span><span class="op">$</span><span class="va">cohort1</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://darwin-eu-dev.github.io/CohortCharacteristics/reference/summariseCharacteristics.html" class="external-link">summariseCharacteristics</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">omopgenerics</span><span class="fu">::</span><span class="fu"><a href="https://darwin-eu-dev.github.io/omopgenerics/reference/bind.html" class="external-link">bind</a></span><span class="op">(</span> <span class="co"># should be reexported by CohortCharacteristics</span></span>
@@ -98,8 +109,9 @@
 <span><span class="co">#&gt; ✔ Data processed: 2 result types idenfied: `summarised_characteristics` and</span></span>
 <span><span class="co">#&gt;   `cohort_attrition`.</span></span>
 <span><span class="co">#&gt; ℹ Creating shiny from provided data</span></span>
-<span><span class="co">#&gt; ✔ Shiny created in: /Users/martics/Documents/GitHub/omopViewer</span></span>
-<span><span class="co">#&gt; ℹ Launching shiny</span></span></code></pre></div>
+<span><span class="co">#&gt; Warning in dir.create(paste0(directory, "/data"), recursive = TRUE):</span></span>
+<span><span class="co">#&gt; '/Users/martics/Documents/GitHub/omopViewer/shiny/data' already exists</span></span>
+<span><span class="co">#&gt; ✔ Shiny created in: /Users/martics/Documents/GitHub/omopViewer/shiny</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="utility-functions">Utility functions<a class="anchor" aria-label="anchor" href="#utility-functions"></a>
@@ -126,8 +138,8 @@
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>Martí Català <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0003-3308-9905" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>Yuchen Guo <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-0847-4855" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Martí Català <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-3308-9905" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Yuchen Guo <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-0847-4855" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 </ul>
 </div>
 

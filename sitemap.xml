@@ -1,6 +1,8 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://oxford-pharmacoepi.github.io/omopViewer/404.html</loc></url>
 <url><loc>https://oxford-pharmacoepi.github.io/omopViewer/LICENSE.html</loc></url>
+<url><loc>https://oxford-pharmacoepi.github.io/omopViewer/articles/index.html</loc></url>
+<url><loc>https://oxford-pharmacoepi.github.io/omopViewer/articles/supported_result_type.html</loc></url>
 <url><loc>https://oxford-pharmacoepi.github.io/omopViewer/authors.html</loc></url>
 <url><loc>https://oxford-pharmacoepi.github.io/omopViewer/index.html</loc></url>
 <url><loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/aboutTab.html</loc></url>
@@ -17,7 +19,6 @@
 <url><loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/index.html</loc></url>
 <url><loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/launchDynamicApp.html</loc></url>
 <url><loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/omopViewer-package.html</loc></url>
-<url><loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/prepareData.html</loc></url>
 <url><loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/reexports.html</loc></url>
 <url><loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/serverDynamic.html</loc></url>
 <url><loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/serverStatic.html</loc></url>
@@ -25,6 +26,7 @@
 <url><loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/studySelectInitServer.html</loc></url>
 <url><loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/studySelectServer.html</loc></url>
 <url><loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/studySelectUi.html</loc></url>
+<url><loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/tidyData.html</loc></url>
 <url><loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/uiDynamic.html</loc></url>
 <url><loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/uiStatic.html</loc></url>
 <url><loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/uploadDataInitServer.html</loc></url>
