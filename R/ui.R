@@ -267,8 +267,8 @@ getFilters <- function(rt, opts, tit) {
     shinyWidgets::pickerInput(
       inputId = '{rt}_{formatSnake(tit)}_{nm}',
       label = '{formatTit(nm)}',
-      choices = {cast(op)},
-      selected = {cast(op)},
+      choices = {cast(sort(op))},
+      selected = {cast(sort(op))},
       width = '160px',
       multiple = TRUE,
       inline = TRUE)" |>
@@ -321,7 +321,7 @@ formattedPanel <- function(rt, setCols, groupCols) {
       shinyWidgets::pickerInput(
         inputId = '{rt}_header',
         label = 'Header',
-        choices = {cast(op)},
+        choices = {cast(sort(op))},
         selected = 'cdm_name',
         width = '160px',
         multiple = TRUE,
@@ -330,7 +330,7 @@ formattedPanel <- function(rt, setCols, groupCols) {
       shinyWidgets::pickerInput(
         inputId = '{rt}_group',
         label = 'Group',
-        choices = {cast(op)},
+        choices = {cast(sort(op))},
         selected = {group},
         width = '160px',
         multiple = TRUE,
@@ -339,7 +339,7 @@ formattedPanel <- function(rt, setCols, groupCols) {
       shinyWidgets::pickerInput(
         inputId = '{rt}_hide',
         label = 'Hide',
-        choices = {cast(op)},
+        choices = {cast(sort(op))},
         selected = {set},
         width = '160px',
         multiple = TRUE,

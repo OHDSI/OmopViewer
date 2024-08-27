@@ -14,7 +14,7 @@ omopViewerPlots <- dplyr::tribble(
   ~plot_id, ~result_tab_id, ~title, ~fun, ~output,
   1L, 1L, "Plot cohort overlap", "plotCohortOverlap", "ggplot2",
   2L, 2L, "Diagram", "plotCohortAttrition", "grViz",
-  3L, 3L, "plot cohort timing", "plotCohortTimming", "ggplot2",
+  3L, 3L, "plot cohort timing", "plotCohortTiming", "ggplot2",
   4L, 4L, "Plot characteristics", "plotCharacteristics", "ggplot2"
 )
 
