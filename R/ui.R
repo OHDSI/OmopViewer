@@ -88,7 +88,10 @@ uiStatic <- function(result = omopgenerics::emptySummarisedResult(),
       ),
       shinydashboard::tabItems(
         ## about ----
-        shinydashboard::tabItem(tabName = "about", omopViewer::aboutTab()),
+        shinydashboard::tabItem(
+          tabName = "about",\n',
+          aboutTab(),
+        '),
         ## background ----
         shinydashboard::tabItem(
           tabName = "background",

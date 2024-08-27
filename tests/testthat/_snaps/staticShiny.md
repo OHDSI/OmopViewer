@@ -1,4 +1,4 @@
-# multiplication works
+# CohortCharacteristics shiny
 
     Code
       cat(uiStatic(result = result, asText = TRUE), sep = "\n")
@@ -40,7 +40,32 @@
           ),
           shinydashboard::tabItems(
             ## about ----
-            shinydashboard::tabItem(tabName = "about", omopViewer::aboutTab()),
+            shinydashboard::tabItem(
+              tabName = "about",
+              shiny::div(
+                class = "about",
+                shiny::tags$h2(shiny::tagList(shiny::strong("omopViewer"), "shiny app")),
+                shiny::tags$h4(shiny::tagList(
+                  "This shiny app was generated with ",
+                  shiny::a(
+                    "omopViewer",
+                    href = "https://github.com/oxford-pharmacoepi/omopViewer",
+                    target = "_blank"
+                  ),
+                  shiny::strong("v0.0.0.900")
+                )),
+                shiny::tags$h5("omopViewer works only with `summarised_result` objects as
+        defined in omopgenerics package."),
+                shiny::tags$img(
+                  src = system.file("www/images/hds_logo.svg", package = "omopViewer"),
+                  class = "logo-img",
+                  alt = "HDS Logo",
+                  height = "10%",
+                  width = "10%",
+                  style = "float:right"
+                )
+              )
+            ),
             ## background ----
             shinydashboard::tabItem(
               tabName = "background",
@@ -331,4 +356,145 @@
           )
         )
       )
+
+---
+
+    Code
+      cat(serverStatic(result = result, asText = TRUE), sep = "\n")
+    Output
+      server <- function(input, output, session) {
+        # summarised_characteristics ----
+        getRawDataSummarisedCharacteristics <- shiny::reactive({
+          data |>
+            omopViewer::filterData("summarised_characteristics", input) |>
+            omopViewer::tidyData(
+              prefixSet = "set:",
+              prefixGroup = "group: ",
+              showSettings = input$summarised_characteristics_show_settings,
+              showGroupping = input$summarised_characteristics_show_groupping,
+              pivotEstimates = input$summarised_characteristics_pivot_estimates
+            )
+        })
+        output$summarised_characteristics_raw_table <- DT::renderDT({
+          DT::datatable(getRawDataSummarisedCharacteristics(), options = list(scrollX = TRUE))
+        })
+        getFormattedDataSummarisedCharacteristics <- shiny::reactive({
+          x <- data |>
+            omopViewer::filterData("summarised_characteristics", input)
+          header <- input$summarised_characteristics_header
+          group <- input$summarised_characteristics_group
+          hide <- input$summarised_characteristics_hide
+          all <- c(header, group, hide)
+          shiny::validate(shiny::need(
+            length(all) == length(unique(all)),
+            "there must not be overlap between `header`, `group` and `hide`"
+          ))
+          omopViewer::visTable(
+            result = x,
+            header = header,
+            group = group,
+            hide = hide
+          )
+        })
+        output$summarised_characteristics_formatted_table <- gt::render_gt({
+          getFormattedDataSummarisedCharacteristics()
+        })
+        output$summarised_characteristics_formatted_download <- shiny::downloadHandler(
+          filename = "gt_table_summarised_characteristics.docx",
+          content = function(file) {
+            getFormattedDataSummarisedCharacteristics() |>
+              gt::gtsave(filename = file)
+          }
+        )
+        getPlotDataSummarisedCharacteristics <- shiny::reactive({
+          data |>
+            omopViewer::filterData("summarised_characteristics", input)
+        })
+      
+        createPlot4 <- shiny::reactive({
+          result <- getPlotDataSummarisedCharacteristics()
+          CohortCharacteristics::plotCharacteristics(
+            result,
+            x = input$summarised_characteristics_plot_4_x,
+            facet = input$summarised_characteristics_plot_4_facet,
+            colour = input$summarised_characteristics_plot_4_colour,
+            plotStyle = input$summarised_characteristics_plot_4_plot_style
+          )
+        })
+        output$summarised_characteristics_plot_4 <- shiny::renderPlot({
+          createPlot4()
+        })
+        output$summarised_characteristics_plot_4_download <- shiny::downloadHandler(
+          filename = "plot_summarised_characteristics.png",
+          content = function(file) {
+            plt <- createPlot4()
+            ggplot2::ggsave(filename = file, plot = plt)
+          }
+        )
+        # cohort_attrition ----
+        getRawDataCohortAttrition <- shiny::reactive({
+          data |>
+            omopViewer::filterData("cohort_attrition", input) |>
+            omopViewer::tidyData(
+              prefixSet = "set:",
+              prefixGroup = "group: ",
+              showSettings = input$cohort_attrition_show_settings,
+              showGroupping = input$cohort_attrition_show_groupping,
+              pivotEstimates = input$cohort_attrition_pivot_estimates
+            )
+        })
+        output$cohort_attrition_raw_table <- DT::renderDT({
+          DT::datatable(getRawDataCohortAttrition(), options = list(scrollX = TRUE))
+        })
+        getFormattedDataCohortAttrition <- shiny::reactive({
+          x <- data |>
+            omopViewer::filterData("cohort_attrition", input)
+          header <- input$cohort_attrition_header
+          group <- input$cohort_attrition_group
+          hide <- input$cohort_attrition_hide
+          all <- c(header, group, hide)
+          shiny::validate(shiny::need(
+            length(all) == length(unique(all)),
+            "there must not be overlap between `header`, `group` and `hide`"
+          ))
+          omopViewer::visTable(
+            result = x,
+            header = header,
+            group = group,
+            hide = hide
+          )
+        })
+        output$cohort_attrition_formatted_table <- gt::render_gt({
+          getFormattedDataCohortAttrition()
+        })
+        output$cohort_attrition_formatted_download <- shiny::downloadHandler(
+          filename = "gt_table_cohort_attrition.docx",
+          content = function(file) {
+            getFormattedDataCohortAttrition() |>
+              gt::gtsave(filename = file)
+          }
+        )
+        getPlotDataCohortAttrition <- shiny::reactive({
+          data |>
+            omopViewer::filterData("cohort_attrition", input)
+        })
+      
+        createPlot2 <- shiny::reactive({
+          result <- getPlotDataCohortAttrition()
+          CohortCharacteristics::plotCohortAttrition(
+            result
+          )
+        })
+        output$cohort_attrition_plot_2 <- DiagrammeR::renderGrViz({
+          createPlot2()
+        })
+        output$cohort_attrition_plot_2_download <- shiny::downloadHandler(
+          filename = "plot_cohort_attrition.png",
+          content = function(file) {
+            plt <- createPlot2()
+            DiagrammeR::export_graph(graph = plt, file_name = file, fily_type = "png", width = 800)
+          }
+        )
+        # end -----
+      }
 

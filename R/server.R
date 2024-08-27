@@ -209,7 +209,12 @@ serverDynamic <- function(input, output, session) {
     # Dynamic tabs
     output$dynamic_tabs_output <- shiny::renderUI({
       static_tabs <- list(
-        shinydashboard::tabItem("about", aboutTab()),
+        shinydashboard::tabItem(
+          "about",
+          aboutTab() |>
+            rlang::parse_expr() |>
+            rlang::eval_tidy()
+        ),
         shinydashboard::tabItem("UploadData", UploadDataTab()),
         shinydashboard::tabItem("LoadData", LoadDataTab()),
         shinydashboard::tabItem("contact", contactTab())
@@ -217,7 +222,6 @@ serverDynamic <- function(input, output, session) {
 
       # print(process_data()$complete)
       all_tabs <-createDynamicTabs(process_data()$complete, process_data()$incomplete, plot_config, session)
-
 
       # Combine static and dynamic tabs
       do.call(shinydashboard::tabItems, c(static_tabs, all_tabs))
