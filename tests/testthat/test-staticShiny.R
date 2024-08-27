@@ -1,3 +1,11 @@
+test_that("empty shiny", {
+  tdir <- here::here()
+  expect_no_error(exportStaticApp(directory = tdir))
+  expect_true("shiny" %in% list.files(tdir))
+  expect_snapshot(uiStatic(asText = TRUE) |> cat(sep = "\n"))
+  expect_snapshot(serverStatic(asText = TRUE) |> cat(sep = "\n"))
+  unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
+})
 
 test_that("CohortCharacteristics shiny", {
   cdm <- CohortCharacteristics::mockCohortCharacteristics(seed = 1L)
@@ -12,10 +20,10 @@ test_that("CohortCharacteristics shiny", {
   result <- result |>
     omopgenerics::newSummarisedResult(settings = set)
 
-  tdir <- tempdir()
+  tdir <- here::here()
   expect_no_error(exportStaticApp(result = result, directory = tdir))
   expect_true("shiny" %in% list.files(tdir))
   expect_snapshot(uiStatic(result = result, asText = TRUE) |> cat(sep = "\n"))
   expect_snapshot(serverStatic(result = result, asText = TRUE) |> cat(sep = "\n"))
-  unlink(tdir)
+  unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
 })

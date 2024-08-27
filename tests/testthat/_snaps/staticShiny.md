@@ -1,3 +1,81 @@
+# empty shiny
+
+    Code
+      cat(uiStatic(asText = TRUE), sep = "\n")
+    Output
+      ui <- shinydashboard::dashboardPage(
+        shinydashboard::dashboardHeader(title = "My study"),
+        # sidebar ----
+        shinydashboard::dashboardSidebar(
+          shinydashboard::sidebarMenu(
+            shinydashboard::menuItem(
+              text = "About", tabName = "about", icon = shiny::icon("circle-info")
+            ),
+            shinydashboard::menuItem(
+              text = "Background", tabName = "background", icon = shiny::icon("magnifying-glass")
+            )
+          )
+        ),
+        # body ----
+        shinydashboard::dashboardBody(
+          shiny::tags$head(
+            # Reset favicon
+            shiny::tags$link(rel = "shortcut icon", href = "#"),
+            # Compiled css file
+            shiny::tags$link(
+              rel = "stylesheet",
+              type = "text/css",
+              href = system.file("www/css/sass.min.css", package = "omopViewer")
+            )
+          ),
+          shinydashboard::tabItems(
+            ## about ----
+            shinydashboard::tabItem(
+              tabName = "about",
+              shiny::div(
+                class = "about",
+                shiny::tags$h2(shiny::tagList(shiny::strong("omopViewer"), "shiny app")),
+                shiny::tags$h4(shiny::tagList(
+                  "This shiny app was generated with ",
+                  shiny::a(
+                    "omopViewer",
+                    href = "https://github.com/oxford-pharmacoepi/omopViewer",
+                    target = "_blank"
+                  ),
+                  shiny::strong("v0.0.0.900")
+                )),
+                shiny::tags$h5("omopViewer works only with `summarised_result` objects as
+        defined in omopgenerics package."),
+                shiny::tags$img(
+                  src = system.file("www/images/hds_logo.svg", package = "omopViewer"),
+                  class = "logo-img",
+                  alt = "HDS Logo",
+                  height = "10%",
+                  width = "10%",
+                  style = "float:right"
+                )
+              )
+            ),
+            ## background ----
+            shinydashboard::tabItem(
+              tabName = "background",
+              shiny::h4("Study background"),
+              shiny::p("You can use this section to add some background of your study")
+            )
+            ## end ----
+          )
+        )
+      )
+
+---
+
+    Code
+      cat(serverStatic(asText = TRUE), sep = "\n")
+    Output
+      server <- function(input, output, session) {
+        # end -----
+      }
+
 # CohortCharacteristics shiny
 
     Code

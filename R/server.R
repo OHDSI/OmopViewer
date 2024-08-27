@@ -241,7 +241,7 @@ serverDynamic <- function(input, output, session) {
 #' @return The server of interest.
 #' @export
 #'
-serverStatic <- function(result = omopgenerics::emptySummarisedResult(),
+serverStatic <- function(result = emptySummarisedResult(),
                          asText = FALSE) {
   # initial checks
   result <- omopgenerics::validateResultArguemnt(result)

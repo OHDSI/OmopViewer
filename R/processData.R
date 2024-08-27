@@ -11,7 +11,7 @@ bindData <- function(data) {
   if (!rlang::is_bare_list(data)) data <- list(data)
   omopgenerics::assertList(data, class = "data.frame")
 
-  empty <- omopgenerics::emptySummarisedResult()
+  empty <- emptySummarisedResult()
   if (length(data) == 0) return(empty)
 
   # validate summarised_result objects

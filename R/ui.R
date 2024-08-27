@@ -45,7 +45,7 @@ uiDynamic <- function() {
 #' @return The ui of interest.
 #' @export
 #'
-uiStatic <- function(result = omopgenerics::emptySummarisedResult(),
+uiStatic <- function(result = emptySummarisedResult(),
                      asText = FALSE) {
   # initial checks
   result <- omopgenerics::validateResultArguemnt(result)
@@ -161,7 +161,8 @@ writeVect <- function(x) {
 # get possible options for the different tabs split by result_type ----
 getPossibleSettings <- function(result) {
   omopgenerics::settings(result) |>
-    dplyr::select(!c("result_id", "package_name", "package_version")) |>
+    dplyr::select(!dplyr::any_of(c(
+      "result_id", "package_name", "package_version"))) |>
     getPossibilities()
 }
 getPossibleGroupping <- function(result) {
@@ -445,4 +446,13 @@ getButton <- function(type) {
            label = '{arg}',
            value = {def}
          )")
+}
+
+emptySummarisedResult <- function() {
+  omopgenerics::emptySummarisedResult(settings = dplyr::tibble(
+    result_id = integer(),
+    result_type = character(),
+    package_name = character(),
+    package_version = character()
+  ))
 }

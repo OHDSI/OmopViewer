@@ -4,7 +4,7 @@
 \alias{serverStatic}
 \title{Provides the static server of the shiny app for a given set of resultType(s).}
 \usage{
-serverStatic(result = omopgenerics::emptySummarisedResult(), asText = FALSE)
+serverStatic(result = emptySummarisedResult(), asText = FALSE)
 }
 \arguments{
 \item{result}{A summarised_result object.}
