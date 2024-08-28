@@ -59,5 +59,3 @@ visTable <- function(result,
     visOmopResults::gtTable(groupColumn = group)
   return(result)
 }
-
-# warning if default plot tab
