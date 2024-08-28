@@ -2,12 +2,15 @@
 # you need to load the package before running these lines of code as styleCode()
 # is required.
 
+# to search icons see: https://fontawesome.com/search?m=free&o=r
+
 omopViewerTabs <- dplyr::tribble(
   ~result_tab_id, ~result_type, ~package, ~title, ~icon,
-  1L, "cohort_overlap", "CohortCharacteristics", "Cohort count", "person",
-  2L, "cohort_attrition", "CohortCharacteristics", "Cohort Attrition", "person",
-  3L, "cohort_timing", "CohortCharacteristics", "Cohort timing", "person",
-  4L, "summarised_characteristics", "CohortCharacteristics", "Cohort characteristics", "people-group"
+  1L, "cohort_overlap", "CohortCharacteristics", "Cohort overlap", "circle-half-stroke",
+  2L, "cohort_attrition", "CohortCharacteristics", "Cohort Attrition", "layer-group", #diagram-next
+  3L, "cohort_timing", "CohortCharacteristics", "Cohort timing", "chart-simple",
+  4L, "summarised_characteristics", "CohortCharacteristics", "Cohort characteristics", "users-gear", #people-group
+  5L, "summarised_large_scale_characteristics", "CohortCharacteristics", "Large Scale Characteristics", "arrow-up-right-dots" #people-group
 )
 
 omopViewerPlots <- dplyr::tribble(

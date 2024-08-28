@@ -71,7 +71,7 @@ uiStatic <- function(result = emptySummarisedResult(),
         shinydashboard::menuItem(
           text = "About", tabName = "about", icon = shiny::icon("circle-info")),
         shinydashboard::menuItem(
-          text = "Background", tabName = "background", icon = shiny::icon("magnifying-glass"))',
+          text = "Background", tabName = "background", icon = shiny::icon("disease"))',
         sidebar,
      ')
     ),
