@@ -40,12 +40,15 @@ Imports:
     vctrs,
     visOmopResults (>= 0.3.0)
 Suggests: 
+    CDMConnector,
     CohortCharacteristics,
     duckdb,
     ggplot2,
     here,
     htmlwidgets,
     knitr,
+    omock,
+    PatientProfiles,
     plotly,
     rmarkdown,
     shinycssloaders,
