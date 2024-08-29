@@ -45,7 +45,7 @@ uiDynamic <- function() {
 #' @return The ui of interest.
 #' @export
 #'
-uiStatic <- function(result = omopgenerics::emptySummarisedResult(),
+uiStatic <- function(result = emptySummarisedResult(),
                      asText = FALSE) {
   # initial checks
   result <- omopgenerics::validateResultArguemnt(result)
@@ -71,7 +71,7 @@ uiStatic <- function(result = omopgenerics::emptySummarisedResult(),
         shinydashboard::menuItem(
           text = "About", tabName = "about", icon = shiny::icon("circle-info")),
         shinydashboard::menuItem(
-          text = "Background", tabName = "background", icon = shiny::icon("magnifying-glass"))',
+          text = "Background", tabName = "background", icon = shiny::icon("disease"))',
         sidebar,
      ')
     ),
@@ -88,7 +88,10 @@ uiStatic <- function(result = omopgenerics::emptySummarisedResult(),
       ),
       shinydashboard::tabItems(
         ## about ----
-        shinydashboard::tabItem(tabName = "about", omopViewer::aboutTab()),
+        shinydashboard::tabItem(
+          tabName = "about",\n',
+          aboutTab(),
+        '),
         ## background ----
         shinydashboard::tabItem(
           tabName = "background",
@@ -158,7 +161,8 @@ writeVect <- function(x) {
 # get possible options for the different tabs split by result_type ----
 getPossibleSettings <- function(result) {
   omopgenerics::settings(result) |>
-    dplyr::select(!c("result_id", "package_name", "package_version")) |>
+    dplyr::select(!dplyr::any_of(c(
+      "result_id", "package_name", "package_version"))) |>
     getPossibilities()
 }
 getPossibleGroupping <- function(result) {
@@ -263,8 +267,8 @@ getFilters <- function(rt, opts, tit) {
     shinyWidgets::pickerInput(
       inputId = '{rt}_{formatSnake(tit)}_{nm}',
       label = '{formatTit(nm)}',
-      choices = {cast(op)},
-      selected = {cast(op)},
+      choices = {cast(sort(op))},
+      selected = {cast(sort(op))},
       width = '160px',
       multiple = TRUE,
       inline = TRUE)" |>
@@ -317,7 +321,7 @@ formattedPanel <- function(rt, setCols, groupCols) {
       shinyWidgets::pickerInput(
         inputId = '{rt}_header',
         label = 'Header',
-        choices = {cast(op)},
+        choices = {cast(sort(op))},
         selected = 'cdm_name',
         width = '160px',
         multiple = TRUE,
@@ -326,7 +330,7 @@ formattedPanel <- function(rt, setCols, groupCols) {
       shinyWidgets::pickerInput(
         inputId = '{rt}_group',
         label = 'Group',
-        choices = {cast(op)},
+        choices = {cast(sort(op))},
         selected = {group},
         width = '160px',
         multiple = TRUE,
@@ -335,7 +339,7 @@ formattedPanel <- function(rt, setCols, groupCols) {
       shinyWidgets::pickerInput(
         inputId = '{rt}_hide',
         label = 'Hide',
-        choices = {cast(op)},
+        choices = {cast(sort(op))},
         selected = {set},
         width = '160px',
         multiple = TRUE,
@@ -442,4 +446,13 @@ getButton <- function(type) {
            label = '{arg}',
            value = {def}
          )")
+}
+
+emptySummarisedResult <- function() {
+  omopgenerics::emptySummarisedResult(settings = dplyr::tibble(
+    result_id = integer(),
+    result_type = character(),
+    package_name = character(),
+    package_version = character()
+  ))
 }

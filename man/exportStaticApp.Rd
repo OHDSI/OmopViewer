@@ -5,7 +5,7 @@
 \title{Export and launch a static shiny specific to the provided results.}
 \usage{
 exportStaticApp(
-  result = omopgenerics::emptySummarisedResult(),
+  result = emptySummarisedResult(),
   directory = getwd(),
   open = rlang::is_interactive()
 )

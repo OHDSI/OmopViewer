@@ -17,7 +17,7 @@ launchDynamicApp <- function() {
 #' @return The shiny app will be created in directory.
 #' @export
 #'
-exportStaticApp <- function(result = omopgenerics::emptySummarisedResult(),
+exportStaticApp <- function(result = emptySummarisedResult(),
                             directory = getwd(),
                             open = rlang::is_interactive()) {
   # input check
@@ -43,6 +43,9 @@ exportStaticApp <- function(result = omopgenerics::emptySummarisedResult(),
     mes <- c("v" = paste0(mes, ": {.var {resType}}."))
   }
   cli::cli_inform(mes)
+  if (length(resType) == 0) {
+    cli::cli_inform(c("!" = "No result_type(s) found, the generated shiny will be empty."))
+  }
 
   # create shiny
   cli::cli_inform(c("i" = "Creating shiny from provided data"))
