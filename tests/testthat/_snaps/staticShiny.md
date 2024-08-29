@@ -12,7 +12,7 @@
               text = "About", tabName = "about", icon = shiny::icon("circle-info")
             ),
             shinydashboard::menuItem(
-              text = "Background", tabName = "background", icon = shiny::icon("magnifying-glass")
+              text = "Background", tabName = "background", icon = shiny::icon("disease")
             )
           )
         ),
@@ -90,32 +90,32 @@
               text = "About", tabName = "about", icon = shiny::icon("circle-info")
             ),
             shinydashboard::menuItem(
-              text = "Background", tabName = "background", icon = shiny::icon("magnifying-glass")
+              text = "Background", tabName = "background", icon = shiny::icon("disease")
             ),
             shinydashboard::menuItem(
               text = "Cohort Attrition",
               tabName = "cohort_attrition",
-              icon = shiny::icon("person")
+              icon = shiny::icon("layer-group")
             ),
             shinydashboard::menuItem(
-              text = "Cohort count",
+              text = "Cohort overlap",
               tabName = "cohort_overlap",
-              icon = shiny::icon("person")
+              icon = shiny::icon("circle-half-stroke")
             ),
             shinydashboard::menuItem(
               text = "Cohort timing",
               tabName = "cohort_timing",
-              icon = shiny::icon("person")
+              icon = shiny::icon("chart-simple")
             ),
             shinydashboard::menuItem(
               text = "Cohort characteristics",
               tabName = "summarised_characteristics",
-              icon = shiny::icon("people-group")
+              icon = shiny::icon("users-gear")
             ),
             shinydashboard::menuItem(
-              text = "Summarised large scale characteristics",
+              text = "Large Scale Characteristics",
               tabName = "summarised_large_scale_characteristics",
-              icon = shiny::icon("table")
+              icon = shiny::icon("arrow-up-right-dots")
             )
           )
         ),
