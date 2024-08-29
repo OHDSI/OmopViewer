@@ -5,9 +5,7 @@
 <url><loc>https://oxford-pharmacoepi.github.io/omopViewer/articles/supported_result_type.html</loc></url>
 <url><loc>https://oxford-pharmacoepi.github.io/omopViewer/authors.html</loc></url>
 <url><loc>https://oxford-pharmacoepi.github.io/omopViewer/index.html</loc></url>
-<url><loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/aboutTab.html</loc></url>
 <url><loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/applyFilters.html</loc></url>
-<url><loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/bindData.html</loc></url>
 <url><loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/createCard.html</loc></url>
 <url><loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/createDynamicTabs.html</loc></url>
 <url><loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/exportStaticApp.html</loc></url>
@@ -22,7 +20,6 @@
 <url><loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/reexports.html</loc></url>
 <url><loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/serverDynamic.html</loc></url>
 <url><loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/serverStatic.html</loc></url>
-<url><loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/splitBySettings.html</loc></url>
 <url><loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/studySelectInitServer.html</loc></url>
 <url><loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/studySelectServer.html</loc></url>
 <url><loc>https://oxford-pharmacoepi.github.io/omopViewer/reference/studySelectUi.html</loc></url>
