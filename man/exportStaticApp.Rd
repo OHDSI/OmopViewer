@@ -6,12 +6,16 @@
 \usage{
 exportStaticApp(
   result = emptySummarisedResult(),
+  logo = "HDS",
   directory = getwd(),
   open = rlang::is_interactive()
 )
 }
 \arguments{
 \item{result}{A summarised_result object.}
+
+\item{logo}{Name of a logo or path to a logo. If NULL no logo is included.
+Only svg format allowed for the moment.}
 
 \item{directory}{Directory to create the shiny.}
 

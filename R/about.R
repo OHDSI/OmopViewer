@@ -14,17 +14,17 @@ aboutTab <- function() {
   defined in omopgenerics package."'
   'shiny::div(
     class = "about",
-    shiny::tags$h2({title}),
-    shiny::tags$h4({subtitle}),
-    shiny::tags$h5({description}),
     shiny::tags$img(
-      src = system.file("www/images/hds_logo.svg", package = "omopViewer"),
+      src = "hds_logo.svg",
       class = "logo-img",
-      alt = "HDS Logo",
+      alt = "Logo",
       height = "10%",
       width = "10%",
       style = "float:right"
-    )
+    ),
+    shiny::tags$h2({title}),
+    shiny::tags$h4({subtitle}),
+    shiny::tags$h5({description})
   )' |>
     glue::glue() |>
     styleCode() |>
