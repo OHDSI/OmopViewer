@@ -43,12 +43,6 @@ test_that("CohortCharacteristics shiny", {
       )
   )
 
-  # Update settings so there is no overlap between groupping and settings
-  set <- omopgenerics::settings(result) |>
-    dplyr::select(-"cohort_name")
-  result <- result |>
-    omopgenerics::newSummarisedResult(settings = set)
-
   # generate shiny
   tdir <- here::here()
   expect_no_error(exportStaticApp(result = result, directory = tdir))

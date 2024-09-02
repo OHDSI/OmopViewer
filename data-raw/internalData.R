@@ -6,19 +6,21 @@
 
 omopViewerTabs <- dplyr::tribble(
   ~result_tab_id, ~result_type, ~package, ~title, ~icon,
-  1L, "cohort_overlap", "CohortCharacteristics", "Cohort overlap", "circle-half-stroke",
-  2L, "cohort_attrition", "CohortCharacteristics", "Cohort Attrition", "layer-group", #diagram-next
-  3L, "cohort_timing", "CohortCharacteristics", "Cohort timing", "chart-simple",
-  4L, "summarised_characteristics", "CohortCharacteristics", "Cohort characteristics", "users-gear", #people-group
-  5L, "summarised_large_scale_characteristics", "CohortCharacteristics", "Large Scale Characteristics", "arrow-up-right-dots" #people-group
+  1L, "summarise_cohort_overlap", "CohortCharacteristics", "Cohort overlap", "circle-half-stroke",
+  2L, "summarise_cohort_attrition", "CohortCharacteristics", "Cohort Attrition", "layer-group", # diagram-next
+  3L, "summarise_cohort_timing", "CohortCharacteristics", "Cohort timing", "chart-simple",
+  4L, "summarise_characteristics", "CohortCharacteristics", "Cohort characteristics", "users-gear", # people-group
+  5L, "summarise_cohort_count", "CohortCharacteristics", "Cohort count", "users",
+  6L, "summarise_large_scale_characteristics", "CohortCharacteristics", "Large Scale Characteristics", "arrow-up-right-dots", # people-group
 )
 
 omopViewerPlots <- dplyr::tribble(
   ~plot_id, ~result_tab_id, ~title, ~fun, ~output,
   1L, 1L, "Plot cohort overlap", "plotCohortOverlap", "ggplot2",
   2L, 2L, "Diagram", "plotCohortAttrition", "grViz",
-  3L, 3L, "plot cohort timing", "plotCohortTiming", "ggplot2",
-  4L, 4L, "Plot characteristics", "plotCharacteristics", "ggplot2"
+  3L, 3L, "Plot cohort timing", "plotCohortTiming", "ggplot2",
+  4L, 4L, "Plot characteristics", "plotCharacteristics", "ggplot2",
+  5L, 5L, "Plot cohort count", "plotCohortCount", "ggplot2"
 )
 
 omopViewerPlotArguments <- dplyr::tribble(
@@ -30,10 +32,11 @@ omopViewerPlotArguments <- dplyr::tribble(
   3L, "facet", "selector", "<groupping>, <variable>, <settings>", TRUE,
   3L, "colour", "selector", "<groupping>, <variable>, <settings>", TRUE,
   3L, "uniqueCombinations", "check", "", NA,
-  4L, "x", "selector", "<groupping>, <variable>, <settings>", TRUE,
+  4L, "plotStyle", "selector", "boxplot, barplot, scatterplot", FALSE,
   4L, "facet", "selector", "<groupping>, <variable>, <settings>", TRUE,
   4L, "colour", "selector", "<groupping>, <variable>, <settings>", TRUE,
-  4L, "plotStyle", "selector", "boxplot, barplot", FALSE
+  5L, "facet", "selector", "<groupping>, <variable>", TRUE,
+  5L, "colour", "selector", "<groupping>, <variable>", TRUE,
 )
 
 omopViewerProj <- c(
