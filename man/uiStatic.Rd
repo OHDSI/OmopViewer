@@ -4,12 +4,14 @@
 \alias{uiStatic}
 \title{Provides the static UI of the shiny app for a given set of resultType(s).}
 \usage{
-uiStatic(result = emptySummarisedResult(), asText = FALSE)
+uiStatic(result = emptySummarisedResult(), asText = FALSE, logo = NULL)
 }
 \arguments{
 \item{result}{A summarised_result object.}
 
 \item{asText}{Whether to output a text object or to eval it.}
+
+\item{logo}{Whethet to include a logo in the about tab and upper panel.}
 }
 \value{
 The ui of interest.

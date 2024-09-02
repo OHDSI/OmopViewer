@@ -12,18 +12,22 @@ launchDynamicApp <- function() {
 #'
 #' @param result A summarised_result object.
 #' @param directory Directory to create the shiny.
+#' @param logo Name of a logo or path to a logo. If NULL no logo is included.
+#' Only svg format allowed for the moment.
 #' @param open Whether to open the shiny app project.
 #'
 #' @return The shiny app will be created in directory.
 #' @export
 #'
 exportStaticApp <- function(result = emptySummarisedResult(),
+                            logo = "HDS",
                             directory = getwd(),
                             open = rlang::is_interactive()) {
   # input check
   result <- omopgenerics::validateResultArguemnt(result)
   omopgenerics::assertCharacter(directory, length = 1)
   omopgenerics::assertLogical(open, length = 1)
+  omopgenerics::assertCharacter(logo, length = 1, null = TRUE)
 
   # create directory if it does not exit
   if (!dir.exists(directory)) {
@@ -48,12 +52,14 @@ exportStaticApp <- function(result = emptySummarisedResult(),
   }
 
   # create shiny
+  directory <- paste0(directory, "/shiny")
+  dir.create(path = directory)
   cli::cli_inform(c("i" = "Creating shiny from provided data"))
-  ui <- c(messageShiny(), uiStatic(result = result, asText = TRUE))
+  logo <- copyLogos(logo, directory)
+  ui <- c(messageShiny(), uiStatic(result = result, asText = TRUE, logo = logo))
   server <- c(messageShiny(), serverStatic(result = result, asText = TRUE))
   global <- c(messageShiny(), omopViewerGlobal)
-  directory <- paste0(directory, "/shiny")
-  dir.create(paste0(directory, "/data"), recursive = TRUE)
+  dir.create(paste0(directory, "/data"))
   writeLines(ui, con = paste0(directory, "/ui.R"))
   writeLines(server, con = paste0(directory, "/server.R"))
   writeLines(global, con = paste0(directory, "/global.R"))
@@ -82,4 +88,24 @@ messageShiny <- function() {
     ),
     "# Be careful editing this file", ""
   )
+}
+copyLogos <- function(logo, directory) {
+  dir.create(paste0(directory, "/www"))
+  from <- system.file("/www/images/hds_logo.svg", package = "omopViewer")
+  to <- paste0(directory, "/www/hds_logo.svg")
+  file.copy(from = from, to = to, overwrite = TRUE)
+  if (!is.null(logo)) {
+    if (logo == "HDS") {
+      return("hds_logo.svg")
+    } else if (file.exists(logo)) {
+      nm <- basename(logo)
+      to <- paste0(directory, "/www/", nm)
+      file.copy(from = logo, to = to, overwrite = TRUE)
+      return(nm)
+    } else {
+      cli::cli_warn(c("!" = "Logo couldn't be found."))
+      return(NULL)
+    }
+  }
+  return(NULL)
 }

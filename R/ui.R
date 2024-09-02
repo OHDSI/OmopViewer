@@ -41,19 +41,26 @@ uiDynamic <- function() {
 #'
 #' @param result A summarised_result object.
 #' @param asText Whether to output a text object or to eval it.
+#' @param logo Whethet to include a logo in the about tab and upper panel.
 #'
 #' @return The ui of interest.
 #' @export
 #'
 uiStatic <- function(result = emptySummarisedResult(),
-                     asText = FALSE) {
+                     asText = FALSE,
+                     logo = NULL) {
   # initial checks
   result <- omopgenerics::validateResultArguemnt(result)
   omopgenerics::assertLogical(asText, length = 1)
+  omopgenerics::assertCharacter(logo, length = 1, null = TRUE)
 
   set <- getPossibleSettings(result)
   groupping <-getPossibleGroupping(result)
   variables <- getPossibleVariables(result)
+
+  # create logo
+  logoHeader <- createLogoHeader(logo)
+  logoBackground <- createLogoBackground(logo)
 
   # create sidebar
   sidebar <- createSidebar(names(set))
@@ -64,7 +71,10 @@ uiStatic <- function(result = emptySummarisedResult(),
   # create ui
   x <- paste0(
     'shinydashboard::dashboardPage(
-    shinydashboard::dashboardHeader(title = "My study"),
+    shinydashboard::dashboardHeader(
+      title = "My study"',
+    logoHeader,
+    '\n),
     # sidebar ----
     shinydashboard::dashboardSidebar(
       shinydashboard::sidebarMenu(
@@ -96,8 +106,9 @@ uiStatic <- function(result = emptySummarisedResult(),
         shinydashboard::tabItem(
           tabName = "background",
           shiny::h4("Study background"),
-          shiny::p("You can use this section to add some background of your study")
-        )',
+          shiny::p("You can use this section to add some background of your study")',
+          logoBackground,
+        ')',
         body,
         '\n## end ----\n',
      ')
@@ -205,6 +216,33 @@ getPossibilities <- function(x, split = FALSE) {
   x <- x |>
     purrr::map(getPos, split = split)
   return(x)
+}
+# create logo ----
+createLogoBackground <- function(logo) {
+  if (is.null(logo)) return('')
+  ',{"\n"}shiny::tags$img(
+      src = "{logo}",
+      class = "logo-img",
+      alt = "Logo",
+      height = "20%",
+      width = "20%",
+      style = "float:left"
+    )' |>
+    glue::glue()
+}
+createLogoHeader <- function(logo) {
+  imageHeader <- function(txt) {
+    paste0('shiny::tags$li(
+      shiny::tags$img(src = "', txt, '", style = "height:50px; padding-right:15px"),
+      class = "dropdown"
+    )')
+  }
+  logotop <- paste0(',\n', imageHeader("hds_logo.svg"))
+  if (!is.null(logo) && logo != "hds_logo.svg") {
+    logotop <- '{logotop},{"\n"}{imageHeader(logo)}' |>
+      glue::glue()
+  }
+  return(logotop)
 }
 # create sidebar ----
 createSidebar <- function(resultType) {

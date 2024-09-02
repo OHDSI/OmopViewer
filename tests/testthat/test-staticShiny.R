@@ -1,3 +1,17 @@
+test_that("logo", {
+  tdir <- here::here()
+  expect_no_error(exportStaticApp(directory = tdir, logo = "HDS"))
+  expect_true("shiny" %in% list.files(tdir))
+  unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
+  expect_no_error(exportStaticApp(
+    directory = tdir, logo = here::here("inst", "images", "testim.png")))
+  expect_true("shiny" %in% list.files(tdir))
+  unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
+
+  expect_snapshot(
+    uiStatic(asText = TRUE, logo = "my_pic.png") |> cat(sep = "\n"))
+})
+
 test_that("empty shiny", {
   tdir <- here::here()
   expect_no_error(exportStaticApp(directory = tdir))

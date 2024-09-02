@@ -1,10 +1,20 @@
-# empty shiny
+# logo
 
     Code
-      cat(uiStatic(asText = TRUE), sep = "\n")
+      cat(uiStatic(asText = TRUE, logo = "my_pic.png"), sep = "\n")
     Output
       ui <- shinydashboard::dashboardPage(
-        shinydashboard::dashboardHeader(title = "My study"),
+        shinydashboard::dashboardHeader(
+          title = "My study",
+          shiny::tags$li(
+            shiny::tags$img(src = "hds_logo.svg", style = "height:50px; padding-right:15px"),
+            class = "dropdown"
+          ),
+          shiny::tags$li(
+            shiny::tags$img(src = "my_pic.png", style = "height:50px; padding-right:15px"),
+            class = "dropdown"
+          )
+        ),
         # sidebar ----
         shinydashboard::dashboardSidebar(
           shinydashboard::sidebarMenu(
@@ -34,6 +44,14 @@
               tabName = "about",
               shiny::div(
                 class = "about",
+                shiny::tags$img(
+                  src = "hds_logo.svg",
+                  class = "logo-img",
+                  alt = "Logo",
+                  height = "10%",
+                  width = "10%",
+                  style = "float:right"
+                ),
                 shiny::tags$h2(shiny::tagList(shiny::strong("omopViewer"), "shiny app")),
                 shiny::tags$h4(shiny::tagList(
                   "This shiny app was generated with ",
@@ -45,15 +63,90 @@
                   shiny::strong("v0.0.0.900")
                 )),
                 shiny::tags$h5("omopViewer works only with `summarised_result` objects as
-        defined in omopgenerics package."),
+        defined in omopgenerics package.")
+              )
+            ),
+            ## background ----
+            shinydashboard::tabItem(
+              tabName = "background",
+              shiny::h4("Study background"),
+              shiny::p("You can use this section to add some background of your study"),
+              shiny::tags$img(
+                src = "my_pic.png",
+                class = "logo-img",
+                alt = "Logo",
+                height = "20%",
+                width = "20%",
+                style = "float:left"
+              )
+            )
+            ## end ----
+          )
+        )
+      )
+
+# empty shiny
+
+    Code
+      cat(uiStatic(asText = TRUE), sep = "\n")
+    Output
+      ui <- shinydashboard::dashboardPage(
+        shinydashboard::dashboardHeader(
+          title = "My study",
+          shiny::tags$li(
+            shiny::tags$img(src = "hds_logo.svg", style = "height:50px; padding-right:15px"),
+            class = "dropdown"
+          )
+        ),
+        # sidebar ----
+        shinydashboard::dashboardSidebar(
+          shinydashboard::sidebarMenu(
+            shinydashboard::menuItem(
+              text = "About", tabName = "about", icon = shiny::icon("circle-info")
+            ),
+            shinydashboard::menuItem(
+              text = "Background", tabName = "background", icon = shiny::icon("disease")
+            )
+          )
+        ),
+        # body ----
+        shinydashboard::dashboardBody(
+          shiny::tags$head(
+            # Reset favicon
+            shiny::tags$link(rel = "shortcut icon", href = "#"),
+            # Compiled css file
+            shiny::tags$link(
+              rel = "stylesheet",
+              type = "text/css",
+              href = system.file("www/css/sass.min.css", package = "omopViewer")
+            )
+          ),
+          shinydashboard::tabItems(
+            ## about ----
+            shinydashboard::tabItem(
+              tabName = "about",
+              shiny::div(
+                class = "about",
                 shiny::tags$img(
-                  src = system.file("www/images/hds_logo.svg", package = "omopViewer"),
+                  src = "hds_logo.svg",
                   class = "logo-img",
-                  alt = "HDS Logo",
+                  alt = "Logo",
                   height = "10%",
                   width = "10%",
                   style = "float:right"
-                )
+                ),
+                shiny::tags$h2(shiny::tagList(shiny::strong("omopViewer"), "shiny app")),
+                shiny::tags$h4(shiny::tagList(
+                  "This shiny app was generated with ",
+                  shiny::a(
+                    "omopViewer",
+                    href = "https://github.com/oxford-pharmacoepi/omopViewer",
+                    target = "_blank"
+                  ),
+                  shiny::strong("v0.0.0.900")
+                )),
+                shiny::tags$h5("omopViewer works only with `summarised_result` objects as
+        defined in omopgenerics package.")
               )
             ),
             ## background ----
@@ -82,7 +175,13 @@
       cat(uiStatic(result = result, asText = TRUE), sep = "\n")
     Output
       ui <- shinydashboard::dashboardPage(
-        shinydashboard::dashboardHeader(title = "My study"),
+        shinydashboard::dashboardHeader(
+          title = "My study",
+          shiny::tags$li(
+            shiny::tags$img(src = "hds_logo.svg", style = "height:50px; padding-right:15px"),
+            class = "dropdown"
+          )
+        ),
         # sidebar ----
         shinydashboard::dashboardSidebar(
           shinydashboard::sidebarMenu(
@@ -142,6 +241,14 @@
               tabName = "about",
               shiny::div(
                 class = "about",
+                shiny::tags$img(
+                  src = "hds_logo.svg",
+                  class = "logo-img",
+                  alt = "Logo",
+                  height = "10%",
+                  width = "10%",
+                  style = "float:right"
+                ),
                 shiny::tags$h2(shiny::tagList(shiny::strong("omopViewer"), "shiny app")),
                 shiny::tags$h4(shiny::tagList(
                   "This shiny app was generated with ",
@@ -153,15 +260,7 @@
                   shiny::strong("v0.0.0.900")
                 )),
                 shiny::tags$h5("omopViewer works only with `summarised_result` objects as
-        defined in omopgenerics package."),
-                shiny::tags$img(
-                  src = system.file("www/images/hds_logo.svg", package = "omopViewer"),
-                  class = "logo-img",
-                  alt = "HDS Logo",
-                  height = "10%",
-                  width = "10%",
-                  style = "float:right"
-                )
+        defined in omopgenerics package.")
               )
             ),
             ## background ----
