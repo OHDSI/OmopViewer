@@ -93,28 +93,33 @@
               text = "Background", tabName = "background", icon = shiny::icon("disease")
             ),
             shinydashboard::menuItem(
+              text = "Cohort characteristics",
+              tabName = "summarise_characteristics",
+              icon = shiny::icon("users-gear")
+            ),
+            shinydashboard::menuItem(
               text = "Cohort Attrition",
-              tabName = "cohort_attrition",
+              tabName = "summarise_cohort_attrition",
               icon = shiny::icon("layer-group")
             ),
             shinydashboard::menuItem(
+              text = "Cohort count",
+              tabName = "summarise_cohort_count",
+              icon = shiny::icon("users")
+            ),
+            shinydashboard::menuItem(
               text = "Cohort overlap",
-              tabName = "cohort_overlap",
+              tabName = "summarise_cohort_overlap",
               icon = shiny::icon("circle-half-stroke")
             ),
             shinydashboard::menuItem(
               text = "Cohort timing",
-              tabName = "cohort_timing",
+              tabName = "summarise_cohort_timing",
               icon = shiny::icon("chart-simple")
             ),
             shinydashboard::menuItem(
-              text = "Cohort characteristics",
-              tabName = "summarised_characteristics",
-              icon = shiny::icon("users-gear")
-            ),
-            shinydashboard::menuItem(
               text = "Large Scale Characteristics",
-              tabName = "summarised_large_scale_characteristics",
+              tabName = "summarise_large_scale_characteristics",
               icon = shiny::icon("arrow-up-right-dots")
             )
           )
@@ -165,155 +170,13 @@
               shiny::h4("Study background"),
               shiny::p("You can use this section to add some background of your study")
             ),
-            ## cohort_attrition ----
+            ## summarise_characteristics ----
             shinydashboard::tabItem(
-              tabName = "cohort_attrition",
-              shiny::h4("Settings"),
-              shinyWidgets::pickerInput(
-                inputId = "cohort_attrition_settings_cohort_definition_id",
-                label = "Cohort definition id",
-                choices = c("1", "2", "3"),
-                selected = c("1", "2", "3"),
-                width = "160px",
-                multiple = TRUE,
-                inline = TRUE
-              ),
-              shinyWidgets::pickerInput(
-                inputId = "cohort_attrition_settings_table_name",
-                label = "Table name",
-                choices = c("cohort"),
-                selected = c("cohort"),
-                width = "160px",
-                multiple = TRUE,
-                inline = TRUE
-              ),
-              shiny::h4("Groupping"),
-              shinyWidgets::pickerInput(
-                inputId = "cohort_attrition_groupping_cdm_name",
-                label = "Cdm name",
-                choices = c("mock database"),
-                selected = c("mock database"),
-                width = "160px",
-                multiple = TRUE,
-                inline = TRUE
-              ),
-              shinyWidgets::pickerInput(
-                inputId = "cohort_attrition_groupping_cohort_name",
-                label = "Cohort name",
-                choices = c("asthma", "covid", "tb"),
-                selected = c("asthma", "covid", "tb"),
-                width = "160px",
-                multiple = TRUE,
-                inline = TRUE
-              ),
-              shinyWidgets::pickerInput(
-                inputId = "cohort_attrition_groupping_reason",
-                label = "Reason",
-                choices = c("Initial qualifying events"),
-                selected = c("Initial qualifying events"),
-                width = "160px",
-                multiple = TRUE,
-                inline = TRUE
-              ),
-              shinyWidgets::pickerInput(
-                inputId = "cohort_attrition_groupping_reason_id",
-                label = "Reason id",
-                choices = c("1"),
-                selected = c("1"),
-                width = "160px",
-                multiple = TRUE,
-                inline = TRUE
-              ),
-              shiny::h4("Variables and estimates"),
-              shinyWidgets::pickerInput(
-                inputId = "cohort_attrition_variables_and_estimates_variable_name",
-                label = "Variable name",
-                choices = c("excluded_records", "excluded_subjects", "number_records", "number_subjects"),
-                selected = c("excluded_records", "excluded_subjects", "number_records", "number_subjects"),
-                width = "160px",
-                multiple = TRUE,
-                inline = TRUE
-              ),
-              shinyWidgets::pickerInput(
-                inputId = "cohort_attrition_variables_and_estimates_estimate_name",
-                label = "Estimate name",
-                choices = c("count"),
-                selected = c("count"),
-                width = "160px",
-                multiple = TRUE,
-                inline = TRUE
-              ),
-              shiny::tabsetPanel(
-                type = "tabs",
-                shiny::tabPanel(
-                  title = "Raw table",
-                  shiny::checkboxInput(
-                    inputId = "cohort_attrition_show_groupping",
-                    label = "Show groupping",
-                    value = TRUE
-                  ),
-                  shiny::checkboxInput(
-                    inputId = "cohort_attrition_show_settings",
-                    label = "Show settings",
-                    value = FALSE
-                  ),
-                  shiny::checkboxInput(
-                    inputId = "cohort_attrition_pivot_estimates",
-                    label = "Pivot estimates",
-                    value = FALSE
-                  ),
-                  shiny::downloadButton(outputId = "cohort_attrition_raw_download", label = "Download as csv"),
-                  DT::DTOutput(outputId = "cohort_attrition_raw_table") |>
-                    shinycssloaders::withSpinner()
-                ),
-                shiny::tabPanel(
-                  title = "Formatted table",
-                  shinyWidgets::pickerInput(
-                    inputId = "cohort_attrition_header",
-                    label = "Header",
-                    choices = c("cdm_name", "cohort_definition_id", "cohort_name", "estimate_name", "reason", "reason_id", "table_name", "variable_level", "variable_name"),
-                    selected = "cdm_name",
-                    width = "160px",
-                    multiple = TRUE,
-                    inline = TRUE
-                  ),
-                  shinyWidgets::pickerInput(
-                    inputId = "cohort_attrition_group",
-                    label = "Group",
-                    choices = c("cdm_name", "cohort_definition_id", "cohort_name", "estimate_name", "reason", "reason_id", "table_name", "variable_level", "variable_name"),
-                    selected = "cohort_name",
-                    width = "160px",
-                    multiple = TRUE,
-                    inline = TRUE
-                  ),
-                  shinyWidgets::pickerInput(
-                    inputId = "cohort_attrition_hide",
-                    label = "Hide",
-                    choices = c("cdm_name", "cohort_definition_id", "cohort_name", "estimate_name", "reason", "reason_id", "table_name", "variable_level", "variable_name"),
-                    selected = c("cohort_definition_id", "table_name"),
-                    width = "160px",
-                    multiple = TRUE,
-                    inline = TRUE
-                  ),
-                  shiny::downloadButton(outputId = "cohort_attrition_formatted_download", label = "Download as word"),
-                  gt::gt_output(outputId = "cohort_attrition_formatted_table") |>
-                    shinycssloaders::withSpinner()
-                ),
-                shiny::tabPanel(
-                  title = "Diagram",
-                  shiny::downloadButton(outputId = "cohort_attrition_plot_2_download", label = "Download"),
-                  DiagrammeR::grVizOutput(outputId = "cohort_attrition_plot_2") |>
-                    shinycssloaders::withSpinner()
-                )
-              )
-            ),
-            ## cohort_overlap ----
-            shinydashboard::tabItem(
-              tabName = "cohort_overlap",
+              tabName = "summarise_characteristics",
               shiny::p(),
               shiny::h4("Groupping"),
               shinyWidgets::pickerInput(
-                inputId = "cohort_overlap_groupping_cdm_name",
+                inputId = "summarise_characteristics_groupping_cdm_name",
                 label = "Cdm name",
                 choices = c("mock database"),
                 selected = c("mock database"),
@@ -322,296 +185,7 @@
                 inline = TRUE
               ),
               shinyWidgets::pickerInput(
-                inputId = "cohort_overlap_groupping_cohort_name_reference",
-                label = "Cohort name reference",
-                choices = c("asthma", "covid", "tb"),
-                selected = c("asthma", "covid", "tb"),
-                width = "160px",
-                multiple = TRUE,
-                inline = TRUE
-              ),
-              shinyWidgets::pickerInput(
-                inputId = "cohort_overlap_groupping_cohort_name_comparator",
-                label = "Cohort name comparator",
-                choices = c("asthma", "covid", "tb"),
-                selected = c("asthma", "covid", "tb"),
-                width = "160px",
-                multiple = TRUE,
-                inline = TRUE
-              ),
-              shiny::h4("Variables and estimates"),
-              shinyWidgets::pickerInput(
-                inputId = "cohort_overlap_variables_and_estimates_variable_name",
-                label = "Variable name",
-                choices = c("comparator", "overlap", "reference"),
-                selected = c("comparator", "overlap", "reference"),
-                width = "160px",
-                multiple = TRUE,
-                inline = TRUE
-              ),
-              shinyWidgets::pickerInput(
-                inputId = "cohort_overlap_variables_and_estimates_estimate_name",
-                label = "Estimate name",
-                choices = c("count", "percentage"),
-                selected = c("count", "percentage"),
-                width = "160px",
-                multiple = TRUE,
-                inline = TRUE
-              ),
-              shiny::tabsetPanel(
-                type = "tabs",
-                shiny::tabPanel(
-                  title = "Raw table",
-                  shiny::checkboxInput(
-                    inputId = "cohort_overlap_show_groupping",
-                    label = "Show groupping",
-                    value = TRUE
-                  ),
-                  shiny::checkboxInput(
-                    inputId = "cohort_overlap_show_settings",
-                    label = "Show settings",
-                    value = FALSE
-                  ),
-                  shiny::checkboxInput(
-                    inputId = "cohort_overlap_pivot_estimates",
-                    label = "Pivot estimates",
-                    value = FALSE
-                  ),
-                  shiny::downloadButton(outputId = "cohort_overlap_raw_download", label = "Download as csv"),
-                  DT::DTOutput(outputId = "cohort_overlap_raw_table") |>
-                    shinycssloaders::withSpinner()
-                ),
-                shiny::tabPanel(
-                  title = "Formatted table",
-                  shinyWidgets::pickerInput(
-                    inputId = "cohort_overlap_header",
-                    label = "Header",
-                    choices = c("cdm_name", "cohort_name_comparator", "cohort_name_reference", "estimate_name", "variable_level", "variable_name"),
-                    selected = "cdm_name",
-                    width = "160px",
-                    multiple = TRUE,
-                    inline = TRUE
-                  ),
-                  shinyWidgets::pickerInput(
-                    inputId = "cohort_overlap_group",
-                    label = "Group",
-                    choices = c("cdm_name", "cohort_name_comparator", "cohort_name_reference", "estimate_name", "variable_level", "variable_name"),
-                    selected = NULL,
-                    width = "160px",
-                    multiple = TRUE,
-                    inline = TRUE
-                  ),
-                  shinyWidgets::pickerInput(
-                    inputId = "cohort_overlap_hide",
-                    label = "Hide",
-                    choices = c("cdm_name", "cohort_name_comparator", "cohort_name_reference", "estimate_name", "variable_level", "variable_name"),
-                    selected = NULL,
-                    width = "160px",
-                    multiple = TRUE,
-                    inline = TRUE
-                  ),
-                  shiny::downloadButton(outputId = "cohort_overlap_formatted_download", label = "Download as word"),
-                  gt::gt_output(outputId = "cohort_overlap_formatted_table") |>
-                    shinycssloaders::withSpinner()
-                ),
-                shiny::tabPanel(
-                  title = "Plot cohort overlap",
-                  shinyWidgets::pickerInput(
-                    inputId = "cohort_overlap_plot_1_facet",
-                    label = "facet",
-                    choices = c("cdm_name", "cohort_name_reference", "cohort_name_comparator", "variable_name", "variable_level", "estimate_name"),
-                    selected = NULL,
-                    multiple = TRUE,
-                    inline = TRUE
-                  ),
-                  shiny::checkboxInput(
-                    inputId = "cohort_overlap_plot_1_unique_combinations",
-                    label = "uniqueCombinations",
-                    value = c(TRUE)
-                  ),
-                  shiny::downloadButton(outputId = "cohort_overlap_plot_1_download", label = "Download"),
-                  shiny::plotOutput(outputId = "cohort_overlap_plot_1") |>
-                    shinycssloaders::withSpinner()
-                )
-              )
-            ),
-            ## cohort_timing ----
-            shinydashboard::tabItem(
-              tabName = "cohort_timing",
-              shiny::h4("Settings"),
-              shinyWidgets::pickerInput(
-                inputId = "cohort_timing_settings_restrict_to_first_entry",
-                label = "Restrict to first entry",
-                choices = c("TRUE"),
-                selected = c("TRUE"),
-                width = "160px",
-                multiple = TRUE,
-                inline = TRUE
-              ),
-              shiny::h4("Groupping"),
-              shinyWidgets::pickerInput(
-                inputId = "cohort_timing_groupping_cdm_name",
-                label = "Cdm name",
-                choices = c("mock database"),
-                selected = c("mock database"),
-                width = "160px",
-                multiple = TRUE,
-                inline = TRUE
-              ),
-              shinyWidgets::pickerInput(
-                inputId = "cohort_timing_groupping_cohort_name_reference",
-                label = "Cohort name reference",
-                choices = c("asthma", "covid", "tb"),
-                selected = c("asthma", "covid", "tb"),
-                width = "160px",
-                multiple = TRUE,
-                inline = TRUE
-              ),
-              shinyWidgets::pickerInput(
-                inputId = "cohort_timing_groupping_cohort_name_comparator",
-                label = "Cohort name comparator",
-                choices = c("asthma", "covid", "tb"),
-                selected = c("asthma", "covid", "tb"),
-                width = "160px",
-                multiple = TRUE,
-                inline = TRUE
-              ),
-              shiny::h4("Variables and estimates"),
-              shinyWidgets::pickerInput(
-                inputId = "cohort_timing_variables_and_estimates_variable_name",
-                label = "Variable name",
-                choices = c("days_between_cohort_entries", "number records", "number subjects"),
-                selected = c("days_between_cohort_entries", "number records", "number subjects"),
-                width = "160px",
-                multiple = TRUE,
-                inline = TRUE
-              ),
-              shinyWidgets::pickerInput(
-                inputId = "cohort_timing_variables_and_estimates_estimate_name",
-                label = "Estimate name",
-                choices = c("count", "max", "median", "min", "q25", "q75"),
-                selected = c("count", "max", "median", "min", "q25", "q75"),
-                width = "160px",
-                multiple = TRUE,
-                inline = TRUE
-              ),
-              shiny::tabsetPanel(
-                type = "tabs",
-                shiny::tabPanel(
-                  title = "Raw table",
-                  shiny::checkboxInput(
-                    inputId = "cohort_timing_show_groupping",
-                    label = "Show groupping",
-                    value = TRUE
-                  ),
-                  shiny::checkboxInput(
-                    inputId = "cohort_timing_show_settings",
-                    label = "Show settings",
-                    value = FALSE
-                  ),
-                  shiny::checkboxInput(
-                    inputId = "cohort_timing_pivot_estimates",
-                    label = "Pivot estimates",
-                    value = FALSE
-                  ),
-                  shiny::downloadButton(outputId = "cohort_timing_raw_download", label = "Download as csv"),
-                  DT::DTOutput(outputId = "cohort_timing_raw_table") |>
-                    shinycssloaders::withSpinner()
-                ),
-                shiny::tabPanel(
-                  title = "Formatted table",
-                  shinyWidgets::pickerInput(
-                    inputId = "cohort_timing_header",
-                    label = "Header",
-                    choices = c("cdm_name", "cohort_name_comparator", "cohort_name_reference", "estimate_name", "restrict_to_first_entry", "variable_level", "variable_name"),
-                    selected = "cdm_name",
-                    width = "160px",
-                    multiple = TRUE,
-                    inline = TRUE
-                  ),
-                  shinyWidgets::pickerInput(
-                    inputId = "cohort_timing_group",
-                    label = "Group",
-                    choices = c("cdm_name", "cohort_name_comparator", "cohort_name_reference", "estimate_name", "restrict_to_first_entry", "variable_level", "variable_name"),
-                    selected = NULL,
-                    width = "160px",
-                    multiple = TRUE,
-                    inline = TRUE
-                  ),
-                  shinyWidgets::pickerInput(
-                    inputId = "cohort_timing_hide",
-                    label = "Hide",
-                    choices = c("cdm_name", "cohort_name_comparator", "cohort_name_reference", "estimate_name", "restrict_to_first_entry", "variable_level", "variable_name"),
-                    selected = c("restrict_to_first_entry"),
-                    width = "160px",
-                    multiple = TRUE,
-                    inline = TRUE
-                  ),
-                  shiny::downloadButton(outputId = "cohort_timing_formatted_download", label = "Download as word"),
-                  gt::gt_output(outputId = "cohort_timing_formatted_table") |>
-                    shinycssloaders::withSpinner()
-                ),
-                shiny::tabPanel(
-                  title = "plot cohort timing",
-                  shinyWidgets::pickerInput(
-                    inputId = "cohort_timing_plot_3_plot_type",
-                    label = "plotType",
-                    choices = c("boxplot", "density"),
-                    selected = c("boxplot"),
-                    multiple = FALSE,
-                    inline = TRUE
-                  ),
-                  shinyWidgets::pickerInput(
-                    inputId = "cohort_timing_plot_3_time_scale",
-                    label = "timeScale",
-                    choices = c("days", "years"),
-                    selected = c("days"),
-                    multiple = FALSE,
-                    inline = TRUE
-                  ),
-                  shinyWidgets::pickerInput(
-                    inputId = "cohort_timing_plot_3_facet",
-                    label = "facet",
-                    choices = c("cdm_name", "cohort_name_reference", "cohort_name_comparator", "variable_name", "variable_level", "estimate_name", "restrict_to_first_entry"),
-                    selected = NULL,
-                    multiple = TRUE,
-                    inline = TRUE
-                  ),
-                  shinyWidgets::pickerInput(
-                    inputId = "cohort_timing_plot_3_colour",
-                    label = "colour",
-                    choices = c("cdm_name", "cohort_name_reference", "cohort_name_comparator", "variable_name", "variable_level", "estimate_name", "restrict_to_first_entry"),
-                    selected = NULL,
-                    multiple = TRUE,
-                    inline = TRUE
-                  ),
-                  shiny::checkboxInput(
-                    inputId = "cohort_timing_plot_3_unique_combinations",
-                    label = "uniqueCombinations",
-                    value = c(TRUE)
-                  ),
-                  shiny::downloadButton(outputId = "cohort_timing_plot_3_download", label = "Download"),
-                  shiny::plotOutput(outputId = "cohort_timing_plot_3") |>
-                    shinycssloaders::withSpinner()
-                )
-              )
-            ),
-            ## summarised_characteristics ----
-            shinydashboard::tabItem(
-              tabName = "summarised_characteristics",
-              shiny::p(),
-              shiny::h4("Groupping"),
-              shinyWidgets::pickerInput(
-                inputId = "summarised_characteristics_groupping_cdm_name",
-                label = "Cdm name",
-                choices = c("mock database"),
-                selected = c("mock database"),
-                width = "160px",
-                multiple = TRUE,
-                inline = TRUE
-              ),
-              shinyWidgets::pickerInput(
-                inputId = "summarised_characteristics_groupping_cohort_name",
+                inputId = "summarise_characteristics_groupping_cohort_name",
                 label = "Cohort name",
                 choices = c("asthma", "covid", "tb"),
                 selected = c("asthma", "covid", "tb"),
@@ -621,7 +195,7 @@
               ),
               shiny::h4("Variables and estimates"),
               shinyWidgets::pickerInput(
-                inputId = "summarised_characteristics_variables_and_estimates_variable_name",
+                inputId = "summarise_characteristics_variables_and_estimates_variable_name",
                 label = "Variable name",
                 choices = c("Age", "Cohort end date", "Cohort start date", "Future observation", "Number records", "Number subjects", "Prior observation", "Sex"),
                 selected = c("Age", "Cohort end date", "Cohort start date", "Future observation", "Number records", "Number subjects", "Prior observation", "Sex"),
@@ -630,7 +204,7 @@
                 inline = TRUE
               ),
               shinyWidgets::pickerInput(
-                inputId = "summarised_characteristics_variables_and_estimates_estimate_name",
+                inputId = "summarise_characteristics_variables_and_estimates_estimate_name",
                 label = "Estimate name",
                 choices = c("count", "max", "mean", "median", "min", "percentage", "q25", "q75", "sd"),
                 selected = c("count", "max", "mean", "median", "min", "percentage", "q25", "q75", "sd"),
@@ -643,28 +217,28 @@
                 shiny::tabPanel(
                   title = "Raw table",
                   shiny::checkboxInput(
-                    inputId = "summarised_characteristics_show_groupping",
+                    inputId = "summarise_characteristics_show_groupping",
                     label = "Show groupping",
                     value = TRUE
                   ),
                   shiny::checkboxInput(
-                    inputId = "summarised_characteristics_show_settings",
+                    inputId = "summarise_characteristics_show_settings",
                     label = "Show settings",
                     value = FALSE
                   ),
                   shiny::checkboxInput(
-                    inputId = "summarised_characteristics_pivot_estimates",
+                    inputId = "summarise_characteristics_pivot_estimates",
                     label = "Pivot estimates",
                     value = FALSE
                   ),
-                  shiny::downloadButton(outputId = "summarised_characteristics_raw_download", label = "Download as csv"),
-                  DT::DTOutput(outputId = "summarised_characteristics_raw_table") |>
+                  shiny::downloadButton(outputId = "summarise_characteristics_raw_download", label = "Download as csv"),
+                  DT::DTOutput(outputId = "summarise_characteristics_raw_table") |>
                     shinycssloaders::withSpinner()
                 ),
                 shiny::tabPanel(
                   title = "Formatted table",
                   shinyWidgets::pickerInput(
-                    inputId = "summarised_characteristics_header",
+                    inputId = "summarise_characteristics_header",
                     label = "Header",
                     choices = c("cdm_name", "cohort_name", "estimate_name", "variable_level", "variable_name"),
                     selected = "cdm_name",
@@ -673,7 +247,7 @@
                     inline = TRUE
                   ),
                   shinyWidgets::pickerInput(
-                    inputId = "summarised_characteristics_group",
+                    inputId = "summarise_characteristics_group",
                     label = "Group",
                     choices = c("cdm_name", "cohort_name", "estimate_name", "variable_level", "variable_name"),
                     selected = "cohort_name",
@@ -682,7 +256,7 @@
                     inline = TRUE
                   ),
                   shinyWidgets::pickerInput(
-                    inputId = "summarised_characteristics_hide",
+                    inputId = "summarise_characteristics_hide",
                     label = "Hide",
                     choices = c("cdm_name", "cohort_name", "estimate_name", "variable_level", "variable_name"),
                     selected = NULL,
@@ -690,22 +264,22 @@
                     multiple = TRUE,
                     inline = TRUE
                   ),
-                  shiny::downloadButton(outputId = "summarised_characteristics_formatted_download", label = "Download as word"),
-                  gt::gt_output(outputId = "summarised_characteristics_formatted_table") |>
+                  shiny::downloadButton(outputId = "summarise_characteristics_formatted_download", label = "Download as word"),
+                  gt::gt_output(outputId = "summarise_characteristics_formatted_table") |>
                     shinycssloaders::withSpinner()
                 ),
                 shiny::tabPanel(
                   title = "Plot characteristics",
                   shinyWidgets::pickerInput(
-                    inputId = "summarised_characteristics_plot_4_x",
-                    label = "x",
-                    choices = c("cdm_name", "cohort_name", "variable_name", "variable_level", "estimate_name"),
-                    selected = c("variable_name"),
-                    multiple = TRUE,
+                    inputId = "summarise_characteristics_plot_4_plot_style",
+                    label = "plotStyle",
+                    choices = c("boxplot", "barplot", "scatterplot"),
+                    selected = c("barplot"),
+                    multiple = FALSE,
                     inline = TRUE
                   ),
                   shinyWidgets::pickerInput(
-                    inputId = "summarised_characteristics_plot_4_facet",
+                    inputId = "summarise_characteristics_plot_4_facet",
                     label = "facet",
                     choices = c("cdm_name", "cohort_name", "variable_name", "variable_level", "estimate_name"),
                     selected = NULL,
@@ -713,61 +287,44 @@
                     inline = TRUE
                   ),
                   shinyWidgets::pickerInput(
-                    inputId = "summarised_characteristics_plot_4_colour",
+                    inputId = "summarise_characteristics_plot_4_colour",
                     label = "colour",
                     choices = c("cdm_name", "cohort_name", "variable_name", "variable_level", "estimate_name"),
                     selected = NULL,
                     multiple = TRUE,
                     inline = TRUE
                   ),
-                  shinyWidgets::pickerInput(
-                    inputId = "summarised_characteristics_plot_4_plot_style",
-                    label = "plotStyle",
-                    choices = c("boxplot", "barplot"),
-                    selected = c("barplot"),
-                    multiple = FALSE,
-                    inline = TRUE
-                  ),
-                  shiny::downloadButton(outputId = "summarised_characteristics_plot_4_download", label = "Download"),
-                  shiny::plotOutput(outputId = "summarised_characteristics_plot_4") |>
+                  shiny::downloadButton(outputId = "summarise_characteristics_plot_4_download", label = "Download"),
+                  shiny::plotOutput(outputId = "summarise_characteristics_plot_4") |>
                     shinycssloaders::withSpinner()
                 )
               )
             ),
-            ## summarised_large_scale_characteristics ----
+            ## summarise_cohort_attrition ----
             shinydashboard::tabItem(
-              tabName = "summarised_large_scale_characteristics",
+              tabName = "summarise_cohort_attrition",
               shiny::h4("Settings"),
               shinyWidgets::pickerInput(
-                inputId = "summarised_large_scale_characteristics_settings_table_name",
+                inputId = "summarise_cohort_attrition_settings_cohort_definition_id",
+                label = "Cohort definition id",
+                choices = c("1", "2", "3"),
+                selected = c("1", "2", "3"),
+                width = "160px",
+                multiple = TRUE,
+                inline = TRUE
+              ),
+              shinyWidgets::pickerInput(
+                inputId = "summarise_cohort_attrition_settings_table_name",
                 label = "Table name",
-                choices = c("condition_occurrence", "drug_exposure"),
-                selected = c("condition_occurrence", "drug_exposure"),
-                width = "160px",
-                multiple = TRUE,
-                inline = TRUE
-              ),
-              shinyWidgets::pickerInput(
-                inputId = "summarised_large_scale_characteristics_settings_type",
-                label = "Type",
-                choices = c("episode", "event"),
-                selected = c("episode", "event"),
-                width = "160px",
-                multiple = TRUE,
-                inline = TRUE
-              ),
-              shinyWidgets::pickerInput(
-                inputId = "summarised_large_scale_characteristics_settings_analysis",
-                label = "Analysis",
-                choices = c("standard"),
-                selected = c("standard"),
+                choices = c("cohort"),
+                selected = c("cohort"),
                 width = "160px",
                 multiple = TRUE,
                 inline = TRUE
               ),
               shiny::h4("Groupping"),
               shinyWidgets::pickerInput(
-                inputId = "summarised_large_scale_characteristics_groupping_cdm_name",
+                inputId = "summarise_cohort_attrition_groupping_cdm_name",
                 label = "Cdm name",
                 choices = c("mock database"),
                 selected = c("mock database"),
@@ -776,7 +333,7 @@
                 inline = TRUE
               ),
               shinyWidgets::pickerInput(
-                inputId = "summarised_large_scale_characteristics_groupping_cohort_name",
+                inputId = "summarise_cohort_attrition_groupping_cohort_name",
                 label = "Cohort name",
                 choices = c("asthma", "covid", "tb"),
                 selected = c("asthma", "covid", "tb"),
@@ -785,44 +342,281 @@
                 inline = TRUE
               ),
               shinyWidgets::pickerInput(
-                inputId = "summarised_large_scale_characteristics_groupping_sex",
-                label = "Sex",
-                choices = c("Female", "Male", "overall"),
-                selected = c("Female", "Male", "overall"),
+                inputId = "summarise_cohort_attrition_groupping_reason",
+                label = "Reason",
+                choices = c("Initial qualifying events"),
+                selected = c("Initial qualifying events"),
                 width = "160px",
                 multiple = TRUE,
                 inline = TRUE
               ),
               shinyWidgets::pickerInput(
-                inputId = "summarised_large_scale_characteristics_groupping_age_group",
-                label = "Age group",
-                choices = c("0 to 44", "45 or above", "overall"),
-                selected = c("0 to 44", "45 or above", "overall"),
-                width = "160px",
-                multiple = TRUE,
-                inline = TRUE
-              ),
-              shinyWidgets::pickerInput(
-                inputId = "summarised_large_scale_characteristics_groupping_concept_id",
-                label = "Concept id",
-                choices = c("1", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "2", "3", "4", "5", "6", "7", "8"),
-                selected = c("1", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "2", "3", "4", "5", "6", "7", "8"),
+                inputId = "summarise_cohort_attrition_groupping_reason_id",
+                label = "Reason id",
+                choices = c("1"),
+                selected = c("1"),
                 width = "160px",
                 multiple = TRUE,
                 inline = TRUE
               ),
               shiny::h4("Variables and estimates"),
               shinyWidgets::pickerInput(
-                inputId = "summarised_large_scale_characteristics_variables_and_estimates_variable_name",
+                inputId = "summarise_cohort_attrition_variables_and_estimates_variable_name",
                 label = "Variable name",
-                choices = c("ALIMENTARY TRACT AND METABOLISM", "Adalimumab", "Arthritis", "Arthropathies", "Degenerative arthropathy", "Descendant drug", "Diseases of the musculoskeletal system and connective tissue", "Injectable", "Injection", "Knee osteoarthritis", "Musculoskeletal disorder", "OA", "Osteoarthritis of hip", "Osteoarthritis of knee", "Osteoarthrosis", "Osteonecrosis", "Other ingredient"),
-                selected = c("ALIMENTARY TRACT AND METABOLISM", "Adalimumab", "Arthritis", "Arthropathies", "Degenerative arthropathy", "Descendant drug", "Diseases of the musculoskeletal system and connective tissue", "Injectable", "Injection", "Knee osteoarthritis", "Musculoskeletal disorder", "OA", "Osteoarthritis of hip", "Osteoarthritis of knee", "Osteoarthrosis", "Osteonecrosis", "Other ingredient"),
+                choices = c("excluded_records", "excluded_subjects", "number_records", "number_subjects"),
+                selected = c("excluded_records", "excluded_subjects", "number_records", "number_subjects"),
                 width = "160px",
                 multiple = TRUE,
                 inline = TRUE
               ),
               shinyWidgets::pickerInput(
-                inputId = "summarised_large_scale_characteristics_variables_and_estimates_estimate_name",
+                inputId = "summarise_cohort_attrition_variables_and_estimates_estimate_name",
+                label = "Estimate name",
+                choices = c("count"),
+                selected = c("count"),
+                width = "160px",
+                multiple = TRUE,
+                inline = TRUE
+              ),
+              shiny::tabsetPanel(
+                type = "tabs",
+                shiny::tabPanel(
+                  title = "Raw table",
+                  shiny::checkboxInput(
+                    inputId = "summarise_cohort_attrition_show_groupping",
+                    label = "Show groupping",
+                    value = TRUE
+                  ),
+                  shiny::checkboxInput(
+                    inputId = "summarise_cohort_attrition_show_settings",
+                    label = "Show settings",
+                    value = FALSE
+                  ),
+                  shiny::checkboxInput(
+                    inputId = "summarise_cohort_attrition_pivot_estimates",
+                    label = "Pivot estimates",
+                    value = FALSE
+                  ),
+                  shiny::downloadButton(outputId = "summarise_cohort_attrition_raw_download", label = "Download as csv"),
+                  DT::DTOutput(outputId = "summarise_cohort_attrition_raw_table") |>
+                    shinycssloaders::withSpinner()
+                ),
+                shiny::tabPanel(
+                  title = "Formatted table",
+                  shinyWidgets::pickerInput(
+                    inputId = "summarise_cohort_attrition_header",
+                    label = "Header",
+                    choices = c("cdm_name", "cohort_definition_id", "cohort_name", "estimate_name", "reason", "reason_id", "table_name", "variable_level", "variable_name"),
+                    selected = "cdm_name",
+                    width = "160px",
+                    multiple = TRUE,
+                    inline = TRUE
+                  ),
+                  shinyWidgets::pickerInput(
+                    inputId = "summarise_cohort_attrition_group",
+                    label = "Group",
+                    choices = c("cdm_name", "cohort_definition_id", "cohort_name", "estimate_name", "reason", "reason_id", "table_name", "variable_level", "variable_name"),
+                    selected = "cohort_name",
+                    width = "160px",
+                    multiple = TRUE,
+                    inline = TRUE
+                  ),
+                  shinyWidgets::pickerInput(
+                    inputId = "summarise_cohort_attrition_hide",
+                    label = "Hide",
+                    choices = c("cdm_name", "cohort_definition_id", "cohort_name", "estimate_name", "reason", "reason_id", "table_name", "variable_level", "variable_name"),
+                    selected = c("cohort_definition_id", "table_name"),
+                    width = "160px",
+                    multiple = TRUE,
+                    inline = TRUE
+                  ),
+                  shiny::downloadButton(outputId = "summarise_cohort_attrition_formatted_download", label = "Download as word"),
+                  gt::gt_output(outputId = "summarise_cohort_attrition_formatted_table") |>
+                    shinycssloaders::withSpinner()
+                ),
+                shiny::tabPanel(
+                  title = "Diagram",
+                  shiny::downloadButton(outputId = "summarise_cohort_attrition_plot_2_download", label = "Download"),
+                  DiagrammeR::grVizOutput(outputId = "summarise_cohort_attrition_plot_2") |>
+                    shinycssloaders::withSpinner()
+                )
+              )
+            ),
+            ## summarise_cohort_count ----
+            shinydashboard::tabItem(
+              tabName = "summarise_cohort_count",
+              shiny::h4("Settings"),
+              shinyWidgets::pickerInput(
+                inputId = "summarise_cohort_count_settings_table_name",
+                label = "Table name",
+                choices = c("cohort"),
+                selected = c("cohort"),
+                width = "160px",
+                multiple = TRUE,
+                inline = TRUE
+              ),
+              shiny::h4("Groupping"),
+              shinyWidgets::pickerInput(
+                inputId = "summarise_cohort_count_groupping_cdm_name",
+                label = "Cdm name",
+                choices = c("mock database"),
+                selected = c("mock database"),
+                width = "160px",
+                multiple = TRUE,
+                inline = TRUE
+              ),
+              shinyWidgets::pickerInput(
+                inputId = "summarise_cohort_count_groupping_cohort_name",
+                label = "Cohort name",
+                choices = c("asthma", "covid", "tb"),
+                selected = c("asthma", "covid", "tb"),
+                width = "160px",
+                multiple = TRUE,
+                inline = TRUE
+              ),
+              shiny::h4("Variables and estimates"),
+              shinyWidgets::pickerInput(
+                inputId = "summarise_cohort_count_variables_and_estimates_variable_name",
+                label = "Variable name",
+                choices = c("Number records", "Number subjects"),
+                selected = c("Number records", "Number subjects"),
+                width = "160px",
+                multiple = TRUE,
+                inline = TRUE
+              ),
+              shinyWidgets::pickerInput(
+                inputId = "summarise_cohort_count_variables_and_estimates_estimate_name",
+                label = "Estimate name",
+                choices = c("count"),
+                selected = c("count"),
+                width = "160px",
+                multiple = TRUE,
+                inline = TRUE
+              ),
+              shiny::tabsetPanel(
+                type = "tabs",
+                shiny::tabPanel(
+                  title = "Raw table",
+                  shiny::checkboxInput(
+                    inputId = "summarise_cohort_count_show_groupping",
+                    label = "Show groupping",
+                    value = TRUE
+                  ),
+                  shiny::checkboxInput(
+                    inputId = "summarise_cohort_count_show_settings",
+                    label = "Show settings",
+                    value = FALSE
+                  ),
+                  shiny::checkboxInput(
+                    inputId = "summarise_cohort_count_pivot_estimates",
+                    label = "Pivot estimates",
+                    value = FALSE
+                  ),
+                  shiny::downloadButton(outputId = "summarise_cohort_count_raw_download", label = "Download as csv"),
+                  DT::DTOutput(outputId = "summarise_cohort_count_raw_table") |>
+                    shinycssloaders::withSpinner()
+                ),
+                shiny::tabPanel(
+                  title = "Formatted table",
+                  shinyWidgets::pickerInput(
+                    inputId = "summarise_cohort_count_header",
+                    label = "Header",
+                    choices = c("cdm_name", "cohort_name", "estimate_name", "table_name", "variable_level", "variable_name"),
+                    selected = "cdm_name",
+                    width = "160px",
+                    multiple = TRUE,
+                    inline = TRUE
+                  ),
+                  shinyWidgets::pickerInput(
+                    inputId = "summarise_cohort_count_group",
+                    label = "Group",
+                    choices = c("cdm_name", "cohort_name", "estimate_name", "table_name", "variable_level", "variable_name"),
+                    selected = "cohort_name",
+                    width = "160px",
+                    multiple = TRUE,
+                    inline = TRUE
+                  ),
+                  shinyWidgets::pickerInput(
+                    inputId = "summarise_cohort_count_hide",
+                    label = "Hide",
+                    choices = c("cdm_name", "cohort_name", "estimate_name", "table_name", "variable_level", "variable_name"),
+                    selected = c("table_name"),
+                    width = "160px",
+                    multiple = TRUE,
+                    inline = TRUE
+                  ),
+                  shiny::downloadButton(outputId = "summarise_cohort_count_formatted_download", label = "Download as word"),
+                  gt::gt_output(outputId = "summarise_cohort_count_formatted_table") |>
+                    shinycssloaders::withSpinner()
+                ),
+                shiny::tabPanel(
+                  title = "Plot cohort count",
+                  shinyWidgets::pickerInput(
+                    inputId = "summarise_cohort_count_plot_5_facet",
+                    label = "facet",
+                    choices = c("cdm_name", "cohort_name", "variable_name", "variable_level", "estimate_name"),
+                    selected = c("cdm_name"),
+                    multiple = TRUE,
+                    inline = TRUE
+                  ),
+                  shinyWidgets::pickerInput(
+                    inputId = "summarise_cohort_count_plot_5_colour",
+                    label = "colour",
+                    choices = c("cdm_name", "cohort_name", "variable_name", "variable_level", "estimate_name"),
+                    selected = NULL,
+                    multiple = TRUE,
+                    inline = TRUE
+                  ),
+                  shiny::downloadButton(outputId = "summarise_cohort_count_plot_5_download", label = "Download"),
+                  shiny::plotOutput(outputId = "summarise_cohort_count_plot_5") |>
+                    shinycssloaders::withSpinner()
+                )
+              )
+            ),
+            ## summarise_cohort_overlap ----
+            shinydashboard::tabItem(
+              tabName = "summarise_cohort_overlap",
+              shiny::p(),
+              shiny::h4("Groupping"),
+              shinyWidgets::pickerInput(
+                inputId = "summarise_cohort_overlap_groupping_cdm_name",
+                label = "Cdm name",
+                choices = c("mock database"),
+                selected = c("mock database"),
+                width = "160px",
+                multiple = TRUE,
+                inline = TRUE
+              ),
+              shinyWidgets::pickerInput(
+                inputId = "summarise_cohort_overlap_groupping_cohort_name_reference",
+                label = "Cohort name reference",
+                choices = c("asthma", "covid", "tb"),
+                selected = c("asthma", "covid", "tb"),
+                width = "160px",
+                multiple = TRUE,
+                inline = TRUE
+              ),
+              shinyWidgets::pickerInput(
+                inputId = "summarise_cohort_overlap_groupping_cohort_name_comparator",
+                label = "Cohort name comparator",
+                choices = c("asthma", "covid", "tb"),
+                selected = c("asthma", "covid", "tb"),
+                width = "160px",
+                multiple = TRUE,
+                inline = TRUE
+              ),
+              shiny::h4("Variables and estimates"),
+              shinyWidgets::pickerInput(
+                inputId = "summarise_cohort_overlap_variables_and_estimates_variable_name",
+                label = "Variable name",
+                choices = c("comparator", "overlap", "reference"),
+                selected = c("comparator", "overlap", "reference"),
+                width = "160px",
+                multiple = TRUE,
+                inline = TRUE
+              ),
+              shinyWidgets::pickerInput(
+                inputId = "summarise_cohort_overlap_variables_and_estimates_estimate_name",
                 label = "Estimate name",
                 choices = c("count", "percentage"),
                 selected = c("count", "percentage"),
@@ -835,28 +629,371 @@
                 shiny::tabPanel(
                   title = "Raw table",
                   shiny::checkboxInput(
-                    inputId = "summarised_large_scale_characteristics_show_groupping",
+                    inputId = "summarise_cohort_overlap_show_groupping",
                     label = "Show groupping",
                     value = TRUE
                   ),
                   shiny::checkboxInput(
-                    inputId = "summarised_large_scale_characteristics_show_settings",
+                    inputId = "summarise_cohort_overlap_show_settings",
                     label = "Show settings",
                     value = FALSE
                   ),
                   shiny::checkboxInput(
-                    inputId = "summarised_large_scale_characteristics_pivot_estimates",
+                    inputId = "summarise_cohort_overlap_pivot_estimates",
                     label = "Pivot estimates",
                     value = FALSE
                   ),
-                  shiny::downloadButton(outputId = "summarised_large_scale_characteristics_raw_download", label = "Download as csv"),
-                  DT::DTOutput(outputId = "summarised_large_scale_characteristics_raw_table") |>
+                  shiny::downloadButton(outputId = "summarise_cohort_overlap_raw_download", label = "Download as csv"),
+                  DT::DTOutput(outputId = "summarise_cohort_overlap_raw_table") |>
                     shinycssloaders::withSpinner()
                 ),
                 shiny::tabPanel(
                   title = "Formatted table",
                   shinyWidgets::pickerInput(
-                    inputId = "summarised_large_scale_characteristics_header",
+                    inputId = "summarise_cohort_overlap_header",
+                    label = "Header",
+                    choices = c("cdm_name", "cohort_name_comparator", "cohort_name_reference", "estimate_name", "variable_level", "variable_name"),
+                    selected = "cdm_name",
+                    width = "160px",
+                    multiple = TRUE,
+                    inline = TRUE
+                  ),
+                  shinyWidgets::pickerInput(
+                    inputId = "summarise_cohort_overlap_group",
+                    label = "Group",
+                    choices = c("cdm_name", "cohort_name_comparator", "cohort_name_reference", "estimate_name", "variable_level", "variable_name"),
+                    selected = NULL,
+                    width = "160px",
+                    multiple = TRUE,
+                    inline = TRUE
+                  ),
+                  shinyWidgets::pickerInput(
+                    inputId = "summarise_cohort_overlap_hide",
+                    label = "Hide",
+                    choices = c("cdm_name", "cohort_name_comparator", "cohort_name_reference", "estimate_name", "variable_level", "variable_name"),
+                    selected = NULL,
+                    width = "160px",
+                    multiple = TRUE,
+                    inline = TRUE
+                  ),
+                  shiny::downloadButton(outputId = "summarise_cohort_overlap_formatted_download", label = "Download as word"),
+                  gt::gt_output(outputId = "summarise_cohort_overlap_formatted_table") |>
+                    shinycssloaders::withSpinner()
+                ),
+                shiny::tabPanel(
+                  title = "Plot cohort overlap",
+                  shinyWidgets::pickerInput(
+                    inputId = "summarise_cohort_overlap_plot_1_facet",
+                    label = "facet",
+                    choices = c("cdm_name", "cohort_name_reference", "cohort_name_comparator", "variable_name", "variable_level", "estimate_name"),
+                    selected = c("cdm_name", "cohort_name_reference"),
+                    multiple = TRUE,
+                    inline = TRUE
+                  ),
+                  shiny::checkboxInput(
+                    inputId = "summarise_cohort_overlap_plot_1_unique_combinations",
+                    label = "uniqueCombinations",
+                    value = c(FALSE)
+                  ),
+                  shiny::downloadButton(outputId = "summarise_cohort_overlap_plot_1_download", label = "Download"),
+                  shiny::plotOutput(outputId = "summarise_cohort_overlap_plot_1") |>
+                    shinycssloaders::withSpinner()
+                )
+              )
+            ),
+            ## summarise_cohort_timing ----
+            shinydashboard::tabItem(
+              tabName = "summarise_cohort_timing",
+              shiny::h4("Settings"),
+              shinyWidgets::pickerInput(
+                inputId = "summarise_cohort_timing_settings_restrict_to_first_entry",
+                label = "Restrict to first entry",
+                choices = c("TRUE"),
+                selected = c("TRUE"),
+                width = "160px",
+                multiple = TRUE,
+                inline = TRUE
+              ),
+              shinyWidgets::pickerInput(
+                inputId = "summarise_cohort_timing_settings_density",
+                label = "Density",
+                choices = c("FALSE"),
+                selected = c("FALSE"),
+                width = "160px",
+                multiple = TRUE,
+                inline = TRUE
+              ),
+              shiny::h4("Groupping"),
+              shinyWidgets::pickerInput(
+                inputId = "summarise_cohort_timing_groupping_cdm_name",
+                label = "Cdm name",
+                choices = c("mock database"),
+                selected = c("mock database"),
+                width = "160px",
+                multiple = TRUE,
+                inline = TRUE
+              ),
+              shinyWidgets::pickerInput(
+                inputId = "summarise_cohort_timing_groupping_cohort_name_reference",
+                label = "Cohort name reference",
+                choices = c("asthma", "covid", "tb"),
+                selected = c("asthma", "covid", "tb"),
+                width = "160px",
+                multiple = TRUE,
+                inline = TRUE
+              ),
+              shinyWidgets::pickerInput(
+                inputId = "summarise_cohort_timing_groupping_cohort_name_comparator",
+                label = "Cohort name comparator",
+                choices = c("asthma", "covid", "tb"),
+                selected = c("asthma", "covid", "tb"),
+                width = "160px",
+                multiple = TRUE,
+                inline = TRUE
+              ),
+              shiny::h4("Variables and estimates"),
+              shinyWidgets::pickerInput(
+                inputId = "summarise_cohort_timing_variables_and_estimates_variable_name",
+                label = "Variable name",
+                choices = c("days_between_cohort_entries", "number records", "number subjects"),
+                selected = c("days_between_cohort_entries", "number records", "number subjects"),
+                width = "160px",
+                multiple = TRUE,
+                inline = TRUE
+              ),
+              shinyWidgets::pickerInput(
+                inputId = "summarise_cohort_timing_variables_and_estimates_estimate_name",
+                label = "Estimate name",
+                choices = c("count", "max", "median", "min", "q25", "q75"),
+                selected = c("count", "max", "median", "min", "q25", "q75"),
+                width = "160px",
+                multiple = TRUE,
+                inline = TRUE
+              ),
+              shiny::tabsetPanel(
+                type = "tabs",
+                shiny::tabPanel(
+                  title = "Raw table",
+                  shiny::checkboxInput(
+                    inputId = "summarise_cohort_timing_show_groupping",
+                    label = "Show groupping",
+                    value = TRUE
+                  ),
+                  shiny::checkboxInput(
+                    inputId = "summarise_cohort_timing_show_settings",
+                    label = "Show settings",
+                    value = FALSE
+                  ),
+                  shiny::checkboxInput(
+                    inputId = "summarise_cohort_timing_pivot_estimates",
+                    label = "Pivot estimates",
+                    value = FALSE
+                  ),
+                  shiny::downloadButton(outputId = "summarise_cohort_timing_raw_download", label = "Download as csv"),
+                  DT::DTOutput(outputId = "summarise_cohort_timing_raw_table") |>
+                    shinycssloaders::withSpinner()
+                ),
+                shiny::tabPanel(
+                  title = "Formatted table",
+                  shinyWidgets::pickerInput(
+                    inputId = "summarise_cohort_timing_header",
+                    label = "Header",
+                    choices = c("cdm_name", "cohort_name_comparator", "cohort_name_reference", "density", "estimate_name", "restrict_to_first_entry", "variable_level", "variable_name"),
+                    selected = "cdm_name",
+                    width = "160px",
+                    multiple = TRUE,
+                    inline = TRUE
+                  ),
+                  shinyWidgets::pickerInput(
+                    inputId = "summarise_cohort_timing_group",
+                    label = "Group",
+                    choices = c("cdm_name", "cohort_name_comparator", "cohort_name_reference", "density", "estimate_name", "restrict_to_first_entry", "variable_level", "variable_name"),
+                    selected = NULL,
+                    width = "160px",
+                    multiple = TRUE,
+                    inline = TRUE
+                  ),
+                  shinyWidgets::pickerInput(
+                    inputId = "summarise_cohort_timing_hide",
+                    label = "Hide",
+                    choices = c("cdm_name", "cohort_name_comparator", "cohort_name_reference", "density", "estimate_name", "restrict_to_first_entry", "variable_level", "variable_name"),
+                    selected = c("restrict_to_first_entry", "density"),
+                    width = "160px",
+                    multiple = TRUE,
+                    inline = TRUE
+                  ),
+                  shiny::downloadButton(outputId = "summarise_cohort_timing_formatted_download", label = "Download as word"),
+                  gt::gt_output(outputId = "summarise_cohort_timing_formatted_table") |>
+                    shinycssloaders::withSpinner()
+                ),
+                shiny::tabPanel(
+                  title = "Plot cohort timing",
+                  shinyWidgets::pickerInput(
+                    inputId = "summarise_cohort_timing_plot_3_plot_type",
+                    label = "plotType",
+                    choices = c("boxplot", "density"),
+                    selected = c("boxplot"),
+                    multiple = FALSE,
+                    inline = TRUE
+                  ),
+                  shinyWidgets::pickerInput(
+                    inputId = "summarise_cohort_timing_plot_3_time_scale",
+                    label = "timeScale",
+                    choices = c("days", "years"),
+                    selected = c("days"),
+                    multiple = FALSE,
+                    inline = TRUE
+                  ),
+                  shinyWidgets::pickerInput(
+                    inputId = "summarise_cohort_timing_plot_3_facet",
+                    label = "facet",
+                    choices = c("cdm_name", "cohort_name_reference", "cohort_name_comparator", "variable_name", "variable_level", "estimate_name", "restrict_to_first_entry", "density"),
+                    selected = c("cdm_name", "cohort_name_reference"),
+                    multiple = TRUE,
+                    inline = TRUE
+                  ),
+                  shinyWidgets::pickerInput(
+                    inputId = "summarise_cohort_timing_plot_3_colour",
+                    label = "colour",
+                    choices = c("cdm_name", "cohort_name_reference", "cohort_name_comparator", "variable_name", "variable_level", "estimate_name", "restrict_to_first_entry", "density"),
+                    selected = c("cohort_name_comparator"),
+                    multiple = TRUE,
+                    inline = TRUE
+                  ),
+                  shiny::checkboxInput(
+                    inputId = "summarise_cohort_timing_plot_3_unique_combinations",
+                    label = "uniqueCombinations",
+                    value = c(FALSE)
+                  ),
+                  shiny::downloadButton(outputId = "summarise_cohort_timing_plot_3_download", label = "Download"),
+                  shiny::plotOutput(outputId = "summarise_cohort_timing_plot_3") |>
+                    shinycssloaders::withSpinner()
+                )
+              )
+            ),
+            ## summarise_large_scale_characteristics ----
+            shinydashboard::tabItem(
+              tabName = "summarise_large_scale_characteristics",
+              shiny::h4("Settings"),
+              shinyWidgets::pickerInput(
+                inputId = "summarise_large_scale_characteristics_settings_table_name",
+                label = "Table name",
+                choices = c("condition_occurrence", "drug_exposure"),
+                selected = c("condition_occurrence", "drug_exposure"),
+                width = "160px",
+                multiple = TRUE,
+                inline = TRUE
+              ),
+              shinyWidgets::pickerInput(
+                inputId = "summarise_large_scale_characteristics_settings_type",
+                label = "Type",
+                choices = c("episode", "event"),
+                selected = c("episode", "event"),
+                width = "160px",
+                multiple = TRUE,
+                inline = TRUE
+              ),
+              shinyWidgets::pickerInput(
+                inputId = "summarise_large_scale_characteristics_settings_analysis",
+                label = "Analysis",
+                choices = c("standard"),
+                selected = c("standard"),
+                width = "160px",
+                multiple = TRUE,
+                inline = TRUE
+              ),
+              shiny::h4("Groupping"),
+              shinyWidgets::pickerInput(
+                inputId = "summarise_large_scale_characteristics_groupping_cdm_name",
+                label = "Cdm name",
+                choices = c("mock database"),
+                selected = c("mock database"),
+                width = "160px",
+                multiple = TRUE,
+                inline = TRUE
+              ),
+              shinyWidgets::pickerInput(
+                inputId = "summarise_large_scale_characteristics_groupping_cohort_name",
+                label = "Cohort name",
+                choices = c("asthma", "covid", "tb"),
+                selected = c("asthma", "covid", "tb"),
+                width = "160px",
+                multiple = TRUE,
+                inline = TRUE
+              ),
+              shinyWidgets::pickerInput(
+                inputId = "summarise_large_scale_characteristics_groupping_sex",
+                label = "Sex",
+                choices = c("Female", "Male", "overall"),
+                selected = c("Female", "Male", "overall"),
+                width = "160px",
+                multiple = TRUE,
+                inline = TRUE
+              ),
+              shinyWidgets::pickerInput(
+                inputId = "summarise_large_scale_characteristics_groupping_age_group",
+                label = "Age group",
+                choices = c("0 to 44", "45 or above", "overall"),
+                selected = c("0 to 44", "45 or above", "overall"),
+                width = "160px",
+                multiple = TRUE,
+                inline = TRUE
+              ),
+              shinyWidgets::pickerInput(
+                inputId = "summarise_large_scale_characteristics_groupping_concept_id",
+                label = "Concept id",
+                choices = c("1", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "2", "3", "4", "5", "6", "7", "8"),
+                selected = c("1", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "2", "3", "4", "5", "6", "7", "8"),
+                width = "160px",
+                multiple = TRUE,
+                inline = TRUE
+              ),
+              shiny::h4("Variables and estimates"),
+              shinyWidgets::pickerInput(
+                inputId = "summarise_large_scale_characteristics_variables_and_estimates_variable_name",
+                label = "Variable name",
+                choices = c("ALIMENTARY TRACT AND METABOLISM", "Adalimumab", "Arthritis", "Arthropathies", "Degenerative arthropathy", "Descendant drug", "Diseases of the musculoskeletal system and connective tissue", "Injectable", "Injection", "Knee osteoarthritis", "Musculoskeletal disorder", "OA", "Osteoarthritis of hip", "Osteoarthritis of knee", "Osteoarthrosis", "Osteonecrosis", "Other ingredient"),
+                selected = c("ALIMENTARY TRACT AND METABOLISM", "Adalimumab", "Arthritis", "Arthropathies", "Degenerative arthropathy", "Descendant drug", "Diseases of the musculoskeletal system and connective tissue", "Injectable", "Injection", "Knee osteoarthritis", "Musculoskeletal disorder", "OA", "Osteoarthritis of hip", "Osteoarthritis of knee", "Osteoarthrosis", "Osteonecrosis", "Other ingredient"),
+                width = "160px",
+                multiple = TRUE,
+                inline = TRUE
+              ),
+              shinyWidgets::pickerInput(
+                inputId = "summarise_large_scale_characteristics_variables_and_estimates_estimate_name",
+                label = "Estimate name",
+                choices = c("count", "percentage"),
+                selected = c("count", "percentage"),
+                width = "160px",
+                multiple = TRUE,
+                inline = TRUE
+              ),
+              shiny::tabsetPanel(
+                type = "tabs",
+                shiny::tabPanel(
+                  title = "Raw table",
+                  shiny::checkboxInput(
+                    inputId = "summarise_large_scale_characteristics_show_groupping",
+                    label = "Show groupping",
+                    value = TRUE
+                  ),
+                  shiny::checkboxInput(
+                    inputId = "summarise_large_scale_characteristics_show_settings",
+                    label = "Show settings",
+                    value = FALSE
+                  ),
+                  shiny::checkboxInput(
+                    inputId = "summarise_large_scale_characteristics_pivot_estimates",
+                    label = "Pivot estimates",
+                    value = FALSE
+                  ),
+                  shiny::downloadButton(outputId = "summarise_large_scale_characteristics_raw_download", label = "Download as csv"),
+                  DT::DTOutput(outputId = "summarise_large_scale_characteristics_raw_table") |>
+                    shinycssloaders::withSpinner()
+                ),
+                shiny::tabPanel(
+                  title = "Formatted table",
+                  shinyWidgets::pickerInput(
+                    inputId = "summarise_large_scale_characteristics_header",
                     label = "Header",
                     choices = c("age_group", "analysis", "cdm_name", "cohort_name", "concept_id", "estimate_name", "sex", "table_name", "type", "variable_level", "variable_name"),
                     selected = "cdm_name",
@@ -865,7 +1002,7 @@
                     inline = TRUE
                   ),
                   shinyWidgets::pickerInput(
-                    inputId = "summarised_large_scale_characteristics_group",
+                    inputId = "summarise_large_scale_characteristics_group",
                     label = "Group",
                     choices = c("age_group", "analysis", "cdm_name", "cohort_name", "concept_id", "estimate_name", "sex", "table_name", "type", "variable_level", "variable_name"),
                     selected = "cohort_name",
@@ -874,7 +1011,7 @@
                     inline = TRUE
                   ),
                   shinyWidgets::pickerInput(
-                    inputId = "summarised_large_scale_characteristics_hide",
+                    inputId = "summarise_large_scale_characteristics_hide",
                     label = "Hide",
                     choices = c("age_group", "analysis", "cdm_name", "cohort_name", "concept_id", "estimate_name", "sex", "table_name", "type", "variable_level", "variable_name"),
                     selected = c("table_name", "type", "analysis"),
@@ -882,8 +1019,8 @@
                     multiple = TRUE,
                     inline = TRUE
                   ),
-                  shiny::downloadButton(outputId = "summarised_large_scale_characteristics_formatted_download", label = "Download as word"),
-                  gt::gt_output(outputId = "summarised_large_scale_characteristics_formatted_table") |>
+                  shiny::downloadButton(outputId = "summarise_large_scale_characteristics_formatted_download", label = "Download as word"),
+                  gt::gt_output(outputId = "summarise_large_scale_characteristics_formatted_table") |>
                     shinycssloaders::withSpinner()
                 )
               )
@@ -899,27 +1036,27 @@
       cat(serverStatic(result = result, asText = TRUE), sep = "\n")
     Output
       server <- function(input, output, session) {
-        # summarised_characteristics ----
-        getRawDataSummarisedCharacteristics <- shiny::reactive({
+        # summarise_characteristics ----
+        getRawDataSummariseCharacteristics <- shiny::reactive({
           data |>
-            omopViewer::filterData("summarised_characteristics", input) |>
+            omopViewer::filterData("summarise_characteristics", input) |>
             omopViewer::tidyData(
               prefixSet = "set:",
               prefixGroup = "group: ",
-              showSettings = input$summarised_characteristics_show_settings,
-              showGroupping = input$summarised_characteristics_show_groupping,
-              pivotEstimates = input$summarised_characteristics_pivot_estimates
+              showSettings = input$summarise_characteristics_show_settings,
+              showGroupping = input$summarise_characteristics_show_groupping,
+              pivotEstimates = input$summarise_characteristics_pivot_estimates
             )
         })
-        output$summarised_characteristics_raw_table <- DT::renderDT({
-          DT::datatable(getRawDataSummarisedCharacteristics(), options = list(scrollX = TRUE))
+        output$summarise_characteristics_raw_table <- DT::renderDT({
+          DT::datatable(getRawDataSummariseCharacteristics(), options = list(scrollX = TRUE))
         })
-        getFormattedDataSummarisedCharacteristics <- shiny::reactive({
+        getFormattedDataSummariseCharacteristics <- shiny::reactive({
           x <- data |>
-            omopViewer::filterData("summarised_characteristics", input)
-          header <- input$summarised_characteristics_header
-          group <- input$summarised_characteristics_group
-          hide <- input$summarised_characteristics_hide
+            omopViewer::filterData("summarise_characteristics", input)
+          header <- input$summarise_characteristics_header
+          group <- input$summarise_characteristics_group
+          hide <- input$summarise_characteristics_hide
           all <- c(header, group, hide)
           shiny::validate(shiny::need(
             length(all) == length(unique(all)),
@@ -932,62 +1069,61 @@
             hide = hide
           )
         })
-        output$summarised_characteristics_formatted_table <- gt::render_gt({
-          getFormattedDataSummarisedCharacteristics()
+        output$summarise_characteristics_formatted_table <- gt::render_gt({
+          getFormattedDataSummariseCharacteristics()
         })
-        output$summarised_characteristics_formatted_download <- shiny::downloadHandler(
-          filename = "gt_table_summarised_characteristics.docx",
+        output$summarise_characteristics_formatted_download <- shiny::downloadHandler(
+          filename = "gt_table_summarise_characteristics.docx",
           content = function(file) {
-            getFormattedDataSummarisedCharacteristics() |>
+            getFormattedDataSummariseCharacteristics() |>
               gt::gtsave(filename = file)
           }
         )
-        getPlotDataSummarisedCharacteristics <- shiny::reactive({
+        getPlotDataSummariseCharacteristics <- shiny::reactive({
           data |>
-            omopViewer::filterData("summarised_characteristics", input)
+            omopViewer::filterData("summarise_characteristics", input)
         })
       
         createPlot4 <- shiny::reactive({
-          result <- getPlotDataSummarisedCharacteristics()
+          result <- getPlotDataSummariseCharacteristics()
           CohortCharacteristics::plotCharacteristics(
             result,
-            x = input$summarised_characteristics_plot_4_x,
-            facet = input$summarised_characteristics_plot_4_facet,
-            colour = input$summarised_characteristics_plot_4_colour,
-            plotStyle = input$summarised_characteristics_plot_4_plot_style
+            plotStyle = input$summarise_characteristics_plot_4_plot_style,
+            facet = input$summarise_characteristics_plot_4_facet,
+            colour = input$summarise_characteristics_plot_4_colour
           )
         })
-        output$summarised_characteristics_plot_4 <- shiny::renderPlot({
+        output$summarise_characteristics_plot_4 <- shiny::renderPlot({
           createPlot4()
         })
-        output$summarised_characteristics_plot_4_download <- shiny::downloadHandler(
-          filename = "plot_summarised_characteristics.png",
+        output$summarise_characteristics_plot_4_download <- shiny::downloadHandler(
+          filename = "plot_summarise_characteristics.png",
           content = function(file) {
             plt <- createPlot4()
             ggplot2::ggsave(filename = file, plot = plt)
           }
         )
-        # cohort_attrition ----
-        getRawDataCohortAttrition <- shiny::reactive({
+        # summarise_cohort_attrition ----
+        getRawDataSummariseCohortAttrition <- shiny::reactive({
           data |>
-            omopViewer::filterData("cohort_attrition", input) |>
+            omopViewer::filterData("summarise_cohort_attrition", input) |>
             omopViewer::tidyData(
               prefixSet = "set:",
               prefixGroup = "group: ",
-              showSettings = input$cohort_attrition_show_settings,
-              showGroupping = input$cohort_attrition_show_groupping,
-              pivotEstimates = input$cohort_attrition_pivot_estimates
+              showSettings = input$summarise_cohort_attrition_show_settings,
+              showGroupping = input$summarise_cohort_attrition_show_groupping,
+              pivotEstimates = input$summarise_cohort_attrition_pivot_estimates
             )
         })
-        output$cohort_attrition_raw_table <- DT::renderDT({
-          DT::datatable(getRawDataCohortAttrition(), options = list(scrollX = TRUE))
+        output$summarise_cohort_attrition_raw_table <- DT::renderDT({
+          DT::datatable(getRawDataSummariseCohortAttrition(), options = list(scrollX = TRUE))
         })
-        getFormattedDataCohortAttrition <- shiny::reactive({
+        getFormattedDataSummariseCohortAttrition <- shiny::reactive({
           x <- data |>
-            omopViewer::filterData("cohort_attrition", input)
-          header <- input$cohort_attrition_header
-          group <- input$cohort_attrition_group
-          hide <- input$cohort_attrition_hide
+            omopViewer::filterData("summarise_cohort_attrition", input)
+          header <- input$summarise_cohort_attrition_header
+          group <- input$summarise_cohort_attrition_group
+          hide <- input$summarise_cohort_attrition_hide
           all <- c(header, group, hide)
           shiny::validate(shiny::need(
             length(all) == length(unique(all)),
@@ -1000,58 +1136,58 @@
             hide = hide
           )
         })
-        output$cohort_attrition_formatted_table <- gt::render_gt({
-          getFormattedDataCohortAttrition()
+        output$summarise_cohort_attrition_formatted_table <- gt::render_gt({
+          getFormattedDataSummariseCohortAttrition()
         })
-        output$cohort_attrition_formatted_download <- shiny::downloadHandler(
-          filename = "gt_table_cohort_attrition.docx",
+        output$summarise_cohort_attrition_formatted_download <- shiny::downloadHandler(
+          filename = "gt_table_summarise_cohort_attrition.docx",
           content = function(file) {
-            getFormattedDataCohortAttrition() |>
+            getFormattedDataSummariseCohortAttrition() |>
               gt::gtsave(filename = file)
           }
         )
-        getPlotDataCohortAttrition <- shiny::reactive({
+        getPlotDataSummariseCohortAttrition <- shiny::reactive({
           data |>
-            omopViewer::filterData("cohort_attrition", input)
+            omopViewer::filterData("summarise_cohort_attrition", input)
         })
       
         createPlot2 <- shiny::reactive({
-          result <- getPlotDataCohortAttrition()
+          result <- getPlotDataSummariseCohortAttrition()
           CohortCharacteristics::plotCohortAttrition(
             result
           )
         })
-        output$cohort_attrition_plot_2 <- DiagrammeR::renderGrViz({
+        output$summarise_cohort_attrition_plot_2 <- DiagrammeR::renderGrViz({
           createPlot2()
         })
-        output$cohort_attrition_plot_2_download <- shiny::downloadHandler(
-          filename = "plot_cohort_attrition.png",
+        output$summarise_cohort_attrition_plot_2_download <- shiny::downloadHandler(
+          filename = "plot_summarise_cohort_attrition.png",
           content = function(file) {
             plt <- createPlot2()
             DiagrammeR::export_graph(graph = plt, file_name = file, fily_type = "png", width = 800)
           }
         )
-        # cohort_overlap ----
-        getRawDataCohortOverlap <- shiny::reactive({
+        # summarise_cohort_count ----
+        getRawDataSummariseCohortCount <- shiny::reactive({
           data |>
-            omopViewer::filterData("cohort_overlap", input) |>
+            omopViewer::filterData("summarise_cohort_count", input) |>
             omopViewer::tidyData(
               prefixSet = "set:",
               prefixGroup = "group: ",
-              showSettings = input$cohort_overlap_show_settings,
-              showGroupping = input$cohort_overlap_show_groupping,
-              pivotEstimates = input$cohort_overlap_pivot_estimates
+              showSettings = input$summarise_cohort_count_show_settings,
+              showGroupping = input$summarise_cohort_count_show_groupping,
+              pivotEstimates = input$summarise_cohort_count_pivot_estimates
             )
         })
-        output$cohort_overlap_raw_table <- DT::renderDT({
-          DT::datatable(getRawDataCohortOverlap(), options = list(scrollX = TRUE))
+        output$summarise_cohort_count_raw_table <- DT::renderDT({
+          DT::datatable(getRawDataSummariseCohortCount(), options = list(scrollX = TRUE))
         })
-        getFormattedDataCohortOverlap <- shiny::reactive({
+        getFormattedDataSummariseCohortCount <- shiny::reactive({
           x <- data |>
-            omopViewer::filterData("cohort_overlap", input)
-          header <- input$cohort_overlap_header
-          group <- input$cohort_overlap_group
-          hide <- input$cohort_overlap_hide
+            omopViewer::filterData("summarise_cohort_count", input)
+          header <- input$summarise_cohort_count_header
+          group <- input$summarise_cohort_count_group
+          hide <- input$summarise_cohort_count_hide
           all <- c(header, group, hide)
           shiny::validate(shiny::need(
             length(all) == length(unique(all)),
@@ -1064,60 +1200,126 @@
             hide = hide
           )
         })
-        output$cohort_overlap_formatted_table <- gt::render_gt({
-          getFormattedDataCohortOverlap()
+        output$summarise_cohort_count_formatted_table <- gt::render_gt({
+          getFormattedDataSummariseCohortCount()
         })
-        output$cohort_overlap_formatted_download <- shiny::downloadHandler(
-          filename = "gt_table_cohort_overlap.docx",
+        output$summarise_cohort_count_formatted_download <- shiny::downloadHandler(
+          filename = "gt_table_summarise_cohort_count.docx",
           content = function(file) {
-            getFormattedDataCohortOverlap() |>
+            getFormattedDataSummariseCohortCount() |>
               gt::gtsave(filename = file)
           }
         )
-        getPlotDataCohortOverlap <- shiny::reactive({
+        getPlotDataSummariseCohortCount <- shiny::reactive({
           data |>
-            omopViewer::filterData("cohort_overlap", input)
+            omopViewer::filterData("summarise_cohort_count", input)
+        })
+      
+        createPlot5 <- shiny::reactive({
+          result <- getPlotDataSummariseCohortCount()
+          CohortCharacteristics::plotCohortCount(
+            result,
+            facet = input$summarise_cohort_count_plot_5_facet,
+            colour = input$summarise_cohort_count_plot_5_colour
+          )
+        })
+        output$summarise_cohort_count_plot_5 <- shiny::renderPlot({
+          createPlot5()
+        })
+        output$summarise_cohort_count_plot_5_download <- shiny::downloadHandler(
+          filename = "plot_summarise_cohort_count.png",
+          content = function(file) {
+            plt <- createPlot5()
+            ggplot2::ggsave(filename = file, plot = plt)
+          }
+        )
+        # summarise_cohort_overlap ----
+        getRawDataSummariseCohortOverlap <- shiny::reactive({
+          data |>
+            omopViewer::filterData("summarise_cohort_overlap", input) |>
+            omopViewer::tidyData(
+              prefixSet = "set:",
+              prefixGroup = "group: ",
+              showSettings = input$summarise_cohort_overlap_show_settings,
+              showGroupping = input$summarise_cohort_overlap_show_groupping,
+              pivotEstimates = input$summarise_cohort_overlap_pivot_estimates
+            )
+        })
+        output$summarise_cohort_overlap_raw_table <- DT::renderDT({
+          DT::datatable(getRawDataSummariseCohortOverlap(), options = list(scrollX = TRUE))
+        })
+        getFormattedDataSummariseCohortOverlap <- shiny::reactive({
+          x <- data |>
+            omopViewer::filterData("summarise_cohort_overlap", input)
+          header <- input$summarise_cohort_overlap_header
+          group <- input$summarise_cohort_overlap_group
+          hide <- input$summarise_cohort_overlap_hide
+          all <- c(header, group, hide)
+          shiny::validate(shiny::need(
+            length(all) == length(unique(all)),
+            "there must not be overlap between `header`, `group` and `hide`"
+          ))
+          omopViewer::visTable(
+            result = x,
+            header = header,
+            group = group,
+            hide = hide
+          )
+        })
+        output$summarise_cohort_overlap_formatted_table <- gt::render_gt({
+          getFormattedDataSummariseCohortOverlap()
+        })
+        output$summarise_cohort_overlap_formatted_download <- shiny::downloadHandler(
+          filename = "gt_table_summarise_cohort_overlap.docx",
+          content = function(file) {
+            getFormattedDataSummariseCohortOverlap() |>
+              gt::gtsave(filename = file)
+          }
+        )
+        getPlotDataSummariseCohortOverlap <- shiny::reactive({
+          data |>
+            omopViewer::filterData("summarise_cohort_overlap", input)
         })
       
         createPlot1 <- shiny::reactive({
-          result <- getPlotDataCohortOverlap()
+          result <- getPlotDataSummariseCohortOverlap()
           CohortCharacteristics::plotCohortOverlap(
             result,
-            facet = input$cohort_overlap_plot_1_facet,
-            uniqueCombinations = input$cohort_overlap_plot_1_unique_combinations
+            facet = input$summarise_cohort_overlap_plot_1_facet,
+            uniqueCombinations = input$summarise_cohort_overlap_plot_1_unique_combinations
           )
         })
-        output$cohort_overlap_plot_1 <- shiny::renderPlot({
+        output$summarise_cohort_overlap_plot_1 <- shiny::renderPlot({
           createPlot1()
         })
-        output$cohort_overlap_plot_1_download <- shiny::downloadHandler(
-          filename = "plot_cohort_overlap.png",
+        output$summarise_cohort_overlap_plot_1_download <- shiny::downloadHandler(
+          filename = "plot_summarise_cohort_overlap.png",
           content = function(file) {
             plt <- createPlot1()
             ggplot2::ggsave(filename = file, plot = plt)
           }
         )
-        # cohort_timing ----
-        getRawDataCohortTiming <- shiny::reactive({
+        # summarise_cohort_timing ----
+        getRawDataSummariseCohortTiming <- shiny::reactive({
           data |>
-            omopViewer::filterData("cohort_timing", input) |>
+            omopViewer::filterData("summarise_cohort_timing", input) |>
             omopViewer::tidyData(
               prefixSet = "set:",
               prefixGroup = "group: ",
-              showSettings = input$cohort_timing_show_settings,
-              showGroupping = input$cohort_timing_show_groupping,
-              pivotEstimates = input$cohort_timing_pivot_estimates
+              showSettings = input$summarise_cohort_timing_show_settings,
+              showGroupping = input$summarise_cohort_timing_show_groupping,
+              pivotEstimates = input$summarise_cohort_timing_pivot_estimates
             )
         })
-        output$cohort_timing_raw_table <- DT::renderDT({
-          DT::datatable(getRawDataCohortTiming(), options = list(scrollX = TRUE))
+        output$summarise_cohort_timing_raw_table <- DT::renderDT({
+          DT::datatable(getRawDataSummariseCohortTiming(), options = list(scrollX = TRUE))
         })
-        getFormattedDataCohortTiming <- shiny::reactive({
+        getFormattedDataSummariseCohortTiming <- shiny::reactive({
           x <- data |>
-            omopViewer::filterData("cohort_timing", input)
-          header <- input$cohort_timing_header
-          group <- input$cohort_timing_group
-          hide <- input$cohort_timing_hide
+            omopViewer::filterData("summarise_cohort_timing", input)
+          header <- input$summarise_cohort_timing_header
+          group <- input$summarise_cohort_timing_group
+          hide <- input$summarise_cohort_timing_hide
           all <- c(header, group, hide)
           shiny::validate(shiny::need(
             length(all) == length(unique(all)),
@@ -1130,63 +1332,63 @@
             hide = hide
           )
         })
-        output$cohort_timing_formatted_table <- gt::render_gt({
-          getFormattedDataCohortTiming()
+        output$summarise_cohort_timing_formatted_table <- gt::render_gt({
+          getFormattedDataSummariseCohortTiming()
         })
-        output$cohort_timing_formatted_download <- shiny::downloadHandler(
-          filename = "gt_table_cohort_timing.docx",
+        output$summarise_cohort_timing_formatted_download <- shiny::downloadHandler(
+          filename = "gt_table_summarise_cohort_timing.docx",
           content = function(file) {
-            getFormattedDataCohortTiming() |>
+            getFormattedDataSummariseCohortTiming() |>
               gt::gtsave(filename = file)
           }
         )
-        getPlotDataCohortTiming <- shiny::reactive({
+        getPlotDataSummariseCohortTiming <- shiny::reactive({
           data |>
-            omopViewer::filterData("cohort_timing", input)
+            omopViewer::filterData("summarise_cohort_timing", input)
         })
       
         createPlot3 <- shiny::reactive({
-          result <- getPlotDataCohortTiming()
+          result <- getPlotDataSummariseCohortTiming()
           CohortCharacteristics::plotCohortTiming(
             result,
-            plotType = input$cohort_timing_plot_3_plot_type,
-            timeScale = input$cohort_timing_plot_3_time_scale,
-            facet = input$cohort_timing_plot_3_facet,
-            colour = input$cohort_timing_plot_3_colour,
-            uniqueCombinations = input$cohort_timing_plot_3_unique_combinations
+            plotType = input$summarise_cohort_timing_plot_3_plot_type,
+            timeScale = input$summarise_cohort_timing_plot_3_time_scale,
+            facet = input$summarise_cohort_timing_plot_3_facet,
+            colour = input$summarise_cohort_timing_plot_3_colour,
+            uniqueCombinations = input$summarise_cohort_timing_plot_3_unique_combinations
           )
         })
-        output$cohort_timing_plot_3 <- shiny::renderPlot({
+        output$summarise_cohort_timing_plot_3 <- shiny::renderPlot({
           createPlot3()
         })
-        output$cohort_timing_plot_3_download <- shiny::downloadHandler(
-          filename = "plot_cohort_timing.png",
+        output$summarise_cohort_timing_plot_3_download <- shiny::downloadHandler(
+          filename = "plot_summarise_cohort_timing.png",
           content = function(file) {
             plt <- createPlot3()
             ggplot2::ggsave(filename = file, plot = plt)
           }
         )
-        # summarised_large_scale_characteristics ----
-        getRawDataSummarisedLargeScaleCharacteristics <- shiny::reactive({
+        # summarise_large_scale_characteristics ----
+        getRawDataSummariseLargeScaleCharacteristics <- shiny::reactive({
           data |>
-            omopViewer::filterData("summarised_large_scale_characteristics", input) |>
+            omopViewer::filterData("summarise_large_scale_characteristics", input) |>
             omopViewer::tidyData(
               prefixSet = "set:",
               prefixGroup = "group: ",
-              showSettings = input$summarised_large_scale_characteristics_show_settings,
-              showGroupping = input$summarised_large_scale_characteristics_show_groupping,
-              pivotEstimates = input$summarised_large_scale_characteristics_pivot_estimates
+              showSettings = input$summarise_large_scale_characteristics_show_settings,
+              showGroupping = input$summarise_large_scale_characteristics_show_groupping,
+              pivotEstimates = input$summarise_large_scale_characteristics_pivot_estimates
             )
         })
-        output$summarised_large_scale_characteristics_raw_table <- DT::renderDT({
-          DT::datatable(getRawDataSummarisedLargeScaleCharacteristics(), options = list(scrollX = TRUE))
+        output$summarise_large_scale_characteristics_raw_table <- DT::renderDT({
+          DT::datatable(getRawDataSummariseLargeScaleCharacteristics(), options = list(scrollX = TRUE))
         })
-        getFormattedDataSummarisedLargeScaleCharacteristics <- shiny::reactive({
+        getFormattedDataSummariseLargeScaleCharacteristics <- shiny::reactive({
           x <- data |>
-            omopViewer::filterData("summarised_large_scale_characteristics", input)
-          header <- input$summarised_large_scale_characteristics_header
-          group <- input$summarised_large_scale_characteristics_group
-          hide <- input$summarised_large_scale_characteristics_hide
+            omopViewer::filterData("summarise_large_scale_characteristics", input)
+          header <- input$summarise_large_scale_characteristics_header
+          group <- input$summarise_large_scale_characteristics_group
+          hide <- input$summarise_large_scale_characteristics_hide
           all <- c(header, group, hide)
           shiny::validate(shiny::need(
             length(all) == length(unique(all)),
@@ -1199,13 +1401,13 @@
             hide = hide
           )
         })
-        output$summarised_large_scale_characteristics_formatted_table <- gt::render_gt({
-          getFormattedDataSummarisedLargeScaleCharacteristics()
+        output$summarise_large_scale_characteristics_formatted_table <- gt::render_gt({
+          getFormattedDataSummariseLargeScaleCharacteristics()
         })
-        output$summarised_large_scale_characteristics_formatted_download <- shiny::downloadHandler(
-          filename = "gt_table_summarised_large_scale_characteristics.docx",
+        output$summarise_large_scale_characteristics_formatted_download <- shiny::downloadHandler(
+          filename = "gt_table_summarise_large_scale_characteristics.docx",
           content = function(file) {
-            getFormattedDataSummarisedLargeScaleCharacteristics() |>
+            getFormattedDataSummariseLargeScaleCharacteristics() |>
               gt::gtsave(filename = file)
           }
         )

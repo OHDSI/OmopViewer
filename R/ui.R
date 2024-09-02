@@ -153,6 +153,8 @@ writeVect <- function(x) {
     x <- paste0('c("', paste0(x, collapse = '", "'), '")')
   } else if (is.null(x)) {
     x <- "NULL"
+  } else if (is.call(x)) {
+    x <- deparse(x)
   } else {
     x <- paste0('c(', paste0(x, collapse = ', '), ')')
   }
