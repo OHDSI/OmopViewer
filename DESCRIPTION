@@ -61,5 +61,5 @@ VignetteBuilder: knitr
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 Remotes:
-    darwin-eu/visOmopResults
+    darwin-eu/visOmopResults,
     darwin-eu-dev/CohortCharacteristics
