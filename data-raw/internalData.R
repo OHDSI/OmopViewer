@@ -6,7 +6,7 @@
 
 omopViewerTabs <- dplyr::tribble(
   ~result_tab_id, ~result_type, ~package, ~title, ~icon, ~information,
-  1L, "summarise_cohort_overlap", "CohortCharacteristics", "Cohort overlap", "circle-half-stroke", "",
+  1L, "summarise_cohort_overlap", "CohortCharacteristics", "Cohort overlap", "circle-half-stroke", "Cohort overlap shows the number of subjects that contribute to a pair of cohorts.",
   2L, "summarise_cohort_attrition", "CohortCharacteristics", "Cohort Attrition", "layer-group", "",
   3L, "summarise_cohort_timing", "CohortCharacteristics", "Cohort timing", "chart-simple", "",
   4L, "summarise_characteristics", "CohortCharacteristics", "Cohort characteristics", "users-gear", "",
