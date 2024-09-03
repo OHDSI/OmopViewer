@@ -233,19 +233,9 @@ serverDynamic <- function(input, output, session) {
   })
 }
 
-#' Provides the static server of the shiny app for a given set of resultType(s).
-#'
-#' @param result A summarised_result object.
-#' @param asText Whether to output a text object or to eval it.
-#'
-#' @return The server of interest.
-#' @export
-#'
-serverStatic <- function(result = emptySummarisedResult(),
-                         asText = FALSE) {
+serverStatic <- function(result = emptySummarisedResult()) {
   # initial checks
   result <- omopgenerics::validateResultArguemnt(result)
-  omopgenerics::assertLogical(asText, length = 1)
 
   resultType <- omopgenerics::settings(result) |>
     dplyr::select("result_type") |>
@@ -262,17 +252,9 @@ serverStatic <- function(result = emptySummarisedResult(),
   }
 
   # create server
-  x <- paste0('function(input, output, session) {', serv,
-              '\n # end -----\n}')
-
-  if (asText) {
-    x <- paste0("server <- ", x) |>
-      styleCode()
-  } else {
-    x <- x |>
-      rlang::parse_expr() |>
-      rlang::eval_tidy()
-  }
+  x <- paste0('server <- function(input, output, session) {', serv,
+              '\n # end -----\n}') |>
+    styleCode()
   return(x)
 }
 

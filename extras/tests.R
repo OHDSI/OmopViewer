@@ -3,6 +3,42 @@ library(shiny)
 library(bslib)
 library(palmerpenguins)
 
+aboutTab2 <- function() {
+  subtitle <- 'shiny::tagList(
+    "This shiny app was generated with ",
+    shiny::a(
+      "omopViewer",
+      href = "https://github.com/oxford-pharmacoepi/omopViewer",
+      target = "_blank"),
+    shiny::strong("v{as.character(utils::packageVersion("omopViewer"))}")
+  )' |>
+    glue::glue()
+  description <- 'shiny::tagList(
+    "omopViewer works only with `summarised_result` objects as defined in ",
+    shiny::a(
+      "omopgenerics",
+      href = "https://github.com/darwin-eu-dev/omopgenerics",
+      target = "_blank"),
+    "."
+  )'
+  'shiny::div(
+    class = "about",
+    shiny::tags$img(
+      src = "hds_logo.svg",
+      class = "logo-img",
+      alt = "Logo",
+      height = "auto",
+      width = "30%",
+      style = "float:right"
+    ),
+    shiny::tags$p({subtitle}),
+    shiny::tags$p({description})
+  )' |>
+    glue::glue() |>
+    styleCode() |>
+    paste0(collapse = "\n")
+}
+
 link_shiny <- tags$a(
   shiny::icon("github"), "Github",
   href = "https://github.com/oxford-pharmacoepi",
@@ -16,16 +52,30 @@ link_posit <- tags$a(
 
 # Define the UI
 ui <- page_navbar(
-  title = "My study",
-  nav_panel(
-    title = "About",
-    icon = icon("circle-info"),
-    aboutTab() |> rlang::parse_expr() |> eval() |> card()
+  title = tags$span(
+    tags$img(
+      src = "hds_logo.svg",
+      width = "auto",
+      height = "46px",
+      class = "me-3",
+      alt = "logo"
+    ),
+    "My study"
   ),
   nav_panel(
     title = "Background",
     icon = icon("disease"),
-    card()
+    card(
+      card_header("Study background"),
+      shiny::p("You can use this section to add some background of your study"),
+      tags$img(
+        src = "hds_logo.svg",
+        width = "auto",
+        height = "100px",
+        alt = "logo",
+        style = "float:left"
+      )
+    )
   ),
   nav_panel(
     title = "Cohort Characteristics",
@@ -36,8 +86,7 @@ ui <- page_navbar(
           open = "Information",
           bslib::accordion_panel(
             title = "Information",
-            icon = shiny::icon("circle-info"),
-            p("In this panel you can find information about the characteristics of the individuals")
+            icon = shiny::icon("circle-info")
           ),
           bslib::accordion_panel(
             title = "Settings",
@@ -57,61 +106,59 @@ ui <- page_navbar(
           )
         )
       ),
-      card(
-        page_navbar(
-          nav_panel(
-            title = "Raw data",
-            card(
-              full_screen = TRUE,
-              DT::datatable(omopgenerics::emptySummarisedResult())
-            )
-          ),
-          nav_panel(
-            title = "Formatted table",
-            card(
-              full_screen = TRUE,
-              card_header(
-                popover(
-                  icon("download"),
-                  downloadButton("download_gt")
-                ),
-                class = "text-end"
+      navset_card_tab(
+        nav_panel(
+          title = "Raw data",
+          card(
+            full_screen = TRUE,
+            DT::datatable(omopgenerics::emptySummarisedResult())
+          )
+        ),
+        nav_panel(
+          title = "Formatted table",
+          card(
+            full_screen = TRUE,
+            card_header(
+              popover(
+                icon("download"),
+                downloadButton("download_gt")
               ),
-              layout_sidebar(
-                sidebar = sidebar(
-                  position = "right",
-                  selectizeInput(inputId = "tab1", label = "Group", choices = unique(penguins$species), multiple = TRUE, options = list(plugins = "remove_button")),
-                  selectizeInput(inputId = "tab2", label = "Header", choices = unique(penguins$species), multiple = TRUE, options = list(plugins = "remove_button")),
-                  selectizeInput(inputId = "tab3", label = "Hide", choices = unique(penguins$species), multiple = TRUE, options = list(plugins = "remove_button"))
-                ),
-                gt::gt(dplyr::tibble(a = 1))
-              )
-            )
-          ),
-          nav_panel(
-            title = "Plot 1",
-            card(
-              full_screen = TRUE,
-              card_header(
-                popover(
-                  icon("download"),
-                  numericInput(
-                    inputId = "download_dpi",
-                    label = "dpi",
-                    value = 300
-                  ),
-                  downloadButton("download_plot")
-                ),
-                class = "text-end"
+              class = "text-end"
+            ),
+            layout_sidebar(
+              sidebar = sidebar(
+                position = "right",
+                selectizeInput(inputId = "tab1", label = "Group", choices = unique(penguins$species), multiple = TRUE, options = list(plugins = "remove_button")),
+                selectizeInput(inputId = "tab2", label = "Header", choices = unique(penguins$species), multiple = TRUE, options = list(plugins = "remove_button")),
+                selectizeInput(inputId = "tab3", label = "Hide", choices = unique(penguins$species), multiple = TRUE, options = list(plugins = "remove_button"))
               ),
-              layout_sidebar(
-                sidebar = sidebar(
-                  position = "right",
-                  selectizeInput(inputId = "plot11", label = "Facet", choices = unique(penguins$species), multiple = TRUE, options = list(plugins = "remove_button")),
-                  selectizeInput(inputId = "plot12", label = "Colour", choices = unique(penguins$species), multiple = TRUE, options = list(plugins = "remove_button"))
+              gt::gt(dplyr::tibble(a = 1))
+            )
+          )
+        ),
+        nav_panel(
+          title = "Plot 1",
+          card(
+            full_screen = TRUE,
+            card_header(
+              popover(
+                icon("download"),
+                numericInput(
+                  inputId = "download_dpi",
+                  label = "dpi",
+                  value = 300
                 ),
-                shiny::plotOutput("plot")
-              )
+                downloadButton("download_plot")
+              ),
+              class = "text-end"
+            ),
+            layout_sidebar(
+              sidebar = sidebar(
+                position = "right",
+                selectizeInput(inputId = "plot11", label = "Facet", choices = unique(penguins$species), multiple = TRUE, options = list(plugins = "remove_button")),
+                selectizeInput(inputId = "plot12", label = "Colour", choices = unique(penguins$species), multiple = TRUE, options = list(plugins = "remove_button"))
+              ),
+              shiny::plotOutput("plot")
             )
           )
         )
@@ -119,6 +166,12 @@ ui <- page_navbar(
     )
   ),
   nav_spacer(),
+  nav_item(
+    popover(
+      icon("circle-info"),
+      aboutTab2() |> rlang::parse_expr() |> eval()
+    )
+  ),
   nav_item(
     input_dark_mode(id = "dark_mode", mode = "light")
   ),

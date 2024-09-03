@@ -37,94 +37,32 @@ uiDynamic <- function() {
   )
 }
 
-#' Provides the static UI of the shiny app for a given set of resultType(s).
-#'
-#' @param result A summarised_result object.
-#' @param asText Whether to output a text object or to eval it.
-#' @param logo Whethet to include a logo in the about tab and upper panel.
-#'
-#' @return The ui of interest.
-#' @export
-#'
 uiStatic <- function(result = emptySummarisedResult(),
-                     asText = FALSE,
-                     logo = NULL) {
+                     logo = NULL,
+                     title = "My study",
+                     background = TRUE) {
   # initial checks
   result <- omopgenerics::validateResultArguemnt(result)
-  omopgenerics::assertLogical(asText, length = 1)
   omopgenerics::assertCharacter(logo, length = 1, null = TRUE)
+  omopgenerics::assertCharacter(title, length = 1)
+  omopgenerics::assertLogical(background, length = 1)
 
-  set <- getPossibleSettings(result)
-  groupping <-getPossibleGroupping(result)
-  variables <- getPossibleVariables(result)
+  elements <- c(
+    createTitle(title, logo),
+    createBackground(background, title, logo),
+    createPanels(result),
+    'bslib::nav_spacer()',
+    createAbout(),
+    'bslib::nav_item(bslib::input_dark_mode(id ="dark_mode", mode = "light"))'
+  ) |>
+    paste0(collapse = ",\n")
 
-  # create logo
-  logoHeader <- createLogoHeader(logo)
-  logoBackground <- createLogoBackground(logo)
-
-  # create sidebar
-  sidebar <- createSidebar(names(set))
-
-  # create body
-  body <- createBody(set, groupping, variables)
-
-  # create ui
-  x <- paste0(
-    'shinydashboard::dashboardPage(
-    shinydashboard::dashboardHeader(
-      title = "My study"',
-    logoHeader,
-    '\n),
-    # sidebar ----
-    shinydashboard::dashboardSidebar(
-      shinydashboard::sidebarMenu(
-        shinydashboard::menuItem(
-          text = "About", tabName = "about", icon = shiny::icon("circle-info")),
-        shinydashboard::menuItem(
-          text = "Background", tabName = "background", icon = shiny::icon("disease"))',
-        sidebar,
-     ')
-    ),
-    # body ----
-    shinydashboard::dashboardBody(
-      shiny::tags$head(
-        # Reset favicon
-        shiny::tags$link(rel = "shortcut icon", href = "#"),
-        # Compiled css file
-        shiny::tags$link(
-          rel = "stylesheet",
-          type = "text/css",
-          href = system.file("www/css/sass.min.css", package = "omopViewer"))
-      ),
-      shinydashboard::tabItems(
-        ## about ----
-        shinydashboard::tabItem(
-          tabName = "about",\n',
-          aboutTab(),
-        '),
-        ## background ----
-        shinydashboard::tabItem(
-          tabName = "background",
-          shiny::h4("Study background"),
-          shiny::p("You can use this section to add some background of your study")',
-          logoBackground,
-        ')',
-        body,
-        '\n## end ----\n',
-     ')
-    )
-  )'
-  )
-
-  if (asText) {
-    x <- paste0("ui <- ", x) |>
-      styleCode()
-  } else {
-    x <- x |>
-      rlang::parse_expr() |>
-      rlang::eval_tidy()
-  }
-  return(x)
+  'ui <- bslib::page_navbar(
+  {elements}
+  )' |>
+    glue::glue() |>
+    as.character() |>
+    styleCode()
 }
 
 # styling functions ----
@@ -171,7 +109,21 @@ writeVect <- function(x) {
   }
   return(x)
 }
-# get possible options for the different tabs split by result_type ----
+# get choices ----
+getChoices <- function(result) {
+  settings <- getPossibleSettings(result)
+  groupping <-getPossibleGroupping(result)
+  variables <- getPossibleVariables(result)
+  choices <- names(variables) |>
+    purrr::set_names() |>
+    purrr::map(\(x) list(
+      settings = settings[[x]],
+      groupping = groupping[[x]],
+      variable_name = variables[[x]]$variable_name,
+      estimate_name = variables[[x]]$estimate_name
+    ))
+  return(choices)
+}
 getPossibleSettings <- function(result) {
   omopgenerics::settings(result) |>
     dplyr::select(!dplyr::any_of(c(
@@ -217,6 +169,194 @@ getPossibilities <- function(x, split = FALSE) {
     purrr::map(getPos, split = split)
   return(x)
 }
+# create title ----
+createTitle <- function(title, logo) {
+  if (is.null(logo)) {
+    x <- 'title = "{title}"'
+  } else {
+    x <- 'title = shiny::tags$span(
+      shiny::tags$img(
+        src = "{logo}",
+        width = "auto",
+        height = "46px",
+        class = "me-3",
+        alt = "logo"
+      ),
+      "{title}"
+    )'
+  }
+  x <- glue::glue(x) |> as.character()
+  return(x)
+}
+# create background ----
+createBackground <- function(background, title, logo) {
+  if (!background) return("")
+  if (!is.null(logo)) {
+    logoImg <- ',
+    shiny::tags$img(
+      src = "{logo}",
+      width = "auto",
+      height = "100px",
+      alt = "logo",
+      align = "left"
+    )' |>
+      glue::glue() |>
+      as.character()
+  } else {
+    logoImg <- ""
+  }
+  'bslib::nav_panel(
+    title = "Background",
+    icon = shiny::icon("disease"),
+    bslib::card(
+      bslib::card_header("{title} background"),
+      shiny::p("You can use this section to add some background of your study"){logoImg}
+    )
+  )' |>
+    glue::glue() |>
+    as.character()
+}
+# create about ----
+createAbout <- function(about = TRUE) {
+  if (!about) return("")
+  'bslib::nav_item(
+    bslib::popover(
+      shiny::icon("circle-info"),
+      shiny::tags$img(
+        src = "hds_logo.svg",
+        class = "logo-img",
+        alt = "Logo",
+        height = "auto",
+        width = "30%",
+        style = "float:right"
+      ),
+      "This shiny app was generated with ",
+      shiny::a(
+        "omopViewer",
+        href = "https://github.com/oxford-pharmacoepi/omopViewer",
+        target = "_blank"
+      ),
+      shiny::strong("v{as.character(utils::packageVersion("omopViewer"))}")
+    )
+  )' |>
+    glue::glue() |>
+    as.character()
+}
+# create panels ----
+createPanels <- function(result) {
+  choices <- getChoices(result)
+  tabs <- names(choices)
+  panel <- character()
+  for (tab in tabs) {
+    title <- getPanelTitle(tab)
+    icon <- getPanelIcon(tab)
+    sidebar <- getPanelSidebar(tab, choices[[tab]])
+    content <- c(title, icon, sidebar) |>
+      paste0(collapse = ",\n")
+    panel <- c(
+      panel,
+      'bslib::nav_panel(
+        {content}
+      )' |>
+        glue::glue() |>
+        as.character()
+    )
+  }
+  panel <- paste0(panel, collapse = ",\n")
+  return(panel)
+}
+getInfo <- function(rt, info, def) {
+  x <- omopViewerTabs[[info]][omopViewerTabs$result_type == rt]
+  if (length(x) == 1 && !is.na(x)) return(x)
+  def
+}
+getPanelTitle <- function(tab) {
+  paste0('title = "', getInfo(tab, "title", formatTit(tab)), '"')
+}
+getPanelIcon <- function(tab) {
+  icon <- getInfo(tab, "icon", NA_character_)
+  if (is.na(icon)) return(NULL)
+  paste0('icon = shiny::icon("', icon, '")')
+}
+getPanelSidebar <- function(tab, choic) {
+  content <- c(
+    getSidebarInformation(tab),
+    getSidebarChoices(choic$settings, "Settings", paste0(tab, "_settings")),
+    getSidebarChoices(choic$groupping, "Groupping", paste0(tab, "_groupping")),
+    getSidebarChoices(choic["variable_name"], "Variables", tab),
+    getSidebarChoices(choic["estimate_name"], "Estimates", tab)
+  ) |>
+    paste0(collapse = ",\n")
+
+  panels <- c(
+    getRawPanel(tab),
+    getTidyPanel(tab),
+    get
+  ) |>
+    paste0(collapse = ",\n")
+
+  "bslib::layout_sidebar(
+    sidebar = bslib::sidebar(
+      bslib::accordion(
+        {content}
+      )
+    ),
+    bslib::navset_card_tab(
+      {panels}
+    )
+  )" |>
+    glue::glue() |>
+    as.character()
+}
+getSidebarInformation <- function(tab) {
+  info <- getInfo(tab, "information", "")
+  'bslib::accordion_panel(
+    title = "Information",
+    icon = shiny::icon("info"),
+    shiny::p("{info}")
+  )' |>
+    glue::glue() |>
+    as.character()
+}
+getSidebarChoices <- function(choi, tit, prefix) {
+  if (length(choi) == 0) return(NULL)
+  selectors <- purrr::map_chr(names(choi), \(x) selector(
+    paste0(prefix, "_", x), formatTit(x), cast(choi[[x]])
+  )) |>
+    paste0(collapse = ",\n")
+  'bslib::accordion_panel(
+    title = "{tit}",
+    {selectors}
+  )' |>
+    glue::glue() |>
+    as.character()
+}
+selector <- function(id, lab, cho) {
+  'shiny::selectizeInput(
+    inputId = "{id}",
+    label = "{lab}",
+    choices = {cho},
+    selected = {cho},
+    multiple = TRUE,
+    options = list(plugins = "remove_button")
+  )' |>
+    glue::glue() |>
+    as.character()
+}
+
+getRawPanel <- function(tab) {
+  NULL
+}
+getTidyPanel <- function(tab) {
+  NULL
+}
+getFormattedPanel <- function(tab) {
+  NULL
+}
+getPlotsPanel <- function(tab) {
+  NULL
+}
+
 # create logo ----
 createLogoBackground <- function(logo) {
   if (is.null(logo)) return('')
@@ -244,32 +384,9 @@ createLogoHeader <- function(logo) {
   }
   return(logotop)
 }
-# create sidebar ----
-createSidebar <- function(resultType) {
-  sidebar <- ""
-  for (rt in resultType) {
-    tit <- getTitle(rt)
-    iconId <- getIcon(rt)
-    sidebar <- '{sidebar},
-      shinydashboard::menuItem(
-        text = "{tit}",
-        tabName = "{rt}",
-        icon = shiny::icon("{iconId}")
-      )' |>
-      glue::glue()
-  }
-  return(sidebar)
-}
-getInfo <- function(rt, info, def) {
-  x <- omopViewerTabs[[info]][omopViewerTabs$result_type == rt]
-  if (length(x) == 1 && !is.na(x)) return(x)
-  def
-}
-getTitle <- function(resultType) {
-  getInfo(resultType, "title", formatTit(resultType))
-}
+
 getIcon <- function(resultType) {
-  getInfo(resultType, "icon", "table")
+
 }
 # create body ----
 createBody <- function(set, groupping, variables) {
