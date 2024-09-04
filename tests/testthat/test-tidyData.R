@@ -30,12 +30,12 @@ test_that("test tidyData", {
         prefixGroup = "",
         showSettings = TRUE,
         showGroupping = TRUE,
-        pivotEstimates = FALSE)
+        pivot = "none")
   )
   expect_identical(colnames(x), c(
-    "my_param", "analysis", "cdm_name", "cohort_name", "age_group", "sex",
-    "time", "variable_name", "variable_level", "estimate_name", "estimate_type",
-    "estimate_value"
+    "result_type", "package_name", "package_version", "my_param", "analysis",
+    "cdm_name", "cohort_name", "age_group", "sex", "time", "variable_name",
+    "variable_level", "estimate_name", "estimate_type", "estimate_value"
   ))
   expect_true(nrow(x) == nrow(result))
   expect_no_error(
@@ -44,9 +44,10 @@ test_that("test tidyData", {
         prefixSet = "pref_set_",
         showSettings = TRUE,
         showGroupping = FALSE,
-        pivotEstimates = FALSE)
+        pivot = "none")
   )
   expect_identical(colnames(x), c(
+    "pref_set_result_type", "pref_set_package_name", "pref_set_package_version",
     "pref_set_my_param", "pref_set_analysis", "variable_name", "variable_level",
     "estimate_name", "estimate_type", "estimate_value"
   ))
@@ -57,7 +58,7 @@ test_that("test tidyData", {
         prefixGroup = "pref_group_",
         showSettings = FALSE,
         showGroupping = TRUE,
-        pivotEstimates = FALSE)
+        pivot = "none")
   )
   expect_identical(colnames(x), c(
     "result_id", "pref_group_cdm_name", "pref_group_cohort_name",
@@ -71,7 +72,7 @@ test_that("test tidyData", {
       tidyData(
         showSettings = FALSE,
         showGroupping = FALSE,
-        pivotEstimates = FALSE)
+        pivot = "none")
   )
   expect_identical(colnames(x), c(
     "result_id", "variable_name", "variable_level", "estimate_name",
@@ -83,11 +84,12 @@ test_that("test tidyData", {
       tidyData(
         showSettings = TRUE,
         showGroupping = TRUE,
-        pivotEstimates = TRUE)
+        pivot = "estimates")
   )
   expect_identical(colnames(x), c(
-    "my_param", "analysis", "cdm_name", "cohort_name", "age_group", "sex",
-    "time", "variable_name", "variable_level", "count", "blood_type"
+    "result_type", "package_name", "package_version", "my_param", "analysis",
+    "cdm_name", "cohort_name", "age_group", "sex", "time", "variable_name",
+    "variable_level", "count", "blood_type"
   ))
   expect_true(nrow(x) == nrow(result))
   expect_identical(x$count |> dplyr::type_sum(), "int")

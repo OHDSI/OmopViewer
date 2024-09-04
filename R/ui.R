@@ -81,7 +81,11 @@ formatSnake <- function(x) {
 }
 cast <- function(x) {
   if (is.character(x)) {
-    x <- paste0('c("', paste0(x, collapse = '", "'), '")')
+    if (length(x) == 0) {
+      x <- "character()"
+    } else {
+      x <- paste0('c("', paste0(x, collapse = '", "'), '")')
+    }
   } else if (is.null(x)) {
     x <- "NULL"
   } else if (is.call(x)) {
@@ -149,7 +153,9 @@ getPossibilities <- function(x, split = FALSE) {
     as.list()
   names(x) <- purrr::map_chr(x, \(x) unique(x$result_type))
   uniquePos <- function(xx) {
-    xx <- unique(xx)
+    xx <- xx |>
+      unique() |>
+      sort() # To remove when the output is constant and always equal
     xx[!is.na(xx)]
   }
   getPos <- function(xx, split = FALSE) {
@@ -373,7 +379,7 @@ getRawPanel <- function(tab) {
     title = "Raw",
     bslib::card(
       full_screen = TRUE,
-      {downloadTable(id, "Download csv")},
+      {downloadTable(id, "Download summarised_result")},
       DT::dataTableOutput("{tab}_raw")
     )
   )' |>
@@ -416,7 +422,7 @@ getTidyPanel <- function(tab) {
 }
 getFormattedPanel <- function(tab, choic) {
   hide <- names(choic$settings)
-  none <- c(names(choic$groupping), "varaible_name", "variable_level",
+  none <- c(names(choic$groupping), "variable_name", "variable_level",
             "estimate_name")
   header <- "cdm_name"
   header <- header[header %in% none]
