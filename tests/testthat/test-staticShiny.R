@@ -12,15 +12,15 @@ test_that("logo", {
   unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
 
   expect_snapshot(
-    uiStatic(asText = TRUE, logo = "my_pic.png") |> cat(sep = "\n"))
+    uiStatic(logo = "my_pic.png") |> cat(sep = "\n"))
 })
 
 test_that("empty shiny", {
   tdir <- here::here()
   expect_no_error(exportStaticApp(directory = tdir))
   expect_true("shiny" %in% list.files(tdir))
-  expect_snapshot(uiStatic(asText = TRUE) |> cat(sep = "\n"))
-  expect_snapshot(serverStatic(asText = TRUE) |> cat(sep = "\n"))
+  expect_snapshot(uiStatic() |> cat(sep = "\n"))
+  expect_snapshot(serverStatic() |> cat(sep = "\n"))
   unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
 })
 
@@ -64,8 +64,8 @@ test_that("CohortCharacteristics shiny", {
   tdir <- here::here()
   expect_no_error(exportStaticApp(result = result, directory = tdir))
   expect_true("shiny" %in% list.files(tdir))
-  expect_snapshot(uiStatic(result = result, asText = TRUE) |> cat(sep = "\n"))
-  expect_snapshot(serverStatic(result = result, asText = TRUE) |> cat(sep = "\n"))
+  expect_snapshot(uiStatic(result = result) |> cat(sep = "\n"))
+  expect_snapshot(serverStatic(result = result) |> cat(sep = "\n"))
   unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
 
   PatientProfiles::mockDisconnect(cdm)

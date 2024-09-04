@@ -15,22 +15,21 @@ visTable <- function(result,
                      group = character(),
                      hide = character()) {
   # initial checks
-  if (is.null(header)) header <- character()
-  if (is.null(group)) group <- character()
-  if (is.null(hide)) hide <- character()
-  setCols <- colnames(omopgenerics::settings(result))
-  setCols <- setCols[!setCols %in% c(
-    "result_id", "result_type", "package_name", "package_version",
-    "min_cell_count"
-  )]
+  if (length(header) == 0) header <- character()
+  if (length(group) == 0) group <- NULL
+  if (length(hide) == 0) hide <- character()
   result <- result |>
-    tidyData(pivotEstimates = FALSE)
+    tidyData() |>
+    dplyr::select(!dplyr::any_of(c(
+      "package_name", "package_version", "result_type", "min_cell_count"
+    )))
   omopgenerics::assertCharacter(header)
-  omopgenerics::assertCharacter(group)
+  omopgenerics::assertCharacter(group, null = TRUE)
   omopgenerics::assertCharacter(hide)
   omopgenerics::assertCharacter(c(header, group, hide), unique = TRUE)
-  omopgenerics::assertTable(
-    result, columns = c("estimate_name", "estimate_type", header, group, hide))
+  allCols <- c("estimate_name", "estimate_type", header, group, hide) |>
+    unique()
+  omopgenerics::assertTable(result, columns = allCols)
 
   # format estimate column
   formatEstimates <- c(
@@ -47,8 +46,8 @@ visTable <- function(result,
       decimals = c(integer = 0, numeric = 1, percentage = 0)) |>
     visOmopResults::formatEstimateName(estimateNameFormat = formatEstimates) |>
     suppressMessages() |>
-    dplyr::select(!dplyr::all_of(c("estimate_type", hide))) |>
-    visOmopResults::formatHeader(header = header)
+    visOmopResults::formatHeader(header = header) |>
+    dplyr::select(!dplyr::any_of(c("estimate_type", hide)))
   if (length(group) > 1) {
     id <- omopgenerics::uniqueId(exclude = colnames(result))
     result <- result |>

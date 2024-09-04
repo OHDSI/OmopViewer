@@ -10,7 +10,7 @@ tidyData(
   showGroupping = TRUE,
   prefixSet = "",
   prefixGroup = "",
-  pivotEstimates = FALSE
+  pivot = "none"
 )
 }
 \arguments{
@@ -24,7 +24,7 @@ tidyData(
 
 \item{prefixGroup}{Prefix for groupping columns.}
 
-\item{pivotEstimates}{Whether to pivot estimates.}
+\item{pivot}{What to pivot: "none", "estimates" or "estimates and variables".}
 }
 \value{
 A tibble.

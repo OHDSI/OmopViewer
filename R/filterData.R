@@ -20,15 +20,18 @@ filterData <- function(result,
     inputs <- names(input)
   }
 
+  # subset to inputs of interest
+  inputs <- inputs[startsWith(inputs, resultType)]
+
   # filter settings
   set <- omopgenerics::settings(result)
   setPrefix <- paste0(resultType, "_settings_")
   toFilter <- inputs[startsWith(inputs, setPrefix)]
-  for (fil in toFilter) {
-    nm <- substr(fil, nchar(setPrefix)+1, nchar(fil))
+  nms <- substr(toFilter, nchar(setPrefix)+1, nchar(toFilter))
+  for (nm in nms) {
     if (nm %in% colnames(set)) {
       set <- set |>
-        dplyr::filter(.data[[nm]] %in% input[[fil]])
+        dplyr::filter(.data[[nm]] %in% input[[paste0(setPrefix, nm)]])
     }
   }
   result <- result |>
@@ -45,14 +48,13 @@ filterData <- function(result,
     dplyr::select(dplyr::all_of(cols)) |>
     dplyr::distinct() |>
     visOmopResults::splitAll()
-
   groupPrefix <- paste0(resultType, "_groupping_")
   toFilter <- inputs[startsWith(inputs, groupPrefix)]
-  for (fil in toFilter) {
-    nm <- substr(fil, nchar(groupPrefix)+1, nchar(fil))
+  nms <- substr(toFilter, nchar(groupPrefix)+1, nchar(toFilter))
+  for (nm in nms) {
     if (nm %in% colnames(group)) {
       group <- group |>
-        dplyr::filter(.data[[nm]] %in% input[[fil]])
+        dplyr::filter(.data[[nm]] %in% input[[paste0(groupPrefix, nm)]])
     }
   }
   result <- result |>
@@ -65,14 +67,11 @@ filterData <- function(result,
     )
 
   # filter variables and estimates
-  varPrefix <- paste0(resultType, "_variables_and_estimates_")
-  toFilter <- inputs[startsWith(inputs, varPrefix)]
-  for (fil in toFilter) {
-    nm <- substr(fil, nchar(varPrefix)+1, nchar(fil))
-    if (nm %in% c("variable_name", "estimate_name")) {
-      result <- result |>
-        dplyr::filter(.data[[nm]] %in% input[[fil]])
-    }
+  nms <- c("variable_name", "estimate_name")
+  nms <- nms[paste0(resultType, "_", nms) %in% inputs]
+  for (nm in nms) {
+    result <- result |>
+      dplyr::filter(.data[[nm]] %in% input[[paste0(resultType, "_", nm)]])
   }
 
   # return a summarised_result

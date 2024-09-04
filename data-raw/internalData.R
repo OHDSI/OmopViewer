@@ -5,13 +5,13 @@
 # to search icons see: https://fontawesome.com/search?m=free&o=r
 
 omopViewerTabs <- dplyr::tribble(
-  ~result_tab_id, ~result_type, ~package, ~title, ~icon,
-  1L, "summarise_cohort_overlap", "CohortCharacteristics", "Cohort overlap", "circle-half-stroke",
-  2L, "summarise_cohort_attrition", "CohortCharacteristics", "Cohort Attrition", "layer-group", # diagram-next
-  3L, "summarise_cohort_timing", "CohortCharacteristics", "Cohort timing", "chart-simple",
-  4L, "summarise_characteristics", "CohortCharacteristics", "Cohort characteristics", "users-gear", # people-group
-  5L, "summarise_cohort_count", "CohortCharacteristics", "Cohort count", "users",
-  6L, "summarise_large_scale_characteristics", "CohortCharacteristics", "Large Scale Characteristics", "arrow-up-right-dots", # people-group
+  ~result_tab_id, ~result_type, ~package, ~title, ~icon, ~information,
+  1L, "summarise_cohort_overlap", "CohortCharacteristics", "Cohort overlap", "circle-half-stroke", "Cohort overlap shows the number of subjects that contribute to a pair of cohorts.",
+  2L, "summarise_cohort_attrition", "CohortCharacteristics", "Cohort Attrition", "layer-group", "",
+  3L, "summarise_cohort_timing", "CohortCharacteristics", "Cohort timing", "chart-simple", "",
+  4L, "summarise_characteristics", "CohortCharacteristics", "Cohort characteristics", "users-gear", "",
+  5L, "summarise_cohort_count", "CohortCharacteristics", "Cohort count", "users", "",
+  6L, "summarise_large_scale_characteristics", "CohortCharacteristics", "Large Scale Characteristics", "arrow-up-right-dots", ""
 )
 
 omopViewerPlots <- dplyr::tribble(

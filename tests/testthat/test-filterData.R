@@ -59,7 +59,7 @@ test_that("check filterData functionality", {
   input <- list(
     custom_groupping_cdm_name = "cdm1",
     custom_random = 1L,
-    custom_variables_and_estimates_variable_name = "number subjects")
+    custom_variable_name = "number subjects")
   expect_no_error(
     x <- filterData(result = result, resultType = "custom", input = input)
   )
