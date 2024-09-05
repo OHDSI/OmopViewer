@@ -1,5 +1,5 @@
 
-getPanelSidebar <- function(tab, choic) {
+createSidebar <- function(tab, choic) {
   content <- c(
     getSidebarInformation(tab),
     getSidebarChoices(choic$settings, "Settings", paste0(tab, "_settings")),
@@ -8,25 +8,11 @@ getPanelSidebar <- function(tab, choic) {
     getSidebarChoices(choic["estimate_name"], "Estimates", tab)
   ) |>
     paste0(collapse = ",\n")
-
-  panels <- c(
-    getRawPanel(tab),
-    getTidyPanel(tab),
-    getFormattedPanel(tab, choic),
-    getPlotsPanel(tab, choic)
-  ) |>
-    paste0(collapse = ",\n")
-
-  "bslib::layout_sidebar(
-    sidebar = bslib::sidebar(
-      bslib::accordion(
-        {content}
-      )
-    ),
-    bslib::navset_card_tab(
-      {panels}
+  'sidebar = bslib::sidebar(
+    bslib::accordion(
+      {content}
     )
-  )" |>
+  ),' |>
     glue::glue() |>
     as.character()
 }

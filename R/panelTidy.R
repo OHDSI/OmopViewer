@@ -1,6 +1,6 @@
 
 # ui ----
-getTidyPanel <- function(tab) {
+tidyUi <- function(tab) {
   id <- paste0(tab, "_tidy_download")
   'bslib::nav_panel(
     title = "Tidy",
@@ -36,7 +36,7 @@ getTidyPanel <- function(tab) {
 }
 
 # server ----
-getTidyRt <- function(rt) {
+tidyServer <- function(rt) {
   c('getTidyData[formatCamel(rt)] <- shiny::reactive({
       data |>
         filterData("[rt]", input) |>

@@ -1,13 +1,13 @@
 
 # ui ----
-getRawPanel <- function(tab) {
-  id <- paste0(tab, "_raw_download")
+rawUi <- function(rt) {
+  id <- paste0(rt, "_raw_download")
   'bslib::nav_panel(
     title = "Raw",
     bslib::card(
       full_screen = TRUE,
       {downloadTable(id, "Download summarised_result")},
-      DT::dataTableOutput("{tab}_raw")
+      DT::dataTableOutput("{rt}_raw")
     )
   )' |>
     glue::glue() |>
@@ -15,7 +15,7 @@ getRawPanel <- function(tab) {
 }
 
 # server ----
-getRawRt <- function(rt) {
+rawServer <- function(rt) {
   c('getRawData[formatCamel(rt)] <- shiny::reactive({
       filterData(data, "[rt]", input)
     })',

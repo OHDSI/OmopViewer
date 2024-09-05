@@ -1,6 +1,6 @@
 
 # ui -----
-getPlotsPanel <- function(tab, choic) {
+plotsUi <- function(tab, choic) {
   plots <- getPlots(tab)
   panels <- purrr::map_chr(plots, \(x) getPlotPanel(x, tab, choic)) |>
     paste0(collapse = ",\n")
@@ -101,7 +101,7 @@ getButton <- function(type) {
 }
 
 # server ----
-getPlotRt <- function(rt) {
+plotsServer <- function(rt) {
   plots <- getPlots(rt)
   if (length(plots) == 0) return(NULL)
 

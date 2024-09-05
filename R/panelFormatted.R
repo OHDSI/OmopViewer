@@ -1,6 +1,6 @@
 
 # ui ----
-getFormattedPanel <- function(tab, choic) {
+formattedUi <- function(tab, choic) {
   hide <- names(choic$settings)
   none <- c(names(choic$groupping), "variable_name", "variable_level",
             "estimate_name")
@@ -52,7 +52,7 @@ getFormattedPanel <- function(tab, choic) {
 }
 
 # server ----
-getFormattedRt <- function(rt) {
+formattedServer <- function(rt) {
   c('getFormattedData[formatCamel(rt)] <- shiny::reactive({
       data |>
         filterData("[rt]", input) |>
