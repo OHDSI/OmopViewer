@@ -28,7 +28,7 @@
               align = "left"
             )
           )
-        ), ,
+        ),
         bslib::nav_spacer(),
         bslib::nav_item(
           bslib::popover(
@@ -67,7 +67,7 @@
             bslib::card_header("My study background"),
             shiny::p("You can use this section to add some background of your study")
           )
-        ), ,
+        ),
         bslib::nav_spacer(),
         bslib::nav_item(
           bslib::popover(
@@ -104,7 +104,7 @@
 # CohortCharacteristics shiny
 
     Code
-      cat(uiStatic(result = result), sep = "\n")
+      cat(uiStatic(choices = getChoices(result)), sep = "\n")
     Output
       ui <- bslib::page_navbar(
         title = "My study",
@@ -1409,7 +1409,7 @@
 ---
 
     Code
-      cat(serverStatic(result = result), sep = "\n")
+      cat(serverStatic(resultTypes = names(getChoices(result))), sep = "\n")
     Output
       server <- function(input, output, session) {
         # summarise_characteristics -----

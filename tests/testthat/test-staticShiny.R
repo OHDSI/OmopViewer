@@ -64,8 +64,8 @@ test_that("CohortCharacteristics shiny", {
   tdir <- here::here()
   expect_no_error(exportStaticApp(result = result, directory = tdir))
   expect_true("shiny" %in% list.files(tdir))
-  expect_snapshot(uiStatic(result = result) |> cat(sep = "\n"))
-  expect_snapshot(serverStatic(result = result) |> cat(sep = "\n"))
+  expect_snapshot(uiStatic(choices = getChoices(result)) |> cat(sep = "\n"))
+  expect_snapshot(serverStatic(resultTypes = names(getChoices(result))) |> cat(sep = "\n"))
   unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
 
   PatientProfiles::mockDisconnect(cdm)
