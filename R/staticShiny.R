@@ -46,13 +46,13 @@ exportStaticApp <- function(result = emptySummarisedResult(),
 
   # create shiny
   directory <- paste0(directory, "/shiny")
-  dir.create(path = directory)
+  dir.create(path = directory, showWarnings = FALSE)
   cli::cli_inform(c("i" = "Creating shiny from provided data"))
   logo <- copyLogos(logo, directory)
   ui <- c(messageShiny(), uiStatic(choices = choices, logo = logo))
   server <- c(messageShiny(), serverStatic(resultTypes = names(choices)))
   global <- c(messageShiny(), omopViewerGlobal)
-  dir.create(paste0(directory, "/data"))
+  dir.create(paste0(directory, "/data"), showWarnings = FALSE)
   writeLines(ui, con = paste0(directory, "/ui.R"))
   writeLines(server, con = paste0(directory, "/server.R"))
   writeLines(global, con = paste0(directory, "/global.R"))
@@ -84,7 +84,7 @@ messageShiny <- function() {
   )
 }
 copyLogos <- function(logo, directory) {
-  dir.create(paste0(directory, "/www"))
+  dir.create(paste0(directory, "/www"), showWarnings = FALSE)
   from <- system.file("/www/images/hds_logo.svg", package = "omopViewer")
   to <- paste0(directory, "/www/hds_logo.svg")
   file.copy(from = from, to = to, overwrite = TRUE)

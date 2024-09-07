@@ -26,6 +26,7 @@ test_that("empty shiny", {
 
 test_that("CohortCharacteristics shiny", {
   # create mock cdm
+  set.seed(123456)
   cdm <- omock::mockCdmReference() |>
     omock::mockPerson(nPerson = 100) |>
     omock::mockObservationPeriod() |>
