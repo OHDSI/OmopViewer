@@ -14,9 +14,9 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 coverage](https://codecov.io/gh/oxford-pharmacoepi/omopViewer/branch/main/graph/badge.svg)](https://app.codecov.io/gh/oxford-pharmacoepi/omopViewer?branch=main)
 <!-- badges: end -->
 
-> \[!IMPORTANT\] This package is under construction and this is just a
-> first Beta release, please use it carefully and report any issue that
-> you encounter using it.
+> [!IMPORTANT] 
+> This package is under construction and this is just a first Beta release, 
+> please use it carefully and report any issue that you encounter using it.
 
 The goal of omopViewer is to allow the user to easily create Shiny Apps
 to visualise study results in `<summarised_result>` format.
