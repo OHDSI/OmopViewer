@@ -22,9 +22,10 @@ knitr::opts_chunk$set(
 [![Codecov test coverage](https://codecov.io/gh/oxford-pharmacoepi/omopViewer/branch/main/graph/badge.svg)](https://app.codecov.io/gh/oxford-pharmacoepi/omopViewer?branch=main)
 <!-- badges: end -->
 
-**WARNING**: *This package is under construction and it is not for user use yet.*
+> [!IMPORTANT]
+> This package is under construction and this is just a first Beta release, please use it carefully and report any issue that you encounter using it.
 
-The goal of omopViewer is to allow the user to easily create interactive Shiny Apps.
+The goal of omopViewer is to allow the user to easily create Shiny Apps to visualise study results in `<summarised_result>` format.
 
 ## Installation
 
@@ -42,25 +43,13 @@ library(omopViewer)
 ```
 
 The package can be divided in 3 main functionalities:
-- Dynamic shiny app
 - Static shiny app
+- Dynamic shiny app
 - Utility functions
-
-## Dynamic shiny app
-
-The dynamic shiny app can be easily launched with `launchDynamicApp()` function. This function creates a shinyApp where you can upload multiple results sets and visualise them.
-
-```{r, eval = FALSE}
-launchDynamicApp()
-```
 
 ## Static shiny app
 
 The static shiny app functionality creates a static shiny from a list of `summarised_result` objects. This shiny is specific to the set of results and can be modified later locally.
-
-```{r, echo=FALSE}
-library(omopgenerics)
-```
 
 ```{r, message=TRUE}
 # lets generate some results
@@ -72,6 +61,16 @@ result <- summariseCharacteristics(cdm$cohort1) |>
 exportStaticApp(result = result)
 ```
 
+## Dynamic shiny app
+
+The dynamic shiny app can be easily launched with `launchDynamicApp()` function. This function creates a shinyApp where you can upload multiple results sets and visualise them.
+
+```{r, eval = FALSE}
+launchDynamicApp()
+```
+
 ## Utility functions
 
-These functions are used inside the static shiny app.
+- `tidyData` is an experimental version of the `tidy.summarised_result` method defined in **visOmopResults**.
+- `visTable` is an experimental version of the `visOmopTable` function defined in **visOmopResults**.
+- `filterData` is a function used internally in the package to subset the result. It is not meant to be for user use. It is exported because it is used in the *exportStaticApp()* function.
