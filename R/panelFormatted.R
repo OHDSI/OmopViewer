@@ -52,9 +52,9 @@ formattedUi <- function(tab, choic) {
 }
 
 # server ----
-formattedServer <- function(rt) {
+formattedServer <- function(rt, data) {
   c('getFormattedData[formatCamel(rt)] <- shiny::reactive({
-      data |>
+      [data] |>
         filterData("[rt]", input) |>
         visTable(
           header = input$[rt]_formatted_header,

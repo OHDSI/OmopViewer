@@ -36,9 +36,9 @@ tidyUi <- function(tab) {
 }
 
 # server ----
-tidyServer <- function(rt) {
+tidyServer <- function(rt, data) {
   c('getTidyData[formatCamel(rt)] <- shiny::reactive({
-      data |>
+      [data] |>
         filterData("[rt]", input) |>
         tidyData(
           prefixSet = "set:",

@@ -14,11 +14,12 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 coverage](https://codecov.io/gh/oxford-pharmacoepi/omopViewer/branch/main/graph/badge.svg)](https://app.codecov.io/gh/oxford-pharmacoepi/omopViewer?branch=main)
 <!-- badges: end -->
 
-**WARNING**: *This package is under construction and it is not for user
-use yet.*
+> \[!IMPORTANT\] This package is under construction and this is just a
+> first Beta release, please use it carefully and report any issue that
+> you encounter using it.
 
-The goal of omopViewer is to allow the user to easily create interactive
-Shiny Apps.
+The goal of omopViewer is to allow the user to easily create Shiny Apps
+to visualise study results in `<summarised_result>` format.
 
 ## Installation
 
@@ -36,18 +37,8 @@ pak::pkg_install("oxford-pharmacoepi/omopViewer")
 library(omopViewer)
 ```
 
-The package can be divided in 3 main functionalities: - Dynamic shiny
-app - Static shiny app - Utility functions
-
-## Dynamic shiny app
-
-The dynamic shiny app can be easily launched with `launchDynamicApp()`
-function. This function creates a shinyApp where you can upload multiple
-results sets and visualise them.
-
-``` r
-launchDynamicApp()
-```
+The package can be divided in 3 main functionalities: - Static shiny
+app - Dynamic shiny app - Utility functions
 
 ## Static shiny app
 
@@ -66,26 +57,36 @@ cdm <- mockCohortCharacteristics()
 #>   cohort_definition_id, subject_id, cohort_start_date, and cohort_end_date.
 #> ! cohort columns will be reordered to match the expected order:
 #>   cohort_definition_id, subject_id, cohort_start_date, and cohort_end_date.
-result <- cdm$cohort1 |>
-  summariseCharacteristics() |>
-  omopgenerics::bind( # should be reexported by CohortCharacteristics
-    cdm$cohort1 |>
-      summariseCohortAttrition()
-  )
+result <- summariseCharacteristics(cdm$cohort1) |>
+  bind(summariseCohortAttrition(cdm$cohort1))
 #> ℹ adding demographics columns
 #> ℹ summarising data
 #> ✔ summariseCharacteristics finished!
 
-exportStaticApp(data = result)
+exportStaticApp(result = result)
 #> ℹ Processing data
-#> ✔ Data processed: 2 result types idenfied: `summarised_characteristics` and
-#>   `cohort_attrition`.
+#> ✔ Data processed: 2 result types idenfied: `summarise_characteristics` and
+#>   `summarise_cohort_attrition`.
 #> ℹ Creating shiny from provided data
-#> Warning in dir.create(paste0(directory, "/data"), recursive = TRUE):
-#> '/Users/martics/Documents/GitHub/omopViewer/shiny/data' already exists
 #> ✔ Shiny created in: /Users/martics/Documents/GitHub/omopViewer/shiny
+```
+
+## Dynamic shiny app
+
+The dynamic shiny app can be easily launched with `launchDynamicApp()`
+function. This function creates a shinyApp where you can upload multiple
+results sets and visualise them.
+
+``` r
+launchDynamicApp()
 ```
 
 ## Utility functions
 
-These functions are used inside the static shiny app.
+- `tidyData` is an experimental version of the `tidy.summarised_result`
+  method defined in **visOmopResults**.
+- `visTable` is an experimental version of the `visOmopTable` function
+  defined in **visOmopResults**.
+- `filterData` is a function used internally in the package to subset
+  the result. It is not meant to be for user use. It is exported because
+  it is used in the *exportStaticApp()* function.

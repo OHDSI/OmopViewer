@@ -15,9 +15,9 @@ rawUi <- function(rt) {
 }
 
 # server ----
-rawServer <- function(rt) {
+rawServer <- function(rt, data) {
   c('getRawData[formatCamel(rt)] <- shiny::reactive({
-      filterData(data, "[rt]", input)
+      filterData([data], "[rt]", input)
     })',
     'output$[rt]_raw <- DT::renderDT({
       DT::datatable(getRawData[formatCamel(rt)](), options = list(scrollX = TRUE))

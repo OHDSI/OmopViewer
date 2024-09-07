@@ -46,13 +46,13 @@ exportStaticApp <- function(result = emptySummarisedResult(),
 
   # create shiny
   directory <- paste0(directory, "/shiny")
-  dir.create(path = directory)
+  dir.create(path = directory, showWarnings = FALSE)
   cli::cli_inform(c("i" = "Creating shiny from provided data"))
   logo <- copyLogos(logo, directory)
   ui <- c(messageShiny(), uiStatic(choices = choices, logo = logo))
   server <- c(messageShiny(), serverStatic(resultTypes = names(choices)))
   global <- c(messageShiny(), omopViewerGlobal)
-  dir.create(paste0(directory, "/data"))
+  dir.create(paste0(directory, "/data"), showWarnings = FALSE)
   writeLines(ui, con = paste0(directory, "/ui.R"))
   writeLines(server, con = paste0(directory, "/server.R"))
   writeLines(global, con = paste0(directory, "/global.R"))
@@ -84,7 +84,7 @@ messageShiny <- function() {
   )
 }
 copyLogos <- function(logo, directory) {
-  dir.create(paste0(directory, "/www"))
+  dir.create(paste0(directory, "/www"), showWarnings = FALSE)
   from <- system.file("/www/images/hds_logo.svg", package = "omopViewer")
   to <- paste0(directory, "/www/hds_logo.svg")
   file.copy(from = from, to = to, overwrite = TRUE)
@@ -120,7 +120,7 @@ uiStatic <- function(choices = list(),
     c(
       pageTitle(title, logo),
       createBackground(background, title, logo),
-      purrr::map_chr(names(choices), \(x) createUiResultType(x, choices[[x]])),
+      createUi(names(choices), choices),
       'bslib::nav_spacer()',
       createAbout(),
       'bslib::nav_item(bslib::input_dark_mode(id ="dark_mode", mode = "light"))'
@@ -149,79 +149,21 @@ pageTitle <- function(title, logo) {
   x <- glue::glue(x) |> as.character()
   return(x)
 }
-createUiResultType <- function(resultType, choices) {
-  content <- c(
-    panelTitle(resultType),
-    panelIcon(resultType),
-    panelSidebar(resultType, choices)
-  ) |>
-    paste0(collapse = ",\n")
-  'bslib::nav_panel(
-      {content}
-    )' |>
-    glue::glue() |>
-    as.character()
-}
-getInfo <- function(rt, info, def) {
-  x <- omopViewerTabs[[info]][omopViewerTabs$result_type == rt]
-  if (length(x) == 1 && !is.na(x)) return(x)
-  def
-}
-panelTitle <- function(tab) {
-  paste0('title = "', getInfo(tab, "title", formatTit(tab)), '"')
-}
-panelIcon <- function(tab) {
-  icon <- getInfo(tab, "icon", NULL)
-  if (is.null(icon)) return(NULL)
-  paste0('icon = shiny::icon("', icon, '")')
-}
-panelSidebar <- function(tab, choic) {
-  sidebar <- createSidebar(tab, choic)
-  panels <- c(
-    rawUi(tab),
-    tidyUi(tab),
-    formattedUi(tab, choic),
-    plotsUi(tab, choic)
-  ) |>
-    paste0(collapse = ",\n")
-  "bslib::layout_sidebar(
-    {sidebar}
-    bslib::navset_card_tab(
-      {panels}
-    )
-  )" |>
-    glue::glue() |>
-    as.character()
-}
 
 # server ----
 serverStatic <- function(resultTypes = character()) {
   # initial checks
   omopgenerics::assertCharacter(resultTypes, unique = TRUE)
 
-  serv <- purrr::map_chr(resultTypes, \(x) {
-    c(glue::glue("# {x} -----"),
-      glue::glue("## raw {x} -----"),
-      rawServer(x),
-      glue::glue("## tidy {x} -----"),
-      tidyServer(x),
-      glue::glue("## formatted {x} -----"),
-      formattedServer(x),
-      glue::glue("## plot {x} -----"),
-      plotsServer(x),
-      "\n"
-    ) |>
-      paste0(collapse = "\n")
-  }) |>
-    paste0(collapse = "\n")
-
-  serv <- paste0(
-    c("server <- function(input, output, session) {", serv, "}"),
+  paste0(
+    c(
+      "server <- function(input, output, session) {",
+      createServer(resultTypes, data = "data"),
+      "}"
+    ),
     collapse = "\n"
   ) |>
     styleCode()
-
-  return(serv)
 }
 
 # utilities ----
