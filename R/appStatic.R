@@ -120,7 +120,7 @@ uiStatic <- function(choices = list(),
     c(
       pageTitle(title, logo),
       createBackground(background, title, logo),
-      purrr::map_chr(names(choices), \(x) createUiResultType(x, choices[[x]])),
+      createUi(names(choices), choices),
       'bslib::nav_spacer()',
       createAbout(),
       'bslib::nav_item(bslib::input_dark_mode(id ="dark_mode", mode = "light"))'
@@ -149,50 +149,6 @@ pageTitle <- function(title, logo) {
   x <- glue::glue(x) |> as.character()
   return(x)
 }
-createUiResultType <- function(resultType, choices) {
-  content <- c(
-    panelTitle(resultType),
-    panelIcon(resultType),
-    panelSidebar(resultType, choices)
-  ) |>
-    paste0(collapse = ",\n")
-  'bslib::nav_panel(
-      {content}
-    )' |>
-    glue::glue() |>
-    as.character()
-}
-getInfo <- function(rt, info, def) {
-  x <- omopViewerTabs[[info]][omopViewerTabs$result_type == rt]
-  if (length(x) == 1 && !is.na(x)) return(x)
-  def
-}
-panelTitle <- function(tab) {
-  paste0('title = "', getInfo(tab, "title", formatTit(tab)), '"')
-}
-panelIcon <- function(tab) {
-  icon <- getInfo(tab, "icon", NULL)
-  if (is.null(icon)) return(NULL)
-  paste0('icon = shiny::icon("', icon, '")')
-}
-panelSidebar <- function(tab, choic) {
-  sidebar <- createSidebar(tab, choic)
-  panels <- c(
-    rawUi(tab),
-    tidyUi(tab),
-    formattedUi(tab, choic),
-    plotsUi(tab, choic)
-  ) |>
-    paste0(collapse = ",\n")
-  "bslib::layout_sidebar(
-    {sidebar}
-    bslib::navset_card_tab(
-      {panels}
-    )
-  )" |>
-    glue::glue() |>
-    as.character()
-}
 
 # server ----
 serverStatic <- function(resultTypes = character()) {
@@ -202,7 +158,7 @@ serverStatic <- function(resultTypes = character()) {
   paste0(
     c(
       "server <- function(input, output, session) {",
-      createServer(resultTypes),
+      createServer(resultTypes, data = "data"),
       "}"
     ),
     collapse = "\n"

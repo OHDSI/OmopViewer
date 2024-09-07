@@ -16,7 +16,7 @@ getChoices <- function(result) {
 getPossibleSettings <- function(result) {
   omopgenerics::settings(result) |>
     dplyr::select(!dplyr::any_of(c(
-      "result_id", "package_name", "package_version"))) |>
+      "result_id", "package_name", "package_version", "min_cell_count"))) |>
     getPossibilities()
 }
 getPossibleGroupping <- function(result) {

@@ -98,7 +98,6 @@
       cat(serverStatic(), sep = "\n")
     Output
       server <- function(input, output, session) {
-      
       }
 
 # CohortCharacteristics shiny

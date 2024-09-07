@@ -9,59 +9,13 @@ launchDynamicApp <- function() {
   shiny::shinyApp(ui = ui, server = serverDynamic)
 }
 
-serverDynamic <- function(input, output, session) {
-
-  output$dynamic_tabs_output <- shiny::renderUI(createDynamicUi(list()))
-
-  uploadedData <- shiny::reactiveVal(dplyr::tibble(
-    id = integer(),
-    name_export = character(),
-    upload_datetime = character(),
-    number_rows = integer(),
-    content = list(),
-    is_empty = logical()
-  ))
-
-  workingData <- shiny::reactiveVal(emptySummarisedResult())
-
-  shiny::observeEvent(input$upload_data_content, {
-    dataList <- processFiles(input$upload_data_content)
-    uploadedData(mergeData(dataList$data, uploadedData()))
-    output$upload_data_message <- shiny::renderText(dataList$message)
-  })
-
-  output$upload_data_uploaded <- DT::renderDataTable({
-    uploadedDatatable(uploadedData())
-  })
-
-  shiny::observeEvent(input$load_data_go, {
-    dataToUpload <- uploadedData() |>
-      dplyr::slice(input$upload_data_uploaded_rows_selected) |>
-      dplyr::pull("content") |>
-      omopgenerics::bind()
-    workingData(dataToUpload)
-  })
-
-  shiny::observeEvent(workingData(), {
-    choices <- getChoices(workingData())
-    output$dynamic_tabs_output <- shiny::renderUI(
-      createDynamicUi(choices)
-    )
-    resultTypes <- names(choices)
-    for (rt in resultTypes) {
-      serverResultType <- ""
-    }
-  })
-
-}
-
 createDynamicUi <- function(choices) {
   c(
     'bslib::page_navbar(',
     c(
       pageTitle("omopViewer App", base::system.file("www/images/hds_logo.svg")),
       loadDataUi(),
-      purrr::map_chr(names(choices), \(x) createUiResultType(x, choices[[x]])),
+      createUi(names(choices), choices),
       'bslib::nav_spacer()',
       createAbout(),
       'bslib::nav_item(bslib::input_dark_mode(id ="dark_mode", mode = "light"))'
@@ -101,10 +55,54 @@ loadDataUi <- function() {
     )
   )'
 }
-captureMessage <- function(x) {
-  x <- rlang::catch_cnd(x, classes = "message")
-  cli::ansi_strip(x$message) |>
-    stringr::str_replace("\n ", "")
+
+serverDynamic <- function(input, output, session) {
+
+  output$dynamic_tabs_output <- shiny::renderUI(createDynamicUi(list()))
+
+  uploadedData <- shiny::reactiveVal(dplyr::tibble(
+    id = integer(),
+    name_export = character(),
+    upload_datetime = character(),
+    number_rows = integer(),
+    content = list(),
+    is_empty = logical()
+  ))
+
+  workingData <- shiny::reactiveVal(emptySummarisedResult())
+
+  shiny::observeEvent(input$upload_data_content, {
+    dataList <- processFiles(input$upload_data_content)
+    uploadedData(mergeData(dataList$data, uploadedData()))
+    output$upload_data_message <- shiny::renderText(dataList$message)
+  })
+
+  output$upload_data_uploaded <- DT::renderDataTable({
+    uploadedDatatable(uploadedData())
+  })
+
+  shiny::observeEvent(input$load_data_go, {
+    dataToUpload <- uploadedData() |>
+      dplyr::slice(input$upload_data_uploaded_rows_selected) |>
+      dplyr::pull("content") |>
+      omopgenerics::bind()
+    workingData(dataToUpload)
+  })
+
+  shiny::observeEvent(workingData(), {
+    choices <- getChoices(workingData())
+    output$dynamic_tabs_output <- shiny::renderUI(
+      createDynamicUi(choices)
+    )
+    for (rt in names(choices)) {
+      serverResultType <- paste0(
+        "function(input, output, session) {", createServer(rt, data = "workingData()"), "}") |>
+        rlang::parse_expr() |>
+        rlang::eval_tidy()
+      shiny::moduleServer(id = NULL, module = serverResultType)
+    }
+  })
+
 }
 processFiles <- function(content) {
   if (is.null(content)) return(list(message = "No data selected!"))
@@ -113,6 +111,11 @@ processFiles <- function(content) {
     data = files,
     message = messageProcessFiles(files)
   )
+}
+captureMessage <- function(x) {
+  x <- rlang::catch_cnd(x, classes = "message")
+  cli::ansi_strip(x$message) |>
+    stringr::str_replace("\n ", "")
 }
 readFiles <- function(datapath) {
   x <- purrr::map_df(datapath, \(x) {

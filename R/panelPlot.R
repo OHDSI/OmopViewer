@@ -101,13 +101,13 @@ getButton <- function(type) {
 }
 
 # server ----
-plotsServer <- function(rt) {
+plotsServer <- function(rt, data) {
   plots <- getPlots(rt)
   if (length(plots) == 0) return(NULL)
 
   plotServer <- purrr::map_chr(plots, \(id) {
     c('createPlot[id] <- shiny::reactive({
-        result <- data |>
+        result <- [data] |>
           filterData("[rt]", input)
         [createPlotFunction(id)]
       })',
