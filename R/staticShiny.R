@@ -199,29 +199,15 @@ serverStatic <- function(resultTypes = character()) {
   # initial checks
   omopgenerics::assertCharacter(resultTypes, unique = TRUE)
 
-  serv <- purrr::map_chr(resultTypes, \(x) {
-    c(glue::glue("# {x} -----"),
-      glue::glue("## raw {x} -----"),
-      rawServer(x),
-      glue::glue("## tidy {x} -----"),
-      tidyServer(x),
-      glue::glue("## formatted {x} -----"),
-      formattedServer(x),
-      glue::glue("## plot {x} -----"),
-      plotsServer(x),
-      "\n"
-    ) |>
-      paste0(collapse = "\n")
-  }) |>
-    paste0(collapse = "\n")
-
-  serv <- paste0(
-    c("server <- function(input, output, session) {", serv, "}"),
+  paste0(
+    c(
+      "server <- function(input, output, session) {",
+      createServer(resultTypes),
+      "}"
+    ),
     collapse = "\n"
   ) |>
     styleCode()
-
-  return(serv)
 }
 
 # utilities ----
