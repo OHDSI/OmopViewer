@@ -126,10 +126,10 @@ readFiles <- function(datapath) {
       )
     } else if (ext == "zip") {
       tempDir <- tempdir()
-      unzip(x, exdir = tempDir)
+      zip::unzip(x, exdir = tempDir)
       x <- dplyr::tibble(
         file_name = list.files(tempDir, pattern = "\\.csv$", full.names = TRUE),
-        name_export = paste0(nm, "/", basename(file_name)),
+        name_export = paste0(nm, "/", basename(.data$file_name)),
         folder_delete = tempDir
       )
     }
