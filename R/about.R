@@ -1,11 +1,10 @@
 
-createAbout <- function(about = TRUE) {
-  if (!about) return("")
+createAbout <- function(logo) {
   'bslib::nav_item(
     bslib::popover(
       shiny::icon("circle-info"),
       shiny::tags$img(
-        src = "hds_logo.svg",
+        src = "{logo}",
         class = "logo-img",
         alt = "Logo",
         height = "auto",
