@@ -122,7 +122,7 @@ uiStatic <- function(choices = list(),
       createBackground(background, title, logo),
       createUi(names(choices), choices),
       'bslib::nav_spacer()',
-      createAbout(),
+      createAbout("hds_logo.svg"),
       'bslib::nav_item(bslib::input_dark_mode(id ="dark_mode", mode = "light"))'
     ) |>
       paste0(collapse = ",\n"),

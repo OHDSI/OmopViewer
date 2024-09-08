@@ -10,14 +10,15 @@ launchDynamicApp <- function() {
 }
 
 createDynamicUi <- function(choices) {
+  logo <- "https://oxford-pharmacoepi.github.io/Oxinfer/images/hds_logo_noline.svg"
   c(
     'bslib::page_navbar(',
     c(
-      pageTitle("omopViewer App", base::system.file("www/images/hds_logo.svg")),
+      pageTitle("omopViewer App", logo),
       loadDataUi(),
       createUi(names(choices), choices),
       'bslib::nav_spacer()',
-      createAbout(),
+      createAbout(logo),
       'bslib::nav_item(bslib::input_dark_mode(id ="dark_mode", mode = "light"))'
     ) |>
       paste0(collapse = ",\n"),
