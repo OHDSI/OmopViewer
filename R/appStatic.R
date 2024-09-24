@@ -15,7 +15,7 @@ exportStaticApp <- function(result = emptySummarisedResult(),
                             directory = getwd(),
                             open = rlang::is_interactive()) {
   # input check
-  result <- omopgenerics::validateResultArguemnt(result)
+  result <- omopgenerics::validateResultArgument(result)
   omopgenerics::assertCharacter(directory, length = 1)
   omopgenerics::assertLogical(open, length = 1)
   omopgenerics::assertCharacter(logo, length = 1, null = TRUE)
