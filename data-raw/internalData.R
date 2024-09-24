@@ -49,6 +49,7 @@ omopViewerProj <- c(
 omopViewerGlobal <- c(
   "library(shiny)",
   "library(omopViewer)",
+  "library(sortable)",
   "",
   "data <- importSummarisedResult(here::here(\"data\"))"
 ) |>

@@ -52,6 +52,7 @@ Suggests:
     rmarkdown,
     shinycssloaders,
     shinyWidgets,
+    sortable,
     styler,
     testthat (>= 3.1.5),
     utils,
