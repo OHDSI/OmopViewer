@@ -1,3 +1,4 @@
+
 #' Export and launch a static shiny specific to the provided results.
 #'
 #' @param result A summarised_result object.
@@ -83,25 +84,34 @@ messageShiny <- function() {
   )
 }
 copyLogos <- function(logo, directory) {
+  # Create 'www' directory if it doesn't exist
   dir.create(paste0(directory, "/www"), showWarnings = FALSE)
-  from <- system.file("/www/images/hds_logo.svg", package = "omopViewer")
-  to <- paste0(directory, "/www/hds_logo.svg")
-  file.copy(from = from, to = to, overwrite = TRUE)
-  if (!is.null(logo)) {
-    if (logo == "HDS") {
-      return("hds_logo.svg")
-    } else if (file.exists(logo)) {
-      nm <- basename(logo)
-      to <- paste0(directory, "/www/", nm)
-      file.copy(from = logo, to = to, overwrite = TRUE)
-      return(nm)
-    } else {
-      cli::cli_warn(c("!" = "Logo couldn't be found."))
-      return(NULL)
-    }
+  hdsLogo <- system.file("/www/images/hds_logo.svg", package = "omopViewer")
+  ohdsiLogo <- system.file("/www/images/ohdsi_logo.svg", package = "omopViewer")
+  if (is.null(logo)) {
+    cli::cli_warn("No logo specified; nothing to copy.")
+    return(NULL)
+  }
+  if (logo == "HDS") {
+    to <- paste0(directory, "/www/hds_logo.svg")
+    file.copy(from = hdsLogo, to = to, overwrite = TRUE)
+    return("hds_logo.svg")
+  } else if (logo == "OHDSI") {
+    to <- paste0(directory, "/www/ohdsi_logo.svg")
+    file.copy(from = ohdsiLogo, to = to, overwrite = TRUE)
+    return("ohdsi_logo.svg")
+  } else if (file.exists(logo)) {
+    nm <- basename(logo)
+    to <- paste0(directory, "/www/", nm)
+    file.copy(from = logo, to = to, overwrite = TRUE)
+    return(nm)
+  } else {
+    cli::cli_warn(c("!" = "Logo couldn't be found."))
+    return(NULL)
   }
   return(NULL)
 }
+
 
 # ui ----
 uiStatic <- function(choices = list(),
