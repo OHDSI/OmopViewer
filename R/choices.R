@@ -21,7 +21,7 @@ getPossibleSettings <- function(result) {
 }
 getPossibleGroupping <- function(result) {
   result |>
-    visOmopResults::addSettings(columns = "result_type") |>
+    visOmopResults::addSettings(settingsColumns = "result_type") |>
     dplyr::select(c(
       "result_type", "cdm_name", "group_name", "group_level", "strata_name",
       "strata_level", "additional_name", "additional_level")) |>
@@ -30,7 +30,7 @@ getPossibleGroupping <- function(result) {
 }
 getPossibleVariables <- function(result) {
   result |>
-    visOmopResults::addSettings(columns = "result_type") |>
+    visOmopResults::addSettings(settingsColumns = "result_type") |>
     dplyr::select(c("result_type", "variable_name", "estimate_name")) |>
     dplyr::distinct() |>
     getPossibilities()
