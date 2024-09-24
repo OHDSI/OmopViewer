@@ -4,6 +4,7 @@ test_that("logo", {
   expect_true("shiny" %in% list.files(tdir))
   unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
   expect_no_error(exportStaticApp(directory = tdir, logo = "HDS"))
+  expect_no_error(exportStaticApp(directory = tdir, logo = "OHDSI"))
   expect_true("shiny" %in% list.files(tdir))
   unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
   expect_no_error(exportStaticApp(
