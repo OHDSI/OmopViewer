@@ -1,4 +1,3 @@
-
 #' Export and launch a static shiny specific to the provided results.
 #'
 #' @param result A summarised_result object.
