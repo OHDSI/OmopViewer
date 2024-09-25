@@ -5,6 +5,7 @@
 #' @param directory Directory to create the shiny.
 #' @param logo Name of a logo or path to a logo. If NULL no logo is included.
 #' Only svg format allowed for the moment.
+#' @param title title of the shiny
 #' @param open Whether to open the shiny app project.
 #'
 #' @return The shiny app will be created in directory.
@@ -12,6 +13,7 @@
 #'
 exportStaticApp <- function(result = emptySummarisedResult(),
                             logo = "HDS",
+                            title = "My study",
                             directory = getwd(),
                             open = rlang::is_interactive()) {
   # input check
@@ -19,6 +21,7 @@ exportStaticApp <- function(result = emptySummarisedResult(),
   omopgenerics::assertCharacter(directory, length = 1)
   omopgenerics::assertLogical(open, length = 1)
   omopgenerics::assertCharacter(logo, length = 1, null = TRUE)
+  omopgenerics::assertCharacter(title, length = 1)
 
   # create directory if it does not exit
   if (!dir.exists(directory)) {
@@ -49,7 +52,7 @@ exportStaticApp <- function(result = emptySummarisedResult(),
   dir.create(path = directory, showWarnings = FALSE)
   cli::cli_inform(c("i" = "Creating shiny from provided data"))
   logo <- copyLogos(logo, directory)
-  ui <- c(messageShiny(), uiStatic(choices = choices, logo = logo))
+  ui <- c(messageShiny(), uiStatic(choices = choices, logo = logo, title = title))
   server <- c(messageShiny(), serverStatic(resultTypes = names(choices)))
   global <- c(messageShiny(), omopViewerGlobal)
   dir.create(paste0(directory, "/data"), showWarnings = FALSE)
