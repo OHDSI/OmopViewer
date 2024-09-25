@@ -5,13 +5,36 @@
 #' @param directory Directory to create the shiny.
 #' @param logo Name of a logo or path to a logo. If NULL no logo is included.
 #' Only svg format allowed for the moment.
+#' @param background Content to fill the background panel. If `NULL`, this panel
+#' will not appear in the Shiny UI. This argument can be populated in two ways:
+#' 1) A character string containing `bslib` code to go directly inside
+#' `bslib::card()`.
+#' 2) A named character vector where the names correspond to specific`bslib`
+#' card elements: "header", "title", "subtitle", "body", and "footer". Each
+#' element's name indicates the type of text it will fill. The order of these
+#' elements is important when displaying the content.
 #' @param open Whether to open the shiny app project.
 #'
 #' @return The shiny app will be created in directory.
+#'
 #' @export
+#'
+#' @examples {
+#' background <- c(
+#'   "header" = "Abstract",
+#'   "title" = "Introduction",
+#'   "body" = "Example of an introduction.",
+#'   "title" = "Methods",
+#'   "paragraph" = "Methods example, with a footer* example.",
+#'   "footer" = "*Here is the footer."
+#' )
+#' tdir <- here::here()
+#' exportStaticApp(directory = tdir, logo = NULL, background = full)
+#'}
 #'
 exportStaticApp <- function(result = emptySummarisedResult(),
                             logo = "HDS",
+                            background = NULL,
                             directory = getwd(),
                             open = rlang::is_interactive()) {
   # input check
@@ -49,7 +72,7 @@ exportStaticApp <- function(result = emptySummarisedResult(),
   dir.create(path = directory, showWarnings = FALSE)
   cli::cli_inform(c("i" = "Creating shiny from provided data"))
   logo <- copyLogos(logo, directory)
-  ui <- c(messageShiny(), uiStatic(choices = choices, logo = logo))
+  ui <- c(messageShiny(), uiStatic(choices = choices, logo = logo, background = background))
   server <- c(messageShiny(), serverStatic(resultTypes = names(choices)))
   global <- c(messageShiny(), omopViewerGlobal)
   dir.create(paste0(directory, "/data"), showWarnings = FALSE)
@@ -108,18 +131,18 @@ copyLogos <- function(logo, directory) {
 uiStatic <- function(choices = list(),
                      logo = NULL,
                      title = "My study",
-                     background = TRUE) {
+                     background = NULL) {
   # initial checks
   omopgenerics::assertList(choices, named = TRUE)
   omopgenerics::assertCharacter(logo, length = 1, null = TRUE)
   omopgenerics::assertCharacter(title, length = 1)
-  omopgenerics::assertLogical(background, length = 1)
+  # TODO: check background
 
   c(
     'ui <- bslib::page_navbar(',
     c(
       pageTitle(title, logo),
-      createBackground(background, title, logo),
+      createBackground(background = background, logo = logo),
       createUi(names(choices), choices),
       'bslib::nav_spacer()',
       createAbout("hds_logo.svg"),

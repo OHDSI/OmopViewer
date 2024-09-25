@@ -7,6 +7,7 @@
 exportStaticApp(
   result = emptySummarisedResult(),
   logo = "HDS",
+  background = NULL,
   directory = getwd(),
   open = rlang::is_interactive()
 )
@@ -17,6 +18,15 @@ exportStaticApp(
 \item{logo}{Name of a logo or path to a logo. If NULL no logo is included.
 Only svg format allowed for the moment.}
 
+\item{background}{Content to fill the background panel. If `NULL`, this panel
+will not appear in the Shiny UI. This argument can be populated in two ways:
+1) A character string containing `bslib` code to go directly inside
+`bslib::card()`.
+2) A named character vector where the names correspond to specific`bslib`
+card elements: "header", "title", "subtitle", "body", and "footer". Each
+element's name indicates the type of text it will fill. The order of these
+elements is important when displaying the content.}
+
 \item{directory}{Directory to create the shiny.}
 
 \item{open}{Whether to open the shiny app project.}
@@ -26,4 +36,19 @@ The shiny app will be created in directory.
 }
 \description{
 Export and launch a static shiny specific to the provided results.
+}
+\examples{
+{
+background <- c(
+  "header" = "Abstract",
+  "title" = "Introduction",
+  "body" = "Example of an introduction.",
+  "title" = "Methods",
+  "paragraph" = "Methods example, with a footer* example.",
+  "footer" = "*Here is the footer."
+)
+tdir <- here::here()
+expect_no_error(exportStaticApp(directory = tdir, logo = NULL, background = full))
+}
+
 }
