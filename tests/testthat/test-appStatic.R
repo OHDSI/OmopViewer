@@ -103,6 +103,12 @@ test_that("background", {
   expect_true("shiny" %in% list.files(tdir))
   unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
   expect_equal(createBackground(NULL, "HDS"), "")
+
+  # expected behaviour
+  expect_warning(x <- validateBackground("bslib::hola("))
+  expect_null(x)
+  expect_warning(x <- validateBackground(c("hi" = "drop", "title" = "keep")))
+  expect_equal(x, c("title" = "keep"))
 })
 
 test_that("title", {

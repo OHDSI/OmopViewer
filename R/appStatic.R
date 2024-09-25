@@ -42,6 +42,7 @@ exportStaticApp <- function(result = emptySummarisedResult(),
                             open = rlang::is_interactive()) {
   # input check
   result <- omopgenerics::validateResultArgument(result)
+  background <- validateBackground(background)
   omopgenerics::assertCharacter(directory, length = 1)
   omopgenerics::assertLogical(open, length = 1)
   omopgenerics::assertCharacter(logo, length = 1, null = TRUE)

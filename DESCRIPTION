@@ -33,6 +33,7 @@ Imports:
     shiny,
     snakecase,
     stringr,
+    styler,
     tidyr,
     usethis,
     vctrs,
@@ -53,7 +54,6 @@ Suggests:
     shinycssloaders,
     shinyWidgets,
     sortable,
-    styler,
     testthat (>= 3.1.5),
     utils,
     zip
