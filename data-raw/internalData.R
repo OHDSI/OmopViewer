@@ -49,7 +49,6 @@ omopViewerProj <- c(
 omopViewerGlobal <- c(
   "library(shiny)",
   "library(omopViewer)",
-  "library(sortable)",
   "",
   "data <- importSummarisedResult(here::here(\"data\"))"
 ) |>
@@ -187,3 +186,4 @@ usethis::use_data(
   omopViewerTabs, omopViewerPlots, omopViewerPlotArguments, omopViewerProj,
   omopViewerGlobal, plot_config, overwrite = TRUE,
   internal = TRUE)
+
