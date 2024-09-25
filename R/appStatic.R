@@ -5,7 +5,8 @@
 #' @param directory Directory to create the shiny.
 #' @param logo Name of a logo or path to a logo. If NULL no logo is included.
 #' Only svg format allowed for the moment.
-#' @param background Content to fill the background panel. If `NULL`, this panel
+#' @param title title of the shiny
+#' #' @param background Content to fill the background panel. If `NULL`, this panel
 #' will not appear in the Shiny UI. This argument can be populated in two ways:
 #' 1) A character string containing `bslib` code to go directly inside
 #' `bslib::card()`.
@@ -34,6 +35,7 @@
 #'
 exportStaticApp <- function(result = emptySummarisedResult(),
                             logo = "HDS",
+                            title = "My study",
                             background = NULL,
                             directory = getwd(),
                             open = rlang::is_interactive()) {
@@ -42,6 +44,7 @@ exportStaticApp <- function(result = emptySummarisedResult(),
   omopgenerics::assertCharacter(directory, length = 1)
   omopgenerics::assertLogical(open, length = 1)
   omopgenerics::assertCharacter(logo, length = 1, null = TRUE)
+  omopgenerics::assertCharacter(title, length = 1)
 
   # create directory if it does not exit
   if (!dir.exists(directory)) {
@@ -72,7 +75,7 @@ exportStaticApp <- function(result = emptySummarisedResult(),
   dir.create(path = directory, showWarnings = FALSE)
   cli::cli_inform(c("i" = "Creating shiny from provided data"))
   logo <- copyLogos(logo, directory)
-  ui <- c(messageShiny(), uiStatic(choices = choices, logo = logo, background = background))
+    ui <- c(messageShiny(), uiStatic(choices = choices, logo = logo, title = title, background = background))
   server <- c(messageShiny(), serverStatic(resultTypes = names(choices)))
   global <- c(messageShiny(), omopViewerGlobal)
   dir.create(paste0(directory, "/data"), showWarnings = FALSE)

@@ -104,3 +104,12 @@ test_that("background", {
   unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
   expect_equal(createBackground(NULL, "HDS"), "")
 })
+
+test_that("title", {
+  tdir <- here::here()
+  expect_no_error(exportStaticApp(directory = tdir, title = "example"))
+  expect_true("shiny" %in% list.files(tdir))
+  x <- readLines(file.path(tdir, "shiny/ui.R"))
+  expect_snapshot(cat(x, sep = "\n"))
+  unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
+})
