@@ -86,18 +86,12 @@ test_that("background", {
   expect_no_error(exportStaticApp(directory = tdir, logo = NULL, background = full))
   expect_true("shiny" %in% list.files(tdir))
   unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
-  expect_equal(
-    createBackground(full),
-    "bslib::nav_panel(\n  title = \"Background\",\n  icon = shiny::icon(\"disease\"),\n  bslib::card(bslib::card_header(shiny::markdown('Abstract')), bslib::card_title(shiny::markdown('**Introduction**')), bslib::card_body(shiny::markdown('Example of an [introduction](https://github.com/oxford-pharmacoepi/omopViewer).')), bslib::card_title(shiny::markdown('Methods')), bslib::card_footer(shiny::markdown('*Here is the footer.')))\n  \n)"
-  )
+  expect_snapshot(createBackground(full))
   # with logo
   expect_no_error(exportStaticApp(directory = tdir, logo = "HDS", background = full))
   expect_true("shiny" %in% list.files(tdir))
   unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
-  expect_equal(
-    createBackground(full, "HDS"),
-    "bslib::nav_panel(\n  title = \"Background\",\n  icon = shiny::icon(\"disease\"),\n  bslib::card(bslib::card_header(shiny::markdown('Abstract')), bslib::card_title(shiny::markdown('**Introduction**')), bslib::card_body(shiny::markdown('Example of an [introduction](https://github.com/oxford-pharmacoepi/omopViewer).')), bslib::card_title(shiny::markdown('Methods')), bslib::card_footer(shiny::markdown('*Here is the footer.')))\n  ,\nshiny::tags$img(\n  src = \"HDS\",\n  width = \"auto\",\n  height = \"100px\",\n  alt = \"logo\",\n  align = \"left\"\n)\n)"
-  )
+  expect_snapshot(createBackground(full, "HDS"))
   # no background
   expect_no_error(exportStaticApp(directory = tdir, logo = "HDS", background = NULL))
   expect_true("shiny" %in% list.files(tdir))
