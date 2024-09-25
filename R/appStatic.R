@@ -13,7 +13,8 @@
 #' 2) A named character vector where the names correspond to specific`bslib`
 #' card elements: "header", "title", "subtitle", "body", and "footer". Each
 #' element's name indicates the type of text it will fill. The order of these
-#' elements is important when displaying the content.
+#' elements is important when displaying the content. Markdown sythax for text
+#' styling is supported.
 #' @param open Whether to open the shiny app project.
 #'
 #' @return The shiny app will be created in directory.
@@ -23,9 +24,9 @@
 #' @examples {
 #' background <- c(
 #'   "header" = "Abstract",
-#'   "title" = "Introduction",
-#'   "body" = "Example of an introduction.",
-#'   "title" = "Methods",
+#'   "title" = "**Introduction**",
+#'   "body" = "This shiny has been generated with [omopViewer](https://github.com/oxford-pharmacoepi/omopViewer).",
+#'   "title" = "**Methods**",
 #'   "paragraph" = "Methods example, with a footer* example.",
 #'   "footer" = "*Here is the footer."
 #' )

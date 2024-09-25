@@ -30,10 +30,10 @@ createBackground <- function(background = NULL,
 
 fillCard <- function(background) {
   purrr::imap(background, ~ switch(.y,
-                                "header" = glue::glue("bslib::card_header('{.x}')"),
-                                "title" = glue::glue("bslib::card_title('{.x}')"),
-                                "body" = glue::glue("bslib::card_body('{.x}')"),
-                                "footer" = glue::glue("bslib::card_footer('{.x}')")
+                                "header" = glue::glue("bslib::card_header(shiny::markdown('{.x}'))"),
+                                "title" = glue::glue("bslib::card_title(shiny::markdown('{.x}'))"),
+                                "body" = glue::glue("bslib::card_body(shiny::markdown('{.x}'))"),
+                                "footer" = glue::glue("bslib::card_footer(shiny::markdown('{.x}'))")
   )) |>
     unlist() |>
     paste0(collapse = ", ")
