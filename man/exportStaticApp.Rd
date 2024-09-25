@@ -7,6 +7,7 @@
 exportStaticApp(
   result = emptySummarisedResult(),
   logo = "HDS",
+  title = "My study",
   directory = getwd(),
   open = rlang::is_interactive()
 )
@@ -16,6 +17,8 @@ exportStaticApp(
 
 \item{logo}{Name of a logo or path to a logo. If NULL no logo is included.
 Only svg format allowed for the moment.}
+
+\item{title}{title of the shiny}
 
 \item{directory}{Directory to create the shiny.}
 
