@@ -83,7 +83,7 @@ test_that("background", {
     "footer" = "*Here is the footer."
   )
   tdir <- here::here()
-  expect_no_error(exportStaticApp(directory = tdir, logo = NULL, content = full))
+  expect_no_error(exportStaticApp(directory = tdir, logo = NULL, background = full))
   expect_true("shiny" %in% list.files(tdir))
   unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
   expect_equal(
@@ -91,7 +91,7 @@ test_that("background", {
     "bslib::nav_panel(\n  title = \"Background\",\n  icon = shiny::icon(\"disease\"),\n  bslib::card(bslib::card_header('Abstract'), bslib::card_title('Introduction'), bslib::card_body('Example of an introduction.'), bslib::card_title('Methods'), bslib::card_footer('*Here is the footer.'))\n  \n)"
   )
   # with logo
-  expect_no_error(exportStaticApp(directory = tdir, logo = "HDS", content = full))
+  expect_no_error(exportStaticApp(directory = tdir, logo = "HDS", background = full))
   expect_true("shiny" %in% list.files(tdir))
   unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
   expect_equal(
@@ -99,7 +99,7 @@ test_that("background", {
     "bslib::nav_panel(\n  title = \"Background\",\n  icon = shiny::icon(\"disease\"),\n  bslib::card(bslib::card_header('Abstract'), bslib::card_title('Introduction'), bslib::card_body('Example of an introduction.'), bslib::card_title('Methods'), bslib::card_footer('*Here is the footer.'))\n  ,\nshiny::tags$img(\n  src = \"HDS\",\n  width = \"auto\",\n  height = \"100px\",\n  alt = \"logo\",\n  align = \"left\"\n)\n)"
   )
   # no background
-  expect_no_error(exportStaticApp(directory = tdir, logo = "HDS", content = NULL))
+  expect_no_error(exportStaticApp(directory = tdir, logo = "HDS", background = NULL))
   expect_true("shiny" %in% list.files(tdir))
   unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
   expect_equal(createBackground(NULL, "HDS"), "")

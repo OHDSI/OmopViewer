@@ -6,7 +6,7 @@
 #' @param logo Name of a logo or path to a logo. If NULL no logo is included.
 #' Only svg format allowed for the moment.
 #' @param title title of the shiny
-#' #' @param background Content to fill the background panel. If `NULL`, this panel
+#' @param background Content to fill the background panel. If `NULL`, this panel
 #' will not appear in the Shiny UI. This argument can be populated in two ways:
 #' 1) A character string containing `bslib` code to go directly inside
 #' `bslib::card()`.
@@ -30,7 +30,7 @@
 #'   "footer" = "*Here is the footer."
 #' )
 #' tdir <- here::here()
-#' exportStaticApp(directory = tdir, logo = NULL, background = full)
+#' exportStaticApp(directory = tdir, logo = NULL, background = background)
 #'}
 #'
 exportStaticApp <- function(result = emptySummarisedResult(),
@@ -75,7 +75,7 @@ exportStaticApp <- function(result = emptySummarisedResult(),
   dir.create(path = directory, showWarnings = FALSE)
   cli::cli_inform(c("i" = "Creating shiny from provided data"))
   logo <- copyLogos(logo, directory)
-    ui <- c(messageShiny(), uiStatic(choices = choices, logo = logo, title = title, background = background))
+  ui <- c(messageShiny(), uiStatic(choices = choices, logo = logo, title = title, background = background))
   server <- c(messageShiny(), serverStatic(resultTypes = names(choices)))
   global <- c(messageShiny(), omopViewerGlobal)
   dir.create(paste0(directory, "/data"), showWarnings = FALSE)
