@@ -6,6 +6,8 @@
 #' @param logo Name of a logo or path to a logo. If NULL no logo is included.
 #' Only svg format allowed for the moment.
 #' @param title title of the shiny
+#' @param summary Whether to include a panel with a summary of content in the
+#' `result`.
 #' @param open Whether to open the shiny app project.
 #'
 #' @return The shiny app will be created in directory.
@@ -14,6 +16,7 @@
 exportStaticApp <- function(result = emptySummarisedResult(),
                             logo = "HDS",
                             title = "My study",
+                            summary = TRUE,
                             directory = getwd(),
                             open = rlang::is_interactive()) {
   # input check
@@ -22,6 +25,12 @@ exportStaticApp <- function(result = emptySummarisedResult(),
   omopgenerics::assertLogical(open, length = 1)
   omopgenerics::assertCharacter(logo, length = 1, null = TRUE)
   omopgenerics::assertCharacter(title, length = 1)
+  omopgenerics::assertLogical(summary, length = 1)
+  if (summary) {
+    sum <- capture.output(summary(result), type = "message")
+  } else {
+    sum <- NULL
+  }
 
   # create directory if it does not exit
   if (!dir.exists(directory)) {
@@ -52,7 +61,7 @@ exportStaticApp <- function(result = emptySummarisedResult(),
   dir.create(path = directory, showWarnings = FALSE)
   cli::cli_inform(c("i" = "Creating shiny from provided data"))
   logo <- copyLogos(logo, directory)
-  ui <- c(messageShiny(), uiStatic(choices = choices, logo = logo, title = title))
+  ui <- c(messageShiny(), uiStatic(choices = choices, logo = logo, title = title, summary = sum))
   server <- c(messageShiny(), serverStatic(resultTypes = names(choices)))
   global <- c(messageShiny(), omopViewerGlobal)
   dir.create(paste0(directory, "/data"), showWarnings = FALSE)
@@ -111,7 +120,8 @@ copyLogos <- function(logo, directory) {
 uiStatic <- function(choices = list(),
                      logo = NULL,
                      title = "My study",
-                     background = TRUE) {
+                     background = TRUE,
+                     summary = NULL) {
   # initial checks
   omopgenerics::assertList(choices, named = TRUE)
   omopgenerics::assertCharacter(logo, length = 1, null = TRUE)
@@ -123,6 +133,7 @@ uiStatic <- function(choices = list(),
     c(
       pageTitle(title, logo),
       createBackground(background, title, logo),
+      createSummary(summary, logo),
       createUi(names(choices), choices),
       'bslib::nav_spacer()',
       createAbout("hds_logo.svg"),

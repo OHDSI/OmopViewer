@@ -8,6 +8,7 @@ exportStaticApp(
   result = emptySummarisedResult(),
   logo = "HDS",
   title = "My study",
+  summary = TRUE,
   directory = getwd(),
   open = rlang::is_interactive()
 )
@@ -19,6 +20,9 @@ exportStaticApp(
 Only svg format allowed for the moment.}
 
 \item{title}{title of the shiny}
+
+\item{summary}{Whether to include a panel with a summary of content in the
+`result`.}
 
 \item{directory}{Directory to create the shiny.}
 
