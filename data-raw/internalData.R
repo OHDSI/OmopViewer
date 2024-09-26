@@ -186,3 +186,4 @@ usethis::use_data(
   omopViewerTabs, omopViewerPlots, omopViewerPlotArguments, omopViewerProj,
   omopViewerGlobal, plot_config, overwrite = TRUE,
   internal = TRUE)
+

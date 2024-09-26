@@ -539,6 +539,105 @@
           bslib::layout_sidebar(
             sidebar = bslib::sidebar(
               position = "right"
+              bslib::accordion(
+                bslib::accordion_panel(
+                  title = "Information",
+                  icon = shiny::icon("info"),
+                  shiny::p("")
+                ),
+                bslib::accordion_panel(
+                  title = "Settings",
+                  shiny::selectizeInput(
+                    inputId = "summarise_large_scale_characteristics_settings_table_name",
+                    label = "Table name",
+                    choices = c("condition_occurrence", "drug_exposure"),
+                    selected = c("condition_occurrence", "drug_exposure"),
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_large_scale_characteristics_settings_type",
+                    label = "Type",
+                    choices = c("episode", "event"),
+                    selected = c("episode", "event"),
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_large_scale_characteristics_settings_analysis",
+                    label = "Analysis",
+                    choices = c("standard"),
+                    selected = c("standard"),
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "Groupping",
+                  shiny::selectizeInput(
+                    inputId = "summarise_large_scale_characteristics_groupping_cdm_name",
+                    label = "Cdm name",
+                    choices = c("mock database"),
+                    selected = c("mock database"),
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_large_scale_characteristics_groupping_cohort_name",
+                    label = "Cohort name",
+                    choices = c("asthma", "covid", "tb"),
+                    selected = c("asthma", "covid", "tb"),
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_large_scale_characteristics_groupping_sex",
+                    label = "Sex",
+                    choices = c("Female", "Male", "overall"),
+                    selected = c("Female", "Male", "overall"),
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_large_scale_characteristics_groupping_age_group",
+                    label = "Age group",
+                    choices = c("0 to 44", "45 or above", "overall"),
+                    selected = c("0 to 44", "45 or above", "overall"),
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_large_scale_characteristics_groupping_concept_id",
+                    label = "Concept id",
+                    choices = c("1361364", "1361365", "1361368", "1361370", "1830184", "1830278", "1830279", "1830280", "1830281", "1830282", "1830283", "194152", "1971546", "21018250", "21216049", "21601213", "21601386", "21601387", "21603215", "21603248", "21603365", "21603444", "21603530", "21603812", "21603848", "21603890", "21605007", "21605008", "35604394", "35604434", "35604435", "35604439", "35604877", "35604879", "35604880", "35604883", "35604884", "35741956", "35774678", "36034746", "36034747", "36034751", "36036059", "36217206", "36217213", "37110496", "37498042", "37593197", "37787172", "40371897", "40475132", "40475135", "40721254", "40741270", "4151660", "4220473", "4220524", "4226696", "42899580", "4304866", "44022939", "44081436", "44091285", "444074", "45430573", "45511667", "45533778", "45538734", "45548358", "45548372", "45755492", "45755493", "45756021", "45756023", "46274351"),
+                    selected = c("1361364", "1361365", "1361368", "1361370", "1830184", "1830278", "1830279", "1830280", "1830281", "1830282", "1830283", "194152", "1971546", "21018250", "21216049", "21601213", "21601386", "21601387", "21603215", "21603248", "21603365", "21603444", "21603530", "21603812", "21603848", "21603890", "21605007", "21605008", "35604394", "35604434", "35604435", "35604439", "35604877", "35604879", "35604880", "35604883", "35604884", "35741956", "35774678", "36034746", "36034747", "36034751", "36036059", "36217206", "36217213", "37110496", "37498042", "37593197", "37787172", "40371897", "40475132", "40475135", "40721254", "40741270", "4151660", "4220473", "4220524", "4226696", "42899580", "4304866", "44022939", "44081436", "44091285", "444074", "45430573", "45511667", "45533778", "45538734", "45548358", "45548372", "45755492", "45755493", "45756021", "45756023", "46274351"),
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "Variables",
+                  shiny::selectizeInput(
+                    inputId = "summarise_large_scale_characteristics_variable_name",
+                    label = "Variable name",
+                    choices = c("ANTIHISTAMINES FOR SYSTEMIC USE", "ANTINEOPLASTIC AGENTS", "ANTINEOPLASTIC AND IMMUNOMODULATING AGENTS", "Acquired deformities of fingers and toes", "Alkaline phosphatase bone isoenzyme raised", "Alkaline phosphatase isoenzyme, bone fraction", "Arthropathies", "Bos taurus catalase preparation", "Bus occupant injured in collision with heavy transport vehicle or bus", "Bus occupant injured in collision with heavy transport vehicle or bus, person on outside of vehicle injured in nontraffic accident", "COUGH AND COLD PREPARATIONS", "DRUGS FOR OBSTRUCTIVE AIRWAY DISEASES", "Disorders of patella", "ENDOCRINE THERAPY", "Elevated mood", "IMMUNOSTIMULANTS", "IMMUNOSUPPRESSANTS", "Internal derangement of knee", "Jaaps Health Salts", "Manic mood", "Manic symptoms co-occurrent and due to primary psychotic disorder", "Mentha arvensis top extract / sodium chloride / xylitol Nasal Powder", "NASAL PREPARATIONS", "Nasal Powder", "Nasal Product", "OTHER RESPIRATORY SYSTEM PRODUCTS", "Other acquired deformities of limbs", "Other joint disorders", "Other joint disorders, not elsewhere classified", "Other specific joint derangements", "POTASSIUM SODIUM TARTRATE / Sodium Bicarbonate / sodium carbonate / Sodium Chloride / tartaric acid Oral Powder", "POTASSIUM SODIUM TARTRATE / Sodium Bicarbonate / tartaric acid Injectable Solution", "POTASSIUM SODIUM TARTRATE / Sodium Bicarbonate / tartaric acid Oral Powder", "POTASSIUM SODIUM TARTRATE 0.0094 MG/MG", "POTASSIUM SODIUM TARTRATE 9.4 MG/MG", "RESPIRATORY SYSTEM", "Renal agenesis and dysgenesis", "Renal agenesis or dysgenesis NOS", "Septiline", "Sisymbrium officianale whole extract 10 MG Nasal Powder", "Sisymbrium officianale whole extract 10 MG Nasal Powder Box of 50", "Sisymbrium officianale whole extract 10 MG Nasal Powder [Euphon]", "Sisymbrium officianale whole extract 10 MG Nasal Powder [Euphon] Box of 50", "Sisymbrium officianale whole extract 10 MG Nasal Powder [Euphon] Box of 50 by Mayoly Spindler", "Sisymbrium officianale whole extract Nasal Powder", "Sisymbrium officianale whole extract Nasal Powder [Euphon]", "Sodium / Sodium Chloride Nasal Powder", "Sodium potassium tartrate", "Sodium potassium tartrate crystal", "THROAT PREPARATIONS", "Topical Liquefied Gas", "Topical Product", "Uroporphyrin III", "Victim of vehicular AND/OR traffic accident", "combinations of electrolytes; parenteral", "glucagon 3 MG Nasal Powder", "glucagon 3 MG Nasal Powder [Baqsimi]", "glucagon 3 MG Nasal Powder [Baqsimi] by Abacus Medicine", "glucagon Nasal Powder", "glucagon Nasal Powder [Baqsimi]", "glucose / potassium / sodium Nasal Powder", "nitrogen 99 % Topical Liquefied Gas", "nitrogen 99.2 % Topical Liquefied Gas", "nitrogen Topical Liquefied Gas", "potassium sodium tartrate", "sodium chloride Nasal Powder", "sodium chloride Nasal Powder [Neilmed Sinus Rins]", "sodium potassium tartrate tetrahydrate", "sumatriptan 11 MG Nasal Powder", "sumatriptan 11 MG Nasal Powder [Onzetra]", "sumatriptan Nasal Powder", "sumatriptan Nasal Powder [Onzetra]"),
+                    selected = c("ANTIHISTAMINES FOR SYSTEMIC USE", "ANTINEOPLASTIC AGENTS", "ANTINEOPLASTIC AND IMMUNOMODULATING AGENTS", "Acquired deformities of fingers and toes", "Alkaline phosphatase bone isoenzyme raised", "Alkaline phosphatase isoenzyme, bone fraction", "Arthropathies", "Bos taurus catalase preparation", "Bus occupant injured in collision with heavy transport vehicle or bus", "Bus occupant injured in collision with heavy transport vehicle or bus, person on outside of vehicle injured in nontraffic accident", "COUGH AND COLD PREPARATIONS", "DRUGS FOR OBSTRUCTIVE AIRWAY DISEASES", "Disorders of patella", "ENDOCRINE THERAPY", "Elevated mood", "IMMUNOSTIMULANTS", "IMMUNOSUPPRESSANTS", "Internal derangement of knee", "Jaaps Health Salts", "Manic mood", "Manic symptoms co-occurrent and due to primary psychotic disorder", "Mentha arvensis top extract / sodium chloride / xylitol Nasal Powder", "NASAL PREPARATIONS", "Nasal Powder", "Nasal Product", "OTHER RESPIRATORY SYSTEM PRODUCTS", "Other acquired deformities of limbs", "Other joint disorders", "Other joint disorders, not elsewhere classified", "Other specific joint derangements", "POTASSIUM SODIUM TARTRATE / Sodium Bicarbonate / sodium carbonate / Sodium Chloride / tartaric acid Oral Powder", "POTASSIUM SODIUM TARTRATE / Sodium Bicarbonate / tartaric acid Injectable Solution", "POTASSIUM SODIUM TARTRATE / Sodium Bicarbonate / tartaric acid Oral Powder", "POTASSIUM SODIUM TARTRATE 0.0094 MG/MG", "POTASSIUM SODIUM TARTRATE 9.4 MG/MG", "RESPIRATORY SYSTEM", "Renal agenesis and dysgenesis", "Renal agenesis or dysgenesis NOS", "Septiline", "Sisymbrium officianale whole extract 10 MG Nasal Powder", "Sisymbrium officianale whole extract 10 MG Nasal Powder Box of 50", "Sisymbrium officianale whole extract 10 MG Nasal Powder [Euphon]", "Sisymbrium officianale whole extract 10 MG Nasal Powder [Euphon] Box of 50", "Sisymbrium officianale whole extract 10 MG Nasal Powder [Euphon] Box of 50 by Mayoly Spindler", "Sisymbrium officianale whole extract Nasal Powder", "Sisymbrium officianale whole extract Nasal Powder [Euphon]", "Sodium / Sodium Chloride Nasal Powder", "Sodium potassium tartrate", "Sodium potassium tartrate crystal", "THROAT PREPARATIONS", "Topical Liquefied Gas", "Topical Product", "Uroporphyrin III", "Victim of vehicular AND/OR traffic accident", "combinations of electrolytes; parenteral", "glucagon 3 MG Nasal Powder", "glucagon 3 MG Nasal Powder [Baqsimi]", "glucagon 3 MG Nasal Powder [Baqsimi] by Abacus Medicine", "glucagon Nasal Powder", "glucagon Nasal Powder [Baqsimi]", "glucose / potassium / sodium Nasal Powder", "nitrogen 99 % Topical Liquefied Gas", "nitrogen 99.2 % Topical Liquefied Gas", "nitrogen Topical Liquefied Gas", "potassium sodium tartrate", "sodium chloride Nasal Powder", "sodium chloride Nasal Powder [Neilmed Sinus Rins]", "sodium potassium tartrate tetrahydrate", "sumatriptan 11 MG Nasal Powder", "sumatriptan 11 MG Nasal Powder [Onzetra]", "sumatriptan Nasal Powder", "sumatriptan Nasal Powder [Onzetra]"),
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "Estimates",
+                  shiny::selectizeInput(
+                    inputId = "summarise_large_scale_characteristics_estimate_name",
+                    label = "Estimate name",
+                    choices = c("count", "percentage"),
+                    selected = c("count", "percentage"),
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                )
+              )
             ),
             DiagrammeR::grVizOutput("summarise_cohort_attrition_plot_2")
           )
@@ -1895,4 +1994,62 @@
       
       
       }
+
+# title
+
+    Code
+      cat(x, sep = "\n")
+    Output
+      # Generated by omopViewer 0.0.0.900
+      # Be careful editing this file
+      
+      ui <- bslib::page_navbar(
+        title = shiny::tags$span(
+          shiny::tags$img(
+            src = "hds_logo.svg",
+            width = "auto",
+            height = "46px",
+            class = "me-3",
+            alt = "logo"
+          ),
+          "example"
+        ),
+        bslib::nav_panel(
+          title = "Background",
+          icon = shiny::icon("disease"),
+          bslib::card(
+            bslib::card_header("example background"),
+            shiny::p("You can use this section to add some background of your study"),
+            shiny::tags$img(
+              src = "hds_logo.svg",
+              width = "auto",
+              height = "100px",
+              alt = "logo",
+              align = "left"
+            )
+          )
+        ),
+        bslib::nav_spacer(),
+        bslib::nav_item(
+          bslib::popover(
+            shiny::icon("circle-info"),
+            shiny::tags$img(
+              src = "hds_logo.svg",
+              class = "logo-img",
+              alt = "Logo",
+              height = "auto",
+              width = "30%",
+              style = "float:right"
+            ),
+            "This shiny app was generated with ",
+            shiny::a(
+              "omopViewer",
+              href = "https://github.com/oxford-pharmacoepi/omopViewer",
+              target = "_blank"
+            ),
+            shiny::strong("v0.0.0.900")
+          )
+        ),
+        bslib::nav_item(bslib::input_dark_mode(id = "dark_mode", mode = "light"))
+      )
 
