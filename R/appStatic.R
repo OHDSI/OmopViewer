@@ -92,7 +92,6 @@ copyLogos <- function(logo, directory) {
   hdsLogo <- system.file("/www/images/hds_logo.svg", package = "omopViewer")
   ohdsiLogo <- system.file("/www/images/ohdsi_logo.svg", package = "omopViewer")
   if (is.null(logo)) {
-    cli::cli_warn("No logo specified; nothing to copy.")
     return(NULL)
   }
   if (logo == "HDS") {
