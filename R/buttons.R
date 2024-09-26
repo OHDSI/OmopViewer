@@ -16,7 +16,7 @@ downloadTable <- function(id, lab, type = NULL) {
   if (is.null(type)) {
     type <- ""
   } else {
-    type <- '{selector("{id}_type", "File", {cast(type)}, {cast("docx")}, FALSE)},' |> glue::glue()
+    type <- paste0('{selector("', id, '_type", "File", {cast(type)}, {cast("docx")}, FALSE)},') |> glue::glue()
   }
 
   'bslib::card_header(
