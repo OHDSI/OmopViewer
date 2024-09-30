@@ -938,7 +938,7 @@
                       shiny::checkboxInput(
                         inputId = "summarise_cohort_overlap_plot_1_unique_combinations",
                         label = "uniqueCombinations",
-                        value = c(FALSE)
+                        value = c(TRUE)
                       ),
                       position = "right"
                     ),
@@ -1173,7 +1173,7 @@
                       shiny::checkboxInput(
                         inputId = "summarise_cohort_timing_plot_3_unique_combinations",
                         label = "uniqueCombinations",
-                        value = c(FALSE)
+                        value = c(TRUE)
                       ),
                       position = "right"
                     ),
