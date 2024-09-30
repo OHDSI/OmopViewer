@@ -206,7 +206,15 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_characteristics_formatted_download", label = "Download word")
+                      shiny::selectizeInput(
+                        inputId = "summarise_characteristics_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_characteristics_formatted_download", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -248,8 +256,8 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::numericInput(inputId = "summarise_characteristics_plot_4_download_width", label = "width", value = 15),
-                      shiny::numericInput(inputId = "summarise_characteristics_plot_4_download_height", label = "height", value = 10),
+                      shiny::numericInput(inputId = "summarise_characteristics_plot_4_download_width", label = "Width", value = 15),
+                      shiny::numericInput(inputId = "summarise_characteristics_plot_4_download_height", label = "Height", value = 10),
                       shiny::selectizeInput(
                         inputId = "summarise_characteristics_plot_4_download_units",
                         label = "Units",
@@ -444,7 +452,15 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_attrition_formatted_download", label = "Download word")
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_attrition_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_cohort_attrition_formatted_download", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -486,17 +502,8 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::numericInput(inputId = "summarise_cohort_attrition_plot_2_download_width", label = "width", value = 15),
-                      shiny::numericInput(inputId = "summarise_cohort_attrition_plot_2_download_height", label = "height", value = 10),
-                      shiny::selectizeInput(
-                        inputId = "summarise_cohort_attrition_plot_2_download_units",
-                        label = "Units",
-                        choices = c("px", "cm", "inch"),
-                        selected = c("cm"),
-                        multiple = FALSE,
-                        options = list(plugins = "remove_button")
-                      ),
-                      shiny::numericInput(inputId = "summarise_cohort_attrition_plot_2_download_dpi", label = "dpi", value = 300),
+                      shiny::numericInput(inputId = "summarise_cohort_attrition_plot_2_download_width", label = "Width (px)", value = 15),
+                      shiny::numericInput(inputId = "summarise_cohort_attrition_plot_2_download_height", label = "Height (px)", value = 10),
                       shiny::downloadButton(outputId = "summarise_cohort_attrition_plot_2_download", label = "Download png")
                     ),
                     class = "text-end"
@@ -634,7 +641,15 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_count_formatted_download", label = "Download word")
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_count_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_cohort_count_formatted_download", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -676,8 +691,8 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::numericInput(inputId = "summarise_cohort_count_plot_5_download_width", label = "width", value = 15),
-                      shiny::numericInput(inputId = "summarise_cohort_count_plot_5_download_height", label = "height", value = 10),
+                      shiny::numericInput(inputId = "summarise_cohort_count_plot_5_download_width", label = "Width", value = 15),
+                      shiny::numericInput(inputId = "summarise_cohort_count_plot_5_download_height", label = "Height", value = 10),
                       shiny::selectizeInput(
                         inputId = "summarise_cohort_count_plot_5_download_units",
                         label = "Units",
@@ -837,7 +852,15 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_overlap_formatted_download", label = "Download word")
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_overlap_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_cohort_overlap_formatted_download", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -879,8 +902,8 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::numericInput(inputId = "summarise_cohort_overlap_plot_1_download_width", label = "width", value = 15),
-                      shiny::numericInput(inputId = "summarise_cohort_overlap_plot_1_download_height", label = "height", value = 10),
+                      shiny::numericInput(inputId = "summarise_cohort_overlap_plot_1_download_width", label = "Width", value = 15),
+                      shiny::numericInput(inputId = "summarise_cohort_overlap_plot_1_download_height", label = "Height", value = 10),
                       shiny::selectizeInput(
                         inputId = "summarise_cohort_overlap_plot_1_download_units",
                         label = "Units",
@@ -1048,7 +1071,15 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_timing_formatted_download", label = "Download word")
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_timing_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_cohort_timing_formatted_download", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -1090,8 +1121,8 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::numericInput(inputId = "summarise_cohort_timing_plot_3_download_width", label = "width", value = 15),
-                      shiny::numericInput(inputId = "summarise_cohort_timing_plot_3_download_height", label = "height", value = 10),
+                      shiny::numericInput(inputId = "summarise_cohort_timing_plot_3_download_width", label = "Width", value = 15),
+                      shiny::numericInput(inputId = "summarise_cohort_timing_plot_3_download_height", label = "Height", value = 10),
                       shiny::selectizeInput(
                         inputId = "summarise_cohort_timing_plot_3_download_units",
                         label = "Units",
@@ -1315,7 +1346,15 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_large_scale_characteristics_formatted_download", label = "Download word")
+                      shiny::selectizeInput(
+                        inputId = "summarise_large_scale_characteristics_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_large_scale_characteristics_formatted_download", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -1435,7 +1474,9 @@
           getFormattedDataSummariseCharacteristics()
         })
         output$summarise_characteristics_formatted_download <- shiny::downloadHandler(
-          filename = "formatted_summarise_characteristics.docx",
+          filename = function() {
+            paste0("formatted_summarise_characteristics.", input$summarise_characteristics_formatted_download_type)
+          },
           content = function(file) {
             getFormattedDataSummariseCharacteristics() |>
               gt::gtsave(filename = file)
@@ -1459,7 +1500,13 @@
           filename = "plot_summarise_characteristics.png",
           content = function(file) {
             plt <- createPlot4()
-            ggplot2::ggsave(filename = file, plot = plt)
+            ggplot2::ggsave(
+              filename = file, plot = plt,
+              width = as.numeric(input$summarise_characteristics_plot_4_download_width),
+              height = as.numeric(input$summarise_characteristics_plot_4_download_height),
+              units = input$summarise_characteristics_plot_4_download_units,
+              dpi = as.numeric(input$summarise_characteristics_plot_4_download_dpi)
+            )
           }
         )
       
@@ -1516,7 +1563,9 @@
           getFormattedDataSummariseCohortAttrition()
         })
         output$summarise_cohort_attrition_formatted_download <- shiny::downloadHandler(
-          filename = "formatted_summarise_cohort_attrition.docx",
+          filename = function() {
+            paste0("formatted_summarise_cohort_attrition.", input$summarise_cohort_attrition_formatted_download_type)
+          },
           content = function(file) {
             getFormattedDataSummariseCohortAttrition() |>
               gt::gtsave(filename = file)
@@ -1537,7 +1586,11 @@
           filename = "plot_summarise_cohort_attrition.png",
           content = function(file) {
             plt <- createPlot2()
-            DiagrammeR::export_graph(graph = plt, file_name = file, fily_type = "png", width = 800)
+            DiagrammeR::export_graph(
+              graph = plt, file_name = file, fily_type = "png",
+              width = as.numeric(input$summarise_cohort_attrition_plot_2_download_width),
+              height = as.numeric(input$summarise_cohort_attrition_plot_2_download_height)
+            )
           }
         )
       
@@ -1594,7 +1647,9 @@
           getFormattedDataSummariseCohortCount()
         })
         output$summarise_cohort_count_formatted_download <- shiny::downloadHandler(
-          filename = "formatted_summarise_cohort_count.docx",
+          filename = function() {
+            paste0("formatted_summarise_cohort_count.", input$summarise_cohort_count_formatted_download_type)
+          },
           content = function(file) {
             getFormattedDataSummariseCohortCount() |>
               gt::gtsave(filename = file)
@@ -1617,7 +1672,13 @@
           filename = "plot_summarise_cohort_count.png",
           content = function(file) {
             plt <- createPlot5()
-            ggplot2::ggsave(filename = file, plot = plt)
+            ggplot2::ggsave(
+              filename = file, plot = plt,
+              width = as.numeric(input$summarise_cohort_count_plot_5_download_width),
+              height = as.numeric(input$summarise_cohort_count_plot_5_download_height),
+              units = input$summarise_cohort_count_plot_5_download_units,
+              dpi = as.numeric(input$summarise_cohort_count_plot_5_download_dpi)
+            )
           }
         )
       
@@ -1674,7 +1735,9 @@
           getFormattedDataSummariseCohortOverlap()
         })
         output$summarise_cohort_overlap_formatted_download <- shiny::downloadHandler(
-          filename = "formatted_summarise_cohort_overlap.docx",
+          filename = function() {
+            paste0("formatted_summarise_cohort_overlap.", input$summarise_cohort_overlap_formatted_download_type)
+          },
           content = function(file) {
             getFormattedDataSummariseCohortOverlap() |>
               gt::gtsave(filename = file)
@@ -1697,7 +1760,13 @@
           filename = "plot_summarise_cohort_overlap.png",
           content = function(file) {
             plt <- createPlot1()
-            ggplot2::ggsave(filename = file, plot = plt)
+            ggplot2::ggsave(
+              filename = file, plot = plt,
+              width = as.numeric(input$summarise_cohort_overlap_plot_1_download_width),
+              height = as.numeric(input$summarise_cohort_overlap_plot_1_download_height),
+              units = input$summarise_cohort_overlap_plot_1_download_units,
+              dpi = as.numeric(input$summarise_cohort_overlap_plot_1_download_dpi)
+            )
           }
         )
       
@@ -1754,7 +1823,9 @@
           getFormattedDataSummariseCohortTiming()
         })
         output$summarise_cohort_timing_formatted_download <- shiny::downloadHandler(
-          filename = "formatted_summarise_cohort_timing.docx",
+          filename = function() {
+            paste0("formatted_summarise_cohort_timing.", input$summarise_cohort_timing_formatted_download_type)
+          },
           content = function(file) {
             getFormattedDataSummariseCohortTiming() |>
               gt::gtsave(filename = file)
@@ -1780,7 +1851,13 @@
           filename = "plot_summarise_cohort_timing.png",
           content = function(file) {
             plt <- createPlot3()
-            ggplot2::ggsave(filename = file, plot = plt)
+            ggplot2::ggsave(
+              filename = file, plot = plt,
+              width = as.numeric(input$summarise_cohort_timing_plot_3_download_width),
+              height = as.numeric(input$summarise_cohort_timing_plot_3_download_height),
+              units = input$summarise_cohort_timing_plot_3_download_units,
+              dpi = as.numeric(input$summarise_cohort_timing_plot_3_download_dpi)
+            )
           }
         )
       
@@ -1837,7 +1914,9 @@
           getFormattedDataSummariseLargeScaleCharacteristics()
         })
         output$summarise_large_scale_characteristics_formatted_download <- shiny::downloadHandler(
-          filename = "formatted_summarise_large_scale_characteristics.docx",
+          filename = function() {
+            paste0("formatted_summarise_large_scale_characteristics.", input$summarise_large_scale_characteristics_formatted_download_type)
+          },
           content = function(file) {
             getFormattedDataSummariseLargeScaleCharacteristics() |>
               gt::gtsave(filename = file)
@@ -1980,7 +2059,15 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_characteristics_formatted_download", label = "Download word")
+                      shiny::selectizeInput(
+                        inputId = "summarise_characteristics_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_characteristics_formatted_download", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -2022,8 +2109,8 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::numericInput(inputId = "summarise_characteristics_plot_4_download_width", label = "width", value = 15),
-                      shiny::numericInput(inputId = "summarise_characteristics_plot_4_download_height", label = "height", value = 10),
+                      shiny::numericInput(inputId = "summarise_characteristics_plot_4_download_width", label = "Width", value = 15),
+                      shiny::numericInput(inputId = "summarise_characteristics_plot_4_download_height", label = "Height", value = 10),
                       shiny::selectizeInput(
                         inputId = "summarise_characteristics_plot_4_download_units",
                         label = "Units",
@@ -2218,7 +2305,15 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_attrition_formatted_download", label = "Download word")
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_attrition_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_cohort_attrition_formatted_download", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -2260,17 +2355,8 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::numericInput(inputId = "summarise_cohort_attrition_plot_2_download_width", label = "width", value = 15),
-                      shiny::numericInput(inputId = "summarise_cohort_attrition_plot_2_download_height", label = "height", value = 10),
-                      shiny::selectizeInput(
-                        inputId = "summarise_cohort_attrition_plot_2_download_units",
-                        label = "Units",
-                        choices = c("px", "cm", "inch"),
-                        selected = c("cm"),
-                        multiple = FALSE,
-                        options = list(plugins = "remove_button")
-                      ),
-                      shiny::numericInput(inputId = "summarise_cohort_attrition_plot_2_download_dpi", label = "dpi", value = 300),
+                      shiny::numericInput(inputId = "summarise_cohort_attrition_plot_2_download_width", label = "Width (px)", value = 15),
+                      shiny::numericInput(inputId = "summarise_cohort_attrition_plot_2_download_height", label = "Height (px)", value = 10),
                       shiny::downloadButton(outputId = "summarise_cohort_attrition_plot_2_download", label = "Download png")
                     ),
                     class = "text-end"
@@ -2408,7 +2494,15 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_count_formatted_download", label = "Download word")
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_count_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_cohort_count_formatted_download", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -2450,8 +2544,8 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::numericInput(inputId = "summarise_cohort_count_plot_5_download_width", label = "width", value = 15),
-                      shiny::numericInput(inputId = "summarise_cohort_count_plot_5_download_height", label = "height", value = 10),
+                      shiny::numericInput(inputId = "summarise_cohort_count_plot_5_download_width", label = "Width", value = 15),
+                      shiny::numericInput(inputId = "summarise_cohort_count_plot_5_download_height", label = "Height", value = 10),
                       shiny::selectizeInput(
                         inputId = "summarise_cohort_count_plot_5_download_units",
                         label = "Units",
@@ -2611,7 +2705,15 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_overlap_formatted_download", label = "Download word")
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_overlap_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_cohort_overlap_formatted_download", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -2653,8 +2755,8 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::numericInput(inputId = "summarise_cohort_overlap_plot_1_download_width", label = "width", value = 15),
-                      shiny::numericInput(inputId = "summarise_cohort_overlap_plot_1_download_height", label = "height", value = 10),
+                      shiny::numericInput(inputId = "summarise_cohort_overlap_plot_1_download_width", label = "Width", value = 15),
+                      shiny::numericInput(inputId = "summarise_cohort_overlap_plot_1_download_height", label = "Height", value = 10),
                       shiny::selectizeInput(
                         inputId = "summarise_cohort_overlap_plot_1_download_units",
                         label = "Units",
@@ -2822,7 +2924,15 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_timing_formatted_download", label = "Download word")
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_timing_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_cohort_timing_formatted_download", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -2864,8 +2974,8 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::numericInput(inputId = "summarise_cohort_timing_plot_3_download_width", label = "width", value = 15),
-                      shiny::numericInput(inputId = "summarise_cohort_timing_plot_3_download_height", label = "height", value = 10),
+                      shiny::numericInput(inputId = "summarise_cohort_timing_plot_3_download_width", label = "Width", value = 15),
+                      shiny::numericInput(inputId = "summarise_cohort_timing_plot_3_download_height", label = "Height", value = 10),
                       shiny::selectizeInput(
                         inputId = "summarise_cohort_timing_plot_3_download_units",
                         label = "Units",
@@ -3089,7 +3199,15 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_large_scale_characteristics_formatted_download", label = "Download word")
+                      shiny::selectizeInput(
+                        inputId = "summarise_large_scale_characteristics_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_large_scale_characteristics_formatted_download", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -3294,7 +3412,15 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_characteristics_formatted_download", label = "Download word")
+                      shiny::selectizeInput(
+                        inputId = "summarise_characteristics_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_characteristics_formatted_download", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -3336,8 +3462,8 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::numericInput(inputId = "summarise_characteristics_plot_4_download_width", label = "width", value = 15),
-                      shiny::numericInput(inputId = "summarise_characteristics_plot_4_download_height", label = "height", value = 10),
+                      shiny::numericInput(inputId = "summarise_characteristics_plot_4_download_width", label = "Width", value = 15),
+                      shiny::numericInput(inputId = "summarise_characteristics_plot_4_download_height", label = "Height", value = 10),
                       shiny::selectizeInput(
                         inputId = "summarise_characteristics_plot_4_download_units",
                         label = "Units",
@@ -3532,7 +3658,15 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_attrition_formatted_download", label = "Download word")
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_attrition_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_cohort_attrition_formatted_download", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -3574,17 +3708,8 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::numericInput(inputId = "summarise_cohort_attrition_plot_2_download_width", label = "width", value = 15),
-                      shiny::numericInput(inputId = "summarise_cohort_attrition_plot_2_download_height", label = "height", value = 10),
-                      shiny::selectizeInput(
-                        inputId = "summarise_cohort_attrition_plot_2_download_units",
-                        label = "Units",
-                        choices = c("px", "cm", "inch"),
-                        selected = c("cm"),
-                        multiple = FALSE,
-                        options = list(plugins = "remove_button")
-                      ),
-                      shiny::numericInput(inputId = "summarise_cohort_attrition_plot_2_download_dpi", label = "dpi", value = 300),
+                      shiny::numericInput(inputId = "summarise_cohort_attrition_plot_2_download_width", label = "Width (px)", value = 15),
+                      shiny::numericInput(inputId = "summarise_cohort_attrition_plot_2_download_height", label = "Height (px)", value = 10),
                       shiny::downloadButton(outputId = "summarise_cohort_attrition_plot_2_download", label = "Download png")
                     ),
                     class = "text-end"
@@ -3722,7 +3847,15 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_count_formatted_download", label = "Download word")
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_count_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_cohort_count_formatted_download", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -3764,8 +3897,8 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::numericInput(inputId = "summarise_cohort_count_plot_5_download_width", label = "width", value = 15),
-                      shiny::numericInput(inputId = "summarise_cohort_count_plot_5_download_height", label = "height", value = 10),
+                      shiny::numericInput(inputId = "summarise_cohort_count_plot_5_download_width", label = "Width", value = 15),
+                      shiny::numericInput(inputId = "summarise_cohort_count_plot_5_download_height", label = "Height", value = 10),
                       shiny::selectizeInput(
                         inputId = "summarise_cohort_count_plot_5_download_units",
                         label = "Units",
@@ -3925,7 +4058,15 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_overlap_formatted_download", label = "Download word")
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_overlap_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_cohort_overlap_formatted_download", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -3967,8 +4108,8 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::numericInput(inputId = "summarise_cohort_overlap_plot_1_download_width", label = "width", value = 15),
-                      shiny::numericInput(inputId = "summarise_cohort_overlap_plot_1_download_height", label = "height", value = 10),
+                      shiny::numericInput(inputId = "summarise_cohort_overlap_plot_1_download_width", label = "Width", value = 15),
+                      shiny::numericInput(inputId = "summarise_cohort_overlap_plot_1_download_height", label = "Height", value = 10),
                       shiny::selectizeInput(
                         inputId = "summarise_cohort_overlap_plot_1_download_units",
                         label = "Units",
@@ -4136,7 +4277,15 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_timing_formatted_download", label = "Download word")
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_timing_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_cohort_timing_formatted_download", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -4178,8 +4327,8 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::numericInput(inputId = "summarise_cohort_timing_plot_3_download_width", label = "width", value = 15),
-                      shiny::numericInput(inputId = "summarise_cohort_timing_plot_3_download_height", label = "height", value = 10),
+                      shiny::numericInput(inputId = "summarise_cohort_timing_plot_3_download_width", label = "Width", value = 15),
+                      shiny::numericInput(inputId = "summarise_cohort_timing_plot_3_download_height", label = "Height", value = 10),
                       shiny::selectizeInput(
                         inputId = "summarise_cohort_timing_plot_3_download_units",
                         label = "Units",
@@ -4403,7 +4552,15 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_large_scale_characteristics_formatted_download", label = "Download word")
+                      shiny::selectizeInput(
+                        inputId = "summarise_large_scale_characteristics_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_large_scale_characteristics_formatted_download", label = "Download")
                     ),
                     class = "text-end"
                   ),
