@@ -28,7 +28,7 @@
 #'
 exportStaticApp <- function(result = emptySummarisedResult(),
                             logo = "ohdsi",
-                            title = "My study",
+                            title = "",
                             background = character(),
                             directory = getwd(),
                             open = rlang::is_interactive()) {
