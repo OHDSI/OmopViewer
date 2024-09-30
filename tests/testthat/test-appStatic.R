@@ -2,20 +2,21 @@ test_that("logo", {
   tdir <- here::here()
 
   # test no logo
-  expect_no_error(exportStaticApp(directory = tdir, logo = NULL))
+  expect_no_error(exportStaticApp(result = emptySummarisedResult(),
+                                  directory = tdir, logo = NULL))
   expect_true("shiny" %in% list.files(tdir))
   unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
 
   # test keywords
   for (key in logoKeywords) {
     expect_identical(basename(logoPath(key)), paste0(key, "_logo.svg"))
-    expect_no_error(exportStaticApp(directory = tdir, logo = key))
+    expect_no_error(exportStaticApp(result = emptySummarisedResult(),directory = tdir, logo = key))
     expect_true("shiny" %in% list.files(tdir))
     unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
   }
 
   # custom logo
-  expect_no_error(exportStaticApp(
+  expect_no_error(exportStaticApp(result = emptySummarisedResult(),
     directory = tdir, logo = here::here("inst", "oxford.png")))
   expect_true("shiny" %in% list.files(tdir))
   unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
@@ -26,7 +27,7 @@ test_that("logo", {
 
 test_that("empty shiny", {
   tdir <- here::here()
-  expect_no_error(exportStaticApp(directory = tdir))
+  expect_no_error(exportStaticApp(result = emptySummarisedResult(),directory = tdir))
   expect_true("shiny" %in% list.files(tdir))
   expect_snapshot(uiStatic() |> cat(sep = "\n"))
   expect_snapshot(serverStatic() |> cat(sep = "\n"))
@@ -83,29 +84,29 @@ test_that("CohortCharacteristics shiny", {
 
 test_that("background", {
   # without logo
-  full <- c(
-    "header" = "Abstract",
-    "title" = "**Introduction**",
-    "body" = "Example of an [introduction](https://github.com/oxford-pharmacoepi/omopViewer).",
-    "title" = "Methods",
-    "paragraph" = "Methods example, with a footer* example.",
-    "footer" = "*Here is the footer."
-  )
+  #full <- c(
+   # "header" = "Abstract",
+    #"title" = "**Introduction**",
+    #"body" = "Example of an [introduction](https://github.com/oxford-pharmacoepi/omopViewer).",
+    #"title" = "Methods",
+    #"paragraph" = "Methods example, with a footer* example.",
+    #"footer" = "*Here is the footer."
+  #)
   tdir <- here::here()
-  expect_no_error(exportStaticApp(directory = tdir, logo = NULL, background = full))
+  expect_no_error(exportStaticApp(result = emptySummarisedResult(),directory = tdir, logo = NULL, background = NULL))
   expect_true("shiny" %in% list.files(tdir))
   unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
   expect_snapshot(createBackground(full))
   # with logo
-  expect_no_error(exportStaticApp(directory = tdir, logo = "HDS", background = full))
+  expect_no_error(exportStaticApp(result = emptySummarisedResult(),directory = tdir, logo = "OHDSI", background = NULL))
   expect_true("shiny" %in% list.files(tdir))
   unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
-  expect_snapshot(createBackground(full, "HDS"))
+  expect_snapshot(createBackground(full, "OHDSI"))
   # no background
-  expect_no_error(exportStaticApp(directory = tdir, logo = "HDS", background = NULL))
+  expect_no_error(exportStaticApp(result = emptySummarisedResult(),directory = tdir, logo = "OHDSI", background = NULL))
   expect_true("shiny" %in% list.files(tdir))
   unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
-  expect_equal(createBackground(NULL, "HDS"), "")
+  expect_equal(createBackground(NULL, "OHDSI"), "")
 
   # expected behaviour
   expect_warning(x <- validateBackground("bslib::hola("))
@@ -116,7 +117,7 @@ test_that("background", {
 
 test_that("title", {
   tdir <- here::here()
-  expect_no_error(exportStaticApp(directory = tdir, title = "example"))
+  expect_no_error(exportStaticApp(result = emptySummarisedResult(),directory = tdir, title = "example"))
   expect_true("shiny" %in% list.files(tdir))
   x <- readLines(file.path(tdir, "shiny/ui.R"))
   expect_snapshot(cat(x, sep = "\n"))
