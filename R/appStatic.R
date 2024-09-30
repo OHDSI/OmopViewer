@@ -29,7 +29,7 @@
 exportStaticApp <- function(result,
                             logo = "ohdsi",
                             title = "",
-                            background = character(),
+                            background = "header",
                             directory = getwd(),
                             open = rlang::is_interactive()) {
   # input check
