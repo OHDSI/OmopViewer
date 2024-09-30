@@ -13,22 +13,7 @@
             alt = "logo"
           ),
           "My study"
-        ),
-        bslib::nav_panel(
-          title = "Background",
-          icon = shiny::icon("disease"),
-          bslib::card(
-            bslib::card_header("My study background"),
-            shiny::p("You can use this section to add some background of your study"),
-            shiny::tags$img(
-              src = "my_pic.png",
-              width = "auto",
-              height = "100px",
-              alt = "logo",
-              align = "left"
-            )
-          )
-        ),
+        ), ,
         bslib::nav_spacer(),
         bslib::nav_item(
           bslib::popover(
@@ -59,15 +44,7 @@
       cat(uiStatic(), sep = "\n")
     Output
       ui <- bslib::page_navbar(
-        title = "My study",
-        bslib::nav_panel(
-          title = "Background",
-          icon = shiny::icon("disease"),
-          bslib::card(
-            bslib::card_header("My study background"),
-            shiny::p("You can use this section to add some background of your study")
-          )
-        ),
+        title = "My study", ,
         bslib::nav_spacer(),
         bslib::nav_item(
           bslib::popover(
@@ -106,15 +83,7 @@
       cat(uiStatic(choices = getChoices(result)), sep = "\n")
     Output
       ui <- bslib::page_navbar(
-        title = "My study",
-        bslib::nav_panel(
-          title = "Background",
-          icon = shiny::icon("disease"),
-          bslib::card(
-            bslib::card_header("My study background"),
-            shiny::p("You can use this section to add some background of your study")
-          )
-        ),
+        title = "My study", ,
         bslib::nav_panel(
           title = "Cohort characteristics",
           icon = shiny::icon("users-gear"),
@@ -1877,6 +1846,20 @@
         ## plot summarise_large_scale_characteristics -----
       }
 
+# background
+
+    Code
+      createBackground(full)
+    Output
+      [1] "bslib::nav_panel(\n  title = \"Background\",\n  icon = shiny::icon(\"disease\"),\n  bslib::card(bslib::card_header(shiny::markdown('Abstract')), bslib::card_title(shiny::markdown('**Introduction**')), shiny::p(shiny::markdown('Example of an [introduction](https://github.com/oxford-pharmacoepi/omopViewer).')), bslib::card_title(shiny::markdown('Methods')), bslib::card_footer(shiny::markdown('*Here is the footer.')))\n)"
+
+---
+
+    Code
+      createBackground(full, "HDS")
+    Output
+      [1] "bslib::nav_panel(\n  title = \"Background\",\n  icon = shiny::icon(\"disease\"),\n  bslib::card(bslib::card_header(shiny::markdown('Abstract')), bslib::card_title(shiny::markdown('**Introduction**')), shiny::p(shiny::markdown('Example of an [introduction](https://github.com/oxford-pharmacoepi/omopViewer).')), bslib::card_title(shiny::markdown('Methods')), bslib::card_footer(shiny::markdown('*Here is the footer.')),\nshiny::tags$img(\n  src = \"HDS\",\n  width = \"auto\",\n  height = \"100px\",\n  alt = \"logo\",\n  align = \"left\"\n))\n)"
+
 # title
 
     Code
@@ -1895,22 +1878,7 @@
             alt = "logo"
           ),
           "example"
-        ),
-        bslib::nav_panel(
-          title = "Background",
-          icon = shiny::icon("disease"),
-          bslib::card(
-            bslib::card_header("example background"),
-            shiny::p("You can use this section to add some background of your study"),
-            shiny::tags$img(
-              src = "hds_logo.svg",
-              width = "auto",
-              height = "100px",
-              alt = "logo",
-              align = "left"
-            )
-          )
-        ),
+        ), ,
         bslib::nav_spacer(),
         bslib::nav_item(
           bslib::popover(

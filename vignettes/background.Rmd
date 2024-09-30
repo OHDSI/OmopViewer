@@ -1,0 +1,34 @@
+---
+title: "Static shiny building"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{background}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(omopViewer)
+```
+
+## Background panel
+
+```{r}
+background <- c(
+  "header" = "Abstract",
+  "title" = "**Introduction**",
+  "body" = "This shiny has been generated with [omopViewer](https://github.com/oxford-pharmacoepi/omopViewer).",
+  "title" = "**Methods**",
+  "paragraph" = "Methods example, with a footer* example.",
+  "footer" = "*Here is the footer."
+)
+tdir <- here::here()
+exportStaticApp(directory = tdir, logo = NULL, background = background, open = FALSE)
+```
