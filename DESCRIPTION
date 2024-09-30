@@ -37,7 +37,8 @@ Imports:
     tidyr,
     usethis,
     vctrs,
-    visOmopResults (>= 0.3.0)
+    visOmopResults (>= 0.3.0),
+    webshot2
 Suggests: 
     CDMConnector,
     CohortCharacteristics,

@@ -66,7 +66,9 @@ formattedServer <- function(rt, data) {
       getFormattedData[formatCamel(rt)]()
     })',
     'output$[rt]_formatted_download <- shiny::downloadHandler(
-      filename = paste0("formatted_[rt].", input$[rt]_type),
+      filename = function(){
+        paste0("formatted_[rt].", input$[rt]_formatted_download_type)
+      },
       content = function(file) {
         getFormattedData[formatCamel(rt)]() |>
           gt::gtsave(filename = file)
