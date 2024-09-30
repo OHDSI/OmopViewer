@@ -1,19 +1,27 @@
 test_that("logo", {
   tdir <- here::here()
+
+  # test no logo
   expect_no_error(exportStaticApp(directory = tdir, logo = NULL))
   expect_true("shiny" %in% list.files(tdir))
   unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
-  expect_no_error(exportStaticApp(directory = tdir, logo = "HDS"))
-  expect_no_error(exportStaticApp(directory = tdir, logo = "OHDSI"))
-  expect_true("shiny" %in% list.files(tdir))
-  unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
+
+  # test keywords
+  for (key in logoKeywords) {
+    expect_identical(basename(logoPath(key)), paste0(key, "_logo.svg"))
+    expect_no_error(exportStaticApp(directory = tdir, logo = key))
+    expect_true("shiny" %in% list.files(tdir))
+    unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
+  }
+
+  # custom logo
   expect_no_error(exportStaticApp(
-    directory = tdir, logo = here::here("inst", "images", "testim.png")))
+    directory = tdir, logo = here::here("inst", "oxford.png")))
   expect_true("shiny" %in% list.files(tdir))
   unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
 
-  expect_snapshot(
-    uiStatic(logo = "my_pic.png") |> cat(sep = "\n"))
+  # test generated ui
+  expect_snapshot(uiStatic(logo = "my_pic.png") |> cat(sep = "\n"))
 })
 
 test_that("empty shiny", {
