@@ -1,5 +1,17 @@
 
 selector <- function(id, lab, cho, sel, mult) {
+  if(stringr::str_detect(id, "variable_name")){
+    'shiny::selectizeInput(
+    inputId = "{id}",
+    label = "{lab}",
+    choices = NULL,
+    selected = {sel},
+    multiple = {mult},
+    options = list(plugins = "remove_button")
+  )' |>
+      glue::glue() |>
+      as.character()
+  } else {
   'shiny::selectizeInput(
     inputId = "{id}",
     label = "{lab}",
@@ -10,6 +22,7 @@ selector <- function(id, lab, cho, sel, mult) {
   )' |>
     glue::glue() |>
     as.character()
+  }
 }
 downloadTable <- function(id, lab) {
   'bslib::card_header(
