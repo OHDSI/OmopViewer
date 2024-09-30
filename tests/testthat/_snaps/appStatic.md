@@ -256,8 +256,8 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::numericInput(inputId = "summarise_characteristics_plot_4_download_width", label = "width", value = 15),
-                      shiny::numericInput(inputId = "summarise_characteristics_plot_4_download_height", label = "height", value = 10),
+                      shiny::numericInput(inputId = "summarise_characteristics_plot_4_download_width", label = "Width", value = 15),
+                      shiny::numericInput(inputId = "summarise_characteristics_plot_4_download_height", label = "Height", value = 10),
                       shiny::selectizeInput(
                         inputId = "summarise_characteristics_plot_4_download_units",
                         label = "Units",
@@ -502,17 +502,8 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::numericInput(inputId = "summarise_cohort_attrition_plot_2_download_width", label = "width", value = 15),
-                      shiny::numericInput(inputId = "summarise_cohort_attrition_plot_2_download_height", label = "height", value = 10),
-                      shiny::selectizeInput(
-                        inputId = "summarise_cohort_attrition_plot_2_download_units",
-                        label = "Units",
-                        choices = c("px", "cm", "inch"),
-                        selected = c("cm"),
-                        multiple = FALSE,
-                        options = list(plugins = "remove_button")
-                      ),
-                      shiny::numericInput(inputId = "summarise_cohort_attrition_plot_2_download_dpi", label = "dpi", value = 300),
+                      shiny::numericInput(inputId = "summarise_cohort_attrition_plot_2_download_width", label = "Width (px)", value = 15),
+                      shiny::numericInput(inputId = "summarise_cohort_attrition_plot_2_download_height", label = "Height (px)", value = 10),
                       shiny::downloadButton(outputId = "summarise_cohort_attrition_plot_2_download", label = "Download png")
                     ),
                     class = "text-end"
@@ -700,8 +691,8 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::numericInput(inputId = "summarise_cohort_count_plot_5_download_width", label = "width", value = 15),
-                      shiny::numericInput(inputId = "summarise_cohort_count_plot_5_download_height", label = "height", value = 10),
+                      shiny::numericInput(inputId = "summarise_cohort_count_plot_5_download_width", label = "Width", value = 15),
+                      shiny::numericInput(inputId = "summarise_cohort_count_plot_5_download_height", label = "Height", value = 10),
                       shiny::selectizeInput(
                         inputId = "summarise_cohort_count_plot_5_download_units",
                         label = "Units",
@@ -911,8 +902,8 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::numericInput(inputId = "summarise_cohort_overlap_plot_1_download_width", label = "width", value = 15),
-                      shiny::numericInput(inputId = "summarise_cohort_overlap_plot_1_download_height", label = "height", value = 10),
+                      shiny::numericInput(inputId = "summarise_cohort_overlap_plot_1_download_width", label = "Width", value = 15),
+                      shiny::numericInput(inputId = "summarise_cohort_overlap_plot_1_download_height", label = "Height", value = 10),
                       shiny::selectizeInput(
                         inputId = "summarise_cohort_overlap_plot_1_download_units",
                         label = "Units",
@@ -1130,8 +1121,8 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::numericInput(inputId = "summarise_cohort_timing_plot_3_download_width", label = "width", value = 15),
-                      shiny::numericInput(inputId = "summarise_cohort_timing_plot_3_download_height", label = "height", value = 10),
+                      shiny::numericInput(inputId = "summarise_cohort_timing_plot_3_download_width", label = "Width", value = 15),
+                      shiny::numericInput(inputId = "summarise_cohort_timing_plot_3_download_height", label = "Height", value = 10),
                       shiny::selectizeInput(
                         inputId = "summarise_cohort_timing_plot_3_download_units",
                         label = "Units",
@@ -1509,7 +1500,13 @@
           filename = "plot_summarise_characteristics.png",
           content = function(file) {
             plt <- createPlot4()
-            ggplot2::ggsave(filename = file, plot = plt)
+            ggplot2::ggsave(
+              filename = file, plot = plt,
+              width = as.numeric(input$summarise_characteristics_plot_4_download_width),
+              height = as.numeric(input$summarise_characteristics_plot_4_download_height),
+              units = input$summarise_characteristics_plot_4_download_units,
+              dpi = as.numeric(input$summarise_characteristics_plot_4_download_dpi)
+            )
           }
         )
       
@@ -1589,7 +1586,11 @@
           filename = "plot_summarise_cohort_attrition.png",
           content = function(file) {
             plt <- createPlot2()
-            DiagrammeR::export_graph(graph = plt, file_name = file, fily_type = "png", width = 800)
+            DiagrammeR::export_graph(
+              graph = plt, file_name = file, fily_type = "png",
+              width = as.numeric(input$summarise_cohort_attrition_plot_2_download_width),
+              height = as.numeric(input$summarise_cohort_attrition_plot_2_download_height)
+            )
           }
         )
       
@@ -1671,7 +1672,13 @@
           filename = "plot_summarise_cohort_count.png",
           content = function(file) {
             plt <- createPlot5()
-            ggplot2::ggsave(filename = file, plot = plt)
+            ggplot2::ggsave(
+              filename = file, plot = plt,
+              width = as.numeric(input$summarise_cohort_count_plot_5_download_width),
+              height = as.numeric(input$summarise_cohort_count_plot_5_download_height),
+              units = input$summarise_cohort_count_plot_5_download_units,
+              dpi = as.numeric(input$summarise_cohort_count_plot_5_download_dpi)
+            )
           }
         )
       
@@ -1753,7 +1760,13 @@
           filename = "plot_summarise_cohort_overlap.png",
           content = function(file) {
             plt <- createPlot1()
-            ggplot2::ggsave(filename = file, plot = plt)
+            ggplot2::ggsave(
+              filename = file, plot = plt,
+              width = as.numeric(input$summarise_cohort_overlap_plot_1_download_width),
+              height = as.numeric(input$summarise_cohort_overlap_plot_1_download_height),
+              units = input$summarise_cohort_overlap_plot_1_download_units,
+              dpi = as.numeric(input$summarise_cohort_overlap_plot_1_download_dpi)
+            )
           }
         )
       
@@ -1838,7 +1851,13 @@
           filename = "plot_summarise_cohort_timing.png",
           content = function(file) {
             plt <- createPlot3()
-            ggplot2::ggsave(filename = file, plot = plt)
+            ggplot2::ggsave(
+              filename = file, plot = plt,
+              width = as.numeric(input$summarise_cohort_timing_plot_3_download_width),
+              height = as.numeric(input$summarise_cohort_timing_plot_3_download_height),
+              units = input$summarise_cohort_timing_plot_3_download_units,
+              dpi = as.numeric(input$summarise_cohort_timing_plot_3_download_dpi)
+            )
           }
         )
       
