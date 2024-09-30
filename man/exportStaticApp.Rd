@@ -9,10 +9,6 @@ exportStaticApp(
   logo = "ohdsi",
   title = "",
   background = "header",
-  result = emptySummarisedResult(),
-  logo = "HDS",
-  title = "My study",
-  background = character(),
   summary = TRUE,
   directory = getwd(),
   open = rlang::is_interactive()
