@@ -3,7 +3,7 @@ createSidebar <- function(tab, choic) {
   content <- c(
     getSidebarInformation(tab),
     getSidebarChoices(choic$settings, "Settings", paste0(tab, "_settings")),
-    getSidebarChoices(choic$groupping, "Groupping", paste0(tab, "_groupping")),
+    getSidebarChoices(choic$grouping, "grouping", paste0(tab, "_grouping")),
     getSidebarChoices(choic["variable_name"], "Variables", tab),
     getSidebarChoices(choic["estimate_name"], "Estimates", tab)
   ) |>

@@ -29,7 +29,7 @@ test_that("test tidyData", {
         prefixSet = "",
         prefixGroup = "",
         showSettings = TRUE,
-        showGroupping = TRUE,
+        showgrouping = TRUE,
         pivot = "none")
   )
   expect_identical(colnames(x), c(
@@ -43,7 +43,7 @@ test_that("test tidyData", {
       tidyData(
         prefixSet = "pref_set_",
         showSettings = TRUE,
-        showGroupping = FALSE,
+        showgrouping = FALSE,
         pivot = "none")
   )
   expect_identical(colnames(x), c(
@@ -57,7 +57,7 @@ test_that("test tidyData", {
       tidyData(
         prefixGroup = "pref_group_",
         showSettings = FALSE,
-        showGroupping = TRUE,
+        showgrouping = TRUE,
         pivot = "none")
   )
   expect_identical(colnames(x), c(
@@ -71,7 +71,7 @@ test_that("test tidyData", {
     x <- result |>
       tidyData(
         showSettings = FALSE,
-        showGroupping = FALSE,
+        showgrouping = FALSE,
         pivot = "none")
   )
   expect_identical(colnames(x), c(
@@ -83,7 +83,7 @@ test_that("test tidyData", {
     x <- result |>
       tidyData(
         showSettings = TRUE,
-        showGroupping = TRUE,
+        showgrouping = TRUE,
         pivot = "estimates")
   )
   expect_identical(colnames(x), c(
