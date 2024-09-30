@@ -1881,9 +1881,9 @@
                   )
                 ),
                 bslib::accordion_panel(
-                  title = "Groupping",
+                  title = "grouping",
                   shiny::selectizeInput(
-                    inputId = "summarise_characteristics_groupping_cdm_name",
+                    inputId = "summarise_characteristics_grouping_cdm_name",
                     label = "Cdm name",
                     choices = c("mock database"),
                     selected = c("mock database"),
@@ -1891,7 +1891,7 @@
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
-                    inputId = "summarise_characteristics_groupping_cohort_name",
+                    inputId = "summarise_characteristics_grouping_cohort_name",
                     label = "Cohort name",
                     choices = c("asthma", "covid", "tb"),
                     selected = c("asthma", "covid", "tb"),
@@ -1957,8 +1957,8 @@
                         value = FALSE
                       ),
                       shiny::checkboxInput(
-                        inputId = "summarise_characteristics_tidy_groupping",
-                        label = "Show groupping",
+                        inputId = "summarise_characteristics_tidy_grouping",
+                        label = "Show grouping",
                         value = TRUE
                       ),
                       shiny::radioButtons(
@@ -2103,9 +2103,9 @@
                   )
                 ),
                 bslib::accordion_panel(
-                  title = "Groupping",
+                  title = "grouping",
                   shiny::selectizeInput(
-                    inputId = "summarise_cohort_attrition_groupping_cdm_name",
+                    inputId = "summarise_cohort_attrition_grouping_cdm_name",
                     label = "Cdm name",
                     choices = c("mock database"),
                     selected = c("mock database"),
@@ -2113,7 +2113,7 @@
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
-                    inputId = "summarise_cohort_attrition_groupping_cohort_name",
+                    inputId = "summarise_cohort_attrition_grouping_cohort_name",
                     label = "Cohort name",
                     choices = c("asthma", "covid", "tb"),
                     selected = c("asthma", "covid", "tb"),
@@ -2121,7 +2121,7 @@
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
-                    inputId = "summarise_cohort_attrition_groupping_reason",
+                    inputId = "summarise_cohort_attrition_grouping_reason",
                     label = "Reason",
                     choices = c("Initial qualifying events"),
                     selected = c("Initial qualifying events"),
@@ -2129,7 +2129,7 @@
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
-                    inputId = "summarise_cohort_attrition_groupping_reason_id",
+                    inputId = "summarise_cohort_attrition_grouping_reason_id",
                     label = "Reason id",
                     choices = c("1"),
                     selected = c("1"),
@@ -2195,8 +2195,8 @@
                         value = FALSE
                       ),
                       shiny::checkboxInput(
-                        inputId = "summarise_cohort_attrition_tidy_groupping",
-                        label = "Show groupping",
+                        inputId = "summarise_cohort_attrition_tidy_grouping",
+                        label = "Show grouping",
                         value = TRUE
                       ),
                       shiny::radioButtons(
@@ -2309,9 +2309,9 @@
                   )
                 ),
                 bslib::accordion_panel(
-                  title = "Groupping",
+                  title = "grouping",
                   shiny::selectizeInput(
-                    inputId = "summarise_cohort_count_groupping_cdm_name",
+                    inputId = "summarise_cohort_count_grouping_cdm_name",
                     label = "Cdm name",
                     choices = c("mock database"),
                     selected = c("mock database"),
@@ -2319,7 +2319,7 @@
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
-                    inputId = "summarise_cohort_count_groupping_cohort_name",
+                    inputId = "summarise_cohort_count_grouping_cohort_name",
                     label = "Cohort name",
                     choices = c("asthma", "covid", "tb"),
                     selected = c("asthma", "covid", "tb"),
@@ -2385,8 +2385,8 @@
                         value = FALSE
                       ),
                       shiny::checkboxInput(
-                        inputId = "summarise_cohort_count_tidy_groupping",
-                        label = "Show groupping",
+                        inputId = "summarise_cohort_count_tidy_grouping",
+                        label = "Show grouping",
                         value = TRUE
                       ),
                       shiny::radioButtons(
@@ -2504,9 +2504,9 @@
                   shiny::p("Cohort overlap shows the number of subjects that contribute to a pair of cohorts.")
                 ),
                 bslib::accordion_panel(
-                  title = "Groupping",
+                  title = "grouping",
                   shiny::selectizeInput(
-                    inputId = "summarise_cohort_overlap_groupping_cdm_name",
+                    inputId = "summarise_cohort_overlap_grouping_cdm_name",
                     label = "Cdm name",
                     choices = c("mock database"),
                     selected = c("mock database"),
@@ -2514,7 +2514,7 @@
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
-                    inputId = "summarise_cohort_overlap_groupping_cohort_name_reference",
+                    inputId = "summarise_cohort_overlap_grouping_cohort_name_reference",
                     label = "Cohort name reference",
                     choices = c("asthma", "covid", "tb"),
                     selected = c("asthma", "covid", "tb"),
@@ -2522,7 +2522,7 @@
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
-                    inputId = "summarise_cohort_overlap_groupping_cohort_name_comparator",
+                    inputId = "summarise_cohort_overlap_grouping_cohort_name_comparator",
                     label = "Cohort name comparator",
                     choices = c("asthma", "covid", "tb"),
                     selected = c("asthma", "covid", "tb"),
@@ -2588,8 +2588,8 @@
                         value = FALSE
                       ),
                       shiny::checkboxInput(
-                        inputId = "summarise_cohort_overlap_tidy_groupping",
-                        label = "Show groupping",
+                        inputId = "summarise_cohort_overlap_tidy_grouping",
+                        label = "Show grouping",
                         value = TRUE
                       ),
                       shiny::radioButtons(
@@ -2715,9 +2715,9 @@
                   )
                 ),
                 bslib::accordion_panel(
-                  title = "Groupping",
+                  title = "grouping",
                   shiny::selectizeInput(
-                    inputId = "summarise_cohort_timing_groupping_cdm_name",
+                    inputId = "summarise_cohort_timing_grouping_cdm_name",
                     label = "Cdm name",
                     choices = c("mock database"),
                     selected = c("mock database"),
@@ -2725,7 +2725,7 @@
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
-                    inputId = "summarise_cohort_timing_groupping_cohort_name_reference",
+                    inputId = "summarise_cohort_timing_grouping_cohort_name_reference",
                     label = "Cohort name reference",
                     choices = c("asthma", "covid", "tb"),
                     selected = c("asthma", "covid", "tb"),
@@ -2733,7 +2733,7 @@
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
-                    inputId = "summarise_cohort_timing_groupping_cohort_name_comparator",
+                    inputId = "summarise_cohort_timing_grouping_cohort_name_comparator",
                     label = "Cohort name comparator",
                     choices = c("asthma", "covid", "tb"),
                     selected = c("asthma", "covid", "tb"),
@@ -2799,8 +2799,8 @@
                         value = FALSE
                       ),
                       shiny::checkboxInput(
-                        inputId = "summarise_cohort_timing_tidy_groupping",
-                        label = "Show groupping",
+                        inputId = "summarise_cohort_timing_tidy_grouping",
+                        label = "Show grouping",
                         value = TRUE
                       ),
                       shiny::radioButtons(
@@ -2966,9 +2966,9 @@
                   )
                 ),
                 bslib::accordion_panel(
-                  title = "Groupping",
+                  title = "grouping",
                   shiny::selectizeInput(
-                    inputId = "summarise_large_scale_characteristics_groupping_cdm_name",
+                    inputId = "summarise_large_scale_characteristics_grouping_cdm_name",
                     label = "Cdm name",
                     choices = c("mock database"),
                     selected = c("mock database"),
@@ -2976,7 +2976,7 @@
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
-                    inputId = "summarise_large_scale_characteristics_groupping_cohort_name",
+                    inputId = "summarise_large_scale_characteristics_grouping_cohort_name",
                     label = "Cohort name",
                     choices = c("asthma", "covid", "tb"),
                     selected = c("asthma", "covid", "tb"),
@@ -2984,7 +2984,7 @@
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
-                    inputId = "summarise_large_scale_characteristics_groupping_sex",
+                    inputId = "summarise_large_scale_characteristics_grouping_sex",
                     label = "Sex",
                     choices = c("Female", "Male", "overall"),
                     selected = c("Female", "Male", "overall"),
@@ -2992,7 +2992,7 @@
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
-                    inputId = "summarise_large_scale_characteristics_groupping_age_group",
+                    inputId = "summarise_large_scale_characteristics_grouping_age_group",
                     label = "Age group",
                     choices = c("0 to 44", "45 or above", "overall"),
                     selected = c("0 to 44", "45 or above", "overall"),
@@ -3000,7 +3000,7 @@
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
-                    inputId = "summarise_large_scale_characteristics_groupping_concept_id",
+                    inputId = "summarise_large_scale_characteristics_grouping_concept_id",
                     label = "Concept id",
                     choices = c("1361364", "1361365", "1361368", "1361370", "1830184", "1830278", "1830279", "1830280", "1830281", "1830282", "1830283", "194152", "1971546", "21018250", "21216049", "21601213", "21601386", "21601387", "21603215", "21603248", "21603365", "21603444", "21603530", "21603812", "21603848", "21603890", "21605007", "21605008", "35604394", "35604434", "35604435", "35604439", "35604877", "35604879", "35604880", "35604883", "35604884", "35741956", "35774678", "36034746", "36034747", "36034751", "36036059", "36217206", "36217213", "37110496", "37498042", "37593197", "37787172", "40371897", "40475132", "40475135", "40721254", "40741270", "4151660", "4220473", "4220524", "4226696", "42899580", "4304866", "44022939", "44081436", "44091285", "444074", "45430573", "45511667", "45533778", "45538734", "45548358", "45548372", "45755492", "45755493", "45756021", "45756023", "46274351"),
                     selected = c("1361364", "1361365", "1361368", "1361370", "1830184", "1830278", "1830279", "1830280", "1830281", "1830282", "1830283", "194152", "1971546", "21018250", "21216049", "21601213", "21601386", "21601387", "21603215", "21603248", "21603365", "21603444", "21603530", "21603812", "21603848", "21603890", "21605007", "21605008", "35604394", "35604434", "35604435", "35604439", "35604877", "35604879", "35604880", "35604883", "35604884", "35741956", "35774678", "36034746", "36034747", "36034751", "36036059", "36217206", "36217213", "37110496", "37498042", "37593197", "37787172", "40371897", "40475132", "40475135", "40721254", "40741270", "4151660", "4220473", "4220524", "4226696", "42899580", "4304866", "44022939", "44081436", "44091285", "444074", "45430573", "45511667", "45533778", "45538734", "45548358", "45548372", "45755492", "45755493", "45756021", "45756023", "46274351"),
@@ -3066,8 +3066,8 @@
                         value = FALSE
                       ),
                       shiny::checkboxInput(
-                        inputId = "summarise_large_scale_characteristics_tidy_groupping",
-                        label = "Show groupping",
+                        inputId = "summarise_large_scale_characteristics_tidy_grouping",
+                        label = "Show grouping",
                         value = TRUE
                       ),
                       shiny::radioButtons(
@@ -3195,9 +3195,9 @@
                   )
                 ),
                 bslib::accordion_panel(
-                  title = "Groupping",
+                  title = "grouping",
                   shiny::selectizeInput(
-                    inputId = "summarise_characteristics_groupping_cdm_name",
+                    inputId = "summarise_characteristics_grouping_cdm_name",
                     label = "Cdm name",
                     choices = c("mock database"),
                     selected = c("mock database"),
@@ -3205,7 +3205,7 @@
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
-                    inputId = "summarise_characteristics_groupping_cohort_name",
+                    inputId = "summarise_characteristics_grouping_cohort_name",
                     label = "Cohort name",
                     choices = c("asthma", "covid", "tb"),
                     selected = c("asthma", "covid", "tb"),
@@ -3271,8 +3271,8 @@
                         value = FALSE
                       ),
                       shiny::checkboxInput(
-                        inputId = "summarise_characteristics_tidy_groupping",
-                        label = "Show groupping",
+                        inputId = "summarise_characteristics_tidy_grouping",
+                        label = "Show grouping",
                         value = TRUE
                       ),
                       shiny::radioButtons(
@@ -3417,9 +3417,9 @@
                   )
                 ),
                 bslib::accordion_panel(
-                  title = "Groupping",
+                  title = "grouping",
                   shiny::selectizeInput(
-                    inputId = "summarise_cohort_attrition_groupping_cdm_name",
+                    inputId = "summarise_cohort_attrition_grouping_cdm_name",
                     label = "Cdm name",
                     choices = c("mock database"),
                     selected = c("mock database"),
@@ -3427,7 +3427,7 @@
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
-                    inputId = "summarise_cohort_attrition_groupping_cohort_name",
+                    inputId = "summarise_cohort_attrition_grouping_cohort_name",
                     label = "Cohort name",
                     choices = c("asthma", "covid", "tb"),
                     selected = c("asthma", "covid", "tb"),
@@ -3435,7 +3435,7 @@
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
-                    inputId = "summarise_cohort_attrition_groupping_reason",
+                    inputId = "summarise_cohort_attrition_grouping_reason",
                     label = "Reason",
                     choices = c("Initial qualifying events"),
                     selected = c("Initial qualifying events"),
@@ -3443,7 +3443,7 @@
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
-                    inputId = "summarise_cohort_attrition_groupping_reason_id",
+                    inputId = "summarise_cohort_attrition_grouping_reason_id",
                     label = "Reason id",
                     choices = c("1"),
                     selected = c("1"),
@@ -3509,8 +3509,8 @@
                         value = FALSE
                       ),
                       shiny::checkboxInput(
-                        inputId = "summarise_cohort_attrition_tidy_groupping",
-                        label = "Show groupping",
+                        inputId = "summarise_cohort_attrition_tidy_grouping",
+                        label = "Show grouping",
                         value = TRUE
                       ),
                       shiny::radioButtons(
@@ -3623,9 +3623,9 @@
                   )
                 ),
                 bslib::accordion_panel(
-                  title = "Groupping",
+                  title = "grouping",
                   shiny::selectizeInput(
-                    inputId = "summarise_cohort_count_groupping_cdm_name",
+                    inputId = "summarise_cohort_count_grouping_cdm_name",
                     label = "Cdm name",
                     choices = c("mock database"),
                     selected = c("mock database"),
@@ -3633,7 +3633,7 @@
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
-                    inputId = "summarise_cohort_count_groupping_cohort_name",
+                    inputId = "summarise_cohort_count_grouping_cohort_name",
                     label = "Cohort name",
                     choices = c("asthma", "covid", "tb"),
                     selected = c("asthma", "covid", "tb"),
@@ -3699,8 +3699,8 @@
                         value = FALSE
                       ),
                       shiny::checkboxInput(
-                        inputId = "summarise_cohort_count_tidy_groupping",
-                        label = "Show groupping",
+                        inputId = "summarise_cohort_count_tidy_grouping",
+                        label = "Show grouping",
                         value = TRUE
                       ),
                       shiny::radioButtons(
@@ -3818,9 +3818,9 @@
                   shiny::p("Cohort overlap shows the number of subjects that contribute to a pair of cohorts.")
                 ),
                 bslib::accordion_panel(
-                  title = "Groupping",
+                  title = "grouping",
                   shiny::selectizeInput(
-                    inputId = "summarise_cohort_overlap_groupping_cdm_name",
+                    inputId = "summarise_cohort_overlap_grouping_cdm_name",
                     label = "Cdm name",
                     choices = c("mock database"),
                     selected = c("mock database"),
@@ -3828,7 +3828,7 @@
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
-                    inputId = "summarise_cohort_overlap_groupping_cohort_name_reference",
+                    inputId = "summarise_cohort_overlap_grouping_cohort_name_reference",
                     label = "Cohort name reference",
                     choices = c("asthma", "covid", "tb"),
                     selected = c("asthma", "covid", "tb"),
@@ -3836,7 +3836,7 @@
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
-                    inputId = "summarise_cohort_overlap_groupping_cohort_name_comparator",
+                    inputId = "summarise_cohort_overlap_grouping_cohort_name_comparator",
                     label = "Cohort name comparator",
                     choices = c("asthma", "covid", "tb"),
                     selected = c("asthma", "covid", "tb"),
@@ -3902,8 +3902,8 @@
                         value = FALSE
                       ),
                       shiny::checkboxInput(
-                        inputId = "summarise_cohort_overlap_tidy_groupping",
-                        label = "Show groupping",
+                        inputId = "summarise_cohort_overlap_tidy_grouping",
+                        label = "Show grouping",
                         value = TRUE
                       ),
                       shiny::radioButtons(
@@ -4029,9 +4029,9 @@
                   )
                 ),
                 bslib::accordion_panel(
-                  title = "Groupping",
+                  title = "grouping",
                   shiny::selectizeInput(
-                    inputId = "summarise_cohort_timing_groupping_cdm_name",
+                    inputId = "summarise_cohort_timing_grouping_cdm_name",
                     label = "Cdm name",
                     choices = c("mock database"),
                     selected = c("mock database"),
@@ -4039,7 +4039,7 @@
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
-                    inputId = "summarise_cohort_timing_groupping_cohort_name_reference",
+                    inputId = "summarise_cohort_timing_grouping_cohort_name_reference",
                     label = "Cohort name reference",
                     choices = c("asthma", "covid", "tb"),
                     selected = c("asthma", "covid", "tb"),
@@ -4047,7 +4047,7 @@
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
-                    inputId = "summarise_cohort_timing_groupping_cohort_name_comparator",
+                    inputId = "summarise_cohort_timing_grouping_cohort_name_comparator",
                     label = "Cohort name comparator",
                     choices = c("asthma", "covid", "tb"),
                     selected = c("asthma", "covid", "tb"),
@@ -4113,8 +4113,8 @@
                         value = FALSE
                       ),
                       shiny::checkboxInput(
-                        inputId = "summarise_cohort_timing_tidy_groupping",
-                        label = "Show groupping",
+                        inputId = "summarise_cohort_timing_tidy_grouping",
+                        label = "Show grouping",
                         value = TRUE
                       ),
                       shiny::radioButtons(
@@ -4280,9 +4280,9 @@
                   )
                 ),
                 bslib::accordion_panel(
-                  title = "Groupping",
+                  title = "grouping",
                   shiny::selectizeInput(
-                    inputId = "summarise_large_scale_characteristics_groupping_cdm_name",
+                    inputId = "summarise_large_scale_characteristics_grouping_cdm_name",
                     label = "Cdm name",
                     choices = c("mock database"),
                     selected = c("mock database"),
@@ -4290,7 +4290,7 @@
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
-                    inputId = "summarise_large_scale_characteristics_groupping_cohort_name",
+                    inputId = "summarise_large_scale_characteristics_grouping_cohort_name",
                     label = "Cohort name",
                     choices = c("asthma", "covid", "tb"),
                     selected = c("asthma", "covid", "tb"),
@@ -4298,7 +4298,7 @@
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
-                    inputId = "summarise_large_scale_characteristics_groupping_sex",
+                    inputId = "summarise_large_scale_characteristics_grouping_sex",
                     label = "Sex",
                     choices = c("Female", "Male", "overall"),
                     selected = c("Female", "Male", "overall"),
@@ -4306,7 +4306,7 @@
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
-                    inputId = "summarise_large_scale_characteristics_groupping_age_group",
+                    inputId = "summarise_large_scale_characteristics_grouping_age_group",
                     label = "Age group",
                     choices = c("0 to 44", "45 or above", "overall"),
                     selected = c("0 to 44", "45 or above", "overall"),
@@ -4314,7 +4314,7 @@
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
-                    inputId = "summarise_large_scale_characteristics_groupping_concept_id",
+                    inputId = "summarise_large_scale_characteristics_grouping_concept_id",
                     label = "Concept id",
                     choices = c("1361364", "1361365", "1361368", "1361370", "1830184", "1830278", "1830279", "1830280", "1830281", "1830282", "1830283", "194152", "1971546", "21018250", "21216049", "21601213", "21601386", "21601387", "21603215", "21603248", "21603365", "21603444", "21603530", "21603812", "21603848", "21603890", "21605007", "21605008", "35604394", "35604434", "35604435", "35604439", "35604877", "35604879", "35604880", "35604883", "35604884", "35741956", "35774678", "36034746", "36034747", "36034751", "36036059", "36217206", "36217213", "37110496", "37498042", "37593197", "37787172", "40371897", "40475132", "40475135", "40721254", "40741270", "4151660", "4220473", "4220524", "4226696", "42899580", "4304866", "44022939", "44081436", "44091285", "444074", "45430573", "45511667", "45533778", "45538734", "45548358", "45548372", "45755492", "45755493", "45756021", "45756023", "46274351"),
                     selected = c("1361364", "1361365", "1361368", "1361370", "1830184", "1830278", "1830279", "1830280", "1830281", "1830282", "1830283", "194152", "1971546", "21018250", "21216049", "21601213", "21601386", "21601387", "21603215", "21603248", "21603365", "21603444", "21603530", "21603812", "21603848", "21603890", "21605007", "21605008", "35604394", "35604434", "35604435", "35604439", "35604877", "35604879", "35604880", "35604883", "35604884", "35741956", "35774678", "36034746", "36034747", "36034751", "36036059", "36217206", "36217213", "37110496", "37498042", "37593197", "37787172", "40371897", "40475132", "40475135", "40721254", "40741270", "4151660", "4220473", "4220524", "4226696", "42899580", "4304866", "44022939", "44081436", "44091285", "444074", "45430573", "45511667", "45533778", "45538734", "45548358", "45548372", "45755492", "45755493", "45756021", "45756023", "46274351"),
@@ -4380,8 +4380,8 @@
                         value = FALSE
                       ),
                       shiny::checkboxInput(
-                        inputId = "summarise_large_scale_characteristics_tidy_groupping",
-                        label = "Show groupping",
+                        inputId = "summarise_large_scale_characteristics_tidy_grouping",
+                        label = "Show grouping",
                         value = TRUE
                       ),
                       shiny::radioButtons(
