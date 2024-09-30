@@ -182,8 +182,14 @@ plot_config <- list(
 )
 # end plot config ----
 
+# TO ADD NEW LOGOS YOU HAVE TO ADD THEM IN THIS LIST AND IN `inst/www/images/`
+# FOLLOW THIS NAMING: '{keyword}_logo.svg'
+# NOTE IT IS NOT CASE SENSITIVE
+logoKeywords <- c("hds", "ohdsi") |>
+  stringr::str_to_lower()
+
 usethis::use_data(
   omopViewerTabs, omopViewerPlots, omopViewerPlotArguments, omopViewerProj,
-  omopViewerGlobal, plot_config, overwrite = TRUE,
+  omopViewerGlobal, plot_config, logoKeywords, overwrite = TRUE,
   internal = TRUE)
 
