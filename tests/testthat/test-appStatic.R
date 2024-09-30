@@ -112,7 +112,7 @@ test_that("background", {
   expect_no_error(exportStaticApp(directory = tdir, logo = "HDS", background = NULL))
   expect_true("shiny" %in% list.files(tdir))
   unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
-  expect_equal(createBackground(NULL, "HDS"), "")
+  expect_null(createBackground(NULL, "HDS"))
 
   # expected behaviour
   expect_warning(x <- validateBackground("bslib::hola("))

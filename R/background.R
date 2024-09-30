@@ -1,6 +1,6 @@
 createBackground <- function(background = NULL,
                              logo = NULL) {
-  if (length(background) == 0) return("")
+  if (length(background) == 0) return(NULL)
   if (!is.null(logo)) {
     logoImg <- ',
     shiny::tags$img(
