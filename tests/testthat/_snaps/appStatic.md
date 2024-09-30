@@ -127,6 +127,17 @@
                   shiny::p("")
                 ),
                 bslib::accordion_panel(
+                  title = "Settings",
+                  shiny::selectizeInput(
+                    inputId = "summarise_characteristics_settings_table_name",
+                    label = "Table name",
+                    choices = c("cohort"),
+                    selected = c("cohort"),
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
                   title = "Groupping",
                   shiny::selectizeInput(
                     inputId = "summarise_characteristics_groupping_cdm_name",
@@ -150,8 +161,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_characteristics_variable_name",
                     label = "Variable name",
-                    choices = c("Age", "Cohort end date", "Cohort start date", "Future observation", "Number records", "Number subjects", "Prior observation", "Sex"),
-                    selected = c("Age", "Cohort end date", "Cohort start date", "Future observation", "Number records", "Number subjects", "Prior observation", "Sex"),
+                    choices = c("Age", "Cohort end date", "Cohort start date", "Days in cohort", "Future observation", "Number records", "Number subjects", "Prior observation", "Sex"),
+                    selected = c("Age", "Cohort end date", "Cohort start date", "Days in cohort", "Future observation", "Number records", "Number subjects", "Prior observation", "Sex"),
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -226,7 +237,15 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_characteristics_formatted_download", label = "Download word")
+                      shiny::selectizeInput(
+                        inputId = "summarise_characteristics_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_characteristics_formatted_download", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -251,7 +270,7 @@
                         ),
                         sortable::add_rank_list(
                           text = "Hide",
-                          labels = character(),
+                          labels = c("table_name"),
                           input_id = "summarise_characteristics_formatted_hide"
                         )
                       ),
@@ -296,7 +315,7 @@
                       shiny::selectizeInput(
                         inputId = "summarise_characteristics_plot_4_facet",
                         label = "facet",
-                        choices = c("cdm_name", "cohort_name", "variable_name", "variable_level", "estimate_name"),
+                        choices = c("cdm_name", "cohort_name", "variable_name", "variable_level", "estimate_name", "table_name"),
                         selected = NULL,
                         multiple = TRUE,
                         options = list(plugins = "remove_button")
@@ -304,7 +323,7 @@
                       shiny::selectizeInput(
                         inputId = "summarise_characteristics_plot_4_colour",
                         label = "colour",
-                        choices = c("cdm_name", "cohort_name", "variable_name", "variable_level", "estimate_name"),
+                        choices = c("cdm_name", "cohort_name", "variable_name", "variable_level", "estimate_name", "table_name"),
                         selected = NULL,
                         multiple = TRUE,
                         options = list(plugins = "remove_button")
@@ -332,18 +351,18 @@
                 bslib::accordion_panel(
                   title = "Settings",
                   shiny::selectizeInput(
-                    inputId = "summarise_cohort_attrition_settings_cohort_definition_id",
-                    label = "Cohort definition id",
-                    choices = c(1, 2, 3),
-                    selected = c(1, 2, 3),
-                    multiple = TRUE,
-                    options = list(plugins = "remove_button")
-                  ),
-                  shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_settings_table_name",
                     label = "Table name",
                     choices = c("cohort"),
                     selected = c("cohort"),
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_attrition_settings_cohort_definition_id",
+                    label = "Cohort definition id",
+                    choices = c(1, 2, 3),
+                    selected = c(1, 2, 3),
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -464,7 +483,15 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_attrition_formatted_download", label = "Download word")
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_attrition_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_cohort_attrition_formatted_download", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -489,7 +516,7 @@
                         ),
                         sortable::add_rank_list(
                           text = "Hide",
-                          labels = c("cohort_definition_id", "table_name"),
+                          labels = c("table_name", "cohort_definition_id"),
                           input_id = "summarise_cohort_attrition_formatted_hide"
                         )
                       ),
@@ -654,7 +681,15 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_count_formatted_download", label = "Download word")
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_count_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_cohort_count_formatted_download", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -857,7 +892,15 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_overlap_formatted_download", label = "Download word")
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_overlap_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_cohort_overlap_formatted_download", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -927,7 +970,7 @@
                       shiny::checkboxInput(
                         inputId = "summarise_cohort_overlap_plot_1_unique_combinations",
                         label = "uniqueCombinations",
-                        value = c(FALSE)
+                        value = c(TRUE)
                       ),
                       position = "right"
                     ),
@@ -956,14 +999,6 @@
                     label = "Restrict to first entry",
                     choices = c(TRUE),
                     selected = c(TRUE),
-                    multiple = TRUE,
-                    options = list(plugins = "remove_button")
-                  ),
-                  shiny::selectizeInput(
-                    inputId = "summarise_cohort_timing_settings_density",
-                    label = "Density",
-                    choices = c(FALSE),
-                    selected = c(FALSE),
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -1011,8 +1046,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_timing_estimate_name",
                     label = "Estimate name",
-                    choices = c("count", "max", "median", "min", "q25", "q75"),
-                    selected = c("count", "max", "median", "min", "q25", "q75"),
+                    choices = c("count", "density_x", "density_y", "max", "median", "min", "q25", "q75"),
+                    selected = c("count", "density_x", "density_y", "max", "median", "min", "q25", "q75"),
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -1076,7 +1111,15 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_timing_formatted_download", label = "Download word")
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_timing_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_cohort_timing_formatted_download", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -1101,7 +1144,7 @@
                         ),
                         sortable::add_rank_list(
                           text = "Hide",
-                          labels = c("restrict_to_first_entry", "density"),
+                          labels = c("restrict_to_first_entry"),
                           input_id = "summarise_cohort_timing_formatted_hide"
                         )
                       ),
@@ -1154,7 +1197,7 @@
                       shiny::selectizeInput(
                         inputId = "summarise_cohort_timing_plot_3_facet",
                         label = "facet",
-                        choices = c("cdm_name", "cohort_name_reference", "cohort_name_comparator", "variable_name", "variable_level", "estimate_name", "restrict_to_first_entry", "density"),
+                        choices = c("cdm_name", "cohort_name_reference", "cohort_name_comparator", "variable_name", "variable_level", "estimate_name", "restrict_to_first_entry"),
                         selected = c("cdm_name", "cohort_name_reference"),
                         multiple = TRUE,
                         options = list(plugins = "remove_button")
@@ -1162,7 +1205,7 @@
                       shiny::selectizeInput(
                         inputId = "summarise_cohort_timing_plot_3_colour",
                         label = "colour",
-                        choices = c("cdm_name", "cohort_name_reference", "cohort_name_comparator", "variable_name", "variable_level", "estimate_name", "restrict_to_first_entry", "density"),
+                        choices = c("cdm_name", "cohort_name_reference", "cohort_name_comparator", "variable_name", "variable_level", "estimate_name", "restrict_to_first_entry"),
                         selected = c("cohort_name_comparator"),
                         multiple = TRUE,
                         options = list(plugins = "remove_button")
@@ -1170,7 +1213,7 @@
                       shiny::checkboxInput(
                         inputId = "summarise_cohort_timing_plot_3_unique_combinations",
                         label = "uniqueCombinations",
-                        value = c(FALSE)
+                        value = c(TRUE)
                       ),
                       position = "right"
                     ),
@@ -1343,7 +1386,15 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_large_scale_characteristics_formatted_download", label = "Download word")
+                      shiny::selectizeInput(
+                        inputId = "summarise_large_scale_characteristics_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_large_scale_characteristics_formatted_download", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -1463,7 +1514,9 @@
           getFormattedDataSummariseCharacteristics()
         })
         output$summarise_characteristics_formatted_download <- shiny::downloadHandler(
-          filename = "formatted_summarise_characteristics.docx",
+          filename = function() {
+            paste0("formatted_summarise_characteristics.", input$summarise_characteristics_formatted_download_type)
+          },
           content = function(file) {
             getFormattedDataSummariseCharacteristics() |>
               gt::gtsave(filename = file)
@@ -1544,7 +1597,9 @@
           getFormattedDataSummariseCohortAttrition()
         })
         output$summarise_cohort_attrition_formatted_download <- shiny::downloadHandler(
-          filename = "formatted_summarise_cohort_attrition.docx",
+          filename = function() {
+            paste0("formatted_summarise_cohort_attrition.", input$summarise_cohort_attrition_formatted_download_type)
+          },
           content = function(file) {
             getFormattedDataSummariseCohortAttrition() |>
               gt::gtsave(filename = file)
@@ -1622,7 +1677,9 @@
           getFormattedDataSummariseCohortCount()
         })
         output$summarise_cohort_count_formatted_download <- shiny::downloadHandler(
-          filename = "formatted_summarise_cohort_count.docx",
+          filename = function() {
+            paste0("formatted_summarise_cohort_count.", input$summarise_cohort_count_formatted_download_type)
+          },
           content = function(file) {
             getFormattedDataSummariseCohortCount() |>
               gt::gtsave(filename = file)
@@ -1702,7 +1759,9 @@
           getFormattedDataSummariseCohortOverlap()
         })
         output$summarise_cohort_overlap_formatted_download <- shiny::downloadHandler(
-          filename = "formatted_summarise_cohort_overlap.docx",
+          filename = function() {
+            paste0("formatted_summarise_cohort_overlap.", input$summarise_cohort_overlap_formatted_download_type)
+          },
           content = function(file) {
             getFormattedDataSummariseCohortOverlap() |>
               gt::gtsave(filename = file)
@@ -1782,7 +1841,9 @@
           getFormattedDataSummariseCohortTiming()
         })
         output$summarise_cohort_timing_formatted_download <- shiny::downloadHandler(
-          filename = "formatted_summarise_cohort_timing.docx",
+          filename = function() {
+            paste0("formatted_summarise_cohort_timing.", input$summarise_cohort_timing_formatted_download_type)
+          },
           content = function(file) {
             getFormattedDataSummariseCohortTiming() |>
               gt::gtsave(filename = file)
@@ -1865,7 +1926,9 @@
           getFormattedDataSummariseLargeScaleCharacteristics()
         })
         output$summarise_large_scale_characteristics_formatted_download <- shiny::downloadHandler(
-          filename = "formatted_summarise_large_scale_characteristics.docx",
+          filename = function() {
+            paste0("formatted_summarise_large_scale_characteristics.", input$summarise_large_scale_characteristics_formatted_download_type)
+          },
           content = function(file) {
             getFormattedDataSummariseLargeScaleCharacteristics() |>
               gt::gtsave(filename = file)
