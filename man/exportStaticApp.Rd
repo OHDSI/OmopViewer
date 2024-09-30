@@ -8,6 +8,7 @@ exportStaticApp(
   result = emptySummarisedResult(),
   logo = "HDS",
   title = "My study",
+  background = character(),
   summary = TRUE,
   directory = getwd(),
   open = rlang::is_interactive()
@@ -21,6 +22,16 @@ Only svg format allowed for the moment.}
 
 \item{title}{title of the shiny}
 
+\item{background}{Content to fill the background panel. If `NULL`, this panel
+will not appear in the Shiny UI. This argument can be populated in two ways:
+1) A character string containing `bslib` code to go directly inside
+`bslib::card()`.
+2) A named character vector where the names correspond to specific`bslib`
+card elements: "header", "title", "subtitle", "body", and "footer". Each
+element's name indicates the type of text it will fill. The order of these
+elements is important when displaying the content. Markdown sythax for text
+styling is supported.}
+
 \item{summary}{Whether to include a panel with a summary of content in the
 `result`.}
 
@@ -33,4 +44,11 @@ The shiny app will be created in directory.
 }
 \description{
 Export and launch a static shiny specific to the provided results.
+}
+\examples{
+{
+tdir <- here::here()
+exportStaticApp(directory = tdir, logo = NULL)
+}
+
 }

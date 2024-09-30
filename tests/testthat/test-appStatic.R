@@ -88,6 +88,39 @@ test_that("CohortCharacteristics shiny", {
   PatientProfiles::mockDisconnect(cdm)
 })
 
+test_that("background", {
+  # without logo
+  full <- c(
+    "header" = "Abstract",
+    "title" = "**Introduction**",
+    "body" = "Example of an [introduction](https://github.com/oxford-pharmacoepi/omopViewer).",
+    "title" = "Methods",
+    "paragraph" = "Methods example, with a footer* example.",
+    "footer" = "*Here is the footer."
+  )
+  tdir <- here::here()
+  expect_no_error(exportStaticApp(directory = tdir, logo = NULL, background = full))
+  expect_true("shiny" %in% list.files(tdir))
+  unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
+  expect_snapshot(createBackground(full))
+  # with logo
+  expect_no_error(exportStaticApp(directory = tdir, logo = "HDS", background = full))
+  expect_true("shiny" %in% list.files(tdir))
+  unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
+  expect_snapshot(createBackground(full, "HDS"))
+  # no background
+  expect_no_error(exportStaticApp(directory = tdir, logo = "HDS", background = NULL))
+  expect_true("shiny" %in% list.files(tdir))
+  unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
+  expect_equal(createBackground(NULL, "HDS"), "")
+
+  # expected behaviour
+  expect_warning(x <- validateBackground("bslib::hola("))
+  expect_null(x)
+  expect_warning(x <- validateBackground(c("hi" = "drop", "title" = "keep")))
+  expect_equal(x, c("title" = "keep"))
+})
+
 test_that("title", {
   tdir <- here::here()
   expect_no_error(exportStaticApp(directory = tdir, title = "example"))
