@@ -187,7 +187,7 @@ test_that("order tabs", {
                                   directory = tdir,
                                   tabOrder = list()))
 
-  expect_no_error(exportStaticApp(result = result,
+  expect_error(exportStaticApp(result = result,
                                   directory = tdir,
                                   tabOrder = c("must be a list")))
 
