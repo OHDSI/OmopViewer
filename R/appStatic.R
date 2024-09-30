@@ -27,7 +27,7 @@
 #'}
 #'
 exportStaticApp <- function(result = emptySummarisedResult(),
-                            logo = "HDS",
+                            logo = "ohdsi",
                             title = "My study",
                             background = character(),
                             directory = getwd(),
