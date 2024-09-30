@@ -1857,7 +1857,7 @@
       Settings: package_name, package_version, result_type, table_name, cohort_definition_id, restrict_to_first_entry, type, and analysis.
     Output
       ui <- bslib::page_navbar(
-        title = "My study", ,
+        title = "My study",
         bslib::nav_panel(
           title = "Cohort characteristics",
           icon = shiny::icon("users-gear"),
@@ -3171,7 +3171,7 @@
             alt = "logo"
           ),
           "My study"
-        ), ,
+        ),
         bslib::nav_panel(
           title = "Cohort characteristics",
           icon = shiny::icon("users-gear"),
