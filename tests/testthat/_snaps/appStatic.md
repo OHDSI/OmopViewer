@@ -1906,24 +1906,6 @@
         ## plot summarise_large_scale_characteristics -----
       }
 
-# background
-
-    Code
-      createBackground(full)
-    Output
-      [1] "bslib::nav_panel(\n  title = \"Background\",\n  icon = shiny::icon(\"disease\"),\n  bslib::card(bslib::card_header(shiny::markdown('Abstract')), bslib::card_title(shiny::markdown('**Introduction**')), shiny::p(shiny::markdown('Example of an [introduction](https://github.com/oxford-pharmacoepi/omopViewer).')), bslib::card_title(shiny::markdown('Methods')), shiny::p(shiny::markdown('Methods example, with a footer* example.')), bslib::card_footer(shiny::markdown('*Here is the footer.')))\n)"
-
----
-
-    Code
-      createBackground(full, "HDS")
-    Output
-      [1] "bslib::nav_panel(\n  title = \"Background\",\n  icon = shiny::icon(\"disease\"),\n  bslib::card(bslib::card_header(shiny::markdown('Abstract')), bslib::card_title(shiny::markdown('**Introduction**')), shiny::p(shiny::markdown('Example of an [introduction](https://github.com/oxford-pharmacoepi/omopViewer).')), bslib::card_title(shiny::markdown('Methods')), shiny::p(shiny::markdown('Methods example, with a footer* example.')), bslib::card_footer(shiny::markdown('*Here is the footer.')),\nshiny::tags$img(\n  src = \"HDS\",\n  width = \"auto\",\n  height = \"100px\",\n  alt = \"logo\",\n  align = \"left\"\n))\n)"
-
-# title
-
-    Code
-      cat(x, sep = "\n")
 ---
 
     Code
@@ -2058,7 +2040,15 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_characteristics_formatted_download", label = "Download word")
+                      shiny::selectizeInput(
+                        inputId = "summarise_characteristics_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_characteristics_formatted_download", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -2296,7 +2286,15 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_attrition_formatted_download", label = "Download word")
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_attrition_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_cohort_attrition_formatted_download", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -2486,7 +2484,15 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_count_formatted_download", label = "Download word")
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_count_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_cohort_count_formatted_download", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -2689,7 +2695,15 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_overlap_formatted_download", label = "Download word")
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_overlap_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_cohort_overlap_formatted_download", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -2900,7 +2914,15 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_timing_formatted_download", label = "Download word")
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_timing_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_cohort_timing_formatted_download", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -3167,7 +3189,15 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_large_scale_characteristics_formatted_download", label = "Download word")
+                      shiny::selectizeInput(
+                        inputId = "summarise_large_scale_characteristics_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_large_scale_characteristics_formatted_download", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -3372,7 +3402,15 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_characteristics_formatted_download", label = "Download word")
+                      shiny::selectizeInput(
+                        inputId = "summarise_characteristics_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_characteristics_formatted_download", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -3610,7 +3648,15 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_attrition_formatted_download", label = "Download word")
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_attrition_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_cohort_attrition_formatted_download", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -3800,7 +3846,15 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_count_formatted_download", label = "Download word")
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_count_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_cohort_count_formatted_download", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -4003,7 +4057,15 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_overlap_formatted_download", label = "Download word")
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_overlap_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_cohort_overlap_formatted_download", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -4214,7 +4276,15 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_timing_formatted_download", label = "Download word")
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_timing_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_cohort_timing_formatted_download", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -4481,7 +4551,15 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_large_scale_characteristics_formatted_download", label = "Download word")
+                      shiny::selectizeInput(
+                        inputId = "summarise_large_scale_characteristics_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_large_scale_characteristics_formatted_download", label = "Download")
                     ),
                     class = "text-end"
                   ),
