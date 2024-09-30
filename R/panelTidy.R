@@ -15,8 +15,8 @@ tidyUi <- function(tab) {
             value = FALSE
           ),
           shiny::checkboxInput(
-            inputId = "{tab}_tidy_groupping",
-            label = "Show groupping",
+            inputId = "{tab}_tidy_grouping",
+            label = "Show grouping",
             value = TRUE
           ),
           shiny::radioButtons(
@@ -44,7 +44,7 @@ tidyServer <- function(rt, data) {
           prefixSet = "set:",
           prefixGroup = "group: ",
           showSettings = input$[rt]_tidy_settings,
-          showGroupping = input$[rt]_tidy_groupping,
+          showgrouping = input$[rt]_tidy_grouping,
           pivot = input$[rt]_tidy_pivot
         )
     })',

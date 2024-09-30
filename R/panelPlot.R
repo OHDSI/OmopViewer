@@ -21,7 +21,7 @@ getPlots <- function(rt) {
 getPlotPanel <- function(id, tab, choic) {
   tit <- getPlotTitle(id)
   buttons <- getPlotButtons(
-    tab, id, names(choic$settings), names(choic$groupping),
+    tab, id, names(choic$settings), names(choic$grouping),
     c("variable_name", "variable_level", "estimate_name"))
   buttons <- paste0(c(buttons, 'position = "right"'), collapse = ",\n")
   out <- getPlotOutput(id)
@@ -81,7 +81,7 @@ getPlotButtons <- function(rt, plotId, setCols, groupCols, varCols) {
 }
 getButtonOpts <- function(opts, setCols, groupCols, varCols) {
   stringr::str_split_1(opts, pattern = ", ") |>
-    subs("<groupping>", groupCols) |>
+    subs("<grouping>", groupCols) |>
     subs("<settings>", setCols) |>
     subs("<variable>", varCols)
 }

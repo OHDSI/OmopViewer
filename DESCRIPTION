@@ -33,10 +33,11 @@ Imports:
     shiny,
     snakecase,
     stringr,
+    styler,
     tidyr,
     usethis,
     vctrs,
-    visOmopResults (>= 0.3.0)
+    visOmopResults (>= 0.4.0)
 Suggests: 
     CDMConnector,
     CohortCharacteristics,
@@ -53,7 +54,6 @@ Suggests:
     shinycssloaders,
     shinyWidgets,
     sortable,
-    styler,
     testthat (>= 3.1.5),
     utils,
     zip,
@@ -62,5 +62,4 @@ VignetteBuilder: knitr
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 Remotes:
-    darwin-eu/visOmopResults,
     darwin-eu-dev/CohortCharacteristics

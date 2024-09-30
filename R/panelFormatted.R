@@ -2,7 +2,7 @@
 # ui ----
 formattedUi <- function(tab, choic) {
   hide <- names(choic$settings)
-  none <- c(names(choic$groupping), "variable_name", "variable_level",
+  none <- c(names(choic$grouping), "variable_name", "variable_level",
             "estimate_name")
   header <- "cdm_name"
   header <- header[header %in% none]

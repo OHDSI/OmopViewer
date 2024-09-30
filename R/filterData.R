@@ -37,7 +37,7 @@ filterData <- function(result,
   result <- result |>
       dplyr::filter(.data$result_id %in% set$result_id)
 
-  # filter groupping
+  # filter grouping
   cols <- c(
     "cdm_name", "group_name", "group_level", "strata_name", "strata_level",
     "additional_name", "additional_level")
@@ -48,7 +48,7 @@ filterData <- function(result,
     dplyr::select(dplyr::all_of(cols)) |>
     dplyr::distinct() |>
     visOmopResults::splitAll()
-  groupPrefix <- paste0(resultType, "_groupping_")
+  groupPrefix <- paste0(resultType, "_grouping_")
   toFilter <- inputs[startsWith(inputs, groupPrefix)]
   nms <- substr(toFilter, nchar(groupPrefix)+1, nchar(toFilter))
   for (nm in nms) {
