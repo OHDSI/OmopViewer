@@ -127,6 +127,17 @@
                   shiny::p("")
                 ),
                 bslib::accordion_panel(
+                  title = "Settings",
+                  shiny::selectizeInput(
+                    inputId = "summarise_characteristics_settings_table_name",
+                    label = "Table name",
+                    choices = c("cohort"),
+                    selected = c("cohort"),
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
                   title = "Groupping",
                   shiny::selectizeInput(
                     inputId = "summarise_characteristics_groupping_cdm_name",
@@ -150,8 +161,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_characteristics_variable_name",
                     label = "Variable name",
-                    choices = c("Age", "Cohort end date", "Cohort start date", "Future observation", "Number records", "Number subjects", "Prior observation", "Sex"),
-                    selected = c("Age", "Cohort end date", "Cohort start date", "Future observation", "Number records", "Number subjects", "Prior observation", "Sex"),
+                    choices = c("Age", "Cohort end date", "Cohort start date", "Days in cohort", "Future observation", "Number records", "Number subjects", "Prior observation", "Sex"),
+                    selected = c("Age", "Cohort end date", "Cohort start date", "Days in cohort", "Future observation", "Number records", "Number subjects", "Prior observation", "Sex"),
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -251,7 +262,7 @@
                         ),
                         sortable::add_rank_list(
                           text = "Hide",
-                          labels = character(),
+                          labels = c("table_name"),
                           input_id = "summarise_characteristics_formatted_hide"
                         )
                       ),
@@ -296,7 +307,7 @@
                       shiny::selectizeInput(
                         inputId = "summarise_characteristics_plot_4_facet",
                         label = "facet",
-                        choices = c("cdm_name", "cohort_name", "variable_name", "variable_level", "estimate_name"),
+                        choices = c("cdm_name", "cohort_name", "variable_name", "variable_level", "estimate_name", "table_name"),
                         selected = NULL,
                         multiple = TRUE,
                         options = list(plugins = "remove_button")
@@ -304,7 +315,7 @@
                       shiny::selectizeInput(
                         inputId = "summarise_characteristics_plot_4_colour",
                         label = "colour",
-                        choices = c("cdm_name", "cohort_name", "variable_name", "variable_level", "estimate_name"),
+                        choices = c("cdm_name", "cohort_name", "variable_name", "variable_level", "estimate_name", "table_name"),
                         selected = NULL,
                         multiple = TRUE,
                         options = list(plugins = "remove_button")
@@ -332,18 +343,18 @@
                 bslib::accordion_panel(
                   title = "Settings",
                   shiny::selectizeInput(
-                    inputId = "summarise_cohort_attrition_settings_cohort_definition_id",
-                    label = "Cohort definition id",
-                    choices = c(1, 2, 3),
-                    selected = c(1, 2, 3),
-                    multiple = TRUE,
-                    options = list(plugins = "remove_button")
-                  ),
-                  shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_settings_table_name",
                     label = "Table name",
                     choices = c("cohort"),
                     selected = c("cohort"),
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_attrition_settings_cohort_definition_id",
+                    label = "Cohort definition id",
+                    choices = c(1, 2, 3),
+                    selected = c(1, 2, 3),
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -489,7 +500,7 @@
                         ),
                         sortable::add_rank_list(
                           text = "Hide",
-                          labels = c("cohort_definition_id", "table_name"),
+                          labels = c("table_name", "cohort_definition_id"),
                           input_id = "summarise_cohort_attrition_formatted_hide"
                         )
                       ),
@@ -927,7 +938,7 @@
                       shiny::checkboxInput(
                         inputId = "summarise_cohort_overlap_plot_1_unique_combinations",
                         label = "uniqueCombinations",
-                        value = c(FALSE)
+                        value = c(TRUE)
                       ),
                       position = "right"
                     ),
@@ -956,14 +967,6 @@
                     label = "Restrict to first entry",
                     choices = c(TRUE),
                     selected = c(TRUE),
-                    multiple = TRUE,
-                    options = list(plugins = "remove_button")
-                  ),
-                  shiny::selectizeInput(
-                    inputId = "summarise_cohort_timing_settings_density",
-                    label = "Density",
-                    choices = c(FALSE),
-                    selected = c(FALSE),
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -1011,8 +1014,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_timing_estimate_name",
                     label = "Estimate name",
-                    choices = c("count", "max", "median", "min", "q25", "q75"),
-                    selected = c("count", "max", "median", "min", "q25", "q75"),
+                    choices = c("count", "density_x", "density_y", "max", "median", "min", "q25", "q75"),
+                    selected = c("count", "density_x", "density_y", "max", "median", "min", "q25", "q75"),
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -1101,7 +1104,7 @@
                         ),
                         sortable::add_rank_list(
                           text = "Hide",
-                          labels = c("restrict_to_first_entry", "density"),
+                          labels = c("restrict_to_first_entry"),
                           input_id = "summarise_cohort_timing_formatted_hide"
                         )
                       ),
@@ -1154,7 +1157,7 @@
                       shiny::selectizeInput(
                         inputId = "summarise_cohort_timing_plot_3_facet",
                         label = "facet",
-                        choices = c("cdm_name", "cohort_name_reference", "cohort_name_comparator", "variable_name", "variable_level", "estimate_name", "restrict_to_first_entry", "density"),
+                        choices = c("cdm_name", "cohort_name_reference", "cohort_name_comparator", "variable_name", "variable_level", "estimate_name", "restrict_to_first_entry"),
                         selected = c("cdm_name", "cohort_name_reference"),
                         multiple = TRUE,
                         options = list(plugins = "remove_button")
@@ -1162,7 +1165,7 @@
                       shiny::selectizeInput(
                         inputId = "summarise_cohort_timing_plot_3_colour",
                         label = "colour",
-                        choices = c("cdm_name", "cohort_name_reference", "cohort_name_comparator", "variable_name", "variable_level", "estimate_name", "restrict_to_first_entry", "density"),
+                        choices = c("cdm_name", "cohort_name_reference", "cohort_name_comparator", "variable_name", "variable_level", "estimate_name", "restrict_to_first_entry"),
                         selected = c("cohort_name_comparator"),
                         multiple = TRUE,
                         options = list(plugins = "remove_button")
@@ -1170,7 +1173,7 @@
                       shiny::checkboxInput(
                         inputId = "summarise_cohort_timing_plot_3_unique_combinations",
                         label = "uniqueCombinations",
-                        value = c(FALSE)
+                        value = c(TRUE)
                       ),
                       position = "right"
                     ),

@@ -87,24 +87,41 @@ messageShiny <- function() {
   )
 }
 copyLogos <- function(logo, directory) {
+  # Create 'www' directory if it doesn't exist
   dir.create(paste0(directory, "/www"), showWarnings = FALSE)
-  from <- system.file("/www/images/hds_logo.svg", package = "omopViewer")
+
+  # HDS logo must be copied always as it is needed for about tab
+  hdsLogo <- logoPath("hds")
   to <- paste0(directory, "/www/hds_logo.svg")
-  file.copy(from = from, to = to, overwrite = TRUE)
-  if (!is.null(logo)) {
-    if (logo == "HDS") {
-      return("hds_logo.svg")
-    } else if (file.exists(logo)) {
-      nm <- basename(logo)
-      to <- paste0(directory, "/www/", nm)
+  file.copy(from = hdsLogo, to = to, overwrite = TRUE)
+
+  if (is.null(logo)) return(NULL)
+
+  # search for standard logo naming:
+  logo <- logoPath(logo)
+
+  # copy the logo if exists
+  if (file.exists(logo)) {
+    nm <- basename(logo)
+    to <- paste0(directory, "/www/", nm)
+    if (logo != hdsLogo) {
       file.copy(from = logo, to = to, overwrite = TRUE)
-      return(nm)
-    } else {
-      cli::cli_warn(c("!" = "Logo couldn't be found."))
-      return(NULL)
     }
+    return(nm)
+  } else {
+    cli::cli_warn(c("!" = "Logo couldn't be found."))
+    return(NULL)
   }
-  return(NULL)
+}
+
+logoPath <- function(logo) {
+  lowLogo <- stringr::str_to_lower(logo)
+  # add more logoKeywords in data-raw/internalData
+  if (lowLogo %in% logoKeywords) {
+    system.file(paste0("/logos/", lowLogo, "_logo.svg"), package = "omopViewer")
+  } else {
+    logo
+  }
 }
 
 # ui ----
