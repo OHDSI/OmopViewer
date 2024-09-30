@@ -94,7 +94,7 @@ ui <- page_navbar(
             selectizeInput(inputId = "set2", label = "Setting2", choices = unique(penguins$species), multiple = FALSE)
           ),
           bslib::accordion_panel(
-            title = "Groupping",
+            title = "grouping",
             selectizeInput(inputId = "group1", label = "Database name", choices = unique(penguins$species), multiple = TRUE, options = list(plugins = "remove_button")),
             selectizeInput(inputId = "group2", label = "Cohort name", choices = unique(penguins$species), multiple = TRUE, options = list(plugins = "remove_button")),
             selectizeInput(inputId = "group3", label = "Sex", choices = unique(penguins$species), multiple = FALSE)

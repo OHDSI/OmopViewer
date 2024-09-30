@@ -3,9 +3,9 @@
 #'
 #' @param result A `summarised_result` object.
 #' @param showSettings Whether to show settings columns.
-#' @param showGroupping Whether to show groupping columns.
+#' @param showgrouping Whether to show grouping columns.
 #' @param prefixSet Prefix for settings columns.
-#' @param prefixGroup Prefix for groupping columns.
+#' @param prefixGroup Prefix for grouping columns.
 #' @param pivot What to pivot: "none", "estimates" or "estimates and variables".
 #'
 #' @return A tibble.
@@ -13,14 +13,14 @@
 #'
 tidyData <- function(result,
                      showSettings = TRUE,
-                     showGroupping = TRUE,
+                     showgrouping = TRUE,
                      prefixSet = "",
                      prefixGroup = "",
                      pivot = "none") {
   # initial checks
   omopgenerics::assertClass(result, "summarised_result")
   omopgenerics::assertLogical(showSettings, length = 1)
-  omopgenerics::assertLogical(showGroupping, length = 1)
+  omopgenerics::assertLogical(showgrouping, length = 1)
   omopgenerics::assertCharacter(prefixSet, length = 1, null = TRUE)
   omopgenerics::assertCharacter(prefixGroup, length = 1, null = TRUE)
   omopgenerics::assertChoice(
@@ -62,8 +62,8 @@ tidyData <- function(result,
       )
   }
 
-  # groupping
-  if (showGroupping) {
+  # grouping
+  if (showgrouping) {
     cols <- c(
       "cdm_name",
       visOmopResults::groupColumns(result),
