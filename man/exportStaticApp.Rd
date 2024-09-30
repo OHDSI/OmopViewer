@@ -5,10 +5,10 @@
 \title{Export and launch a static shiny specific to the provided results.}
 \usage{
 exportStaticApp(
-  result = emptySummarisedResult(),
-  logo = "HDS",
-  title = "My study",
-  background = character(),
+  result,
+  logo = "ohdsi",
+  title = "",
+  background = "header",
   directory = getwd(),
   open = rlang::is_interactive()
 )
