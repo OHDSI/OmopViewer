@@ -9,6 +9,7 @@ exportStaticApp(
   logo = "HDS",
   title = "My study",
   background = character(),
+  summary = TRUE,
   directory = getwd(),
   open = rlang::is_interactive()
 )
@@ -30,6 +31,9 @@ card elements: "header", "title", "subtitle", "body", and "footer". Each
 element's name indicates the type of text it will fill. The order of these
 elements is important when displaying the content. Markdown sythax for text
 styling is supported.}
+
+\item{summary}{Whether to include a panel with a summary of content in the
+`result`.}
 
 \item{directory}{Directory to create the shiny.}
 
