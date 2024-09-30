@@ -90,6 +90,14 @@ test_that("CohortCharacteristics shiny", {
 })
 
 test_that("background", {
+  full <- c(
+    "header" = "Abstract",
+    "title" = "**Introduction**",
+    "body" = "Example of an [introduction](https://github.com/oxford-pharmacoepi/omopViewer).",
+    "title" = "Methods",
+    "body" = "Methods example, with a footer* example.",
+    "footer" = "*Here is the footer."
+  )
   tdir <- here::here()
   expect_no_error(exportStaticApp(result = emptySummarisedResult(),directory = tdir, logo = NULL, background = NULL))
   expect_true("shiny" %in% list.files(tdir))
@@ -104,7 +112,7 @@ test_that("background", {
   expect_no_error(exportStaticApp(result = emptySummarisedResult(),directory = tdir, logo = "OHDSI", background = NULL))
   expect_true("shiny" %in% list.files(tdir))
   unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
-  expect_equal(createBackground(NULL, "OHDSI"), "")
+  expect_null(createBackground(NULL, "OHDSI"))
 
   # expected behaviour
   expect_warning(x <- validateBackground("bslib::hola("))

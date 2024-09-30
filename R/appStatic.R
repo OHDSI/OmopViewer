@@ -25,7 +25,7 @@
 #'
 #' @examples {
 #' tdir <- here::here()
-#' exportStaticApp(directory = tdir, logo = NULL)
+#' exportStaticApp(result = omopgenerics::emptySummarisedResult(), directory = tdir, logo = NULL)
 #'}
 #'
 exportStaticApp <- function(result,
