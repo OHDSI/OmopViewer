@@ -206,7 +206,15 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_characteristics_formatted_download", label = "Download word")
+                      shiny::selectizeInput(
+                        inputId = "summarise_characteristics_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_characteristics_formatted_download", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -444,7 +452,15 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_attrition_formatted_download", label = "Download word")
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_attrition_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_cohort_attrition_formatted_download", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -634,7 +650,15 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_count_formatted_download", label = "Download word")
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_count_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_cohort_count_formatted_download", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -837,7 +861,15 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_overlap_formatted_download", label = "Download word")
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_overlap_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_cohort_overlap_formatted_download", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -1048,7 +1080,15 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_timing_formatted_download", label = "Download word")
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_timing_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_cohort_timing_formatted_download", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -1315,7 +1355,15 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_large_scale_characteristics_formatted_download", label = "Download word")
+                      shiny::selectizeInput(
+                        inputId = "summarise_large_scale_characteristics_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_large_scale_characteristics_formatted_download", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -1435,7 +1483,9 @@
           getFormattedDataSummariseCharacteristics()
         })
         output$summarise_characteristics_formatted_download <- shiny::downloadHandler(
-          filename = "formatted_summarise_characteristics.docx",
+          filename = function() {
+            paste0("formatted_summarise_characteristics.", input$summarise_characteristics_formatted_download_type)
+          },
           content = function(file) {
             getFormattedDataSummariseCharacteristics() |>
               gt::gtsave(filename = file)
@@ -1516,7 +1566,9 @@
           getFormattedDataSummariseCohortAttrition()
         })
         output$summarise_cohort_attrition_formatted_download <- shiny::downloadHandler(
-          filename = "formatted_summarise_cohort_attrition.docx",
+          filename = function() {
+            paste0("formatted_summarise_cohort_attrition.", input$summarise_cohort_attrition_formatted_download_type)
+          },
           content = function(file) {
             getFormattedDataSummariseCohortAttrition() |>
               gt::gtsave(filename = file)
@@ -1594,7 +1646,9 @@
           getFormattedDataSummariseCohortCount()
         })
         output$summarise_cohort_count_formatted_download <- shiny::downloadHandler(
-          filename = "formatted_summarise_cohort_count.docx",
+          filename = function() {
+            paste0("formatted_summarise_cohort_count.", input$summarise_cohort_count_formatted_download_type)
+          },
           content = function(file) {
             getFormattedDataSummariseCohortCount() |>
               gt::gtsave(filename = file)
@@ -1674,7 +1728,9 @@
           getFormattedDataSummariseCohortOverlap()
         })
         output$summarise_cohort_overlap_formatted_download <- shiny::downloadHandler(
-          filename = "formatted_summarise_cohort_overlap.docx",
+          filename = function() {
+            paste0("formatted_summarise_cohort_overlap.", input$summarise_cohort_overlap_formatted_download_type)
+          },
           content = function(file) {
             getFormattedDataSummariseCohortOverlap() |>
               gt::gtsave(filename = file)
@@ -1754,7 +1810,9 @@
           getFormattedDataSummariseCohortTiming()
         })
         output$summarise_cohort_timing_formatted_download <- shiny::downloadHandler(
-          filename = "formatted_summarise_cohort_timing.docx",
+          filename = function() {
+            paste0("formatted_summarise_cohort_timing.", input$summarise_cohort_timing_formatted_download_type)
+          },
           content = function(file) {
             getFormattedDataSummariseCohortTiming() |>
               gt::gtsave(filename = file)
@@ -1837,7 +1895,9 @@
           getFormattedDataSummariseLargeScaleCharacteristics()
         })
         output$summarise_large_scale_characteristics_formatted_download <- shiny::downloadHandler(
-          filename = "formatted_summarise_large_scale_characteristics.docx",
+          filename = function() {
+            paste0("formatted_summarise_large_scale_characteristics.", input$summarise_large_scale_characteristics_formatted_download_type)
+          },
           content = function(file) {
             getFormattedDataSummariseLargeScaleCharacteristics() |>
               gt::gtsave(filename = file)
@@ -1851,14 +1911,14 @@
     Code
       createBackground(full)
     Output
-      [1] "bslib::nav_panel(\n  title = \"Background\",\n  icon = shiny::icon(\"disease\"),\n  bslib::card(bslib::card_header(shiny::markdown('Abstract')), bslib::card_title(shiny::markdown('**Introduction**')), shiny::p(shiny::markdown('Example of an [introduction](https://github.com/oxford-pharmacoepi/omopViewer).')), bslib::card_title(shiny::markdown('Methods')), bslib::card_footer(shiny::markdown('*Here is the footer.')))\n)"
+      [1] "bslib::nav_panel(\n  title = \"Background\",\n  icon = shiny::icon(\"disease\"),\n  bslib::card(bslib::card_header(shiny::markdown('Abstract')), bslib::card_title(shiny::markdown('**Introduction**')), shiny::p(shiny::markdown('Example of an [introduction](https://github.com/oxford-pharmacoepi/omopViewer).')), bslib::card_title(shiny::markdown('Methods')), shiny::p(shiny::markdown('Methods example, with a footer* example.')), bslib::card_footer(shiny::markdown('*Here is the footer.')))\n)"
 
 ---
 
     Code
       createBackground(full, "HDS")
     Output
-      [1] "bslib::nav_panel(\n  title = \"Background\",\n  icon = shiny::icon(\"disease\"),\n  bslib::card(bslib::card_header(shiny::markdown('Abstract')), bslib::card_title(shiny::markdown('**Introduction**')), shiny::p(shiny::markdown('Example of an [introduction](https://github.com/oxford-pharmacoepi/omopViewer).')), bslib::card_title(shiny::markdown('Methods')), bslib::card_footer(shiny::markdown('*Here is the footer.')),\nshiny::tags$img(\n  src = \"HDS\",\n  width = \"auto\",\n  height = \"100px\",\n  alt = \"logo\",\n  align = \"left\"\n))\n)"
+      [1] "bslib::nav_panel(\n  title = \"Background\",\n  icon = shiny::icon(\"disease\"),\n  bslib::card(bslib::card_header(shiny::markdown('Abstract')), bslib::card_title(shiny::markdown('**Introduction**')), shiny::p(shiny::markdown('Example of an [introduction](https://github.com/oxford-pharmacoepi/omopViewer).')), bslib::card_title(shiny::markdown('Methods')), shiny::p(shiny::markdown('Methods example, with a footer* example.')), bslib::card_footer(shiny::markdown('*Here is the footer.')),\nshiny::tags$img(\n  src = \"HDS\",\n  width = \"auto\",\n  height = \"100px\",\n  alt = \"logo\",\n  align = \"left\"\n))\n)"
 
 # title
 
