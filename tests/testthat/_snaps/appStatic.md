@@ -4490,20 +4490,6 @@
           "example"
         ),
         bslib::nav_panel(
-          title = "Background",
-          icon = shiny::icon("disease"),
-          bslib::card(
-            bslib::card_header(shiny::markdown("header")),
-            shiny::tags$img(
-              src = "ohdsi_logo.svg",
-              width = "auto",
-              height = "100px",
-              alt = "logo",
-              align = "left"
-            )
-          )
-        ),
-        bslib::nav_panel(
           title = "Summary",
           icon = shiny::icon("file-alt"),
           bslib::card(

@@ -31,7 +31,7 @@
 exportStaticApp <- function(result,
                             logo = "ohdsi",
                             title = "",
-                            background = "header",
+                            background = NULL,
                             summary = TRUE,
                             directory = getwd(),
                             open = rlang::is_interactive()) {
