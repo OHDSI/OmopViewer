@@ -88,7 +88,7 @@ test_that("background", {
     "title" = "**Introduction**",
     "body" = "Example of an [introduction](https://github.com/oxford-pharmacoepi/omopViewer).",
     "title" = "Methods",
-    "paragraph" = "Methods example, with a footer* example.",
+    "body" = "Methods example, with a footer* example.",
     "footer" = "*Here is the footer."
   )
   tdir <- here::here()
@@ -105,7 +105,7 @@ test_that("background", {
   expect_no_error(exportStaticApp(directory = tdir, logo = "HDS", background = NULL))
   expect_true("shiny" %in% list.files(tdir))
   unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
-  expect_equal(createBackground(NULL, "HDS"), "")
+  expect_null(createBackground(NULL, "HDS"))
 
   # expected behaviour
   expect_warning(x <- validateBackground("bslib::hola("))
