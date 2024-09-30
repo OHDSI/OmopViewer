@@ -1,7 +1,7 @@
 
 getChoices <- function(result) {
   settings <- getPossibleSettings(result)
-  grouping <-getPossiblegrouping(result)
+  grouping <-getPossibleGrouping(result)
   variables <- getPossibleVariables(result)
   choices <- names(variables) |>
     purrr::set_names() |>
@@ -19,7 +19,7 @@ getPossibleSettings <- function(result) {
       "result_id", "package_name", "package_version", "min_cell_count"))) |>
     getPossibilities()
 }
-getPossiblegrouping <- function(result) {
+getPossibleGrouping <- function(result) {
   result |>
     visOmopResults::addSettings(settingsColumns = "result_type") |>
     dplyr::select(c(
