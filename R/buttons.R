@@ -1,6 +1,7 @@
 
 selector <- function(id, lab, cho, sel, mult) {
-  if(stringr::str_detect(id, "variable_name")){
+  if(stringr::str_detect(id, "variable_name") ||
+     stringr::str_detect(id, "summarise_large_scale_characteristics_grouping_concept_id")){
     'shiny::selectizeInput(
     inputId = "{id}",
     label = "{lab}",
