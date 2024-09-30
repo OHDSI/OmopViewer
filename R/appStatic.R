@@ -26,7 +26,7 @@
 #' exportStaticApp(directory = tdir, logo = NULL)
 #'}
 #'
-exportStaticApp <- function(result = emptySummarisedResult(),
+exportStaticApp <- function(result,
                             logo = "ohdsi",
                             title = "",
                             background = character(),
@@ -144,7 +144,7 @@ logoPath <- function(logo) {
 # ui ----
 uiStatic <- function(choices = list(),
                      logo = NULL,
-                     title = "My study",
+                     title = "",
                      background = NULL) {
   # initial checks
   omopgenerics::assertList(choices, named = TRUE)
