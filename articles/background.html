@@ -65,7 +65,13 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://oxford-pharmacoepi.github.io/omopViewer/">omopViewer</a></span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://oxford-pharmacoepi.github.io/omopViewer/">omopViewer</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://darwin-eu-dev.github.io/omopgenerics/" class="external-link">omopgenerics</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'omopgenerics'</span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:stats':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     filter</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="background-panel">Background panel<a class="anchor" aria-label="anchor" href="#background-panel"></a>
 </h2>
@@ -79,7 +85,7 @@
 <span>  <span class="st">"footer"</span> <span class="op">=</span> <span class="st">"*Here is the footer."</span></span>
 <span><span class="op">)</span></span>
 <span><span class="va">tdir</span> <span class="op">&lt;-</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/exportStaticApp.html">exportStaticApp</a></span><span class="op">(</span>directory <span class="op">=</span> <span class="va">tdir</span>, logo <span class="op">=</span> <span class="cn">NULL</span>, background <span class="op">=</span> <span class="va">background</span>, open <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/exportStaticApp.html">exportStaticApp</a></span><span class="op">(</span>result <span class="op">=</span> <span class="fu"><a href="https://darwin-eu-dev.github.io/omopgenerics/reference/emptySummarisedResult.html" class="external-link">emptySummarisedResult</a></span><span class="op">(</span><span class="op">)</span>, directory <span class="op">=</span> <span class="va">tdir</span>, logo <span class="op">=</span> <span class="cn">NULL</span>, background <span class="op">=</span> <span class="va">background</span>, open <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: paragraph is not allowed named for `background` and will be</span></span>
 <span><span class="co">#&gt; ignored.</span></span>
 <span><span class="co">#&gt; A summarised_result object with 0 rows, 0 different result_id, different cdm</span></span>
