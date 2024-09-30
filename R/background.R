@@ -1,6 +1,6 @@
 createBackground <- function(background = NULL,
                              logo = NULL) {
-  if (length(background) == 0) return("")
+  if (length(background) == 0) return(NULL)
   if (!is.null(logo)) {
     logoImg <- ',
     shiny::tags$img(
@@ -53,8 +53,8 @@ validateBackground <- function(background) {
   } else {
     omopgenerics::assertCharacter(x = background, null = TRUE, named = TRUE)
     notAllowed <- ! names(background) %in% c("header", "title", "body", "footer")
-    if (sum(notAllowed) > 0) {
-      cli::cli_warn("{background[notAllowed]} {?is/are} not allowed named for `background` and will be ignored.")
+    if (any(notAllowed)) {
+      cli::cli_warn("{names(background)[notAllowed]} {?is/are} not allowed named for `background` and will be ignored.")
       background <- background[!notAllowed]
     }
   }
