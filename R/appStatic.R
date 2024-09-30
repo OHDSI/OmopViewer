@@ -22,22 +22,14 @@
 #' @export
 #'
 #' @examples {
-#' background <- c(
-#'   "header" = "Abstract",
-#'   "title" = "**Introduction**",
-#'   "body" = "This shiny has been generated with [omopViewer](https://github.com/oxford-pharmacoepi/omopViewer).",
-#'   "title" = "**Methods**",
-#'   "paragraph" = "Methods example, with a footer* example.",
-#'   "footer" = "*Here is the footer."
-#' )
 #' tdir <- here::here()
-#' exportStaticApp(directory = tdir, logo = NULL, background = background)
+#' exportStaticApp(directory = tdir, logo = NULL)
 #'}
 #'
 exportStaticApp <- function(result = emptySummarisedResult(),
                             logo = "HDS",
                             title = "My study",
-                            background = NULL,
+                            background = character(),
                             directory = getwd(),
                             open = rlang::is_interactive()) {
   # input check
@@ -141,7 +133,6 @@ uiStatic <- function(choices = list(),
   omopgenerics::assertList(choices, named = TRUE)
   omopgenerics::assertCharacter(logo, length = 1, null = TRUE)
   omopgenerics::assertCharacter(title, length = 1)
-  # TODO: check background
 
   c(
     'ui <- bslib::page_navbar(',

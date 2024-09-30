@@ -8,7 +8,7 @@ exportStaticApp(
   result = emptySummarisedResult(),
   logo = "HDS",
   title = "My study",
-  background = NULL,
+  background = character(),
   directory = getwd(),
   open = rlang::is_interactive()
 )
@@ -28,7 +28,8 @@ will not appear in the Shiny UI. This argument can be populated in two ways:
 2) A named character vector where the names correspond to specific`bslib`
 card elements: "header", "title", "subtitle", "body", and "footer". Each
 element's name indicates the type of text it will fill. The order of these
-elements is important when displaying the content.}
+elements is important when displaying the content. Markdown sythax for text
+styling is supported.}
 
 \item{directory}{Directory to create the shiny.}
 
@@ -42,16 +43,8 @@ Export and launch a static shiny specific to the provided results.
 }
 \examples{
 {
-background <- c(
-  "header" = "Abstract",
-  "title" = "Introduction",
-  "body" = "Example of an introduction.",
-  "title" = "Methods",
-  "paragraph" = "Methods example, with a footer* example.",
-  "footer" = "*Here is the footer."
-)
 tdir <- here::here()
-exportStaticApp(directory = tdir, logo = NULL, background = background)
+exportStaticApp(directory = tdir, logo = NULL)
 }
 
 }
