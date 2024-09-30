@@ -47,6 +47,7 @@
 <span>  logo <span class="op">=</span> <span class="st">"HDS"</span>,</span>
 <span>  title <span class="op">=</span> <span class="st">"My study"</span>,</span>
 <span>  background <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  summary <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  directory <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  open <span class="op">=</span> <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/is_interactive.html" class="external-link">is_interactive</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -81,6 +82,11 @@ elements is important when displaying the content. Markdown sythax for text
 styling is supported.</p></dd>
 
 
+<dt id="arg-summary">summary<a class="anchor" aria-label="anchor" href="#arg-summary"></a></dt>
+<dd><p>Whether to include a panel with a summary of content in the
+`result`.</p></dd>
+
+
 <dt id="arg-directory">directory<a class="anchor" aria-label="anchor" href="#arg-directory"></a></dt>
 <dd><p>Directory to create the shiny.</p></dd>
 
@@ -100,6 +106,9 @@ styling is supported.</p></dd>
 <span class="r-in"><span><span class="va">tdir</span> <span class="op">&lt;-</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">exportStaticApp</span><span class="op">(</span>directory <span class="op">=</span> <span class="va">tdir</span>, logo <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> A summarised_result object with 0 rows, 0 different result_id, different cdm</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> names, and 3 settings.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Settings: result_type, package_name, and package_version.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Processing data</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Data processed: 0 result types idenfied.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> No result_type(s) found, the generated shiny will be empty.</span>
