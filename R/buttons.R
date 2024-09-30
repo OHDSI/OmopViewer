@@ -5,7 +5,7 @@ selector <- function(id, lab, cho, sel, mult) {
     inputId = "{id}",
     label = "{lab}",
     choices = NULL,
-    selected = {sel},
+    selected = NULL,
     multiple = {mult},
     options = list(plugins = "remove_button")
   )' |>
