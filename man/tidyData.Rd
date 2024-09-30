@@ -7,7 +7,7 @@
 tidyData(
   result,
   showSettings = TRUE,
-  showGroupping = TRUE,
+  showgrouping = TRUE,
   prefixSet = "",
   prefixGroup = "",
   pivot = "none"
@@ -18,11 +18,11 @@ tidyData(
 
 \item{showSettings}{Whether to show settings columns.}
 
-\item{showGroupping}{Whether to show groupping columns.}
+\item{showgrouping}{Whether to show grouping columns.}
 
 \item{prefixSet}{Prefix for settings columns.}
 
-\item{prefixGroup}{Prefix for groupping columns.}
+\item{prefixGroup}{Prefix for grouping columns.}
 
 \item{pivot}{What to pivot: "none", "estimates" or "estimates and variables".}
 }

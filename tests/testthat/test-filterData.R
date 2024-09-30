@@ -36,14 +36,14 @@ test_that("check filterData functionality", {
   expect_true(nrow(x) == sum(result$result_id %in% idCustom))
 
   # filtering works
-  input <- list(custom_groupping_cdm_name = "cdm1")
+  input <- list(custom_grouping_cdm_name = "cdm1")
   expect_no_error(
     x <- filterData(result = result, resultType = "custom", input = input)
   )
   expect_true(nrow(x) == sum(result$cdm_name == "cdm1" & result$result_id %in% idCustom))
 
   input <- list(
-    custom_groupping_cdm_name = "cdm1",
+    custom_grouping_cdm_name = "cdm1",
     custom_random = 1L,
     custom_settings_analysis = TRUE)
   expect_no_error(
@@ -57,7 +57,7 @@ test_that("check filterData functionality", {
       result$result_id %in% idAnalysis))
 
   input <- list(
-    custom_groupping_cdm_name = "cdm1",
+    custom_grouping_cdm_name = "cdm1",
     custom_random = 1L,
     custom_variable_name = "number subjects")
   expect_no_error(

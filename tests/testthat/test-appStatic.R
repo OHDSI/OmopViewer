@@ -1,18 +1,27 @@
 test_that("logo", {
   tdir <- here::here()
+
+  # test no logo
   expect_no_error(exportStaticApp(directory = tdir, logo = NULL))
   expect_true("shiny" %in% list.files(tdir))
   unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
-  expect_no_error(exportStaticApp(directory = tdir, logo = "HDS"))
-  expect_true("shiny" %in% list.files(tdir))
-  unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
+
+  # test keywords
+  for (key in logoKeywords) {
+    expect_identical(basename(logoPath(key)), paste0(key, "_logo.svg"))
+    expect_no_error(exportStaticApp(directory = tdir, logo = key))
+    expect_true("shiny" %in% list.files(tdir))
+    unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
+  }
+
+  # custom logo
   expect_no_error(exportStaticApp(
-    directory = tdir, logo = here::here("inst", "images", "testim.png")))
+    directory = tdir, logo = here::here("inst", "oxford.png")))
   expect_true("shiny" %in% list.files(tdir))
   unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
 
-  expect_snapshot(
-    uiStatic(logo = "my_pic.png") |> cat(sep = "\n"))
+  # test generated ui
+  expect_snapshot(uiStatic(logo = "my_pic.png") |> cat(sep = "\n"))
 })
 
 test_that("empty shiny", {
@@ -63,13 +72,53 @@ test_that("CohortCharacteristics shiny", {
 
   # generate shiny
   tdir <- here::here()
-  expect_no_error(exportStaticApp(result = result, directory = tdir))
+  expect_no_error(exportStaticApp(result = result, directory = tdir, summary = FALSE))
   expect_true("shiny" %in% list.files(tdir))
   expect_snapshot(uiStatic(choices = getChoices(result)) |> cat(sep = "\n"))
   expect_snapshot(serverStatic(resultTypes = names(getChoices(result))) |> cat(sep = "\n"))
   unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
 
+  # use summary
+  expect_no_error(exportStaticApp(result = result, directory = tdir, summary = TRUE))
+  expect_true("shiny" %in% list.files(tdir))
+  expect_snapshot(uiStatic(choices = getChoices(result), summary = capture.output(summary(result), type = "message"), logo = NULL) |> cat(sep = "\n"))
+  expect_snapshot(uiStatic(choices = getChoices(result), summary = capture.output(summary(result), type = "message"), logo = "HDS") |> cat(sep = "\n"))
+  unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
+
   PatientProfiles::mockDisconnect(cdm)
+})
+
+test_that("background", {
+  # without logo
+  full <- c(
+    "header" = "Abstract",
+    "title" = "**Introduction**",
+    "body" = "Example of an [introduction](https://github.com/oxford-pharmacoepi/omopViewer).",
+    "title" = "Methods",
+    "body" = "Methods example, with a footer* example.",
+    "footer" = "*Here is the footer."
+  )
+  tdir <- here::here()
+  expect_no_error(exportStaticApp(directory = tdir, logo = NULL, background = full))
+  expect_true("shiny" %in% list.files(tdir))
+  unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
+  expect_snapshot(createBackground(full))
+  # with logo
+  expect_no_error(exportStaticApp(directory = tdir, logo = "HDS", background = full))
+  expect_true("shiny" %in% list.files(tdir))
+  unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
+  expect_snapshot(createBackground(full, "HDS"))
+  # no background
+  expect_no_error(exportStaticApp(directory = tdir, logo = "HDS", background = NULL))
+  expect_true("shiny" %in% list.files(tdir))
+  unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
+  expect_null(createBackground(NULL, "HDS"))
+
+  # expected behaviour
+  expect_warning(x <- validateBackground("bslib::hola("))
+  expect_null(x)
+  expect_warning(x <- validateBackground(c("hi" = "drop", "title" = "keep")))
+  expect_equal(x, c("title" = "keep"))
 })
 
 test_that("title", {

@@ -6,22 +6,44 @@
 #' @param logo Name of a logo or path to a logo. If NULL no logo is included.
 #' Only svg format allowed for the moment.
 #' @param title title of the shiny
+#' @param background Content to fill the background panel. If `NULL`, this panel
+#' will not appear in the Shiny UI. This argument can be populated in two ways:
+#' 1) A character string containing `bslib` code to go directly inside
+#' `bslib::card()`.
+#' 2) A named character vector where the names correspond to specific`bslib`
+#' card elements: "header", "title", "subtitle", "body", and "footer". Each
+#' element's name indicates the type of text it will fill. The order of these
+#' elements is important when displaying the content. Markdown sythax for text
+#' styling is supported.
+#' @param summary Whether to include a panel with a summary of content in the
+#' `result`.
 #' @param open Whether to open the shiny app project.
 #'
 #' @return The shiny app will be created in directory.
+#'
 #' @export
+#'
+#' @examples {
+#' tdir <- here::here()
+#' exportStaticApp(directory = tdir, logo = NULL)
+#'}
 #'
 exportStaticApp <- function(result = emptySummarisedResult(),
                             logo = "HDS",
                             title = "My study",
+                            background = character(),
+                            summary = TRUE,
                             directory = getwd(),
                             open = rlang::is_interactive()) {
   # input check
   result <- omopgenerics::validateResultArgument(result)
+  background <- validateBackground(background)
   omopgenerics::assertCharacter(directory, length = 1)
   omopgenerics::assertLogical(open, length = 1)
   omopgenerics::assertCharacter(logo, length = 1, null = TRUE)
   omopgenerics::assertCharacter(title, length = 1)
+  omopgenerics::assertLogical(summary, length = 1)
+  sum <- validateSummary(summary, result)
 
   # create directory if it does not exit
   if (!dir.exists(directory)) {
@@ -52,7 +74,7 @@ exportStaticApp <- function(result = emptySummarisedResult(),
   dir.create(path = directory, showWarnings = FALSE)
   cli::cli_inform(c("i" = "Creating shiny from provided data"))
   logo <- copyLogos(logo, directory)
-  ui <- c(messageShiny(), uiStatic(choices = choices, logo = logo, title = title))
+  ui <- c(messageShiny(), uiStatic(choices = choices, logo = logo, title = title, summary = sum, background = background))
   server <- c(messageShiny(), serverStatic(resultTypes = names(choices)))
   global <- c(messageShiny(), omopViewerGlobal)
   dir.create(paste0(directory, "/data"), showWarnings = FALSE)
@@ -87,42 +109,60 @@ messageShiny <- function() {
   )
 }
 copyLogos <- function(logo, directory) {
+  # Create 'www' directory if it doesn't exist
   dir.create(paste0(directory, "/www"), showWarnings = FALSE)
-  from <- system.file("/www/images/hds_logo.svg", package = "omopViewer")
+
+  # HDS logo must be copied always as it is needed for about tab
+  hdsLogo <- logoPath("hds")
   to <- paste0(directory, "/www/hds_logo.svg")
-  file.copy(from = from, to = to, overwrite = TRUE)
-  if (!is.null(logo)) {
-    if (logo == "HDS") {
-      return("hds_logo.svg")
-    } else if (file.exists(logo)) {
-      nm <- basename(logo)
-      to <- paste0(directory, "/www/", nm)
+  file.copy(from = hdsLogo, to = to, overwrite = TRUE)
+
+  if (is.null(logo)) return(NULL)
+
+  # search for standard logo naming:
+  logo <- logoPath(logo)
+
+  # copy the logo if exists
+  if (file.exists(logo)) {
+    nm <- basename(logo)
+    to <- paste0(directory, "/www/", nm)
+    if (logo != hdsLogo) {
       file.copy(from = logo, to = to, overwrite = TRUE)
-      return(nm)
-    } else {
-      cli::cli_warn(c("!" = "Logo couldn't be found."))
-      return(NULL)
     }
+    return(nm)
+  } else {
+    cli::cli_warn(c("!" = "Logo couldn't be found."))
+    return(NULL)
   }
-  return(NULL)
+}
+
+logoPath <- function(logo) {
+  lowLogo <- stringr::str_to_lower(logo)
+  # add more logoKeywords in data-raw/internalData
+  if (lowLogo %in% logoKeywords) {
+    system.file(paste0("/logos/", lowLogo, "_logo.svg"), package = "omopViewer")
+  } else {
+    logo
+  }
 }
 
 # ui ----
 uiStatic <- function(choices = list(),
                      logo = NULL,
                      title = "My study",
-                     background = TRUE) {
+                     background = NULL,
+                     summary = NULL) {
   # initial checks
   omopgenerics::assertList(choices, named = TRUE)
   omopgenerics::assertCharacter(logo, length = 1, null = TRUE)
   omopgenerics::assertCharacter(title, length = 1)
-  omopgenerics::assertLogical(background, length = 1)
 
   c(
     'ui <- bslib::page_navbar(',
     c(
       pageTitle(title, logo),
-      createBackground(background, title, logo),
+      createBackground(background = background, logo = logo),
+      createSummary(summary, logo),
       createUi(names(choices), choices),
       'bslib::nav_spacer()',
       createAbout("hds_logo.svg"),

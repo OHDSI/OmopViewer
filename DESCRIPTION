@@ -27,22 +27,23 @@ Imports:
     dplyr,
     DT,
     glue,
-    gt,
     omopgenerics (>= 0.2.3),
     purrr,
     rlang,
     shiny,
     snakecase,
     stringr,
+    styler,
     tidyr,
     usethis,
     vctrs,
-    visOmopResults (>= 0.3.0)
+    visOmopResults (>= 0.4.0)
 Suggests: 
     CDMConnector,
     CohortCharacteristics,
     duckdb,
     ggplot2,
+    gt,
     here,
     htmlwidgets,
     knitr,
@@ -53,13 +54,12 @@ Suggests:
     shinycssloaders,
     shinyWidgets,
     sortable,
-    styler,
     testthat (>= 3.1.5),
     utils,
-    zip
+    zip,
+    webshot2
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 Remotes:
-    darwin-eu/visOmopResults,
     darwin-eu-dev/CohortCharacteristics

@@ -25,18 +25,18 @@ omopViewerPlots <- dplyr::tribble(
 
 omopViewerPlotArguments <- dplyr::tribble(
   ~plot_id, ~argument, ~type, ~opts, ~multiple,
-  1L, "facet", "selector", "<groupping>, <variable>, <settings>", TRUE,
+  1L, "facet", "selector", "<grouping>, <variable>, <settings>", TRUE,
   1L, "uniqueCombinations", "check", "", NA,
   3L, "plotType", "selector", "boxplot, density", FALSE,
   3L, "timeScale", "selector", "days, years", FALSE,
-  3L, "facet", "selector", "<groupping>, <variable>, <settings>", TRUE,
-  3L, "colour", "selector", "<groupping>, <variable>, <settings>", TRUE,
+  3L, "facet", "selector", "<grouping>, <variable>, <settings>", TRUE,
+  3L, "colour", "selector", "<grouping>, <variable>, <settings>", TRUE,
   3L, "uniqueCombinations", "check", "", NA,
   4L, "plotStyle", "selector", "boxplot, barplot, scatterplot", FALSE,
-  4L, "facet", "selector", "<groupping>, <variable>, <settings>", TRUE,
-  4L, "colour", "selector", "<groupping>, <variable>, <settings>", TRUE,
-  5L, "facet", "selector", "<groupping>, <variable>", TRUE,
-  5L, "colour", "selector", "<groupping>, <variable>", TRUE,
+  4L, "facet", "selector", "<grouping>, <variable>, <settings>", TRUE,
+  4L, "colour", "selector", "<grouping>, <variable>, <settings>", TRUE,
+  5L, "facet", "selector", "<grouping>, <variable>", TRUE,
+  5L, "colour", "selector", "<grouping>, <variable>", TRUE,
 )
 
 omopViewerProj <- c(
@@ -195,8 +195,14 @@ plot_config <- list(
 )
 # end plot config ----
 
+# TO ADD NEW LOGOS YOU HAVE TO ADD THEM IN THIS LIST AND IN `inst/www/images/`
+# FOLLOW THIS NAMING: '{keyword}_logo.svg'
+# NOTE IT IS NOT CASE SENSITIVE
+logoKeywords <- c("hds", "ohdsi") |>
+  stringr::str_to_lower()
+
 usethis::use_data(
   omopViewerTabs, omopViewerPlots, omopViewerPlotArguments, omopViewerProj,
-  omopViewerGlobal, plot_config, overwrite = TRUE,
+  omopViewerGlobal, plot_config, logoKeywords, overwrite = TRUE,
   internal = TRUE)
 

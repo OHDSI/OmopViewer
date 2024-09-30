@@ -21,7 +21,7 @@ getPlots <- function(rt) {
 getPlotPanel <- function(id, tab, choic) {
   tit <- getPlotTitle(id)
   buttons <- getPlotButtons(
-    tab, id, names(choic$settings), names(choic$groupping),
+    tab, id, names(choic$settings), names(choic$grouping),
     c("variable_name", "variable_level", "estimate_name"))
   buttons <- paste0(c(buttons, 'position = "right"'), collapse = ",\n")
   out <- getPlotOutput(id)
@@ -30,7 +30,7 @@ getPlotPanel <- function(id, tab, choic) {
     title = "{tit}",
     bslib::card(
       full_screen = TRUE,
-      {downloadPlot(downloadId)},
+      {downloadPlot(downloadId, id)},
       bslib::layout_sidebar(
         sidebar = bslib::sidebar(
           {buttons}
@@ -81,7 +81,7 @@ getPlotButtons <- function(rt, plotId, setCols, groupCols, varCols) {
 }
 getButtonOpts <- function(opts, setCols, groupCols, varCols) {
   stringr::str_split_1(opts, pattern = ", ") |>
-    subs("<groupping>", groupCols) |>
+    subs("<grouping>", groupCols) |>
     subs("<settings>", setCols) |>
     subs("<variable>", varCols)
 }
@@ -118,7 +118,7 @@ plotsServer <- function(rt, data) {
         filename = "plot_[rt].png",
         content = function(file) {
           plt <- createPlot[id]()
-          [savePlotFunction(id)]
+          [savePlotFunction(rt, id)]
         }
       )'
     ) |>
@@ -147,11 +147,22 @@ createPlotFunction <- function(id) {
     result{args})" |>
     glue::glue()
 }
-savePlotFunction <- function(id) {
+savePlotFunction <- function(rt, id) {
   output <- omopViewerPlots$output[omopViewerPlots$plot_id == id]
   switch(output,
-         "ggplot2" = "ggplot2::ggsave(filename = file, plot = plt)",
-         "grViz" = "DiagrammeR::export_graph(graph = plt, file_name = file, fily_type = 'png', width = 800)")
+         "ggplot2" = "ggplot2::ggsave(
+                        filename = file, plot = plt,
+                        width = as.numeric(input${rt}_plot_{id}_download_width),
+                        height = as.numeric(input${rt}_plot_{id}_download_height),
+                        units = input${rt}_plot_{id}_download_units,
+                        dpi = as.numeric(input${rt}_plot_{id}_download_dpi)
+                      )" |> glue::glue(),
+         "grViz" = "DiagrammeR::export_graph(
+                      graph = plt, file_name = file, fily_type = 'png',
+                      width = as.numeric(input${rt}_plot_{id}_download_width),
+                      height = as.numeric(input${rt}_plot_{id}_download_height)
+                    )" |> glue::glue()
+         )
 }
 renderPlotFunction <- function(id) {
   output <- omopViewerPlots$output[omopViewerPlots$plot_id == id]
