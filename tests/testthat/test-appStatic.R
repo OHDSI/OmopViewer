@@ -95,7 +95,7 @@ test_that("background", {
     "title" = "**Introduction**",
     "body" = "Example of an [introduction](https://github.com/oxford-pharmacoepi/omopViewer).",
     "title" = "Methods",
-    "paragraph" = "Methods example, with a footer* example.",
+    "body" = "Methods example, with a footer* example.",
     "footer" = "*Here is the footer."
   )
   tdir <- here::here()
