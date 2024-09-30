@@ -72,10 +72,17 @@ test_that("CohortCharacteristics shiny", {
 
   # generate shiny
   tdir <- here::here()
-  expect_no_error(exportStaticApp(result = result, directory = tdir))
+  expect_no_error(exportStaticApp(result = result, directory = tdir, summary = FALSE))
   expect_true("shiny" %in% list.files(tdir))
   expect_snapshot(uiStatic(choices = getChoices(result)) |> cat(sep = "\n"))
   expect_snapshot(serverStatic(resultTypes = names(getChoices(result))) |> cat(sep = "\n"))
+  unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
+
+  # use summary
+  expect_no_error(exportStaticApp(result = result, directory = tdir, summary = TRUE))
+  expect_true("shiny" %in% list.files(tdir))
+  expect_snapshot(uiStatic(choices = getChoices(result), summary = capture.output(summary(result), type = "message"), logo = NULL) |> cat(sep = "\n"))
+  expect_snapshot(uiStatic(choices = getChoices(result), summary = capture.output(summary(result), type = "message"), logo = "HDS") |> cat(sep = "\n"))
   unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
 
   PatientProfiles::mockDisconnect(cdm)
@@ -105,7 +112,7 @@ test_that("background", {
   expect_no_error(exportStaticApp(directory = tdir, logo = "HDS", background = NULL))
   expect_true("shiny" %in% list.files(tdir))
   unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
-  expect_equal(createBackground(NULL, "HDS"), "")
+  expect_null(createBackground(NULL, "HDS"))
 
   # expected behaviour
   expect_warning(x <- validateBackground("bslib::hola("))
