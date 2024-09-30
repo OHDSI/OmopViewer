@@ -15,7 +15,7 @@ formattedUi <- function(tab, choic) {
     title = "Formatted",
     bslib::card(
       full_screen = TRUE,
-      {downloadTable(id, "Download word")},
+      {downloadTable(id, "Download", c("docx", "png", "pdf", "html"))},
       bslib::layout_sidebar(
         sidebar = bslib::sidebar(
           sortable::bucket_list(
@@ -66,7 +66,9 @@ formattedServer <- function(rt, data) {
       getFormattedData[formatCamel(rt)]()
     })',
     'output$[rt]_formatted_download <- shiny::downloadHandler(
-      filename = "formatted_[rt].docx",
+      filename = function(){
+        paste0("formatted_[rt].", input$[rt]_formatted_download_type)
+      },
       content = function(file) {
         getFormattedData[formatCamel(rt)]() |>
           gt::gtsave(filename = file)

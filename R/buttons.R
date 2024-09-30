@@ -11,10 +11,18 @@ selector <- function(id, lab, cho, sel, mult) {
     glue::glue() |>
     as.character()
 }
-downloadTable <- function(id, lab) {
+downloadTable <- function(id, lab, type = NULL) {
+
+  if (is.null(type)) {
+    type <- ""
+  } else {
+    type <- paste0('{selector("', id, '_type", "File", {cast(type)}, {cast("docx")}, FALSE)},') |> glue::glue()
+  }
+
   'bslib::card_header(
     bslib::popover(
       shiny::icon("download"),
+      {type}
       shiny::downloadButton(outputId = "{id}", label = "{lab}")
     ),
     class = "text-end"
