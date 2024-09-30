@@ -25,13 +25,13 @@
 #'
 #' @examples {
 #' tdir <- here::here()
-#' exportStaticApp(directory = tdir, logo = NULL)
+#' exportStaticApp(result = omopgenerics::emptySummarisedResult(), directory = tdir, logo = NULL)
 #'}
 #'
-exportStaticApp <- function(result = emptySummarisedResult(),
-                            logo = "HDS",
-                            title = "My study",
-                            background = character(),
+exportStaticApp <- function(result,
+                            logo = "ohdsi",
+                            title = "",
+                            background = NULL,
                             summary = TRUE,
                             directory = getwd(),
                             open = rlang::is_interactive()) {
@@ -149,7 +149,7 @@ logoPath <- function(logo) {
 # ui ----
 uiStatic <- function(choices = list(),
                      logo = NULL,
-                     title = "My study",
+                     title = "",
                      background = NULL,
                      summary = NULL) {
   # initial checks

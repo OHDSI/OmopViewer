@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(omopViewer)
+library(omopgenerics)
 ```
 
 ## Background panel
@@ -30,5 +31,5 @@ background <- c(
   "footer" = "*Here is the footer."
 )
 tdir <- here::here()
-exportStaticApp(directory = tdir, logo = NULL, background = background, open = FALSE)
+exportStaticApp(result = emptySummarisedResult(), directory = tdir, logo = NULL, background = background, open = FALSE)
 ```
