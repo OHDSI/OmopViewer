@@ -11,6 +11,7 @@ exportStaticApp(
   background = NULL,
   summary = TRUE,
   directory = getwd(),
+  tabOrder = list(),
   open = rlang::is_interactive()
 )
 }
@@ -36,6 +37,8 @@ styling is supported.}
 `result`.}
 
 \item{directory}{Directory to create the shiny.}
+
+\item{tabOrder}{List specifying order of result tabs.}
 
 \item{open}{Whether to open the shiny app project.}
 }

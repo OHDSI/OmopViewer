@@ -17,6 +17,9 @@
 #' styling is supported.
 #' @param summary Whether to include a panel with a summary of content in the
 #' `result`.
+#' @param tabOrder List specifying order of result tabs. Each tab is determined
+#' by the available result types in the result object. Tabs for any available
+#' results not specified will be included after the specified result tabs.
 #' @param open Whether to open the shiny app project.
 #'
 #' @return The shiny app will be created in directory.
@@ -34,6 +37,7 @@ exportStaticApp <- function(result,
                             background = NULL,
                             summary = TRUE,
                             directory = getwd(),
+                            tabOrder = list(),
                             open = rlang::is_interactive()) {
   # input check
   result <- omopgenerics::validateResultArgument(result)
@@ -43,6 +47,7 @@ exportStaticApp <- function(result,
   omopgenerics::assertCharacter(logo, length = 1, null = TRUE)
   omopgenerics::assertCharacter(title, length = 1)
   omopgenerics::assertLogical(summary, length = 1)
+  omopgenerics::assertList(tabOrder)
   sum <- validateSummary(summary, result)
 
   # create directory if it does not exit
@@ -68,6 +73,14 @@ exportStaticApp <- function(result,
   }
 
   choices <- getChoices(result)
+  tabOrder <- purrr::flatten_chr(tabOrder)
+  if(any(isFALSE(tabOrder %in% names(choices)))){
+  cli::cli_warn("'{setdiff(tabOrder, names(choices))}' not found in results")
+  }
+  # if not specified, append remaining results
+  tabOrder <- c(intersect(names(choices), tabOrder),
+                setdiff(names(choices), tabOrder))
+  choices <- choices[tabOrder]
 
   # create shiny
   directory <- paste0(directory, "/shiny")
