@@ -28,7 +28,7 @@
               align = "left"
             )
           )
-        ), ,
+        ),
         bslib::nav_spacer(),
         bslib::nav_item(
           bslib::popover(
@@ -67,7 +67,7 @@
             bslib::card_header("My study background"),
             shiny::p("You can use this section to add some background of your study")
           )
-        ), ,
+        ),
         bslib::nav_spacer(),
         bslib::nav_item(
           bslib::popover(
@@ -114,7 +114,7 @@
             bslib::card_header("My study background"),
             shiny::p("You can use this section to add some background of your study")
           )
-        ), ,
+        ),
         bslib::nav_panel(
           title = "Cohort characteristics",
           icon = shiny::icon("users-gear"),
@@ -1893,7 +1893,7 @@
             bslib::card_header("My study background"),
             shiny::p("You can use this section to add some background of your study")
           )
-        ), ,
+        ),
         bslib::nav_panel(
           title = "Cohort characteristics",
           icon = shiny::icon("users-gear"),
@@ -3219,7 +3219,7 @@
               align = "left"
             )
           )
-        ), ,
+        ),
         bslib::nav_panel(
           title = "Cohort characteristics",
           icon = shiny::icon("users-gear"),

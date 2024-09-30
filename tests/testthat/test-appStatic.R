@@ -63,7 +63,7 @@ test_that("CohortCharacteristics shiny", {
 
   # generate shiny
   tdir <- here::here()
-  expect_no_error(exportStaticApp(result = result, directory = tdir))
+  expect_no_error(exportStaticApp(result = result, directory = tdir, summary = FALSE))
   expect_true("shiny" %in% list.files(tdir))
   expect_snapshot(uiStatic(choices = getChoices(result)) |> cat(sep = "\n"))
   expect_snapshot(serverStatic(resultTypes = names(getChoices(result))) |> cat(sep = "\n"))

@@ -1,5 +1,6 @@
 createSummary <- function(sum, logo) {
-  if (length(sum) == 0) {return("")}
+
+  if (length(sum) == 0) {return(NULL)}
 
   if (!is.null(logo)) {
     logoImg <- ',

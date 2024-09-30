@@ -26,11 +26,7 @@ exportStaticApp <- function(result = emptySummarisedResult(),
   omopgenerics::assertCharacter(logo, length = 1, null = TRUE)
   omopgenerics::assertCharacter(title, length = 1)
   omopgenerics::assertLogical(summary, length = 1)
-  if (summary) {
-    sum <- capture.output(summary(result), type = "message")
-  } else {
-    sum <- NULL
-  }
+  sum <- validateSummary(summary, result)
 
   # create directory if it does not exit
   if (!dir.exists(directory)) {
