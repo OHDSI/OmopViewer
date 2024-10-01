@@ -52,13 +52,8 @@ exportStaticApp <- function(result,
   omopgenerics::assertLogical(summary, length = 1)
   omopgenerics::assertList(panels)
   sum <- validateSummary(summary, result)
-
-  # create directory if it does not exit
-  if (!dir.exists(directory)) {
-    cli::cli_inform(c("i" = "Provided directory does not exist, it will be created."))
-    dir.create(path = directory, recursive = TRUE)
-    cli::cli_inform(c("v" = "directory created: {.pkg {directory}}"))
-  }
+  directory <- validateDirectory(directory)
+  if (isTRUE(directory)) return(cli::cli_inform(c("i" = "{.strong shiny} folder will not be overwritten. Stopping process.")))
 
   # processing data
   cli::cli_inform(c("i" = "Processing data"))
@@ -86,7 +81,7 @@ exportStaticApp <- function(result,
   choices <- choices[panels]
 
   # create shiny
-  directory <- paste0(directory, "/shiny")
+  directory <- file.path(directory, "shiny")
   dir.create(path = directory, showWarnings = FALSE)
   cli::cli_inform(c("i" = "Creating shiny from provided data"))
   logo <- copyLogos(logo, directory)
