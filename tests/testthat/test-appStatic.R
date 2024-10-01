@@ -133,5 +133,66 @@ test_that("title", {
   unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
 })
 
+test_that("order tabs", {
+  # create mock cdm
+  set.seed(123456)
+  cdm <- omock::mockCdmReference() |>
+    omock::mockPerson(nPerson = 100) |>
+    omock::mockObservationPeriod() |>
+    omock::mockConditionOccurrence(recordPerson = 3) |>
+    omock::mockDrugExposure(recordPerson = 4.5) |>
+    omock::mockCohort(
+      numberCohorts = 3, cohortName = c("covid", "tb", "asthma"))
+
+  # TO BE REMOVED WHEN CohortCharacteristics works with local cdms
+  cdm <- CDMConnector::copyCdmTo(
+    con = duckdb::dbConnect(duckdb::duckdb()), cdm = cdm, schema = "main")
+
+  # generate result set
+  result <- omopgenerics::bind(
+    cdm$cohort |>
+      CohortCharacteristics::summariseCohortAttrition(),
+    cdm$cohort |>
+      CohortCharacteristics::summariseCohortCount(),
+    cdm$cohort |>
+      CohortCharacteristics::summariseCohortOverlap()
+  )
+
+  # generate shiny
+  tdir <- here::here()
+  unique(omopgenerics::settings(result) |>
+    dplyr::pull("result_type"))
+  expect_no_error(exportStaticApp(result = result,
+                                  directory = tdir,
+                                  panels = list("summarise_cohort_count",
+                                                  "summarise_cohort_attrition",
+                                                  "summarise_cohort_overlap")))
 
 
+  expect_no_error(exportStaticApp(result = result,
+                                  directory = tdir,
+                                  panels = list("summarise_cohort_count",
+                                                  "summarise_cohort_attrition",
+                                                  "summarise_cohort_overlap",
+                                                  "not an option",
+                                                  "another missing result")))
+  expect_no_error(exportStaticApp(result = result,
+                                  directory = tdir,
+                                  panels = list("not an option")))
+  # missing a result
+  expect_no_error(exportStaticApp(result = result,
+                                  directory = tdir,
+                                  panels = list("summarise_cohort_count",
+                                                  "summarise_cohort_attrition")))
+
+  # will show all results
+  expect_no_error(exportStaticApp(result = result,
+                                  directory = tdir,
+                                  panels = list()))
+
+  expect_error(exportStaticApp(result = result,
+                               directory = tdir,
+                               panels = c("must be a list")))
+
+
+})

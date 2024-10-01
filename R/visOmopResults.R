@@ -35,7 +35,7 @@ visTable <- function(result,
   formatEstimates <- c(
     "N (%)" = "<count> (<percentage>%)",
     "N" = "<count>",
-    "medain [Q25 - Q75]" = "<median> [<q25> - <q75>]",
+    "median [Q25 - Q75]" = "<median> [<q25> - <q75>]",
     "mean (SD)" = "<mean> (<sd>)",
     "[Q25 - Q75]" = "[<q25> - <q75>]",
     "range" = "[<min> <max>]",
