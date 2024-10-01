@@ -133,7 +133,7 @@ test_that("title", {
 
 test_that("omopViewerGlobal", {
   tdir <- here::here()
-  expect_no_error(exportStaticApp(directory = tdir))
+  expect_no_error(exportStaticApp(result = emptySummarisedResult(), directory = tdir))
   expect_true("shiny" %in% list.files(tdir))
   x <- readLines(file.path(tdir, "shiny/global.R"))
   expect_snapshot(cat(x, sep = "\n"))
