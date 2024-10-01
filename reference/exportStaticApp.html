@@ -49,6 +49,7 @@
 <span>  background <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  summary <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  directory <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  panels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  open <span class="op">=</span> <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/is_interactive.html" class="external-link">is_interactive</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -89,6 +90,12 @@ styling is supported.</p></dd>
 
 <dt id="arg-directory">directory<a class="anchor" aria-label="anchor" href="#arg-directory"></a></dt>
 <dd><p>Directory to create the shiny.</p></dd>
+
+
+<dt id="arg-panels">panels<a class="anchor" aria-label="anchor" href="#arg-panels"></a></dt>
+<dd><p>List specifying order of results. Each panel is determined
+by the available result types in the result object. Panels for any available
+results not specified will be included after the specified result tabs.</p></dd>
 
 
 <dt id="arg-open">open<a class="anchor" aria-label="anchor" href="#arg-open"></a></dt>
