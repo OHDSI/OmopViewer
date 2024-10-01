@@ -12,7 +12,7 @@
             class = "me-3",
             alt = "logo"
           ),
-          "My study"
+          ""
         ),
         bslib::nav_spacer(),
         bslib::nav_item(
@@ -44,7 +44,7 @@
       cat(uiStatic(), sep = "\n")
     Output
       ui <- bslib::page_navbar(
-        title = "My study",
+        title = "",
         bslib::nav_spacer(),
         bslib::nav_item(
           bslib::popover(
@@ -83,7 +83,7 @@
       cat(uiStatic(choices = getChoices(result)), sep = "\n")
     Output
       ui <- bslib::page_navbar(
-        title = "My study",
+        title = "",
         bslib::nav_panel(
           title = "Cohort characteristics",
           icon = shiny::icon("users-gear"),
@@ -1933,7 +1933,7 @@
       Settings: package_name, package_version, result_type, cohort_definition_id, table_name, restrict_to_first_entry, density, type, and analysis.
     Output
       ui <- bslib::page_navbar(
-        title = "My study",
+        title = "",
         bslib::nav_panel(
           title = "Cohort characteristics",
           icon = shiny::icon("users-gear"),
@@ -3282,7 +3282,7 @@
             class = "me-3",
             alt = "logo"
           ),
-          "My study"
+          ""
         ),
         bslib::nav_panel(
           title = "Cohort characteristics",
@@ -4623,9 +4623,9 @@
 ---
 
     Code
-      createBackground(full, "HDS")
+      createBackground(full, "OHDSI")
     Output
-      [1] "bslib::nav_panel(\n  title = \"Background\",\n  icon = shiny::icon(\"disease\"),\n  bslib::card(bslib::card_header(shiny::markdown('Abstract')), bslib::card_title(shiny::markdown('**Introduction**')), shiny::p(shiny::markdown('Example of an [introduction](https://github.com/oxford-pharmacoepi/omopViewer).')), bslib::card_title(shiny::markdown('Methods')), shiny::p(shiny::markdown('Methods example, with a footer* example.')), bslib::card_footer(shiny::markdown('*Here is the footer.')),\nshiny::tags$img(\n  src = \"HDS\",\n  width = \"auto\",\n  height = \"100px\",\n  alt = \"logo\",\n  align = \"left\"\n))\n)"
+      [1] "bslib::nav_panel(\n  title = \"Background\",\n  icon = shiny::icon(\"disease\"),\n  bslib::card(bslib::card_header(shiny::markdown('Abstract')), bslib::card_title(shiny::markdown('**Introduction**')), shiny::p(shiny::markdown('Example of an [introduction](https://github.com/oxford-pharmacoepi/omopViewer).')), bslib::card_title(shiny::markdown('Methods')), shiny::p(shiny::markdown('Methods example, with a footer* example.')), bslib::card_footer(shiny::markdown('*Here is the footer.')),\nshiny::tags$img(\n  src = \"OHDSI\",\n  width = \"auto\",\n  height = \"100px\",\n  alt = \"logo\",\n  align = \"left\"\n))\n)"
 
 # title
 
@@ -4638,7 +4638,7 @@
       ui <- bslib::page_navbar(
         title = shiny::tags$span(
           shiny::tags$img(
-            src = "hds_logo.svg",
+            src = "ohdsi_logo.svg",
             width = "auto",
             height = "46px",
             class = "me-3",
@@ -4653,7 +4653,7 @@
             bslib::card_header("Summary of results"),
             shiny::p(shiny::markdown("A summarised_result object with **0** rows, **0** different result_id, different cdm names, and **3** settings.")), shiny::p(shiny::markdown(" - **Settings:** result_type, package_name, and package_version.")),
             shiny::tags$img(
-              src = "hds_logo.svg",
+              src = "ohdsi_logo.svg",
               width = "auto",
               height = "100px",
               alt = "logo",

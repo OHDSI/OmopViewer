@@ -5,10 +5,10 @@
 \title{Export and launch a static shiny specific to the provided results.}
 \usage{
 exportStaticApp(
-  result = emptySummarisedResult(),
-  logo = "HDS",
-  title = "My study",
-  background = character(),
+  result,
+  logo = "ohdsi",
+  title = "",
+  background = NULL,
   summary = TRUE,
   directory = getwd(),
   open = rlang::is_interactive()
@@ -48,7 +48,7 @@ Export and launch a static shiny specific to the provided results.
 \examples{
 {
 tdir <- here::here()
-exportStaticApp(directory = tdir, logo = NULL)
+exportStaticApp(result = omopgenerics::emptySummarisedResult(), directory = tdir, logo = NULL)
 }
 
 }
