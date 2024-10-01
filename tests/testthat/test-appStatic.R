@@ -161,35 +161,35 @@ test_that("order tabs", {
     dplyr::pull("result_type"))
   expect_no_error(exportStaticApp(result = result,
                                   directory = tdir,
-                                  tabOrder = list("summarise_cohort_count",
+                                  panels = list("summarise_cohort_count",
                                                   "summarise_cohort_attrition",
                                                   "summarise_cohort_overlap")))
 
 
   expect_no_error(exportStaticApp(result = result,
                                   directory = tdir,
-                                  tabOrder = list("summarise_cohort_count",
+                                  panels = list("summarise_cohort_count",
                                                   "summarise_cohort_attrition",
                                                   "summarise_cohort_overlap",
                                                   "not an option",
                                                   "another missing result")))
   expect_no_error(exportStaticApp(result = result,
                                   directory = tdir,
-                                  tabOrder = list("not an option")))
+                                  panels = list("not an option")))
   # missing a result
   expect_no_error(exportStaticApp(result = result,
                                   directory = tdir,
-                                  tabOrder = list("summarise_cohort_count",
+                                  panels = list("summarise_cohort_count",
                                                   "summarise_cohort_attrition")))
 
   # will show all results
   expect_no_error(exportStaticApp(result = result,
                                   directory = tdir,
-                                  tabOrder = list()))
+                                  panels = list()))
 
   expect_error(exportStaticApp(result = result,
-                                  directory = tdir,
-                                  tabOrder = c("must be a list")))
+                               directory = tdir,
+                               panels = c("must be a list")))
 
 
 })

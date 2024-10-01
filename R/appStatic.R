@@ -17,8 +17,8 @@
 #' styling is supported.
 #' @param summary Whether to include a panel with a summary of content in the
 #' `result`.
-#' @param tabOrder List specifying order of result tabs. Each tab is determined
-#' by the available result types in the result object. Tabs for any available
+#' @param panels List specifying order of results. Each panel is determined
+#' by the available result types in the result object. Panels for any available
 #' results not specified will be included after the specified result tabs.
 #' @param open Whether to open the shiny app project.
 #'
@@ -37,7 +37,7 @@ exportStaticApp <- function(result,
                             background = NULL,
                             summary = TRUE,
                             directory = getwd(),
-                            tabOrder = list(),
+                            panels = list(),
                             open = rlang::is_interactive()) {
   # input check
   result <- omopgenerics::validateResultArgument(result)
