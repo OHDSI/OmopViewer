@@ -21,6 +21,7 @@
 #' by the available result types in the result object. Panels for any available
 #' results not specified will be included after the specified result tabs.
 #' @param open Whether to open the shiny app project.
+#' @param theme Assign a theme to the shiny app using bslib::bs_theme()
 #'
 #' @return The shiny app will be created in directory.
 #'
@@ -28,7 +29,7 @@
 #'
 #' @examples {
 #' tdir <- here::here()
-#' exportStaticApp(result = omopgenerics::emptySummarisedResult(), directory = tdir, logo = NULL)
+#' exportStaticApp(result = omopgenerics::emptySummarisedResult(), directory = tdir, logo = NULL, theme = "bslib::bs_theme(bg = "#bb0a1e", fg = "#0000ff")")
 #'}
 #'
 exportStaticApp <- function(result,
@@ -38,7 +39,8 @@ exportStaticApp <- function(result,
                             summary = TRUE,
                             directory = getwd(),
                             panels = list(),
-                            open = rlang::is_interactive()) {
+                            open = rlang::is_interactive(),
+                            theme = NULL) {
   # input check
   result <- omopgenerics::validateResultArgument(result)
   background <- validateBackground(background)
@@ -87,7 +89,7 @@ exportStaticApp <- function(result,
   dir.create(path = directory, showWarnings = FALSE)
   cli::cli_inform(c("i" = "Creating shiny from provided data"))
   logo <- copyLogos(logo, directory)
-  ui <- c(messageShiny(), uiStatic(choices = choices, logo = logo, title = title, summary = sum, background = background))
+  ui <- c(messageShiny(), uiStatic(choices = choices, logo = logo, title = title, summary = sum, background = background, theme = theme))
   server <- c(messageShiny(), serverStatic(resultTypes = names(choices)))
   global <- c(messageShiny(), omopViewerGlobal)
   dir.create(paste0(directory, "/data"), showWarnings = FALSE)
@@ -164,14 +166,22 @@ uiStatic <- function(choices = list(),
                      logo = NULL,
                      title = "",
                      background = NULL,
-                     summary = NULL) {
+                     summary = NULL,
+                     theme = NULL) {  # Add the theme argument with default NULL
   # initial checks
   omopgenerics::assertList(choices, named = TRUE)
   omopgenerics::assertCharacter(logo, length = 1, null = TRUE)
   omopgenerics::assertCharacter(title, length = 1)
 
+  # Create the bslib::bs_theme() call, or use NULL if not provided
+  theme_setting <- if (!is.null(theme)) {
+    paste0("theme = ", theme, ",")  # Keep it simple, just insert the theme
+  } else {
+    ""
+  }
   c(
     'ui <- bslib::page_navbar(',
+    theme_setting,
     c(
       pageTitle(title, logo),
       createBackground(background = background, logo = logo),
@@ -187,6 +197,7 @@ uiStatic <- function(choices = list(),
     paste0(collapse = "\n") |>
     styleCode()
 }
+
 pageTitle <- function(title, logo) {
   if (is.null(logo)) {
     x <- 'title = "{title}"'
