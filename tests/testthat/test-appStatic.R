@@ -77,9 +77,8 @@ test_that("CohortCharacteristics shiny", {
   expect_true("shiny" %in% list.files(tdir))
   expect_snapshot(uiStatic(choices = getChoices(result)) |> cat(sep = "\n"))
   expect_snapshot(serverStatic(resultTypes = names(getChoices(result))) |> cat(sep = "\n"))
-  unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
 
-  # use summary
+  # use summary + test overwrite (question when interactive and overwrite by default when not)
   expect_no_error(exportStaticApp(result = result, directory = tdir, summary = TRUE))
   expect_true("shiny" %in% list.files(tdir))
   expect_snapshot(uiStatic(choices = getChoices(result), summary = capture.output(summary(result), type = "message"), logo = NULL) |> cat(sep = "\n"))
