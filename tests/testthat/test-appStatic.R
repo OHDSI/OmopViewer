@@ -77,7 +77,10 @@ test_that("CohortCharacteristics shiny", {
   expect_true("shiny" %in% list.files(tdir))
   expect_snapshot(uiStatic(choices = getChoices(result)) |> cat(sep = "\n"))
   expect_snapshot(serverStatic(resultTypes = names(getChoices(result))) |> cat(sep = "\n"))
+  x <- readLines(file.path(tdir, "shiny/global.R"))
+  expect_snapshot(cat(x, sep = "\n"))
   unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
+
 
   # use summary
   expect_no_error(exportStaticApp(result = result, directory = tdir, summary = TRUE))
@@ -131,11 +134,4 @@ test_that("title", {
 })
 
 
-test_that("omopViewerGlobal", {
-  tdir <- here::here()
-  expect_no_error(exportStaticApp(result = emptySummarisedResult(), directory = tdir))
-  expect_true("shiny" %in% list.files(tdir))
-  x <- readLines(file.path(tdir, "shiny/global.R"))
-  expect_snapshot(cat(x, sep = "\n"))
-  unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
-})
+

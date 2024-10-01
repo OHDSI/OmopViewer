@@ -49,19 +49,6 @@ omopViewerProj <- c(
 omopViewerGlobal <- c(
   "library(shiny)",
   "library(omopViewer)",
-  "library(omopgenerics)",
-  "library(bslib)",
-  "library(purrr)",
-  "library(glue)",
-  "library(styler)",
-  "library(cli)",
-  "library(readr)",
-  "library(DT)",
-  "library(dplyr)",
-  "library(visOmopResults)",
-  "library(purrr)",
-  "library(gt)",
-  "library(utils)",
   "",
   "data <- importSummarisedResult(here::here(\"data\"))"
 ) |>
