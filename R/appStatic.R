@@ -50,9 +50,9 @@ exportStaticApp <- function(result,
     cli::cli_inform(c("i" = "Provided directory does not exist, it will be created."))
     dir.create(path = directory, recursive = TRUE)
     cli::cli_inform(c("v" = "directory created: {.pkg {directory}}"))
-  }
+
+  } else if (file.exists(here::here(directory, "shiny"))) {
   # ask overwrite shiny
-  if (file.exists(directory, "shiny")) {
     overwrite <- "1"  # overwrite if non-interactive
     if (rlang::is_interactive()) {
       cli::cli_inform(c(
@@ -92,7 +92,7 @@ exportStaticApp <- function(result,
   choices <- getChoices(result)
 
   # create shiny
-  directory <- paste0(directory, "/shiny")
+  directory <- here::here(directory, "shiny")
   dir.create(path = directory, showWarnings = FALSE)
   cli::cli_inform(c("i" = "Creating shiny from provided data"))
   logo <- copyLogos(logo, directory)
