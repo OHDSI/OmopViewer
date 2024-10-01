@@ -47,7 +47,7 @@ exportStaticApp <- function(result,
   omopgenerics::assertCharacter(logo, length = 1, null = TRUE)
   omopgenerics::assertCharacter(title, length = 1)
   omopgenerics::assertLogical(summary, length = 1)
-  omopgenerics::assertList(tabOrder)
+  omopgenerics::assertList(panels)
   sum <- validateSummary(summary, result)
 
   # create directory if it does not exit
@@ -73,14 +73,14 @@ exportStaticApp <- function(result,
   }
 
   choices <- getChoices(result)
-  tabOrder <- purrr::flatten_chr(tabOrder)
-  if(any(isFALSE(tabOrder %in% names(choices)))){
-  cli::cli_warn("'{setdiff(tabOrder, names(choices))}' not found in results")
+  panels <- purrr::flatten_chr(panels)
+  if(any(isFALSE(panels %in% names(choices)))){
+  cli::cli_warn("'{setdiff(panels, names(choices))}' not found in results")
   }
   # if not specified, append remaining results
-  tabOrder <- c(intersect(names(choices), tabOrder),
-                setdiff(names(choices), tabOrder))
-  choices <- choices[tabOrder]
+  panels <- c(intersect(names(choices), panels),
+                setdiff(names(choices), panels))
+  choices <- choices[panels]
 
   # create shiny
   directory <- paste0(directory, "/shiny")
