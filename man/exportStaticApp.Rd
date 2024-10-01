@@ -5,12 +5,13 @@
 \title{Export and launch a static shiny specific to the provided results.}
 \usage{
 exportStaticApp(
-  result = emptySummarisedResult(),
-  logo = "HDS",
-  title = "My study",
-  background = character(),
+  result,
+  logo = "ohdsi",
+  title = "",
+  background = NULL,
   summary = TRUE,
   directory = getwd(),
+  panels = list(),
   open = rlang::is_interactive()
 )
 }
@@ -37,6 +38,10 @@ styling is supported.}
 
 \item{directory}{Directory to create the shiny.}
 
+\item{panels}{List specifying order of results. Each panel is determined
+by the available result types in the result object. Panels for any available
+results not specified will be included after the specified result tabs.}
+
 \item{open}{Whether to open the shiny app project.}
 }
 \value{
@@ -48,7 +53,7 @@ Export and launch a static shiny specific to the provided results.
 \examples{
 {
 tdir <- here::here()
-exportStaticApp(directory = tdir, logo = NULL)
+exportStaticApp(result = omopgenerics::emptySummarisedResult(), directory = tdir, logo = NULL)
 }
 
 }

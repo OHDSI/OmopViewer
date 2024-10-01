@@ -27,6 +27,7 @@ Imports:
     dplyr,
     DT,
     glue,
+    here,
     omopgenerics (>= 0.2.3),
     purrr,
     rlang,
@@ -40,11 +41,10 @@ Imports:
     visOmopResults (>= 0.4.0)
 Suggests: 
     CDMConnector,
-    CohortCharacteristics,
+    CohortCharacteristics (>= 0.3.0),
     duckdb,
     ggplot2,
     gt,
-    here,
     htmlwidgets,
     knitr,
     omock,
@@ -56,9 +56,8 @@ Suggests:
     sortable,
     testthat (>= 3.1.5),
     utils,
-    zip
+    zip,
+    webshot2
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 Config/testthat/parallel: true
-Remotes:
-    darwin-eu-dev/CohortCharacteristics
