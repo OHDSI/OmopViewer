@@ -51,6 +51,28 @@ exportStaticApp <- function(result,
     dir.create(path = directory, recursive = TRUE)
     cli::cli_inform(c("v" = "directory created: {.pkg {directory}}"))
   }
+  # ask overwrite shiny
+  if (file.exists(directory, "shiny")) {
+    overwrite <- "1"  # overwrite if non-interactive
+    if (rlang::is_interactive()) {
+      cli::cli_inform(c(
+        "!" = "A {.strong shiny} folder already exists in the provided directory. Enter choice 1 or 2:",
+        " " = "1) Overwrite",
+        " " = "2) Cancel"
+      ))
+      overwrite <- readline()
+      while (!overwrite %in% c("1", "2")) {
+        cli::cli_inform(c("x" = "Invalid input. Please choose 1 to overwrite or 2 to cancel:"))
+        overwrite <- readline()
+      }
+    }
+    if (overwrite == "2") {
+      cli::cli_inform(c("i" = "{.strong shiny} folder will not be overwritten. Stopping process."))
+      return()
+    } else {
+      cli::cli_inform(c("i" = "{.strong shiny} folder will be overwritten."))
+    }
+  }
 
   # processing data
   cli::cli_inform(c("i" = "Processing data"))
