@@ -54,9 +54,10 @@ The shiny app will be created in directory.
 Export and launch a static shiny specific to the provided results.
 }
 \examples{
+{
 tdir <- here::here()
 exportStaticApp(result = omopgenerics::emptySummarisedResult(), directory = tdir,
 logo = NULL, theme = "bslib::bs_theme(bg = "#bb0a1e", fg = "#0000ff")")
-
+}
 
 }
