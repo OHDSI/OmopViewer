@@ -44,35 +44,8 @@ exportStaticApp <- function(result,
   omopgenerics::assertCharacter(title, length = 1)
   omopgenerics::assertLogical(summary, length = 1)
   sum <- validateSummary(summary, result)
-
-  # create directory if it does not exit
-  if (!dir.exists(directory)) {
-    cli::cli_inform(c("i" = "Provided directory does not exist, it will be created."))
-    dir.create(path = directory, recursive = TRUE)
-    cli::cli_inform(c("v" = "directory created: {.pkg {directory}}"))
-
-  } else if (file.exists(here::here(directory, "shiny"))) {
-  # ask overwrite shiny
-    overwrite <- "1"  # overwrite if non-interactive
-    if (rlang::is_interactive()) {
-      cli::cli_inform(c(
-        "!" = "A {.strong shiny} folder already exists in the provided directory. Enter choice 1 or 2:",
-        " " = "1) Overwrite",
-        " " = "2) Cancel"
-      ))
-      overwrite <- readline()
-      while (!overwrite %in% c("1", "2")) {
-        cli::cli_inform(c("x" = "Invalid input. Please choose 1 to overwrite or 2 to cancel:"))
-        overwrite <- readline()
-      }
-    }
-    if (overwrite == "2") {
-      cli::cli_inform(c("i" = "{.strong shiny} folder will not be overwritten. Stopping process."))
-      return()
-    } else {
-      cli::cli_inform(c("i" = "{.strong shiny} folder will be overwritten."))
-    }
-  }
+  directory <- validateDirectory(directory)
+  if (isTRUE(directory)) return(cli::cli_inform(c("i" = "{.strong shiny} folder will not be overwritten. Stopping process.")))
 
   # processing data
   cli::cli_inform(c("i" = "Processing data"))
@@ -92,7 +65,7 @@ exportStaticApp <- function(result,
   choices <- getChoices(result)
 
   # create shiny
-  directory <- here::here(directory, "shiny")
+  directory <- file.path(directory, "shiny")
   dir.create(path = directory, showWarnings = FALSE)
   cli::cli_inform(c("i" = "Creating shiny from provided data"))
   logo <- copyLogos(logo, directory)
