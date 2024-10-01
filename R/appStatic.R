@@ -27,11 +27,11 @@
 #'
 #' @export
 #'
-#' @examples {
+#' @examples
 #' tdir <- here::here()
 #' exportStaticApp(result = omopgenerics::emptySummarisedResult(), directory = tdir,
 #' logo = NULL, theme = "bslib::bs_theme(bg = "#bb0a1e", fg = "#0000ff")")
-#'}
+#'
 #'
 exportStaticApp <- function(result,
                             logo = "ohdsi",
