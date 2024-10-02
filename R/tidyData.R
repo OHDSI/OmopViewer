@@ -29,19 +29,22 @@ tidyData <- function(result,
     length = 1)
 
   # add settings
+  groups <- NULL
   if (showSettings) {
     set <- omopgenerics::settings(result) |>
       dplyr::filter(.data$result_id %in% unique(result$result_id))
-    groups <- set |>
-      dplyr::select(c("result_id", "group", "strata", "additional")) |>
-      tidyr::pivot_longer(c("group", "strata", "additional")) |>
-      dplyr::filter(!is.na(.data$value)) |>
-      dplyr::group_by(.data$result_id) |>
-      tidyr::separate_rows(value, sep = " &&& ") |>
-      dplyr::pull("value") |>
-      unique()
+    if (all(c("group", "strata", "additional") %in% colnames(set))) {
+      groups <- set |>
+        dplyr::select(c("result_id", "group", "strata", "additional")) |>
+        tidyr::pivot_longer(c("group", "strata", "additional")) |>
+        dplyr::filter(!is.na(.data$value)) |>
+        dplyr::group_by(.data$result_id) |>
+        tidyr::separate_rows(.data$value, sep = " &&& ") |>
+        dplyr::pull("value") |>
+        unique()
+    }
     set <- set |>
-      dplyr::select(!dplyr::all_of(c("group", "strata", "additional")))
+      dplyr::select(!dplyr::any_of(c("group", "strata", "additional")))
     for (col in colnames(set)) {
       if (all(is.na(set[[col]]))) {
         set <- set |>
@@ -90,7 +93,8 @@ tidyData <- function(result,
         rlang::parse_expr() |>
         rlang::set_names(groupsMiss)
       result <- result |>
-        dplyr::mutate(!!!overallCols)
+        dplyr::mutate(!!!overallCols) |>
+        dplyr::relocate(dplyr::all_of(groupsMiss), .before = "variable_name")
     }
   } else {
     result <- result |>
