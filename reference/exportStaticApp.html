@@ -50,6 +50,7 @@
 <span>  summary <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  directory <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  panels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  theme <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  open <span class="op">=</span> <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/is_interactive.html" class="external-link">is_interactive</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -98,6 +99,10 @@ by the available result types in the result object. Panels for any available
 results not specified will be included after the specified result tabs.</p></dd>
 
 
+<dt id="arg-theme">theme<a class="anchor" aria-label="anchor" href="#arg-theme"></a></dt>
+<dd><p>Assign a theme to the shiny app using bslib::bs_theme()</p></dd>
+
+
 <dt id="arg-open">open<a class="anchor" aria-label="anchor" href="#arg-open"></a></dt>
 <dd><p>Whether to open the shiny app project.</p></dd>
 
@@ -111,7 +116,7 @@ results not specified will be included after the specified result tabs.</p></dd>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="op">{</span></span></span>
 <span class="r-in"><span><span class="va">tdir</span> <span class="op">&lt;-</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">exportStaticApp</span><span class="op">(</span>result <span class="op">=</span> <span class="fu">omopgenerics</span><span class="fu">::</span><span class="fu"><a href="https://darwin-eu-dev.github.io/omopgenerics/reference/emptySummarisedResult.html" class="external-link">emptySummarisedResult</a></span><span class="op">(</span><span class="op">)</span>, directory <span class="op">=</span> <span class="va">tdir</span>, logo <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">exportStaticApp</span><span class="op">(</span>result <span class="op">=</span> <span class="fu">omopgenerics</span><span class="fu">::</span><span class="fu"><a href="https://darwin-eu-dev.github.io/omopgenerics/reference/emptySummarisedResult.html" class="external-link">emptySummarisedResult</a></span><span class="op">(</span><span class="op">)</span>, directory <span class="op">=</span> <span class="va">tdir</span>, logo <span class="op">=</span> <span class="cn">NULL</span>, theme <span class="op">=</span> <span class="st">"bslib::bs_theme(bg = '#bb0a1e', fg = '#0000ff')"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> A summarised_result object with 0 rows, 0 different result_id, different cdm</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> names, and 3 settings.</span>
