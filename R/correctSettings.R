@@ -13,7 +13,8 @@ correctSettings <- function(x) {
         dplyr::group_by(.data$result_id) |>
         dplyr::summarise(
           dplyr::across(dplyr::ends_with("name"), ~ getUniqueName(.x))
-        ),
+        ) |>
+        dplyr::rename_with(~gsub("_name", "", .x)),
       by = "result_id"
     )
   return(omopgenerics::newSummarisedResult(x = x, settings = set))
