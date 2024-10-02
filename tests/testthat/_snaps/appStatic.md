@@ -1948,6 +1948,7 @@
       
       library(bslib)
       library(sortable)
+      library(visOmopResults)
       library(DT)
       library(readr)
       library(gt)
