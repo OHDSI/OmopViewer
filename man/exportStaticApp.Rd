@@ -12,8 +12,8 @@ exportStaticApp(
   summary = TRUE,
   directory = getwd(),
   panels = list(),
-  open = rlang::is_interactive(),
-  theme = NULL
+  theme = NULL,
+  open = rlang::is_interactive()
 )
 }
 \arguments{
@@ -43,9 +43,9 @@ styling is supported.}
 by the available result types in the result object. Panels for any available
 results not specified will be included after the specified result tabs.}
 
-\item{open}{Whether to open the shiny app project.}
-
 \item{theme}{Assign a theme to the shiny app using bslib::bs_theme()}
+
+\item{open}{Whether to open the shiny app project.}
 }
 \value{
 The shiny app will be created in directory.
@@ -56,7 +56,7 @@ Export and launch a static shiny specific to the provided results.
 \examples{
 {
 tdir <- here::here()
-exportStaticApp(result = omopgenerics::emptySummarisedResult(), directory = tdir, logo = NULL, theme = "bslib::bs_theme(bg = \"#bb0a1e\", fg = \"#0000ff\")")
+exportStaticApp(result = omopgenerics::emptySummarisedResult(), directory = tdir, logo = NULL, theme = "bslib::bs_theme(bg = '#bb0a1e', fg = '#0000ff')")
 }
 
 }
