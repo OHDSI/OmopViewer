@@ -21,6 +21,7 @@
 #' by the available result types in the result object. Panels for any available
 #' results not specified will be included after the specified result tabs.
 #' @param open Whether to open the shiny app project.
+#' @param theme Assign a theme to the shiny app using bslib::bs_theme()
 #'
 #' @return The shiny app will be created in directory.
 #'
@@ -28,8 +29,8 @@
 #'
 #' @examples {
 #' tdir <- here::here()
-#' exportStaticApp(result = omopgenerics::emptySummarisedResult(), directory = tdir, logo = NULL)
-#'}
+#' exportStaticApp(result = omopgenerics::emptySummarisedResult(), directory = tdir, logo = NULL, theme = "bslib::bs_theme(bg = '#bb0a1e', fg = '#0000ff')")
+#' }
 #'
 exportStaticApp <- function(result,
                             logo = "ohdsi",
@@ -38,6 +39,7 @@ exportStaticApp <- function(result,
                             summary = TRUE,
                             directory = getwd(),
                             panels = list(),
+                            theme = NULL,
                             open = rlang::is_interactive()) {
   # input check
   result <- omopgenerics::validateResultArgument(result)
@@ -47,10 +49,13 @@ exportStaticApp <- function(result,
   omopgenerics::assertCharacter(logo, length = 1, null = TRUE)
   omopgenerics::assertCharacter(title, length = 1)
   omopgenerics::assertLogical(summary, length = 1)
+  omopgenerics::assertCharacter(theme, length = 1, null = TRUE)
   omopgenerics::assertList(panels)
   sum <- validateSummary(summary, result)
   directory <- validateDirectory(directory)
-  if (isTRUE(directory)) return(cli::cli_inform(c("i" = "{.strong shiny} folder will not be overwritten. Stopping process.")))
+  if (isTRUE(directory)) {
+    return(cli::cli_inform(c("i" = "{.strong shiny} folder will not be overwritten. Stopping process.")))
+  }
 
   # processing data
   cli::cli_inform(c("i" = "Processing data"))
@@ -69,12 +74,14 @@ exportStaticApp <- function(result,
 
   choices <- getChoices(result)
   panels <- purrr::flatten_chr(panels)
-  if(any(isFALSE(panels %in% names(choices)))){
-  cli::cli_warn("'{setdiff(panels, names(choices))}' not found in results")
+  if (any(isFALSE(panels %in% names(choices)))) {
+    cli::cli_warn("'{setdiff(panels, names(choices))}' not found in results")
   }
   # if not specified, append remaining results
-  panels <- c(intersect(names(choices), panels),
-                setdiff(names(choices), panels))
+  panels <- c(
+    intersect(panels, names(choices)),
+    setdiff(names(choices), panels)
+  )
   choices <- choices[panels]
 
   # create shiny
@@ -82,16 +89,12 @@ exportStaticApp <- function(result,
   dir.create(path = directory, showWarnings = FALSE)
   cli::cli_inform(c("i" = "Creating shiny from provided data"))
   logo <- copyLogos(logo, directory)
-  ui <- c(messageShiny(), uiStatic(choices = choices, logo = logo, title = title, summary = sum, background = background))
-  libraries <- detectPackages(ui)
+  ui <- c(messageShiny(), uiStatic(choices = choices, logo = logo, title = title, summary = sum, background = background, theme = theme))
+  ui_libraries <- detectPackages(ui)
   server <- c(messageShiny(), serverStatic(resultTypes = names(choices)))
-  libraries <- c(libraries,detectPackages(server))
-  libraries <- c(libraries,detectPackages(omopViewerGlobal))
-  libraries <- unique(libraries)
-  checkInstalledPackages(libraries)
-  library_statements_list <- paste0("library(", libraries, ")")
-  library_statements_list <- c(library_statements_list, "")
-  merged_statements <- c(styleCode(library_statements_list), omopViewerGlobal)
+  server_libraries <- detectPackages(server)
+  global_libraries <- detectPackages(omopViewerGlobal)
+  merged_statements <- c(ui_libraries, server_libraries, global_libraries, omopViewerGlobal)
   global <- c(messageShiny(), unique(merged_statements, fromLast = TRUE))
   dir.create(paste0(directory, "/data"), showWarnings = FALSE)
   writeLines(ui, con = paste0(directory, "/ui.R"))
@@ -102,7 +105,8 @@ exportStaticApp <- function(result,
     result,
     minCellCount = 0,
     fileName = "results.csv",
-    path = paste0(directory, "/data"))
+    path = paste0(directory, "/data")
+  )
   cli::cli_inform(c("v" = "Shiny created in: {.pkg {directory}}"))
 
   # open shiny
@@ -133,7 +137,9 @@ copyLogos <- function(logo, directory) {
   to <- paste0(directory, "/www/hds_logo.svg")
   file.copy(from = hdsLogo, to = to, overwrite = TRUE)
 
-  if (is.null(logo)) return(NULL)
+  if (is.null(logo)) {
+    return(NULL)
+  }
 
   # search for standard logo naming:
   logo <- logoPath(logo)
@@ -167,29 +173,38 @@ uiStatic <- function(choices = list(),
                      logo = NULL,
                      title = "",
                      background = NULL,
-                     summary = NULL) {
+                     summary = NULL,
+                     theme = NULL) {
   # initial checks
   omopgenerics::assertList(choices, named = TRUE)
   omopgenerics::assertCharacter(logo, length = 1, null = TRUE)
   omopgenerics::assertCharacter(title, length = 1)
 
+  # Create the bslib::bs_theme() call, or use NULL if not provided
+  theme_setting <- if (!is.null(theme)) {
+    paste0("theme = ", theme, ",")
+  } else {
+    ""
+  }
   c(
-    'ui <- bslib::page_navbar(',
+    "ui <- bslib::page_navbar(",
+    theme_setting,
     c(
       pageTitle(title, logo),
       createBackground(background = background, logo = logo),
       createSummary(summary, logo),
       createUi(names(choices), choices),
-      'bslib::nav_spacer()',
+      "bslib::nav_spacer()",
       createAbout("hds_logo.svg"),
       'bslib::nav_item(bslib::input_dark_mode(id ="dark_mode", mode = "light"))'
     ) |>
       paste0(collapse = ",\n"),
-    ')'
+    ")"
   ) |>
     paste0(collapse = "\n") |>
     styleCode()
 }
+
 pageTitle <- function(title, logo) {
   if (is.null(logo)) {
     x <- 'title = "{title}"'
@@ -251,7 +266,7 @@ cast <- function(x) {
   } else if (is.call(x)) {
     x <- deparse(x)
   } else {
-    x <- paste0('c(', paste0(x, collapse = ', '), ')')
+    x <- paste0("c(", paste0(x, collapse = ", "), ")")
   }
   return(x)
 }
@@ -264,7 +279,7 @@ subs <- function(x, pat, subst) {
     } else if (id == n) {
       x <- c(x[-n], subst)
     } else {
-      x <- c(x[1:(id-1)], subst, x[(id+1):n])
+      x <- c(x[1:(id - 1)], subst, x[(id + 1):n])
     }
   }
   return(x)
