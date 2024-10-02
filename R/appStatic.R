@@ -79,7 +79,7 @@ exportStaticApp <- function(result,
   }
   # if not specified, append remaining results
   panels <- c(
-    intersect(names(choices), panels),
+    intersect(panels, names(choices)),
     setdiff(names(choices), panels)
   )
   choices <- choices[panels]
