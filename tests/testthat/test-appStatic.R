@@ -192,3 +192,13 @@ test_that("order tabs", {
 
 
 })
+
+test_that("theme", {
+  tdir <- here::here()
+
+  expect_no_error(exportStaticApp(result = emptySummarisedResult(), directory = tdir, theme = NULL, open = FALSE))
+
+  ui <- uiStatic(theme = "bslib::bs_theme(bg = '#bb0a1e', fg = '#0000ff')")
+
+  expect_true(grepl('theme = bslib::bs_theme\\(bg = "#bb0a1e", fg = "#0000ff"\\)', ui[2]))
+})
