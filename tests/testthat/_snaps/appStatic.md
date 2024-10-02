@@ -130,8 +130,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_characteristics_variable_name",
                     label = "Variable name",
-                    choices = c("Age", "Cohort end date", "Cohort start date", "Days in cohort", "Future observation", "Number records", "Number subjects", "Prior observation", "Sex"),
-                    selected = c("Age", "Cohort end date", "Cohort start date", "Days in cohort", "Future observation", "Number records", "Number subjects", "Prior observation", "Sex"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -376,8 +376,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_variable_name",
                     label = "Variable name",
-                    choices = c("excluded_records", "excluded_subjects", "number_records", "number_subjects"),
-                    selected = c("excluded_records", "excluded_subjects", "number_records", "number_subjects"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -565,8 +565,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_count_variable_name",
                     label = "Variable name",
-                    choices = c("Number records", "Number subjects"),
-                    selected = c("Number records", "Number subjects"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -776,8 +776,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_overlap_variable_name",
                     label = "Variable name",
-                    choices = c("comparator", "overlap", "reference"),
-                    selected = c("comparator", "overlap", "reference"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -995,8 +995,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_timing_variable_name",
                     label = "Variable name",
-                    choices = c("days_between_cohort_entries", "number records", "number subjects"),
-                    selected = c("days_between_cohort_entries", "number records", "number subjects"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -1259,8 +1259,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_grouping_concept_id",
                     label = "Concept id",
-                    choices = c("1361364", "1361365", "1361368", "1361370", "1830184", "1830278", "1830279", "1830280", "1830281", "1830282", "1830283", "194152", "1971546", "21018250", "21216049", "21601213", "21601386", "21601387", "21603215", "21603248", "21603365", "21603444", "21603530", "21603812", "21603848", "21603890", "21605007", "21605008", "35604394", "35604434", "35604435", "35604439", "35604877", "35604879", "35604880", "35604883", "35604884", "35741956", "35774678", "36034746", "36034747", "36034751", "36036059", "36217206", "36217213", "37110496", "37498042", "37593197", "37787172", "40371897", "40475132", "40475135", "40721254", "40741270", "4151660", "4220473", "4220524", "4226696", "42899580", "4304866", "44022939", "44081436", "44091285", "444074", "45430573", "45511667", "45533778", "45538734", "45548358", "45548372", "45755492", "45755493", "45756021", "45756023", "46274351"),
-                    selected = c("1361364", "1361365", "1361368", "1361370", "1830184", "1830278", "1830279", "1830280", "1830281", "1830282", "1830283", "194152", "1971546", "21018250", "21216049", "21601213", "21601386", "21601387", "21603215", "21603248", "21603365", "21603444", "21603530", "21603812", "21603848", "21603890", "21605007", "21605008", "35604394", "35604434", "35604435", "35604439", "35604877", "35604879", "35604880", "35604883", "35604884", "35741956", "35774678", "36034746", "36034747", "36034751", "36036059", "36217206", "36217213", "37110496", "37498042", "37593197", "37787172", "40371897", "40475132", "40475135", "40721254", "40741270", "4151660", "4220473", "4220524", "4226696", "42899580", "4304866", "44022939", "44081436", "44091285", "444074", "45430573", "45511667", "45533778", "45538734", "45548358", "45548372", "45755492", "45755493", "45756021", "45756023", "46274351"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -1270,8 +1270,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_variable_name",
                     label = "Variable name",
-                    choices = c("ANTIHISTAMINES FOR SYSTEMIC USE", "ANTINEOPLASTIC AGENTS", "ANTINEOPLASTIC AND IMMUNOMODULATING AGENTS", "Acquired deformities of fingers and toes", "Alkaline phosphatase bone isoenzyme raised", "Alkaline phosphatase isoenzyme, bone fraction", "Arthropathies", "Bos taurus catalase preparation", "Bus occupant injured in collision with heavy transport vehicle or bus", "Bus occupant injured in collision with heavy transport vehicle or bus, person on outside of vehicle injured in nontraffic accident", "COUGH AND COLD PREPARATIONS", "DRUGS FOR OBSTRUCTIVE AIRWAY DISEASES", "Disorders of patella", "ENDOCRINE THERAPY", "Elevated mood", "IMMUNOSTIMULANTS", "IMMUNOSUPPRESSANTS", "Internal derangement of knee", "Jaaps Health Salts", "Manic mood", "Manic symptoms co-occurrent and due to primary psychotic disorder", "Mentha arvensis top extract / sodium chloride / xylitol Nasal Powder", "NASAL PREPARATIONS", "Nasal Powder", "Nasal Product", "OTHER RESPIRATORY SYSTEM PRODUCTS", "Other acquired deformities of limbs", "Other joint disorders", "Other joint disorders, not elsewhere classified", "Other specific joint derangements", "POTASSIUM SODIUM TARTRATE / Sodium Bicarbonate / sodium carbonate / Sodium Chloride / tartaric acid Oral Powder", "POTASSIUM SODIUM TARTRATE / Sodium Bicarbonate / tartaric acid Injectable Solution", "POTASSIUM SODIUM TARTRATE / Sodium Bicarbonate / tartaric acid Oral Powder", "POTASSIUM SODIUM TARTRATE 0.0094 MG/MG", "POTASSIUM SODIUM TARTRATE 9.4 MG/MG", "RESPIRATORY SYSTEM", "Renal agenesis and dysgenesis", "Renal agenesis or dysgenesis NOS", "Septiline", "Sisymbrium officianale whole extract 10 MG Nasal Powder", "Sisymbrium officianale whole extract 10 MG Nasal Powder Box of 50", "Sisymbrium officianale whole extract 10 MG Nasal Powder [Euphon]", "Sisymbrium officianale whole extract 10 MG Nasal Powder [Euphon] Box of 50", "Sisymbrium officianale whole extract 10 MG Nasal Powder [Euphon] Box of 50 by Mayoly Spindler", "Sisymbrium officianale whole extract Nasal Powder", "Sisymbrium officianale whole extract Nasal Powder [Euphon]", "Sodium / Sodium Chloride Nasal Powder", "Sodium potassium tartrate", "Sodium potassium tartrate crystal", "THROAT PREPARATIONS", "Topical Liquefied Gas", "Topical Product", "Uroporphyrin III", "Victim of vehicular AND/OR traffic accident", "combinations of electrolytes; parenteral", "glucagon 3 MG Nasal Powder", "glucagon 3 MG Nasal Powder [Baqsimi]", "glucagon 3 MG Nasal Powder [Baqsimi] by Abacus Medicine", "glucagon Nasal Powder", "glucagon Nasal Powder [Baqsimi]", "glucose / potassium / sodium Nasal Powder", "nitrogen 99 % Topical Liquefied Gas", "nitrogen 99.2 % Topical Liquefied Gas", "nitrogen Topical Liquefied Gas", "potassium sodium tartrate", "sodium chloride Nasal Powder", "sodium chloride Nasal Powder [Neilmed Sinus Rins]", "sodium potassium tartrate tetrahydrate", "sumatriptan 11 MG Nasal Powder", "sumatriptan 11 MG Nasal Powder [Onzetra]", "sumatriptan Nasal Powder", "sumatriptan Nasal Powder [Onzetra]"),
-                    selected = c("ANTIHISTAMINES FOR SYSTEMIC USE", "ANTINEOPLASTIC AGENTS", "ANTINEOPLASTIC AND IMMUNOMODULATING AGENTS", "Acquired deformities of fingers and toes", "Alkaline phosphatase bone isoenzyme raised", "Alkaline phosphatase isoenzyme, bone fraction", "Arthropathies", "Bos taurus catalase preparation", "Bus occupant injured in collision with heavy transport vehicle or bus", "Bus occupant injured in collision with heavy transport vehicle or bus, person on outside of vehicle injured in nontraffic accident", "COUGH AND COLD PREPARATIONS", "DRUGS FOR OBSTRUCTIVE AIRWAY DISEASES", "Disorders of patella", "ENDOCRINE THERAPY", "Elevated mood", "IMMUNOSTIMULANTS", "IMMUNOSUPPRESSANTS", "Internal derangement of knee", "Jaaps Health Salts", "Manic mood", "Manic symptoms co-occurrent and due to primary psychotic disorder", "Mentha arvensis top extract / sodium chloride / xylitol Nasal Powder", "NASAL PREPARATIONS", "Nasal Powder", "Nasal Product", "OTHER RESPIRATORY SYSTEM PRODUCTS", "Other acquired deformities of limbs", "Other joint disorders", "Other joint disorders, not elsewhere classified", "Other specific joint derangements", "POTASSIUM SODIUM TARTRATE / Sodium Bicarbonate / sodium carbonate / Sodium Chloride / tartaric acid Oral Powder", "POTASSIUM SODIUM TARTRATE / Sodium Bicarbonate / tartaric acid Injectable Solution", "POTASSIUM SODIUM TARTRATE / Sodium Bicarbonate / tartaric acid Oral Powder", "POTASSIUM SODIUM TARTRATE 0.0094 MG/MG", "POTASSIUM SODIUM TARTRATE 9.4 MG/MG", "RESPIRATORY SYSTEM", "Renal agenesis and dysgenesis", "Renal agenesis or dysgenesis NOS", "Septiline", "Sisymbrium officianale whole extract 10 MG Nasal Powder", "Sisymbrium officianale whole extract 10 MG Nasal Powder Box of 50", "Sisymbrium officianale whole extract 10 MG Nasal Powder [Euphon]", "Sisymbrium officianale whole extract 10 MG Nasal Powder [Euphon] Box of 50", "Sisymbrium officianale whole extract 10 MG Nasal Powder [Euphon] Box of 50 by Mayoly Spindler", "Sisymbrium officianale whole extract Nasal Powder", "Sisymbrium officianale whole extract Nasal Powder [Euphon]", "Sodium / Sodium Chloride Nasal Powder", "Sodium potassium tartrate", "Sodium potassium tartrate crystal", "THROAT PREPARATIONS", "Topical Liquefied Gas", "Topical Product", "Uroporphyrin III", "Victim of vehicular AND/OR traffic accident", "combinations of electrolytes; parenteral", "glucagon 3 MG Nasal Powder", "glucagon 3 MG Nasal Powder [Baqsimi]", "glucagon 3 MG Nasal Powder [Baqsimi] by Abacus Medicine", "glucagon Nasal Powder", "glucagon Nasal Powder [Baqsimi]", "glucose / potassium / sodium Nasal Powder", "nitrogen 99 % Topical Liquefied Gas", "nitrogen 99.2 % Topical Liquefied Gas", "nitrogen Topical Liquefied Gas", "potassium sodium tartrate", "sodium chloride Nasal Powder", "sodium chloride Nasal Powder [Neilmed Sinus Rins]", "sodium potassium tartrate tetrahydrate", "sumatriptan 11 MG Nasal Powder", "sumatriptan 11 MG Nasal Powder [Onzetra]", "sumatriptan Nasal Powder", "sumatriptan Nasal Powder [Onzetra]"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -1423,6 +1423,8 @@
     Output
       server <- function(input, output, session) {
         # summarise_characteristics -----
+        ## update inputs summarise_characteristics -----
+        updateSelectizeInput(session, "summarise_characteristics_variable_name", choices = unique(visOmopResults::filterSettings(data, result_type == "summarise_characteristics")$variable_name), selected = unique(visOmopResults::filterSettings(data, result_type == "summarise_characteristics")$variable_name), server = TRUE)
         ## raw summarise_characteristics -----
         getRawDataSummariseCharacteristics <- shiny::reactive({
           filterData(data, "summarise_characteristics", input)
@@ -1512,6 +1514,8 @@
       
       
         # summarise_cohort_attrition -----
+        ## update inputs summarise_cohort_attrition -----
+        updateSelectizeInput(session, "summarise_cohort_attrition_variable_name", choices = unique(visOmopResults::filterSettings(data, result_type == "summarise_cohort_attrition")$variable_name), selected = unique(visOmopResults::filterSettings(data, result_type == "summarise_cohort_attrition")$variable_name), server = TRUE)
         ## raw summarise_cohort_attrition -----
         getRawDataSummariseCohortAttrition <- shiny::reactive({
           filterData(data, "summarise_cohort_attrition", input)
@@ -1596,6 +1600,8 @@
       
       
         # summarise_cohort_count -----
+        ## update inputs summarise_cohort_count -----
+        updateSelectizeInput(session, "summarise_cohort_count_variable_name", choices = unique(visOmopResults::filterSettings(data, result_type == "summarise_cohort_count")$variable_name), selected = unique(visOmopResults::filterSettings(data, result_type == "summarise_cohort_count")$variable_name), server = TRUE)
         ## raw summarise_cohort_count -----
         getRawDataSummariseCohortCount <- shiny::reactive({
           filterData(data, "summarise_cohort_count", input)
@@ -1684,6 +1690,8 @@
       
       
         # summarise_cohort_overlap -----
+        ## update inputs summarise_cohort_overlap -----
+        updateSelectizeInput(session, "summarise_cohort_overlap_variable_name", choices = unique(visOmopResults::filterSettings(data, result_type == "summarise_cohort_overlap")$variable_name), selected = unique(visOmopResults::filterSettings(data, result_type == "summarise_cohort_overlap")$variable_name), server = TRUE)
         ## raw summarise_cohort_overlap -----
         getRawDataSummariseCohortOverlap <- shiny::reactive({
           filterData(data, "summarise_cohort_overlap", input)
@@ -1772,6 +1780,8 @@
       
       
         # summarise_cohort_timing -----
+        ## update inputs summarise_cohort_timing -----
+        updateSelectizeInput(session, "summarise_cohort_timing_variable_name", choices = unique(visOmopResults::filterSettings(data, result_type == "summarise_cohort_timing")$variable_name), selected = unique(visOmopResults::filterSettings(data, result_type == "summarise_cohort_timing")$variable_name), server = TRUE)
         ## raw summarise_cohort_timing -----
         getRawDataSummariseCohortTiming <- shiny::reactive({
           filterData(data, "summarise_cohort_timing", input)
@@ -1863,6 +1873,9 @@
       
       
         # summarise_large_scale_characteristics -----
+        ## update inputs summarise_large_scale_characteristics -----
+        updateSelectizeInput(session, "summarise_large_scale_characteristics_variable_name", choices = unique(visOmopResults::filterSettings(data, result_type == "summarise_large_scale_characteristics")$variable_name), selected = unique(visOmopResults::filterSettings(data, result_type == "summarise_large_scale_characteristics")$variable_name), server = TRUE)
+        updateSelectizeInput(session, "summarise_large_scale_characteristics_grouping_concept_id", choices = unique(visOmopResults::filterSettings(data, result_type == "summarise_large_scale_characteristics")$additional_level), selected = unique(visOmopResults::filterSettings(data, result_type == "summarise_large_scale_characteristics")$additional_level), server = TRUE)
         ## raw summarise_large_scale_characteristics -----
         getRawDataSummariseLargeScaleCharacteristics <- shiny::reactive({
           filterData(data, "summarise_large_scale_characteristics", input)
@@ -2005,8 +2018,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_characteristics_variable_name",
                     label = "Variable name",
-                    choices = c("Age", "Cohort end date", "Cohort start date", "Days in cohort", "Future observation", "Number records", "Number subjects", "Prior observation", "Sex"),
-                    selected = c("Age", "Cohort end date", "Cohort start date", "Days in cohort", "Future observation", "Number records", "Number subjects", "Prior observation", "Sex"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -2251,8 +2264,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_variable_name",
                     label = "Variable name",
-                    choices = c("excluded_records", "excluded_subjects", "number_records", "number_subjects"),
-                    selected = c("excluded_records", "excluded_subjects", "number_records", "number_subjects"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -2440,8 +2453,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_count_variable_name",
                     label = "Variable name",
-                    choices = c("Number records", "Number subjects"),
-                    selected = c("Number records", "Number subjects"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -2651,8 +2664,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_overlap_variable_name",
                     label = "Variable name",
-                    choices = c("comparator", "overlap", "reference"),
-                    selected = c("comparator", "overlap", "reference"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -2870,8 +2883,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_timing_variable_name",
                     label = "Variable name",
-                    choices = c("days_between_cohort_entries", "number records", "number subjects"),
-                    selected = c("days_between_cohort_entries", "number records", "number subjects"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -3134,8 +3147,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_grouping_concept_id",
                     label = "Concept id",
-                    choices = c("1361364", "1361365", "1361368", "1361370", "1830184", "1830278", "1830279", "1830280", "1830281", "1830282", "1830283", "194152", "1971546", "21018250", "21216049", "21601213", "21601386", "21601387", "21603215", "21603248", "21603365", "21603444", "21603530", "21603812", "21603848", "21603890", "21605007", "21605008", "35604394", "35604434", "35604435", "35604439", "35604877", "35604879", "35604880", "35604883", "35604884", "35741956", "35774678", "36034746", "36034747", "36034751", "36036059", "36217206", "36217213", "37110496", "37498042", "37593197", "37787172", "40371897", "40475132", "40475135", "40721254", "40741270", "4151660", "4220473", "4220524", "4226696", "42899580", "4304866", "44022939", "44081436", "44091285", "444074", "45430573", "45511667", "45533778", "45538734", "45548358", "45548372", "45755492", "45755493", "45756021", "45756023", "46274351"),
-                    selected = c("1361364", "1361365", "1361368", "1361370", "1830184", "1830278", "1830279", "1830280", "1830281", "1830282", "1830283", "194152", "1971546", "21018250", "21216049", "21601213", "21601386", "21601387", "21603215", "21603248", "21603365", "21603444", "21603530", "21603812", "21603848", "21603890", "21605007", "21605008", "35604394", "35604434", "35604435", "35604439", "35604877", "35604879", "35604880", "35604883", "35604884", "35741956", "35774678", "36034746", "36034747", "36034751", "36036059", "36217206", "36217213", "37110496", "37498042", "37593197", "37787172", "40371897", "40475132", "40475135", "40721254", "40741270", "4151660", "4220473", "4220524", "4226696", "42899580", "4304866", "44022939", "44081436", "44091285", "444074", "45430573", "45511667", "45533778", "45538734", "45548358", "45548372", "45755492", "45755493", "45756021", "45756023", "46274351"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -3145,8 +3158,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_variable_name",
                     label = "Variable name",
-                    choices = c("ANTIHISTAMINES FOR SYSTEMIC USE", "ANTINEOPLASTIC AGENTS", "ANTINEOPLASTIC AND IMMUNOMODULATING AGENTS", "Acquired deformities of fingers and toes", "Alkaline phosphatase bone isoenzyme raised", "Alkaline phosphatase isoenzyme, bone fraction", "Arthropathies", "Bos taurus catalase preparation", "Bus occupant injured in collision with heavy transport vehicle or bus", "Bus occupant injured in collision with heavy transport vehicle or bus, person on outside of vehicle injured in nontraffic accident", "COUGH AND COLD PREPARATIONS", "DRUGS FOR OBSTRUCTIVE AIRWAY DISEASES", "Disorders of patella", "ENDOCRINE THERAPY", "Elevated mood", "IMMUNOSTIMULANTS", "IMMUNOSUPPRESSANTS", "Internal derangement of knee", "Jaaps Health Salts", "Manic mood", "Manic symptoms co-occurrent and due to primary psychotic disorder", "Mentha arvensis top extract / sodium chloride / xylitol Nasal Powder", "NASAL PREPARATIONS", "Nasal Powder", "Nasal Product", "OTHER RESPIRATORY SYSTEM PRODUCTS", "Other acquired deformities of limbs", "Other joint disorders", "Other joint disorders, not elsewhere classified", "Other specific joint derangements", "POTASSIUM SODIUM TARTRATE / Sodium Bicarbonate / sodium carbonate / Sodium Chloride / tartaric acid Oral Powder", "POTASSIUM SODIUM TARTRATE / Sodium Bicarbonate / tartaric acid Injectable Solution", "POTASSIUM SODIUM TARTRATE / Sodium Bicarbonate / tartaric acid Oral Powder", "POTASSIUM SODIUM TARTRATE 0.0094 MG/MG", "POTASSIUM SODIUM TARTRATE 9.4 MG/MG", "RESPIRATORY SYSTEM", "Renal agenesis and dysgenesis", "Renal agenesis or dysgenesis NOS", "Septiline", "Sisymbrium officianale whole extract 10 MG Nasal Powder", "Sisymbrium officianale whole extract 10 MG Nasal Powder Box of 50", "Sisymbrium officianale whole extract 10 MG Nasal Powder [Euphon]", "Sisymbrium officianale whole extract 10 MG Nasal Powder [Euphon] Box of 50", "Sisymbrium officianale whole extract 10 MG Nasal Powder [Euphon] Box of 50 by Mayoly Spindler", "Sisymbrium officianale whole extract Nasal Powder", "Sisymbrium officianale whole extract Nasal Powder [Euphon]", "Sodium / Sodium Chloride Nasal Powder", "Sodium potassium tartrate", "Sodium potassium tartrate crystal", "THROAT PREPARATIONS", "Topical Liquefied Gas", "Topical Product", "Uroporphyrin III", "Victim of vehicular AND/OR traffic accident", "combinations of electrolytes; parenteral", "glucagon 3 MG Nasal Powder", "glucagon 3 MG Nasal Powder [Baqsimi]", "glucagon 3 MG Nasal Powder [Baqsimi] by Abacus Medicine", "glucagon Nasal Powder", "glucagon Nasal Powder [Baqsimi]", "glucose / potassium / sodium Nasal Powder", "nitrogen 99 % Topical Liquefied Gas", "nitrogen 99.2 % Topical Liquefied Gas", "nitrogen Topical Liquefied Gas", "potassium sodium tartrate", "sodium chloride Nasal Powder", "sodium chloride Nasal Powder [Neilmed Sinus Rins]", "sodium potassium tartrate tetrahydrate", "sumatriptan 11 MG Nasal Powder", "sumatriptan 11 MG Nasal Powder [Onzetra]", "sumatriptan Nasal Powder", "sumatriptan Nasal Powder [Onzetra]"),
-                    selected = c("ANTIHISTAMINES FOR SYSTEMIC USE", "ANTINEOPLASTIC AGENTS", "ANTINEOPLASTIC AND IMMUNOMODULATING AGENTS", "Acquired deformities of fingers and toes", "Alkaline phosphatase bone isoenzyme raised", "Alkaline phosphatase isoenzyme, bone fraction", "Arthropathies", "Bos taurus catalase preparation", "Bus occupant injured in collision with heavy transport vehicle or bus", "Bus occupant injured in collision with heavy transport vehicle or bus, person on outside of vehicle injured in nontraffic accident", "COUGH AND COLD PREPARATIONS", "DRUGS FOR OBSTRUCTIVE AIRWAY DISEASES", "Disorders of patella", "ENDOCRINE THERAPY", "Elevated mood", "IMMUNOSTIMULANTS", "IMMUNOSUPPRESSANTS", "Internal derangement of knee", "Jaaps Health Salts", "Manic mood", "Manic symptoms co-occurrent and due to primary psychotic disorder", "Mentha arvensis top extract / sodium chloride / xylitol Nasal Powder", "NASAL PREPARATIONS", "Nasal Powder", "Nasal Product", "OTHER RESPIRATORY SYSTEM PRODUCTS", "Other acquired deformities of limbs", "Other joint disorders", "Other joint disorders, not elsewhere classified", "Other specific joint derangements", "POTASSIUM SODIUM TARTRATE / Sodium Bicarbonate / sodium carbonate / Sodium Chloride / tartaric acid Oral Powder", "POTASSIUM SODIUM TARTRATE / Sodium Bicarbonate / tartaric acid Injectable Solution", "POTASSIUM SODIUM TARTRATE / Sodium Bicarbonate / tartaric acid Oral Powder", "POTASSIUM SODIUM TARTRATE 0.0094 MG/MG", "POTASSIUM SODIUM TARTRATE 9.4 MG/MG", "RESPIRATORY SYSTEM", "Renal agenesis and dysgenesis", "Renal agenesis or dysgenesis NOS", "Septiline", "Sisymbrium officianale whole extract 10 MG Nasal Powder", "Sisymbrium officianale whole extract 10 MG Nasal Powder Box of 50", "Sisymbrium officianale whole extract 10 MG Nasal Powder [Euphon]", "Sisymbrium officianale whole extract 10 MG Nasal Powder [Euphon] Box of 50", "Sisymbrium officianale whole extract 10 MG Nasal Powder [Euphon] Box of 50 by Mayoly Spindler", "Sisymbrium officianale whole extract Nasal Powder", "Sisymbrium officianale whole extract Nasal Powder [Euphon]", "Sodium / Sodium Chloride Nasal Powder", "Sodium potassium tartrate", "Sodium potassium tartrate crystal", "THROAT PREPARATIONS", "Topical Liquefied Gas", "Topical Product", "Uroporphyrin III", "Victim of vehicular AND/OR traffic accident", "combinations of electrolytes; parenteral", "glucagon 3 MG Nasal Powder", "glucagon 3 MG Nasal Powder [Baqsimi]", "glucagon 3 MG Nasal Powder [Baqsimi] by Abacus Medicine", "glucagon Nasal Powder", "glucagon Nasal Powder [Baqsimi]", "glucose / potassium / sodium Nasal Powder", "nitrogen 99 % Topical Liquefied Gas", "nitrogen 99.2 % Topical Liquefied Gas", "nitrogen Topical Liquefied Gas", "potassium sodium tartrate", "sodium chloride Nasal Powder", "sodium chloride Nasal Powder [Neilmed Sinus Rins]", "sodium potassium tartrate tetrahydrate", "sumatriptan 11 MG Nasal Powder", "sumatriptan 11 MG Nasal Powder [Onzetra]", "sumatriptan Nasal Powder", "sumatriptan Nasal Powder [Onzetra]"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -3358,8 +3371,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_characteristics_variable_name",
                     label = "Variable name",
-                    choices = c("Age", "Cohort end date", "Cohort start date", "Days in cohort", "Future observation", "Number records", "Number subjects", "Prior observation", "Sex"),
-                    selected = c("Age", "Cohort end date", "Cohort start date", "Days in cohort", "Future observation", "Number records", "Number subjects", "Prior observation", "Sex"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -3604,8 +3617,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_variable_name",
                     label = "Variable name",
-                    choices = c("excluded_records", "excluded_subjects", "number_records", "number_subjects"),
-                    selected = c("excluded_records", "excluded_subjects", "number_records", "number_subjects"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -3793,8 +3806,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_count_variable_name",
                     label = "Variable name",
-                    choices = c("Number records", "Number subjects"),
-                    selected = c("Number records", "Number subjects"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -4004,8 +4017,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_overlap_variable_name",
                     label = "Variable name",
-                    choices = c("comparator", "overlap", "reference"),
-                    selected = c("comparator", "overlap", "reference"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -4223,8 +4236,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_timing_variable_name",
                     label = "Variable name",
-                    choices = c("days_between_cohort_entries", "number records", "number subjects"),
-                    selected = c("days_between_cohort_entries", "number records", "number subjects"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -4487,8 +4500,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_grouping_concept_id",
                     label = "Concept id",
-                    choices = c("1361364", "1361365", "1361368", "1361370", "1830184", "1830278", "1830279", "1830280", "1830281", "1830282", "1830283", "194152", "1971546", "21018250", "21216049", "21601213", "21601386", "21601387", "21603215", "21603248", "21603365", "21603444", "21603530", "21603812", "21603848", "21603890", "21605007", "21605008", "35604394", "35604434", "35604435", "35604439", "35604877", "35604879", "35604880", "35604883", "35604884", "35741956", "35774678", "36034746", "36034747", "36034751", "36036059", "36217206", "36217213", "37110496", "37498042", "37593197", "37787172", "40371897", "40475132", "40475135", "40721254", "40741270", "4151660", "4220473", "4220524", "4226696", "42899580", "4304866", "44022939", "44081436", "44091285", "444074", "45430573", "45511667", "45533778", "45538734", "45548358", "45548372", "45755492", "45755493", "45756021", "45756023", "46274351"),
-                    selected = c("1361364", "1361365", "1361368", "1361370", "1830184", "1830278", "1830279", "1830280", "1830281", "1830282", "1830283", "194152", "1971546", "21018250", "21216049", "21601213", "21601386", "21601387", "21603215", "21603248", "21603365", "21603444", "21603530", "21603812", "21603848", "21603890", "21605007", "21605008", "35604394", "35604434", "35604435", "35604439", "35604877", "35604879", "35604880", "35604883", "35604884", "35741956", "35774678", "36034746", "36034747", "36034751", "36036059", "36217206", "36217213", "37110496", "37498042", "37593197", "37787172", "40371897", "40475132", "40475135", "40721254", "40741270", "4151660", "4220473", "4220524", "4226696", "42899580", "4304866", "44022939", "44081436", "44091285", "444074", "45430573", "45511667", "45533778", "45538734", "45548358", "45548372", "45755492", "45755493", "45756021", "45756023", "46274351"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -4498,8 +4511,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_variable_name",
                     label = "Variable name",
-                    choices = c("ANTIHISTAMINES FOR SYSTEMIC USE", "ANTINEOPLASTIC AGENTS", "ANTINEOPLASTIC AND IMMUNOMODULATING AGENTS", "Acquired deformities of fingers and toes", "Alkaline phosphatase bone isoenzyme raised", "Alkaline phosphatase isoenzyme, bone fraction", "Arthropathies", "Bos taurus catalase preparation", "Bus occupant injured in collision with heavy transport vehicle or bus", "Bus occupant injured in collision with heavy transport vehicle or bus, person on outside of vehicle injured in nontraffic accident", "COUGH AND COLD PREPARATIONS", "DRUGS FOR OBSTRUCTIVE AIRWAY DISEASES", "Disorders of patella", "ENDOCRINE THERAPY", "Elevated mood", "IMMUNOSTIMULANTS", "IMMUNOSUPPRESSANTS", "Internal derangement of knee", "Jaaps Health Salts", "Manic mood", "Manic symptoms co-occurrent and due to primary psychotic disorder", "Mentha arvensis top extract / sodium chloride / xylitol Nasal Powder", "NASAL PREPARATIONS", "Nasal Powder", "Nasal Product", "OTHER RESPIRATORY SYSTEM PRODUCTS", "Other acquired deformities of limbs", "Other joint disorders", "Other joint disorders, not elsewhere classified", "Other specific joint derangements", "POTASSIUM SODIUM TARTRATE / Sodium Bicarbonate / sodium carbonate / Sodium Chloride / tartaric acid Oral Powder", "POTASSIUM SODIUM TARTRATE / Sodium Bicarbonate / tartaric acid Injectable Solution", "POTASSIUM SODIUM TARTRATE / Sodium Bicarbonate / tartaric acid Oral Powder", "POTASSIUM SODIUM TARTRATE 0.0094 MG/MG", "POTASSIUM SODIUM TARTRATE 9.4 MG/MG", "RESPIRATORY SYSTEM", "Renal agenesis and dysgenesis", "Renal agenesis or dysgenesis NOS", "Septiline", "Sisymbrium officianale whole extract 10 MG Nasal Powder", "Sisymbrium officianale whole extract 10 MG Nasal Powder Box of 50", "Sisymbrium officianale whole extract 10 MG Nasal Powder [Euphon]", "Sisymbrium officianale whole extract 10 MG Nasal Powder [Euphon] Box of 50", "Sisymbrium officianale whole extract 10 MG Nasal Powder [Euphon] Box of 50 by Mayoly Spindler", "Sisymbrium officianale whole extract Nasal Powder", "Sisymbrium officianale whole extract Nasal Powder [Euphon]", "Sodium / Sodium Chloride Nasal Powder", "Sodium potassium tartrate", "Sodium potassium tartrate crystal", "THROAT PREPARATIONS", "Topical Liquefied Gas", "Topical Product", "Uroporphyrin III", "Victim of vehicular AND/OR traffic accident", "combinations of electrolytes; parenteral", "glucagon 3 MG Nasal Powder", "glucagon 3 MG Nasal Powder [Baqsimi]", "glucagon 3 MG Nasal Powder [Baqsimi] by Abacus Medicine", "glucagon Nasal Powder", "glucagon Nasal Powder [Baqsimi]", "glucose / potassium / sodium Nasal Powder", "nitrogen 99 % Topical Liquefied Gas", "nitrogen 99.2 % Topical Liquefied Gas", "nitrogen Topical Liquefied Gas", "potassium sodium tartrate", "sodium chloride Nasal Powder", "sodium chloride Nasal Powder [Neilmed Sinus Rins]", "sodium potassium tartrate tetrahydrate", "sumatriptan 11 MG Nasal Powder", "sumatriptan 11 MG Nasal Powder [Onzetra]", "sumatriptan Nasal Powder", "sumatriptan Nasal Powder [Onzetra]"),
-                    selected = c("ANTIHISTAMINES FOR SYSTEMIC USE", "ANTINEOPLASTIC AGENTS", "ANTINEOPLASTIC AND IMMUNOMODULATING AGENTS", "Acquired deformities of fingers and toes", "Alkaline phosphatase bone isoenzyme raised", "Alkaline phosphatase isoenzyme, bone fraction", "Arthropathies", "Bos taurus catalase preparation", "Bus occupant injured in collision with heavy transport vehicle or bus", "Bus occupant injured in collision with heavy transport vehicle or bus, person on outside of vehicle injured in nontraffic accident", "COUGH AND COLD PREPARATIONS", "DRUGS FOR OBSTRUCTIVE AIRWAY DISEASES", "Disorders of patella", "ENDOCRINE THERAPY", "Elevated mood", "IMMUNOSTIMULANTS", "IMMUNOSUPPRESSANTS", "Internal derangement of knee", "Jaaps Health Salts", "Manic mood", "Manic symptoms co-occurrent and due to primary psychotic disorder", "Mentha arvensis top extract / sodium chloride / xylitol Nasal Powder", "NASAL PREPARATIONS", "Nasal Powder", "Nasal Product", "OTHER RESPIRATORY SYSTEM PRODUCTS", "Other acquired deformities of limbs", "Other joint disorders", "Other joint disorders, not elsewhere classified", "Other specific joint derangements", "POTASSIUM SODIUM TARTRATE / Sodium Bicarbonate / sodium carbonate / Sodium Chloride / tartaric acid Oral Powder", "POTASSIUM SODIUM TARTRATE / Sodium Bicarbonate / tartaric acid Injectable Solution", "POTASSIUM SODIUM TARTRATE / Sodium Bicarbonate / tartaric acid Oral Powder", "POTASSIUM SODIUM TARTRATE 0.0094 MG/MG", "POTASSIUM SODIUM TARTRATE 9.4 MG/MG", "RESPIRATORY SYSTEM", "Renal agenesis and dysgenesis", "Renal agenesis or dysgenesis NOS", "Septiline", "Sisymbrium officianale whole extract 10 MG Nasal Powder", "Sisymbrium officianale whole extract 10 MG Nasal Powder Box of 50", "Sisymbrium officianale whole extract 10 MG Nasal Powder [Euphon]", "Sisymbrium officianale whole extract 10 MG Nasal Powder [Euphon] Box of 50", "Sisymbrium officianale whole extract 10 MG Nasal Powder [Euphon] Box of 50 by Mayoly Spindler", "Sisymbrium officianale whole extract Nasal Powder", "Sisymbrium officianale whole extract Nasal Powder [Euphon]", "Sodium / Sodium Chloride Nasal Powder", "Sodium potassium tartrate", "Sodium potassium tartrate crystal", "THROAT PREPARATIONS", "Topical Liquefied Gas", "Topical Product", "Uroporphyrin III", "Victim of vehicular AND/OR traffic accident", "combinations of electrolytes; parenteral", "glucagon 3 MG Nasal Powder", "glucagon 3 MG Nasal Powder [Baqsimi]", "glucagon 3 MG Nasal Powder [Baqsimi] by Abacus Medicine", "glucagon Nasal Powder", "glucagon Nasal Powder [Baqsimi]", "glucose / potassium / sodium Nasal Powder", "nitrogen 99 % Topical Liquefied Gas", "nitrogen 99.2 % Topical Liquefied Gas", "nitrogen Topical Liquefied Gas", "potassium sodium tartrate", "sodium chloride Nasal Powder", "sodium chloride Nasal Powder [Neilmed Sinus Rins]", "sodium potassium tartrate tetrahydrate", "sumatriptan 11 MG Nasal Powder", "sumatriptan 11 MG Nasal Powder [Onzetra]", "sumatriptan Nasal Powder", "sumatriptan Nasal Powder [Onzetra]"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
