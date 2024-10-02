@@ -170,7 +170,7 @@ uiStatic <- function(choices = list(),
                      title = "",
                      background = NULL,
                      summary = NULL,
-                     theme = NULL) { # Add the theme argument with default NULL
+                     theme = NULL) {
   # initial checks
   omopgenerics::assertList(choices, named = TRUE)
   omopgenerics::assertCharacter(logo, length = 1, null = TRUE)
