@@ -1,5 +1,26 @@
 
+#' Get the different options that a summarised_result have.
+#'
+#' @param result A `<summarised_result>` object.
+#'
+#' @return A named list with the options
+#' @export
+#'
+#' @examples
+#' library(CohortCharacteristics)
+#'
+#' cdm <- mockCohortCharacteristics()
+#'
+#' result <- cdm$cohort1 |>
+#'   summariseCharacteristics()
+#'
+#' getChoices(result)
+#'
 getChoices <- function(result) {
+  # initial checks
+  result <- omopgenerics::validateResultArguemnt(result)
+
+  # get choices
   settings <- getPossibleSettings(result)
   grouping <-getPossibleGrouping(result)
   variables <- getPossibleVariables(result)
@@ -11,6 +32,7 @@ getChoices <- function(result) {
       variable_name = variables[[x]]$variable_name,
       estimate_name = variables[[x]]$estimate_name
     ))
+
   return(choices)
 }
 getPossibleSettings <- function(result) {
