@@ -50,7 +50,7 @@ omopViewerGlobal <- c(
   "library(shiny)",
   "library(omopViewer)",
   "",
-  "data <- importSummarisedResult(here::here(\"data\"))"
+  "data <- importSummarisedResult(here::here(\"data\")) |> \n correctSettings()"
 ) |>
   styleCode()
 

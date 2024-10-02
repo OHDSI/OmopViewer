@@ -32,6 +32,11 @@ tidyData <- function(result,
   if (showSettings) {
     set <- omopgenerics::settings(result) |>
       dplyr::filter(.data$result_id %in% unique(result$result_id))
+    # groups <- set |>
+    #   dplyr::select(dplyr::all_of(c("result_id", "group", "strata", "additional"))) |>
+    #   tidyr::pivot_longer(cols = )
+    set <- set |>
+      dplyr::select(!dplyr::all_of(c("group", "strata", "additional")))
     for (col in colnames(set)) {
       if (all(is.na(set[[col]]))) {
         set <- set |>
