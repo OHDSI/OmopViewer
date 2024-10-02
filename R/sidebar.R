@@ -29,7 +29,7 @@ getSidebarInformation <- function(tab) {
 getSidebarChoices <- function(choi, tit, prefix) {
   if (length(choi) == 0) return(NULL)
   selectors <- purrr::map_chr(names(choi), \(x) selector(
-    paste0(prefix, "_", x), formatTit(x), cast(choi[[x]]), cast(choi[[x]]), TRUE
+    paste0(prefix, "_", x), formatTit(x), 'NULL', 'NULL', TRUE
   )) |>
     paste0(collapse = ",\n")
   'bslib::accordion_panel(

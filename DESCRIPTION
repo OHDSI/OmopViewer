@@ -27,7 +27,6 @@ Imports:
     dplyr,
     DT,
     glue,
-    here,
     omopgenerics (>= 0.2.3),
     purrr,
     rlang,
@@ -45,6 +44,7 @@ Suggests:
     duckdb,
     ggplot2,
     gt,
+    here,
     htmlwidgets,
     knitr,
     omock,
@@ -56,8 +56,8 @@ Suggests:
     sortable,
     testthat (>= 3.1.5),
     utils,
-    zip,
-    webshot2
+    webshot2,
+    zip
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 Config/testthat/parallel: true
