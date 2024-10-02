@@ -1947,14 +1947,14 @@
       # Be careful editing this file
       
       library(bslib)
-      library(sortable)
-      library(visOmopResults)
       library(DT)
-      library(readr)
+      library(sortable)
       library(gt)
+      library(DiagrammeR)
+      library(visOmopResults)
+      library(readr)
       library(CohortCharacteristics)
       library(ggplot2)
-      library(DiagrammeR)
       library(here)
       library(shiny)
       library(omopViewer)

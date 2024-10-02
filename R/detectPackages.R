@@ -18,7 +18,7 @@ detectPackages <- function(code) {
 
 checkInstalledPackages <- function(libraries_vector) {
 
-  installed_packages <- names(installed.packages()[,3])
+  installed_packages <- names(utils::installed.packages()[,3])
   flag_vector <-  !(libraries_vector %in% installed_packages)
 
   needed_packages <- libraries_vector[flag_vector]
