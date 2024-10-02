@@ -9,11 +9,43 @@ detectPackages <- function(code) {
   libraries <- gsub("::", "", libraries)
   libraries <- unique(libraries)
   if (length(libraries) == 0) {
-    return("")
+    return()
   }
 
-  library_statements_list <- paste0("library(", libraries, ")")
-  library_statements_list <- c(library_statements_list, "")
-  return(styleCode(library_statements_list))
+  return(libraries)
 }
 
+
+checkInstalledPackages <- function(libraries_vector) {
+
+  installed_packages <- names(installed.packages()[,3])
+  flag_vector <-  !(libraries_vector %in% installed_packages)
+
+  needed_packages <- libraries_vector[flag_vector]
+  if (length(needed_packages) > 0) {
+    qty <- length(needed_packages)
+
+    # Combine package names without quotes for display
+    packages_list <- paste0("{.pkg ", needed_packages, "}", collapse = ", ")
+
+    cli::cli_inform(
+      c("i" = sprintf(
+        "The following package%s missing: %s.",
+        if (qty > 1) "s are" else " is",
+        packages_list
+      ))
+    )
+
+    cli::cli_inform(
+      c("i" = sprintf(
+        "\nRun {.code install.packages(%s)} to install %s.",
+        if (qty > 1) {
+          sprintf("c(%s)", paste(sprintf("\"%s\"", needed_packages), collapse = ", "))
+        } else {
+          sprintf("\"%s\"", needed_packages)
+        },
+        if (qty > 1) "them" else "it"
+      ))
+    )
+    }
+}
