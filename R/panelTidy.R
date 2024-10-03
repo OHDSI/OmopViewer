@@ -9,15 +9,11 @@ tidyUi <- function(tab) {
       {downloadTable(id, "Download csv")},
       bslib::layout_sidebar(
         sidebar = bslib::sidebar(
-          shiny::checkboxInput(
-            inputId = "{tab}_tidy_settings",
-            label = "Show settings",
-            value = FALSE
-          ),
-          shiny::checkboxInput(
-            inputId = "{tab}_tidy_grouping",
-            label = "Show grouping",
-            value = TRUE
+          shiny::selectizeInput(
+            inputId = "{tab}_tidy_columns",
+            label = "Columns",
+            choices = NULL,
+            selected = NULL
           ),
           shiny::radioButtons(
             inputId = "{tab}_tidy_pivot",

@@ -190,15 +190,11 @@
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
-                      shiny::checkboxInput(
-                        inputId = "summarise_characteristics_tidy_settings",
-                        label = "Show settings",
-                        value = FALSE
-                      ),
-                      shiny::checkboxInput(
-                        inputId = "summarise_characteristics_tidy_grouping",
-                        label = "Show grouping",
-                        value = TRUE
+                      shiny::selectizeInput(
+                        inputId = "summarise_characteristics_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_characteristics_tidy_pivot",
@@ -422,15 +418,11 @@
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
-                      shiny::checkboxInput(
-                        inputId = "summarise_cohort_attrition_tidy_settings",
-                        label = "Show settings",
-                        value = FALSE
-                      ),
-                      shiny::checkboxInput(
-                        inputId = "summarise_cohort_attrition_tidy_grouping",
-                        label = "Show grouping",
-                        value = TRUE
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_attrition_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_cohort_attrition_tidy_pivot",
@@ -597,15 +589,11 @@
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
-                      shiny::checkboxInput(
-                        inputId = "summarise_cohort_count_tidy_settings",
-                        label = "Show settings",
-                        value = FALSE
-                      ),
-                      shiny::checkboxInput(
-                        inputId = "summarise_cohort_count_tidy_grouping",
-                        label = "Show grouping",
-                        value = TRUE
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_count_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_cohort_count_tidy_pivot",
@@ -794,15 +782,11 @@
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
-                      shiny::checkboxInput(
-                        inputId = "summarise_cohort_overlap_tidy_settings",
-                        label = "Show settings",
-                        value = FALSE
-                      ),
-                      shiny::checkboxInput(
-                        inputId = "summarise_cohort_overlap_tidy_grouping",
-                        label = "Show grouping",
-                        value = TRUE
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_overlap_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_cohort_overlap_tidy_pivot",
@@ -999,15 +983,11 @@
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
-                      shiny::checkboxInput(
-                        inputId = "summarise_cohort_timing_tidy_settings",
-                        label = "Show settings",
-                        value = FALSE
-                      ),
-                      shiny::checkboxInput(
-                        inputId = "summarise_cohort_timing_tidy_grouping",
-                        label = "Show grouping",
-                        value = TRUE
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_timing_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_cohort_timing_tidy_pivot",
@@ -1260,15 +1240,11 @@
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
-                      shiny::checkboxInput(
-                        inputId = "summarise_large_scale_characteristics_tidy_settings",
-                        label = "Show settings",
-                        value = FALSE
-                      ),
-                      shiny::checkboxInput(
-                        inputId = "summarise_large_scale_characteristics_tidy_grouping",
-                        label = "Show grouping",
-                        value = TRUE
+                      shiny::selectizeInput(
+                        inputId = "summarise_large_scale_characteristics_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_large_scale_characteristics_tidy_pivot",
@@ -1921,15 +1897,11 @@
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
-                      shiny::checkboxInput(
-                        inputId = "summarise_characteristics_tidy_settings",
-                        label = "Show settings",
-                        value = FALSE
-                      ),
-                      shiny::checkboxInput(
-                        inputId = "summarise_characteristics_tidy_grouping",
-                        label = "Show grouping",
-                        value = TRUE
+                      shiny::selectizeInput(
+                        inputId = "summarise_characteristics_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_characteristics_tidy_pivot",
@@ -2153,15 +2125,11 @@
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
-                      shiny::checkboxInput(
-                        inputId = "summarise_cohort_attrition_tidy_settings",
-                        label = "Show settings",
-                        value = FALSE
-                      ),
-                      shiny::checkboxInput(
-                        inputId = "summarise_cohort_attrition_tidy_grouping",
-                        label = "Show grouping",
-                        value = TRUE
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_attrition_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_cohort_attrition_tidy_pivot",
@@ -2328,15 +2296,11 @@
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
-                      shiny::checkboxInput(
-                        inputId = "summarise_cohort_count_tidy_settings",
-                        label = "Show settings",
-                        value = FALSE
-                      ),
-                      shiny::checkboxInput(
-                        inputId = "summarise_cohort_count_tidy_grouping",
-                        label = "Show grouping",
-                        value = TRUE
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_count_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_cohort_count_tidy_pivot",
@@ -2525,15 +2489,11 @@
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
-                      shiny::checkboxInput(
-                        inputId = "summarise_cohort_overlap_tidy_settings",
-                        label = "Show settings",
-                        value = FALSE
-                      ),
-                      shiny::checkboxInput(
-                        inputId = "summarise_cohort_overlap_tidy_grouping",
-                        label = "Show grouping",
-                        value = TRUE
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_overlap_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_cohort_overlap_tidy_pivot",
@@ -2730,15 +2690,11 @@
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
-                      shiny::checkboxInput(
-                        inputId = "summarise_cohort_timing_tidy_settings",
-                        label = "Show settings",
-                        value = FALSE
-                      ),
-                      shiny::checkboxInput(
-                        inputId = "summarise_cohort_timing_tidy_grouping",
-                        label = "Show grouping",
-                        value = TRUE
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_timing_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_cohort_timing_tidy_pivot",
@@ -2991,15 +2947,11 @@
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
-                      shiny::checkboxInput(
-                        inputId = "summarise_large_scale_characteristics_tidy_settings",
-                        label = "Show settings",
-                        value = FALSE
-                      ),
-                      shiny::checkboxInput(
-                        inputId = "summarise_large_scale_characteristics_tidy_grouping",
-                        label = "Show grouping",
-                        value = TRUE
+                      shiny::selectizeInput(
+                        inputId = "summarise_large_scale_characteristics_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_large_scale_characteristics_tidy_pivot",
@@ -3200,15 +3152,11 @@
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
-                      shiny::checkboxInput(
-                        inputId = "summarise_characteristics_tidy_settings",
-                        label = "Show settings",
-                        value = FALSE
-                      ),
-                      shiny::checkboxInput(
-                        inputId = "summarise_characteristics_tidy_grouping",
-                        label = "Show grouping",
-                        value = TRUE
+                      shiny::selectizeInput(
+                        inputId = "summarise_characteristics_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_characteristics_tidy_pivot",
@@ -3432,15 +3380,11 @@
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
-                      shiny::checkboxInput(
-                        inputId = "summarise_cohort_attrition_tidy_settings",
-                        label = "Show settings",
-                        value = FALSE
-                      ),
-                      shiny::checkboxInput(
-                        inputId = "summarise_cohort_attrition_tidy_grouping",
-                        label = "Show grouping",
-                        value = TRUE
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_attrition_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_cohort_attrition_tidy_pivot",
@@ -3607,15 +3551,11 @@
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
-                      shiny::checkboxInput(
-                        inputId = "summarise_cohort_count_tidy_settings",
-                        label = "Show settings",
-                        value = FALSE
-                      ),
-                      shiny::checkboxInput(
-                        inputId = "summarise_cohort_count_tidy_grouping",
-                        label = "Show grouping",
-                        value = TRUE
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_count_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_cohort_count_tidy_pivot",
@@ -3804,15 +3744,11 @@
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
-                      shiny::checkboxInput(
-                        inputId = "summarise_cohort_overlap_tidy_settings",
-                        label = "Show settings",
-                        value = FALSE
-                      ),
-                      shiny::checkboxInput(
-                        inputId = "summarise_cohort_overlap_tidy_grouping",
-                        label = "Show grouping",
-                        value = TRUE
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_overlap_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_cohort_overlap_tidy_pivot",
@@ -4009,15 +3945,11 @@
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
-                      shiny::checkboxInput(
-                        inputId = "summarise_cohort_timing_tidy_settings",
-                        label = "Show settings",
-                        value = FALSE
-                      ),
-                      shiny::checkboxInput(
-                        inputId = "summarise_cohort_timing_tidy_grouping",
-                        label = "Show grouping",
-                        value = TRUE
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_timing_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_cohort_timing_tidy_pivot",
@@ -4270,15 +4202,11 @@
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
-                      shiny::checkboxInput(
-                        inputId = "summarise_large_scale_characteristics_tidy_settings",
-                        label = "Show settings",
-                        value = FALSE
-                      ),
-                      shiny::checkboxInput(
-                        inputId = "summarise_large_scale_characteristics_tidy_grouping",
-                        label = "Show grouping",
-                        value = TRUE
+                      shiny::selectizeInput(
+                        inputId = "summarise_large_scale_characteristics_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_large_scale_characteristics_tidy_pivot",

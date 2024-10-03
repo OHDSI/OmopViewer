@@ -27,11 +27,37 @@ getChoices <- function(result, flatten = FALSE) {
   grouping <-getPossibleGrouping(result)
   variables <- getPossibleVariables(result)
 
+  sets <- omopgenerics::settings(result)
+  if (!all(c("group", "strata", "additional") %in% colnames(sets))) {
+    sets <- result |>
+      correctSettings() |>
+      omopgenerics::settings()
+  }
+
+  # tidy columns
+  tidyCols <- sets |>
+    dplyr::group_by(.data$result_type) |>
+    dplyr::group_split()
+  names(tidyCols) <- purrr::map_chr(tidyCols, \(x) unique(x$result_type))
+  tidyCols <- tidyCols |>
+    purrr::map(\(x) {
+      setCols <- x |>
+        dplyr::select(!c(
+          "result_id", "result_type", "package_name", "package_version",
+          "group", "strata", "additional"
+        )) |>
+        purrr::map(unique)
+      setCols <- names(setCols)[!is.na(setCols)]
+      c("cdm_name", getCols(x$group), getCols(x$strata), getCols(x$additional), setCols)
+    })
+
   if (flatten) {
+    names(tidyCols) <- paste0(names(tidyCols), "_tidy_columns")
     choices <- c(
       correctNames(settings, "settings"),
       correctNames(grouping, "grouping"),
-      correctNames(variables)
+      correctNames(variables),
+      tidyCols
     )
   } else {
     choices <- names(variables) |>
@@ -40,7 +66,8 @@ getChoices <- function(result, flatten = FALSE) {
         settings = settings[[x]],
         grouping = grouping[[x]],
         variable_name = variables[[x]]$variable_name,
-        estimate_name = variables[[x]]$estimate_name
+        estimate_name = variables[[x]]$estimate_name,
+        tidy_columns = tidyCols[[x]]
       ))
   }
 
@@ -102,4 +129,13 @@ correctNames <- function(x, prefix = "") {
   x <- unlist(x, recursive = FALSE)
   names(x) <- gsub(".", sub, names(x), fixed = TRUE)
   return(x)
+}
+getCols <- function(x) {
+  cols <- x |>
+    unique() |>
+    stringr::str_split(pattern = " &&& ") |>
+    unlist() |>
+    unique()
+  cols <- cols[!is.na(cols)]
+  return(cols)
 }
