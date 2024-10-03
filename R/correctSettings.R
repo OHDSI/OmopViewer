@@ -1,31 +1,50 @@
-#' This function adds infromation on groupping variables to the settings
-#' attribute of a summaried result
+
+#' Add the strata, group and additional columns to settings with the tidyColumns
+#' (`visOmopResults::splitGroup()`, `visOmopResults::splitStrata()`,
+#' `visOmopResults::splitAdditional()`) for each 'result_id'.
 #'
-#' @param x A `<summarised_result>` object.
+#' @param result A `<summarised_result>` object.
 #'
 #' @export
 #'
-correctSettings <- function(x) {
-  set <- omopgenerics::settings(x) |>
-    dplyr::left_join(
-      x |>
-        dplyr::distinct(.data$result_id, .data$group_name, .data$strata_name, .data$additional_name) |>
-        dplyr::group_by(.data$result_id) |>
-        dplyr::summarise(
-          dplyr::across(dplyr::ends_with("name"), ~ getUniqueName(.x))
-        ) |>
-        dplyr::rename_with(~gsub("_name", "", .x)),
-      by = "result_id"
-    )
-  return(omopgenerics::newSummarisedResult(x = x, settings = set))
-}
+correctSettings <- function(result) {
+  # check input
+  result <- omopgenerics::validateResultArgument(result)
 
-getUniqueName <- function(x) {
-  uniqueNames <- x |> stringr::str_split(" &&& ") |> unlist()  |> unique()
-  if (all(uniqueNames == "overall")) {
-    uniqueNames <- NA
-  } else {
-    uniqueNames <- uniqueNames[!uniqueNames %in% "overall"] |> paste0(collapse = " &&& ")
+  if (nrow(result) == 0) return(result)
+
+  set <- omopgenerics::settings(result)
+
+  cols <- c("group", "strata", "additional")
+  cols <- cols[cols %in% colnames(set)]
+  if (length(cols) > 0) {
+    cli::cli_warn(c("!" = "{.var {cols}} will be overwritten in settings."))
   }
-  return(uniqueNames)
+
+  # obtain group, strata, and additional at
+  x <- result |>
+    dplyr::select("result_id", "strata_name", "group_name", "additional_name") |>
+    dplyr::distinct()
+  group <- rep("", nrow(set))
+  strata <- rep("", nrow(set))
+  additional <- rep("", nrow(set))
+  for (k in seq_len(nrow(set))) {
+    xk <- x |>
+      dplyr::filter(.data$result_id == .env$set$result_id[k])
+    group[k] <- visOmopResults::groupColumns(xk) |> joinCols()
+    strata[k] <- visOmopResults::strataColumns(xk) |> joinCols()
+    additional[k] <- visOmopResults::additionalColumns(xk) |> joinCols()
+  }
+
+  # correct settings
+  set <- set |>
+    dplyr::mutate(
+      group = .env$group, strata = .env$strata, additional = .env$additional
+    )
+
+  return(omopgenerics::newSummarisedResult(result, settings = set))
+}
+joinCols <- function(x) {
+  if (length(x) == 0) return(NA_character_)
+  stringr::str_flatten(x, collapse = " &&& ")
 }

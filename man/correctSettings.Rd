@@ -2,15 +2,17 @@
 % Please edit documentation in R/correctSettings.R
 \name{correctSettings}
 \alias{correctSettings}
-\title{This function adds infromation on groupping variables to the settings
-attribute of a summaried result}
+\title{Add the strata, group and additional columns to settings with the tidyColumns
+(`visOmopResults::splitGroup()`, `visOmopResults::splitStrata()`,
+`visOmopResults::splitAdditional()`) for each 'result_id'.}
 \usage{
-correctSettings(x)
+correctSettings(result)
 }
 \arguments{
-\item{x}{A `<summarised_result>` object.}
+\item{result}{A `<summarised_result>` object.}
 }
 \description{
-This function adds infromation on groupping variables to the settings
-attribute of a summaried result
+Add the strata, group and additional columns to settings with the tidyColumns
+(`visOmopResults::splitGroup()`, `visOmopResults::splitStrata()`,
+`visOmopResults::splitAdditional()`) for each 'result_id'.
 }
