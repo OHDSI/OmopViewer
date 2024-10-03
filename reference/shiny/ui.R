@@ -16,6 +16,16 @@ ui <- bslib::page_navbar(
   bslib::nav_spacer(),
   bslib::nav_item(
     bslib::popover(
+      shiny::icon("download"),
+      shiny::downloadButton(
+        outputId = "download_raw",
+        label = "Download raw data",
+        icon = shiny::icon("download")
+      )
+    )
+  ),
+  bslib::nav_item(
+    bslib::popover(
       shiny::icon("circle-info"),
       shiny::tags$img(
         src = "hds_logo.svg",
