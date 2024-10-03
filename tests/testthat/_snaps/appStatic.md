@@ -1944,7 +1944,7 @@
       cat(uiStatic(choices = getChoices(result), summary = capture.output(summary(
         result), type = "message"), logo = NULL), sep = "\n")
     Message
-      A summarised_result object with 12492 rows, 9 different result_id, 1 different cdm names, and 8 settings.
+      A summarised_result object with 33196 rows, 9 different result_id, 1 different cdm names, and 8 settings.
       CDM names: mock database.
       Settings: package_name, package_version, result_type, table_name, cohort_definition_id, restrict_to_first_entry, type, and analysis.
     Output
@@ -3288,7 +3288,7 @@
       cat(uiStatic(choices = getChoices(result), summary = capture.output(summary(
         result), type = "message"), logo = "HDS"), sep = "\n")
     Message
-      A summarised_result object with 12492 rows, 9 different result_id, 1 different cdm names, and 8 settings.
+      A summarised_result object with 33196 rows, 9 different result_id, 1 different cdm names, and 8 settings.
       CDM names: mock database.
       Settings: package_name, package_version, result_type, table_name, cohort_definition_id, restrict_to_first_entry, type, and analysis.
     Output
