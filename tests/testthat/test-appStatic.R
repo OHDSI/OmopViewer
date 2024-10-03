@@ -64,7 +64,7 @@ test_that("CohortCharacteristics shiny", {
       CohortCharacteristics::summariseCohortTiming(),
     cdm$cohort |>
       PatientProfiles::addAge(ageGroup = list(c(0, 44), c(45, Inf))) |>
-      PatientProfiles::addSex() |>
+      PatientProfiles::addSex(name = "cohort") |>
       CohortCharacteristics::summariseLargeScaleCharacteristics(
         strata = list("sex", "age_group", c("age_group", "sex")),
         eventInWindow = "condition_occurrence",

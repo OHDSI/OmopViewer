@@ -1957,7 +1957,8 @@
       library(ggplot2)
       library(here)
       
-      data <- importSummarisedResult(here::here("data"))
+      data <- omopViewer::importSummarisedResult(here::here("data")) |>
+        omopViewer::correctSettings()
 
 ---
 

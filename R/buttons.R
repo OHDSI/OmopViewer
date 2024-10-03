@@ -1,4 +1,3 @@
-
 selector <- function(id, lab, cho, sel, mult) {
   'shiny::selectizeInput(
     inputId = "{id}",

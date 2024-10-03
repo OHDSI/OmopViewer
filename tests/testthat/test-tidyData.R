@@ -94,4 +94,11 @@ test_that("test tidyData", {
   expect_true(nrow(x) == nrow(result))
   expect_identical(x$count |> dplyr::type_sum(), "int")
   expect_identical(x$blood_type |> dplyr::type_sum(), "chr")
+
+  cols <- result |>
+    correctSettings() |>
+    visOmopResults::filterStrata(sex == "overall") |>
+    tidyData() |>
+    colnames()
+  expect_true("sex" %in% cols)
 })
