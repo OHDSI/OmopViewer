@@ -14,8 +14,6 @@ detectPackages <- function(code) {
 
   return(libraries)
 }
-
-
 checkInstalledPackages <- function(libraries_vector) {
 
   installed_packages <- names(utils::installed.packages()[,3])
@@ -23,32 +21,12 @@ checkInstalledPackages <- function(libraries_vector) {
 
   needed_packages <- libraries_vector[flag_vector]
   if (length(needed_packages) > 0) {
-    qty <- length(needed_packages)
-
-    # Combine package names without quotes for display
-    packages_list <- paste0("{.pkg ", needed_packages, "}", collapse = ", ")
-
-    cli::cli_warn(
-      c("i" = sprintf(
-        "The following package%s missing: %s.",
-        if (qty > 1) "s are" else " is",
-        packages_list
-      ))
-    )
-
-    cli::cli_warn(
-      c("i" = sprintf(
-        "\nRun {.run install.packages(%s)} to install %s.",
-        if (qty > 1) {
-          sprintf("c(%s)", paste(sprintf("\"%s\"", needed_packages), collapse = ", "))
-        } else {
-          sprintf("\"%s\"", needed_packages)
-        },
-        if (qty > 1) "them" else "it"
-      ))
-    )
+    cli::cli_warn(c(
+      "!" = "{length(needed_packages)} packages {?is/are} not installed: {.pkg {needed_packages}}."
+    ))
+    install <- paste0(needed_packages, collapse = '", "')
+    cli::cli_inform(c("i" = '{.run install.packages(c("{install}"))}'))
   }
 
-
-
+  return(invisible(NULL))
 }

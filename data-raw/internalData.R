@@ -47,9 +47,6 @@ omopViewerProj <- c(
 )
 
 omopViewerGlobal <- c(
-  "library(shiny)",
-  "library(omopViewer)",
-  "",
   "data <- importSummarisedResult(here::here(\"data\"))"
 ) |>
   styleCode()

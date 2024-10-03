@@ -9,4 +9,4 @@ omopgenerics::exportSummarisedResult
 
 #' @importFrom omopgenerics emptySummarisedResult
 #' @export
-omopgenerics::emptySummarisedResult()
+omopgenerics::emptySummarisedResult

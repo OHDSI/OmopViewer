@@ -28,8 +28,10 @@
 #' @export
 #'
 #' @examples {
-#' tdir <- here::here()
-#' exportStaticApp(result = omopgenerics::emptySummarisedResult(), directory = tdir, logo = NULL, theme = "bslib::bs_theme(bg = '#bb0a1e', fg = '#0000ff')")
+#' exportStaticApp(
+#'   result = emptySummarisedResult(),
+#'   theme = "bslib::bs_theme(bg = '#bb0a1e', fg = '#0000ff')"
+#' )
 #' }
 #'
 exportStaticApp <- function(result,
@@ -90,16 +92,14 @@ exportStaticApp <- function(result,
   cli::cli_inform(c("i" = "Creating shiny from provided data"))
   logo <- copyLogos(logo, directory)
   ui <- c(messageShiny(), uiStatic(choices = choices, logo = logo, title = title, summary = sum, background = background, theme = theme))
-  libraries <- detectPackages(ui)
   server <- c(messageShiny(), serverStatic(resultTypes = names(choices)))
-  libraries <- c(libraries,detectPackages(server))
-  libraries <- c(libraries,detectPackages(omopViewerGlobal))
-  libraries <- unique(libraries)
+  libraries <- unique(c(
+    detectPackages(ui), detectPackages(server), detectPackages(omopViewerGlobal)
+  ))
   checkInstalledPackages(libraries)
-  library_statements_list <- paste0("library(", libraries, ")")
-  library_statements_list <- c(library_statements_list, "")
-  merged_statements <- c(styleCode(library_statements_list), omopViewerGlobal)
-  global <- c(messageShiny(), unique(merged_statements, fromLast = TRUE))
+  libraryStatementsList <- paste0("library(", libraries, ")")
+  global <- c(messageShiny(), libraryStatementsList, "", omopViewerGlobal) |>
+    styleCode()
   dir.create(paste0(directory, "/data"), showWarnings = FALSE)
   writeLines(ui, con = paste0(directory, "/ui.R"))
   writeLines(server, con = paste0(directory, "/server.R"))

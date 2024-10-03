@@ -1946,17 +1946,16 @@
       # Be careful editing this file
       
       library(bslib)
+      library(shiny)
       library(DT)
       library(sortable)
       library(gt)
       library(DiagrammeR)
-      library(visOmopResults)
+      library(omopViewer)
       library(readr)
       library(CohortCharacteristics)
       library(ggplot2)
       library(here)
-      library(shiny)
-      library(omopViewer)
       
       data <- importSummarisedResult(here::here("data"))
 
