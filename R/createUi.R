@@ -26,7 +26,6 @@ panelIcon <- function(tab) {
 panelSidebar <- function(tab, choic) {
   sidebar <- createSidebar(tab, choic)
   panels <- c(
-    rawUi(tab),
     tidyUi(tab),
     formattedUi(tab, choic),
     plotsUi(tab, choic)
