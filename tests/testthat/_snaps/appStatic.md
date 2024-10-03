@@ -17,7 +17,7 @@
         bslib::nav_spacer(),
         bslib::nav_item(
           bslib::popover(
-            icon = shiny::icon("download"),
+            shiny::icon("download"),
             shiny::downloadButton(
               outputId = "download_raw",
               label = "Download raw data",
@@ -58,7 +58,7 @@
         bslib::nav_spacer(),
         bslib::nav_item(
           bslib::popover(
-            icon = shiny::icon("download"),
+            shiny::icon("download"),
             shiny::downloadButton(
               outputId = "download_raw",
               label = "Download raw data",
@@ -1422,7 +1422,7 @@
         bslib::nav_spacer(),
         bslib::nav_item(
           bslib::popover(
-            icon = shiny::icon("download"),
+            shiny::icon("download"),
             shiny::downloadButton(
               outputId = "download_raw",
               label = "Download raw data",
@@ -3327,7 +3327,7 @@
         bslib::nav_spacer(),
         bslib::nav_item(
           bslib::popover(
-            icon = shiny::icon("download"),
+            shiny::icon("download"),
             shiny::downloadButton(
               outputId = "download_raw",
               label = "Download raw data",
@@ -4690,7 +4690,7 @@
         bslib::nav_spacer(),
         bslib::nav_item(
           bslib::popover(
-            icon = shiny::icon("download"),
+            shiny::icon("download"),
             shiny::downloadButton(
               outputId = "download_raw",
               label = "Download raw data",
@@ -4772,7 +4772,7 @@
         bslib::nav_spacer(),
         bslib::nav_item(
           bslib::popover(
-            icon = shiny::icon("download"),
+            shiny::icon("download"),
             shiny::downloadButton(
               outputId = "download_raw",
               label = "Download raw data",
