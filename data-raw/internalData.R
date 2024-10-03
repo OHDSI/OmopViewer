@@ -47,10 +47,8 @@ omopViewerProj <- c(
 )
 
 omopViewerGlobal <- c(
-  "library(shiny)",
-  "library(omopViewer)",
-  "",
-  "data <- importSummarisedResult(here::here(\"data\")) |> \n correctSettings()"
+  "data <- omopViewer::importSummarisedResult(here::here(\"data\")) |>",
+  "omopViewer::correctSettings()"
 ) |>
   styleCode()
 
@@ -182,7 +180,7 @@ plot_config <- list(
 )
 # end plot config ----
 
-# TO ADD NEW LOGOS YOU HAVE TO ADD THEM IN THIS LIST AND IN `inst/www/images/`
+# TO ADD NEW LOGOS YOU HAVE TO ADD THEM IN THIS LIST AND IN `inst/logos/`
 # FOLLOW THIS NAMING: '{keyword}_logo.svg'
 # NOTE IT IS NOT CASE SENSITIVE
 logoKeywords <- c("hds", "ohdsi") |>
