@@ -1,5 +1,17 @@
 
 # ui ----
+downloadRawDataUi <- function() {
+  'bslib::nav_item(
+    bslib::popover(
+      shiny::icon("download"),
+      shiny::downloadButton(
+        outputId = "download_raw",
+        label = "Download raw data",
+        icon = shiny::icon("download")
+      )
+    )
+  )'
+}
 rawUi <- function(rt) {
   id <- paste0(rt, "_raw_download")
   'bslib::nav_panel(
@@ -15,6 +27,17 @@ rawUi <- function(rt) {
 }
 
 # server ----
+downloadRawDataServer <- function(data) {
+  '# download raw data -----
+  output$download_raw <- shiny::downloadHandler(
+    filename = "results.csv",
+    content = function(file) {
+      omopViewer::exportSummarisedResult([data], fileName = file)
+    }
+  )' |>
+    glue::glue(.open = "[", .close = "]") |>
+    as.character()
+}
 rawServer <- function(rt, data) {
   c('getRawData[formatCamel(rt)] <- shiny::reactive({
       filterData([data], "[rt]", input)

@@ -1,6 +1,7 @@
 
 createServer <- function(resultTypes, data) {
   c(
+    downloadRawDataServer(data),
     selectiseServer(resultTypes, data),
     purrr::map_chr(resultTypes, \(x) {
       c(glue::glue("# {x} -----"),

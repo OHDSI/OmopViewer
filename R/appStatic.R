@@ -161,7 +161,6 @@ copyLogos <- function(logo, directory) {
     return(NULL)
   }
 }
-
 logoPath <- function(logo) {
   lowLogo <- stringr::str_to_lower(logo)
   # add more logoKeywords in data-raw/internalData
@@ -199,6 +198,7 @@ uiStatic <- function(choices = list(),
       createSummary(summary, logo),
       createUi(names(choices), choices),
       "bslib::nav_spacer()",
+      downloadRawDataUi(),
       createAbout("hds_logo.svg"),
       'bslib::nav_item(bslib::input_dark_mode(id ="dark_mode", mode = "light"))'
     ) |>
