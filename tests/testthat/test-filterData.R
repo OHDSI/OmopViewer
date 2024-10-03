@@ -24,6 +24,7 @@ test_that("check filterData functionality", {
     ))
 
   input <- list()
+  class(input)
   expect_no_error(
     x <- result |>
       filterData(

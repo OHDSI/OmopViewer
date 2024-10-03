@@ -55,7 +55,10 @@ Export and launch a static shiny specific to the provided results.
 }
 \examples{
 {
-exportStaticApp(result = omopgenerics::emptySummarisedResult(), logo = NULL, theme = "bslib::bs_theme(bg = '#bb0a1e', fg = '#0000ff')")
+exportStaticApp(
+  result = emptySummarisedResult(),
+  theme = "bslib::bs_theme(bg = '#bb0a1e', fg = '#0000ff')"
+)
 }
 
 }

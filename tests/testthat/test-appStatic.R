@@ -2,8 +2,9 @@ test_that("logo", {
   tdir <- here::here()
 
   # test no logo
-  expect_no_error(exportStaticApp(result = emptySummarisedResult(),
-                                  directory = tdir, logo = NULL))
+  expect_no_error(exportStaticApp(
+    result = emptySummarisedResult(), directory = tdir, logo = NULL
+  ))
   expect_true("shiny" %in% list.files(tdir))
   unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
 
@@ -77,8 +78,11 @@ test_that("CohortCharacteristics shiny", {
   expect_true("shiny" %in% list.files(tdir))
   expect_snapshot(uiStatic(choices = getChoices(result)) |> cat(sep = "\n"))
   expect_snapshot(serverStatic(resultTypes = names(getChoices(result))) |> cat(sep = "\n"))
+  x <- readLines(file.path(tdir, "shiny/global.R"))
+  expect_snapshot(cat(x, sep = "\n"))
+  unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
 
-  # use summary + test overwrite (question when interactive and overwrite by default when not)
+  # use summary + test overwrite (question when interactive and overwrite by default when not)>>>>>>> main
   expect_no_error(exportStaticApp(result = result, directory = tdir, summary = TRUE))
   expect_true("shiny" %in% list.files(tdir))
   expect_snapshot(uiStatic(choices = getChoices(result), summary = capture.output(summary(result), type = "message"), logo = NULL) |> cat(sep = "\n"))

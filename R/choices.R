@@ -1,16 +1,49 @@
 
-getChoices <- function(result) {
+#' Get the different options that a summarised_result have.
+#'
+#' @param result A `<summarised_result>` object.
+#' @param flatten Whether to flatten to a single list or not.
+#'
+#' @return A named list with the options
+#' @export
+#'
+#' @examples
+#' library(CohortCharacteristics)
+#'
+#' cdm <- mockCohortCharacteristics()
+#'
+#' result <- cdm$cohort1 |>
+#'   summariseCharacteristics()
+#'
+#' getChoices(result)
+#'
+getChoices <- function(result, flatten = FALSE) {
+  # initial checks
+  result <- omopgenerics::validateResultArgument(result)
+  omopgenerics::assertLogical(flatten, length = 1)
+
+  # get choices
   settings <- getPossibleSettings(result)
   grouping <-getPossibleGrouping(result)
   variables <- getPossibleVariables(result)
-  choices <- names(variables) |>
-    purrr::set_names() |>
-    purrr::map(\(x) list(
-      settings = settings[[x]],
-      grouping = grouping[[x]],
-      variable_name = variables[[x]]$variable_name,
-      estimate_name = variables[[x]]$estimate_name
-    ))
+
+  if (flatten) {
+    choices <- c(
+      correctNames(settings, "settings"),
+      correctNames(grouping, "grouping"),
+      correctNames(variables)
+    )
+  } else {
+    choices <- names(variables) |>
+      purrr::set_names() |>
+      purrr::map(\(x) list(
+        settings = settings[[x]],
+        grouping = grouping[[x]],
+        variable_name = variables[[x]]$variable_name,
+        estimate_name = variables[[x]]$estimate_name
+      ))
+  }
+
   return(choices)
 }
 getPossibleSettings <- function(result) {
@@ -58,5 +91,15 @@ getPossibilities <- function(x, split = FALSE) {
   }
   x <- x |>
     purrr::map(getPos, split = split)
+  return(x)
+}
+correctNames <- function(x, prefix = "") {
+  if (prefix == "") {
+    sub <- "_"
+  } else {
+    sub <- paste0("_", prefix, "_")
+  }
+  x <- unlist(x, recursive = FALSE)
+  names(x) <- gsub(".", sub, names(x), fixed = TRUE)
   return(x)
 }

@@ -28,7 +28,10 @@
 #' @export
 #'
 #' @examples {
-#' exportStaticApp(result = omopgenerics::emptySummarisedResult(), logo = NULL, theme = "bslib::bs_theme(bg = '#bb0a1e', fg = '#0000ff')")
+#' exportStaticApp(
+#'   result = emptySummarisedResult(),
+#'   theme = "bslib::bs_theme(bg = '#bb0a1e', fg = '#0000ff')"
+#' )
 #' }
 #'
 exportStaticApp <- function(result,
@@ -90,7 +93,13 @@ exportStaticApp <- function(result,
   logo <- copyLogos(logo, directory)
   ui <- c(messageShiny(), uiStatic(choices = choices, logo = logo, title = title, summary = sum, background = background, theme = theme))
   server <- c(messageShiny(), serverStatic(resultTypes = names(choices)))
-  global <- c(messageShiny(), omopViewerGlobal)
+  libraries <- unique(c(
+    detectPackages(ui), detectPackages(server), detectPackages(omopViewerGlobal)
+  ))
+  checkInstalledPackages(libraries)
+  libraryStatementsList <- paste0("library(", libraries, ")")
+  global <- c(messageShiny(), libraryStatementsList, "", omopViewerGlobal) |>
+    styleCode()
   dir.create(paste0(directory, "/data"), showWarnings = FALSE)
   writeLines(ui, con = paste0(directory, "/ui.R"))
   writeLines(server, con = paste0(directory, "/server.R"))
@@ -278,12 +287,4 @@ subs <- function(x, pat, subst) {
     }
   }
   return(x)
-}
-emptySummarisedResult <- function() {
-  omopgenerics::emptySummarisedResult(settings = dplyr::tibble(
-    result_id = integer(),
-    result_type = character(),
-    package_name = character(),
-    package_version = character()
-  ))
 }
