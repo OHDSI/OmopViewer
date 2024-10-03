@@ -178,20 +178,6 @@
             ),
             bslib::navset_card_tab(
               bslib::nav_panel(
-                title = "Raw",
-                bslib::card(
-                  full_screen = TRUE,
-                  bslib::card_header(
-                    bslib::popover(
-                      shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_characteristics_raw_download", label = "Download summarised_result")
-                    ),
-                    class = "text-end"
-                  ),
-                  DT::dataTableOutput("summarise_characteristics_raw")
-                )
-              ),
-              bslib::nav_panel(
                 title = "Tidy",
                 bslib::card(
                   full_screen = TRUE,
@@ -424,20 +410,6 @@
             ),
             bslib::navset_card_tab(
               bslib::nav_panel(
-                title = "Raw",
-                bslib::card(
-                  full_screen = TRUE,
-                  bslib::card_header(
-                    bslib::popover(
-                      shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_attrition_raw_download", label = "Download summarised_result")
-                    ),
-                    class = "text-end"
-                  ),
-                  DT::dataTableOutput("summarise_cohort_attrition_raw")
-                )
-              ),
-              bslib::nav_panel(
                 title = "Tidy",
                 bslib::card(
                   full_screen = TRUE,
@@ -612,20 +584,6 @@
               )
             ),
             bslib::navset_card_tab(
-              bslib::nav_panel(
-                title = "Raw",
-                bslib::card(
-                  full_screen = TRUE,
-                  bslib::card_header(
-                    bslib::popover(
-                      shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_count_raw_download", label = "Download summarised_result")
-                    ),
-                    class = "text-end"
-                  ),
-                  DT::dataTableOutput("summarise_cohort_count_raw")
-                )
-              ),
               bslib::nav_panel(
                 title = "Tidy",
                 bslib::card(
@@ -823,20 +781,6 @@
               )
             ),
             bslib::navset_card_tab(
-              bslib::nav_panel(
-                title = "Raw",
-                bslib::card(
-                  full_screen = TRUE,
-                  bslib::card_header(
-                    bslib::popover(
-                      shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_overlap_raw_download", label = "Download summarised_result")
-                    ),
-                    class = "text-end"
-                  ),
-                  DT::dataTableOutput("summarise_cohort_overlap_raw")
-                )
-              ),
               bslib::nav_panel(
                 title = "Tidy",
                 bslib::card(
@@ -1042,20 +986,6 @@
               )
             ),
             bslib::navset_card_tab(
-              bslib::nav_panel(
-                title = "Raw",
-                bslib::card(
-                  full_screen = TRUE,
-                  bslib::card_header(
-                    bslib::popover(
-                      shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_timing_raw_download", label = "Download summarised_result")
-                    ),
-                    class = "text-end"
-                  ),
-                  DT::dataTableOutput("summarise_cohort_timing_raw")
-                )
-              ),
               bslib::nav_panel(
                 title = "Tidy",
                 bslib::card(
@@ -1318,20 +1248,6 @@
             ),
             bslib::navset_card_tab(
               bslib::nav_panel(
-                title = "Raw",
-                bslib::card(
-                  full_screen = TRUE,
-                  bslib::card_header(
-                    bslib::popover(
-                      shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_large_scale_characteristics_raw_download", label = "Download summarised_result")
-                    ),
-                    class = "text-end"
-                  ),
-                  DT::dataTableOutput("summarise_large_scale_characteristics_raw")
-                )
-              ),
-              bslib::nav_panel(
                 title = "Tidy",
                 bslib::card(
                   full_screen = TRUE,
@@ -1479,21 +1395,6 @@
           }
         })
         # summarise_characteristics -----
-        ## raw summarise_characteristics -----
-        getRawDataSummariseCharacteristics <- shiny::reactive({
-          filterData(data, "summarise_characteristics", input)
-        })
-        output$summarise_characteristics_raw <- DT::renderDT({
-          DT::datatable(getRawDataSummariseCharacteristics(), options = list(scrollX = TRUE))
-        })
-        output$summarise_characteristics_raw_download <- shiny::downloadHandler(
-          filename = "raw_summarise_characteristics.csv",
-          content = function(file) {
-            getRawDataSummariseCharacteristics() |>
-              readr::write_csv(file = file)
-            # TBR by exportSummarisedResult
-          }
-        )
         ## tidy summarise_characteristics -----
         getTidyDataSummariseCharacteristics <- shiny::reactive({
           data |>
@@ -1568,21 +1469,6 @@
       
       
         # summarise_cohort_attrition -----
-        ## raw summarise_cohort_attrition -----
-        getRawDataSummariseCohortAttrition <- shiny::reactive({
-          filterData(data, "summarise_cohort_attrition", input)
-        })
-        output$summarise_cohort_attrition_raw <- DT::renderDT({
-          DT::datatable(getRawDataSummariseCohortAttrition(), options = list(scrollX = TRUE))
-        })
-        output$summarise_cohort_attrition_raw_download <- shiny::downloadHandler(
-          filename = "raw_summarise_cohort_attrition.csv",
-          content = function(file) {
-            getRawDataSummariseCohortAttrition() |>
-              readr::write_csv(file = file)
-            # TBR by exportSummarisedResult
-          }
-        )
         ## tidy summarise_cohort_attrition -----
         getTidyDataSummariseCohortAttrition <- shiny::reactive({
           data |>
@@ -1652,21 +1538,6 @@
       
       
         # summarise_cohort_count -----
-        ## raw summarise_cohort_count -----
-        getRawDataSummariseCohortCount <- shiny::reactive({
-          filterData(data, "summarise_cohort_count", input)
-        })
-        output$summarise_cohort_count_raw <- DT::renderDT({
-          DT::datatable(getRawDataSummariseCohortCount(), options = list(scrollX = TRUE))
-        })
-        output$summarise_cohort_count_raw_download <- shiny::downloadHandler(
-          filename = "raw_summarise_cohort_count.csv",
-          content = function(file) {
-            getRawDataSummariseCohortCount() |>
-              readr::write_csv(file = file)
-            # TBR by exportSummarisedResult
-          }
-        )
         ## tidy summarise_cohort_count -----
         getTidyDataSummariseCohortCount <- shiny::reactive({
           data |>
@@ -1740,21 +1611,6 @@
       
       
         # summarise_cohort_overlap -----
-        ## raw summarise_cohort_overlap -----
-        getRawDataSummariseCohortOverlap <- shiny::reactive({
-          filterData(data, "summarise_cohort_overlap", input)
-        })
-        output$summarise_cohort_overlap_raw <- DT::renderDT({
-          DT::datatable(getRawDataSummariseCohortOverlap(), options = list(scrollX = TRUE))
-        })
-        output$summarise_cohort_overlap_raw_download <- shiny::downloadHandler(
-          filename = "raw_summarise_cohort_overlap.csv",
-          content = function(file) {
-            getRawDataSummariseCohortOverlap() |>
-              readr::write_csv(file = file)
-            # TBR by exportSummarisedResult
-          }
-        )
         ## tidy summarise_cohort_overlap -----
         getTidyDataSummariseCohortOverlap <- shiny::reactive({
           data |>
@@ -1828,21 +1684,6 @@
       
       
         # summarise_cohort_timing -----
-        ## raw summarise_cohort_timing -----
-        getRawDataSummariseCohortTiming <- shiny::reactive({
-          filterData(data, "summarise_cohort_timing", input)
-        })
-        output$summarise_cohort_timing_raw <- DT::renderDT({
-          DT::datatable(getRawDataSummariseCohortTiming(), options = list(scrollX = TRUE))
-        })
-        output$summarise_cohort_timing_raw_download <- shiny::downloadHandler(
-          filename = "raw_summarise_cohort_timing.csv",
-          content = function(file) {
-            getRawDataSummariseCohortTiming() |>
-              readr::write_csv(file = file)
-            # TBR by exportSummarisedResult
-          }
-        )
         ## tidy summarise_cohort_timing -----
         getTidyDataSummariseCohortTiming <- shiny::reactive({
           data |>
@@ -1919,21 +1760,6 @@
       
       
         # summarise_large_scale_characteristics -----
-        ## raw summarise_large_scale_characteristics -----
-        getRawDataSummariseLargeScaleCharacteristics <- shiny::reactive({
-          filterData(data, "summarise_large_scale_characteristics", input)
-        })
-        output$summarise_large_scale_characteristics_raw <- DT::renderDT({
-          DT::datatable(getRawDataSummariseLargeScaleCharacteristics(), options = list(scrollX = TRUE))
-        })
-        output$summarise_large_scale_characteristics_raw_download <- shiny::downloadHandler(
-          filename = "raw_summarise_large_scale_characteristics.csv",
-          content = function(file) {
-            getRawDataSummariseLargeScaleCharacteristics() |>
-              readr::write_csv(file = file)
-            # TBR by exportSummarisedResult
-          }
-        )
         ## tidy summarise_large_scale_characteristics -----
         getTidyDataSummariseLargeScaleCharacteristics <- shiny::reactive({
           data |>
@@ -2083,20 +1909,6 @@
             ),
             bslib::navset_card_tab(
               bslib::nav_panel(
-                title = "Raw",
-                bslib::card(
-                  full_screen = TRUE,
-                  bslib::card_header(
-                    bslib::popover(
-                      shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_characteristics_raw_download", label = "Download summarised_result")
-                    ),
-                    class = "text-end"
-                  ),
-                  DT::dataTableOutput("summarise_characteristics_raw")
-                )
-              ),
-              bslib::nav_panel(
                 title = "Tidy",
                 bslib::card(
                   full_screen = TRUE,
@@ -2329,20 +2141,6 @@
             ),
             bslib::navset_card_tab(
               bslib::nav_panel(
-                title = "Raw",
-                bslib::card(
-                  full_screen = TRUE,
-                  bslib::card_header(
-                    bslib::popover(
-                      shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_attrition_raw_download", label = "Download summarised_result")
-                    ),
-                    class = "text-end"
-                  ),
-                  DT::dataTableOutput("summarise_cohort_attrition_raw")
-                )
-              ),
-              bslib::nav_panel(
                 title = "Tidy",
                 bslib::card(
                   full_screen = TRUE,
@@ -2517,20 +2315,6 @@
               )
             ),
             bslib::navset_card_tab(
-              bslib::nav_panel(
-                title = "Raw",
-                bslib::card(
-                  full_screen = TRUE,
-                  bslib::card_header(
-                    bslib::popover(
-                      shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_count_raw_download", label = "Download summarised_result")
-                    ),
-                    class = "text-end"
-                  ),
-                  DT::dataTableOutput("summarise_cohort_count_raw")
-                )
-              ),
               bslib::nav_panel(
                 title = "Tidy",
                 bslib::card(
@@ -2728,20 +2512,6 @@
               )
             ),
             bslib::navset_card_tab(
-              bslib::nav_panel(
-                title = "Raw",
-                bslib::card(
-                  full_screen = TRUE,
-                  bslib::card_header(
-                    bslib::popover(
-                      shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_overlap_raw_download", label = "Download summarised_result")
-                    ),
-                    class = "text-end"
-                  ),
-                  DT::dataTableOutput("summarise_cohort_overlap_raw")
-                )
-              ),
               bslib::nav_panel(
                 title = "Tidy",
                 bslib::card(
@@ -2947,20 +2717,6 @@
               )
             ),
             bslib::navset_card_tab(
-              bslib::nav_panel(
-                title = "Raw",
-                bslib::card(
-                  full_screen = TRUE,
-                  bslib::card_header(
-                    bslib::popover(
-                      shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_timing_raw_download", label = "Download summarised_result")
-                    ),
-                    class = "text-end"
-                  ),
-                  DT::dataTableOutput("summarise_cohort_timing_raw")
-                )
-              ),
               bslib::nav_panel(
                 title = "Tidy",
                 bslib::card(
@@ -3222,20 +2978,6 @@
               )
             ),
             bslib::navset_card_tab(
-              bslib::nav_panel(
-                title = "Raw",
-                bslib::card(
-                  full_screen = TRUE,
-                  bslib::card_header(
-                    bslib::popover(
-                      shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_large_scale_characteristics_raw_download", label = "Download summarised_result")
-                    ),
-                    class = "text-end"
-                  ),
-                  DT::dataTableOutput("summarise_large_scale_characteristics_raw")
-                )
-              ),
               bslib::nav_panel(
                 title = "Tidy",
                 bslib::card(
@@ -3446,20 +3188,6 @@
             ),
             bslib::navset_card_tab(
               bslib::nav_panel(
-                title = "Raw",
-                bslib::card(
-                  full_screen = TRUE,
-                  bslib::card_header(
-                    bslib::popover(
-                      shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_characteristics_raw_download", label = "Download summarised_result")
-                    ),
-                    class = "text-end"
-                  ),
-                  DT::dataTableOutput("summarise_characteristics_raw")
-                )
-              ),
-              bslib::nav_panel(
                 title = "Tidy",
                 bslib::card(
                   full_screen = TRUE,
@@ -3692,20 +3420,6 @@
             ),
             bslib::navset_card_tab(
               bslib::nav_panel(
-                title = "Raw",
-                bslib::card(
-                  full_screen = TRUE,
-                  bslib::card_header(
-                    bslib::popover(
-                      shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_attrition_raw_download", label = "Download summarised_result")
-                    ),
-                    class = "text-end"
-                  ),
-                  DT::dataTableOutput("summarise_cohort_attrition_raw")
-                )
-              ),
-              bslib::nav_panel(
                 title = "Tidy",
                 bslib::card(
                   full_screen = TRUE,
@@ -3880,20 +3594,6 @@
               )
             ),
             bslib::navset_card_tab(
-              bslib::nav_panel(
-                title = "Raw",
-                bslib::card(
-                  full_screen = TRUE,
-                  bslib::card_header(
-                    bslib::popover(
-                      shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_count_raw_download", label = "Download summarised_result")
-                    ),
-                    class = "text-end"
-                  ),
-                  DT::dataTableOutput("summarise_cohort_count_raw")
-                )
-              ),
               bslib::nav_panel(
                 title = "Tidy",
                 bslib::card(
@@ -4091,20 +3791,6 @@
               )
             ),
             bslib::navset_card_tab(
-              bslib::nav_panel(
-                title = "Raw",
-                bslib::card(
-                  full_screen = TRUE,
-                  bslib::card_header(
-                    bslib::popover(
-                      shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_overlap_raw_download", label = "Download summarised_result")
-                    ),
-                    class = "text-end"
-                  ),
-                  DT::dataTableOutput("summarise_cohort_overlap_raw")
-                )
-              ),
               bslib::nav_panel(
                 title = "Tidy",
                 bslib::card(
@@ -4310,20 +3996,6 @@
               )
             ),
             bslib::navset_card_tab(
-              bslib::nav_panel(
-                title = "Raw",
-                bslib::card(
-                  full_screen = TRUE,
-                  bslib::card_header(
-                    bslib::popover(
-                      shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_timing_raw_download", label = "Download summarised_result")
-                    ),
-                    class = "text-end"
-                  ),
-                  DT::dataTableOutput("summarise_cohort_timing_raw")
-                )
-              ),
               bslib::nav_panel(
                 title = "Tidy",
                 bslib::card(
@@ -4585,20 +4257,6 @@
               )
             ),
             bslib::navset_card_tab(
-              bslib::nav_panel(
-                title = "Raw",
-                bslib::card(
-                  full_screen = TRUE,
-                  bslib::card_header(
-                    bslib::popover(
-                      shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_large_scale_characteristics_raw_download", label = "Download summarised_result")
-                    ),
-                    class = "text-end"
-                  ),
-                  DT::dataTableOutput("summarise_large_scale_characteristics_raw")
-                )
-              ),
               bslib::nav_panel(
                 title = "Tidy",
                 bslib::card(
