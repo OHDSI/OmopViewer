@@ -1,18 +1,5 @@
 
 selector <- function(id, lab, cho, sel, mult) {
-  if(stringr::str_detect(id, "variable_name") ||
-     stringr::str_detect(id, "summarise_large_scale_characteristics_grouping_concept_id")){
-    'shiny::selectizeInput(
-    inputId = "{id}",
-    label = "{lab}",
-    choices = NULL,
-    selected = NULL,
-    multiple = {mult},
-    options = list(plugins = "remove_button")
-  )' |>
-      glue::glue() |>
-      as.character()
-  } else {
   'shiny::selectizeInput(
     inputId = "{id}",
     label = "{lab}",
@@ -23,7 +10,6 @@ selector <- function(id, lab, cho, sel, mult) {
   )' |>
     glue::glue() |>
     as.character()
-  }
 }
 downloadTable <- function(id, lab, type = NULL) {
 

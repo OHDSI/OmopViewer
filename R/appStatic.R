@@ -280,11 +280,3 @@ subs <- function(x, pat, subst) {
   }
   return(x)
 }
-emptySummarisedResult <- function() {
-  omopgenerics::emptySummarisedResult(settings = dplyr::tibble(
-    result_id = integer(),
-    result_type = character(),
-    package_name = character(),
-    package_version = character()
-  ))
-}

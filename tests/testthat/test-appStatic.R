@@ -2,8 +2,9 @@ test_that("logo", {
   tdir <- here::here()
 
   # test no logo
-  expect_no_error(exportStaticApp(result = emptySummarisedResult(),
-                                  directory = tdir, logo = NULL))
+  expect_no_error(exportStaticApp(
+    result = emptySummarisedResult(), directory = tdir, logo = NULL
+  ))
   expect_true("shiny" %in% list.files(tdir))
   unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
 

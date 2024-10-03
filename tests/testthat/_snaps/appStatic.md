@@ -100,8 +100,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_characteristics_settings_table_name",
                     label = "Table name",
-                    choices = c("cohort"),
-                    selected = c("cohort"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -111,16 +111,16 @@
                   shiny::selectizeInput(
                     inputId = "summarise_characteristics_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = c("mock database"),
-                    selected = c("mock database"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_characteristics_grouping_cohort_name",
                     label = "Cohort name",
-                    choices = c("asthma", "covid", "tb"),
-                    selected = c("asthma", "covid", "tb"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -141,8 +141,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_characteristics_estimate_name",
                     label = "Estimate name",
-                    choices = c("count", "max", "mean", "median", "min", "percentage", "q25", "q75", "sd"),
-                    selected = c("count", "max", "mean", "median", "min", "percentage", "q25", "q75", "sd"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -322,16 +322,16 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_settings_table_name",
                     label = "Table name",
-                    choices = c("cohort"),
-                    selected = c("cohort"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_settings_cohort_definition_id",
                     label = "Cohort definition id",
-                    choices = c(1, 2, 3),
-                    selected = c(1, 2, 3),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -341,32 +341,32 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = c("mock database"),
-                    selected = c("mock database"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_grouping_cohort_name",
                     label = "Cohort name",
-                    choices = c("asthma", "covid", "tb"),
-                    selected = c("asthma", "covid", "tb"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_grouping_reason",
                     label = "Reason",
-                    choices = c("Initial qualifying events"),
-                    selected = c("Initial qualifying events"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_grouping_reason_id",
                     label = "Reason id",
-                    choices = c("1"),
-                    selected = c("1"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -387,8 +387,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_estimate_name",
                     label = "Estimate name",
-                    choices = c("count"),
-                    selected = c("count"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -535,8 +535,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_count_settings_table_name",
                     label = "Table name",
-                    choices = c("cohort"),
-                    selected = c("cohort"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -546,16 +546,16 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_count_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = c("mock database"),
-                    selected = c("mock database"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_count_grouping_cohort_name",
                     label = "Cohort name",
-                    choices = c("asthma", "covid", "tb"),
-                    selected = c("asthma", "covid", "tb"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -576,8 +576,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_count_estimate_name",
                     label = "Estimate name",
-                    choices = c("count"),
-                    selected = c("count"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -749,24 +749,24 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_overlap_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = c("mock database"),
-                    selected = c("mock database"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_overlap_grouping_cohort_name_reference",
                     label = "Cohort name reference",
-                    choices = c("asthma", "covid", "tb"),
-                    selected = c("asthma", "covid", "tb"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_overlap_grouping_cohort_name_comparator",
                     label = "Cohort name comparator",
-                    choices = c("asthma", "covid", "tb"),
-                    selected = c("asthma", "covid", "tb"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -787,8 +787,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_overlap_estimate_name",
                     label = "Estimate name",
-                    choices = c("count", "percentage"),
-                    selected = c("count", "percentage"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -957,8 +957,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_timing_settings_restrict_to_first_entry",
                     label = "Restrict to first entry",
-                    choices = c(TRUE),
-                    selected = c(TRUE),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -968,24 +968,24 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_timing_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = c("mock database"),
-                    selected = c("mock database"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_timing_grouping_cohort_name_reference",
                     label = "Cohort name reference",
-                    choices = c("asthma", "covid", "tb"),
-                    selected = c("asthma", "covid", "tb"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_timing_grouping_cohort_name_comparator",
                     label = "Cohort name comparator",
-                    choices = c("asthma", "covid", "tb"),
-                    selected = c("asthma", "covid", "tb"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -1006,8 +1006,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_timing_estimate_name",
                     label = "Estimate name",
-                    choices = c("count", "density_x", "density_y", "max", "median", "min", "q25", "q75"),
-                    selected = c("count", "density_x", "density_y", "max", "median", "min", "q25", "q75"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -1200,24 +1200,24 @@
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_settings_table_name",
                     label = "Table name",
-                    choices = c("condition_occurrence", "drug_exposure"),
-                    selected = c("condition_occurrence", "drug_exposure"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_settings_type",
                     label = "Type",
-                    choices = c("episode", "event"),
-                    selected = c("episode", "event"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_settings_analysis",
                     label = "Analysis",
-                    choices = c("standard"),
-                    selected = c("standard"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -1227,32 +1227,32 @@
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = c("mock database"),
-                    selected = c("mock database"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_grouping_cohort_name",
                     label = "Cohort name",
-                    choices = c("asthma", "covid", "tb"),
-                    selected = c("asthma", "covid", "tb"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_grouping_sex",
                     label = "Sex",
-                    choices = c("Female", "Male", "overall"),
-                    selected = c("Female", "Male", "overall"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_grouping_age_group",
                     label = "Age group",
-                    choices = c("0 to 44", "45 or above", "overall"),
-                    selected = c("0 to 44", "45 or above", "overall"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
@@ -1281,8 +1281,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_estimate_name",
                     label = "Estimate name",
-                    choices = c("count", "percentage"),
-                    selected = c("count", "percentage"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -1422,9 +1422,19 @@
       cat(serverStatic(resultTypes = names(getChoices(result))), sep = "\n")
     Output
       server <- function(input, output, session) {
+        # fill selectise variables ----
+        shiny::observe({
+          choices <- omopViewer::getChoices(data, flatten = TRUE)
+          for (k in seq_along(choices)) {
+            shiny::updateSelectizeInput(
+              session,
+              inputId = names(choices)[k],
+              choices = choices[[k]],
+              selected = choices[[k]]
+            )
+          }
+        })
         # summarise_characteristics -----
-        ## update inputs summarise_characteristics -----
-        updateSelectizeInput(session, "summarise_characteristics_variable_name", choices = unique(visOmopResults::filterSettings(data, result_type == "summarise_characteristics")$variable_name), selected = unique(visOmopResults::filterSettings(data, result_type == "summarise_characteristics")$variable_name), server = TRUE)
         ## raw summarise_characteristics -----
         getRawDataSummariseCharacteristics <- shiny::reactive({
           filterData(data, "summarise_characteristics", input)
@@ -1514,8 +1524,6 @@
       
       
         # summarise_cohort_attrition -----
-        ## update inputs summarise_cohort_attrition -----
-        updateSelectizeInput(session, "summarise_cohort_attrition_variable_name", choices = unique(visOmopResults::filterSettings(data, result_type == "summarise_cohort_attrition")$variable_name), selected = unique(visOmopResults::filterSettings(data, result_type == "summarise_cohort_attrition")$variable_name), server = TRUE)
         ## raw summarise_cohort_attrition -----
         getRawDataSummariseCohortAttrition <- shiny::reactive({
           filterData(data, "summarise_cohort_attrition", input)
@@ -1600,8 +1608,6 @@
       
       
         # summarise_cohort_count -----
-        ## update inputs summarise_cohort_count -----
-        updateSelectizeInput(session, "summarise_cohort_count_variable_name", choices = unique(visOmopResults::filterSettings(data, result_type == "summarise_cohort_count")$variable_name), selected = unique(visOmopResults::filterSettings(data, result_type == "summarise_cohort_count")$variable_name), server = TRUE)
         ## raw summarise_cohort_count -----
         getRawDataSummariseCohortCount <- shiny::reactive({
           filterData(data, "summarise_cohort_count", input)
@@ -1690,8 +1696,6 @@
       
       
         # summarise_cohort_overlap -----
-        ## update inputs summarise_cohort_overlap -----
-        updateSelectizeInput(session, "summarise_cohort_overlap_variable_name", choices = unique(visOmopResults::filterSettings(data, result_type == "summarise_cohort_overlap")$variable_name), selected = unique(visOmopResults::filterSettings(data, result_type == "summarise_cohort_overlap")$variable_name), server = TRUE)
         ## raw summarise_cohort_overlap -----
         getRawDataSummariseCohortOverlap <- shiny::reactive({
           filterData(data, "summarise_cohort_overlap", input)
@@ -1780,8 +1784,6 @@
       
       
         # summarise_cohort_timing -----
-        ## update inputs summarise_cohort_timing -----
-        updateSelectizeInput(session, "summarise_cohort_timing_variable_name", choices = unique(visOmopResults::filterSettings(data, result_type == "summarise_cohort_timing")$variable_name), selected = unique(visOmopResults::filterSettings(data, result_type == "summarise_cohort_timing")$variable_name), server = TRUE)
         ## raw summarise_cohort_timing -----
         getRawDataSummariseCohortTiming <- shiny::reactive({
           filterData(data, "summarise_cohort_timing", input)
@@ -1873,9 +1875,6 @@
       
       
         # summarise_large_scale_characteristics -----
-        ## update inputs summarise_large_scale_characteristics -----
-        updateSelectizeInput(session, "summarise_large_scale_characteristics_variable_name", choices = unique(visOmopResults::filterSettings(data, result_type == "summarise_large_scale_characteristics")$variable_name), selected = unique(visOmopResults::filterSettings(data, result_type == "summarise_large_scale_characteristics")$variable_name), server = TRUE)
-        updateSelectizeInput(session, "summarise_large_scale_characteristics_grouping_concept_id", choices = unique(visOmopResults::filterSettings(data, result_type == "summarise_large_scale_characteristics")$additional_level), selected = unique(visOmopResults::filterSettings(data, result_type == "summarise_large_scale_characteristics")$additional_level), server = TRUE)
         ## raw summarise_large_scale_characteristics -----
         getRawDataSummariseLargeScaleCharacteristics <- shiny::reactive({
           filterData(data, "summarise_large_scale_characteristics", input)
@@ -1966,8 +1965,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_characteristics_settings_table_name",
                     label = "Table name",
-                    choices = c("cohort"),
-                    selected = c("cohort"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -1977,16 +1976,16 @@
                   shiny::selectizeInput(
                     inputId = "summarise_characteristics_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = c("mock database"),
-                    selected = c("mock database"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_characteristics_grouping_cohort_name",
                     label = "Cohort name",
-                    choices = c("asthma", "covid", "tb"),
-                    selected = c("asthma", "covid", "tb"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -2007,8 +2006,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_characteristics_estimate_name",
                     label = "Estimate name",
-                    choices = c("count", "max", "mean", "median", "min", "percentage", "q25", "q75", "sd"),
-                    selected = c("count", "max", "mean", "median", "min", "percentage", "q25", "q75", "sd"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -2188,16 +2187,16 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_settings_table_name",
                     label = "Table name",
-                    choices = c("cohort"),
-                    selected = c("cohort"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_settings_cohort_definition_id",
                     label = "Cohort definition id",
-                    choices = c(1, 2, 3),
-                    selected = c(1, 2, 3),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -2207,32 +2206,32 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = c("mock database"),
-                    selected = c("mock database"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_grouping_cohort_name",
                     label = "Cohort name",
-                    choices = c("asthma", "covid", "tb"),
-                    selected = c("asthma", "covid", "tb"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_grouping_reason",
                     label = "Reason",
-                    choices = c("Initial qualifying events"),
-                    selected = c("Initial qualifying events"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_grouping_reason_id",
                     label = "Reason id",
-                    choices = c("1"),
-                    selected = c("1"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -2253,8 +2252,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_estimate_name",
                     label = "Estimate name",
-                    choices = c("count"),
-                    selected = c("count"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -2401,8 +2400,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_count_settings_table_name",
                     label = "Table name",
-                    choices = c("cohort"),
-                    selected = c("cohort"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -2412,16 +2411,16 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_count_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = c("mock database"),
-                    selected = c("mock database"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_count_grouping_cohort_name",
                     label = "Cohort name",
-                    choices = c("asthma", "covid", "tb"),
-                    selected = c("asthma", "covid", "tb"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -2442,8 +2441,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_count_estimate_name",
                     label = "Estimate name",
-                    choices = c("count"),
-                    selected = c("count"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -2615,24 +2614,24 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_overlap_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = c("mock database"),
-                    selected = c("mock database"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_overlap_grouping_cohort_name_reference",
                     label = "Cohort name reference",
-                    choices = c("asthma", "covid", "tb"),
-                    selected = c("asthma", "covid", "tb"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_overlap_grouping_cohort_name_comparator",
                     label = "Cohort name comparator",
-                    choices = c("asthma", "covid", "tb"),
-                    selected = c("asthma", "covid", "tb"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -2653,8 +2652,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_overlap_estimate_name",
                     label = "Estimate name",
-                    choices = c("count", "percentage"),
-                    selected = c("count", "percentage"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -2823,8 +2822,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_timing_settings_restrict_to_first_entry",
                     label = "Restrict to first entry",
-                    choices = c(TRUE),
-                    selected = c(TRUE),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -2834,24 +2833,24 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_timing_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = c("mock database"),
-                    selected = c("mock database"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_timing_grouping_cohort_name_reference",
                     label = "Cohort name reference",
-                    choices = c("asthma", "covid", "tb"),
-                    selected = c("asthma", "covid", "tb"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_timing_grouping_cohort_name_comparator",
                     label = "Cohort name comparator",
-                    choices = c("asthma", "covid", "tb"),
-                    selected = c("asthma", "covid", "tb"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -2872,8 +2871,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_timing_estimate_name",
                     label = "Estimate name",
-                    choices = c("count", "density_x", "density_y", "max", "median", "min", "q25", "q75"),
-                    selected = c("count", "density_x", "density_y", "max", "median", "min", "q25", "q75"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -3066,24 +3065,24 @@
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_settings_table_name",
                     label = "Table name",
-                    choices = c("condition_occurrence", "drug_exposure"),
-                    selected = c("condition_occurrence", "drug_exposure"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_settings_type",
                     label = "Type",
-                    choices = c("episode", "event"),
-                    selected = c("episode", "event"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_settings_analysis",
                     label = "Analysis",
-                    choices = c("standard"),
-                    selected = c("standard"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -3093,32 +3092,32 @@
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = c("mock database"),
-                    selected = c("mock database"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_grouping_cohort_name",
                     label = "Cohort name",
-                    choices = c("asthma", "covid", "tb"),
-                    selected = c("asthma", "covid", "tb"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_grouping_sex",
                     label = "Sex",
-                    choices = c("Female", "Male", "overall"),
-                    selected = c("Female", "Male", "overall"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_grouping_age_group",
                     label = "Age group",
-                    choices = c("0 to 44", "45 or above", "overall"),
-                    selected = c("0 to 44", "45 or above", "overall"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
@@ -3147,8 +3146,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_estimate_name",
                     label = "Estimate name",
-                    choices = c("count", "percentage"),
-                    selected = c("count", "percentage"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -3319,8 +3318,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_characteristics_settings_table_name",
                     label = "Table name",
-                    choices = c("cohort"),
-                    selected = c("cohort"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -3330,16 +3329,16 @@
                   shiny::selectizeInput(
                     inputId = "summarise_characteristics_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = c("mock database"),
-                    selected = c("mock database"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_characteristics_grouping_cohort_name",
                     label = "Cohort name",
-                    choices = c("asthma", "covid", "tb"),
-                    selected = c("asthma", "covid", "tb"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -3360,8 +3359,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_characteristics_estimate_name",
                     label = "Estimate name",
-                    choices = c("count", "max", "mean", "median", "min", "percentage", "q25", "q75", "sd"),
-                    selected = c("count", "max", "mean", "median", "min", "percentage", "q25", "q75", "sd"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -3541,16 +3540,16 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_settings_table_name",
                     label = "Table name",
-                    choices = c("cohort"),
-                    selected = c("cohort"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_settings_cohort_definition_id",
                     label = "Cohort definition id",
-                    choices = c(1, 2, 3),
-                    selected = c(1, 2, 3),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -3560,32 +3559,32 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = c("mock database"),
-                    selected = c("mock database"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_grouping_cohort_name",
                     label = "Cohort name",
-                    choices = c("asthma", "covid", "tb"),
-                    selected = c("asthma", "covid", "tb"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_grouping_reason",
                     label = "Reason",
-                    choices = c("Initial qualifying events"),
-                    selected = c("Initial qualifying events"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_grouping_reason_id",
                     label = "Reason id",
-                    choices = c("1"),
-                    selected = c("1"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -3606,8 +3605,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_estimate_name",
                     label = "Estimate name",
-                    choices = c("count"),
-                    selected = c("count"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -3754,8 +3753,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_count_settings_table_name",
                     label = "Table name",
-                    choices = c("cohort"),
-                    selected = c("cohort"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -3765,16 +3764,16 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_count_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = c("mock database"),
-                    selected = c("mock database"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_count_grouping_cohort_name",
                     label = "Cohort name",
-                    choices = c("asthma", "covid", "tb"),
-                    selected = c("asthma", "covid", "tb"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -3795,8 +3794,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_count_estimate_name",
                     label = "Estimate name",
-                    choices = c("count"),
-                    selected = c("count"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -3968,24 +3967,24 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_overlap_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = c("mock database"),
-                    selected = c("mock database"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_overlap_grouping_cohort_name_reference",
                     label = "Cohort name reference",
-                    choices = c("asthma", "covid", "tb"),
-                    selected = c("asthma", "covid", "tb"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_overlap_grouping_cohort_name_comparator",
                     label = "Cohort name comparator",
-                    choices = c("asthma", "covid", "tb"),
-                    selected = c("asthma", "covid", "tb"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -4006,8 +4005,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_overlap_estimate_name",
                     label = "Estimate name",
-                    choices = c("count", "percentage"),
-                    selected = c("count", "percentage"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -4176,8 +4175,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_timing_settings_restrict_to_first_entry",
                     label = "Restrict to first entry",
-                    choices = c(TRUE),
-                    selected = c(TRUE),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -4187,24 +4186,24 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_timing_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = c("mock database"),
-                    selected = c("mock database"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_timing_grouping_cohort_name_reference",
                     label = "Cohort name reference",
-                    choices = c("asthma", "covid", "tb"),
-                    selected = c("asthma", "covid", "tb"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_timing_grouping_cohort_name_comparator",
                     label = "Cohort name comparator",
-                    choices = c("asthma", "covid", "tb"),
-                    selected = c("asthma", "covid", "tb"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -4225,8 +4224,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_timing_estimate_name",
                     label = "Estimate name",
-                    choices = c("count", "density_x", "density_y", "max", "median", "min", "q25", "q75"),
-                    selected = c("count", "density_x", "density_y", "max", "median", "min", "q25", "q75"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -4419,24 +4418,24 @@
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_settings_table_name",
                     label = "Table name",
-                    choices = c("condition_occurrence", "drug_exposure"),
-                    selected = c("condition_occurrence", "drug_exposure"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_settings_type",
                     label = "Type",
-                    choices = c("episode", "event"),
-                    selected = c("episode", "event"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_settings_analysis",
                     label = "Analysis",
-                    choices = c("standard"),
-                    selected = c("standard"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -4446,32 +4445,32 @@
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = c("mock database"),
-                    selected = c("mock database"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_grouping_cohort_name",
                     label = "Cohort name",
-                    choices = c("asthma", "covid", "tb"),
-                    selected = c("asthma", "covid", "tb"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_grouping_sex",
                     label = "Sex",
-                    choices = c("Female", "Male", "overall"),
-                    selected = c("Female", "Male", "overall"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_grouping_age_group",
                     label = "Age group",
-                    choices = c("0 to 44", "45 or above", "overall"),
-                    selected = c("0 to 44", "45 or above", "overall"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
@@ -4500,8 +4499,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_estimate_name",
                     label = "Estimate name",
-                    choices = c("count", "percentage"),
-                    selected = c("count", "percentage"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
