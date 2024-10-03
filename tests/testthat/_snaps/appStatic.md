@@ -17,6 +17,16 @@
         bslib::nav_spacer(),
         bslib::nav_item(
           bslib::popover(
+            icon = shiny::icon("download"),
+            shiny::downloadButton(
+              outputId = "download_raw",
+              label = "Download raw data",
+              icon = shiny::icon("download")
+            )
+          )
+        ),
+        bslib::nav_item(
+          bslib::popover(
             shiny::icon("circle-info"),
             shiny::tags$img(
               src = "hds_logo.svg",
@@ -48,6 +58,16 @@
         bslib::nav_spacer(),
         bslib::nav_item(
           bslib::popover(
+            icon = shiny::icon("download"),
+            shiny::downloadButton(
+              outputId = "download_raw",
+              label = "Download raw data",
+              icon = shiny::icon("download")
+            )
+          )
+        ),
+        bslib::nav_item(
+          bslib::popover(
             shiny::icon("circle-info"),
             shiny::tags$img(
               src = "hds_logo.svg",
@@ -75,6 +95,13 @@
       cat(serverStatic(), sep = "\n")
     Output
       server <- function(input, output, session) {
+        # download raw data -----
+        output$download_raw <- shiny::downloadHandler(
+          filename = "results.csv",
+          content = function(file) {
+            omopViewer::exportSummarisedResult(data, fileName = file)
+          }
+        )
       }
 
 # CohortCharacteristics shiny
@@ -1395,6 +1422,16 @@
         bslib::nav_spacer(),
         bslib::nav_item(
           bslib::popover(
+            icon = shiny::icon("download"),
+            shiny::downloadButton(
+              outputId = "download_raw",
+              label = "Download raw data",
+              icon = shiny::icon("download")
+            )
+          )
+        ),
+        bslib::nav_item(
+          bslib::popover(
             shiny::icon("circle-info"),
             shiny::tags$img(
               src = "hds_logo.svg",
@@ -1422,6 +1459,13 @@
       cat(serverStatic(resultTypes = names(getChoices(result))), sep = "\n")
     Output
       server <- function(input, output, session) {
+        # download raw data -----
+        output$download_raw <- shiny::downloadHandler(
+          filename = "results.csv",
+          content = function(file) {
+            omopViewer::exportSummarisedResult(data, fileName = file)
+          }
+        )
         # fill selectise variables ----
         shiny::observe({
           choices <- omopViewer::getChoices(data, flatten = TRUE)
@@ -3283,6 +3327,16 @@
         bslib::nav_spacer(),
         bslib::nav_item(
           bslib::popover(
+            icon = shiny::icon("download"),
+            shiny::downloadButton(
+              outputId = "download_raw",
+              label = "Download raw data",
+              icon = shiny::icon("download")
+            )
+          )
+        ),
+        bslib::nav_item(
+          bslib::popover(
             shiny::icon("circle-info"),
             shiny::tags$img(
               src = "hds_logo.svg",
@@ -4636,6 +4690,16 @@
         bslib::nav_spacer(),
         bslib::nav_item(
           bslib::popover(
+            icon = shiny::icon("download"),
+            shiny::downloadButton(
+              outputId = "download_raw",
+              label = "Download raw data",
+              icon = shiny::icon("download")
+            )
+          )
+        ),
+        bslib::nav_item(
+          bslib::popover(
             shiny::icon("circle-info"),
             shiny::tags$img(
               src = "hds_logo.svg",
@@ -4706,6 +4770,16 @@
           )
         ),
         bslib::nav_spacer(),
+        bslib::nav_item(
+          bslib::popover(
+            icon = shiny::icon("download"),
+            shiny::downloadButton(
+              outputId = "download_raw",
+              label = "Download raw data",
+              icon = shiny::icon("download")
+            )
+          )
+        ),
         bslib::nav_item(
           bslib::popover(
             shiny::icon("circle-info"),
