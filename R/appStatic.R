@@ -22,6 +22,7 @@
 #' results not specified will be included after the specified result tabs.
 #' @param open Whether to open the shiny app project.
 #' @param theme Assign a theme to the shiny app using bslib::bs_theme()
+#' @param colourPalette Choose colours to make a custom theme.
 #'
 #' @return The shiny app will be created in directory.
 #'

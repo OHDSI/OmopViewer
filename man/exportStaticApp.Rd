@@ -46,6 +46,8 @@ results not specified will be included after the specified result tabs.}
 
 \item{theme}{Assign a theme to the shiny app using bslib::bs_theme()}
 
+\item{colourPalette}{Choose colours to make a custom theme.}
+
 \item{open}{Whether to open the shiny app project.}
 }
 \value{
