@@ -37,7 +37,8 @@ Imports:
     tidyr,
     usethis,
     vctrs,
-    visOmopResults (>= 0.4.0)
+    visOmopResults (>= 0.4.0),
+    yaml
 Suggests: 
     CDMConnector,
     CohortCharacteristics (>= 0.3.0),

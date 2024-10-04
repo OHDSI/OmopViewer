@@ -1,5 +1,6 @@
 test_that("logo", {
-  tdir <- here::here()
+  #tdir <- here::here()
+  tdir <- tempdir()
 
   # test no logo
   expect_no_error(exportStaticApp(
@@ -27,7 +28,8 @@ test_that("logo", {
 })
 
 test_that("empty shiny", {
-  tdir <- here::here()
+  #tdir <- here::here()
+  tdir <- tempdir()
   expect_no_error(exportStaticApp(result = emptySummarisedResult(),directory = tdir))
   expect_true("shiny" %in% list.files(tdir))
   expect_snapshot(uiStatic() |> cat(sep = "\n"))
@@ -73,7 +75,8 @@ test_that("CohortCharacteristics shiny", {
   )
 
   # generate shiny
-  tdir <- here::here()
+  #tdir <- here::here()
+  tdir <- tempdir()
   expect_no_error(exportStaticApp(result = result, directory = tdir, summary = FALSE))
   expect_true("shiny" %in% list.files(tdir))
   expect_snapshot(uiStatic(choices = getChoices(result)) |> cat(sep = "\n"))
@@ -92,40 +95,9 @@ test_that("CohortCharacteristics shiny", {
   PatientProfiles::mockDisconnect(cdm)
 })
 
-test_that("background", {
-  full <- c(
-    "header" = "Abstract",
-    "title" = "**Introduction**",
-    "body" = "Example of an [introduction](https://github.com/oxford-pharmacoepi/omopViewer).",
-    "title" = "Methods",
-    "body" = "Methods example, with a footer* example.",
-    "footer" = "*Here is the footer."
-  )
-  tdir <- here::here()
-  expect_no_error(exportStaticApp(result = emptySummarisedResult(),directory = tdir, logo = NULL, background = NULL))
-  expect_true("shiny" %in% list.files(tdir))
-  unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
-  expect_snapshot(createBackground(full))
-  # with logo
-  expect_no_error(exportStaticApp(result = emptySummarisedResult(),directory = tdir, logo = "OHDSI", background = NULL))
-  expect_true("shiny" %in% list.files(tdir))
-  unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
-  expect_snapshot(createBackground(full, "OHDSI"))
-  # no background
-  expect_no_error(exportStaticApp(result = emptySummarisedResult(),directory = tdir, logo = "OHDSI", background = NULL))
-  expect_true("shiny" %in% list.files(tdir))
-  unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
-  expect_null(createBackground(NULL, "OHDSI"))
-
-  # expected behaviour
-  expect_warning(x <- validateBackground("bslib::hola("))
-  expect_null(x)
-  expect_warning(x <- validateBackground(c("hi" = "drop", "title" = "keep")))
-  expect_equal(x, c("title" = "keep"))
-})
-
 test_that("title", {
-  tdir <- here::here()
+  #tdir <- here::here()
+  tdir <- tempdir()
   expect_no_error(exportStaticApp(result = emptySummarisedResult(),directory = tdir, title = "example"))
   expect_true("shiny" %in% list.files(tdir))
   x <- readLines(file.path(tdir, "shiny/ui.R"))
@@ -159,7 +131,8 @@ test_that("order tabs", {
   )
 
   # generate shiny
-  tdir <- here::here()
+  #tdir <- here::here()
+  tdir <- tempdir()
   unique(omopgenerics::settings(result) |>
     dplyr::pull("result_type"))
   expect_no_error(exportStaticApp(result = result,
@@ -198,7 +171,8 @@ test_that("order tabs", {
 })
 
 test_that("theme", {
-  tdir <- here::here()
+  #tdir <- here::here()
+  tdir <- tempdir()
 
   expect_no_error(exportStaticApp(result = emptySummarisedResult(), directory = tdir, theme = NULL, open = FALSE))
 

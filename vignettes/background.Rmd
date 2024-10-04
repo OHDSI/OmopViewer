@@ -1,5 +1,5 @@
 ---
-title: "Static shiny building"
+title: "Edit the background panel of your shiny using `background.md`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{background}
@@ -14,22 +14,27 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
-library(omopViewer)
-library(omopgenerics)
-```
-
-## Background panel
+The background panel is triggered when `background = TRUE` argument is used in the `exportStaticApp()` function. If background is set to TRUE a 'background' panel is added and a default 'background.md' file is created. The content of this 'background' will be always a card generated with the `cardFromMd()` function using the content of 'background.md'. In this vignette we are going to show different options how to populate the 'background.md'.
 
 ```{r}
-background <- c(
-  "header" = "Abstract",
-  "title" = "**Introduction**",
-  "body" = "This shiny has been generated with [omopViewer](https://github.com/oxford-pharmacoepi/omopViewer).",
-  "title" = "**Methods**",
-  "paragraph" = "Methods example, with a footer* example.",
-  "footer" = "*Here is the footer."
-)
-tdir <- here::here()
-exportStaticApp(result = emptySummarisedResult(), directory = tdir, logo = NULL, background = background, open = FALSE)
+library(omopViewer)
+```
+
+## `bslib::card()` arguments
+
+We can control the arguments of the `bslib::card()` using the
+
+## Keywords
+
+The following keywords can be used to edit the `bslib::card()` content:
+
+```{r, echo=FALSE}
+omopViewer:::backgroundKeywords |>
+  dplyr::mutate(`function` = purrr::map2(.data$link, .data$fun, \(x, y) {
+    shiny::a(href = x, y) |>
+      as.character() |>
+      gt::html()
+  })) |>
+  dplyr::select(!c("fun", "link")) |>
+  gt::gt()
 ```
