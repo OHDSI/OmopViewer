@@ -1,13 +1,34 @@
 
-createUi <- function(resultTypes, choices = list()) {
-  purrr::map_chr(resultTypes, \(x) {
-    c(
-      'bslib::nav_panel(',
-      c(panelTitle(x), panelIcon(x), panelSidebar(x, choices[[x]])) |>
-        paste0(collapse = ",\n"),
-      ')'
-    ) |>
-      paste0(collapse = "\n")
+createUi <- function(choices = list()) {
+  n <- length(names(choices))
+  x <- purrr::map_chr(names(choices), \(x) {
+    nm <- names(choices[[x]])
+    if (x %in% paste0("id_", 1:n)) {
+      c(
+        'bslib::nav_panel(',
+        c(panelTitle(nm), panelIcon(nm), panelSidebar(nm, choices[[x]][[nm]])) |>
+          paste0(collapse = ",\n"),
+        ')'
+      ) |>
+        paste0(collapse = "\n")
+    } else {
+      c(
+        'bslib::nav_menu(',
+        'title = "{x}",' |> glue::glue(),
+        purrr::map_chr(nm, \(y) {
+          c(
+            'bslib::nav_panel(',
+            c(panelTitle(y), panelIcon(y), panelSidebar(y, choices[[x]][[y]])) |>
+              paste0(collapse = ",\n"),
+            '),'
+          ) |>
+            paste0(collapse = "\n")
+        }),
+        'icon = shiny::icon("rectangle-list")',
+        ')'
+      ) |>
+        paste0(collapse = "\n")
+    }
   })
 }
 getInfo <- function(rt, info, def) {

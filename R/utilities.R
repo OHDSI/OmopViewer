@@ -37,3 +37,27 @@ validateDirectory <- function(directory) {
   }
   return(directory)
 }
+
+validatePanels <- function(panels, choices) {
+  omopgenerics::assertList(panels)
+  # clean list elements
+  panelsClean <- purrr::map(panels, function(x) {
+    x[x %in% names(choices)]
+  }) |>
+    purrr::compact()
+  panelOrder <- purrr::flatten_chr(panelsClean)
+  # check duplicates
+  if (length(unique(panelOrder)) != length(panelOrder)){
+    cli::cli_abort("`panels` cannot have duplicate results")
+  }
+  out <- setdiff(purrr::flatten_chr(panels), panelOrder)
+  cli::cli_warn("{.strong {out}} in `panels` not found in results")
+  # if not specified, append remaining results
+  panelsClean <- c(panelsClean, as.list(setdiff(names(choices), panelOrder)))
+  # add names
+  names(panelsClean)[names(panelsClean) == ""] <- paste0("id_", 1:sum(names(panelsClean) == ""))
+  # get choices
+  choices <- purrr::map(panelsClean, function(x, y = choices) {y[x]})
+  resultOrder <- panelsClean |> unlist() |> unname()
+  return(list(choices = choices, result_order = resultOrder))
+}

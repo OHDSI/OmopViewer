@@ -50,7 +50,7 @@ exportStaticApp <- function(result,
   omopgenerics::assertCharacter(title, length = 1)
   omopgenerics::assertLogical(summary, length = 1)
   omopgenerics::assertCharacter(theme, length = 1, null = TRUE)
-  omopgenerics::assertList(panels)
+  panels <- validatePanels(panels, getChoices(result))
   sum <- validateSummary(summary, result)
   directory <- validateDirectory(directory)
   if (isTRUE(directory)) {
@@ -72,25 +72,13 @@ exportStaticApp <- function(result,
     cli::cli_inform(c("!" = "No result_type(s) found, the generated shiny will be empty."))
   }
 
-  choices <- getChoices(result)
-  panels <- purrr::flatten_chr(panels)
-  if (any(isFALSE(panels %in% names(choices)))) {
-    cli::cli_warn("'{setdiff(panels, names(choices))}' not found in results")
-  }
-  # if not specified, append remaining results
-  panels <- c(
-    intersect(panels, names(choices)),
-    setdiff(names(choices), panels)
-  )
-  choices <- choices[panels]
-
   # create shiny
   directory <- file.path(directory, "shiny")
   dir.create(path = directory, showWarnings = FALSE)
   cli::cli_inform(c("i" = "Creating shiny from provided data"))
   logo <- copyLogos(logo, directory)
-  ui <- c(messageShiny(), uiStatic(choices = choices, logo = logo, title = title, summary = sum, background = background, theme = theme))
-  server <- c(messageShiny(), serverStatic(resultTypes = names(choices)))
+  ui <- c(messageShiny(), uiStatic(choices = panels$choices, logo = logo, title = title, summary = sum, background = background, theme = theme))
+  server <- c(messageShiny(), serverStatic(resultTypes = panels$result_order))
   global <- c(messageShiny(), omopViewerGlobal)
   dir.create(paste0(directory, "/data"), showWarnings = FALSE)
   writeLines(ui, con = paste0(directory, "/ui.R"))
@@ -189,7 +177,7 @@ uiStatic <- function(choices = list(),
       pageTitle(title, logo),
       createBackground(background = background, logo = logo),
       createSummary(summary, logo),
-      createUi(names(choices), choices),
+      createUi(choices),
       "bslib::nav_spacer()",
       createAbout("hds_logo.svg"),
       'bslib::nav_item(bslib::input_dark_mode(id ="dark_mode", mode = "light"))'
