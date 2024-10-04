@@ -13,6 +13,7 @@ exportStaticApp(
   directory = getwd(),
   panels = list(),
   theme = NULL,
+  colourPalette = NULL,
   open = rlang::is_interactive()
 )
 }

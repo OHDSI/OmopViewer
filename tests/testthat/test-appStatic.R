@@ -206,3 +206,14 @@ test_that("theme", {
 
   expect_true(grepl('theme = bslib::bs_theme\\(bootswatch = "sandstone", primary = "#605ca8", bg = "white", fg = "black", success = "#3B9AB2"\\)', ui[2]))
 })
+
+test_that("colourPalette", {
+  tdir <- here::here()
+
+  expect_no_error(exportStaticApp(result = emptySummarisedResult(), directory = tdir, theme = NULL, colourPalette = c("orange", "blue"), open = FALSE))
+
+  ui <- uiStatic(colourPalette = c("orange", "blue"))
+
+  expect_true(grepl('^\\s*theme = bslib::bs_theme\\(version = 5, preset = "sandstone", bg = "#FFFFFF", fg = "#000000", primary = "#FFB124", success = "#0000DA", info = "#482FB6", warning = "#00006D", danger = "red"\\),?$', ui[2]))
+})
+

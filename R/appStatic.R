@@ -42,6 +42,7 @@ exportStaticApp <- function(result,
                             directory = getwd(),
                             panels = list(),
                             theme = NULL,
+                            colourPalette = NULL,
                             open = rlang::is_interactive()) {
   # input check
   result <- omopgenerics::validateResultArgument(result)
@@ -52,11 +53,16 @@ exportStaticApp <- function(result,
   omopgenerics::assertCharacter(title, length = 1)
   omopgenerics::assertLogical(summary, length = 1)
   omopgenerics::assertCharacter(theme, length = 1, null = TRUE)
+  omopgenerics::assertCharacter(colourPalette, length = 2, null = TRUE)
   omopgenerics::assertList(panels)
   sum <- validateSummary(summary, result)
   directory <- validateDirectory(directory)
   if (isTRUE(directory)) {
     return(cli::cli_inform(c("i" = "{.strong shiny} folder will not be overwritten. Stopping process.")))
+  }
+
+  if (!is.null(theme) && !is.null(colourPalette)) {
+    cli::cli_abort("Cannot use theme and colourPalette argument at the same time.")
   }
 
   # processing data
@@ -91,7 +97,7 @@ exportStaticApp <- function(result,
   dir.create(path = directory, showWarnings = FALSE)
   cli::cli_inform(c("i" = "Creating shiny from provided data"))
   logo <- copyLogos(logo, directory)
-  ui <- c(messageShiny(), uiStatic(choices = choices, logo = logo, title = title, summary = sum, background = background, theme = theme))
+  ui <- c(messageShiny(), uiStatic(choices = choices, logo = logo, title = title, summary = sum, background = background, theme = theme, colourPalette = colourPalette))
   server <- c(messageShiny(), serverStatic(resultTypes = names(choices)))
   libraries <- unique(c(
     detectPackages(ui), detectPackages(server), detectPackages(omopViewerGlobal)
@@ -179,11 +185,14 @@ uiStatic <- function(choices = list(),
                      title = "",
                      background = NULL,
                      summary = NULL,
-                     theme = NULL) {
+                     theme = NULL,
+                     colourPalette = NULL) {
   # initial checks
   omopgenerics::assertList(choices, named = TRUE)
   omopgenerics::assertCharacter(logo, length = 1, null = TRUE)
   omopgenerics::assertCharacter(title, length = 1)
+  omopgenerics::assertCharacter(theme, length = 1, null = TRUE)
+  omopgenerics::assertCharacter(colourPalette, length = 2, null = TRUE)
 
   get_theme <- function(theme) {
   if (is.null(theme)) {
@@ -202,16 +211,55 @@ uiStatic <- function(choices = list(),
 
   theme <- get_theme(theme)
 
+  getColourPalette <- function(colourPalette) {
+    if (is.null(colourPalette)) {
+      return(NULL) # Return default theme if theme is NULL
+    }
+    if (!is.null(colourPalette)) {
+      palette_func <- colorRampPalette(c("white", colourPalette[1], colourPalette[2], "black"))
+      palette <- palette_func(8)
 
-  # Create the bslib::bs_theme() call, or use NULL if not provided
-  theme_setting <- if (!is.null(theme)) {
-    paste0("theme = ", theme, ",")
-  } else {
-    ""
+      cp <- sprintf(
+        "bslib::bs_theme(
+    version = 5,
+    preset = 'sandstone',
+    bg = '%s',
+    fg = '%s',
+    primary = '%s',
+    success = '%s',
+    info = '%s',
+    warning = '%s',
+    danger = '%s'
+  )",
+        palette[1], # bg
+        palette[8], # fg
+        palette[3], # primary
+        palette[6], # success
+        palette[5], # info
+        palette[7], # warning
+        "red" # danger
+      )
+      cp <- gsub("\n", "", cp)
+      return(cp)
+    }
   }
+
+  cp <- getColourPalette(colourPalette)
+
+  if(is.null(theme) && !is.null(colourPalette)) {
+    theme = cp
+  } else if (!is.null(theme) && is.null(colourPalette)){
+    theme = theme
+  } else if(is.null(theme) && is.null(colourPalette)){
+    theme = NULL
+  }
+
   c(
-    "ui <- bslib::page_navbar(",
-    theme_setting,
+    paste0(
+      "ui <- bslib::page_navbar(",
+      if (!is.null(theme)){
+        paste0("theme=", theme, ",")}
+    ),
     c(
       pageTitle(title, logo),
       createBackground(background = background, logo = logo),
