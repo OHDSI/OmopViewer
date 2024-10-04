@@ -17,6 +17,16 @@
         bslib::nav_spacer(),
         bslib::nav_item(
           bslib::popover(
+            shiny::icon("download"),
+            shiny::downloadButton(
+              outputId = "download_raw",
+              label = "Download raw data",
+              icon = shiny::icon("download")
+            )
+          )
+        ),
+        bslib::nav_item(
+          bslib::popover(
             shiny::icon("circle-info"),
             shiny::tags$img(
               src = "hds_logo.svg",
@@ -48,6 +58,16 @@
         bslib::nav_spacer(),
         bslib::nav_item(
           bslib::popover(
+            shiny::icon("download"),
+            shiny::downloadButton(
+              outputId = "download_raw",
+              label = "Download raw data",
+              icon = shiny::icon("download")
+            )
+          )
+        ),
+        bslib::nav_item(
+          bslib::popover(
             shiny::icon("circle-info"),
             shiny::tags$img(
               src = "hds_logo.svg",
@@ -75,6 +95,13 @@
       cat(serverStatic(), sep = "\n")
     Output
       server <- function(input, output, session) {
+        # download raw data -----
+        output$download_raw <- shiny::downloadHandler(
+          filename = "results.csv",
+          content = function(file) {
+            omopViewer::exportSummarisedResult(data, fileName = file)
+          }
+        )
       }
 
 # CohortCharacteristics shiny
@@ -100,8 +127,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_characteristics_settings_table_name",
                     label = "Table name",
-                    choices = c("cohort"),
-                    selected = c("cohort"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -111,16 +138,16 @@
                   shiny::selectizeInput(
                     inputId = "summarise_characteristics_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = c("mock database"),
-                    selected = c("mock database"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_characteristics_grouping_cohort_name",
                     label = "Cohort name",
-                    choices = c("asthma", "covid", "tb"),
-                    selected = c("asthma", "covid", "tb"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -141,8 +168,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_characteristics_estimate_name",
                     label = "Estimate name",
-                    choices = c("count", "max", "mean", "median", "min", "percentage", "q25", "q75", "sd"),
-                    selected = c("count", "max", "mean", "median", "min", "percentage", "q25", "q75", "sd"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -150,20 +177,6 @@
               )
             ),
             bslib::navset_card_tab(
-              bslib::nav_panel(
-                title = "Raw",
-                bslib::card(
-                  full_screen = TRUE,
-                  bslib::card_header(
-                    bslib::popover(
-                      shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_characteristics_raw_download", label = "Download summarised_result")
-                    ),
-                    class = "text-end"
-                  ),
-                  DT::dataTableOutput("summarise_characteristics_raw")
-                )
-              ),
               bslib::nav_panel(
                 title = "Tidy",
                 bslib::card(
@@ -177,15 +190,13 @@
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
-                      shiny::checkboxInput(
-                        inputId = "summarise_characteristics_tidy_settings",
-                        label = "Show settings",
-                        value = FALSE
-                      ),
-                      shiny::checkboxInput(
-                        inputId = "summarise_characteristics_tidy_grouping",
-                        label = "Show grouping",
-                        value = TRUE
+                      shiny::selectizeInput(
+                        inputId = "summarise_characteristics_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_characteristics_tidy_pivot",
@@ -322,16 +333,16 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_settings_table_name",
                     label = "Table name",
-                    choices = c("cohort"),
-                    selected = c("cohort"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_settings_cohort_definition_id",
                     label = "Cohort definition id",
-                    choices = c(1, 2, 3),
-                    selected = c(1, 2, 3),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -341,32 +352,32 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = c("mock database"),
-                    selected = c("mock database"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_grouping_cohort_name",
                     label = "Cohort name",
-                    choices = c("asthma", "covid", "tb"),
-                    selected = c("asthma", "covid", "tb"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_grouping_reason",
                     label = "Reason",
-                    choices = c("Initial qualifying events"),
-                    selected = c("Initial qualifying events"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_grouping_reason_id",
                     label = "Reason id",
-                    choices = c("1"),
-                    selected = c("1"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -387,8 +398,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_estimate_name",
                     label = "Estimate name",
-                    choices = c("count"),
-                    selected = c("count"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -396,20 +407,6 @@
               )
             ),
             bslib::navset_card_tab(
-              bslib::nav_panel(
-                title = "Raw",
-                bslib::card(
-                  full_screen = TRUE,
-                  bslib::card_header(
-                    bslib::popover(
-                      shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_attrition_raw_download", label = "Download summarised_result")
-                    ),
-                    class = "text-end"
-                  ),
-                  DT::dataTableOutput("summarise_cohort_attrition_raw")
-                )
-              ),
               bslib::nav_panel(
                 title = "Tidy",
                 bslib::card(
@@ -423,15 +420,13 @@
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
-                      shiny::checkboxInput(
-                        inputId = "summarise_cohort_attrition_tidy_settings",
-                        label = "Show settings",
-                        value = FALSE
-                      ),
-                      shiny::checkboxInput(
-                        inputId = "summarise_cohort_attrition_tidy_grouping",
-                        label = "Show grouping",
-                        value = TRUE
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_attrition_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_cohort_attrition_tidy_pivot",
@@ -535,8 +530,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_count_settings_table_name",
                     label = "Table name",
-                    choices = c("cohort"),
-                    selected = c("cohort"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -546,16 +541,16 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_count_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = c("mock database"),
-                    selected = c("mock database"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_count_grouping_cohort_name",
                     label = "Cohort name",
-                    choices = c("asthma", "covid", "tb"),
-                    selected = c("asthma", "covid", "tb"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -576,8 +571,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_count_estimate_name",
                     label = "Estimate name",
-                    choices = c("count"),
-                    selected = c("count"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -585,20 +580,6 @@
               )
             ),
             bslib::navset_card_tab(
-              bslib::nav_panel(
-                title = "Raw",
-                bslib::card(
-                  full_screen = TRUE,
-                  bslib::card_header(
-                    bslib::popover(
-                      shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_count_raw_download", label = "Download summarised_result")
-                    ),
-                    class = "text-end"
-                  ),
-                  DT::dataTableOutput("summarise_cohort_count_raw")
-                )
-              ),
               bslib::nav_panel(
                 title = "Tidy",
                 bslib::card(
@@ -612,15 +593,13 @@
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
-                      shiny::checkboxInput(
-                        inputId = "summarise_cohort_count_tidy_settings",
-                        label = "Show settings",
-                        value = FALSE
-                      ),
-                      shiny::checkboxInput(
-                        inputId = "summarise_cohort_count_tidy_grouping",
-                        label = "Show grouping",
-                        value = TRUE
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_count_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_cohort_count_tidy_pivot",
@@ -749,24 +728,24 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_overlap_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = c("mock database"),
-                    selected = c("mock database"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_overlap_grouping_cohort_name_reference",
                     label = "Cohort name reference",
-                    choices = c("asthma", "covid", "tb"),
-                    selected = c("asthma", "covid", "tb"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_overlap_grouping_cohort_name_comparator",
                     label = "Cohort name comparator",
-                    choices = c("asthma", "covid", "tb"),
-                    selected = c("asthma", "covid", "tb"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -787,8 +766,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_overlap_estimate_name",
                     label = "Estimate name",
-                    choices = c("count", "percentage"),
-                    selected = c("count", "percentage"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -796,20 +775,6 @@
               )
             ),
             bslib::navset_card_tab(
-              bslib::nav_panel(
-                title = "Raw",
-                bslib::card(
-                  full_screen = TRUE,
-                  bslib::card_header(
-                    bslib::popover(
-                      shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_overlap_raw_download", label = "Download summarised_result")
-                    ),
-                    class = "text-end"
-                  ),
-                  DT::dataTableOutput("summarise_cohort_overlap_raw")
-                )
-              ),
               bslib::nav_panel(
                 title = "Tidy",
                 bslib::card(
@@ -823,15 +788,13 @@
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
-                      shiny::checkboxInput(
-                        inputId = "summarise_cohort_overlap_tidy_settings",
-                        label = "Show settings",
-                        value = FALSE
-                      ),
-                      shiny::checkboxInput(
-                        inputId = "summarise_cohort_overlap_tidy_grouping",
-                        label = "Show grouping",
-                        value = TRUE
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_overlap_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_cohort_overlap_tidy_pivot",
@@ -957,8 +920,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_timing_settings_restrict_to_first_entry",
                     label = "Restrict to first entry",
-                    choices = c(TRUE),
-                    selected = c(TRUE),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -968,24 +931,24 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_timing_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = c("mock database"),
-                    selected = c("mock database"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_timing_grouping_cohort_name_reference",
                     label = "Cohort name reference",
-                    choices = c("asthma", "covid", "tb"),
-                    selected = c("asthma", "covid", "tb"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_timing_grouping_cohort_name_comparator",
                     label = "Cohort name comparator",
-                    choices = c("asthma", "covid", "tb"),
-                    selected = c("asthma", "covid", "tb"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -1006,8 +969,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_timing_estimate_name",
                     label = "Estimate name",
-                    choices = c("count", "density_x", "density_y", "max", "median", "min", "q25", "q75"),
-                    selected = c("count", "density_x", "density_y", "max", "median", "min", "q25", "q75"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -1015,20 +978,6 @@
               )
             ),
             bslib::navset_card_tab(
-              bslib::nav_panel(
-                title = "Raw",
-                bslib::card(
-                  full_screen = TRUE,
-                  bslib::card_header(
-                    bslib::popover(
-                      shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_timing_raw_download", label = "Download summarised_result")
-                    ),
-                    class = "text-end"
-                  ),
-                  DT::dataTableOutput("summarise_cohort_timing_raw")
-                )
-              ),
               bslib::nav_panel(
                 title = "Tidy",
                 bslib::card(
@@ -1042,15 +991,13 @@
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
-                      shiny::checkboxInput(
-                        inputId = "summarise_cohort_timing_tidy_settings",
-                        label = "Show settings",
-                        value = FALSE
-                      ),
-                      shiny::checkboxInput(
-                        inputId = "summarise_cohort_timing_tidy_grouping",
-                        label = "Show grouping",
-                        value = TRUE
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_timing_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_cohort_timing_tidy_pivot",
@@ -1200,24 +1147,24 @@
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_settings_table_name",
                     label = "Table name",
-                    choices = c("condition_occurrence", "drug_exposure"),
-                    selected = c("condition_occurrence", "drug_exposure"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_settings_type",
                     label = "Type",
-                    choices = c("episode", "event"),
-                    selected = c("episode", "event"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_settings_analysis",
                     label = "Analysis",
-                    choices = c("standard"),
-                    selected = c("standard"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -1227,32 +1174,32 @@
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = c("mock database"),
-                    selected = c("mock database"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_grouping_cohort_name",
                     label = "Cohort name",
-                    choices = c("asthma", "covid", "tb"),
-                    selected = c("asthma", "covid", "tb"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_grouping_sex",
                     label = "Sex",
-                    choices = c("Female", "Male", "overall"),
-                    selected = c("Female", "Male", "overall"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_grouping_age_group",
                     label = "Age group",
-                    choices = c("0 to 44", "45 or above", "overall"),
-                    selected = c("0 to 44", "45 or above", "overall"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
@@ -1281,8 +1228,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_estimate_name",
                     label = "Estimate name",
-                    choices = c("count", "percentage"),
-                    selected = c("count", "percentage"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -1290,20 +1237,6 @@
               )
             ),
             bslib::navset_card_tab(
-              bslib::nav_panel(
-                title = "Raw",
-                bslib::card(
-                  full_screen = TRUE,
-                  bslib::card_header(
-                    bslib::popover(
-                      shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_large_scale_characteristics_raw_download", label = "Download summarised_result")
-                    ),
-                    class = "text-end"
-                  ),
-                  DT::dataTableOutput("summarise_large_scale_characteristics_raw")
-                )
-              ),
               bslib::nav_panel(
                 title = "Tidy",
                 bslib::card(
@@ -1317,15 +1250,13 @@
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
-                      shiny::checkboxInput(
-                        inputId = "summarise_large_scale_characteristics_tidy_settings",
-                        label = "Show settings",
-                        value = FALSE
-                      ),
-                      shiny::checkboxInput(
-                        inputId = "summarise_large_scale_characteristics_tidy_grouping",
-                        label = "Show grouping",
-                        value = TRUE
+                      shiny::selectizeInput(
+                        inputId = "summarise_large_scale_characteristics_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_large_scale_characteristics_tidy_pivot",
@@ -1395,6 +1326,16 @@
         bslib::nav_spacer(),
         bslib::nav_item(
           bslib::popover(
+            shiny::icon("download"),
+            shiny::downloadButton(
+              outputId = "download_raw",
+              label = "Download raw data",
+              icon = shiny::icon("download")
+            )
+          )
+        ),
+        bslib::nav_item(
+          bslib::popover(
             shiny::icon("circle-info"),
             shiny::tags$img(
               src = "hds_logo.svg",
@@ -1422,38 +1363,41 @@
       cat(serverStatic(resultTypes = names(getChoices(result))), sep = "\n")
     Output
       server <- function(input, output, session) {
-        # summarise_characteristics -----
-        ## update inputs summarise_characteristics -----
-        updateSelectizeInput(session, "summarise_characteristics_variable_name", choices = unique(visOmopResults::filterSettings(data, result_type == "summarise_characteristics")$variable_name), selected = unique(visOmopResults::filterSettings(data, result_type == "summarise_characteristics")$variable_name), server = TRUE)
-        ## raw summarise_characteristics -----
-        getRawDataSummariseCharacteristics <- shiny::reactive({
-          filterData(data, "summarise_characteristics", input)
-        })
-        output$summarise_characteristics_raw <- DT::renderDT({
-          DT::datatable(getRawDataSummariseCharacteristics(), options = list(scrollX = TRUE))
-        })
-        output$summarise_characteristics_raw_download <- shiny::downloadHandler(
-          filename = "raw_summarise_characteristics.csv",
+        # download raw data -----
+        output$download_raw <- shiny::downloadHandler(
+          filename = "results.csv",
           content = function(file) {
-            getRawDataSummariseCharacteristics() |>
-              readr::write_csv(file = file)
-            # TBR by exportSummarisedResult
+            omopViewer::exportSummarisedResult(data, fileName = file)
           }
         )
+        # fill selectise variables ----
+        shiny::observe({
+          choices <- omopViewer::getChoices(data, flatten = TRUE)
+          for (k in seq_along(choices)) {
+            shiny::updateSelectizeInput(
+              session,
+              inputId = names(choices)[k],
+              choices = choices[[k]],
+              selected = choices[[k]]
+            )
+          }
+        })
+        # summarise_characteristics -----
         ## tidy summarise_characteristics -----
         getTidyDataSummariseCharacteristics <- shiny::reactive({
           data |>
             filterData("summarise_characteristics", input) |>
             tidyData(
-              prefixSet = "set:",
-              prefixGroup = "group: ",
-              showSettings = input$summarise_characteristics_tidy_settings,
-              showgrouping = input$summarise_characteristics_tidy_grouping,
+              cols = input$summarise_characteristics_tidy_columns,
               pivot = input$summarise_characteristics_tidy_pivot
             )
         })
         output$summarise_characteristics_tidy <- DT::renderDT({
-          DT::datatable(getTidyDataSummariseCharacteristics(), options = list(scrollX = TRUE))
+          DT::datatable(
+            getTidyDataSummariseCharacteristics(),
+            options = list(scrollX = TRUE),
+            rownames = FALSE
+          )
         })
         output$summarise_characteristics_tidy_download <- shiny::downloadHandler(
           filename = "tidy_summarise_characteristics.csv",
@@ -1514,37 +1458,21 @@
       
       
         # summarise_cohort_attrition -----
-        ## update inputs summarise_cohort_attrition -----
-        updateSelectizeInput(session, "summarise_cohort_attrition_variable_name", choices = unique(visOmopResults::filterSettings(data, result_type == "summarise_cohort_attrition")$variable_name), selected = unique(visOmopResults::filterSettings(data, result_type == "summarise_cohort_attrition")$variable_name), server = TRUE)
-        ## raw summarise_cohort_attrition -----
-        getRawDataSummariseCohortAttrition <- shiny::reactive({
-          filterData(data, "summarise_cohort_attrition", input)
-        })
-        output$summarise_cohort_attrition_raw <- DT::renderDT({
-          DT::datatable(getRawDataSummariseCohortAttrition(), options = list(scrollX = TRUE))
-        })
-        output$summarise_cohort_attrition_raw_download <- shiny::downloadHandler(
-          filename = "raw_summarise_cohort_attrition.csv",
-          content = function(file) {
-            getRawDataSummariseCohortAttrition() |>
-              readr::write_csv(file = file)
-            # TBR by exportSummarisedResult
-          }
-        )
         ## tidy summarise_cohort_attrition -----
         getTidyDataSummariseCohortAttrition <- shiny::reactive({
           data |>
             filterData("summarise_cohort_attrition", input) |>
             tidyData(
-              prefixSet = "set:",
-              prefixGroup = "group: ",
-              showSettings = input$summarise_cohort_attrition_tidy_settings,
-              showgrouping = input$summarise_cohort_attrition_tidy_grouping,
+              cols = input$summarise_cohort_attrition_tidy_columns,
               pivot = input$summarise_cohort_attrition_tidy_pivot
             )
         })
         output$summarise_cohort_attrition_tidy <- DT::renderDT({
-          DT::datatable(getTidyDataSummariseCohortAttrition(), options = list(scrollX = TRUE))
+          DT::datatable(
+            getTidyDataSummariseCohortAttrition(),
+            options = list(scrollX = TRUE),
+            rownames = FALSE
+          )
         })
         output$summarise_cohort_attrition_tidy_download <- shiny::downloadHandler(
           filename = "tidy_summarise_cohort_attrition.csv",
@@ -1600,37 +1528,21 @@
       
       
         # summarise_cohort_count -----
-        ## update inputs summarise_cohort_count -----
-        updateSelectizeInput(session, "summarise_cohort_count_variable_name", choices = unique(visOmopResults::filterSettings(data, result_type == "summarise_cohort_count")$variable_name), selected = unique(visOmopResults::filterSettings(data, result_type == "summarise_cohort_count")$variable_name), server = TRUE)
-        ## raw summarise_cohort_count -----
-        getRawDataSummariseCohortCount <- shiny::reactive({
-          filterData(data, "summarise_cohort_count", input)
-        })
-        output$summarise_cohort_count_raw <- DT::renderDT({
-          DT::datatable(getRawDataSummariseCohortCount(), options = list(scrollX = TRUE))
-        })
-        output$summarise_cohort_count_raw_download <- shiny::downloadHandler(
-          filename = "raw_summarise_cohort_count.csv",
-          content = function(file) {
-            getRawDataSummariseCohortCount() |>
-              readr::write_csv(file = file)
-            # TBR by exportSummarisedResult
-          }
-        )
         ## tidy summarise_cohort_count -----
         getTidyDataSummariseCohortCount <- shiny::reactive({
           data |>
             filterData("summarise_cohort_count", input) |>
             tidyData(
-              prefixSet = "set:",
-              prefixGroup = "group: ",
-              showSettings = input$summarise_cohort_count_tidy_settings,
-              showgrouping = input$summarise_cohort_count_tidy_grouping,
+              cols = input$summarise_cohort_count_tidy_columns,
               pivot = input$summarise_cohort_count_tidy_pivot
             )
         })
         output$summarise_cohort_count_tidy <- DT::renderDT({
-          DT::datatable(getTidyDataSummariseCohortCount(), options = list(scrollX = TRUE))
+          DT::datatable(
+            getTidyDataSummariseCohortCount(),
+            options = list(scrollX = TRUE),
+            rownames = FALSE
+          )
         })
         output$summarise_cohort_count_tidy_download <- shiny::downloadHandler(
           filename = "tidy_summarise_cohort_count.csv",
@@ -1690,37 +1602,21 @@
       
       
         # summarise_cohort_overlap -----
-        ## update inputs summarise_cohort_overlap -----
-        updateSelectizeInput(session, "summarise_cohort_overlap_variable_name", choices = unique(visOmopResults::filterSettings(data, result_type == "summarise_cohort_overlap")$variable_name), selected = unique(visOmopResults::filterSettings(data, result_type == "summarise_cohort_overlap")$variable_name), server = TRUE)
-        ## raw summarise_cohort_overlap -----
-        getRawDataSummariseCohortOverlap <- shiny::reactive({
-          filterData(data, "summarise_cohort_overlap", input)
-        })
-        output$summarise_cohort_overlap_raw <- DT::renderDT({
-          DT::datatable(getRawDataSummariseCohortOverlap(), options = list(scrollX = TRUE))
-        })
-        output$summarise_cohort_overlap_raw_download <- shiny::downloadHandler(
-          filename = "raw_summarise_cohort_overlap.csv",
-          content = function(file) {
-            getRawDataSummariseCohortOverlap() |>
-              readr::write_csv(file = file)
-            # TBR by exportSummarisedResult
-          }
-        )
         ## tidy summarise_cohort_overlap -----
         getTidyDataSummariseCohortOverlap <- shiny::reactive({
           data |>
             filterData("summarise_cohort_overlap", input) |>
             tidyData(
-              prefixSet = "set:",
-              prefixGroup = "group: ",
-              showSettings = input$summarise_cohort_overlap_tidy_settings,
-              showgrouping = input$summarise_cohort_overlap_tidy_grouping,
+              cols = input$summarise_cohort_overlap_tidy_columns,
               pivot = input$summarise_cohort_overlap_tidy_pivot
             )
         })
         output$summarise_cohort_overlap_tidy <- DT::renderDT({
-          DT::datatable(getTidyDataSummariseCohortOverlap(), options = list(scrollX = TRUE))
+          DT::datatable(
+            getTidyDataSummariseCohortOverlap(),
+            options = list(scrollX = TRUE),
+            rownames = FALSE
+          )
         })
         output$summarise_cohort_overlap_tidy_download <- shiny::downloadHandler(
           filename = "tidy_summarise_cohort_overlap.csv",
@@ -1780,37 +1676,21 @@
       
       
         # summarise_cohort_timing -----
-        ## update inputs summarise_cohort_timing -----
-        updateSelectizeInput(session, "summarise_cohort_timing_variable_name", choices = unique(visOmopResults::filterSettings(data, result_type == "summarise_cohort_timing")$variable_name), selected = unique(visOmopResults::filterSettings(data, result_type == "summarise_cohort_timing")$variable_name), server = TRUE)
-        ## raw summarise_cohort_timing -----
-        getRawDataSummariseCohortTiming <- shiny::reactive({
-          filterData(data, "summarise_cohort_timing", input)
-        })
-        output$summarise_cohort_timing_raw <- DT::renderDT({
-          DT::datatable(getRawDataSummariseCohortTiming(), options = list(scrollX = TRUE))
-        })
-        output$summarise_cohort_timing_raw_download <- shiny::downloadHandler(
-          filename = "raw_summarise_cohort_timing.csv",
-          content = function(file) {
-            getRawDataSummariseCohortTiming() |>
-              readr::write_csv(file = file)
-            # TBR by exportSummarisedResult
-          }
-        )
         ## tidy summarise_cohort_timing -----
         getTidyDataSummariseCohortTiming <- shiny::reactive({
           data |>
             filterData("summarise_cohort_timing", input) |>
             tidyData(
-              prefixSet = "set:",
-              prefixGroup = "group: ",
-              showSettings = input$summarise_cohort_timing_tidy_settings,
-              showgrouping = input$summarise_cohort_timing_tidy_grouping,
+              cols = input$summarise_cohort_timing_tidy_columns,
               pivot = input$summarise_cohort_timing_tidy_pivot
             )
         })
         output$summarise_cohort_timing_tidy <- DT::renderDT({
-          DT::datatable(getTidyDataSummariseCohortTiming(), options = list(scrollX = TRUE))
+          DT::datatable(
+            getTidyDataSummariseCohortTiming(),
+            options = list(scrollX = TRUE),
+            rownames = FALSE
+          )
         })
         output$summarise_cohort_timing_tidy_download <- shiny::downloadHandler(
           filename = "tidy_summarise_cohort_timing.csv",
@@ -1873,38 +1753,21 @@
       
       
         # summarise_large_scale_characteristics -----
-        ## update inputs summarise_large_scale_characteristics -----
-        updateSelectizeInput(session, "summarise_large_scale_characteristics_variable_name", choices = unique(visOmopResults::filterSettings(data, result_type == "summarise_large_scale_characteristics")$variable_name), selected = unique(visOmopResults::filterSettings(data, result_type == "summarise_large_scale_characteristics")$variable_name), server = TRUE)
-        updateSelectizeInput(session, "summarise_large_scale_characteristics_grouping_concept_id", choices = unique(visOmopResults::filterSettings(data, result_type == "summarise_large_scale_characteristics")$additional_level), selected = unique(visOmopResults::filterSettings(data, result_type == "summarise_large_scale_characteristics")$additional_level), server = TRUE)
-        ## raw summarise_large_scale_characteristics -----
-        getRawDataSummariseLargeScaleCharacteristics <- shiny::reactive({
-          filterData(data, "summarise_large_scale_characteristics", input)
-        })
-        output$summarise_large_scale_characteristics_raw <- DT::renderDT({
-          DT::datatable(getRawDataSummariseLargeScaleCharacteristics(), options = list(scrollX = TRUE))
-        })
-        output$summarise_large_scale_characteristics_raw_download <- shiny::downloadHandler(
-          filename = "raw_summarise_large_scale_characteristics.csv",
-          content = function(file) {
-            getRawDataSummariseLargeScaleCharacteristics() |>
-              readr::write_csv(file = file)
-            # TBR by exportSummarisedResult
-          }
-        )
         ## tidy summarise_large_scale_characteristics -----
         getTidyDataSummariseLargeScaleCharacteristics <- shiny::reactive({
           data |>
             filterData("summarise_large_scale_characteristics", input) |>
             tidyData(
-              prefixSet = "set:",
-              prefixGroup = "group: ",
-              showSettings = input$summarise_large_scale_characteristics_tidy_settings,
-              showgrouping = input$summarise_large_scale_characteristics_tidy_grouping,
+              cols = input$summarise_large_scale_characteristics_tidy_columns,
               pivot = input$summarise_large_scale_characteristics_tidy_pivot
             )
         })
         output$summarise_large_scale_characteristics_tidy <- DT::renderDT({
-          DT::datatable(getTidyDataSummariseLargeScaleCharacteristics(), options = list(scrollX = TRUE))
+          DT::datatable(
+            getTidyDataSummariseLargeScaleCharacteristics(),
+            options = list(scrollX = TRUE),
+            rownames = FALSE
+          )
         })
         output$summarise_large_scale_characteristics_tidy_download <- shiny::downloadHandler(
           filename = "tidy_summarise_large_scale_characteristics.csv",
@@ -1941,6 +1804,29 @@
 ---
 
     Code
+      cat(x, sep = "\n")
+    Output
+      # Generated by omopViewer 0.0.0.900
+      # Be careful editing this file
+      
+      library(bslib)
+      library(shiny)
+      library(DT)
+      library(sortable)
+      library(gt)
+      library(DiagrammeR)
+      library(omopViewer)
+      library(readr)
+      library(CohortCharacteristics)
+      library(ggplot2)
+      library(here)
+      
+      data <- omopViewer::importSummarisedResult(here::here("data")) |>
+        omopViewer::correctSettings()
+
+---
+
+    Code
       cat(uiStatic(choices = getChoices(result), summary = capture.output(summary(
         result), type = "message"), logo = NULL), sep = "\n")
     Message
@@ -1966,8 +1852,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_characteristics_settings_table_name",
                     label = "Table name",
-                    choices = c("cohort"),
-                    selected = c("cohort"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -1977,16 +1863,16 @@
                   shiny::selectizeInput(
                     inputId = "summarise_characteristics_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = c("mock database"),
-                    selected = c("mock database"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_characteristics_grouping_cohort_name",
                     label = "Cohort name",
-                    choices = c("asthma", "covid", "tb"),
-                    selected = c("asthma", "covid", "tb"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -2007,8 +1893,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_characteristics_estimate_name",
                     label = "Estimate name",
-                    choices = c("count", "max", "mean", "median", "min", "percentage", "q25", "q75", "sd"),
-                    selected = c("count", "max", "mean", "median", "min", "percentage", "q25", "q75", "sd"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -2016,20 +1902,6 @@
               )
             ),
             bslib::navset_card_tab(
-              bslib::nav_panel(
-                title = "Raw",
-                bslib::card(
-                  full_screen = TRUE,
-                  bslib::card_header(
-                    bslib::popover(
-                      shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_characteristics_raw_download", label = "Download summarised_result")
-                    ),
-                    class = "text-end"
-                  ),
-                  DT::dataTableOutput("summarise_characteristics_raw")
-                )
-              ),
               bslib::nav_panel(
                 title = "Tidy",
                 bslib::card(
@@ -2043,15 +1915,13 @@
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
-                      shiny::checkboxInput(
-                        inputId = "summarise_characteristics_tidy_settings",
-                        label = "Show settings",
-                        value = FALSE
-                      ),
-                      shiny::checkboxInput(
-                        inputId = "summarise_characteristics_tidy_grouping",
-                        label = "Show grouping",
-                        value = TRUE
+                      shiny::selectizeInput(
+                        inputId = "summarise_characteristics_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_characteristics_tidy_pivot",
@@ -2188,16 +2058,16 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_settings_table_name",
                     label = "Table name",
-                    choices = c("cohort"),
-                    selected = c("cohort"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_settings_cohort_definition_id",
                     label = "Cohort definition id",
-                    choices = c(1, 2, 3),
-                    selected = c(1, 2, 3),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -2207,32 +2077,32 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = c("mock database"),
-                    selected = c("mock database"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_grouping_cohort_name",
                     label = "Cohort name",
-                    choices = c("asthma", "covid", "tb"),
-                    selected = c("asthma", "covid", "tb"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_grouping_reason",
                     label = "Reason",
-                    choices = c("Initial qualifying events"),
-                    selected = c("Initial qualifying events"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_grouping_reason_id",
                     label = "Reason id",
-                    choices = c("1"),
-                    selected = c("1"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -2253,8 +2123,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_estimate_name",
                     label = "Estimate name",
-                    choices = c("count"),
-                    selected = c("count"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -2262,20 +2132,6 @@
               )
             ),
             bslib::navset_card_tab(
-              bslib::nav_panel(
-                title = "Raw",
-                bslib::card(
-                  full_screen = TRUE,
-                  bslib::card_header(
-                    bslib::popover(
-                      shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_attrition_raw_download", label = "Download summarised_result")
-                    ),
-                    class = "text-end"
-                  ),
-                  DT::dataTableOutput("summarise_cohort_attrition_raw")
-                )
-              ),
               bslib::nav_panel(
                 title = "Tidy",
                 bslib::card(
@@ -2289,15 +2145,13 @@
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
-                      shiny::checkboxInput(
-                        inputId = "summarise_cohort_attrition_tidy_settings",
-                        label = "Show settings",
-                        value = FALSE
-                      ),
-                      shiny::checkboxInput(
-                        inputId = "summarise_cohort_attrition_tidy_grouping",
-                        label = "Show grouping",
-                        value = TRUE
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_attrition_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_cohort_attrition_tidy_pivot",
@@ -2401,8 +2255,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_count_settings_table_name",
                     label = "Table name",
-                    choices = c("cohort"),
-                    selected = c("cohort"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -2412,16 +2266,16 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_count_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = c("mock database"),
-                    selected = c("mock database"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_count_grouping_cohort_name",
                     label = "Cohort name",
-                    choices = c("asthma", "covid", "tb"),
-                    selected = c("asthma", "covid", "tb"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -2442,8 +2296,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_count_estimate_name",
                     label = "Estimate name",
-                    choices = c("count"),
-                    selected = c("count"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -2451,20 +2305,6 @@
               )
             ),
             bslib::navset_card_tab(
-              bslib::nav_panel(
-                title = "Raw",
-                bslib::card(
-                  full_screen = TRUE,
-                  bslib::card_header(
-                    bslib::popover(
-                      shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_count_raw_download", label = "Download summarised_result")
-                    ),
-                    class = "text-end"
-                  ),
-                  DT::dataTableOutput("summarise_cohort_count_raw")
-                )
-              ),
               bslib::nav_panel(
                 title = "Tidy",
                 bslib::card(
@@ -2478,15 +2318,13 @@
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
-                      shiny::checkboxInput(
-                        inputId = "summarise_cohort_count_tidy_settings",
-                        label = "Show settings",
-                        value = FALSE
-                      ),
-                      shiny::checkboxInput(
-                        inputId = "summarise_cohort_count_tidy_grouping",
-                        label = "Show grouping",
-                        value = TRUE
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_count_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_cohort_count_tidy_pivot",
@@ -2615,24 +2453,24 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_overlap_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = c("mock database"),
-                    selected = c("mock database"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_overlap_grouping_cohort_name_reference",
                     label = "Cohort name reference",
-                    choices = c("asthma", "covid", "tb"),
-                    selected = c("asthma", "covid", "tb"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_overlap_grouping_cohort_name_comparator",
                     label = "Cohort name comparator",
-                    choices = c("asthma", "covid", "tb"),
-                    selected = c("asthma", "covid", "tb"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -2653,8 +2491,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_overlap_estimate_name",
                     label = "Estimate name",
-                    choices = c("count", "percentage"),
-                    selected = c("count", "percentage"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -2662,20 +2500,6 @@
               )
             ),
             bslib::navset_card_tab(
-              bslib::nav_panel(
-                title = "Raw",
-                bslib::card(
-                  full_screen = TRUE,
-                  bslib::card_header(
-                    bslib::popover(
-                      shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_overlap_raw_download", label = "Download summarised_result")
-                    ),
-                    class = "text-end"
-                  ),
-                  DT::dataTableOutput("summarise_cohort_overlap_raw")
-                )
-              ),
               bslib::nav_panel(
                 title = "Tidy",
                 bslib::card(
@@ -2689,15 +2513,13 @@
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
-                      shiny::checkboxInput(
-                        inputId = "summarise_cohort_overlap_tidy_settings",
-                        label = "Show settings",
-                        value = FALSE
-                      ),
-                      shiny::checkboxInput(
-                        inputId = "summarise_cohort_overlap_tidy_grouping",
-                        label = "Show grouping",
-                        value = TRUE
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_overlap_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_cohort_overlap_tidy_pivot",
@@ -2823,8 +2645,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_timing_settings_restrict_to_first_entry",
                     label = "Restrict to first entry",
-                    choices = c(TRUE),
-                    selected = c(TRUE),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -2834,24 +2656,24 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_timing_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = c("mock database"),
-                    selected = c("mock database"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_timing_grouping_cohort_name_reference",
                     label = "Cohort name reference",
-                    choices = c("asthma", "covid", "tb"),
-                    selected = c("asthma", "covid", "tb"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_timing_grouping_cohort_name_comparator",
                     label = "Cohort name comparator",
-                    choices = c("asthma", "covid", "tb"),
-                    selected = c("asthma", "covid", "tb"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -2872,8 +2694,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_timing_estimate_name",
                     label = "Estimate name",
-                    choices = c("count", "density_x", "density_y", "max", "median", "min", "q25", "q75"),
-                    selected = c("count", "density_x", "density_y", "max", "median", "min", "q25", "q75"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -2881,20 +2703,6 @@
               )
             ),
             bslib::navset_card_tab(
-              bslib::nav_panel(
-                title = "Raw",
-                bslib::card(
-                  full_screen = TRUE,
-                  bslib::card_header(
-                    bslib::popover(
-                      shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_timing_raw_download", label = "Download summarised_result")
-                    ),
-                    class = "text-end"
-                  ),
-                  DT::dataTableOutput("summarise_cohort_timing_raw")
-                )
-              ),
               bslib::nav_panel(
                 title = "Tidy",
                 bslib::card(
@@ -2908,15 +2716,13 @@
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
-                      shiny::checkboxInput(
-                        inputId = "summarise_cohort_timing_tidy_settings",
-                        label = "Show settings",
-                        value = FALSE
-                      ),
-                      shiny::checkboxInput(
-                        inputId = "summarise_cohort_timing_tidy_grouping",
-                        label = "Show grouping",
-                        value = TRUE
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_timing_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_cohort_timing_tidy_pivot",
@@ -3066,24 +2872,24 @@
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_settings_table_name",
                     label = "Table name",
-                    choices = c("condition_occurrence", "drug_exposure"),
-                    selected = c("condition_occurrence", "drug_exposure"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_settings_type",
                     label = "Type",
-                    choices = c("episode", "event"),
-                    selected = c("episode", "event"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_settings_analysis",
                     label = "Analysis",
-                    choices = c("standard"),
-                    selected = c("standard"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -3093,32 +2899,32 @@
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = c("mock database"),
-                    selected = c("mock database"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_grouping_cohort_name",
                     label = "Cohort name",
-                    choices = c("asthma", "covid", "tb"),
-                    selected = c("asthma", "covid", "tb"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_grouping_sex",
                     label = "Sex",
-                    choices = c("Female", "Male", "overall"),
-                    selected = c("Female", "Male", "overall"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_grouping_age_group",
                     label = "Age group",
-                    choices = c("0 to 44", "45 or above", "overall"),
-                    selected = c("0 to 44", "45 or above", "overall"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
@@ -3147,8 +2953,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_estimate_name",
                     label = "Estimate name",
-                    choices = c("count", "percentage"),
-                    selected = c("count", "percentage"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -3156,20 +2962,6 @@
               )
             ),
             bslib::navset_card_tab(
-              bslib::nav_panel(
-                title = "Raw",
-                bslib::card(
-                  full_screen = TRUE,
-                  bslib::card_header(
-                    bslib::popover(
-                      shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_large_scale_characteristics_raw_download", label = "Download summarised_result")
-                    ),
-                    class = "text-end"
-                  ),
-                  DT::dataTableOutput("summarise_large_scale_characteristics_raw")
-                )
-              ),
               bslib::nav_panel(
                 title = "Tidy",
                 bslib::card(
@@ -3183,15 +2975,13 @@
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
-                      shiny::checkboxInput(
-                        inputId = "summarise_large_scale_characteristics_tidy_settings",
-                        label = "Show settings",
-                        value = FALSE
-                      ),
-                      shiny::checkboxInput(
-                        inputId = "summarise_large_scale_characteristics_tidy_grouping",
-                        label = "Show grouping",
-                        value = TRUE
+                      shiny::selectizeInput(
+                        inputId = "summarise_large_scale_characteristics_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_large_scale_characteristics_tidy_pivot",
@@ -3261,6 +3051,16 @@
         bslib::nav_spacer(),
         bslib::nav_item(
           bslib::popover(
+            shiny::icon("download"),
+            shiny::downloadButton(
+              outputId = "download_raw",
+              label = "Download raw data",
+              icon = shiny::icon("download")
+            )
+          )
+        ),
+        bslib::nav_item(
+          bslib::popover(
             shiny::icon("circle-info"),
             shiny::tags$img(
               src = "hds_logo.svg",
@@ -3319,8 +3119,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_characteristics_settings_table_name",
                     label = "Table name",
-                    choices = c("cohort"),
-                    selected = c("cohort"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -3330,16 +3130,16 @@
                   shiny::selectizeInput(
                     inputId = "summarise_characteristics_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = c("mock database"),
-                    selected = c("mock database"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_characteristics_grouping_cohort_name",
                     label = "Cohort name",
-                    choices = c("asthma", "covid", "tb"),
-                    selected = c("asthma", "covid", "tb"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -3360,8 +3160,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_characteristics_estimate_name",
                     label = "Estimate name",
-                    choices = c("count", "max", "mean", "median", "min", "percentage", "q25", "q75", "sd"),
-                    selected = c("count", "max", "mean", "median", "min", "percentage", "q25", "q75", "sd"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -3369,20 +3169,6 @@
               )
             ),
             bslib::navset_card_tab(
-              bslib::nav_panel(
-                title = "Raw",
-                bslib::card(
-                  full_screen = TRUE,
-                  bslib::card_header(
-                    bslib::popover(
-                      shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_characteristics_raw_download", label = "Download summarised_result")
-                    ),
-                    class = "text-end"
-                  ),
-                  DT::dataTableOutput("summarise_characteristics_raw")
-                )
-              ),
               bslib::nav_panel(
                 title = "Tidy",
                 bslib::card(
@@ -3396,15 +3182,13 @@
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
-                      shiny::checkboxInput(
-                        inputId = "summarise_characteristics_tidy_settings",
-                        label = "Show settings",
-                        value = FALSE
-                      ),
-                      shiny::checkboxInput(
-                        inputId = "summarise_characteristics_tidy_grouping",
-                        label = "Show grouping",
-                        value = TRUE
+                      shiny::selectizeInput(
+                        inputId = "summarise_characteristics_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_characteristics_tidy_pivot",
@@ -3541,16 +3325,16 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_settings_table_name",
                     label = "Table name",
-                    choices = c("cohort"),
-                    selected = c("cohort"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_settings_cohort_definition_id",
                     label = "Cohort definition id",
-                    choices = c(1, 2, 3),
-                    selected = c(1, 2, 3),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -3560,32 +3344,32 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = c("mock database"),
-                    selected = c("mock database"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_grouping_cohort_name",
                     label = "Cohort name",
-                    choices = c("asthma", "covid", "tb"),
-                    selected = c("asthma", "covid", "tb"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_grouping_reason",
                     label = "Reason",
-                    choices = c("Initial qualifying events"),
-                    selected = c("Initial qualifying events"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_grouping_reason_id",
                     label = "Reason id",
-                    choices = c("1"),
-                    selected = c("1"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -3606,8 +3390,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_estimate_name",
                     label = "Estimate name",
-                    choices = c("count"),
-                    selected = c("count"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -3615,20 +3399,6 @@
               )
             ),
             bslib::navset_card_tab(
-              bslib::nav_panel(
-                title = "Raw",
-                bslib::card(
-                  full_screen = TRUE,
-                  bslib::card_header(
-                    bslib::popover(
-                      shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_attrition_raw_download", label = "Download summarised_result")
-                    ),
-                    class = "text-end"
-                  ),
-                  DT::dataTableOutput("summarise_cohort_attrition_raw")
-                )
-              ),
               bslib::nav_panel(
                 title = "Tidy",
                 bslib::card(
@@ -3642,15 +3412,13 @@
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
-                      shiny::checkboxInput(
-                        inputId = "summarise_cohort_attrition_tidy_settings",
-                        label = "Show settings",
-                        value = FALSE
-                      ),
-                      shiny::checkboxInput(
-                        inputId = "summarise_cohort_attrition_tidy_grouping",
-                        label = "Show grouping",
-                        value = TRUE
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_attrition_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_cohort_attrition_tidy_pivot",
@@ -3754,8 +3522,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_count_settings_table_name",
                     label = "Table name",
-                    choices = c("cohort"),
-                    selected = c("cohort"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -3765,16 +3533,16 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_count_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = c("mock database"),
-                    selected = c("mock database"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_count_grouping_cohort_name",
                     label = "Cohort name",
-                    choices = c("asthma", "covid", "tb"),
-                    selected = c("asthma", "covid", "tb"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -3795,8 +3563,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_count_estimate_name",
                     label = "Estimate name",
-                    choices = c("count"),
-                    selected = c("count"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -3804,20 +3572,6 @@
               )
             ),
             bslib::navset_card_tab(
-              bslib::nav_panel(
-                title = "Raw",
-                bslib::card(
-                  full_screen = TRUE,
-                  bslib::card_header(
-                    bslib::popover(
-                      shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_count_raw_download", label = "Download summarised_result")
-                    ),
-                    class = "text-end"
-                  ),
-                  DT::dataTableOutput("summarise_cohort_count_raw")
-                )
-              ),
               bslib::nav_panel(
                 title = "Tidy",
                 bslib::card(
@@ -3831,15 +3585,13 @@
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
-                      shiny::checkboxInput(
-                        inputId = "summarise_cohort_count_tidy_settings",
-                        label = "Show settings",
-                        value = FALSE
-                      ),
-                      shiny::checkboxInput(
-                        inputId = "summarise_cohort_count_tidy_grouping",
-                        label = "Show grouping",
-                        value = TRUE
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_count_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_cohort_count_tidy_pivot",
@@ -3968,24 +3720,24 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_overlap_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = c("mock database"),
-                    selected = c("mock database"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_overlap_grouping_cohort_name_reference",
                     label = "Cohort name reference",
-                    choices = c("asthma", "covid", "tb"),
-                    selected = c("asthma", "covid", "tb"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_overlap_grouping_cohort_name_comparator",
                     label = "Cohort name comparator",
-                    choices = c("asthma", "covid", "tb"),
-                    selected = c("asthma", "covid", "tb"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -4006,8 +3758,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_overlap_estimate_name",
                     label = "Estimate name",
-                    choices = c("count", "percentage"),
-                    selected = c("count", "percentage"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -4015,20 +3767,6 @@
               )
             ),
             bslib::navset_card_tab(
-              bslib::nav_panel(
-                title = "Raw",
-                bslib::card(
-                  full_screen = TRUE,
-                  bslib::card_header(
-                    bslib::popover(
-                      shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_overlap_raw_download", label = "Download summarised_result")
-                    ),
-                    class = "text-end"
-                  ),
-                  DT::dataTableOutput("summarise_cohort_overlap_raw")
-                )
-              ),
               bslib::nav_panel(
                 title = "Tidy",
                 bslib::card(
@@ -4042,15 +3780,13 @@
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
-                      shiny::checkboxInput(
-                        inputId = "summarise_cohort_overlap_tidy_settings",
-                        label = "Show settings",
-                        value = FALSE
-                      ),
-                      shiny::checkboxInput(
-                        inputId = "summarise_cohort_overlap_tidy_grouping",
-                        label = "Show grouping",
-                        value = TRUE
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_overlap_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_cohort_overlap_tidy_pivot",
@@ -4176,8 +3912,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_timing_settings_restrict_to_first_entry",
                     label = "Restrict to first entry",
-                    choices = c(TRUE),
-                    selected = c(TRUE),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -4187,24 +3923,24 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_timing_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = c("mock database"),
-                    selected = c("mock database"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_timing_grouping_cohort_name_reference",
                     label = "Cohort name reference",
-                    choices = c("asthma", "covid", "tb"),
-                    selected = c("asthma", "covid", "tb"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_timing_grouping_cohort_name_comparator",
                     label = "Cohort name comparator",
-                    choices = c("asthma", "covid", "tb"),
-                    selected = c("asthma", "covid", "tb"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -4225,8 +3961,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_timing_estimate_name",
                     label = "Estimate name",
-                    choices = c("count", "density_x", "density_y", "max", "median", "min", "q25", "q75"),
-                    selected = c("count", "density_x", "density_y", "max", "median", "min", "q25", "q75"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -4234,20 +3970,6 @@
               )
             ),
             bslib::navset_card_tab(
-              bslib::nav_panel(
-                title = "Raw",
-                bslib::card(
-                  full_screen = TRUE,
-                  bslib::card_header(
-                    bslib::popover(
-                      shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_cohort_timing_raw_download", label = "Download summarised_result")
-                    ),
-                    class = "text-end"
-                  ),
-                  DT::dataTableOutput("summarise_cohort_timing_raw")
-                )
-              ),
               bslib::nav_panel(
                 title = "Tidy",
                 bslib::card(
@@ -4261,15 +3983,13 @@
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
-                      shiny::checkboxInput(
-                        inputId = "summarise_cohort_timing_tidy_settings",
-                        label = "Show settings",
-                        value = FALSE
-                      ),
-                      shiny::checkboxInput(
-                        inputId = "summarise_cohort_timing_tidy_grouping",
-                        label = "Show grouping",
-                        value = TRUE
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_timing_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_cohort_timing_tidy_pivot",
@@ -4419,24 +4139,24 @@
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_settings_table_name",
                     label = "Table name",
-                    choices = c("condition_occurrence", "drug_exposure"),
-                    selected = c("condition_occurrence", "drug_exposure"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_settings_type",
                     label = "Type",
-                    choices = c("episode", "event"),
-                    selected = c("episode", "event"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_settings_analysis",
                     label = "Analysis",
-                    choices = c("standard"),
-                    selected = c("standard"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -4446,32 +4166,32 @@
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = c("mock database"),
-                    selected = c("mock database"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_grouping_cohort_name",
                     label = "Cohort name",
-                    choices = c("asthma", "covid", "tb"),
-                    selected = c("asthma", "covid", "tb"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_grouping_sex",
                     label = "Sex",
-                    choices = c("Female", "Male", "overall"),
-                    selected = c("Female", "Male", "overall"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_grouping_age_group",
                     label = "Age group",
-                    choices = c("0 to 44", "45 or above", "overall"),
-                    selected = c("0 to 44", "45 or above", "overall"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
@@ -4500,8 +4220,8 @@
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_estimate_name",
                     label = "Estimate name",
-                    choices = c("count", "percentage"),
-                    selected = c("count", "percentage"),
+                    choices = NULL,
+                    selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   )
@@ -4509,20 +4229,6 @@
               )
             ),
             bslib::navset_card_tab(
-              bslib::nav_panel(
-                title = "Raw",
-                bslib::card(
-                  full_screen = TRUE,
-                  bslib::card_header(
-                    bslib::popover(
-                      shiny::icon("download"),
-                      shiny::downloadButton(outputId = "summarise_large_scale_characteristics_raw_download", label = "Download summarised_result")
-                    ),
-                    class = "text-end"
-                  ),
-                  DT::dataTableOutput("summarise_large_scale_characteristics_raw")
-                )
-              ),
               bslib::nav_panel(
                 title = "Tidy",
                 bslib::card(
@@ -4536,15 +4242,13 @@
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
-                      shiny::checkboxInput(
-                        inputId = "summarise_large_scale_characteristics_tidy_settings",
-                        label = "Show settings",
-                        value = FALSE
-                      ),
-                      shiny::checkboxInput(
-                        inputId = "summarise_large_scale_characteristics_tidy_grouping",
-                        label = "Show grouping",
-                        value = TRUE
+                      shiny::selectizeInput(
+                        inputId = "summarise_large_scale_characteristics_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_large_scale_characteristics_tidy_pivot",
@@ -4612,6 +4316,16 @@
           )
         ),
         bslib::nav_spacer(),
+        bslib::nav_item(
+          bslib::popover(
+            shiny::icon("download"),
+            shiny::downloadButton(
+              outputId = "download_raw",
+              label = "Download raw data",
+              icon = shiny::icon("download")
+            )
+          )
+        ),
         bslib::nav_item(
           bslib::popover(
             shiny::icon("circle-info"),
@@ -4684,6 +4398,16 @@
           )
         ),
         bslib::nav_spacer(),
+        bslib::nav_item(
+          bslib::popover(
+            shiny::icon("download"),
+            shiny::downloadButton(
+              outputId = "download_raw",
+              label = "Download raw data",
+              icon = shiny::icon("download")
+            )
+          )
+        ),
         bslib::nav_item(
           bslib::popover(
             shiny::icon("circle-info"),

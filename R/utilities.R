@@ -37,3 +37,4 @@ validateDirectory <- function(directory) {
   }
   return(directory)
 }
+

@@ -55,8 +55,10 @@ Export and launch a static shiny specific to the provided results.
 }
 \examples{
 {
-tdir <- here::here()
-exportStaticApp(result = emptySummarisedResult(), theme = theme1)
+exportStaticApp(
+  result = emptySummarisedResult(),
+  theme = theme1
+)
 }
 
 }
