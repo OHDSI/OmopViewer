@@ -1393,7 +1393,11 @@
             )
         })
         output$summarise_characteristics_tidy <- DT::renderDT({
-          DT::datatable(getTidyDataSummariseCharacteristics(), options = list(scrollX = TRUE))
+          DT::datatable(
+            getTidyDataSummariseCharacteristics(),
+            options = list(scrollX = TRUE),
+            rownames = FALSE
+          )
         })
         output$summarise_characteristics_tidy_download <- shiny::downloadHandler(
           filename = "tidy_summarise_characteristics.csv",
@@ -1464,7 +1468,11 @@
             )
         })
         output$summarise_cohort_attrition_tidy <- DT::renderDT({
-          DT::datatable(getTidyDataSummariseCohortAttrition(), options = list(scrollX = TRUE))
+          DT::datatable(
+            getTidyDataSummariseCohortAttrition(),
+            options = list(scrollX = TRUE),
+            rownames = FALSE
+          )
         })
         output$summarise_cohort_attrition_tidy_download <- shiny::downloadHandler(
           filename = "tidy_summarise_cohort_attrition.csv",
@@ -1530,7 +1538,11 @@
             )
         })
         output$summarise_cohort_count_tidy <- DT::renderDT({
-          DT::datatable(getTidyDataSummariseCohortCount(), options = list(scrollX = TRUE))
+          DT::datatable(
+            getTidyDataSummariseCohortCount(),
+            options = list(scrollX = TRUE),
+            rownames = FALSE
+          )
         })
         output$summarise_cohort_count_tidy_download <- shiny::downloadHandler(
           filename = "tidy_summarise_cohort_count.csv",
@@ -1600,7 +1612,11 @@
             )
         })
         output$summarise_cohort_overlap_tidy <- DT::renderDT({
-          DT::datatable(getTidyDataSummariseCohortOverlap(), options = list(scrollX = TRUE))
+          DT::datatable(
+            getTidyDataSummariseCohortOverlap(),
+            options = list(scrollX = TRUE),
+            rownames = FALSE
+          )
         })
         output$summarise_cohort_overlap_tidy_download <- shiny::downloadHandler(
           filename = "tidy_summarise_cohort_overlap.csv",
@@ -1670,7 +1686,11 @@
             )
         })
         output$summarise_cohort_timing_tidy <- DT::renderDT({
-          DT::datatable(getTidyDataSummariseCohortTiming(), options = list(scrollX = TRUE))
+          DT::datatable(
+            getTidyDataSummariseCohortTiming(),
+            options = list(scrollX = TRUE),
+            rownames = FALSE
+          )
         })
         output$summarise_cohort_timing_tidy_download <- shiny::downloadHandler(
           filename = "tidy_summarise_cohort_timing.csv",
@@ -1743,7 +1763,11 @@
             )
         })
         output$summarise_large_scale_characteristics_tidy <- DT::renderDT({
-          DT::datatable(getTidyDataSummariseLargeScaleCharacteristics(), options = list(scrollX = TRUE))
+          DT::datatable(
+            getTidyDataSummariseLargeScaleCharacteristics(),
+            options = list(scrollX = TRUE),
+            rownames = FALSE
+          )
         })
         output$summarise_large_scale_characteristics_tidy_download <- shiny::downloadHandler(
           filename = "tidy_summarise_large_scale_characteristics.csv",
