@@ -194,7 +194,9 @@
                         inputId = "summarise_characteristics_tidy_columns",
                         label = "Columns",
                         choices = NULL,
-                        selected = NULL
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_characteristics_tidy_pivot",
@@ -422,7 +424,9 @@
                         inputId = "summarise_cohort_attrition_tidy_columns",
                         label = "Columns",
                         choices = NULL,
-                        selected = NULL
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_cohort_attrition_tidy_pivot",
@@ -593,7 +597,9 @@
                         inputId = "summarise_cohort_count_tidy_columns",
                         label = "Columns",
                         choices = NULL,
-                        selected = NULL
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_cohort_count_tidy_pivot",
@@ -786,7 +792,9 @@
                         inputId = "summarise_cohort_overlap_tidy_columns",
                         label = "Columns",
                         choices = NULL,
-                        selected = NULL
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_cohort_overlap_tidy_pivot",
@@ -987,7 +995,9 @@
                         inputId = "summarise_cohort_timing_tidy_columns",
                         label = "Columns",
                         choices = NULL,
-                        selected = NULL
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_cohort_timing_tidy_pivot",
@@ -1244,7 +1254,9 @@
                         inputId = "summarise_large_scale_characteristics_tidy_columns",
                         label = "Columns",
                         choices = NULL,
-                        selected = NULL
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_large_scale_characteristics_tidy_pivot",
@@ -1376,10 +1388,7 @@
           data |>
             filterData("summarise_characteristics", input) |>
             tidyData(
-              prefixSet = "set:",
-              prefixGroup = "group: ",
-              showSettings = input$summarise_characteristics_tidy_settings,
-              showgrouping = input$summarise_characteristics_tidy_grouping,
+              cols = input$summarise_characteristics_tidy_columns,
               pivot = input$summarise_characteristics_tidy_pivot
             )
         })
@@ -1450,10 +1459,7 @@
           data |>
             filterData("summarise_cohort_attrition", input) |>
             tidyData(
-              prefixSet = "set:",
-              prefixGroup = "group: ",
-              showSettings = input$summarise_cohort_attrition_tidy_settings,
-              showgrouping = input$summarise_cohort_attrition_tidy_grouping,
+              cols = input$summarise_cohort_attrition_tidy_columns,
               pivot = input$summarise_cohort_attrition_tidy_pivot
             )
         })
@@ -1519,10 +1525,7 @@
           data |>
             filterData("summarise_cohort_count", input) |>
             tidyData(
-              prefixSet = "set:",
-              prefixGroup = "group: ",
-              showSettings = input$summarise_cohort_count_tidy_settings,
-              showgrouping = input$summarise_cohort_count_tidy_grouping,
+              cols = input$summarise_cohort_count_tidy_columns,
               pivot = input$summarise_cohort_count_tidy_pivot
             )
         })
@@ -1592,10 +1595,7 @@
           data |>
             filterData("summarise_cohort_overlap", input) |>
             tidyData(
-              prefixSet = "set:",
-              prefixGroup = "group: ",
-              showSettings = input$summarise_cohort_overlap_tidy_settings,
-              showgrouping = input$summarise_cohort_overlap_tidy_grouping,
+              cols = input$summarise_cohort_overlap_tidy_columns,
               pivot = input$summarise_cohort_overlap_tidy_pivot
             )
         })
@@ -1665,10 +1665,7 @@
           data |>
             filterData("summarise_cohort_timing", input) |>
             tidyData(
-              prefixSet = "set:",
-              prefixGroup = "group: ",
-              showSettings = input$summarise_cohort_timing_tidy_settings,
-              showgrouping = input$summarise_cohort_timing_tidy_grouping,
+              cols = input$summarise_cohort_timing_tidy_columns,
               pivot = input$summarise_cohort_timing_tidy_pivot
             )
         })
@@ -1741,10 +1738,7 @@
           data |>
             filterData("summarise_large_scale_characteristics", input) |>
             tidyData(
-              prefixSet = "set:",
-              prefixGroup = "group: ",
-              showSettings = input$summarise_large_scale_characteristics_tidy_settings,
-              showgrouping = input$summarise_large_scale_characteristics_tidy_grouping,
+              cols = input$summarise_large_scale_characteristics_tidy_columns,
               pivot = input$summarise_large_scale_characteristics_tidy_pivot
             )
         })
@@ -1901,7 +1895,9 @@
                         inputId = "summarise_characteristics_tidy_columns",
                         label = "Columns",
                         choices = NULL,
-                        selected = NULL
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_characteristics_tidy_pivot",
@@ -2129,7 +2125,9 @@
                         inputId = "summarise_cohort_attrition_tidy_columns",
                         label = "Columns",
                         choices = NULL,
-                        selected = NULL
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_cohort_attrition_tidy_pivot",
@@ -2300,7 +2298,9 @@
                         inputId = "summarise_cohort_count_tidy_columns",
                         label = "Columns",
                         choices = NULL,
-                        selected = NULL
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_cohort_count_tidy_pivot",
@@ -2493,7 +2493,9 @@
                         inputId = "summarise_cohort_overlap_tidy_columns",
                         label = "Columns",
                         choices = NULL,
-                        selected = NULL
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_cohort_overlap_tidy_pivot",
@@ -2694,7 +2696,9 @@
                         inputId = "summarise_cohort_timing_tidy_columns",
                         label = "Columns",
                         choices = NULL,
-                        selected = NULL
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_cohort_timing_tidy_pivot",
@@ -2951,7 +2955,9 @@
                         inputId = "summarise_large_scale_characteristics_tidy_columns",
                         label = "Columns",
                         choices = NULL,
-                        selected = NULL
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_large_scale_characteristics_tidy_pivot",
@@ -3156,7 +3162,9 @@
                         inputId = "summarise_characteristics_tidy_columns",
                         label = "Columns",
                         choices = NULL,
-                        selected = NULL
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_characteristics_tidy_pivot",
@@ -3384,7 +3392,9 @@
                         inputId = "summarise_cohort_attrition_tidy_columns",
                         label = "Columns",
                         choices = NULL,
-                        selected = NULL
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_cohort_attrition_tidy_pivot",
@@ -3555,7 +3565,9 @@
                         inputId = "summarise_cohort_count_tidy_columns",
                         label = "Columns",
                         choices = NULL,
-                        selected = NULL
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_cohort_count_tidy_pivot",
@@ -3748,7 +3760,9 @@
                         inputId = "summarise_cohort_overlap_tidy_columns",
                         label = "Columns",
                         choices = NULL,
-                        selected = NULL
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_cohort_overlap_tidy_pivot",
@@ -3949,7 +3963,9 @@
                         inputId = "summarise_cohort_timing_tidy_columns",
                         label = "Columns",
                         choices = NULL,
-                        selected = NULL
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_cohort_timing_tidy_pivot",
@@ -4206,7 +4222,9 @@
                         inputId = "summarise_large_scale_characteristics_tidy_columns",
                         label = "Columns",
                         choices = NULL,
-                        selected = NULL
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_large_scale_characteristics_tidy_pivot",

@@ -42,10 +42,10 @@ getChoices <- function(result, flatten = FALSE) {
   tidyCols <- tidyCols |>
     purrr::map(\(x) {
       setCols <- x |>
-        dplyr::select(!c(
+        dplyr::select(!dplyr::any_of(c(
           "result_id", "result_type", "package_name", "package_version",
-          "group", "strata", "additional"
-        )) |>
+          "group", "strata", "additional", "min_cell_count"
+        ))) |>
         purrr::map(unique)
       setCols <- names(setCols)[!is.na(setCols)]
       c("cdm_name", getCols(x$group), getCols(x$strata), getCols(x$additional), setCols)

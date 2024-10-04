@@ -4,25 +4,12 @@
 \alias{tidyData}
 \title{Get a tidy tibble from a `summarised_result` object.}
 \usage{
-tidyData(
-  result,
-  showSettings = TRUE,
-  showgrouping = TRUE,
-  prefixSet = "",
-  prefixGroup = "",
-  pivot = "none"
-)
+tidyData(result, cols, pivot = "none")
 }
 \arguments{
 \item{result}{A `summarised_result` object.}
 
-\item{showSettings}{Whether to show settings columns.}
-
-\item{showgrouping}{Whether to show grouping columns.}
-
-\item{prefixSet}{Prefix for settings columns.}
-
-\item{prefixGroup}{Prefix for grouping columns.}
+\item{cols}{Columns to show a part from the core ones.}
 
 \item{pivot}{What to pivot: "none", "estimates" or "estimates and variables".}
 }
