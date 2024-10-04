@@ -29,7 +29,7 @@
 #'
 #' @examples {
 #' tdir <- here::here()
-#' exportStaticApp(result = omopgenerics::emptySummarisedResult(), directory = tdir, logo = NULL, theme = theme1)
+#' exportStaticApp(result = emptySummarisedResult(), theme = theme1)
 #' }
 #'
 exportStaticApp <- function(result,
