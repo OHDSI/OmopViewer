@@ -28,28 +28,48 @@ tidyUi <- function(tab) {
 
 # server ----
 tidyServer <- function(rt, data) {
-  c('getTidyData[formatCamel(rt)] <- shiny::reactive({
-      [data] |>
-        filterData("[rt]", input) |>
-        tidyData(
-          cols = input$[rt]_tidy_columns,
-          pivot = input$[rt]_tidy_pivot
+  c(paste0('getTidyData', formatCamel(rt), ' <- shiny::reactive({
+      res <- ', data, ' |>
+        omopViewer::filterData("', rt, '", input) |>
+        omopViewer::tidyData()
+
+      # columns to eliminate
+      colsEliminate <- colnames(res)
+      colsEliminate <- colsEliminate[!colsEliminate %in% c(
+        input$', rt, '_tidy_columns, "variable_name", "variable_level",
+        "estimate_name", "estimate_type", "estimate_value"
+      )]
+
+      # pivot
+      pivot <- input$', rt, '_tidy_pivot
+      if (pivot != "none") {
+        vars <- switch(
+          pivot,
+          "estimates" = "estimate_name",
+          "estimates and variables" = c("variable_name", "variable_level", "estimate_name")
         )
-    })',
+        res <- res |>
+          visOmopResults::pivotEstimates(pivotEstimatesBy = vars)
+      }
+
+      res |>
+        dplyr::select(!dplyr::all_of(colsEliminate))
+    })'),
     'output$[rt]_tidy <- DT::renderDT({
       DT::datatable(
         getTidyData[formatCamel(rt)](),
         options = list(scrollX = TRUE),
         rownames = FALSE
       )
-    })',
+    })' |>
+      glue::glue(.open = "[", .close = "]"),
     'output$[rt]_tidy_download <- shiny::downloadHandler(
       filename = "tidy_[rt].csv",
       content = function(file) {
         getTidyData[formatCamel(rt)]() |>
           readr::write_csv(file = file)
       }
-    )'
-  ) |>
-    purrr::map_chr(\(x) glue::glue(x, .open = "[", .close = "]"))
+    )' |>
+      glue::glue(.open = "[", .close = "]")
+  )
 }

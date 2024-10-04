@@ -176,7 +176,7 @@ test_that("order tabs", {
                                                   "summarise_cohort_overlap",
                                                   "not an option",
                                                   "another missing result")))
-  expect_no_error(exportStaticApp(result = result,
+  expect_warning(exportStaticApp(result = result,
                                   directory = tdir,
                                   panels = list("not an option")))
   # missing a result

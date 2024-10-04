@@ -1385,12 +1385,30 @@
         # summarise_characteristics -----
         ## tidy summarise_characteristics -----
         getTidyDataSummariseCharacteristics <- shiny::reactive({
-          data |>
-            filterData("summarise_characteristics", input) |>
-            tidyData(
-              cols = input$summarise_characteristics_tidy_columns,
-              pivot = input$summarise_characteristics_tidy_pivot
+          res <- data |>
+            omopViewer::filterData("summarise_characteristics", input) |>
+            omopViewer::tidyData()
+      
+          # columns to eliminate
+          colsEliminate <- colnames(res)
+          colsEliminate <- colsEliminate[!colsEliminate %in% c(
+            input$summarise_characteristics_tidy_columns, "variable_name", "variable_level",
+            "estimate_name", "estimate_type", "estimate_value"
+          )]
+      
+          # pivot
+          pivot <- input$summarise_characteristics_tidy_pivot
+          if (pivot != "none") {
+            vars <- switch(pivot,
+              "estimates" = "estimate_name",
+              "estimates and variables" = c("variable_name", "variable_level", "estimate_name")
             )
+            res <- res |>
+              visOmopResults::pivotEstimates(pivotEstimatesBy = vars)
+          }
+      
+          res |>
+            dplyr::select(!dplyr::all_of(colsEliminate))
         })
         output$summarise_characteristics_tidy <- DT::renderDT({
           DT::datatable(
@@ -1409,8 +1427,8 @@
         ## formatted summarise_characteristics -----
         getFormattedDataSummariseCharacteristics <- shiny::reactive({
           data |>
-            filterData("summarise_characteristics", input) |>
-            visTable(
+            omopViewer::filterData("summarise_characteristics", input) |>
+            omopViewer::visTable(
               header = input$summarise_characteristics_formatted_header,
               group = input$summarise_characteristics_formatted_group,
               hide = input$summarise_characteristics_formatted_hide
@@ -1431,7 +1449,7 @@
         ## plot summarise_characteristics -----
         createPlot4 <- shiny::reactive({
           result <- data |>
-            filterData("summarise_characteristics", input)
+            omopViewer::filterData("summarise_characteristics", input)
           CohortCharacteristics::plotCharacteristics(
             result,
             plotStyle = input$summarise_characteristics_plot_4_plot_style,
@@ -1460,12 +1478,30 @@
         # summarise_cohort_attrition -----
         ## tidy summarise_cohort_attrition -----
         getTidyDataSummariseCohortAttrition <- shiny::reactive({
-          data |>
-            filterData("summarise_cohort_attrition", input) |>
-            tidyData(
-              cols = input$summarise_cohort_attrition_tidy_columns,
-              pivot = input$summarise_cohort_attrition_tidy_pivot
+          res <- data |>
+            omopViewer::filterData("summarise_cohort_attrition", input) |>
+            omopViewer::tidyData()
+      
+          # columns to eliminate
+          colsEliminate <- colnames(res)
+          colsEliminate <- colsEliminate[!colsEliminate %in% c(
+            input$summarise_cohort_attrition_tidy_columns, "variable_name", "variable_level",
+            "estimate_name", "estimate_type", "estimate_value"
+          )]
+      
+          # pivot
+          pivot <- input$summarise_cohort_attrition_tidy_pivot
+          if (pivot != "none") {
+            vars <- switch(pivot,
+              "estimates" = "estimate_name",
+              "estimates and variables" = c("variable_name", "variable_level", "estimate_name")
             )
+            res <- res |>
+              visOmopResults::pivotEstimates(pivotEstimatesBy = vars)
+          }
+      
+          res |>
+            dplyr::select(!dplyr::all_of(colsEliminate))
         })
         output$summarise_cohort_attrition_tidy <- DT::renderDT({
           DT::datatable(
@@ -1484,8 +1520,8 @@
         ## formatted summarise_cohort_attrition -----
         getFormattedDataSummariseCohortAttrition <- shiny::reactive({
           data |>
-            filterData("summarise_cohort_attrition", input) |>
-            visTable(
+            omopViewer::filterData("summarise_cohort_attrition", input) |>
+            omopViewer::visTable(
               header = input$summarise_cohort_attrition_formatted_header,
               group = input$summarise_cohort_attrition_formatted_group,
               hide = input$summarise_cohort_attrition_formatted_hide
@@ -1506,7 +1542,7 @@
         ## plot summarise_cohort_attrition -----
         createPlot2 <- shiny::reactive({
           result <- data |>
-            filterData("summarise_cohort_attrition", input)
+            omopViewer::filterData("summarise_cohort_attrition", input)
           CohortCharacteristics::plotCohortAttrition(
             result
           )
@@ -1530,12 +1566,30 @@
         # summarise_cohort_count -----
         ## tidy summarise_cohort_count -----
         getTidyDataSummariseCohortCount <- shiny::reactive({
-          data |>
-            filterData("summarise_cohort_count", input) |>
-            tidyData(
-              cols = input$summarise_cohort_count_tidy_columns,
-              pivot = input$summarise_cohort_count_tidy_pivot
+          res <- data |>
+            omopViewer::filterData("summarise_cohort_count", input) |>
+            omopViewer::tidyData()
+      
+          # columns to eliminate
+          colsEliminate <- colnames(res)
+          colsEliminate <- colsEliminate[!colsEliminate %in% c(
+            input$summarise_cohort_count_tidy_columns, "variable_name", "variable_level",
+            "estimate_name", "estimate_type", "estimate_value"
+          )]
+      
+          # pivot
+          pivot <- input$summarise_cohort_count_tidy_pivot
+          if (pivot != "none") {
+            vars <- switch(pivot,
+              "estimates" = "estimate_name",
+              "estimates and variables" = c("variable_name", "variable_level", "estimate_name")
             )
+            res <- res |>
+              visOmopResults::pivotEstimates(pivotEstimatesBy = vars)
+          }
+      
+          res |>
+            dplyr::select(!dplyr::all_of(colsEliminate))
         })
         output$summarise_cohort_count_tidy <- DT::renderDT({
           DT::datatable(
@@ -1554,8 +1608,8 @@
         ## formatted summarise_cohort_count -----
         getFormattedDataSummariseCohortCount <- shiny::reactive({
           data |>
-            filterData("summarise_cohort_count", input) |>
-            visTable(
+            omopViewer::filterData("summarise_cohort_count", input) |>
+            omopViewer::visTable(
               header = input$summarise_cohort_count_formatted_header,
               group = input$summarise_cohort_count_formatted_group,
               hide = input$summarise_cohort_count_formatted_hide
@@ -1576,7 +1630,7 @@
         ## plot summarise_cohort_count -----
         createPlot5 <- shiny::reactive({
           result <- data |>
-            filterData("summarise_cohort_count", input)
+            omopViewer::filterData("summarise_cohort_count", input)
           CohortCharacteristics::plotCohortCount(
             result,
             facet = input$summarise_cohort_count_plot_5_facet,
@@ -1604,12 +1658,30 @@
         # summarise_cohort_overlap -----
         ## tidy summarise_cohort_overlap -----
         getTidyDataSummariseCohortOverlap <- shiny::reactive({
-          data |>
-            filterData("summarise_cohort_overlap", input) |>
-            tidyData(
-              cols = input$summarise_cohort_overlap_tidy_columns,
-              pivot = input$summarise_cohort_overlap_tidy_pivot
+          res <- data |>
+            omopViewer::filterData("summarise_cohort_overlap", input) |>
+            omopViewer::tidyData()
+      
+          # columns to eliminate
+          colsEliminate <- colnames(res)
+          colsEliminate <- colsEliminate[!colsEliminate %in% c(
+            input$summarise_cohort_overlap_tidy_columns, "variable_name", "variable_level",
+            "estimate_name", "estimate_type", "estimate_value"
+          )]
+      
+          # pivot
+          pivot <- input$summarise_cohort_overlap_tidy_pivot
+          if (pivot != "none") {
+            vars <- switch(pivot,
+              "estimates" = "estimate_name",
+              "estimates and variables" = c("variable_name", "variable_level", "estimate_name")
             )
+            res <- res |>
+              visOmopResults::pivotEstimates(pivotEstimatesBy = vars)
+          }
+      
+          res |>
+            dplyr::select(!dplyr::all_of(colsEliminate))
         })
         output$summarise_cohort_overlap_tidy <- DT::renderDT({
           DT::datatable(
@@ -1628,8 +1700,8 @@
         ## formatted summarise_cohort_overlap -----
         getFormattedDataSummariseCohortOverlap <- shiny::reactive({
           data |>
-            filterData("summarise_cohort_overlap", input) |>
-            visTable(
+            omopViewer::filterData("summarise_cohort_overlap", input) |>
+            omopViewer::visTable(
               header = input$summarise_cohort_overlap_formatted_header,
               group = input$summarise_cohort_overlap_formatted_group,
               hide = input$summarise_cohort_overlap_formatted_hide
@@ -1650,7 +1722,7 @@
         ## plot summarise_cohort_overlap -----
         createPlot1 <- shiny::reactive({
           result <- data |>
-            filterData("summarise_cohort_overlap", input)
+            omopViewer::filterData("summarise_cohort_overlap", input)
           CohortCharacteristics::plotCohortOverlap(
             result,
             facet = input$summarise_cohort_overlap_plot_1_facet,
@@ -1678,12 +1750,30 @@
         # summarise_cohort_timing -----
         ## tidy summarise_cohort_timing -----
         getTidyDataSummariseCohortTiming <- shiny::reactive({
-          data |>
-            filterData("summarise_cohort_timing", input) |>
-            tidyData(
-              cols = input$summarise_cohort_timing_tidy_columns,
-              pivot = input$summarise_cohort_timing_tidy_pivot
+          res <- data |>
+            omopViewer::filterData("summarise_cohort_timing", input) |>
+            omopViewer::tidyData()
+      
+          # columns to eliminate
+          colsEliminate <- colnames(res)
+          colsEliminate <- colsEliminate[!colsEliminate %in% c(
+            input$summarise_cohort_timing_tidy_columns, "variable_name", "variable_level",
+            "estimate_name", "estimate_type", "estimate_value"
+          )]
+      
+          # pivot
+          pivot <- input$summarise_cohort_timing_tidy_pivot
+          if (pivot != "none") {
+            vars <- switch(pivot,
+              "estimates" = "estimate_name",
+              "estimates and variables" = c("variable_name", "variable_level", "estimate_name")
             )
+            res <- res |>
+              visOmopResults::pivotEstimates(pivotEstimatesBy = vars)
+          }
+      
+          res |>
+            dplyr::select(!dplyr::all_of(colsEliminate))
         })
         output$summarise_cohort_timing_tidy <- DT::renderDT({
           DT::datatable(
@@ -1702,8 +1792,8 @@
         ## formatted summarise_cohort_timing -----
         getFormattedDataSummariseCohortTiming <- shiny::reactive({
           data |>
-            filterData("summarise_cohort_timing", input) |>
-            visTable(
+            omopViewer::filterData("summarise_cohort_timing", input) |>
+            omopViewer::visTable(
               header = input$summarise_cohort_timing_formatted_header,
               group = input$summarise_cohort_timing_formatted_group,
               hide = input$summarise_cohort_timing_formatted_hide
@@ -1724,7 +1814,7 @@
         ## plot summarise_cohort_timing -----
         createPlot3 <- shiny::reactive({
           result <- data |>
-            filterData("summarise_cohort_timing", input)
+            omopViewer::filterData("summarise_cohort_timing", input)
           CohortCharacteristics::plotCohortTiming(
             result,
             plotType = input$summarise_cohort_timing_plot_3_plot_type,
@@ -1755,12 +1845,30 @@
         # summarise_large_scale_characteristics -----
         ## tidy summarise_large_scale_characteristics -----
         getTidyDataSummariseLargeScaleCharacteristics <- shiny::reactive({
-          data |>
-            filterData("summarise_large_scale_characteristics", input) |>
-            tidyData(
-              cols = input$summarise_large_scale_characteristics_tidy_columns,
-              pivot = input$summarise_large_scale_characteristics_tidy_pivot
+          res <- data |>
+            omopViewer::filterData("summarise_large_scale_characteristics", input) |>
+            omopViewer::tidyData()
+      
+          # columns to eliminate
+          colsEliminate <- colnames(res)
+          colsEliminate <- colsEliminate[!colsEliminate %in% c(
+            input$summarise_large_scale_characteristics_tidy_columns, "variable_name", "variable_level",
+            "estimate_name", "estimate_type", "estimate_value"
+          )]
+      
+          # pivot
+          pivot <- input$summarise_large_scale_characteristics_tidy_pivot
+          if (pivot != "none") {
+            vars <- switch(pivot,
+              "estimates" = "estimate_name",
+              "estimates and variables" = c("variable_name", "variable_level", "estimate_name")
             )
+            res <- res |>
+              visOmopResults::pivotEstimates(pivotEstimatesBy = vars)
+          }
+      
+          res |>
+            dplyr::select(!dplyr::all_of(colsEliminate))
         })
         output$summarise_large_scale_characteristics_tidy <- DT::renderDT({
           DT::datatable(
@@ -1779,8 +1887,8 @@
         ## formatted summarise_large_scale_characteristics -----
         getFormattedDataSummariseLargeScaleCharacteristics <- shiny::reactive({
           data |>
-            filterData("summarise_large_scale_characteristics", input) |>
-            visTable(
+            omopViewer::filterData("summarise_large_scale_characteristics", input) |>
+            omopViewer::visTable(
               header = input$summarise_large_scale_characteristics_formatted_header,
               group = input$summarise_large_scale_characteristics_formatted_group,
               hide = input$summarise_large_scale_characteristics_formatted_hide
@@ -1816,6 +1924,8 @@
       library(gt)
       library(DiagrammeR)
       library(omopViewer)
+      library(visOmopResults)
+      library(dplyr)
       library(readr)
       library(CohortCharacteristics)
       library(ggplot2)
