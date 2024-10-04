@@ -29,7 +29,7 @@
 #'
 #' @examples {
 #' tdir <- here::here()
-#' exportStaticApp(result = omopgenerics::emptySummarisedResult(), directory = tdir, logo = NULL, theme = "bslib::bs_theme(bg = '#bb0a1e', fg = '#0000ff')")
+#' exportStaticApp(result = omopgenerics::emptySummarisedResult(), directory = tdir, logo = NULL, theme = theme1)
 #' }
 #'
 exportStaticApp <- function(result,
@@ -163,6 +163,19 @@ logoPath <- function(logo) {
     logo
   }
 }
+
+# Theme ----
+
+library(bslib)
+
+theme1 <- "bslib::bs_theme(bootswatch = 'sandstone',
+primary = '#605ca8',
+bg = 'white',
+fg = 'black',
+success = '#3B9AB2')"
+
+theme1 <- gsub("\n", "", theme1)
+
 
 # ui ----
 uiStatic <- function(choices = list(),
