@@ -2,9 +2,9 @@
 # Be careful editing this file
 
 library(bslib)
-library(shiny)
-library(omopViewer)
 library(here)
+library(omopViewer)
+library(shiny)
 
 data <- omopViewer::importSummarisedResult(here::here("data")) |>
   omopViewer::correctSettings()

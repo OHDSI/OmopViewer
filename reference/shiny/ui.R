@@ -13,6 +13,11 @@ ui <- bslib::page_navbar(
     ),
     ""
   ),
+  bslib::nav_panel(
+    title = "Background",
+    icon = shiny::icon("disease"),
+    omopViewer::cardFromMd("background.md")
+  ),
   bslib::nav_spacer(),
   bslib::nav_item(
     bslib::popover(

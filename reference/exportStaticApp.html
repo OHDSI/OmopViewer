@@ -18,7 +18,7 @@
       <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/background.html">Static shiny building</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/background.html">Edit the background panel of your shiny using `background.md`</a></li>
     <li><a class="dropdown-item" href="../articles/supported_result_type.html">Plot tabs in omopViewer</a></li>
   </ul></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -46,7 +46,7 @@
 <span>  <span class="va">result</span>,</span>
 <span>  logo <span class="op">=</span> <span class="st">"ohdsi"</span>,</span>
 <span>  title <span class="op">=</span> <span class="st">""</span>,</span>
-<span>  background <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  background <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  summary <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  directory <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  panels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
@@ -73,15 +73,8 @@ Only svg format allowed for the moment.</p></dd>
 
 
 <dt id="arg-background">background<a class="anchor" aria-label="anchor" href="#arg-background"></a></dt>
-<dd><p>Content to fill the background panel. If `NULL`, this panel
-will not appear in the Shiny UI. This argument can be populated in two ways:
-1) A character string containing `bslib` code to go directly inside
-`bslib::card()`.
-2) A named character vector where the names correspond to specific`bslib`
-card elements: "header", "title", "subtitle", "body", and "footer". Each
-element's name indicates the type of text it will fill. The order of these
-elements is important when displaying the content. Markdown sythax for text
-styling is supported.</p></dd>
+<dd><p>Whether to include a background panel. Background panel
+content will be controlled from the generated background.md file.</p></dd>
 
 
 <dt id="arg-summary">summary<a class="anchor" aria-label="anchor" href="#arg-summary"></a></dt>
