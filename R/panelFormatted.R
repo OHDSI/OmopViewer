@@ -55,8 +55,8 @@ formattedUi <- function(tab, choic) {
 formattedServer <- function(rt, data) {
   c('getFormattedData[formatCamel(rt)] <- shiny::reactive({
       [data] |>
-        filterData("[rt]", input) |>
-        visTable(
+        omopViewer::filterData("[rt]", input) |>
+        omopViewer::visTable(
           header = input$[rt]_formatted_header,
           group = input$[rt]_formatted_group,
           hide = input$[rt]_formatted_hide

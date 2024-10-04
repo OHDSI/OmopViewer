@@ -13,7 +13,7 @@ filterData <- function(result,
                        resultType,
                        input) {
   # initial check
-  result <- omopgenerics::validateResultArguemnt(result)
+  result <- omopgenerics::validateResultArgument(result)
   omopgenerics::assertCharacter(resultType)
 
   # filter result type
