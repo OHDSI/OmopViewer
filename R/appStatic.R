@@ -30,7 +30,7 @@
 #' @examples {
 #' exportStaticApp(
 #'   result = emptySummarisedResult(),
-#'   theme = theme1
+#'   theme = "theme1"
 #' )
 #' }
 #'
@@ -171,17 +171,6 @@ logoPath <- function(logo) {
   }
 }
 
-# Theme ----
-
-library(bslib)
-
-theme1 <- "bslib::bs_theme(bootswatch = 'sandstone',
-primary = '#605ca8',
-bg = 'white',
-fg = 'black',
-success = '#3B9AB2')"
-
-theme1 <- gsub("\n", "", theme1)
 
 
 # ui ----
@@ -195,6 +184,25 @@ uiStatic <- function(choices = list(),
   omopgenerics::assertList(choices, named = TRUE)
   omopgenerics::assertCharacter(logo, length = 1, null = TRUE)
   omopgenerics::assertCharacter(title, length = 1)
+
+  get_theme <- function(theme) {
+   if (theme == "theme1") {
+     theme <- "bslib::bs_theme(bootswatch = 'sandstone',
+                                primary = '#605ca8',
+                                bg = 'white',
+                                fg = 'black',
+                                success = '#3B9AB2')"
+
+     theme <- gsub("\n", "", theme)
+     return(theme)
+   } else if (theme == "") {
+     return(bs_theme())
+   } else {
+     return(NULL)
+   }
+ }
+
+ theme <- get_theme(theme)
 
   # Create the bslib::bs_theme() call, or use NULL if not provided
   theme_setting <- if (!is.null(theme)) {

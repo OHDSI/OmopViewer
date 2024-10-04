@@ -57,7 +57,7 @@ Export and launch a static shiny specific to the provided results.
 {
 exportStaticApp(
   result = emptySummarisedResult(),
-  theme = theme1
+  theme = "theme1"
 )
 }
 
