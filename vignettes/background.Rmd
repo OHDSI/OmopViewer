@@ -31,5 +31,5 @@ background <- c(
   "footer" = "*Here is the footer."
 )
 tdir <- here::here()
-exportStaticApp(result = emptySummarisedResult(), directory = tdir, logo = NULL, background = background, open = FALSE)
+exportStaticApp(result = emptySummarisedResult(), directory = tdir, logo = NULL, background = background, theme = "theme1", open = FALSE)
 ```

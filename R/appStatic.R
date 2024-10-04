@@ -186,23 +186,22 @@ uiStatic <- function(choices = list(),
   omopgenerics::assertCharacter(title, length = 1)
 
   get_theme <- function(theme) {
-   if (theme == "theme1") {
-     theme <- "bslib::bs_theme(bootswatch = 'sandstone',
-                                primary = '#605ca8',
-                                bg = 'white',
-                                fg = 'black',
-                                success = '#3B9AB2')"
+  if (is.null(theme)) {
+    return(NULL) # Return default theme if theme is NULL
+  }
+  if (theme == "theme1") {
+    theme <- "bslib::bs_theme(bootswatch = 'sandstone',
+    primary = '#605ca8',
+    bg = 'white',
+    fg = 'black',success = '#3B9AB2')"
 
-     theme <- gsub("\n", "", theme)
-     return(theme)
-   } else if (theme == "") {
-     return(bs_theme())
-   } else {
-     return(NULL)
-   }
- }
+    theme <- gsub("\n    ", "", theme)
+    return(theme)
+  }
+  }
 
- theme <- get_theme(theme)
+  theme <- get_theme(theme)
+
 
   # Create the bslib::bs_theme() call, or use NULL if not provided
   theme_setting <- if (!is.null(theme)) {
