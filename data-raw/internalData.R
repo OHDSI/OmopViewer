@@ -58,7 +58,14 @@ omopViewerGlobal <- c(
 logoKeywords <- c("hds", "ohdsi") |>
   stringr::str_to_lower()
 
+backgroundKeywords <- dplyr::tribble(
+  ~keyword, ~fun, ~link,
+  "header", "bslib::card_header", "https://rstudio.github.io/bslib//reference/card_body.html",
+  "footer", "bslib::card_footer", "https://rstudio.github.io/bslib//reference/card_body.html"
+)
+
 usethis::use_data(
   omopViewerTabs, omopViewerPlots, omopViewerPlotArguments, omopViewerProj,
-  omopViewerGlobal, logoKeywords, overwrite = TRUE, internal = TRUE)
+  omopViewerGlobal, logoKeywords, backgroundKeywords, overwrite = TRUE,
+  internal = TRUE)
 
