@@ -1,24 +1,14 @@
 
 # ui ----
 tidyUi <- function(tab) {
-  id <- paste0(tab, "_tidy_download")
   'bslib::nav_panel(
     title = "Tidy",
     bslib::card(
       full_screen = TRUE,
-      {downloadTable(id, "Download csv")},
+      {downloadTable("{tab}_tidy_download", "Download csv")},
       bslib::layout_sidebar(
         sidebar = bslib::sidebar(
-          shiny::checkboxInput(
-            inputId = "{tab}_tidy_settings",
-            label = "Show settings",
-            value = FALSE
-          ),
-          shiny::checkboxInput(
-            inputId = "{tab}_tidy_grouping",
-            label = "Show grouping",
-            value = TRUE
-          ),
+          {selector("{tab}_tidy_columns", "Columns", "NULL", "NULL", TRUE)},
           shiny::radioButtons(
             inputId = "{tab}_tidy_pivot",
             label = "Pivot estimates/variables",
@@ -32,6 +22,7 @@ tidyUi <- function(tab) {
     )
   )' |>
     glue::glue() |>
+    glue::glue() |>
     as.character()
 }
 
@@ -41,15 +32,16 @@ tidyServer <- function(rt, data) {
       [data] |>
         filterData("[rt]", input) |>
         tidyData(
-          prefixSet = "set:",
-          prefixGroup = "group: ",
-          showSettings = input$[rt]_tidy_settings,
-          showgrouping = input$[rt]_tidy_grouping,
+          cols = input$[rt]_tidy_columns,
           pivot = input$[rt]_tidy_pivot
         )
     })',
     'output$[rt]_tidy <- DT::renderDT({
-      DT::datatable(getTidyData[formatCamel(rt)](), options = list(scrollX = TRUE))
+      DT::datatable(
+        getTidyData[formatCamel(rt)](),
+        options = list(scrollX = TRUE),
+        rownames = FALSE
+      )
     })',
     'output$[rt]_tidy_download <- shiny::downloadHandler(
       filename = "tidy_[rt].csv",
