@@ -197,7 +197,7 @@ uiStatic <- function(choices = list(),
 
   get_theme <- function(theme) {
   if (is.null(theme)) {
-    return(NULL) # Return default theme if theme is NULL
+    return(NULL)
   }
   if (theme == "theme1") {
     theme <- "bslib::bs_theme(bootswatch = 'sandstone',
@@ -214,7 +214,7 @@ uiStatic <- function(choices = list(),
 
   getColourPalette <- function(colourPalette) {
     if (is.null(colourPalette)) {
-      return(NULL) # Return default theme if theme is NULL
+      return(NULL)
     }
     if (!is.null(colourPalette)) {
       palette_func <- colorRampPalette(c("white", colourPalette[1], colourPalette[2], "black"))
