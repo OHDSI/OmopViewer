@@ -27,7 +27,6 @@ Imports:
     dplyr,
     DT,
     glue,
-    here,
     omopgenerics (>= 0.2.3),
     purrr,
     rlang,
@@ -38,13 +37,15 @@ Imports:
     tidyr,
     usethis,
     vctrs,
-    visOmopResults (>= 0.4.0)
+    visOmopResults (>= 0.4.0),
+    yaml
 Suggests: 
     CDMConnector,
     CohortCharacteristics (>= 0.3.0),
     duckdb,
     ggplot2,
     gt,
+    here,
     htmlwidgets,
     knitr,
     omock,
@@ -56,8 +57,8 @@ Suggests:
     sortable,
     testthat (>= 3.1.5),
     utils,
-    zip,
-    webshot2
+    webshot2,
+    zip
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 Config/testthat/parallel: true

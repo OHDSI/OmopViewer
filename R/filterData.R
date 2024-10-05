@@ -12,8 +12,15 @@
 filterData <- function(result,
                        resultType,
                        input) {
+  # initial check
+  result <- omopgenerics::validateResultArgument(result)
+  omopgenerics::assertCharacter(resultType)
+
+  # filter result type
   result <- result |>
     visOmopResults::filterSettings(.data$result_type == .env$resultType)
+  if (nrow(result) == 0) return(emptySummarisedResult())
+
   if (length(input) == 0) {
     inputs <- character()
   } else {
@@ -36,6 +43,8 @@ filterData <- function(result,
   }
   result <- result |>
       dplyr::filter(.data$result_id %in% set$result_id)
+
+  if (nrow(result) == 0) return(emptySummarisedResult())
 
   # filter grouping
   cols <- c(

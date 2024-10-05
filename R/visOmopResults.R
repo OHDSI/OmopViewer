@@ -18,10 +18,14 @@ visTable <- function(result,
   if (length(header) == 0) header <- character()
   if (length(group) == 0) group <- NULL
   if (length(hide) == 0) hide <- character()
+
+  if (nrow(result) == 0) return(gt::gt(dplyr::tibble()))
+
   result <- result |>
     tidyData() |>
     dplyr::select(!dplyr::any_of(c(
-      "package_name", "package_version", "result_type", "min_cell_count"
+      "package_name", "package_version", "result_type", "min_cell_count",
+      "strata", "group", "additional"
     )))
   omopgenerics::assertCharacter(header)
   omopgenerics::assertCharacter(group, null = TRUE)
@@ -55,6 +59,65 @@ visTable <- function(result,
     group <- id
   }
   result <- result |>
-    visOmopResults::gtTable(groupColumn = group)
+    visOmopResults::formatTable(groupColumn = group)
   return(result)
+}
+
+# THIS IS A REPLACEMENT FOR TIDY METHOD DEFINED IN VISOMOPRESULTS TAKES INTO
+# ACCOUNT GROUP, STRATA, AND ADDITIONAL COLUMNS AND THEY ARE GENERATED IN
+# OMOPGENERICS.
+
+#' Get a tidy tibble from a `summarised_result` object.
+#'
+#' @param result A `summarised_result` object.
+#'
+#' @return A tibble.
+#' @export
+#'
+tidyData <- function(result) {
+  # initial checks
+  result <- omopgenerics::validateResultArgument(result)
+
+  # correct settings if it has not been done before
+  sets <- omopgenerics::settings(result)
+  if (!all(c("group", "strata", "additional") %in% colnames(sets))) {
+    sets <- result |>
+      correctSettings() |>
+      omopgenerics::settings()
+  }
+  sets <- removeSettingsNa(sets)
+  attr(result, "settings") <- sets
+
+  # get grouping columns
+  groupingCols <- c(
+    getCols(sets$group), getCols(sets$strata), getCols(sets$additional))
+
+  # add settings and grouping
+  result <- result |>
+    visOmopResults::addSettings() |>
+    visOmopResults::splitAll()
+
+  # add missing grouping
+  notPresent <- groupingCols[!groupingCols %in% colnames(result)]
+  if (length(notPresent) > 0) {
+    for (col in notPresent) {
+      result <- result |>
+        dplyr::mutate(!!col := "overall")
+    }
+  }
+
+  # grouping will be located before variable
+  result <- result |>
+    dplyr::relocate(dplyr::all_of(groupingCols), .before = "variable_name") |>
+    dplyr::select(!"result_id")
+
+  return(result)
+}
+
+removeSettingsNa <- function(x) {
+  cols <- x |>
+    purrr::map(unique)
+  cols <- names(cols)[is.na(cols)]
+  x |>
+    dplyr::select(!dplyr::all_of(cols))
 }

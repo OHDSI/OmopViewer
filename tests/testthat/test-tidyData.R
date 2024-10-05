@@ -23,75 +23,19 @@ test_that("test tidyData", {
       "analysis" = c(TRUE, FALSE, TRUE)
     ))
 
-  expect_no_error(
-    x <- result |>
-      tidyData(
-        prefixSet = "",
-        prefixGroup = "",
-        showSettings = TRUE,
-        showgrouping = TRUE,
-        pivot = "none")
-  )
+  expect_no_error(x <- tidyData(result))
   expect_identical(colnames(x), c(
-    "result_type", "package_name", "package_version", "my_param", "analysis",
     "cdm_name", "cohort_name", "age_group", "sex", "time", "variable_name",
-    "variable_level", "estimate_name", "estimate_type", "estimate_value"
-  ))
-  expect_true(nrow(x) == nrow(result))
-  expect_no_error(
-    x <- result |>
-      tidyData(
-        prefixSet = "pref_set_",
-        showSettings = TRUE,
-        showgrouping = FALSE,
-        pivot = "none")
-  )
-  expect_identical(colnames(x), c(
-    "pref_set_result_type", "pref_set_package_name", "pref_set_package_version",
-    "pref_set_my_param", "pref_set_analysis", "variable_name", "variable_level",
-    "estimate_name", "estimate_type", "estimate_value"
-  ))
-  expect_true(nrow(x) == nrow(result))
-  expect_no_error(
-    x <- result |>
-      tidyData(
-        prefixGroup = "pref_group_",
-        showSettings = FALSE,
-        showgrouping = TRUE,
-        pivot = "none")
-  )
-  expect_identical(colnames(x), c(
-    "result_id", "pref_group_cdm_name", "pref_group_cohort_name",
-    "pref_group_age_group", "pref_group_sex", "pref_group_time",
-    "variable_name", "variable_level", "estimate_name", "estimate_type",
-    "estimate_value"
-  ))
-  expect_true(nrow(x) == nrow(result))
-  expect_no_error(
-    x <- result |>
-      tidyData(
-        showSettings = FALSE,
-        showgrouping = FALSE,
-        pivot = "none")
-  )
-  expect_identical(colnames(x), c(
-    "result_id", "variable_name", "variable_level", "estimate_name",
-    "estimate_type", "estimate_value"
-  ))
-  expect_true(nrow(x) == nrow(result))
-  expect_no_error(
-    x <- result |>
-      tidyData(
-        showSettings = TRUE,
-        showgrouping = TRUE,
-        pivot = "estimates")
-  )
-  expect_identical(colnames(x), c(
+    "variable_level", "estimate_name", "estimate_type", "estimate_value",
     "result_type", "package_name", "package_version", "my_param", "analysis",
-    "cdm_name", "cohort_name", "age_group", "sex", "time", "variable_name",
-    "variable_level", "count", "blood_type"
+    "group", "strata", "additional"
   ))
   expect_true(nrow(x) == nrow(result))
-  expect_identical(x$count |> dplyr::type_sum(), "int")
-  expect_identical(x$blood_type |> dplyr::type_sum(), "chr")
+
+  cols <- result |>
+    correctSettings() |>
+    visOmopResults::filterStrata(sex == "overall") |>
+    tidyData() |>
+    colnames()
+  expect_true("sex" %in% cols)
 })

@@ -38,6 +38,7 @@ validateDirectory <- function(directory) {
   return(directory)
 }
 
+
 validatePanels <- function(panels, choices) {
   omopgenerics::assertList(panels)
   # clean list elements

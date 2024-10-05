@@ -6,15 +6,8 @@
 #' @param logo Name of a logo or path to a logo. If NULL no logo is included.
 #' Only svg format allowed for the moment.
 #' @param title title of the shiny
-#' @param background Content to fill the background panel. If `NULL`, this panel
-#' will not appear in the Shiny UI. This argument can be populated in two ways:
-#' 1) A character string containing `bslib` code to go directly inside
-#' `bslib::card()`.
-#' 2) A named character vector where the names correspond to specific`bslib`
-#' card elements: "header", "title", "subtitle", "body", and "footer". Each
-#' element's name indicates the type of text it will fill. The order of these
-#' elements is important when displaying the content. Markdown sythax for text
-#' styling is supported.
+#' @param background Whether to include a background panel. Background panel
+#' content will be controlled from the generated background.md file.
 #' @param summary Whether to include a panel with a summary of content in the
 #' `result`.
 #' @param panels List specifying order of results. Each panel is determined
@@ -28,14 +21,16 @@
 #' @export
 #'
 #' @examples {
-#' tdir <- here::here()
-#' exportStaticApp(result = omopgenerics::emptySummarisedResult(), directory = tdir, logo = NULL, theme = "bslib::bs_theme(bg = '#bb0a1e', fg = '#0000ff')")
+#' exportStaticApp(
+#'   result = emptySummarisedResult(),
+#'   theme = "bslib::bs_theme(bg = '#bb0a1e', fg = '#0000ff')"
+#' )
 #' }
 #'
 exportStaticApp <- function(result,
                             logo = "ohdsi",
                             title = "",
-                            background = NULL,
+                            background = TRUE,
                             summary = TRUE,
                             directory = getwd(),
                             panels = list(),
@@ -43,7 +38,6 @@ exportStaticApp <- function(result,
                             open = rlang::is_interactive()) {
   # input check
   result <- omopgenerics::validateResultArgument(result)
-  background <- validateBackground(background)
   omopgenerics::assertCharacter(directory, length = 1)
   omopgenerics::assertLogical(open, length = 1)
   omopgenerics::assertCharacter(logo, length = 1, null = TRUE)
@@ -51,6 +45,7 @@ exportStaticApp <- function(result,
   omopgenerics::assertLogical(summary, length = 1)
   omopgenerics::assertCharacter(theme, length = 1, null = TRUE)
   panels <- validatePanels(panels, getChoices(result))
+  omopgenerics::assertLogical(background, length = 1)
   sum <- validateSummary(summary, result)
   directory <- validateDirectory(directory)
   if (isTRUE(directory)) {
@@ -76,11 +71,44 @@ exportStaticApp <- function(result,
   directory <- file.path(directory, "shiny")
   dir.create(path = directory, showWarnings = FALSE)
   cli::cli_inform(c("i" = "Creating shiny from provided data"))
+
+  # copy the logos to the shiny folder
   logo <- copyLogos(logo, directory)
-  ui <- c(messageShiny(), uiStatic(choices = panels$choices, logo = logo, title = title, summary = sum, background = background, theme = theme))
+
+  # create ui
+  ui <- c(
+    messageShiny(),
+    uiStatic(
+      choices = panels$choices,
+      logo = logo,
+      title = title,
+      summary = sum,
+      background = background,
+      theme = theme
+    )
+  )
+
+  # create server
   server <- c(messageShiny(), serverStatic(resultTypes = panels$result_order))
-  global <- c(messageShiny(), omopViewerGlobal)
+
+  # check installed libraries
+  libraries <- c(
+    detectPackages(ui), detectPackages(server), detectPackages(omopViewerGlobal)
+  ) |>
+    unique() |>
+    sort()
+  checkInstalledPackages(libraries)
+
+  # create global
+  libraryStatementsList <- paste0("library(", libraries, ")")
+  global <- c(messageShiny(), libraryStatementsList, "", omopViewerGlobal) |>
+    styleCode()
+
+  # write files in the corresponding directory
   dir.create(paste0(directory, "/data"), showWarnings = FALSE)
+  if (background) {
+    writeLines(defaultBackground(logo), con = file.path(directory, "background.md"))
+  }
   writeLines(ui, con = paste0(directory, "/ui.R"))
   writeLines(server, con = paste0(directory, "/server.R"))
   writeLines(global, con = paste0(directory, "/global.R"))
@@ -91,6 +119,7 @@ exportStaticApp <- function(result,
     fileName = "results.csv",
     path = paste0(directory, "/data")
   )
+
   cli::cli_inform(c("v" = "Shiny created in: {.pkg {directory}}"))
 
   # open shiny
@@ -141,7 +170,6 @@ copyLogos <- function(logo, directory) {
     return(NULL)
   }
 }
-
 logoPath <- function(logo) {
   lowLogo <- stringr::str_to_lower(logo)
   # add more logoKeywords in data-raw/internalData
@@ -156,7 +184,7 @@ logoPath <- function(logo) {
 uiStatic <- function(choices = list(),
                      logo = NULL,
                      title = "",
-                     background = NULL,
+                     background = TRUE,
                      summary = NULL,
                      theme = NULL) {
   # initial checks
@@ -175,10 +203,11 @@ uiStatic <- function(choices = list(),
     theme_setting,
     c(
       pageTitle(title, logo),
-      createBackground(background = background, logo = logo),
+      createBackground(background),
       createSummary(summary, logo),
       createUi(choices),
       "bslib::nav_spacer()",
+      downloadRawDataUi(),
       createAbout("hds_logo.svg"),
       'bslib::nav_item(bslib::input_dark_mode(id ="dark_mode", mode = "light"))'
     ) |>
@@ -267,12 +296,4 @@ subs <- function(x, pat, subst) {
     }
   }
   return(x)
-}
-emptySummarisedResult <- function() {
-  omopgenerics::emptySummarisedResult(settings = dplyr::tibble(
-    result_id = integer(),
-    result_type = character(),
-    package_name = character(),
-    package_version = character()
-  ))
 }
