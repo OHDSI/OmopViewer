@@ -114,6 +114,4376 @@
         )
       }
 
+# CohortCharacteristics shiny
+
+    Code
+      cat(uiStatic(choices = panels$choices), sep = "\n")
+    Output
+      ui <- bslib::page_navbar(
+        title = "",
+        bslib::nav_panel(
+          title = "Background",
+          icon = shiny::icon("disease"),
+          omopViewer::cardFromMd("background.md")
+        ),
+        bslib::nav_panel(
+          title = "Cohort characteristics",
+          icon = shiny::icon("users-gear"),
+          bslib::layout_sidebar(
+            sidebar = bslib::sidebar(
+              bslib::accordion(
+                bslib::accordion_panel(
+                  title = "Information",
+                  icon = shiny::icon("info"),
+                  shiny::p("")
+                ),
+                bslib::accordion_panel(
+                  title = "Settings",
+                  shiny::selectizeInput(
+                    inputId = "summarise_characteristics_settings_table_name",
+                    label = "Table name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "grouping",
+                  shiny::selectizeInput(
+                    inputId = "summarise_characteristics_grouping_cdm_name",
+                    label = "Cdm name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_characteristics_grouping_cohort_name",
+                    label = "Cohort name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "Variables",
+                  shiny::selectizeInput(
+                    inputId = "summarise_characteristics_variable_name",
+                    label = "Variable name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "Estimates",
+                  shiny::selectizeInput(
+                    inputId = "summarise_characteristics_estimate_name",
+                    label = "Estimate name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                )
+              )
+            ),
+            bslib::navset_card_tab(
+              bslib::nav_panel(
+                title = "Tidy",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::downloadButton(outputId = "summarise_characteristics_tidy_download", label = "Download csv")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      shiny::selectizeInput(
+                        inputId = "summarise_characteristics_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::radioButtons(
+                        inputId = "summarise_characteristics_tidy_pivot",
+                        label = "Pivot estimates/variables",
+                        choices = c("none", "estimates", "estimates and variables"),
+                        selected = "none"
+                      ),
+                      position = "right"
+                    ),
+                    DT::dataTableOutput("summarise_characteristics_tidy")
+                  )
+                )
+              ),
+              bslib::nav_panel(
+                title = "Formatted",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::selectizeInput(
+                        inputId = "summarise_characteristics_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_characteristics_formatted_download", label = "Download")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      sortable::bucket_list(
+                        header = NULL,
+                        sortable::add_rank_list(
+                          text = "None",
+                          labels = c("variable_name", "variable_level", "estimate_name"),
+                          input_id = "summarise_characteristics_formatted_none"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Header",
+                          labels = c("cdm_name"),
+                          input_id = "summarise_characteristics_formatted_header"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Group",
+                          labels = c("cohort_name"),
+                          input_id = "summarise_characteristics_formatted_group"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Hide",
+                          labels = c("table_name"),
+                          input_id = "summarise_characteristics_formatted_hide"
+                        )
+                      ),
+                      position = "right"
+                    ),
+                    gt::gt_output("summarise_characteristics_formatted")
+                  )
+                )
+              ),
+              bslib::nav_panel(
+                title = "Plot characteristics",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::numericInput(inputId = "summarise_characteristics_plot_4_download_width", label = "Width", value = 15),
+                      shiny::numericInput(inputId = "summarise_characteristics_plot_4_download_height", label = "Height", value = 10),
+                      shiny::selectizeInput(
+                        inputId = "summarise_characteristics_plot_4_download_units",
+                        label = "Units",
+                        choices = c("px", "cm", "inch"),
+                        selected = c("cm"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::numericInput(inputId = "summarise_characteristics_plot_4_download_dpi", label = "dpi", value = 300),
+                      shiny::downloadButton(outputId = "summarise_characteristics_plot_4_download", label = "Download png")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      shiny::selectizeInput(
+                        inputId = "summarise_characteristics_plot_4_plot_style",
+                        label = "plotStyle",
+                        choices = c("boxplot", "barplot", "scatterplot"),
+                        selected = c("barplot"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::selectizeInput(
+                        inputId = "summarise_characteristics_plot_4_facet",
+                        label = "facet",
+                        choices = c("cdm_name", "cohort_name", "variable_name", "variable_level", "estimate_name", "table_name"),
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::selectizeInput(
+                        inputId = "summarise_characteristics_plot_4_colour",
+                        label = "colour",
+                        choices = c("cdm_name", "cohort_name", "variable_name", "variable_level", "estimate_name", "table_name"),
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      position = "right"
+                    ),
+                    shiny::plotOutput("summarise_characteristics_plot_4")
+                  )
+                )
+              )
+            )
+          )
+        ),
+        bslib::nav_panel(
+          title = "Cohort Attrition",
+          icon = shiny::icon("layer-group"),
+          bslib::layout_sidebar(
+            sidebar = bslib::sidebar(
+              bslib::accordion(
+                bslib::accordion_panel(
+                  title = "Information",
+                  icon = shiny::icon("info"),
+                  shiny::p("")
+                ),
+                bslib::accordion_panel(
+                  title = "Settings",
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_attrition_settings_table_name",
+                    label = "Table name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_attrition_settings_cohort_definition_id",
+                    label = "Cohort definition id",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "grouping",
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_attrition_grouping_cdm_name",
+                    label = "Cdm name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_attrition_grouping_cohort_name",
+                    label = "Cohort name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_attrition_grouping_reason",
+                    label = "Reason",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_attrition_grouping_reason_id",
+                    label = "Reason id",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "Variables",
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_attrition_variable_name",
+                    label = "Variable name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "Estimates",
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_attrition_estimate_name",
+                    label = "Estimate name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                )
+              )
+            ),
+            bslib::navset_card_tab(
+              bslib::nav_panel(
+                title = "Tidy",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::downloadButton(outputId = "summarise_cohort_attrition_tidy_download", label = "Download csv")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_attrition_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::radioButtons(
+                        inputId = "summarise_cohort_attrition_tidy_pivot",
+                        label = "Pivot estimates/variables",
+                        choices = c("none", "estimates", "estimates and variables"),
+                        selected = "none"
+                      ),
+                      position = "right"
+                    ),
+                    DT::dataTableOutput("summarise_cohort_attrition_tidy")
+                  )
+                )
+              ),
+              bslib::nav_panel(
+                title = "Formatted",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_attrition_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_cohort_attrition_formatted_download", label = "Download")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      sortable::bucket_list(
+                        header = NULL,
+                        sortable::add_rank_list(
+                          text = "None",
+                          labels = c("reason", "reason_id", "variable_name", "variable_level", "estimate_name"),
+                          input_id = "summarise_cohort_attrition_formatted_none"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Header",
+                          labels = c("cdm_name"),
+                          input_id = "summarise_cohort_attrition_formatted_header"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Group",
+                          labels = c("cohort_name"),
+                          input_id = "summarise_cohort_attrition_formatted_group"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Hide",
+                          labels = c("table_name", "cohort_definition_id"),
+                          input_id = "summarise_cohort_attrition_formatted_hide"
+                        )
+                      ),
+                      position = "right"
+                    ),
+                    gt::gt_output("summarise_cohort_attrition_formatted")
+                  )
+                )
+              ),
+              bslib::nav_panel(
+                title = "Diagram",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::numericInput(inputId = "summarise_cohort_attrition_plot_2_download_width", label = "Width (px)", value = 15),
+                      shiny::numericInput(inputId = "summarise_cohort_attrition_plot_2_download_height", label = "Height (px)", value = 10),
+                      shiny::downloadButton(outputId = "summarise_cohort_attrition_plot_2_download", label = "Download png")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      position = "right"
+                    ),
+                    DiagrammeR::grVizOutput("summarise_cohort_attrition_plot_2")
+                  )
+                )
+              )
+            )
+          )
+        ),
+        bslib::nav_panel(
+          title = "Cohort count",
+          icon = shiny::icon("users"),
+          bslib::layout_sidebar(
+            sidebar = bslib::sidebar(
+              bslib::accordion(
+                bslib::accordion_panel(
+                  title = "Information",
+                  icon = shiny::icon("info"),
+                  shiny::p("")
+                ),
+                bslib::accordion_panel(
+                  title = "Settings",
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_count_settings_table_name",
+                    label = "Table name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "grouping",
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_count_grouping_cdm_name",
+                    label = "Cdm name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_count_grouping_cohort_name",
+                    label = "Cohort name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "Variables",
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_count_variable_name",
+                    label = "Variable name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "Estimates",
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_count_estimate_name",
+                    label = "Estimate name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                )
+              )
+            ),
+            bslib::navset_card_tab(
+              bslib::nav_panel(
+                title = "Tidy",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::downloadButton(outputId = "summarise_cohort_count_tidy_download", label = "Download csv")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_count_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::radioButtons(
+                        inputId = "summarise_cohort_count_tidy_pivot",
+                        label = "Pivot estimates/variables",
+                        choices = c("none", "estimates", "estimates and variables"),
+                        selected = "none"
+                      ),
+                      position = "right"
+                    ),
+                    DT::dataTableOutput("summarise_cohort_count_tidy")
+                  )
+                )
+              ),
+              bslib::nav_panel(
+                title = "Formatted",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_count_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_cohort_count_formatted_download", label = "Download")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      sortable::bucket_list(
+                        header = NULL,
+                        sortable::add_rank_list(
+                          text = "None",
+                          labels = c("variable_name", "variable_level", "estimate_name"),
+                          input_id = "summarise_cohort_count_formatted_none"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Header",
+                          labels = c("cdm_name"),
+                          input_id = "summarise_cohort_count_formatted_header"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Group",
+                          labels = c("cohort_name"),
+                          input_id = "summarise_cohort_count_formatted_group"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Hide",
+                          labels = c("table_name"),
+                          input_id = "summarise_cohort_count_formatted_hide"
+                        )
+                      ),
+                      position = "right"
+                    ),
+                    gt::gt_output("summarise_cohort_count_formatted")
+                  )
+                )
+              ),
+              bslib::nav_panel(
+                title = "Plot cohort count",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::numericInput(inputId = "summarise_cohort_count_plot_5_download_width", label = "Width", value = 15),
+                      shiny::numericInput(inputId = "summarise_cohort_count_plot_5_download_height", label = "Height", value = 10),
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_count_plot_5_download_units",
+                        label = "Units",
+                        choices = c("px", "cm", "inch"),
+                        selected = c("cm"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::numericInput(inputId = "summarise_cohort_count_plot_5_download_dpi", label = "dpi", value = 300),
+                      shiny::downloadButton(outputId = "summarise_cohort_count_plot_5_download", label = "Download png")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_count_plot_5_facet",
+                        label = "facet",
+                        choices = c("cdm_name", "cohort_name", "variable_name", "variable_level", "estimate_name"),
+                        selected = c("cdm_name"),
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_count_plot_5_colour",
+                        label = "colour",
+                        choices = c("cdm_name", "cohort_name", "variable_name", "variable_level", "estimate_name"),
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      position = "right"
+                    ),
+                    shiny::plotOutput("summarise_cohort_count_plot_5")
+                  )
+                )
+              )
+            )
+          )
+        ),
+        bslib::nav_panel(
+          title = "Cohort overlap",
+          icon = shiny::icon("circle-half-stroke"),
+          bslib::layout_sidebar(
+            sidebar = bslib::sidebar(
+              bslib::accordion(
+                bslib::accordion_panel(
+                  title = "Information",
+                  icon = shiny::icon("info"),
+                  shiny::p("Cohort overlap shows the number of subjects that contribute to a pair of cohorts.")
+                ),
+                bslib::accordion_panel(
+                  title = "grouping",
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_overlap_grouping_cdm_name",
+                    label = "Cdm name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_overlap_grouping_cohort_name_reference",
+                    label = "Cohort name reference",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_overlap_grouping_cohort_name_comparator",
+                    label = "Cohort name comparator",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "Variables",
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_overlap_variable_name",
+                    label = "Variable name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "Estimates",
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_overlap_estimate_name",
+                    label = "Estimate name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                )
+              )
+            ),
+            bslib::navset_card_tab(
+              bslib::nav_panel(
+                title = "Tidy",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::downloadButton(outputId = "summarise_cohort_overlap_tidy_download", label = "Download csv")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_overlap_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::radioButtons(
+                        inputId = "summarise_cohort_overlap_tidy_pivot",
+                        label = "Pivot estimates/variables",
+                        choices = c("none", "estimates", "estimates and variables"),
+                        selected = "none"
+                      ),
+                      position = "right"
+                    ),
+                    DT::dataTableOutput("summarise_cohort_overlap_tidy")
+                  )
+                )
+              ),
+              bslib::nav_panel(
+                title = "Formatted",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_overlap_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_cohort_overlap_formatted_download", label = "Download")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      sortable::bucket_list(
+                        header = NULL,
+                        sortable::add_rank_list(
+                          text = "None",
+                          labels = c("cohort_name_reference", "cohort_name_comparator", "variable_name", "variable_level", "estimate_name"),
+                          input_id = "summarise_cohort_overlap_formatted_none"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Header",
+                          labels = c("cdm_name"),
+                          input_id = "summarise_cohort_overlap_formatted_header"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Group",
+                          labels = character(),
+                          input_id = "summarise_cohort_overlap_formatted_group"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Hide",
+                          labels = character(),
+                          input_id = "summarise_cohort_overlap_formatted_hide"
+                        )
+                      ),
+                      position = "right"
+                    ),
+                    gt::gt_output("summarise_cohort_overlap_formatted")
+                  )
+                )
+              ),
+              bslib::nav_panel(
+                title = "Plot cohort overlap",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::numericInput(inputId = "summarise_cohort_overlap_plot_1_download_width", label = "Width", value = 15),
+                      shiny::numericInput(inputId = "summarise_cohort_overlap_plot_1_download_height", label = "Height", value = 10),
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_overlap_plot_1_download_units",
+                        label = "Units",
+                        choices = c("px", "cm", "inch"),
+                        selected = c("cm"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::numericInput(inputId = "summarise_cohort_overlap_plot_1_download_dpi", label = "dpi", value = 300),
+                      shiny::downloadButton(outputId = "summarise_cohort_overlap_plot_1_download", label = "Download png")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_overlap_plot_1_facet",
+                        label = "facet",
+                        choices = c("cdm_name", "cohort_name_reference", "cohort_name_comparator", "variable_name", "variable_level", "estimate_name"),
+                        selected = c("cdm_name", "cohort_name_reference"),
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::checkboxInput(
+                        inputId = "summarise_cohort_overlap_plot_1_unique_combinations",
+                        label = "uniqueCombinations",
+                        value = c(TRUE)
+                      ),
+                      position = "right"
+                    ),
+                    shiny::plotOutput("summarise_cohort_overlap_plot_1")
+                  )
+                )
+              )
+            )
+          )
+        ),
+        bslib::nav_panel(
+          title = "Cohort timing",
+          icon = shiny::icon("chart-simple"),
+          bslib::layout_sidebar(
+            sidebar = bslib::sidebar(
+              bslib::accordion(
+                bslib::accordion_panel(
+                  title = "Information",
+                  icon = shiny::icon("info"),
+                  shiny::p("")
+                ),
+                bslib::accordion_panel(
+                  title = "Settings",
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_timing_settings_restrict_to_first_entry",
+                    label = "Restrict to first entry",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "grouping",
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_timing_grouping_cdm_name",
+                    label = "Cdm name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_timing_grouping_cohort_name_reference",
+                    label = "Cohort name reference",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_timing_grouping_cohort_name_comparator",
+                    label = "Cohort name comparator",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "Variables",
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_timing_variable_name",
+                    label = "Variable name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "Estimates",
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_timing_estimate_name",
+                    label = "Estimate name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                )
+              )
+            ),
+            bslib::navset_card_tab(
+              bslib::nav_panel(
+                title = "Tidy",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::downloadButton(outputId = "summarise_cohort_timing_tidy_download", label = "Download csv")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_timing_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::radioButtons(
+                        inputId = "summarise_cohort_timing_tidy_pivot",
+                        label = "Pivot estimates/variables",
+                        choices = c("none", "estimates", "estimates and variables"),
+                        selected = "none"
+                      ),
+                      position = "right"
+                    ),
+                    DT::dataTableOutput("summarise_cohort_timing_tidy")
+                  )
+                )
+              ),
+              bslib::nav_panel(
+                title = "Formatted",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_timing_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_cohort_timing_formatted_download", label = "Download")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      sortable::bucket_list(
+                        header = NULL,
+                        sortable::add_rank_list(
+                          text = "None",
+                          labels = c("cohort_name_reference", "cohort_name_comparator", "variable_name", "variable_level", "estimate_name"),
+                          input_id = "summarise_cohort_timing_formatted_none"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Header",
+                          labels = c("cdm_name"),
+                          input_id = "summarise_cohort_timing_formatted_header"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Group",
+                          labels = character(),
+                          input_id = "summarise_cohort_timing_formatted_group"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Hide",
+                          labels = c("restrict_to_first_entry"),
+                          input_id = "summarise_cohort_timing_formatted_hide"
+                        )
+                      ),
+                      position = "right"
+                    ),
+                    gt::gt_output("summarise_cohort_timing_formatted")
+                  )
+                )
+              ),
+              bslib::nav_panel(
+                title = "Plot cohort timing",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::numericInput(inputId = "summarise_cohort_timing_plot_3_download_width", label = "Width", value = 15),
+                      shiny::numericInput(inputId = "summarise_cohort_timing_plot_3_download_height", label = "Height", value = 10),
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_timing_plot_3_download_units",
+                        label = "Units",
+                        choices = c("px", "cm", "inch"),
+                        selected = c("cm"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::numericInput(inputId = "summarise_cohort_timing_plot_3_download_dpi", label = "dpi", value = 300),
+                      shiny::downloadButton(outputId = "summarise_cohort_timing_plot_3_download", label = "Download png")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_timing_plot_3_plot_type",
+                        label = "plotType",
+                        choices = c("boxplot", "density"),
+                        selected = c("boxplot"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_timing_plot_3_time_scale",
+                        label = "timeScale",
+                        choices = c("days", "years"),
+                        selected = c("days"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_timing_plot_3_facet",
+                        label = "facet",
+                        choices = c("cdm_name", "cohort_name_reference", "cohort_name_comparator", "variable_name", "variable_level", "estimate_name", "restrict_to_first_entry"),
+                        selected = c("cdm_name", "cohort_name_reference"),
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_timing_plot_3_colour",
+                        label = "colour",
+                        choices = c("cdm_name", "cohort_name_reference", "cohort_name_comparator", "variable_name", "variable_level", "estimate_name", "restrict_to_first_entry"),
+                        selected = c("cohort_name_comparator"),
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::checkboxInput(
+                        inputId = "summarise_cohort_timing_plot_3_unique_combinations",
+                        label = "uniqueCombinations",
+                        value = c(TRUE)
+                      ),
+                      position = "right"
+                    ),
+                    shiny::plotOutput("summarise_cohort_timing_plot_3")
+                  )
+                )
+              )
+            )
+          )
+        ),
+        bslib::nav_panel(
+          title = "Large Scale Characteristics",
+          icon = shiny::icon("arrow-up-right-dots"),
+          bslib::layout_sidebar(
+            sidebar = bslib::sidebar(
+              bslib::accordion(
+                bslib::accordion_panel(
+                  title = "Information",
+                  icon = shiny::icon("info"),
+                  shiny::p("")
+                ),
+                bslib::accordion_panel(
+                  title = "Settings",
+                  shiny::selectizeInput(
+                    inputId = "summarise_large_scale_characteristics_settings_table_name",
+                    label = "Table name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_large_scale_characteristics_settings_type",
+                    label = "Type",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_large_scale_characteristics_settings_analysis",
+                    label = "Analysis",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "grouping",
+                  shiny::selectizeInput(
+                    inputId = "summarise_large_scale_characteristics_grouping_cdm_name",
+                    label = "Cdm name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_large_scale_characteristics_grouping_cohort_name",
+                    label = "Cohort name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_large_scale_characteristics_grouping_sex",
+                    label = "Sex",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_large_scale_characteristics_grouping_age_group",
+                    label = "Age group",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_large_scale_characteristics_grouping_concept_id",
+                    label = "Concept id",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "Variables",
+                  shiny::selectizeInput(
+                    inputId = "summarise_large_scale_characteristics_variable_name",
+                    label = "Variable name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "Estimates",
+                  shiny::selectizeInput(
+                    inputId = "summarise_large_scale_characteristics_estimate_name",
+                    label = "Estimate name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                )
+              )
+            ),
+            bslib::navset_card_tab(
+              bslib::nav_panel(
+                title = "Tidy",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::downloadButton(outputId = "summarise_large_scale_characteristics_tidy_download", label = "Download csv")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      shiny::selectizeInput(
+                        inputId = "summarise_large_scale_characteristics_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::radioButtons(
+                        inputId = "summarise_large_scale_characteristics_tidy_pivot",
+                        label = "Pivot estimates/variables",
+                        choices = c("none", "estimates", "estimates and variables"),
+                        selected = "none"
+                      ),
+                      position = "right"
+                    ),
+                    DT::dataTableOutput("summarise_large_scale_characteristics_tidy")
+                  )
+                )
+              ),
+              bslib::nav_panel(
+                title = "Formatted",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::selectizeInput(
+                        inputId = "summarise_large_scale_characteristics_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_large_scale_characteristics_formatted_download", label = "Download")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      sortable::bucket_list(
+                        header = NULL,
+                        sortable::add_rank_list(
+                          text = "None",
+                          labels = c("sex", "age_group", "concept_id", "variable_name", "variable_level", "estimate_name"),
+                          input_id = "summarise_large_scale_characteristics_formatted_none"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Header",
+                          labels = c("cdm_name"),
+                          input_id = "summarise_large_scale_characteristics_formatted_header"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Group",
+                          labels = c("cohort_name"),
+                          input_id = "summarise_large_scale_characteristics_formatted_group"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Hide",
+                          labels = c("table_name", "type", "analysis"),
+                          input_id = "summarise_large_scale_characteristics_formatted_hide"
+                        )
+                      ),
+                      position = "right"
+                    ),
+                    gt::gt_output("summarise_large_scale_characteristics_formatted")
+                  )
+                )
+              ),
+            )
+          )
+        ),
+        bslib::nav_spacer(),
+        bslib::nav_item(
+          bslib::popover(
+            shiny::icon("download"),
+            shiny::downloadButton(
+              outputId = "download_raw",
+              label = "Download raw data",
+              icon = shiny::icon("download")
+            )
+          )
+        ),
+        bslib::nav_item(
+          bslib::popover(
+            shiny::icon("circle-info"),
+            shiny::tags$img(
+              src = "hds_logo.svg",
+              class = "logo-img",
+              alt = "Logo",
+              height = "auto",
+              width = "30%",
+              style = "float:right"
+            ),
+            "This shiny app was generated with ",
+            shiny::a(
+              "omopViewer",
+              href = "https://github.com/oxford-pharmacoepi/omopViewer",
+              target = "_blank"
+            ),
+            shiny::strong("v0.0.0.900")
+          )
+        ),
+        bslib::nav_item(bslib::input_dark_mode(id = "dark_mode", mode = "light"))
+      )
+
+---
+
+    Code
+      cat(serverStatic(resultTypes = panels$result_order), sep = "\n")
+    Output
+      server <- function(input, output, session) {
+        # download raw data -----
+        output$download_raw <- shiny::downloadHandler(
+          filename = "results.csv",
+          content = function(file) {
+            omopViewer::exportSummarisedResult(data, fileName = file)
+          }
+        )
+        # fill selectise variables ----
+        shiny::observe({
+          choices <- omopViewer::getChoices(data, flatten = TRUE)
+          for (k in seq_along(choices)) {
+            shiny::updateSelectizeInput(
+              session,
+              inputId = names(choices)[k],
+              choices = choices[[k]],
+              selected = choices[[k]]
+            )
+          }
+        })
+        # summarise_characteristics -----
+        ## tidy summarise_characteristics -----
+        getTidyDataSummariseCharacteristics <- shiny::reactive({
+          res <- data |>
+            omopViewer::filterData("summarise_characteristics", input) |>
+            omopViewer::tidyData()
+      
+          # columns to eliminate
+          colsEliminate <- colnames(res)
+          colsEliminate <- colsEliminate[!colsEliminate %in% c(
+            input$summarise_characteristics_tidy_columns, "variable_name", "variable_level",
+            "estimate_name", "estimate_type", "estimate_value"
+          )]
+      
+          # pivot
+          pivot <- input$summarise_characteristics_tidy_pivot
+          if (pivot != "none") {
+            vars <- switch(pivot,
+              "estimates" = "estimate_name",
+              "estimates and variables" = c("variable_name", "variable_level", "estimate_name")
+            )
+            res <- res |>
+              visOmopResults::pivotEstimates(pivotEstimatesBy = vars)
+          }
+      
+          res |>
+            dplyr::select(!dplyr::all_of(colsEliminate))
+        })
+        output$summarise_characteristics_tidy <- DT::renderDT({
+          DT::datatable(
+            getTidyDataSummariseCharacteristics(),
+            options = list(scrollX = TRUE),
+            rownames = FALSE
+          )
+        })
+        output$summarise_characteristics_tidy_download <- shiny::downloadHandler(
+          filename = "tidy_summarise_characteristics.csv",
+          content = function(file) {
+            getTidyDataSummariseCharacteristics() |>
+              readr::write_csv(file = file)
+          }
+        )
+        ## formatted summarise_characteristics -----
+        getFormattedDataSummariseCharacteristics <- shiny::reactive({
+          data |>
+            omopViewer::filterData("summarise_characteristics", input) |>
+            omopViewer::visTable(
+              header = input$summarise_characteristics_formatted_header,
+              group = input$summarise_characteristics_formatted_group,
+              hide = input$summarise_characteristics_formatted_hide
+            )
+        })
+        output$summarise_characteristics_formatted <- gt::render_gt({
+          getFormattedDataSummariseCharacteristics()
+        })
+        output$summarise_characteristics_formatted_download <- shiny::downloadHandler(
+          filename = function() {
+            paste0("formatted_summarise_characteristics.", input$summarise_characteristics_formatted_download_type)
+          },
+          content = function(file) {
+            getFormattedDataSummariseCharacteristics() |>
+              gt::gtsave(filename = file)
+          }
+        )
+        ## plot summarise_characteristics -----
+        createPlot4 <- shiny::reactive({
+          result <- data |>
+            omopViewer::filterData("summarise_characteristics", input)
+          CohortCharacteristics::plotCharacteristics(
+            result,
+            plotStyle = input$summarise_characteristics_plot_4_plot_style,
+            facet = input$summarise_characteristics_plot_4_facet,
+            colour = input$summarise_characteristics_plot_4_colour
+          )
+        })
+        output$summarise_characteristics_plot_4 <- shiny::renderPlot({
+          createPlot4()
+        })
+        output$summarise_characteristics_plot_4_download <- shiny::downloadHandler(
+          filename = "plot_summarise_characteristics.png",
+          content = function(file) {
+            plt <- createPlot4()
+            ggplot2::ggsave(
+              filename = file, plot = plt,
+              width = as.numeric(input$summarise_characteristics_plot_4_download_width),
+              height = as.numeric(input$summarise_characteristics_plot_4_download_height),
+              units = input$summarise_characteristics_plot_4_download_units,
+              dpi = as.numeric(input$summarise_characteristics_plot_4_download_dpi)
+            )
+          }
+        )
+      
+      
+        # summarise_cohort_attrition -----
+        ## tidy summarise_cohort_attrition -----
+        getTidyDataSummariseCohortAttrition <- shiny::reactive({
+          res <- data |>
+            omopViewer::filterData("summarise_cohort_attrition", input) |>
+            omopViewer::tidyData()
+      
+          # columns to eliminate
+          colsEliminate <- colnames(res)
+          colsEliminate <- colsEliminate[!colsEliminate %in% c(
+            input$summarise_cohort_attrition_tidy_columns, "variable_name", "variable_level",
+            "estimate_name", "estimate_type", "estimate_value"
+          )]
+      
+          # pivot
+          pivot <- input$summarise_cohort_attrition_tidy_pivot
+          if (pivot != "none") {
+            vars <- switch(pivot,
+              "estimates" = "estimate_name",
+              "estimates and variables" = c("variable_name", "variable_level", "estimate_name")
+            )
+            res <- res |>
+              visOmopResults::pivotEstimates(pivotEstimatesBy = vars)
+          }
+      
+          res |>
+            dplyr::select(!dplyr::all_of(colsEliminate))
+        })
+        output$summarise_cohort_attrition_tidy <- DT::renderDT({
+          DT::datatable(
+            getTidyDataSummariseCohortAttrition(),
+            options = list(scrollX = TRUE),
+            rownames = FALSE
+          )
+        })
+        output$summarise_cohort_attrition_tidy_download <- shiny::downloadHandler(
+          filename = "tidy_summarise_cohort_attrition.csv",
+          content = function(file) {
+            getTidyDataSummariseCohortAttrition() |>
+              readr::write_csv(file = file)
+          }
+        )
+        ## formatted summarise_cohort_attrition -----
+        getFormattedDataSummariseCohortAttrition <- shiny::reactive({
+          data |>
+            omopViewer::filterData("summarise_cohort_attrition", input) |>
+            omopViewer::visTable(
+              header = input$summarise_cohort_attrition_formatted_header,
+              group = input$summarise_cohort_attrition_formatted_group,
+              hide = input$summarise_cohort_attrition_formatted_hide
+            )
+        })
+        output$summarise_cohort_attrition_formatted <- gt::render_gt({
+          getFormattedDataSummariseCohortAttrition()
+        })
+        output$summarise_cohort_attrition_formatted_download <- shiny::downloadHandler(
+          filename = function() {
+            paste0("formatted_summarise_cohort_attrition.", input$summarise_cohort_attrition_formatted_download_type)
+          },
+          content = function(file) {
+            getFormattedDataSummariseCohortAttrition() |>
+              gt::gtsave(filename = file)
+          }
+        )
+        ## plot summarise_cohort_attrition -----
+        createPlot2 <- shiny::reactive({
+          result <- data |>
+            omopViewer::filterData("summarise_cohort_attrition", input)
+          CohortCharacteristics::plotCohortAttrition(
+            result
+          )
+        })
+        output$summarise_cohort_attrition_plot_2 <- DiagrammeR::renderGrViz({
+          createPlot2()
+        })
+        output$summarise_cohort_attrition_plot_2_download <- shiny::downloadHandler(
+          filename = "plot_summarise_cohort_attrition.png",
+          content = function(file) {
+            plt <- createPlot2()
+            DiagrammeR::export_graph(
+              graph = plt, file_name = file, fily_type = "png",
+              width = as.numeric(input$summarise_cohort_attrition_plot_2_download_width),
+              height = as.numeric(input$summarise_cohort_attrition_plot_2_download_height)
+            )
+          }
+        )
+      
+      
+        # summarise_cohort_count -----
+        ## tidy summarise_cohort_count -----
+        getTidyDataSummariseCohortCount <- shiny::reactive({
+          res <- data |>
+            omopViewer::filterData("summarise_cohort_count", input) |>
+            omopViewer::tidyData()
+      
+          # columns to eliminate
+          colsEliminate <- colnames(res)
+          colsEliminate <- colsEliminate[!colsEliminate %in% c(
+            input$summarise_cohort_count_tidy_columns, "variable_name", "variable_level",
+            "estimate_name", "estimate_type", "estimate_value"
+          )]
+      
+          # pivot
+          pivot <- input$summarise_cohort_count_tidy_pivot
+          if (pivot != "none") {
+            vars <- switch(pivot,
+              "estimates" = "estimate_name",
+              "estimates and variables" = c("variable_name", "variable_level", "estimate_name")
+            )
+            res <- res |>
+              visOmopResults::pivotEstimates(pivotEstimatesBy = vars)
+          }
+      
+          res |>
+            dplyr::select(!dplyr::all_of(colsEliminate))
+        })
+        output$summarise_cohort_count_tidy <- DT::renderDT({
+          DT::datatable(
+            getTidyDataSummariseCohortCount(),
+            options = list(scrollX = TRUE),
+            rownames = FALSE
+          )
+        })
+        output$summarise_cohort_count_tidy_download <- shiny::downloadHandler(
+          filename = "tidy_summarise_cohort_count.csv",
+          content = function(file) {
+            getTidyDataSummariseCohortCount() |>
+              readr::write_csv(file = file)
+          }
+        )
+        ## formatted summarise_cohort_count -----
+        getFormattedDataSummariseCohortCount <- shiny::reactive({
+          data |>
+            omopViewer::filterData("summarise_cohort_count", input) |>
+            omopViewer::visTable(
+              header = input$summarise_cohort_count_formatted_header,
+              group = input$summarise_cohort_count_formatted_group,
+              hide = input$summarise_cohort_count_formatted_hide
+            )
+        })
+        output$summarise_cohort_count_formatted <- gt::render_gt({
+          getFormattedDataSummariseCohortCount()
+        })
+        output$summarise_cohort_count_formatted_download <- shiny::downloadHandler(
+          filename = function() {
+            paste0("formatted_summarise_cohort_count.", input$summarise_cohort_count_formatted_download_type)
+          },
+          content = function(file) {
+            getFormattedDataSummariseCohortCount() |>
+              gt::gtsave(filename = file)
+          }
+        )
+        ## plot summarise_cohort_count -----
+        createPlot5 <- shiny::reactive({
+          result <- data |>
+            omopViewer::filterData("summarise_cohort_count", input)
+          CohortCharacteristics::plotCohortCount(
+            result,
+            facet = input$summarise_cohort_count_plot_5_facet,
+            colour = input$summarise_cohort_count_plot_5_colour
+          )
+        })
+        output$summarise_cohort_count_plot_5 <- shiny::renderPlot({
+          createPlot5()
+        })
+        output$summarise_cohort_count_plot_5_download <- shiny::downloadHandler(
+          filename = "plot_summarise_cohort_count.png",
+          content = function(file) {
+            plt <- createPlot5()
+            ggplot2::ggsave(
+              filename = file, plot = plt,
+              width = as.numeric(input$summarise_cohort_count_plot_5_download_width),
+              height = as.numeric(input$summarise_cohort_count_plot_5_download_height),
+              units = input$summarise_cohort_count_plot_5_download_units,
+              dpi = as.numeric(input$summarise_cohort_count_plot_5_download_dpi)
+            )
+          }
+        )
+      
+      
+        # summarise_cohort_overlap -----
+        ## tidy summarise_cohort_overlap -----
+        getTidyDataSummariseCohortOverlap <- shiny::reactive({
+          res <- data |>
+            omopViewer::filterData("summarise_cohort_overlap", input) |>
+            omopViewer::tidyData()
+      
+          # columns to eliminate
+          colsEliminate <- colnames(res)
+          colsEliminate <- colsEliminate[!colsEliminate %in% c(
+            input$summarise_cohort_overlap_tidy_columns, "variable_name", "variable_level",
+            "estimate_name", "estimate_type", "estimate_value"
+          )]
+      
+          # pivot
+          pivot <- input$summarise_cohort_overlap_tidy_pivot
+          if (pivot != "none") {
+            vars <- switch(pivot,
+              "estimates" = "estimate_name",
+              "estimates and variables" = c("variable_name", "variable_level", "estimate_name")
+            )
+            res <- res |>
+              visOmopResults::pivotEstimates(pivotEstimatesBy = vars)
+          }
+      
+          res |>
+            dplyr::select(!dplyr::all_of(colsEliminate))
+        })
+        output$summarise_cohort_overlap_tidy <- DT::renderDT({
+          DT::datatable(
+            getTidyDataSummariseCohortOverlap(),
+            options = list(scrollX = TRUE),
+            rownames = FALSE
+          )
+        })
+        output$summarise_cohort_overlap_tidy_download <- shiny::downloadHandler(
+          filename = "tidy_summarise_cohort_overlap.csv",
+          content = function(file) {
+            getTidyDataSummariseCohortOverlap() |>
+              readr::write_csv(file = file)
+          }
+        )
+        ## formatted summarise_cohort_overlap -----
+        getFormattedDataSummariseCohortOverlap <- shiny::reactive({
+          data |>
+            omopViewer::filterData("summarise_cohort_overlap", input) |>
+            omopViewer::visTable(
+              header = input$summarise_cohort_overlap_formatted_header,
+              group = input$summarise_cohort_overlap_formatted_group,
+              hide = input$summarise_cohort_overlap_formatted_hide
+            )
+        })
+        output$summarise_cohort_overlap_formatted <- gt::render_gt({
+          getFormattedDataSummariseCohortOverlap()
+        })
+        output$summarise_cohort_overlap_formatted_download <- shiny::downloadHandler(
+          filename = function() {
+            paste0("formatted_summarise_cohort_overlap.", input$summarise_cohort_overlap_formatted_download_type)
+          },
+          content = function(file) {
+            getFormattedDataSummariseCohortOverlap() |>
+              gt::gtsave(filename = file)
+          }
+        )
+        ## plot summarise_cohort_overlap -----
+        createPlot1 <- shiny::reactive({
+          result <- data |>
+            omopViewer::filterData("summarise_cohort_overlap", input)
+          CohortCharacteristics::plotCohortOverlap(
+            result,
+            facet = input$summarise_cohort_overlap_plot_1_facet,
+            uniqueCombinations = input$summarise_cohort_overlap_plot_1_unique_combinations
+          )
+        })
+        output$summarise_cohort_overlap_plot_1 <- shiny::renderPlot({
+          createPlot1()
+        })
+        output$summarise_cohort_overlap_plot_1_download <- shiny::downloadHandler(
+          filename = "plot_summarise_cohort_overlap.png",
+          content = function(file) {
+            plt <- createPlot1()
+            ggplot2::ggsave(
+              filename = file, plot = plt,
+              width = as.numeric(input$summarise_cohort_overlap_plot_1_download_width),
+              height = as.numeric(input$summarise_cohort_overlap_plot_1_download_height),
+              units = input$summarise_cohort_overlap_plot_1_download_units,
+              dpi = as.numeric(input$summarise_cohort_overlap_plot_1_download_dpi)
+            )
+          }
+        )
+      
+      
+        # summarise_cohort_timing -----
+        ## tidy summarise_cohort_timing -----
+        getTidyDataSummariseCohortTiming <- shiny::reactive({
+          res <- data |>
+            omopViewer::filterData("summarise_cohort_timing", input) |>
+            omopViewer::tidyData()
+      
+          # columns to eliminate
+          colsEliminate <- colnames(res)
+          colsEliminate <- colsEliminate[!colsEliminate %in% c(
+            input$summarise_cohort_timing_tidy_columns, "variable_name", "variable_level",
+            "estimate_name", "estimate_type", "estimate_value"
+          )]
+      
+          # pivot
+          pivot <- input$summarise_cohort_timing_tidy_pivot
+          if (pivot != "none") {
+            vars <- switch(pivot,
+              "estimates" = "estimate_name",
+              "estimates and variables" = c("variable_name", "variable_level", "estimate_name")
+            )
+            res <- res |>
+              visOmopResults::pivotEstimates(pivotEstimatesBy = vars)
+          }
+      
+          res |>
+            dplyr::select(!dplyr::all_of(colsEliminate))
+        })
+        output$summarise_cohort_timing_tidy <- DT::renderDT({
+          DT::datatable(
+            getTidyDataSummariseCohortTiming(),
+            options = list(scrollX = TRUE),
+            rownames = FALSE
+          )
+        })
+        output$summarise_cohort_timing_tidy_download <- shiny::downloadHandler(
+          filename = "tidy_summarise_cohort_timing.csv",
+          content = function(file) {
+            getTidyDataSummariseCohortTiming() |>
+              readr::write_csv(file = file)
+          }
+        )
+        ## formatted summarise_cohort_timing -----
+        getFormattedDataSummariseCohortTiming <- shiny::reactive({
+          data |>
+            omopViewer::filterData("summarise_cohort_timing", input) |>
+            omopViewer::visTable(
+              header = input$summarise_cohort_timing_formatted_header,
+              group = input$summarise_cohort_timing_formatted_group,
+              hide = input$summarise_cohort_timing_formatted_hide
+            )
+        })
+        output$summarise_cohort_timing_formatted <- gt::render_gt({
+          getFormattedDataSummariseCohortTiming()
+        })
+        output$summarise_cohort_timing_formatted_download <- shiny::downloadHandler(
+          filename = function() {
+            paste0("formatted_summarise_cohort_timing.", input$summarise_cohort_timing_formatted_download_type)
+          },
+          content = function(file) {
+            getFormattedDataSummariseCohortTiming() |>
+              gt::gtsave(filename = file)
+          }
+        )
+        ## plot summarise_cohort_timing -----
+        createPlot3 <- shiny::reactive({
+          result <- data |>
+            omopViewer::filterData("summarise_cohort_timing", input)
+          CohortCharacteristics::plotCohortTiming(
+            result,
+            plotType = input$summarise_cohort_timing_plot_3_plot_type,
+            timeScale = input$summarise_cohort_timing_plot_3_time_scale,
+            facet = input$summarise_cohort_timing_plot_3_facet,
+            colour = input$summarise_cohort_timing_plot_3_colour,
+            uniqueCombinations = input$summarise_cohort_timing_plot_3_unique_combinations
+          )
+        })
+        output$summarise_cohort_timing_plot_3 <- shiny::renderPlot({
+          createPlot3()
+        })
+        output$summarise_cohort_timing_plot_3_download <- shiny::downloadHandler(
+          filename = "plot_summarise_cohort_timing.png",
+          content = function(file) {
+            plt <- createPlot3()
+            ggplot2::ggsave(
+              filename = file, plot = plt,
+              width = as.numeric(input$summarise_cohort_timing_plot_3_download_width),
+              height = as.numeric(input$summarise_cohort_timing_plot_3_download_height),
+              units = input$summarise_cohort_timing_plot_3_download_units,
+              dpi = as.numeric(input$summarise_cohort_timing_plot_3_download_dpi)
+            )
+          }
+        )
+      
+      
+        # summarise_large_scale_characteristics -----
+        ## tidy summarise_large_scale_characteristics -----
+        getTidyDataSummariseLargeScaleCharacteristics <- shiny::reactive({
+          res <- data |>
+            omopViewer::filterData("summarise_large_scale_characteristics", input) |>
+            omopViewer::tidyData()
+      
+          # columns to eliminate
+          colsEliminate <- colnames(res)
+          colsEliminate <- colsEliminate[!colsEliminate %in% c(
+            input$summarise_large_scale_characteristics_tidy_columns, "variable_name", "variable_level",
+            "estimate_name", "estimate_type", "estimate_value"
+          )]
+      
+          # pivot
+          pivot <- input$summarise_large_scale_characteristics_tidy_pivot
+          if (pivot != "none") {
+            vars <- switch(pivot,
+              "estimates" = "estimate_name",
+              "estimates and variables" = c("variable_name", "variable_level", "estimate_name")
+            )
+            res <- res |>
+              visOmopResults::pivotEstimates(pivotEstimatesBy = vars)
+          }
+      
+          res |>
+            dplyr::select(!dplyr::all_of(colsEliminate))
+        })
+        output$summarise_large_scale_characteristics_tidy <- DT::renderDT({
+          DT::datatable(
+            getTidyDataSummariseLargeScaleCharacteristics(),
+            options = list(scrollX = TRUE),
+            rownames = FALSE
+          )
+        })
+        output$summarise_large_scale_characteristics_tidy_download <- shiny::downloadHandler(
+          filename = "tidy_summarise_large_scale_characteristics.csv",
+          content = function(file) {
+            getTidyDataSummariseLargeScaleCharacteristics() |>
+              readr::write_csv(file = file)
+          }
+        )
+        ## formatted summarise_large_scale_characteristics -----
+        getFormattedDataSummariseLargeScaleCharacteristics <- shiny::reactive({
+          data |>
+            omopViewer::filterData("summarise_large_scale_characteristics", input) |>
+            omopViewer::visTable(
+              header = input$summarise_large_scale_characteristics_formatted_header,
+              group = input$summarise_large_scale_characteristics_formatted_group,
+              hide = input$summarise_large_scale_characteristics_formatted_hide
+            )
+        })
+        output$summarise_large_scale_characteristics_formatted <- gt::render_gt({
+          getFormattedDataSummariseLargeScaleCharacteristics()
+        })
+        output$summarise_large_scale_characteristics_formatted_download <- shiny::downloadHandler(
+          filename = function() {
+            paste0("formatted_summarise_large_scale_characteristics.", input$summarise_large_scale_characteristics_formatted_download_type)
+          },
+          content = function(file) {
+            getFormattedDataSummariseLargeScaleCharacteristics() |>
+              gt::gtsave(filename = file)
+          }
+        )
+        ## plot summarise_large_scale_characteristics -----
+      }
+
+---
+
+    Code
+      cat(x, sep = "\n")
+    Output
+      # Generated by omopViewer 0.0.0.900
+      # Be careful editing this file
+      
+      library(CohortCharacteristics)
+      library(DT)
+      library(DiagrammeR)
+      library(bslib)
+      library(dplyr)
+      library(ggplot2)
+      library(gt)
+      library(here)
+      library(omopViewer)
+      library(readr)
+      library(shiny)
+      library(sortable)
+      library(visOmopResults)
+      
+      data <- omopViewer::importSummarisedResult(here::here("data")) |>
+        omopViewer::correctSettings()
+
+---
+
+    Code
+      cat(uiStatic(choices = panels$choices, summary = capture.output(summary(result),
+      type = "message"), logo = NULL), sep = "\n")
+    Message
+      A summarised_result object with 33196 rows, 9 different result_id, 1 different cdm names, and 8 settings.
+      CDM names: mock database.
+      Settings: package_name, package_version, result_type, table_name, cohort_definition_id, restrict_to_first_entry, type, and analysis.
+    Output
+      ui <- bslib::page_navbar(
+        title = "",
+        bslib::nav_panel(
+          title = "Background",
+          icon = shiny::icon("disease"),
+          omopViewer::cardFromMd("background.md")
+        ),
+        bslib::nav_panel(
+          title = "Cohort characteristics",
+          icon = shiny::icon("users-gear"),
+          bslib::layout_sidebar(
+            sidebar = bslib::sidebar(
+              bslib::accordion(
+                bslib::accordion_panel(
+                  title = "Information",
+                  icon = shiny::icon("info"),
+                  shiny::p("")
+                ),
+                bslib::accordion_panel(
+                  title = "Settings",
+                  shiny::selectizeInput(
+                    inputId = "summarise_characteristics_settings_table_name",
+                    label = "Table name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "grouping",
+                  shiny::selectizeInput(
+                    inputId = "summarise_characteristics_grouping_cdm_name",
+                    label = "Cdm name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_characteristics_grouping_cohort_name",
+                    label = "Cohort name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "Variables",
+                  shiny::selectizeInput(
+                    inputId = "summarise_characteristics_variable_name",
+                    label = "Variable name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "Estimates",
+                  shiny::selectizeInput(
+                    inputId = "summarise_characteristics_estimate_name",
+                    label = "Estimate name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                )
+              )
+            ),
+            bslib::navset_card_tab(
+              bslib::nav_panel(
+                title = "Tidy",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::downloadButton(outputId = "summarise_characteristics_tidy_download", label = "Download csv")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      shiny::selectizeInput(
+                        inputId = "summarise_characteristics_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::radioButtons(
+                        inputId = "summarise_characteristics_tidy_pivot",
+                        label = "Pivot estimates/variables",
+                        choices = c("none", "estimates", "estimates and variables"),
+                        selected = "none"
+                      ),
+                      position = "right"
+                    ),
+                    DT::dataTableOutput("summarise_characteristics_tidy")
+                  )
+                )
+              ),
+              bslib::nav_panel(
+                title = "Formatted",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::selectizeInput(
+                        inputId = "summarise_characteristics_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_characteristics_formatted_download", label = "Download")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      sortable::bucket_list(
+                        header = NULL,
+                        sortable::add_rank_list(
+                          text = "None",
+                          labels = c("variable_name", "variable_level", "estimate_name"),
+                          input_id = "summarise_characteristics_formatted_none"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Header",
+                          labels = c("cdm_name"),
+                          input_id = "summarise_characteristics_formatted_header"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Group",
+                          labels = c("cohort_name"),
+                          input_id = "summarise_characteristics_formatted_group"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Hide",
+                          labels = c("table_name"),
+                          input_id = "summarise_characteristics_formatted_hide"
+                        )
+                      ),
+                      position = "right"
+                    ),
+                    gt::gt_output("summarise_characteristics_formatted")
+                  )
+                )
+              ),
+              bslib::nav_panel(
+                title = "Plot characteristics",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::numericInput(inputId = "summarise_characteristics_plot_4_download_width", label = "Width", value = 15),
+                      shiny::numericInput(inputId = "summarise_characteristics_plot_4_download_height", label = "Height", value = 10),
+                      shiny::selectizeInput(
+                        inputId = "summarise_characteristics_plot_4_download_units",
+                        label = "Units",
+                        choices = c("px", "cm", "inch"),
+                        selected = c("cm"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::numericInput(inputId = "summarise_characteristics_plot_4_download_dpi", label = "dpi", value = 300),
+                      shiny::downloadButton(outputId = "summarise_characteristics_plot_4_download", label = "Download png")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      shiny::selectizeInput(
+                        inputId = "summarise_characteristics_plot_4_plot_style",
+                        label = "plotStyle",
+                        choices = c("boxplot", "barplot", "scatterplot"),
+                        selected = c("barplot"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::selectizeInput(
+                        inputId = "summarise_characteristics_plot_4_facet",
+                        label = "facet",
+                        choices = c("cdm_name", "cohort_name", "variable_name", "variable_level", "estimate_name", "table_name"),
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::selectizeInput(
+                        inputId = "summarise_characteristics_plot_4_colour",
+                        label = "colour",
+                        choices = c("cdm_name", "cohort_name", "variable_name", "variable_level", "estimate_name", "table_name"),
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      position = "right"
+                    ),
+                    shiny::plotOutput("summarise_characteristics_plot_4")
+                  )
+                )
+              )
+            )
+          )
+        ),
+        bslib::nav_panel(
+          title = "Cohort Attrition",
+          icon = shiny::icon("layer-group"),
+          bslib::layout_sidebar(
+            sidebar = bslib::sidebar(
+              bslib::accordion(
+                bslib::accordion_panel(
+                  title = "Information",
+                  icon = shiny::icon("info"),
+                  shiny::p("")
+                ),
+                bslib::accordion_panel(
+                  title = "Settings",
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_attrition_settings_table_name",
+                    label = "Table name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_attrition_settings_cohort_definition_id",
+                    label = "Cohort definition id",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "grouping",
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_attrition_grouping_cdm_name",
+                    label = "Cdm name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_attrition_grouping_cohort_name",
+                    label = "Cohort name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_attrition_grouping_reason",
+                    label = "Reason",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_attrition_grouping_reason_id",
+                    label = "Reason id",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "Variables",
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_attrition_variable_name",
+                    label = "Variable name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "Estimates",
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_attrition_estimate_name",
+                    label = "Estimate name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                )
+              )
+            ),
+            bslib::navset_card_tab(
+              bslib::nav_panel(
+                title = "Tidy",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::downloadButton(outputId = "summarise_cohort_attrition_tidy_download", label = "Download csv")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_attrition_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::radioButtons(
+                        inputId = "summarise_cohort_attrition_tidy_pivot",
+                        label = "Pivot estimates/variables",
+                        choices = c("none", "estimates", "estimates and variables"),
+                        selected = "none"
+                      ),
+                      position = "right"
+                    ),
+                    DT::dataTableOutput("summarise_cohort_attrition_tidy")
+                  )
+                )
+              ),
+              bslib::nav_panel(
+                title = "Formatted",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_attrition_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_cohort_attrition_formatted_download", label = "Download")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      sortable::bucket_list(
+                        header = NULL,
+                        sortable::add_rank_list(
+                          text = "None",
+                          labels = c("reason", "reason_id", "variable_name", "variable_level", "estimate_name"),
+                          input_id = "summarise_cohort_attrition_formatted_none"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Header",
+                          labels = c("cdm_name"),
+                          input_id = "summarise_cohort_attrition_formatted_header"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Group",
+                          labels = c("cohort_name"),
+                          input_id = "summarise_cohort_attrition_formatted_group"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Hide",
+                          labels = c("table_name", "cohort_definition_id"),
+                          input_id = "summarise_cohort_attrition_formatted_hide"
+                        )
+                      ),
+                      position = "right"
+                    ),
+                    gt::gt_output("summarise_cohort_attrition_formatted")
+                  )
+                )
+              ),
+              bslib::nav_panel(
+                title = "Diagram",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::numericInput(inputId = "summarise_cohort_attrition_plot_2_download_width", label = "Width (px)", value = 15),
+                      shiny::numericInput(inputId = "summarise_cohort_attrition_plot_2_download_height", label = "Height (px)", value = 10),
+                      shiny::downloadButton(outputId = "summarise_cohort_attrition_plot_2_download", label = "Download png")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      position = "right"
+                    ),
+                    DiagrammeR::grVizOutput("summarise_cohort_attrition_plot_2")
+                  )
+                )
+              )
+            )
+          )
+        ),
+        bslib::nav_panel(
+          title = "Cohort count",
+          icon = shiny::icon("users"),
+          bslib::layout_sidebar(
+            sidebar = bslib::sidebar(
+              bslib::accordion(
+                bslib::accordion_panel(
+                  title = "Information",
+                  icon = shiny::icon("info"),
+                  shiny::p("")
+                ),
+                bslib::accordion_panel(
+                  title = "Settings",
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_count_settings_table_name",
+                    label = "Table name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "grouping",
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_count_grouping_cdm_name",
+                    label = "Cdm name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_count_grouping_cohort_name",
+                    label = "Cohort name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "Variables",
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_count_variable_name",
+                    label = "Variable name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "Estimates",
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_count_estimate_name",
+                    label = "Estimate name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                )
+              )
+            ),
+            bslib::navset_card_tab(
+              bslib::nav_panel(
+                title = "Tidy",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::downloadButton(outputId = "summarise_cohort_count_tidy_download", label = "Download csv")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_count_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::radioButtons(
+                        inputId = "summarise_cohort_count_tidy_pivot",
+                        label = "Pivot estimates/variables",
+                        choices = c("none", "estimates", "estimates and variables"),
+                        selected = "none"
+                      ),
+                      position = "right"
+                    ),
+                    DT::dataTableOutput("summarise_cohort_count_tidy")
+                  )
+                )
+              ),
+              bslib::nav_panel(
+                title = "Formatted",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_count_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_cohort_count_formatted_download", label = "Download")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      sortable::bucket_list(
+                        header = NULL,
+                        sortable::add_rank_list(
+                          text = "None",
+                          labels = c("variable_name", "variable_level", "estimate_name"),
+                          input_id = "summarise_cohort_count_formatted_none"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Header",
+                          labels = c("cdm_name"),
+                          input_id = "summarise_cohort_count_formatted_header"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Group",
+                          labels = c("cohort_name"),
+                          input_id = "summarise_cohort_count_formatted_group"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Hide",
+                          labels = c("table_name"),
+                          input_id = "summarise_cohort_count_formatted_hide"
+                        )
+                      ),
+                      position = "right"
+                    ),
+                    gt::gt_output("summarise_cohort_count_formatted")
+                  )
+                )
+              ),
+              bslib::nav_panel(
+                title = "Plot cohort count",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::numericInput(inputId = "summarise_cohort_count_plot_5_download_width", label = "Width", value = 15),
+                      shiny::numericInput(inputId = "summarise_cohort_count_plot_5_download_height", label = "Height", value = 10),
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_count_plot_5_download_units",
+                        label = "Units",
+                        choices = c("px", "cm", "inch"),
+                        selected = c("cm"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::numericInput(inputId = "summarise_cohort_count_plot_5_download_dpi", label = "dpi", value = 300),
+                      shiny::downloadButton(outputId = "summarise_cohort_count_plot_5_download", label = "Download png")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_count_plot_5_facet",
+                        label = "facet",
+                        choices = c("cdm_name", "cohort_name", "variable_name", "variable_level", "estimate_name"),
+                        selected = c("cdm_name"),
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_count_plot_5_colour",
+                        label = "colour",
+                        choices = c("cdm_name", "cohort_name", "variable_name", "variable_level", "estimate_name"),
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      position = "right"
+                    ),
+                    shiny::plotOutput("summarise_cohort_count_plot_5")
+                  )
+                )
+              )
+            )
+          )
+        ),
+        bslib::nav_panel(
+          title = "Cohort overlap",
+          icon = shiny::icon("circle-half-stroke"),
+          bslib::layout_sidebar(
+            sidebar = bslib::sidebar(
+              bslib::accordion(
+                bslib::accordion_panel(
+                  title = "Information",
+                  icon = shiny::icon("info"),
+                  shiny::p("Cohort overlap shows the number of subjects that contribute to a pair of cohorts.")
+                ),
+                bslib::accordion_panel(
+                  title = "grouping",
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_overlap_grouping_cdm_name",
+                    label = "Cdm name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_overlap_grouping_cohort_name_reference",
+                    label = "Cohort name reference",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_overlap_grouping_cohort_name_comparator",
+                    label = "Cohort name comparator",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "Variables",
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_overlap_variable_name",
+                    label = "Variable name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "Estimates",
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_overlap_estimate_name",
+                    label = "Estimate name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                )
+              )
+            ),
+            bslib::navset_card_tab(
+              bslib::nav_panel(
+                title = "Tidy",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::downloadButton(outputId = "summarise_cohort_overlap_tidy_download", label = "Download csv")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_overlap_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::radioButtons(
+                        inputId = "summarise_cohort_overlap_tidy_pivot",
+                        label = "Pivot estimates/variables",
+                        choices = c("none", "estimates", "estimates and variables"),
+                        selected = "none"
+                      ),
+                      position = "right"
+                    ),
+                    DT::dataTableOutput("summarise_cohort_overlap_tidy")
+                  )
+                )
+              ),
+              bslib::nav_panel(
+                title = "Formatted",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_overlap_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_cohort_overlap_formatted_download", label = "Download")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      sortable::bucket_list(
+                        header = NULL,
+                        sortable::add_rank_list(
+                          text = "None",
+                          labels = c("cohort_name_reference", "cohort_name_comparator", "variable_name", "variable_level", "estimate_name"),
+                          input_id = "summarise_cohort_overlap_formatted_none"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Header",
+                          labels = c("cdm_name"),
+                          input_id = "summarise_cohort_overlap_formatted_header"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Group",
+                          labels = character(),
+                          input_id = "summarise_cohort_overlap_formatted_group"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Hide",
+                          labels = character(),
+                          input_id = "summarise_cohort_overlap_formatted_hide"
+                        )
+                      ),
+                      position = "right"
+                    ),
+                    gt::gt_output("summarise_cohort_overlap_formatted")
+                  )
+                )
+              ),
+              bslib::nav_panel(
+                title = "Plot cohort overlap",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::numericInput(inputId = "summarise_cohort_overlap_plot_1_download_width", label = "Width", value = 15),
+                      shiny::numericInput(inputId = "summarise_cohort_overlap_plot_1_download_height", label = "Height", value = 10),
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_overlap_plot_1_download_units",
+                        label = "Units",
+                        choices = c("px", "cm", "inch"),
+                        selected = c("cm"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::numericInput(inputId = "summarise_cohort_overlap_plot_1_download_dpi", label = "dpi", value = 300),
+                      shiny::downloadButton(outputId = "summarise_cohort_overlap_plot_1_download", label = "Download png")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_overlap_plot_1_facet",
+                        label = "facet",
+                        choices = c("cdm_name", "cohort_name_reference", "cohort_name_comparator", "variable_name", "variable_level", "estimate_name"),
+                        selected = c("cdm_name", "cohort_name_reference"),
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::checkboxInput(
+                        inputId = "summarise_cohort_overlap_plot_1_unique_combinations",
+                        label = "uniqueCombinations",
+                        value = c(TRUE)
+                      ),
+                      position = "right"
+                    ),
+                    shiny::plotOutput("summarise_cohort_overlap_plot_1")
+                  )
+                )
+              )
+            )
+          )
+        ),
+        bslib::nav_panel(
+          title = "Cohort timing",
+          icon = shiny::icon("chart-simple"),
+          bslib::layout_sidebar(
+            sidebar = bslib::sidebar(
+              bslib::accordion(
+                bslib::accordion_panel(
+                  title = "Information",
+                  icon = shiny::icon("info"),
+                  shiny::p("")
+                ),
+                bslib::accordion_panel(
+                  title = "Settings",
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_timing_settings_restrict_to_first_entry",
+                    label = "Restrict to first entry",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "grouping",
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_timing_grouping_cdm_name",
+                    label = "Cdm name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_timing_grouping_cohort_name_reference",
+                    label = "Cohort name reference",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_timing_grouping_cohort_name_comparator",
+                    label = "Cohort name comparator",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "Variables",
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_timing_variable_name",
+                    label = "Variable name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "Estimates",
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_timing_estimate_name",
+                    label = "Estimate name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                )
+              )
+            ),
+            bslib::navset_card_tab(
+              bslib::nav_panel(
+                title = "Tidy",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::downloadButton(outputId = "summarise_cohort_timing_tidy_download", label = "Download csv")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_timing_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::radioButtons(
+                        inputId = "summarise_cohort_timing_tidy_pivot",
+                        label = "Pivot estimates/variables",
+                        choices = c("none", "estimates", "estimates and variables"),
+                        selected = "none"
+                      ),
+                      position = "right"
+                    ),
+                    DT::dataTableOutput("summarise_cohort_timing_tidy")
+                  )
+                )
+              ),
+              bslib::nav_panel(
+                title = "Formatted",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_timing_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_cohort_timing_formatted_download", label = "Download")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      sortable::bucket_list(
+                        header = NULL,
+                        sortable::add_rank_list(
+                          text = "None",
+                          labels = c("cohort_name_reference", "cohort_name_comparator", "variable_name", "variable_level", "estimate_name"),
+                          input_id = "summarise_cohort_timing_formatted_none"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Header",
+                          labels = c("cdm_name"),
+                          input_id = "summarise_cohort_timing_formatted_header"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Group",
+                          labels = character(),
+                          input_id = "summarise_cohort_timing_formatted_group"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Hide",
+                          labels = c("restrict_to_first_entry"),
+                          input_id = "summarise_cohort_timing_formatted_hide"
+                        )
+                      ),
+                      position = "right"
+                    ),
+                    gt::gt_output("summarise_cohort_timing_formatted")
+                  )
+                )
+              ),
+              bslib::nav_panel(
+                title = "Plot cohort timing",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::numericInput(inputId = "summarise_cohort_timing_plot_3_download_width", label = "Width", value = 15),
+                      shiny::numericInput(inputId = "summarise_cohort_timing_plot_3_download_height", label = "Height", value = 10),
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_timing_plot_3_download_units",
+                        label = "Units",
+                        choices = c("px", "cm", "inch"),
+                        selected = c("cm"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::numericInput(inputId = "summarise_cohort_timing_plot_3_download_dpi", label = "dpi", value = 300),
+                      shiny::downloadButton(outputId = "summarise_cohort_timing_plot_3_download", label = "Download png")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_timing_plot_3_plot_type",
+                        label = "plotType",
+                        choices = c("boxplot", "density"),
+                        selected = c("boxplot"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_timing_plot_3_time_scale",
+                        label = "timeScale",
+                        choices = c("days", "years"),
+                        selected = c("days"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_timing_plot_3_facet",
+                        label = "facet",
+                        choices = c("cdm_name", "cohort_name_reference", "cohort_name_comparator", "variable_name", "variable_level", "estimate_name", "restrict_to_first_entry"),
+                        selected = c("cdm_name", "cohort_name_reference"),
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_timing_plot_3_colour",
+                        label = "colour",
+                        choices = c("cdm_name", "cohort_name_reference", "cohort_name_comparator", "variable_name", "variable_level", "estimate_name", "restrict_to_first_entry"),
+                        selected = c("cohort_name_comparator"),
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::checkboxInput(
+                        inputId = "summarise_cohort_timing_plot_3_unique_combinations",
+                        label = "uniqueCombinations",
+                        value = c(TRUE)
+                      ),
+                      position = "right"
+                    ),
+                    shiny::plotOutput("summarise_cohort_timing_plot_3")
+                  )
+                )
+              )
+            )
+          )
+        ),
+        bslib::nav_panel(
+          title = "Large Scale Characteristics",
+          icon = shiny::icon("arrow-up-right-dots"),
+          bslib::layout_sidebar(
+            sidebar = bslib::sidebar(
+              bslib::accordion(
+                bslib::accordion_panel(
+                  title = "Information",
+                  icon = shiny::icon("info"),
+                  shiny::p("")
+                ),
+                bslib::accordion_panel(
+                  title = "Settings",
+                  shiny::selectizeInput(
+                    inputId = "summarise_large_scale_characteristics_settings_table_name",
+                    label = "Table name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_large_scale_characteristics_settings_type",
+                    label = "Type",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_large_scale_characteristics_settings_analysis",
+                    label = "Analysis",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "grouping",
+                  shiny::selectizeInput(
+                    inputId = "summarise_large_scale_characteristics_grouping_cdm_name",
+                    label = "Cdm name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_large_scale_characteristics_grouping_cohort_name",
+                    label = "Cohort name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_large_scale_characteristics_grouping_sex",
+                    label = "Sex",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_large_scale_characteristics_grouping_age_group",
+                    label = "Age group",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_large_scale_characteristics_grouping_concept_id",
+                    label = "Concept id",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "Variables",
+                  shiny::selectizeInput(
+                    inputId = "summarise_large_scale_characteristics_variable_name",
+                    label = "Variable name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "Estimates",
+                  shiny::selectizeInput(
+                    inputId = "summarise_large_scale_characteristics_estimate_name",
+                    label = "Estimate name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                )
+              )
+            ),
+            bslib::navset_card_tab(
+              bslib::nav_panel(
+                title = "Tidy",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::downloadButton(outputId = "summarise_large_scale_characteristics_tidy_download", label = "Download csv")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      shiny::selectizeInput(
+                        inputId = "summarise_large_scale_characteristics_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::radioButtons(
+                        inputId = "summarise_large_scale_characteristics_tidy_pivot",
+                        label = "Pivot estimates/variables",
+                        choices = c("none", "estimates", "estimates and variables"),
+                        selected = "none"
+                      ),
+                      position = "right"
+                    ),
+                    DT::dataTableOutput("summarise_large_scale_characteristics_tidy")
+                  )
+                )
+              ),
+              bslib::nav_panel(
+                title = "Formatted",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::selectizeInput(
+                        inputId = "summarise_large_scale_characteristics_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_large_scale_characteristics_formatted_download", label = "Download")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      sortable::bucket_list(
+                        header = NULL,
+                        sortable::add_rank_list(
+                          text = "None",
+                          labels = c("sex", "age_group", "concept_id", "variable_name", "variable_level", "estimate_name"),
+                          input_id = "summarise_large_scale_characteristics_formatted_none"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Header",
+                          labels = c("cdm_name"),
+                          input_id = "summarise_large_scale_characteristics_formatted_header"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Group",
+                          labels = c("cohort_name"),
+                          input_id = "summarise_large_scale_characteristics_formatted_group"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Hide",
+                          labels = c("table_name", "type", "analysis"),
+                          input_id = "summarise_large_scale_characteristics_formatted_hide"
+                        )
+                      ),
+                      position = "right"
+                    ),
+                    gt::gt_output("summarise_large_scale_characteristics_formatted")
+                  )
+                )
+              ),
+            )
+          )
+        ),
+        bslib::nav_spacer(),
+        bslib::nav_item(
+          bslib::popover(
+            shiny::icon("download"),
+            shiny::downloadButton(
+              outputId = "download_raw",
+              label = "Download raw data",
+              icon = shiny::icon("download")
+            )
+          )
+        ),
+        bslib::nav_item(
+          bslib::popover(
+            shiny::icon("circle-info"),
+            shiny::tags$img(
+              src = "hds_logo.svg",
+              class = "logo-img",
+              alt = "Logo",
+              height = "auto",
+              width = "30%",
+              style = "float:right"
+            ),
+            "This shiny app was generated with ",
+            shiny::a(
+              "omopViewer",
+              href = "https://github.com/oxford-pharmacoepi/omopViewer",
+              target = "_blank"
+            ),
+            shiny::strong("v0.0.0.900")
+          )
+        ),
+        bslib::nav_item(bslib::input_dark_mode(id = "dark_mode", mode = "light"))
+      )
+
+---
+
+    Code
+      cat(uiStatic(choices = panels$choices, summary = capture.output(summary(result),
+      type = "message"), logo = "HDS"), sep = "\n")
+    Message
+      A summarised_result object with 33196 rows, 9 different result_id, 1 different cdm names, and 8 settings.
+      CDM names: mock database.
+      Settings: package_name, package_version, result_type, table_name, cohort_definition_id, restrict_to_first_entry, type, and analysis.
+    Output
+      ui <- bslib::page_navbar(
+        title = shiny::tags$span(
+          shiny::tags$img(
+            src = "HDS",
+            width = "auto",
+            height = "46px",
+            class = "me-3",
+            alt = "logo"
+          ),
+          ""
+        ),
+        bslib::nav_panel(
+          title = "Background",
+          icon = shiny::icon("disease"),
+          omopViewer::cardFromMd("background.md")
+        ),
+        bslib::nav_panel(
+          title = "Cohort characteristics",
+          icon = shiny::icon("users-gear"),
+          bslib::layout_sidebar(
+            sidebar = bslib::sidebar(
+              bslib::accordion(
+                bslib::accordion_panel(
+                  title = "Information",
+                  icon = shiny::icon("info"),
+                  shiny::p("")
+                ),
+                bslib::accordion_panel(
+                  title = "Settings",
+                  shiny::selectizeInput(
+                    inputId = "summarise_characteristics_settings_table_name",
+                    label = "Table name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "grouping",
+                  shiny::selectizeInput(
+                    inputId = "summarise_characteristics_grouping_cdm_name",
+                    label = "Cdm name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_characteristics_grouping_cohort_name",
+                    label = "Cohort name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "Variables",
+                  shiny::selectizeInput(
+                    inputId = "summarise_characteristics_variable_name",
+                    label = "Variable name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "Estimates",
+                  shiny::selectizeInput(
+                    inputId = "summarise_characteristics_estimate_name",
+                    label = "Estimate name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                )
+              )
+            ),
+            bslib::navset_card_tab(
+              bslib::nav_panel(
+                title = "Tidy",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::downloadButton(outputId = "summarise_characteristics_tidy_download", label = "Download csv")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      shiny::selectizeInput(
+                        inputId = "summarise_characteristics_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::radioButtons(
+                        inputId = "summarise_characteristics_tidy_pivot",
+                        label = "Pivot estimates/variables",
+                        choices = c("none", "estimates", "estimates and variables"),
+                        selected = "none"
+                      ),
+                      position = "right"
+                    ),
+                    DT::dataTableOutput("summarise_characteristics_tidy")
+                  )
+                )
+              ),
+              bslib::nav_panel(
+                title = "Formatted",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::selectizeInput(
+                        inputId = "summarise_characteristics_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_characteristics_formatted_download", label = "Download")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      sortable::bucket_list(
+                        header = NULL,
+                        sortable::add_rank_list(
+                          text = "None",
+                          labels = c("variable_name", "variable_level", "estimate_name"),
+                          input_id = "summarise_characteristics_formatted_none"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Header",
+                          labels = c("cdm_name"),
+                          input_id = "summarise_characteristics_formatted_header"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Group",
+                          labels = c("cohort_name"),
+                          input_id = "summarise_characteristics_formatted_group"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Hide",
+                          labels = c("table_name"),
+                          input_id = "summarise_characteristics_formatted_hide"
+                        )
+                      ),
+                      position = "right"
+                    ),
+                    gt::gt_output("summarise_characteristics_formatted")
+                  )
+                )
+              ),
+              bslib::nav_panel(
+                title = "Plot characteristics",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::numericInput(inputId = "summarise_characteristics_plot_4_download_width", label = "Width", value = 15),
+                      shiny::numericInput(inputId = "summarise_characteristics_plot_4_download_height", label = "Height", value = 10),
+                      shiny::selectizeInput(
+                        inputId = "summarise_characteristics_plot_4_download_units",
+                        label = "Units",
+                        choices = c("px", "cm", "inch"),
+                        selected = c("cm"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::numericInput(inputId = "summarise_characteristics_plot_4_download_dpi", label = "dpi", value = 300),
+                      shiny::downloadButton(outputId = "summarise_characteristics_plot_4_download", label = "Download png")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      shiny::selectizeInput(
+                        inputId = "summarise_characteristics_plot_4_plot_style",
+                        label = "plotStyle",
+                        choices = c("boxplot", "barplot", "scatterplot"),
+                        selected = c("barplot"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::selectizeInput(
+                        inputId = "summarise_characteristics_plot_4_facet",
+                        label = "facet",
+                        choices = c("cdm_name", "cohort_name", "variable_name", "variable_level", "estimate_name", "table_name"),
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::selectizeInput(
+                        inputId = "summarise_characteristics_plot_4_colour",
+                        label = "colour",
+                        choices = c("cdm_name", "cohort_name", "variable_name", "variable_level", "estimate_name", "table_name"),
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      position = "right"
+                    ),
+                    shiny::plotOutput("summarise_characteristics_plot_4")
+                  )
+                )
+              )
+            )
+          )
+        ),
+        bslib::nav_panel(
+          title = "Cohort Attrition",
+          icon = shiny::icon("layer-group"),
+          bslib::layout_sidebar(
+            sidebar = bslib::sidebar(
+              bslib::accordion(
+                bslib::accordion_panel(
+                  title = "Information",
+                  icon = shiny::icon("info"),
+                  shiny::p("")
+                ),
+                bslib::accordion_panel(
+                  title = "Settings",
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_attrition_settings_table_name",
+                    label = "Table name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_attrition_settings_cohort_definition_id",
+                    label = "Cohort definition id",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "grouping",
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_attrition_grouping_cdm_name",
+                    label = "Cdm name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_attrition_grouping_cohort_name",
+                    label = "Cohort name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_attrition_grouping_reason",
+                    label = "Reason",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_attrition_grouping_reason_id",
+                    label = "Reason id",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "Variables",
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_attrition_variable_name",
+                    label = "Variable name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "Estimates",
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_attrition_estimate_name",
+                    label = "Estimate name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                )
+              )
+            ),
+            bslib::navset_card_tab(
+              bslib::nav_panel(
+                title = "Tidy",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::downloadButton(outputId = "summarise_cohort_attrition_tidy_download", label = "Download csv")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_attrition_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::radioButtons(
+                        inputId = "summarise_cohort_attrition_tidy_pivot",
+                        label = "Pivot estimates/variables",
+                        choices = c("none", "estimates", "estimates and variables"),
+                        selected = "none"
+                      ),
+                      position = "right"
+                    ),
+                    DT::dataTableOutput("summarise_cohort_attrition_tidy")
+                  )
+                )
+              ),
+              bslib::nav_panel(
+                title = "Formatted",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_attrition_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_cohort_attrition_formatted_download", label = "Download")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      sortable::bucket_list(
+                        header = NULL,
+                        sortable::add_rank_list(
+                          text = "None",
+                          labels = c("reason", "reason_id", "variable_name", "variable_level", "estimate_name"),
+                          input_id = "summarise_cohort_attrition_formatted_none"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Header",
+                          labels = c("cdm_name"),
+                          input_id = "summarise_cohort_attrition_formatted_header"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Group",
+                          labels = c("cohort_name"),
+                          input_id = "summarise_cohort_attrition_formatted_group"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Hide",
+                          labels = c("table_name", "cohort_definition_id"),
+                          input_id = "summarise_cohort_attrition_formatted_hide"
+                        )
+                      ),
+                      position = "right"
+                    ),
+                    gt::gt_output("summarise_cohort_attrition_formatted")
+                  )
+                )
+              ),
+              bslib::nav_panel(
+                title = "Diagram",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::numericInput(inputId = "summarise_cohort_attrition_plot_2_download_width", label = "Width (px)", value = 15),
+                      shiny::numericInput(inputId = "summarise_cohort_attrition_plot_2_download_height", label = "Height (px)", value = 10),
+                      shiny::downloadButton(outputId = "summarise_cohort_attrition_plot_2_download", label = "Download png")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      position = "right"
+                    ),
+                    DiagrammeR::grVizOutput("summarise_cohort_attrition_plot_2")
+                  )
+                )
+              )
+            )
+          )
+        ),
+        bslib::nav_panel(
+          title = "Cohort count",
+          icon = shiny::icon("users"),
+          bslib::layout_sidebar(
+            sidebar = bslib::sidebar(
+              bslib::accordion(
+                bslib::accordion_panel(
+                  title = "Information",
+                  icon = shiny::icon("info"),
+                  shiny::p("")
+                ),
+                bslib::accordion_panel(
+                  title = "Settings",
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_count_settings_table_name",
+                    label = "Table name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "grouping",
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_count_grouping_cdm_name",
+                    label = "Cdm name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_count_grouping_cohort_name",
+                    label = "Cohort name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "Variables",
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_count_variable_name",
+                    label = "Variable name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "Estimates",
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_count_estimate_name",
+                    label = "Estimate name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                )
+              )
+            ),
+            bslib::navset_card_tab(
+              bslib::nav_panel(
+                title = "Tidy",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::downloadButton(outputId = "summarise_cohort_count_tidy_download", label = "Download csv")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_count_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::radioButtons(
+                        inputId = "summarise_cohort_count_tidy_pivot",
+                        label = "Pivot estimates/variables",
+                        choices = c("none", "estimates", "estimates and variables"),
+                        selected = "none"
+                      ),
+                      position = "right"
+                    ),
+                    DT::dataTableOutput("summarise_cohort_count_tidy")
+                  )
+                )
+              ),
+              bslib::nav_panel(
+                title = "Formatted",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_count_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_cohort_count_formatted_download", label = "Download")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      sortable::bucket_list(
+                        header = NULL,
+                        sortable::add_rank_list(
+                          text = "None",
+                          labels = c("variable_name", "variable_level", "estimate_name"),
+                          input_id = "summarise_cohort_count_formatted_none"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Header",
+                          labels = c("cdm_name"),
+                          input_id = "summarise_cohort_count_formatted_header"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Group",
+                          labels = c("cohort_name"),
+                          input_id = "summarise_cohort_count_formatted_group"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Hide",
+                          labels = c("table_name"),
+                          input_id = "summarise_cohort_count_formatted_hide"
+                        )
+                      ),
+                      position = "right"
+                    ),
+                    gt::gt_output("summarise_cohort_count_formatted")
+                  )
+                )
+              ),
+              bslib::nav_panel(
+                title = "Plot cohort count",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::numericInput(inputId = "summarise_cohort_count_plot_5_download_width", label = "Width", value = 15),
+                      shiny::numericInput(inputId = "summarise_cohort_count_plot_5_download_height", label = "Height", value = 10),
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_count_plot_5_download_units",
+                        label = "Units",
+                        choices = c("px", "cm", "inch"),
+                        selected = c("cm"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::numericInput(inputId = "summarise_cohort_count_plot_5_download_dpi", label = "dpi", value = 300),
+                      shiny::downloadButton(outputId = "summarise_cohort_count_plot_5_download", label = "Download png")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_count_plot_5_facet",
+                        label = "facet",
+                        choices = c("cdm_name", "cohort_name", "variable_name", "variable_level", "estimate_name"),
+                        selected = c("cdm_name"),
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_count_plot_5_colour",
+                        label = "colour",
+                        choices = c("cdm_name", "cohort_name", "variable_name", "variable_level", "estimate_name"),
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      position = "right"
+                    ),
+                    shiny::plotOutput("summarise_cohort_count_plot_5")
+                  )
+                )
+              )
+            )
+          )
+        ),
+        bslib::nav_panel(
+          title = "Cohort overlap",
+          icon = shiny::icon("circle-half-stroke"),
+          bslib::layout_sidebar(
+            sidebar = bslib::sidebar(
+              bslib::accordion(
+                bslib::accordion_panel(
+                  title = "Information",
+                  icon = shiny::icon("info"),
+                  shiny::p("Cohort overlap shows the number of subjects that contribute to a pair of cohorts.")
+                ),
+                bslib::accordion_panel(
+                  title = "grouping",
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_overlap_grouping_cdm_name",
+                    label = "Cdm name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_overlap_grouping_cohort_name_reference",
+                    label = "Cohort name reference",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_overlap_grouping_cohort_name_comparator",
+                    label = "Cohort name comparator",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "Variables",
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_overlap_variable_name",
+                    label = "Variable name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "Estimates",
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_overlap_estimate_name",
+                    label = "Estimate name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                )
+              )
+            ),
+            bslib::navset_card_tab(
+              bslib::nav_panel(
+                title = "Tidy",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::downloadButton(outputId = "summarise_cohort_overlap_tidy_download", label = "Download csv")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_overlap_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::radioButtons(
+                        inputId = "summarise_cohort_overlap_tidy_pivot",
+                        label = "Pivot estimates/variables",
+                        choices = c("none", "estimates", "estimates and variables"),
+                        selected = "none"
+                      ),
+                      position = "right"
+                    ),
+                    DT::dataTableOutput("summarise_cohort_overlap_tidy")
+                  )
+                )
+              ),
+              bslib::nav_panel(
+                title = "Formatted",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_overlap_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_cohort_overlap_formatted_download", label = "Download")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      sortable::bucket_list(
+                        header = NULL,
+                        sortable::add_rank_list(
+                          text = "None",
+                          labels = c("cohort_name_reference", "cohort_name_comparator", "variable_name", "variable_level", "estimate_name"),
+                          input_id = "summarise_cohort_overlap_formatted_none"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Header",
+                          labels = c("cdm_name"),
+                          input_id = "summarise_cohort_overlap_formatted_header"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Group",
+                          labels = character(),
+                          input_id = "summarise_cohort_overlap_formatted_group"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Hide",
+                          labels = character(),
+                          input_id = "summarise_cohort_overlap_formatted_hide"
+                        )
+                      ),
+                      position = "right"
+                    ),
+                    gt::gt_output("summarise_cohort_overlap_formatted")
+                  )
+                )
+              ),
+              bslib::nav_panel(
+                title = "Plot cohort overlap",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::numericInput(inputId = "summarise_cohort_overlap_plot_1_download_width", label = "Width", value = 15),
+                      shiny::numericInput(inputId = "summarise_cohort_overlap_plot_1_download_height", label = "Height", value = 10),
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_overlap_plot_1_download_units",
+                        label = "Units",
+                        choices = c("px", "cm", "inch"),
+                        selected = c("cm"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::numericInput(inputId = "summarise_cohort_overlap_plot_1_download_dpi", label = "dpi", value = 300),
+                      shiny::downloadButton(outputId = "summarise_cohort_overlap_plot_1_download", label = "Download png")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_overlap_plot_1_facet",
+                        label = "facet",
+                        choices = c("cdm_name", "cohort_name_reference", "cohort_name_comparator", "variable_name", "variable_level", "estimate_name"),
+                        selected = c("cdm_name", "cohort_name_reference"),
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::checkboxInput(
+                        inputId = "summarise_cohort_overlap_plot_1_unique_combinations",
+                        label = "uniqueCombinations",
+                        value = c(TRUE)
+                      ),
+                      position = "right"
+                    ),
+                    shiny::plotOutput("summarise_cohort_overlap_plot_1")
+                  )
+                )
+              )
+            )
+          )
+        ),
+        bslib::nav_panel(
+          title = "Cohort timing",
+          icon = shiny::icon("chart-simple"),
+          bslib::layout_sidebar(
+            sidebar = bslib::sidebar(
+              bslib::accordion(
+                bslib::accordion_panel(
+                  title = "Information",
+                  icon = shiny::icon("info"),
+                  shiny::p("")
+                ),
+                bslib::accordion_panel(
+                  title = "Settings",
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_timing_settings_restrict_to_first_entry",
+                    label = "Restrict to first entry",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "grouping",
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_timing_grouping_cdm_name",
+                    label = "Cdm name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_timing_grouping_cohort_name_reference",
+                    label = "Cohort name reference",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_timing_grouping_cohort_name_comparator",
+                    label = "Cohort name comparator",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "Variables",
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_timing_variable_name",
+                    label = "Variable name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "Estimates",
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_timing_estimate_name",
+                    label = "Estimate name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                )
+              )
+            ),
+            bslib::navset_card_tab(
+              bslib::nav_panel(
+                title = "Tidy",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::downloadButton(outputId = "summarise_cohort_timing_tidy_download", label = "Download csv")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_timing_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::radioButtons(
+                        inputId = "summarise_cohort_timing_tidy_pivot",
+                        label = "Pivot estimates/variables",
+                        choices = c("none", "estimates", "estimates and variables"),
+                        selected = "none"
+                      ),
+                      position = "right"
+                    ),
+                    DT::dataTableOutput("summarise_cohort_timing_tidy")
+                  )
+                )
+              ),
+              bslib::nav_panel(
+                title = "Formatted",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_timing_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_cohort_timing_formatted_download", label = "Download")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      sortable::bucket_list(
+                        header = NULL,
+                        sortable::add_rank_list(
+                          text = "None",
+                          labels = c("cohort_name_reference", "cohort_name_comparator", "variable_name", "variable_level", "estimate_name"),
+                          input_id = "summarise_cohort_timing_formatted_none"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Header",
+                          labels = c("cdm_name"),
+                          input_id = "summarise_cohort_timing_formatted_header"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Group",
+                          labels = character(),
+                          input_id = "summarise_cohort_timing_formatted_group"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Hide",
+                          labels = c("restrict_to_first_entry"),
+                          input_id = "summarise_cohort_timing_formatted_hide"
+                        )
+                      ),
+                      position = "right"
+                    ),
+                    gt::gt_output("summarise_cohort_timing_formatted")
+                  )
+                )
+              ),
+              bslib::nav_panel(
+                title = "Plot cohort timing",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::numericInput(inputId = "summarise_cohort_timing_plot_3_download_width", label = "Width", value = 15),
+                      shiny::numericInput(inputId = "summarise_cohort_timing_plot_3_download_height", label = "Height", value = 10),
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_timing_plot_3_download_units",
+                        label = "Units",
+                        choices = c("px", "cm", "inch"),
+                        selected = c("cm"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::numericInput(inputId = "summarise_cohort_timing_plot_3_download_dpi", label = "dpi", value = 300),
+                      shiny::downloadButton(outputId = "summarise_cohort_timing_plot_3_download", label = "Download png")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_timing_plot_3_plot_type",
+                        label = "plotType",
+                        choices = c("boxplot", "density"),
+                        selected = c("boxplot"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_timing_plot_3_time_scale",
+                        label = "timeScale",
+                        choices = c("days", "years"),
+                        selected = c("days"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_timing_plot_3_facet",
+                        label = "facet",
+                        choices = c("cdm_name", "cohort_name_reference", "cohort_name_comparator", "variable_name", "variable_level", "estimate_name", "restrict_to_first_entry"),
+                        selected = c("cdm_name", "cohort_name_reference"),
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_timing_plot_3_colour",
+                        label = "colour",
+                        choices = c("cdm_name", "cohort_name_reference", "cohort_name_comparator", "variable_name", "variable_level", "estimate_name", "restrict_to_first_entry"),
+                        selected = c("cohort_name_comparator"),
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::checkboxInput(
+                        inputId = "summarise_cohort_timing_plot_3_unique_combinations",
+                        label = "uniqueCombinations",
+                        value = c(TRUE)
+                      ),
+                      position = "right"
+                    ),
+                    shiny::plotOutput("summarise_cohort_timing_plot_3")
+                  )
+                )
+              )
+            )
+          )
+        ),
+        bslib::nav_panel(
+          title = "Large Scale Characteristics",
+          icon = shiny::icon("arrow-up-right-dots"),
+          bslib::layout_sidebar(
+            sidebar = bslib::sidebar(
+              bslib::accordion(
+                bslib::accordion_panel(
+                  title = "Information",
+                  icon = shiny::icon("info"),
+                  shiny::p("")
+                ),
+                bslib::accordion_panel(
+                  title = "Settings",
+                  shiny::selectizeInput(
+                    inputId = "summarise_large_scale_characteristics_settings_table_name",
+                    label = "Table name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_large_scale_characteristics_settings_type",
+                    label = "Type",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_large_scale_characteristics_settings_analysis",
+                    label = "Analysis",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "grouping",
+                  shiny::selectizeInput(
+                    inputId = "summarise_large_scale_characteristics_grouping_cdm_name",
+                    label = "Cdm name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_large_scale_characteristics_grouping_cohort_name",
+                    label = "Cohort name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_large_scale_characteristics_grouping_sex",
+                    label = "Sex",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_large_scale_characteristics_grouping_age_group",
+                    label = "Age group",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_large_scale_characteristics_grouping_concept_id",
+                    label = "Concept id",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "Variables",
+                  shiny::selectizeInput(
+                    inputId = "summarise_large_scale_characteristics_variable_name",
+                    label = "Variable name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                ),
+                bslib::accordion_panel(
+                  title = "Estimates",
+                  shiny::selectizeInput(
+                    inputId = "summarise_large_scale_characteristics_estimate_name",
+                    label = "Estimate name",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  )
+                )
+              )
+            ),
+            bslib::navset_card_tab(
+              bslib::nav_panel(
+                title = "Tidy",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::downloadButton(outputId = "summarise_large_scale_characteristics_tidy_download", label = "Download csv")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      shiny::selectizeInput(
+                        inputId = "summarise_large_scale_characteristics_tidy_columns",
+                        label = "Columns",
+                        choices = NULL,
+                        selected = NULL,
+                        multiple = TRUE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::radioButtons(
+                        inputId = "summarise_large_scale_characteristics_tidy_pivot",
+                        label = "Pivot estimates/variables",
+                        choices = c("none", "estimates", "estimates and variables"),
+                        selected = "none"
+                      ),
+                      position = "right"
+                    ),
+                    DT::dataTableOutput("summarise_large_scale_characteristics_tidy")
+                  )
+                )
+              ),
+              bslib::nav_panel(
+                title = "Formatted",
+                bslib::card(
+                  full_screen = TRUE,
+                  bslib::card_header(
+                    bslib::popover(
+                      shiny::icon("download"),
+                      shiny::selectizeInput(
+                        inputId = "summarise_large_scale_characteristics_formatted_download_type",
+                        label = "File",
+                        choices = c("docx", "png", "pdf", "html"),
+                        selected = c("docx"),
+                        multiple = FALSE,
+                        options = list(plugins = "remove_button")
+                      ),
+                      shiny::downloadButton(outputId = "summarise_large_scale_characteristics_formatted_download", label = "Download")
+                    ),
+                    class = "text-end"
+                  ),
+                  bslib::layout_sidebar(
+                    sidebar = bslib::sidebar(
+                      sortable::bucket_list(
+                        header = NULL,
+                        sortable::add_rank_list(
+                          text = "None",
+                          labels = c("sex", "age_group", "concept_id", "variable_name", "variable_level", "estimate_name"),
+                          input_id = "summarise_large_scale_characteristics_formatted_none"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Header",
+                          labels = c("cdm_name"),
+                          input_id = "summarise_large_scale_characteristics_formatted_header"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Group",
+                          labels = c("cohort_name"),
+                          input_id = "summarise_large_scale_characteristics_formatted_group"
+                        ),
+                        sortable::add_rank_list(
+                          text = "Hide",
+                          labels = c("table_name", "type", "analysis"),
+                          input_id = "summarise_large_scale_characteristics_formatted_hide"
+                        )
+                      ),
+                      position = "right"
+                    ),
+                    gt::gt_output("summarise_large_scale_characteristics_formatted")
+                  )
+                )
+              ),
+            )
+          )
+        ),
+        bslib::nav_spacer(),
+        bslib::nav_item(
+          bslib::popover(
+            shiny::icon("download"),
+            shiny::downloadButton(
+              outputId = "download_raw",
+              label = "Download raw data",
+              icon = shiny::icon("download")
+            )
+          )
+        ),
+        bslib::nav_item(
+          bslib::popover(
+            shiny::icon("circle-info"),
+            shiny::tags$img(
+              src = "hds_logo.svg",
+              class = "logo-img",
+              alt = "Logo",
+              height = "auto",
+              width = "30%",
+              style = "float:right"
+            ),
+            "This shiny app was generated with ",
+            shiny::a(
+              "omopViewer",
+              href = "https://github.com/oxford-pharmacoepi/omopViewer",
+              target = "_blank"
+            ),
+            shiny::strong("v0.0.0.900")
+          )
+        ),
+        bslib::nav_item(bslib::input_dark_mode(id = "dark_mode", mode = "light"))
+      )
+
 # title
 
     Code
