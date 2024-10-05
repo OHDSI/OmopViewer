@@ -23,14 +23,27 @@ cardFromMd <- function(fileName) {
   metadata <- content$metadata
   body <- content$body
 
+  tmpFile <- tempfile(fileext = ".md")
+  writeLines(text = body, con = tmpFile)
+
+  # metadata referring to keys
+  keys <- getCardKeys(metadata)
+
   arguments <- c(
     # metadata referring to arguments of card
     metadata[names(metadata) %in% names(formals(bslib::card))],
-    # metadata referring to keys
-    getCardKeys(metadata),
-    # body
-    list(shiny::markdown(body))
+    # content
+    list(
+      keys$header,
+      bslib::card_body(shiny::HTML(markdown::markdownToHTML(
+        file = tmpFile, fragment.only = TRUE
+      ))),
+      keys$footer
+    ) |>
+      eliminateNull()
   )
+
+  unlink(tmpFile)
 
   do.call(bslib::card, arguments)
 }
@@ -61,20 +74,21 @@ extractYamlMetadata <- function(content) {
   return(list(body = content, metadata = metadata))
 }
 getCardKeys <- function(metadata) {
-  x <- list()
-  for (key in backgroundKeywords$keyword) {
-    if (key %in% names(metadata)) {
-      y <- paste0(
-        backgroundKeywords$fun[backgroundKeywords$keyword == key],
-        "(metadata[[key]])"
-      ) |>
-        rlang::parse_expr() |>
-        rlang::eval_tidy()
-      x <- c(x, list(y))
-    }
-  }
-
-  return(x)
+  backgroundKeywords$keyword |>
+    rlang::set_names() |>
+    purrr::map(\(x) {
+      if (x %in% names(metadata)) {
+        paste0(
+          backgroundKeywords$fun[backgroundKeywords$keyword == x],
+          "(metadata[[x]])"
+        ) |>
+          rlang::parse_expr() |>
+          rlang::eval_tidy()
+      } else {
+        NULL
+      }
+    }) |>
+    eliminateNull()
 }
 
 createBackground <- function(background) {
@@ -108,4 +122,7 @@ defaultBackground <- function(logo = NULL) {
     logo,
     ''
   )
+}
+eliminateNull <- function(x) {
+  x[purrr::map_lgl(x, ~ !is.null(.x))]
 }
