@@ -130,7 +130,6 @@ test_that("order tabs", {
   )
 
   # generate shiny
-  #tdir <- here::here()
   tdir <- tempdir()
   unique(omopgenerics::settings(result) |>
            dplyr::pull("result_type"))
