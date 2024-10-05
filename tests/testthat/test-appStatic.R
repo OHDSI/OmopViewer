@@ -146,7 +146,7 @@ test_that("order tabs", {
 
   unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
 
-  expect_no_error(exportStaticApp(result = result,
+  expect_warning(exportStaticApp(result = result,
                                   directory = tdir,
                                   panels = list("summarise_cohort_count",
                                                 "summarise_cohort_attrition",
@@ -174,7 +174,7 @@ test_that("order tabs", {
   unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
 
   # menu with results not in result
-  expect_no_error(exportStaticApp(result = result,
+  expect_warning(exportStaticApp(result = result,
                                   directory = tdir,
                                   panels = list("CHARACTERISTICS" = c("summarise_characteristics", "summarise_large_scale_characteristics", "hi"), "summarise_cohort_overlap")))
   expect_warning(panels <- validatePanels(list("CHARACTERISTICS" = c("summarise_characteristics", "summarise_large_scale_characteristics", "hi"), "summarise_cohort_overlap"), getChoices(result)))
