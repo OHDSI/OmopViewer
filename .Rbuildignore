@@ -10,3 +10,6 @@
 ^codecov\.yml$
 ^data-raw$
 ^shiny$
+^doc$
+^Meta$
+^vignettes/articles$
