@@ -17,7 +17,7 @@ test_that("logo", {
 
   # custom logo
   expect_no_error(exportStaticApp(result = emptySummarisedResult(),
-    directory = tdir, logo = here::here("inst", "oxford.png")))
+                                  directory = tdir, logo = here::here("inst", "oxford.png")))
   expect_true("shiny" %in% list.files(tdir))
   unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
 
@@ -157,40 +157,66 @@ test_that("order tabs", {
   # generate shiny
   tdir <- here::here()
   unique(omopgenerics::settings(result) |>
-    dplyr::pull("result_type"))
+           dplyr::pull("result_type"))
   expect_no_error(exportStaticApp(result = result,
                                   directory = tdir,
                                   panels = list("summarise_cohort_count",
-                                                  "summarise_cohort_attrition",
-                                                  "summarise_cohort_overlap")))
+                                                "summarise_cohort_attrition",
+                                                "summarise_cohort_overlap")))
+  panels <- validatePanels(list("summarise_cohort_count",
+                                "summarise_cohort_attrition",
+                                "summarise_cohort_overlap") , getChoices(result))
+  expect_snapshot(uiStatic(choices = panels$choices))
 
+  unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
 
   expect_no_error(exportStaticApp(result = result,
                                   directory = tdir,
                                   panels = list("summarise_cohort_count",
-                                                  "summarise_cohort_attrition",
-                                                  "summarise_cohort_overlap",
-                                                  "not an option",
-                                                  "another missing result")))
+                                                "summarise_cohort_attrition",
+                                                "summarise_cohort_overlap",
+                                                "not an option",
+                                                "another missing result")))
+  unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
+
   expect_no_error(exportStaticApp(result = result,
                                   directory = tdir,
                                   panels = list("not an option")))
+  unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
+
   # missing a result
   expect_no_error(exportStaticApp(result = result,
                                   directory = tdir,
                                   panels = list("summarise_cohort_count",
-                                                  "summarise_cohort_attrition")))
+                                                "summarise_cohort_attrition")))
+  unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
 
   # will show all results
   expect_no_error(exportStaticApp(result = result,
                                   directory = tdir,
                                   panels = list()))
+  unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
+
+  # menu with results not in result
+  expect_no_error(exportStaticApp(result = result,
+                                  directory = tdir,
+                                  panels = list("CHARACTERISTICS" = c("summarise_characteristics", "summarise_large_scale_characteristics", "hi"), "summarise_cohort_overlap")))
+  expect_warning(panels <- validatePanels(list("CHARACTERISTICS" = c("summarise_characteristics", "summarise_large_scale_characteristics", "hi"), "summarise_cohort_overlap"), getChoices(result)))
+  expect_snapshot(uiStatic(choices = panels$choices))
+  unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
+
+  # menu for details
+  expect_no_error(exportStaticApp(result = result,
+                                  directory = tdir,
+                                  panels = list("DETAILS" = c("summarise_cohort_count", "summarise_cohort_attrition"), "summarise_cohort_overlap")))
+  panels <- validatePanels(list("DETAILS" = c("summarise_cohort_count", "summarise_cohort_attrition"), "summarise_cohort_overlap"), getChoices(result))
+  expect_snapshot(uiStatic(choices = panels$choices))
+  unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
 
   expect_error(exportStaticApp(result = result,
                                directory = tdir,
                                panels = c("must be a list")))
-
-
+  expect_error(validatePanels(list("summarise_cohort_count", "summarise_cohort_count"), getChoices(result)))
 })
 
 test_that("theme", {

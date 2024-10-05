@@ -51,11 +51,19 @@ validatePanels <- function(panels, choices) {
     cli::cli_abort("`panels` cannot have duplicate results")
   }
   out <- setdiff(purrr::flatten_chr(panels), panelOrder)
-  cli::cli_warn("{.strong {out}} in `panels` not found in results")
+  if (length(out) > 0) {
+    cli::cli_warn("{.strong {out}} in `panels` not found in results")
+  }
   # if not specified, append remaining results
   panelsClean <- c(panelsClean, as.list(setdiff(names(choices), panelOrder)))
   # add names
-  names(panelsClean)[names(panelsClean) == ""] <- paste0("id_", 1:sum(names(panelsClean) == ""))
+  if (length(panelsClean) > 0) {
+    if (is.null(names(panelsClean))) {
+      names(panelsClean) <- paste0("id_", 1:length(panelsClean))
+    } else {
+      names(panelsClean)[names(panelsClean) == ""] <- paste0("id_", 1:sum(names(panelsClean) == ""))
+    }
+  }
   # get choices
   choices <- purrr::map(panelsClean, function(x, y = choices) {y[x]})
   resultOrder <- panelsClean |> unlist() |> unname()

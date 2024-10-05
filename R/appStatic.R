@@ -211,7 +211,7 @@ pageTitle <- function(title, logo) {
 # server ----
 serverStatic <- function(resultTypes = character()) {
   # initial checks
-  omopgenerics::assertCharacter(resultTypes, unique = TRUE)
+  omopgenerics::assertCharacter(resultTypes, unique = TRUE, null = TRUE)
 
   paste0(
     c(
