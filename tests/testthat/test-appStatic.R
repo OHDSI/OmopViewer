@@ -188,6 +188,6 @@ test_that("colourPalette", {
 
   ui <- uiStatic(colourPalette = c("orange", "blue"))
 
-  expect_true(grepl('^\\s*theme = bslib::bs_theme\\(version = 5, preset = "sandstone", bg = "#FFFFFF", fg = "#000000", primary = "#FFB124", success = "#0000DA", info = "#482FB6", warning = "#00006D", danger = "red"\\),?$', ui[2]))
+  expect_true(grepl('^\\s*theme = bslib::bs_theme\\(version = 5, preset = "sandstone", bg = "white", fg = "black", primary = "orange", success = "blue", base_font = font_google\\("Space Mono"\\), code_font = font_google\\("Space Mono"\\)\\),?$', ui[2]))
 })
 
