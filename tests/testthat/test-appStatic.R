@@ -178,7 +178,7 @@ test_that("theme", {
 
   ui <- uiStatic(theme = "theme1")
 
-  expect_true(grepl('theme = bslib::bs_theme\\(bootswatch = "sandstone", primary = "#605ca8", bg = "white", fg = "black", success = "#3B9AB2"\\)', ui[2]))
+  expect_true(grepl('theme = bslib::bs_theme\\(bootswatch = "sandstone", primary = "#605ca8", bg = "white", fg = "black", success = "#3B9AB2", base_font = font_google\\("Space Mono"\\), code_font = font_google\\("Space Mono"\\)\\)', ui[2]))
 })
 
 test_that("colourPalette", {
