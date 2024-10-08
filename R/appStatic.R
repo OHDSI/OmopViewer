@@ -241,8 +241,11 @@ uiStatic <- function(choices = list(),
 
     theme <- gsub("\n    ", "", theme)
     return(theme)
-  } else {
+  } else if(grepl("bslib::bs_theme", theme)) {
     theme = theme
+  } else {
+    cli::cli_warn(c("!" = "Custom theme must follow the format 'bslib::bs_theme(...)'.The theme argument has set to NULL."))
+    theme = NULL
   }
   }
 
