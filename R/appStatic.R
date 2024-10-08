@@ -56,13 +56,14 @@ exportStaticApp <- function(result,
   omopgenerics::assertLogical(summary, length = 1)
   omopgenerics::assertCharacter(theme, length = 1, null = TRUE)
   omopgenerics::assertCharacter(colourPalette, length = 2, null = TRUE)
-  omopgenerics::assertList(panels)
   omopgenerics::assertLogical(background, length = 1)
   sum <- validateSummary(summary, result)
   directory <- validateDirectory(directory)
   if (isTRUE(directory)) {
     return(cli::cli_inform(c("i" = "{.strong shiny} folder will not be overwritten. Stopping process.")))
   }
+  resType <- omopgenerics::settings(result)[["result_type"]] |> unique()
+  panels <- validatePanels(panels, resType)
 
   if (!is.null(theme) && !is.null(colourPalette)) {
     cli::cli_abort("Cannot use theme and colourPalette argument at the same time.")
@@ -70,30 +71,14 @@ exportStaticApp <- function(result,
 
   # processing data
   cli::cli_inform(c("i" = "Processing data"))
-  resType <- omopgenerics::settings(result)[["result_type"]] |> unique()
-  mes <- "Data processed: {length(resType)} result type{?s} idenfied"
-  if (length(resType) == 0) {
-    resType <- character()
-    mes <- c("!" = paste0(mes, "."))
-  } else {
-    mes <- c("v" = paste0(mes, ": {.var {resType}}."))
-  }
-  cli::cli_inform(mes)
-  if (length(resType) == 0) {
-    cli::cli_inform(c("!" = "No result_type(s) found, the generated shiny will be empty."))
-  }
-
   choices <- getChoices(result)
-  panels <- purrr::flatten_chr(panels)
-  if (any(isFALSE(panels %in% names(choices)))) {
-    cli::cli_warn("'{setdiff(panels, names(choices))}' not found in results")
+  if (length(resType) == 0) {
+    c("!" = "No result_type(s) found, the generated shiny will be empty.") |>
+      cli::cli_inform()
+  } else {
+    c("v" = "Data processed: {length(resType)} result type{?s} idenfied: {.var {resType}}.") |>
+      cli::cli_inform()
   }
-  # if not specified, append remaining results
-  panels <- c(
-    intersect(panels, names(choices)),
-    setdiff(names(choices), panels)
-  )
-  choices <- choices[panels]
 
   # create shiny
   directory <- file.path(directory, "shiny")
@@ -114,15 +99,18 @@ exportStaticApp <- function(result,
       background = background,
       theme = theme,
       colourPalette = colourPalette
+      panels = panels
     )
   )
 
   # create server
-  server <- c(messageShiny(), serverStatic(resultTypes = names(choices)))
+  server <- c(messageShiny(), serverStatic(resultTypes = resType))
 
   # check installed libraries
   libraries <- c(
-    detectPackages(ui), detectPackages(server), detectPackages(omopViewerGlobal)
+    detectPackages(ui),
+    detectPackages(server),
+    detectPackages(omopViewerGlobal)
   ) |>
     unique() |>
     sort()
@@ -134,19 +122,20 @@ exportStaticApp <- function(result,
     styleCode()
 
   # write files in the corresponding directory
-  dir.create(paste0(directory, "/data"), showWarnings = FALSE)
+  dir.create(file.path(directory, "data"), showWarnings = FALSE)
   if (background) {
-    writeLines(defaultBackground(logo), con = file.path(directory, "background.md"))
+    defaultBackground(logo) |>
+      writeLines(con = file.path(directory, "background.md"))
   }
-  writeLines(ui, con = paste0(directory, "/ui.R"))
-  writeLines(server, con = paste0(directory, "/server.R"))
-  writeLines(global, con = paste0(directory, "/global.R"))
-  writeLines(omopViewerProj, con = paste0(directory, "/shiny.Rproj"))
-  omopgenerics::exportSummarisedResult(
+  writeLines(ui, con = file.path(directory, "ui.R"))
+  writeLines(server, con = file.path(directory, "server.R"))
+  writeLines(global, con = file.path(directory, "global.R"))
+  writeLines(omopViewerProj, con = file.path(directory, "shiny.Rproj"))
+  exportSummarisedResult(
     result,
     minCellCount = 0,
     fileName = "results.csv",
-    path = paste0(directory, "/data")
+    path = file.path(directory, "data")
   )
 
   cli::cli_inform(c("v" = "Shiny created in: {.pkg {directory}}"))
@@ -172,11 +161,11 @@ messageShiny <- function() {
 }
 copyLogos <- function(logo, directory) {
   # Create 'www' directory if it doesn't exist
-  dir.create(paste0(directory, "/www"), showWarnings = FALSE)
+  dir.create(file.path(directory, "www"), showWarnings = FALSE)
 
   # HDS logo must be copied always as it is needed for about tab
   hdsLogo <- logoPath("hds")
-  to <- paste0(directory, "/www/hds_logo.svg")
+  to <- file.path(directory, "www", "hds_logo.svg")
   file.copy(from = hdsLogo, to = to, overwrite = TRUE)
 
   if (is.null(logo)) {
@@ -189,7 +178,7 @@ copyLogos <- function(logo, directory) {
   # copy the logo if exists
   if (file.exists(logo)) {
     nm <- basename(logo)
-    to <- paste0(directory, "/www/", nm)
+    to <- file.path(directory, "www", nm)
     if (logo != hdsLogo) {
       file.copy(from = logo, to = to, overwrite = TRUE)
     }
@@ -203,7 +192,7 @@ logoPath <- function(logo) {
   lowLogo <- stringr::str_to_lower(logo)
   # add more logoKeywords in data-raw/internalData
   if (lowLogo %in% logoKeywords) {
-    system.file(paste0("/logos/", lowLogo, "_logo.svg"), package = "omopViewer")
+    system.file(file.path("logos", paste0(lowLogo, "_logo.svg")), package = "omopViewer")
   } else {
     logo
   }
@@ -218,7 +207,8 @@ uiStatic <- function(choices = list(),
                      background = TRUE,
                      summary = NULL,
                      theme = NULL,
-                     colourPalette = NULL) {
+                     colourPalette = NULL,
+                     panels = list()) {
   # initial checks
   omopgenerics::assertList(choices, named = TRUE)
   omopgenerics::assertCharacter(logo, length = 1, null = TRUE)
@@ -297,7 +287,7 @@ uiStatic <- function(choices = list(),
       pageTitle(title, logo),
       createBackground(background),
       createSummary(summary, logo),
-      createUi(names(choices), choices),
+      createUi(choices, panels),
       "bslib::nav_spacer()",
       downloadRawDataUi(),
       createAbout("hds_logo.svg"),
@@ -332,7 +322,7 @@ pageTitle <- function(title, logo) {
 # server ----
 serverStatic <- function(resultTypes = character()) {
   # initial checks
-  omopgenerics::assertCharacter(resultTypes, unique = TRUE)
+  omopgenerics::assertCharacter(resultTypes, unique = TRUE, null = TRUE)
 
   paste0(
     c(

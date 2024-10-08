@@ -16,7 +16,7 @@ createDynamicUi <- function(choices) {
     c(
       pageTitle("omopViewer App", logo),
       loadDataUi(),
-      createUi(names(choices), choices),
+      createUi(choices),
       'bslib::nav_spacer()',
       createAbout(logo),
       'bslib::nav_item(bslib::input_dark_mode(id ="dark_mode", mode = "light"))'
