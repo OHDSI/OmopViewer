@@ -200,7 +200,7 @@ test_that("custom theme", {
     base_font = font_google('Space Mono'),
     code_font = font_google('Space Mono'))"
 
-  expect_warning(exportStaticApp(result = emptySummarisedResult(), theme = theme, open = FALSE))
+  expect_message(exportStaticApp(result = emptySummarisedResult(), theme = theme, open = FALSE))
 
   ui <- uiStatic(theme ="bslib::bs_theme(preset = 'sandstone',bg = 'white',fg = 'black',primary = 'orange', success = 'blue',base_font = font_google('Space Mono'),code_font = font_google('Space Mono'))")
 
