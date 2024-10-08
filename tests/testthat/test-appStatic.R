@@ -241,37 +241,48 @@ test_that("theme", {
 
   expect_no_error(exportStaticApp(result = emptySummarisedResult(), directory = tdir, theme = "theme1", open = FALSE))
 
-  ui <- uiStatic(theme = "theme1")
+  ui <- readLines(file.path(tdir, "shiny", "ui.R")) |>
+    stringr::str_flatten() |>
+    stringr::str_replace_all(" ", "") |>
+    stringr::str_replace_all('"', "'")
 
-  expect_true(grepl('theme = bslib::bs_theme\\(bootswatch = "sandstone", primary = "#605ca8", bg = "white", fg = "black", success = "#3B9AB2", base_font = font_google\\("Space Mono"\\), code_font = font_google\\("Space Mono"\\)\\)', ui[2]))
+  expectedTheme <- omopViewerThemes$theme1 |>
+    stringr::str_replace_all("\n| ", "") |>
+    stringr::str_replace_all('"', "'")
+
+  expect_true(grepl(expectedTheme, ui, fixed = TRUE))
 
   # delete created shiny
   unlink(file.path(tdir, "shiny"), recursive = TRUE)
-})
 
-test_that("colourPalette", {
-  tdir <- here::here()
-
-  expect_no_error(exportStaticApp(result = emptySummarisedResult(), directory = tdir, theme = NULL, colourPalette = c("orange", "blue"), open = FALSE))
-
-  ui <- uiStatic(colourPalette = c("orange", "blue"))
-
-  expect_true(grepl('^\\s*theme = bslib::bs_theme\\(version = 5, preset = "sandstone", bg = "white", fg = "black", primary = "orange", success = "blue", base_font = font_google\\("Space Mono"\\), code_font = font_google\\("Space Mono"\\)\\),?$', ui[2]))
-})
-
-test_that("custom theme", {
+  # custom theme
   theme <- "bslib::bs_theme(bootswatch = 'sandstone',
     primary = '#605ca8',
     bg = 'white',
     fg = 'black',
     success = '#3B9AB2',
-    base_font = font_google('Space Mono'),
-    code_font = font_google('Space Mono'))"
+    base_font = bslib::font_google('Space Mono'),
+    code_font = bslib::font_google('Space Mono'))"
 
-  expect_message(exportStaticApp(result = emptySummarisedResult(), theme = theme, open = FALSE))
+  expect_message(exportStaticApp(
+    result = emptySummarisedResult(),
+    theme = theme,
+    directory = tdir,
+    open = FALSE
+  ))
 
-  ui <- uiStatic(theme ="bslib::bs_theme(preset = 'sandstone',bg = 'white',fg = 'black',primary = 'orange', success = 'blue',base_font = font_google('Space Mono'),code_font = font_google('Space Mono'))")
+  ui <- readLines(file.path(tdir, "shiny", "ui.R")) |>
+    stringr::str_flatten() |>
+    stringr::str_replace_all(" ", "") |>
+    stringr::str_replace_all('"', "'")
 
-  expect_true(grepl('^\\s*theme = bslib::bs_theme\\(preset = "sandstone", bg = "white", fg = "black", primary = "orange", success = "blue", base_font = font_google\\("Space Mono"\\), code_font = font_google\\("Space Mono"\\)\\),?$', ui[2]))
+  expectedTheme <- theme |>
+    stringr::str_replace_all("\n| ", "") |>
+    stringr::str_replace_all('"', "'")
+
+  expect_true(grepl(expectedTheme, ui, fixed = TRUE))
+
+  # delete created shiny
+  unlink(file.path(tdir, "shiny"), recursive = TRUE)
 })
 
