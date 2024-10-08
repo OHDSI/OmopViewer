@@ -192,6 +192,16 @@ test_that("colourPalette", {
 })
 
 test_that("custom theme", {
+  theme <- "bslib::bs_theme(bootswatch = 'sandstone',
+    primary = '#605ca8',
+    bg = 'white',
+    fg = 'black',
+    success = '#3B9AB2',
+    base_font = font_google('Space Mono'),
+    code_font = font_google('Space Mono'))"
+
+  expect_warning(exportStaticApp(result = emptySummarisedResult(), theme = theme, open = FALSE))
+
   ui <- uiStatic(theme ="bslib::bs_theme(preset = 'sandstone',bg = 'white',fg = 'black',primary = 'orange', success = 'blue',base_font = font_google('Space Mono'),code_font = font_google('Space Mono'))")
 
   expect_true(grepl('^\\s*theme = bslib::bs_theme\\(preset = "sandstone", bg = "white", fg = "black", primary = "orange", success = "blue", base_font = font_google\\("Space Mono"\\), code_font = font_google\\("Space Mono"\\)\\),?$', ui[2]))
