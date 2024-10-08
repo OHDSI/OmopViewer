@@ -14,8 +14,17 @@
 #' by the available result types in the result object. Panels for any available
 #' results not specified will be included after the specified result tabs.
 #' @param open Whether to open the shiny app project.
-#' @param theme Assign a theme to the shiny app using bslib::bs_theme()
-#' @param colourPalette Choose colours to make a custom theme.
+#' @param theme Specify the theme for the Shiny application. You can either select a predefined
+#' theme provided by the package (e.g., `"theme1"`), or define a custom theme using `bslib::bs_theme()`.
+#' If using a custom theme, it must be provided as a character string (e.g., `"bslib::bs_theme(bg = 'white', fg = 'black')"`).
+#' The custom theme allows for advanced customization of the app's appearance, including colours, fonts, and other styling options.
+#' @param colourPalette A character vector of two colours to customize the Shiny app's appearance.
+#' This argument can be used in place of the theme argument, and allows users to choose
+#' custom colours for certain aspects of the shiny. The first colour defines the
+#' primary theme colour, which is applied to key interactive components
+#' such as buttons, links, and labels, emphasizing important actions and elements.
+#' The second colour is used for the header bar at the top of the Shiny app.
+#
 #'
 #' @return The shiny app will be created in directory.
 #'
@@ -225,7 +234,10 @@ uiStatic <- function(choices = list(),
     theme <- "bslib::bs_theme(bootswatch = 'sandstone',
     primary = '#605ca8',
     bg = 'white',
-    fg = 'black',success = '#3B9AB2')"
+    fg = 'black',
+    success = '#3B9AB2',
+    base_font = font_google('Space Mono'),
+    code_font = font_google('Space Mono'))"
 
     theme <- gsub("\n    ", "", theme)
     return(theme)
@@ -239,9 +251,6 @@ uiStatic <- function(choices = list(),
       return(NULL)
     }
     if (!is.null(colourPalette)) {
-      palette_func <- colorRampPalette(c("white", colourPalette[1], colourPalette[2], "black"))
-      palette <- palette_func(8)
-
       cp <- sprintf(
         "bslib::bs_theme(
     version = 5,
@@ -250,17 +259,13 @@ uiStatic <- function(choices = list(),
     fg = '%s',
     primary = '%s',
     success = '%s',
-    info = '%s',
-    warning = '%s',
-    danger = '%s'
+    base_font = font_google('Space Mono'),
+    code_font = font_google('Space Mono')
   )",
-        palette[1], # bg
-        palette[8], # fg
-        palette[3], # primary
-        palette[6], # success
-        palette[5], # info
-        palette[7], # warning
-        "red" # danger
+        "white", # bg
+        "black", # fg
+        colourPalette[1], # primary
+        colourPalette[2] # success
       )
       cp <- gsub("\n", "", cp)
       return(cp)
