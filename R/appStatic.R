@@ -241,6 +241,8 @@ uiStatic <- function(choices = list(),
 
     theme <- gsub("\n    ", "", theme)
     return(theme)
+  } else {
+    theme = theme
   }
   }
 
