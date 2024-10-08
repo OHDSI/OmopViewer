@@ -34,7 +34,7 @@ test_that("empty shiny", {
   expect_true("shiny" %in% list.files(tdir))
   expect_snapshot(uiStatic() |> cat(sep = "\n"))
   expect_snapshot(serverStatic() |> cat(sep = "\n"))
-  unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
+  unlink(file.path(tdir, "shiny"), recursive = TRUE)
 })
 
 test_that("CohortCharacteristics shiny", {
@@ -78,19 +78,32 @@ test_that("CohortCharacteristics shiny", {
   tdir <- tempdir()
   expect_no_error(exportStaticApp(result = result, directory = tdir, summary = FALSE))
   expect_true("shiny" %in% list.files(tdir))
-  panels <- validatePanels(list(), getChoices(result))
-  expect_snapshot(uiStatic(choices = panels$choices) |> cat(sep = "\n"))
-  expect_snapshot(serverStatic(resultTypes = panels$result_order) |> cat(sep = "\n"))
-  x <- readLines(file.path(tdir, "shiny/global.R"))
-  expect_snapshot(cat(x, sep = "\n"))
-  unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
 
-  # use summary + test overwrite (question when interactive and overwrite by default when not)
-  expect_no_error(exportStaticApp(result = result, directory = tdir, summary = TRUE))
+  # test ui snapshot
+  ui <- readLines(file.path(tdir, "shiny", "ui.R"))
+  expect_snapshot(cat(ui, sep = "\n"))
+
+  # test server snapshot
+  server <- readLines(file.path(tdir, "shiny", "server.R"))
+  expect_snapshot(cat(server, sep = "\n"))
+
+  # test global snapshot
+  global <- readLines(file.path(tdir, "shiny", "global.R"))
+  expect_snapshot(cat(global, sep = "\n"))
+
+  # delete created shiny
+  unlink(file.path(tdir, "shiny"), recursive = TRUE)
+
+  # test summary = FALSE
+  expect_no_error(exportStaticApp(result = result, directory = tdir, summary = FALSE))
   expect_true("shiny" %in% list.files(tdir))
-  expect_snapshot(uiStatic(choices = panels$choices, summary = capture.output(summary(result), type = "message"), logo = NULL) |> cat(sep = "\n"))
-  expect_snapshot(uiStatic(choices = panels$choices, summary = capture.output(summary(result), type = "message"), logo = "HDS") |> cat(sep = "\n"))
-  unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
+
+  # test ui snapshot
+  ui <- readLines(file.path(tdir, "shiny", "ui.R"))
+  expect_snapshot(cat(ui, sep = "\n"))
+
+  # delete created shiny
+  unlink(file.path(tdir, "shiny"), recursive = TRUE)
 
   PatientProfiles::mockDisconnect(cdm)
 })
@@ -98,11 +111,20 @@ test_that("CohortCharacteristics shiny", {
 test_that("title", {
   #tdir <- here::here()
   tdir <- tempdir()
-  expect_no_error(exportStaticApp(result = emptySummarisedResult(),directory = tdir, title = "example"))
+  expect_no_error(exportStaticApp(
+    result = emptySummarisedResult(), directory = tdir, title = "example"
+  ))
+
+  # check shiny is created
   expect_true("shiny" %in% list.files(tdir))
-  x <- readLines(file.path(tdir, "shiny/ui.R"))
-  expect_snapshot(cat(x, sep = "\n"))
-  unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
+
+  # snapshot for ui
+  ui <- readLines(file.path(tdir, "shiny", "ui.R"))
+  expect_snapshot(cat(ui, sep = "\n"))
+
+  # delete created shiny
+  unlink(file.path(tdir, "shiny"), recursive = TRUE)
+
 })
 
 test_that("order tabs", {
@@ -132,67 +154,85 @@ test_that("order tabs", {
 
   # generate shiny
   tdir <- tempdir()
-  unique(omopgenerics::settings(result) |>
-           dplyr::pull("result_type"))
-  expect_no_error(exportStaticApp(result = result,
-                                  directory = tdir,
-                                  panels = list("summarise_cohort_count",
-                                                "summarise_cohort_attrition",
-                                                "summarise_cohort_overlap")))
-  panels <- validatePanels(list("summarise_cohort_count",
-                                "summarise_cohort_attrition",
-                                "summarise_cohort_overlap") , getChoices(result))
-  expect_snapshot(uiStatic(choices = panels$choices))
+  expect_no_error(exportStaticApp(
+    result = result,
+    directory = tdir,
+    panels = list(
+      "summarise_cohort_count",
+      "summarise_cohort_overlap",
+      "summarise_cohort_attrition"
+    )
+  ))
 
-  unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
+  # snapshot ui
+  ui <- readLines(file.path(tdir, "shiny", "ui.R"))
+  expect_snapshot(cat(ui, sep = "\n"))
 
-  expect_warning(exportStaticApp(result = result,
-                                  directory = tdir,
-                                  panels = list("summarise_cohort_count",
-                                                "summarise_cohort_attrition",
-                                                "summarise_cohort_overlap",
-                                                "not an option",
-                                                "another missing result")))
-  unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
+  # delete created shiny
+  unlink(file.path(tdir, "shiny"), recursive = TRUE)
 
-  expect_warning(exportStaticApp(result = result,
-                                  directory = tdir,
-                                  panels = list("not an option")))
-  unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
+  # expect warning if panel is not present
+  expect_warning(exportStaticApp(
+    result = result,
+    directory = tdir,
+    panels = list(
+      "summarise_cohort_count", "summarise_cohort_attrition",
+      "summarise_cohort_overlap", "not an option",
+      "another missing result"
+    )
+  ))
 
-  # missing a result
-  expect_no_error(exportStaticApp(result = result,
-                                  directory = tdir,
-                                  panels = list("summarise_cohort_count",
-                                                "summarise_cohort_attrition")))
-  unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
+  # delete created shiny
+  unlink(file.path(tdir, "shiny"), recursive = TRUE)
 
-  # will show all results
-  expect_no_error(exportStaticApp(result = result,
-                                  directory = tdir,
-                                  panels = list()))
-  unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
+  # expect warning if panel is not present
+  expect_warning(exportStaticApp(
+    result = result, directory = tdir, panels = list("not an option")
+  ))
+
+  # delete created shiny
+  unlink(file.path(tdir, "shiny"), recursive = TRUE)
 
   # menu with results not in result
-  expect_warning(exportStaticApp(result = result,
-                                  directory = tdir,
-                                  panels = list("CHARACTERISTICS" = c("summarise_characteristics", "summarise_large_scale_characteristics", "hi"), "summarise_cohort_overlap")))
-  expect_warning(panels <- validatePanels(list("CHARACTERISTICS" = c("summarise_characteristics", "summarise_large_scale_characteristics", "hi"), "summarise_cohort_overlap"), getChoices(result)))
-  expect_snapshot(uiStatic(choices = panels$choices))
-  unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
+  expect_warning(exportStaticApp(
+    result = result,
+    directory = tdir,
+    panels = list(
+      "CHARACTERISTICS" = c("summarise_characteristics", "summarise_large_scale_characteristics", "hi"),
+      "summarise_cohort_overlap"
+    )
+  ))
+
+  # snapshot ui
+  ui <- readLines(file.path(tdir, "shiny", "ui.R"))
+  expect_snapshot(cat(ui, sep = "\n"))
+
+  # delete created shiny
+  unlink(file.path(tdir, "shiny"), recursive = TRUE)
 
   # menu for details
-  expect_no_error(exportStaticApp(result = result,
-                                  directory = tdir,
-                                  panels = list("DETAILS" = c("summarise_cohort_count", "summarise_cohort_attrition"), "summarise_cohort_overlap")))
-  panels <- validatePanels(list("DETAILS" = c("summarise_cohort_count", "summarise_cohort_attrition"), "summarise_cohort_overlap"), getChoices(result))
-  expect_snapshot(uiStatic(choices = panels$choices))
-  unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
+  expect_no_error(exportStaticApp(
+    result = result,
+    directory = tdir,
+    panels = list(
+      "DETAILS" = c("summarise_cohort_count", "Attrition" = "summarise_cohort_attrition"),
+      "Overlap" = "summarise_cohort_overlap"
+    )
+  ))
 
-  expect_error(exportStaticApp(result = result,
-                               directory = tdir,
-                               panels = c("must be a list")))
-  expect_error(validatePanels(list("summarise_cohort_count", "summarise_cohort_count"), getChoices(result)))
+  # snapshot ui
+  ui <- readLines(file.path(tdir, "shiny", "ui.R"))
+  expect_snapshot(cat(ui, sep = "\n"))
+
+  # delete created shiny
+  unlink(file.path(tdir, "shiny"), recursive = TRUE)
+
+  # expect error if it is not a list
+  expect_error(exportStaticApp(result = result, panels = c("must be a list")))
+
+  # expect error if duplicated elements
+  expect_error(exportStaticApp(result = result, panels = list(
+    "summarise_cohort_overlap", "summarise_cohort_overlap")))
 })
 
 test_that("theme", {
@@ -204,4 +244,7 @@ test_that("theme", {
   ui <- uiStatic(theme = "bslib::bs_theme(bg = '#bb0a1e', fg = '#0000ff')")
 
   expect_true(grepl('theme = bslib::bs_theme\\(bg = "#bb0a1e", fg = "#0000ff"\\)', ui[2]))
+
+  # delete created shiny
+  unlink(file.path(tdir, "shiny"), recursive = TRUE)
 })

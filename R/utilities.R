@@ -38,35 +38,66 @@ validateDirectory <- function(directory) {
   return(directory)
 }
 
+validatePanels <- function(panels, resultTypes, call = parent.frame()) {
+  omopgenerics::assertList(panels, call = call)
 
-validatePanels <- function(panels, choices) {
-  omopgenerics::assertList(panels)
-  # clean list elements
-  panelsClean <- purrr::map(panels, function(x) {
-    x[x %in% names(choices)]
-  }) |>
+  # elements must be characters
+  if (length(panels) > 0 & !is.character(unlist(panels))) {
+    cli::cli_abort("{.var panels} should be a character list.", call = call)
+  }
+
+  # elements must be unique TO CONSIDER REMOVING
+  allPanels <- purrr::flatten_chr(panels)
+  uniquePanels <- unique(allPanels)
+  if (length(allPanels) != length(uniquePanels)) {
+    cli::cli_abort("{.var panels} can not have repeated elements.", call = call)
+  }
+
+  # eliminate not present panels
+  panels <- panels |>
+    purrr::map(\(x) purrr::keep(x, \(y) y %in% resultTypes)) |>
     purrr::compact()
-  panelOrder <- purrr::flatten_chr(panelsClean)
-  # check duplicates
-  if (length(unique(panelOrder)) != length(panelOrder)){
-    cli::cli_abort("`panels` cannot have duplicate results")
+  notPresent <- allPanels[!allPanels %in% resultTypes]
+  if (length(notPresent) > 0) {
+    cli::cli_warn("{.var {notPresent}} eliminated from panels as not present in results.")
   }
-  out <- setdiff(purrr::flatten_chr(panels), panelOrder)
-  if (length(out) > 0) {
-    cli::cli_warn("{.strong {out}} in `panels` not found in results")
-  }
-  # if not specified, append remaining results
-  panelsClean <- c(panelsClean, as.list(setdiff(names(choices), panelOrder)))
-  # add names
-  if (length(panelsClean) > 0) {
-    if (is.null(names(panelsClean))) {
-      names(panelsClean) <- paste0("id_", 1:length(panelsClean))
-    } else {
-      names(panelsClean)[names(panelsClean) == ""] <- paste0("id_", 1:sum(names(panelsClean) == ""))
-    }
-  }
-  # get choices
-  choices <- purrr::map(panelsClean, function(x, y = choices) {y[x]})
-  resultOrder <- panelsClean |> unlist() |> unname()
-  return(list(choices = choices, result_order = resultOrder))
+
+  # add panels not in choices
+  panels <- c(panels, as.list(resultTypes[!resultTypes %in% allPanels]))
+
+  # correct lengths
+  panels <- panels |>
+    purrr::map(\(x) if (length(x) > 1) as.list(x) else x)
+
+  # correct names of panels and title
+  panels <- panelNames(panels)
+
+  return(panels)
+}
+panelNames <- function(x) {
+  # correct names of menus
+  if (is.null(names(x))) names(x) <- rep("", length(x))
+  names(x) <- names(x) |>
+    purrr::imap_chr(\(nm, k) {
+      if (nm != "") return(nm)
+      if (length(x[[k]]) == 1) { # if single panel it is not a menu
+        return(getTitle(x[[k]]))
+      } else {
+        return("unnamed")
+      }
+    })
+  # correct names of panels if not provided the name is the default one
+  x <- x |>
+    purrr::map(\(xx) {
+      if (is.list(xx)) {
+        if (is.null(names(xx))) names(xx) <- rep("", length(xx))
+        names(xx) <- names(xx) |>
+          purrr::imap_chr(\(nm, k) if (nm != "") nm else getTitle(xx[[k]]))
+      }
+      return(xx)
+    })
+  return(x)
+}
+getTitle <- function(x) {
+  getInfo(x, "title", formatTit(x))
 }

@@ -104,7 +104,7 @@ defaultBackground <- function(logo = NULL) {
   if (is.null(logo)) {
     logo <- character()
   } else {
-    logo <- c('', paste0('<img src="', logo, '" width="100px">'))
+    logo <- c('', paste0('![](', logo, '){width=100px}'))
   }
   c(
     '-----',

@@ -44,27 +44,24 @@ exportStaticApp <- function(result,
   omopgenerics::assertCharacter(title, length = 1)
   omopgenerics::assertLogical(summary, length = 1)
   omopgenerics::assertCharacter(theme, length = 1, null = TRUE)
-  panels <- validatePanels(panels, getChoices(result))
   omopgenerics::assertLogical(background, length = 1)
   sum <- validateSummary(summary, result)
   directory <- validateDirectory(directory)
   if (isTRUE(directory)) {
     return(cli::cli_inform(c("i" = "{.strong shiny} folder will not be overwritten. Stopping process.")))
   }
+  resType <- omopgenerics::settings(result)[["result_type"]] |> unique()
+  panels <- validatePanels(panels, resType)
 
   # processing data
   cli::cli_inform(c("i" = "Processing data"))
-  resType <- omopgenerics::settings(result)[["result_type"]] |> unique()
-  mes <- "Data processed: {length(resType)} result type{?s} idenfied"
+  choices <- getChoices(result)
   if (length(resType) == 0) {
-    resType <- character()
-    mes <- c("!" = paste0(mes, "."))
+    c("!" = "No result_type(s) found, the generated shiny will be empty.") |>
+      cli::cli_inform()
   } else {
-    mes <- c("v" = paste0(mes, ": {.var {resType}}."))
-  }
-  cli::cli_inform(mes)
-  if (length(resType) == 0) {
-    cli::cli_inform(c("!" = "No result_type(s) found, the generated shiny will be empty."))
+    c("v" = "Data processed: {length(resType)} result type{?s} idenfied: {.var {resType}}.") |>
+      cli::cli_inform()
   }
 
   # create shiny
@@ -79,21 +76,24 @@ exportStaticApp <- function(result,
   ui <- c(
     messageShiny(),
     uiStatic(
-      choices = panels$choices,
+      choices = choices,
       logo = logo,
       title = title,
       summary = sum,
       background = background,
-      theme = theme
+      theme = theme,
+      panels = panels
     )
   )
 
   # create server
-  server <- c(messageShiny(), serverStatic(resultTypes = panels$result_order))
+  server <- c(messageShiny(), serverStatic(resultTypes = resType))
 
   # check installed libraries
   libraries <- c(
-    detectPackages(ui), detectPackages(server), detectPackages(omopViewerGlobal)
+    detectPackages(ui),
+    detectPackages(server),
+    detectPackages(omopViewerGlobal)
   ) |>
     unique() |>
     sort()
@@ -107,17 +107,18 @@ exportStaticApp <- function(result,
   # write files in the corresponding directory
   dir.create(paste0(directory, "/data"), showWarnings = FALSE)
   if (background) {
-    writeLines(defaultBackground(logo), con = file.path(directory, "background.md"))
+    defaultBackground(logo) |>
+      writeLines(con = file.path(directory, "background.md"))
   }
   writeLines(ui, con = paste0(directory, "/ui.R"))
   writeLines(server, con = paste0(directory, "/server.R"))
   writeLines(global, con = paste0(directory, "/global.R"))
   writeLines(omopViewerProj, con = paste0(directory, "/shiny.Rproj"))
-  omopgenerics::exportSummarisedResult(
+  exportSummarisedResult(
     result,
     minCellCount = 0,
     fileName = "results.csv",
-    path = paste0(directory, "/data")
+    path = file.path(directory, "data")
   )
 
   cli::cli_inform(c("v" = "Shiny created in: {.pkg {directory}}"))
@@ -186,7 +187,8 @@ uiStatic <- function(choices = list(),
                      title = "",
                      background = TRUE,
                      summary = NULL,
-                     theme = NULL) {
+                     theme = NULL,
+                     panels = list()) {
   # initial checks
   omopgenerics::assertList(choices, named = TRUE)
   omopgenerics::assertCharacter(logo, length = 1, null = TRUE)
@@ -205,7 +207,7 @@ uiStatic <- function(choices = list(),
       pageTitle(title, logo),
       createBackground(background),
       createSummary(summary, logo),
-      createUi(choices),
+      createUi(choices, panels),
       "bslib::nav_spacer()",
       downloadRawDataUi(),
       createAbout("hds_logo.svg"),
