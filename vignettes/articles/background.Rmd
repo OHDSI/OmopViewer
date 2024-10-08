@@ -1,0 +1,194 @@
+---
+title: "Edit the background panel of your shiny using `background.md`"
+output: 
+  html_document:
+    theme: 
+      version: 5
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The background panel is triggered when `background = TRUE` argument is used in the `exportStaticApp()` function. If background is set to TRUE a 'background' panel is added and a default 'background.md' file is created. The content of this 'background' panel will be always a card generated with the `cardFromMd()` function using the content of 'background.md'. In this vignette we are going to show different options how to populate the 'background.md' file.
+
+```{r}
+library(omopViewer)
+```
+
+## General markdown behaviour
+
+The markdown part is compiled using the function `markdown::markdownToHTML()`, so anything suported by this function can be included in the markdown part. Most commonly used markdown functionalities are:
+
+- `#` for titles
+- `##` for subtitles
+- `###` for third level titles, as so on...
+- `![](image.png)` to add images. Remember that the root folder is 'shiny/www/'
+- `*...*` for italic text.
+- `**...**` for bold text.
+- `-` for bullet points.
+
+A simple example:
+
+```{markdown}
+# Introduction
+
+This shiny *contains information* on:
+
+- A
+- B
+- C
+
+## Images
+
+The **ohdsi** logo:
+![]('ohdsi_logo.svg'){width=100px}
+```
+
+```{r, echo=FALSE}
+text <- paste0('# Introduction
+
+This shiny *contains information* on:
+
+- A
+- B
+- C
+
+## Images
+
+The **ohdsi** logo:
+
+![](',
+system.file("logos", "ohdsi_logo.svg", package = "omopViewer"), 
+'){width=100px}')
+
+tmpFile <- tempfile(fileext = ".md")
+writeLines(text = text, con = tmpFile)
+x <- cardFromMd(tmpFile)
+unlink(tmpFile)
+x
+```
+
+## Populate `yaml` part
+
+You can add some metadata to your markdown using the `yaml` on the top. To do so you need to put the metadata between `---`:
+
+```{markdown}
+---
+YAML CONTENT
+---
+
+BODY CONTENT
+
+```
+
+The `yaml` metadata can contain two types of information:
+
+- keywords to add elemets to the card.
+- arguments of the `bslib::card` function.
+
+### Keywords
+
+The following keywords can be used to edit the `bslib::card()` content:
+
+```{r, echo=FALSE}
+omopViewer:::backgroundKeywords |>
+  dplyr::mutate(`function` = purrr::map2(.data$link, .data$fun, \(x, y) {
+    shiny::a(href = x, y) |>
+      as.character() |>
+      gt::html()
+  })) |>
+  dplyr::select(!c("fun", "link")) |>
+  gt::gt()
+```
+
+Function column states which is the function that is triggered. Let's see how to add header and footer to our card:
+
+```{markdown}
+---
+header: "Card header"
+footer: "Some extra information"
+---
+# Introduction
+
+bla bla bla bla...
+```
+
+```{r, echo=FALSE}
+text <- '---
+header: "Card header"
+footer: "Some extra information"
+---
+# Introduction
+
+bla bla bla bla...'
+
+tmpFile <- tempfile(fileext = ".md")
+writeLines(text = text, con = tmpFile)
+x <- cardFromMd(tmpFile)
+unlink(tmpFile)
+x
+```
+
+### `bslib::card()` arguments
+
+We can control the arguments of the `bslib::card()` using the metadata included in the yaml file. To include metadata in your background.md file.
+
+You can check the documentation of [`bslib::card()`](https://rstudio.github.io/bslib/reference/card.html), the supported arguments are those that can be populated using values (not calls to other functions):
+
+- `full_screen`
+- `height`
+- `max_height`
+- `min_height`
+- `fill`
+- `class`
+- `id`
+
+For example:
+
+```{markdown}
+----
+header: "My custom card"
+id: "my_custom_id" # this can be later used in the css
+class: "my_custom_class" # this can be later used in the css
+height: 100px
+----
+# Introduction
+
+This shiny *contains information* on:
+
+- A
+- B
+- C
+```
+
+```{r, echo=FALSE}
+text <- paste0('----
+header: "My custom card"
+id: "my_custom_id" # this can be later used in the css
+class: "my_custom_class" # this can be later used in the css
+height: 200px
+----
+# Introduction
+
+This shiny *contains information* on:
+
+- A
+- B
+- C')
+
+tmpFile <- tempfile(fileext = ".md")
+writeLines(text = text, con = tmpFile)
+x <- cardFromMd(tmpFile)
+unlink(tmpFile)
+x
+```
+
+Let's see the html so we can see that id and class are populated:
+```{r, echo=FALSE}
+ x |> as.character() |> cat()
+```
+

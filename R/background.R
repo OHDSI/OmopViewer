@@ -1,62 +1,128 @@
-createBackground <- function(background = NULL,
-                             logo = NULL) {
-  if (length(background) == 0) return(NULL)
-  if (!is.null(logo)) {
-    logoImg <- ',
-    shiny::tags$img(
-      src = "{logo}",
-      width = "auto",
-      height = "100px",
-      alt = "logo",
-      align = "left"
-    )' |>
-      glue::glue() |>
-      as.character()
-  } else {
-    logoImg <- ""
+
+#' Create a `bslib::card()` object from a `.md` file.
+#'
+#' @param fileName Name of the .md file.
+#'
+#' @return Ui `bslib::card` with the background details.
+#' @export
+#'
+cardFromMd <- function(fileName) {
+  # validate file
+  if (!validateFileBackground(fileName)) {
+    cli::cli_warn(c(
+      "!" = "background not created, fileName must be the name of an `.md` file"
+    ))
+    return(bslib::card())
   }
 
-  return(
-    'bslib::nav_panel(
-    title = "Background",
-    icon = shiny::icon("disease"),
-    bslib::card({fillCard(background)}{logoImg})
-  )' |>
-      glue::glue() |>
-      as.character()
+  # read file
+  content <- readLines(fileName)
+
+  # extract yaml metadata
+  content <- extractYamlMetadata(content)
+  metadata <- content$metadata
+  body <- content$body
+
+  tmpFile <- tempfile(fileext = ".md")
+  writeLines(text = body, con = tmpFile)
+
+  # metadata referring to keys
+  keys <- getCardKeys(metadata)
+
+  arguments <- c(
+    # metadata referring to arguments of card
+    metadata[names(metadata) %in% names(formals(bslib::card))],
+    # content
+    list(
+      keys$header,
+      bslib::card_body(shiny::HTML(markdown::markdownToHTML(
+        file = tmpFile, fragment.only = TRUE
+      ))),
+      keys$footer
+    ) |>
+      eliminateNull()
   )
+
+  unlink(tmpFile)
+
+  do.call(bslib::card, arguments)
 }
 
-fillCard <- function(background) {
-  purrr::imap(background, ~ switch(.y,
-                                   "header" = glue::glue("bslib::card_header(shiny::markdown('{.x}'))"),
-                                   "title" = glue::glue("bslib::card_title(shiny::markdown('{.x}'))"),
-                                   "body" = glue::glue("shiny::p(shiny::markdown('{.x}'))"),
-                                   "footer" = glue::glue("bslib::card_footer(shiny::markdown('{.x}'))")
-  )) |>
-    unlist() |>
-    paste0(collapse = ", ")
+validateFileBackground <- function(fileName) {
+  if (!is.character(fileName)) return(FALSE)
+  if (length(fileName) != 1) return(FALSE)
+  if (tools::file_ext(fileName) != "md") return(FALSE)
+  if (!file.exists(fileName)) return(FALSE)
+  return(TRUE)
 }
+extractYamlMetadata <- function(content) {
+  # Find the positions of the YAML delimiters (----- or ---)
+  yamlStart <- grep("^---|^-----", content)[1]
+  yamlEnd <- grep("^---|^-----", content)[2]
 
-validateBackground <- function(background) {
-  if (length(background) == 1) {
-    background <- tryCatch(
-      expr = {styler::style_text(background) |> suppressWarnings()},
-      error = function(e) {
-        cli::cli_warn(
-          c("!" = "If a `bslib` code synthax was supplied in `background`, this couldn't be styled and will be ignored. The error is the following:",
-            "x" = "{e$message}")
-        )
+  if (any(is.na(c(yamlStart, yamlEnd)))) {
+    metadata <- NULL
+  } else {
+    # identify YAML block
+    id <- (yamlStart + 1):(yamlEnd - 1)
+    # Parse the YAML content
+    metadata <- yaml::yaml.load(paste(content[id], collapse = "\n"))
+    # eliminate yaml part from content
+    content <- content[-(yamlStart:yamlEnd)]
+  }
+
+  return(list(body = content, metadata = metadata))
+}
+getCardKeys <- function(metadata) {
+  backgroundKeywords$keyword |>
+    rlang::set_names() |>
+    purrr::map(\(x) {
+      if (x %in% names(metadata)) {
+        paste0(
+          backgroundKeywords$fun[backgroundKeywords$keyword == x],
+          "(metadata[[x]])"
+        ) |>
+          rlang::parse_expr() |>
+          rlang::eval_tidy()
+      } else {
         NULL
       }
-    )
+    }) |>
+    eliminateNull()
+}
+
+createBackground <- function(background) {
+  if (!background) return(character())
+  'bslib::nav_panel(
+    title = "Background",
+    icon = shiny::icon("disease"),
+    omopViewer::cardFromMd("background.md")
+  )'
+}
+
+defaultBackground <- function(logo = NULL) {
+  if (is.null(logo)) {
+    logo <- character()
   } else {
-    omopgenerics::assertCharacter(x = background, null = TRUE, named = TRUE)
-    notAllowed <- ! names(background) %in% c("header", "title", "body", "footer")
-    if (any(notAllowed)) {
-      cli::cli_warn("{names(background)[notAllowed]} {?is/are} not allowed named for `background` and will be ignored.")
-      background <- background[!notAllowed]
-    }
+    logo <- c('', paste0('<img src="', logo, '" width="100px">'))
   }
-  return(invisible(background))
+  c(
+    '-----',
+    '# this block contain the metadata of the .md document, you can add here:',
+    paste0('#   - background keys: ', paste0(backgroundKeywords$keyword, collapse = ', '), '.'),
+    '#   - bslib::card arguments.',
+    '# you can have more information how to use this section on the background',
+    '# vingette',
+    'header: "This is the header of the background"',
+    '-----',
+    '',
+    '# Title',
+    '## subtitle',
+    'content',
+    logo,
+    ''
+  )
+}
+eliminateNull <- function(x) {
+  x[purrr::map_lgl(x, ~ !is.null(.x))]
 }

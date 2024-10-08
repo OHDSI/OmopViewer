@@ -23,40 +23,19 @@ test_that("test tidyData", {
       "analysis" = c(TRUE, FALSE, TRUE)
     ))
 
-  expect_no_error(
-    x <- result |>
-      tidyData(
-        c("cdm_name", "cohort_name", "age_group", "sex", "time", "my_param",
-          "analysis"),
-        pivot = "none"
-      )
-  )
+  expect_no_error(x <- tidyData(result))
   expect_identical(colnames(x), c(
     "cdm_name", "cohort_name", "age_group", "sex", "time", "variable_name",
     "variable_level", "estimate_name", "estimate_type", "estimate_value",
-    "my_param", "analysis"
+    "result_type", "package_name", "package_version", "my_param", "analysis",
+    "group", "strata", "additional"
   ))
   expect_true(nrow(x) == nrow(result))
-
-  expect_no_error(
-    x <- result |>
-      tidyData(
-        c("cdm_name", "cohort_name", "age_group", "sex", "time", "my_param",
-          "analysis"),
-        pivot = "estimates")
-  )
-  expect_identical(colnames(x), c(
-    "cdm_name", "cohort_name", "age_group", "sex", "time", "variable_name",
-    "variable_level", "my_param", "analysis", "count", "blood_type"
-  ))
-  expect_true(nrow(x) == nrow(result))
-  expect_identical(x$count |> dplyr::type_sum(), "int")
-  expect_identical(x$blood_type |> dplyr::type_sum(), "chr")
 
   cols <- result |>
     correctSettings() |>
     visOmopResults::filterStrata(sex == "overall") |>
-    tidyData(cols = visOmopResults::tidyColumns(result)) |>
+    tidyData() |>
     colnames()
   expect_true("sex" %in% cols)
 })

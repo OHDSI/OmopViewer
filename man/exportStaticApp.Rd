@@ -8,7 +8,7 @@ exportStaticApp(
   result,
   logo = "ohdsi",
   title = "",
-  background = NULL,
+  background = TRUE,
   summary = TRUE,
   directory = getwd(),
   panels = list(),
@@ -25,15 +25,8 @@ Only svg format allowed for the moment.}
 
 \item{title}{title of the shiny}
 
-\item{background}{Content to fill the background panel. If `NULL`, this panel
-will not appear in the Shiny UI. This argument can be populated in two ways:
-1) A character string containing `bslib` code to go directly inside
-`bslib::card()`.
-2) A named character vector where the names correspond to specific`bslib`
-card elements: "header", "title", "subtitle", "body", and "footer". Each
-element's name indicates the type of text it will fill. The order of these
-elements is important when displaying the content. Markdown sythax for text
-styling is supported.}
+\item{background}{Whether to include a background panel. Background panel
+content will be controlled from the generated background.md file.}
 
 \item{summary}{Whether to include a panel with a summary of content in the
 `result`.}
