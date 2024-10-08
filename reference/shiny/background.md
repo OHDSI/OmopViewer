@@ -11,5 +11,5 @@ header: "This is the header of the background"
 ## subtitle
 content
 
-<img src="ohdsi_logo.svg" width="100px">
+![](ohdsi_logo.svg){width=100px}
 
