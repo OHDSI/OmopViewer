@@ -105,15 +105,15 @@ exportStaticApp <- function(result,
     styleCode()
 
   # write files in the corresponding directory
-  dir.create(paste0(directory, "/data"), showWarnings = FALSE)
+  dir.create(file.path(directory, "data"), showWarnings = FALSE)
   if (background) {
     defaultBackground(logo) |>
       writeLines(con = file.path(directory, "background.md"))
   }
-  writeLines(ui, con = paste0(directory, "/ui.R"))
-  writeLines(server, con = paste0(directory, "/server.R"))
-  writeLines(global, con = paste0(directory, "/global.R"))
-  writeLines(omopViewerProj, con = paste0(directory, "/shiny.Rproj"))
+  writeLines(ui, con = file.path(directory, "ui.R"))
+  writeLines(server, con = file.path(directory, "server.R"))
+  writeLines(global, con = file.path(directory, "global.R"))
+  writeLines(omopViewerProj, con = file.path(directory, "shiny.Rproj"))
   exportSummarisedResult(
     result,
     minCellCount = 0,
@@ -144,11 +144,11 @@ messageShiny <- function() {
 }
 copyLogos <- function(logo, directory) {
   # Create 'www' directory if it doesn't exist
-  dir.create(paste0(directory, "/www"), showWarnings = FALSE)
+  dir.create(file.path(directory, "www"), showWarnings = FALSE)
 
   # HDS logo must be copied always as it is needed for about tab
   hdsLogo <- logoPath("hds")
-  to <- paste0(directory, "/www/hds_logo.svg")
+  to <- file.path(directory, "www", "hds_logo.svg")
   file.copy(from = hdsLogo, to = to, overwrite = TRUE)
 
   if (is.null(logo)) {
@@ -161,7 +161,7 @@ copyLogos <- function(logo, directory) {
   # copy the logo if exists
   if (file.exists(logo)) {
     nm <- basename(logo)
-    to <- paste0(directory, "/www/", nm)
+    to <- file.path(directory, "www", nm)
     if (logo != hdsLogo) {
       file.copy(from = logo, to = to, overwrite = TRUE)
     }
@@ -175,7 +175,7 @@ logoPath <- function(logo) {
   lowLogo <- stringr::str_to_lower(logo)
   # add more logoKeywords in data-raw/internalData
   if (lowLogo %in% logoKeywords) {
-    system.file(paste0("/logos/", lowLogo, "_logo.svg"), package = "omopViewer")
+    system.file(file.path("logos", paste0(lowLogo, "_logo.svg")), package = "omopViewer")
   } else {
     logo
   }

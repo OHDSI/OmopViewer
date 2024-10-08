@@ -7,21 +7,21 @@ test_that("logo", {
     result = emptySummarisedResult(), directory = tdir, logo = NULL
   ))
   expect_true("shiny" %in% list.files(tdir))
-  unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
+  unlink(file.path(tdir, "shiny"), recursive = TRUE)
 
   # test keywords
   for (key in logoKeywords) {
     expect_identical(basename(logoPath(key)), paste0(key, "_logo.svg"))
     expect_no_error(exportStaticApp(result = emptySummarisedResult(),directory = tdir, logo = key))
     expect_true("shiny" %in% list.files(tdir))
-    unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
+    unlink(file.path(tdir, "shiny"), recursive = TRUE)
   }
 
   # custom logo
   expect_no_error(exportStaticApp(result = emptySummarisedResult(),
                                   directory = tdir, logo = here::here("inst", "oxford.png")))
   expect_true("shiny" %in% list.files(tdir))
-  unlink(paste0(tdir, "/shiny/"), recursive = TRUE)
+  unlink(file.path(tdir, "shiny"), recursive = TRUE)
 
   # test generated ui
   expect_snapshot(uiStatic(logo = "my_pic.png") |> cat(sep = "\n"))
