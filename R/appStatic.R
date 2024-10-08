@@ -98,7 +98,7 @@ exportStaticApp <- function(result,
       summary = sum,
       background = background,
       theme = theme,
-      colourPalette = colourPalette
+      colourPalette = colourPalette,
       panels = panels
     )
   )
