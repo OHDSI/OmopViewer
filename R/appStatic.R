@@ -18,13 +18,6 @@
 #' theme provided by the package (e.g., `"theme1"`), or define a custom theme using `bslib::bs_theme()`.
 #' If using a custom theme, it must be provided as a character string (e.g., `"bslib::bs_theme(bg = 'white', fg = 'black')"`).
 #' The custom theme allows for advanced customization of the app's appearance, including colours, fonts, and other styling options.
-#' @param colourPalette A character vector of two colours to customize the Shiny app's appearance.
-#' This argument can be used in place of the theme argument, and allows users to choose
-#' custom colours for certain aspects of the shiny. The first colour defines the
-#' primary theme colour, which is applied to key interactive components
-#' such as buttons, links, and labels, emphasizing important actions and elements.
-#' The second colour is used for the header bar at the top of the Shiny app.
-#
 #'
 #' @return The shiny app will be created in directory.
 #'
@@ -45,7 +38,6 @@ exportStaticApp <- function(result,
                             directory = getwd(),
                             panels = list(),
                             theme = NULL,
-                            colourPalette = NULL,
                             open = rlang::is_interactive()) {
   # input check
   result <- omopgenerics::validateResultArgument(result)
@@ -54,8 +46,6 @@ exportStaticApp <- function(result,
   omopgenerics::assertCharacter(logo, length = 1, null = TRUE)
   omopgenerics::assertCharacter(title, length = 1)
   omopgenerics::assertLogical(summary, length = 1)
-  omopgenerics::assertCharacter(theme, length = 1, null = TRUE)
-  omopgenerics::assertCharacter(colourPalette, length = 2, null = TRUE)
   omopgenerics::assertLogical(background, length = 1)
   sum <- validateSummary(summary, result)
   directory <- validateDirectory(directory)
@@ -64,10 +54,7 @@ exportStaticApp <- function(result,
   }
   resType <- omopgenerics::settings(result)[["result_type"]] |> unique()
   panels <- validatePanels(panels, resType)
-
-  if (!is.null(theme) && !is.null(colourPalette)) {
-    cli::cli_abort("Cannot use theme and colourPalette argument at the same time.")
-  }
+  theme <- validateTheme(theme)
 
   # processing data
   cli::cli_inform(c("i" = "Processing data"))
@@ -98,7 +85,6 @@ exportStaticApp <- function(result,
       summary = sum,
       background = background,
       theme = theme,
-      colourPalette = colourPalette,
       panels = panels
     )
   )
@@ -207,84 +193,12 @@ uiStatic <- function(choices = list(),
                      background = TRUE,
                      summary = NULL,
                      theme = NULL,
-                     colourPalette = NULL,
                      panels = list()) {
-  # initial checks
-  omopgenerics::assertList(choices, named = TRUE)
-  omopgenerics::assertCharacter(logo, length = 1, null = TRUE)
-  omopgenerics::assertCharacter(title, length = 1)
-  omopgenerics::assertCharacter(theme, length = 1, null = TRUE)
-  omopgenerics::assertCharacter(colourPalette, length = 2, null = TRUE)
-
-  get_theme <- function(theme) {
-  if (is.null(theme)) {
-    return(NULL)
-  }
-  if (theme == "theme1") {
-    theme <- "bslib::bs_theme(bootswatch = 'sandstone',
-    primary = '#605ca8',
-    bg = 'white',
-    fg = 'black',
-    success = '#3B9AB2',
-    base_font = font_google('Space Mono'),
-    code_font = font_google('Space Mono'))"
-
-    theme <- gsub("\n    ", "", theme)
-    return(theme)
-  } else if(grepl("bslib::bs_theme", theme)) {
-    theme = theme
-  } else {
-    cli::cli_warn(c("!" = "Custom theme must follow the format 'bslib::bs_theme(...)'.The theme argument has set to NULL."))
-    theme = NULL
-  }
-  }
-
-  theme <- get_theme(theme)
-
-  getColourPalette <- function(colourPalette) {
-    if (is.null(colourPalette)) {
-      return(NULL)
-    }
-    if (!is.null(colourPalette)) {
-      cp <- sprintf(
-        "bslib::bs_theme(
-    version = 5,
-    preset = 'sandstone',
-    bg = '%s',
-    fg = '%s',
-    primary = '%s',
-    success = '%s',
-    base_font = font_google('Space Mono'),
-    code_font = font_google('Space Mono')
-  )",
-        "white", # bg
-        "black", # fg
-        colourPalette[1], # primary
-        colourPalette[2] # success
-      )
-      cp <- gsub("\n", "", cp)
-      return(cp)
-    }
-  }
-
-  cp <- getColourPalette(colourPalette)
-
-  if(is.null(theme) && !is.null(colourPalette)) {
-    theme = cp
-  } else if (!is.null(theme) && is.null(colourPalette)){
-    theme = theme
-  } else if(is.null(theme) && is.null(colourPalette)){
-    theme = NULL
-  }
-
   c(
-    paste0(
-      "ui <- bslib::page_navbar(",
-      if (!is.null(theme)){
-        paste0("theme=", theme, ",")}
-    ),
+    "ui <- bslib::page_navbar(",
     c(
       pageTitle(title, logo),
+      pageTheme(theme),
       createBackground(background),
       createSummary(summary, logo),
       createUi(choices, panels),

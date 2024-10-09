@@ -13,7 +13,6 @@ exportStaticApp(
   directory = getwd(),
   panels = list(),
   theme = NULL,
-  colourPalette = NULL,
   open = rlang::is_interactive()
 )
 }
@@ -41,13 +40,6 @@ results not specified will be included after the specified result tabs.}
 theme provided by the package (e.g., `"theme1"`), or define a custom theme using `bslib::bs_theme()`.
 If using a custom theme, it must be provided as a character string (e.g., `"bslib::bs_theme(bg = 'white', fg = 'black')"`).
 The custom theme allows for advanced customization of the app's appearance, including colours, fonts, and other styling options.}
-
-\item{colourPalette}{A character vector of two colours to customize the Shiny app's appearance.
-This argument can be used in place of the theme argument, and allows users to choose
-custom colours for certain aspects of the shiny. The first colour defines the
-primary theme colour, which is applied to key interactive components
-such as buttons, links, and labels, emphasizing important actions and elements.
-The second colour is used for the header bar at the top of the Shiny app.}
 
 \item{open}{Whether to open the shiny app project.}
 }
