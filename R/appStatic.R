@@ -189,11 +189,6 @@ uiStatic <- function(choices = list(),
                      summary = NULL,
                      theme = NULL,
                      panels = list()) {
-  # initial checks
-  omopgenerics::assertList(choices, named = TRUE)
-  omopgenerics::assertCharacter(logo, length = 1, null = TRUE)
-  omopgenerics::assertCharacter(title, length = 1)
-
   # Create the bslib::bs_theme() call, or use NULL if not provided
   theme_setting <- if (!is.null(theme)) {
     paste0("theme = ", theme, ",")
@@ -241,9 +236,6 @@ pageTitle <- function(title, logo) {
 
 # server ----
 serverStatic <- function(resultTypes = character()) {
-  # initial checks
-  omopgenerics::assertCharacter(resultTypes, unique = TRUE, null = TRUE)
-
   paste0(
     c(
       "server <- function(input, output, session) {",

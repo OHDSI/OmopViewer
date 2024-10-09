@@ -238,21 +238,21 @@
                 )
               ),
               bslib::nav_panel(
-                title = "Formatted",
+                title = "Table cohort characteristics",
                 bslib::card(
                   full_screen = TRUE,
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
                       shiny::selectizeInput(
-                        inputId = "summarise_characteristics_formatted_download_type",
+                        inputId = "summarise_characteristics_formatted_download_4_type",
                         label = "File",
                         choices = c("docx", "png", "pdf", "html"),
                         selected = c("docx"),
                         multiple = FALSE,
                         options = list(plugins = "remove_button")
                       ),
-                      shiny::downloadButton(outputId = "summarise_characteristics_formatted_download", label = "Download")
+                      shiny::downloadButton(outputId = "summarise_characteristics_formatted_download_4", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -261,29 +261,29 @@
                       sortable::bucket_list(
                         header = NULL,
                         sortable::add_rank_list(
-                          text = "None",
+                          text = c("none"),
                           labels = c("variable_name", "variable_level", "estimate_name"),
-                          input_id = "summarise_characteristics_formatted_none"
+                          input_id = "summarise_characteristics_formatted_4_none"
                         ),
                         sortable::add_rank_list(
-                          text = "Header",
-                          labels = c("cdm_name"),
-                          input_id = "summarise_characteristics_formatted_header"
+                          text = c("header"),
+                          labels = c("cdm_name", "cohort_name"),
+                          input_id = "summarise_characteristics_formatted_4_header"
                         ),
                         sortable::add_rank_list(
-                          text = "Group",
-                          labels = c("cohort_name"),
-                          input_id = "summarise_characteristics_formatted_group"
+                          text = c("groupColumn"),
+                          labels = NULL,
+                          input_id = "summarise_characteristics_formatted_4_groupColumn"
                         ),
                         sortable::add_rank_list(
-                          text = "Hide",
-                          labels = c("table_name"),
-                          input_id = "summarise_characteristics_formatted_hide"
+                          text = c("hide"),
+                          labels = NULL,
+                          input_id = "summarise_characteristics_formatted_4_hide"
                         )
                       ),
                       position = "right"
                     ),
-                    gt::gt_output("summarise_characteristics_formatted")
+                    gt::gt_output("summarise_characteristics_formatted_4")
                   )
                 )
               ),
@@ -468,21 +468,21 @@
                 )
               ),
               bslib::nav_panel(
-                title = "Formatted",
+                title = "Table cohort attrition",
                 bslib::card(
                   full_screen = TRUE,
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
                       shiny::selectizeInput(
-                        inputId = "summarise_cohort_attrition_formatted_download_type",
+                        inputId = "summarise_cohort_attrition_formatted_download_2_type",
                         label = "File",
                         choices = c("docx", "png", "pdf", "html"),
                         selected = c("docx"),
                         multiple = FALSE,
                         options = list(plugins = "remove_button")
                       ),
-                      shiny::downloadButton(outputId = "summarise_cohort_attrition_formatted_download", label = "Download")
+                      shiny::downloadButton(outputId = "summarise_cohort_attrition_formatted_download_2", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -491,29 +491,29 @@
                       sortable::bucket_list(
                         header = NULL,
                         sortable::add_rank_list(
-                          text = "None",
-                          labels = c("reason", "reason_id", "variable_name", "variable_level", "estimate_name"),
-                          input_id = "summarise_cohort_attrition_formatted_none"
+                          text = c("none"),
+                          labels = c("reason"),
+                          input_id = "summarise_cohort_attrition_formatted_2_none"
                         ),
                         sortable::add_rank_list(
-                          text = "Header",
-                          labels = c("cdm_name"),
-                          input_id = "summarise_cohort_attrition_formatted_header"
+                          text = c("header"),
+                          labels = c("variable_name"),
+                          input_id = "summarise_cohort_attrition_formatted_2_header"
                         ),
                         sortable::add_rank_list(
-                          text = "Group",
-                          labels = c("cohort_name"),
-                          input_id = "summarise_cohort_attrition_formatted_group"
+                          text = c("groupColumn"),
+                          labels = c("cdm_name", "cohort_name"),
+                          input_id = "summarise_cohort_attrition_formatted_2_groupColumn"
                         ),
                         sortable::add_rank_list(
-                          text = "Hide",
-                          labels = c("table_name", "cohort_definition_id"),
-                          input_id = "summarise_cohort_attrition_formatted_hide"
+                          text = c("hide"),
+                          labels = c("variable_level", "reason_id", "estimate_name"),
+                          input_id = "summarise_cohort_attrition_formatted_2_hide"
                         )
                       ),
                       position = "right"
                     ),
-                    gt::gt_output("summarise_cohort_attrition_formatted")
+                    gt::gt_output("summarise_cohort_attrition_formatted_2")
                   )
                 )
               ),
@@ -641,21 +641,21 @@
                 )
               ),
               bslib::nav_panel(
-                title = "Formatted",
+                title = "Table cohort count",
                 bslib::card(
                   full_screen = TRUE,
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
                       shiny::selectizeInput(
-                        inputId = "summarise_cohort_count_formatted_download_type",
+                        inputId = "summarise_cohort_count_formatted_download_5_type",
                         label = "File",
                         choices = c("docx", "png", "pdf", "html"),
                         selected = c("docx"),
                         multiple = FALSE,
                         options = list(plugins = "remove_button")
                       ),
-                      shiny::downloadButton(outputId = "summarise_cohort_count_formatted_download", label = "Download")
+                      shiny::downloadButton(outputId = "summarise_cohort_count_formatted_download_5", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -664,29 +664,29 @@
                       sortable::bucket_list(
                         header = NULL,
                         sortable::add_rank_list(
-                          text = "None",
-                          labels = c("variable_name", "variable_level", "estimate_name"),
-                          input_id = "summarise_cohort_count_formatted_none"
+                          text = c("none"),
+                          labels = c("cdm_name", "variable_name", "estimate_name"),
+                          input_id = "summarise_cohort_count_formatted_5_none"
                         ),
                         sortable::add_rank_list(
-                          text = "Header",
-                          labels = c("cdm_name"),
-                          input_id = "summarise_cohort_count_formatted_header"
-                        ),
-                        sortable::add_rank_list(
-                          text = "Group",
+                          text = c("header"),
                           labels = c("cohort_name"),
-                          input_id = "summarise_cohort_count_formatted_group"
+                          input_id = "summarise_cohort_count_formatted_5_header"
                         ),
                         sortable::add_rank_list(
-                          text = "Hide",
-                          labels = c("table_name"),
-                          input_id = "summarise_cohort_count_formatted_hide"
+                          text = c("groupColumn"),
+                          labels = NULL,
+                          input_id = "summarise_cohort_count_formatted_5_groupColumn"
+                        ),
+                        sortable::add_rank_list(
+                          text = c("hide"),
+                          labels = c("variable_level"),
+                          input_id = "summarise_cohort_count_formatted_5_hide"
                         )
                       ),
                       position = "right"
                     ),
-                    gt::gt_output("summarise_cohort_count_formatted")
+                    gt::gt_output("summarise_cohort_count_formatted_5")
                   )
                 )
               ),
@@ -836,52 +836,57 @@
                 )
               ),
               bslib::nav_panel(
-                title = "Formatted",
+                title = "Table cohort overlap",
                 bslib::card(
                   full_screen = TRUE,
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
                       shiny::selectizeInput(
-                        inputId = "summarise_cohort_overlap_formatted_download_type",
+                        inputId = "summarise_cohort_overlap_formatted_download_1_type",
                         label = "File",
                         choices = c("docx", "png", "pdf", "html"),
                         selected = c("docx"),
                         multiple = FALSE,
                         options = list(plugins = "remove_button")
                       ),
-                      shiny::downloadButton(outputId = "summarise_cohort_overlap_formatted_download", label = "Download")
+                      shiny::downloadButton(outputId = "summarise_cohort_overlap_formatted_download_1", label = "Download")
                     ),
                     class = "text-end"
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
+                      shiny::checkboxInput(
+                        inputId = "summarise_cohort_overlap_formatted_1_uniqueCombinations",
+                        label = "uniqueCombinations",
+                        value = c(TRUE)
+                      ),
                       sortable::bucket_list(
                         header = NULL,
                         sortable::add_rank_list(
-                          text = "None",
-                          labels = c("cohort_name_reference", "cohort_name_comparator", "variable_name", "variable_level", "estimate_name"),
-                          input_id = "summarise_cohort_overlap_formatted_none"
+                          text = c("none"),
+                          labels = c("cohort_name_reference", "cohort_name_comparator", "estimate_name"),
+                          input_id = "summarise_cohort_overlap_formatted_1_none"
                         ),
                         sortable::add_rank_list(
-                          text = "Header",
+                          text = c("header"),
+                          labels = c("variable_name"),
+                          input_id = "summarise_cohort_overlap_formatted_1_header"
+                        ),
+                        sortable::add_rank_list(
+                          text = c("groupColumn"),
                           labels = c("cdm_name"),
-                          input_id = "summarise_cohort_overlap_formatted_header"
+                          input_id = "summarise_cohort_overlap_formatted_1_groupColumn"
                         ),
                         sortable::add_rank_list(
-                          text = "Group",
-                          labels = character(),
-                          input_id = "summarise_cohort_overlap_formatted_group"
-                        ),
-                        sortable::add_rank_list(
-                          text = "Hide",
-                          labels = character(),
-                          input_id = "summarise_cohort_overlap_formatted_hide"
+                          text = c("hide"),
+                          labels = c("variable_level"),
+                          input_id = "summarise_cohort_overlap_formatted_1_hide"
                         )
                       ),
                       position = "right"
                     ),
-                    gt::gt_output("summarise_cohort_overlap_formatted")
+                    gt::gt_output("summarise_cohort_overlap_formatted_1")
                   )
                 )
               ),
@@ -1039,52 +1044,64 @@
                 )
               ),
               bslib::nav_panel(
-                title = "Formatted",
+                title = "Table cohort timing",
                 bslib::card(
                   full_screen = TRUE,
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
                       shiny::selectizeInput(
-                        inputId = "summarise_cohort_timing_formatted_download_type",
+                        inputId = "summarise_cohort_timing_formatted_download_3_type",
                         label = "File",
                         choices = c("docx", "png", "pdf", "html"),
                         selected = c("docx"),
                         multiple = FALSE,
                         options = list(plugins = "remove_button")
                       ),
-                      shiny::downloadButton(outputId = "summarise_cohort_timing_formatted_download", label = "Download")
+                      shiny::downloadButton(outputId = "summarise_cohort_timing_formatted_download_3", label = "Download")
                     ),
                     class = "text-end"
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
+                      shiny::checkboxInput(
+                        inputId = "summarise_cohort_timing_formatted_3_uniqueCombinations",
+                        label = "uniqueCombinations",
+                        value = c(TRUE)
+                      ),
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_timing_formatted_3_timeScale",
+                        label = c("timeScale"),
+                        choices = c("days", "years"),
+                        selected = c("days"),
+                        multiple = FALSE
+                      ),
                       sortable::bucket_list(
                         header = NULL,
                         sortable::add_rank_list(
-                          text = "None",
-                          labels = c("cohort_name_reference", "cohort_name_comparator", "variable_name", "variable_level", "estimate_name"),
-                          input_id = "summarise_cohort_timing_formatted_none"
+                          text = c("none"),
+                          labels = c("cdm_name", "cohort_name_reference", "cohort_name_comparator", "variable_name", "estimate_name"),
+                          input_id = "summarise_cohort_timing_formatted_3_none"
                         ),
                         sortable::add_rank_list(
-                          text = "Header",
-                          labels = c("cdm_name"),
-                          input_id = "summarise_cohort_timing_formatted_header"
+                          text = c("header"),
+                          labels = NULL,
+                          input_id = "summarise_cohort_timing_formatted_3_header"
                         ),
                         sortable::add_rank_list(
-                          text = "Group",
-                          labels = character(),
-                          input_id = "summarise_cohort_timing_formatted_group"
+                          text = c("groupColumn"),
+                          labels = NULL,
+                          input_id = "summarise_cohort_timing_formatted_3_groupColumn"
                         ),
                         sortable::add_rank_list(
-                          text = "Hide",
-                          labels = c("restrict_to_first_entry"),
-                          input_id = "summarise_cohort_timing_formatted_hide"
+                          text = c("hide"),
+                          labels = c("variable_level"),
+                          input_id = "summarise_cohort_timing_formatted_3_hide"
                         )
                       ),
                       position = "right"
                     ),
-                    gt::gt_output("summarise_cohort_timing_formatted")
+                    gt::gt_output("summarise_cohort_timing_formatted_3")
                   )
                 )
               ),
@@ -1305,14 +1322,14 @@
                     bslib::popover(
                       shiny::icon("download"),
                       shiny::selectizeInput(
-                        inputId = "summarise_large_scale_characteristics_formatted_download_type",
+                        inputId = "summarise_large_scale_characteristics_formatted_download_0_type",
                         label = "File",
                         choices = c("docx", "png", "pdf", "html"),
                         selected = c("docx"),
                         multiple = FALSE,
                         options = list(plugins = "remove_button")
                       ),
-                      shiny::downloadButton(outputId = "summarise_large_scale_characteristics_formatted_download", label = "Download")
+                      shiny::downloadButton(outputId = "summarise_large_scale_characteristics_formatted_download_0", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -1321,29 +1338,29 @@
                       sortable::bucket_list(
                         header = NULL,
                         sortable::add_rank_list(
-                          text = "None",
+                          text = c("none"),
                           labels = c("sex", "age_group", "concept_id", "variable_name", "variable_level", "estimate_name"),
-                          input_id = "summarise_large_scale_characteristics_formatted_none"
+                          input_id = "summarise_large_scale_characteristics_formatted_0_none"
                         ),
                         sortable::add_rank_list(
-                          text = "Header",
+                          text = c("header"),
                           labels = c("cdm_name"),
-                          input_id = "summarise_large_scale_characteristics_formatted_header"
+                          input_id = "summarise_large_scale_characteristics_formatted_0_header"
                         ),
                         sortable::add_rank_list(
-                          text = "Group",
+                          text = c("group"),
                           labels = c("cohort_name"),
-                          input_id = "summarise_large_scale_characteristics_formatted_group"
+                          input_id = "summarise_large_scale_characteristics_formatted_0_group"
                         ),
                         sortable::add_rank_list(
-                          text = "Hide",
+                          text = c("hide"),
                           labels = c("table_name", "type", "analysis"),
-                          input_id = "summarise_large_scale_characteristics_formatted_hide"
+                          input_id = "summarise_large_scale_characteristics_formatted_0_hide"
                         )
                       ),
                       position = "right"
                     ),
-                    gt::gt_output("summarise_large_scale_characteristics_formatted")
+                    gt::gt_output("summarise_large_scale_characteristics_formatted_0")
                   )
                 )
               ),
@@ -1458,18 +1475,18 @@
         getFormattedDataSummariseCharacteristics <- shiny::reactive({
           data |>
             omopViewer::filterData("summarise_characteristics", input) |>
-            omopViewer::visTable(
-              header = input$summarise_characteristics_formatted_header,
-              group = input$summarise_characteristics_formatted_group,
-              hide = input$summarise_characteristics_formatted_hide
+            CohortCharacteristics::tableCharacteristics(
+              header = input$summarise_characteristics_formatted_4_header,
+              groupColumn = input$summarise_characteristics_formatted_4_groupColumn,
+              hide = input$summarise_characteristics_formatted_4_hide
             )
         })
-        output$summarise_characteristics_formatted <- gt::render_gt({
+        output$summarise_characteristics_formatted_4 <- gt::render_gt({
           getFormattedDataSummariseCharacteristics()
         })
-        output$summarise_characteristics_formatted_download <- shiny::downloadHandler(
+        output$summarise_characteristics_formatted_download_4 <- shiny::downloadHandler(
           filename = function() {
-            paste0("formatted_summarise_characteristics.", input$summarise_characteristics_formatted_download_type)
+            paste0("formatted_summarise_characteristics.", input$summarise_characteristics_formatted_download_4_type)
           },
           content = function(file) {
             getFormattedDataSummariseCharacteristics() |>
@@ -1551,18 +1568,18 @@
         getFormattedDataSummariseCohortAttrition <- shiny::reactive({
           data |>
             omopViewer::filterData("summarise_cohort_attrition", input) |>
-            omopViewer::visTable(
-              header = input$summarise_cohort_attrition_formatted_header,
-              group = input$summarise_cohort_attrition_formatted_group,
-              hide = input$summarise_cohort_attrition_formatted_hide
+            CohortCharacteristics::tableCohortAttrition(
+              header = input$summarise_cohort_attrition_formatted_2_header,
+              groupColumn = input$summarise_cohort_attrition_formatted_2_groupColumn,
+              hide = input$summarise_cohort_attrition_formatted_2_hide
             )
         })
-        output$summarise_cohort_attrition_formatted <- gt::render_gt({
+        output$summarise_cohort_attrition_formatted_2 <- gt::render_gt({
           getFormattedDataSummariseCohortAttrition()
         })
-        output$summarise_cohort_attrition_formatted_download <- shiny::downloadHandler(
+        output$summarise_cohort_attrition_formatted_download_2 <- shiny::downloadHandler(
           filename = function() {
-            paste0("formatted_summarise_cohort_attrition.", input$summarise_cohort_attrition_formatted_download_type)
+            paste0("formatted_summarise_cohort_attrition.", input$summarise_cohort_attrition_formatted_download_2_type)
           },
           content = function(file) {
             getFormattedDataSummariseCohortAttrition() |>
@@ -1639,18 +1656,18 @@
         getFormattedDataSummariseCohortCount <- shiny::reactive({
           data |>
             omopViewer::filterData("summarise_cohort_count", input) |>
-            omopViewer::visTable(
-              header = input$summarise_cohort_count_formatted_header,
-              group = input$summarise_cohort_count_formatted_group,
-              hide = input$summarise_cohort_count_formatted_hide
+            CohortCharacteristics::tableCohortCount(
+              header = input$summarise_cohort_count_formatted_5_header,
+              groupColumn = input$summarise_cohort_count_formatted_5_groupColumn,
+              hide = input$summarise_cohort_count_formatted_5_hide
             )
         })
-        output$summarise_cohort_count_formatted <- gt::render_gt({
+        output$summarise_cohort_count_formatted_5 <- gt::render_gt({
           getFormattedDataSummariseCohortCount()
         })
-        output$summarise_cohort_count_formatted_download <- shiny::downloadHandler(
+        output$summarise_cohort_count_formatted_download_5 <- shiny::downloadHandler(
           filename = function() {
-            paste0("formatted_summarise_cohort_count.", input$summarise_cohort_count_formatted_download_type)
+            paste0("formatted_summarise_cohort_count.", input$summarise_cohort_count_formatted_download_5_type)
           },
           content = function(file) {
             getFormattedDataSummariseCohortCount() |>
@@ -1731,18 +1748,19 @@
         getFormattedDataSummariseCohortOverlap <- shiny::reactive({
           data |>
             omopViewer::filterData("summarise_cohort_overlap", input) |>
-            omopViewer::visTable(
-              header = input$summarise_cohort_overlap_formatted_header,
-              group = input$summarise_cohort_overlap_formatted_group,
-              hide = input$summarise_cohort_overlap_formatted_hide
+            CohortCharacteristics::tableCohortOverlap(
+              uniqueCombinations = input$summarise_cohort_overlap_formatted_1_uniqueCombinations,
+              header = input$summarise_cohort_overlap_formatted_1_header,
+              groupColumn = input$summarise_cohort_overlap_formatted_1_groupColumn,
+              hide = input$summarise_cohort_overlap_formatted_1_hide
             )
         })
-        output$summarise_cohort_overlap_formatted <- gt::render_gt({
+        output$summarise_cohort_overlap_formatted_1 <- gt::render_gt({
           getFormattedDataSummariseCohortOverlap()
         })
-        output$summarise_cohort_overlap_formatted_download <- shiny::downloadHandler(
+        output$summarise_cohort_overlap_formatted_download_1 <- shiny::downloadHandler(
           filename = function() {
-            paste0("formatted_summarise_cohort_overlap.", input$summarise_cohort_overlap_formatted_download_type)
+            paste0("formatted_summarise_cohort_overlap.", input$summarise_cohort_overlap_formatted_download_1_type)
           },
           content = function(file) {
             getFormattedDataSummariseCohortOverlap() |>
@@ -1823,18 +1841,20 @@
         getFormattedDataSummariseCohortTiming <- shiny::reactive({
           data |>
             omopViewer::filterData("summarise_cohort_timing", input) |>
-            omopViewer::visTable(
-              header = input$summarise_cohort_timing_formatted_header,
-              group = input$summarise_cohort_timing_formatted_group,
-              hide = input$summarise_cohort_timing_formatted_hide
+            CohortCharacteristics::tableCohortTiming(
+              uniqueCombinations = input$summarise_cohort_timing_formatted_3_uniqueCombinations,
+              timeScale = input$summarise_cohort_timing_formatted_3_timeScale,
+              header = input$summarise_cohort_timing_formatted_3_header,
+              groupColumn = input$summarise_cohort_timing_formatted_3_groupColumn,
+              hide = input$summarise_cohort_timing_formatted_3_hide
             )
         })
-        output$summarise_cohort_timing_formatted <- gt::render_gt({
+        output$summarise_cohort_timing_formatted_3 <- gt::render_gt({
           getFormattedDataSummariseCohortTiming()
         })
-        output$summarise_cohort_timing_formatted_download <- shiny::downloadHandler(
+        output$summarise_cohort_timing_formatted_download_3 <- shiny::downloadHandler(
           filename = function() {
-            paste0("formatted_summarise_cohort_timing.", input$summarise_cohort_timing_formatted_download_type)
+            paste0("formatted_summarise_cohort_timing.", input$summarise_cohort_timing_formatted_download_3_type)
           },
           content = function(file) {
             getFormattedDataSummariseCohortTiming() |>
@@ -1919,17 +1939,17 @@
           data |>
             omopViewer::filterData("summarise_large_scale_characteristics", input) |>
             omopViewer::visTable(
-              header = input$summarise_large_scale_characteristics_formatted_header,
-              group = input$summarise_large_scale_characteristics_formatted_group,
-              hide = input$summarise_large_scale_characteristics_formatted_hide
+              header = input$summarise_large_scale_characteristics_formatted_0_header,
+              group = input$summarise_large_scale_characteristics_formatted_0_group,
+              hide = input$summarise_large_scale_characteristics_formatted_0_hide
             )
         })
-        output$summarise_large_scale_characteristics_formatted <- gt::render_gt({
+        output$summarise_large_scale_characteristics_formatted_0 <- gt::render_gt({
           getFormattedDataSummariseLargeScaleCharacteristics()
         })
-        output$summarise_large_scale_characteristics_formatted_download <- shiny::downloadHandler(
+        output$summarise_large_scale_characteristics_formatted_download_0 <- shiny::downloadHandler(
           filename = function() {
-            paste0("formatted_summarise_large_scale_characteristics.", input$summarise_large_scale_characteristics_formatted_download_type)
+            paste0("formatted_summarise_large_scale_characteristics.", input$summarise_large_scale_characteristics_formatted_download_0_type)
           },
           content = function(file) {
             getFormattedDataSummariseLargeScaleCharacteristics() |>
@@ -2088,21 +2108,21 @@
                 )
               ),
               bslib::nav_panel(
-                title = "Formatted",
+                title = "Table cohort characteristics",
                 bslib::card(
                   full_screen = TRUE,
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
                       shiny::selectizeInput(
-                        inputId = "summarise_characteristics_formatted_download_type",
+                        inputId = "summarise_characteristics_formatted_download_4_type",
                         label = "File",
                         choices = c("docx", "png", "pdf", "html"),
                         selected = c("docx"),
                         multiple = FALSE,
                         options = list(plugins = "remove_button")
                       ),
-                      shiny::downloadButton(outputId = "summarise_characteristics_formatted_download", label = "Download")
+                      shiny::downloadButton(outputId = "summarise_characteristics_formatted_download_4", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -2111,29 +2131,29 @@
                       sortable::bucket_list(
                         header = NULL,
                         sortable::add_rank_list(
-                          text = "None",
+                          text = c("none"),
                           labels = c("variable_name", "variable_level", "estimate_name"),
-                          input_id = "summarise_characteristics_formatted_none"
+                          input_id = "summarise_characteristics_formatted_4_none"
                         ),
                         sortable::add_rank_list(
-                          text = "Header",
-                          labels = c("cdm_name"),
-                          input_id = "summarise_characteristics_formatted_header"
+                          text = c("header"),
+                          labels = c("cdm_name", "cohort_name"),
+                          input_id = "summarise_characteristics_formatted_4_header"
                         ),
                         sortable::add_rank_list(
-                          text = "Group",
-                          labels = c("cohort_name"),
-                          input_id = "summarise_characteristics_formatted_group"
+                          text = c("groupColumn"),
+                          labels = NULL,
+                          input_id = "summarise_characteristics_formatted_4_groupColumn"
                         ),
                         sortable::add_rank_list(
-                          text = "Hide",
-                          labels = c("table_name"),
-                          input_id = "summarise_characteristics_formatted_hide"
+                          text = c("hide"),
+                          labels = NULL,
+                          input_id = "summarise_characteristics_formatted_4_hide"
                         )
                       ),
                       position = "right"
                     ),
-                    gt::gt_output("summarise_characteristics_formatted")
+                    gt::gt_output("summarise_characteristics_formatted_4")
                   )
                 )
               ),
@@ -2318,21 +2338,21 @@
                 )
               ),
               bslib::nav_panel(
-                title = "Formatted",
+                title = "Table cohort attrition",
                 bslib::card(
                   full_screen = TRUE,
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
                       shiny::selectizeInput(
-                        inputId = "summarise_cohort_attrition_formatted_download_type",
+                        inputId = "summarise_cohort_attrition_formatted_download_2_type",
                         label = "File",
                         choices = c("docx", "png", "pdf", "html"),
                         selected = c("docx"),
                         multiple = FALSE,
                         options = list(plugins = "remove_button")
                       ),
-                      shiny::downloadButton(outputId = "summarise_cohort_attrition_formatted_download", label = "Download")
+                      shiny::downloadButton(outputId = "summarise_cohort_attrition_formatted_download_2", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -2341,29 +2361,29 @@
                       sortable::bucket_list(
                         header = NULL,
                         sortable::add_rank_list(
-                          text = "None",
-                          labels = c("reason", "reason_id", "variable_name", "variable_level", "estimate_name"),
-                          input_id = "summarise_cohort_attrition_formatted_none"
+                          text = c("none"),
+                          labels = c("reason"),
+                          input_id = "summarise_cohort_attrition_formatted_2_none"
                         ),
                         sortable::add_rank_list(
-                          text = "Header",
-                          labels = c("cdm_name"),
-                          input_id = "summarise_cohort_attrition_formatted_header"
+                          text = c("header"),
+                          labels = c("variable_name"),
+                          input_id = "summarise_cohort_attrition_formatted_2_header"
                         ),
                         sortable::add_rank_list(
-                          text = "Group",
-                          labels = c("cohort_name"),
-                          input_id = "summarise_cohort_attrition_formatted_group"
+                          text = c("groupColumn"),
+                          labels = c("cdm_name", "cohort_name"),
+                          input_id = "summarise_cohort_attrition_formatted_2_groupColumn"
                         ),
                         sortable::add_rank_list(
-                          text = "Hide",
-                          labels = c("table_name", "cohort_definition_id"),
-                          input_id = "summarise_cohort_attrition_formatted_hide"
+                          text = c("hide"),
+                          labels = c("variable_level", "reason_id", "estimate_name"),
+                          input_id = "summarise_cohort_attrition_formatted_2_hide"
                         )
                       ),
                       position = "right"
                     ),
-                    gt::gt_output("summarise_cohort_attrition_formatted")
+                    gt::gt_output("summarise_cohort_attrition_formatted_2")
                   )
                 )
               ),
@@ -2491,21 +2511,21 @@
                 )
               ),
               bslib::nav_panel(
-                title = "Formatted",
+                title = "Table cohort count",
                 bslib::card(
                   full_screen = TRUE,
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
                       shiny::selectizeInput(
-                        inputId = "summarise_cohort_count_formatted_download_type",
+                        inputId = "summarise_cohort_count_formatted_download_5_type",
                         label = "File",
                         choices = c("docx", "png", "pdf", "html"),
                         selected = c("docx"),
                         multiple = FALSE,
                         options = list(plugins = "remove_button")
                       ),
-                      shiny::downloadButton(outputId = "summarise_cohort_count_formatted_download", label = "Download")
+                      shiny::downloadButton(outputId = "summarise_cohort_count_formatted_download_5", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -2514,29 +2534,29 @@
                       sortable::bucket_list(
                         header = NULL,
                         sortable::add_rank_list(
-                          text = "None",
-                          labels = c("variable_name", "variable_level", "estimate_name"),
-                          input_id = "summarise_cohort_count_formatted_none"
+                          text = c("none"),
+                          labels = c("cdm_name", "variable_name", "estimate_name"),
+                          input_id = "summarise_cohort_count_formatted_5_none"
                         ),
                         sortable::add_rank_list(
-                          text = "Header",
-                          labels = c("cdm_name"),
-                          input_id = "summarise_cohort_count_formatted_header"
-                        ),
-                        sortable::add_rank_list(
-                          text = "Group",
+                          text = c("header"),
                           labels = c("cohort_name"),
-                          input_id = "summarise_cohort_count_formatted_group"
+                          input_id = "summarise_cohort_count_formatted_5_header"
                         ),
                         sortable::add_rank_list(
-                          text = "Hide",
-                          labels = c("table_name"),
-                          input_id = "summarise_cohort_count_formatted_hide"
+                          text = c("groupColumn"),
+                          labels = NULL,
+                          input_id = "summarise_cohort_count_formatted_5_groupColumn"
+                        ),
+                        sortable::add_rank_list(
+                          text = c("hide"),
+                          labels = c("variable_level"),
+                          input_id = "summarise_cohort_count_formatted_5_hide"
                         )
                       ),
                       position = "right"
                     ),
-                    gt::gt_output("summarise_cohort_count_formatted")
+                    gt::gt_output("summarise_cohort_count_formatted_5")
                   )
                 )
               ),
@@ -2686,52 +2706,57 @@
                 )
               ),
               bslib::nav_panel(
-                title = "Formatted",
+                title = "Table cohort overlap",
                 bslib::card(
                   full_screen = TRUE,
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
                       shiny::selectizeInput(
-                        inputId = "summarise_cohort_overlap_formatted_download_type",
+                        inputId = "summarise_cohort_overlap_formatted_download_1_type",
                         label = "File",
                         choices = c("docx", "png", "pdf", "html"),
                         selected = c("docx"),
                         multiple = FALSE,
                         options = list(plugins = "remove_button")
                       ),
-                      shiny::downloadButton(outputId = "summarise_cohort_overlap_formatted_download", label = "Download")
+                      shiny::downloadButton(outputId = "summarise_cohort_overlap_formatted_download_1", label = "Download")
                     ),
                     class = "text-end"
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
+                      shiny::checkboxInput(
+                        inputId = "summarise_cohort_overlap_formatted_1_uniqueCombinations",
+                        label = "uniqueCombinations",
+                        value = c(TRUE)
+                      ),
                       sortable::bucket_list(
                         header = NULL,
                         sortable::add_rank_list(
-                          text = "None",
-                          labels = c("cohort_name_reference", "cohort_name_comparator", "variable_name", "variable_level", "estimate_name"),
-                          input_id = "summarise_cohort_overlap_formatted_none"
+                          text = c("none"),
+                          labels = c("cohort_name_reference", "cohort_name_comparator", "estimate_name"),
+                          input_id = "summarise_cohort_overlap_formatted_1_none"
                         ),
                         sortable::add_rank_list(
-                          text = "Header",
+                          text = c("header"),
+                          labels = c("variable_name"),
+                          input_id = "summarise_cohort_overlap_formatted_1_header"
+                        ),
+                        sortable::add_rank_list(
+                          text = c("groupColumn"),
                           labels = c("cdm_name"),
-                          input_id = "summarise_cohort_overlap_formatted_header"
+                          input_id = "summarise_cohort_overlap_formatted_1_groupColumn"
                         ),
                         sortable::add_rank_list(
-                          text = "Group",
-                          labels = character(),
-                          input_id = "summarise_cohort_overlap_formatted_group"
-                        ),
-                        sortable::add_rank_list(
-                          text = "Hide",
-                          labels = character(),
-                          input_id = "summarise_cohort_overlap_formatted_hide"
+                          text = c("hide"),
+                          labels = c("variable_level"),
+                          input_id = "summarise_cohort_overlap_formatted_1_hide"
                         )
                       ),
                       position = "right"
                     ),
-                    gt::gt_output("summarise_cohort_overlap_formatted")
+                    gt::gt_output("summarise_cohort_overlap_formatted_1")
                   )
                 )
               ),
@@ -2889,52 +2914,64 @@
                 )
               ),
               bslib::nav_panel(
-                title = "Formatted",
+                title = "Table cohort timing",
                 bslib::card(
                   full_screen = TRUE,
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
                       shiny::selectizeInput(
-                        inputId = "summarise_cohort_timing_formatted_download_type",
+                        inputId = "summarise_cohort_timing_formatted_download_3_type",
                         label = "File",
                         choices = c("docx", "png", "pdf", "html"),
                         selected = c("docx"),
                         multiple = FALSE,
                         options = list(plugins = "remove_button")
                       ),
-                      shiny::downloadButton(outputId = "summarise_cohort_timing_formatted_download", label = "Download")
+                      shiny::downloadButton(outputId = "summarise_cohort_timing_formatted_download_3", label = "Download")
                     ),
                     class = "text-end"
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
+                      shiny::checkboxInput(
+                        inputId = "summarise_cohort_timing_formatted_3_uniqueCombinations",
+                        label = "uniqueCombinations",
+                        value = c(TRUE)
+                      ),
+                      shiny::selectizeInput(
+                        inputId = "summarise_cohort_timing_formatted_3_timeScale",
+                        label = c("timeScale"),
+                        choices = c("days", "years"),
+                        selected = c("days"),
+                        multiple = FALSE
+                      ),
                       sortable::bucket_list(
                         header = NULL,
                         sortable::add_rank_list(
-                          text = "None",
-                          labels = c("cohort_name_reference", "cohort_name_comparator", "variable_name", "variable_level", "estimate_name"),
-                          input_id = "summarise_cohort_timing_formatted_none"
+                          text = c("none"),
+                          labels = c("cdm_name", "cohort_name_reference", "cohort_name_comparator", "variable_name", "estimate_name"),
+                          input_id = "summarise_cohort_timing_formatted_3_none"
                         ),
                         sortable::add_rank_list(
-                          text = "Header",
-                          labels = c("cdm_name"),
-                          input_id = "summarise_cohort_timing_formatted_header"
+                          text = c("header"),
+                          labels = NULL,
+                          input_id = "summarise_cohort_timing_formatted_3_header"
                         ),
                         sortable::add_rank_list(
-                          text = "Group",
-                          labels = character(),
-                          input_id = "summarise_cohort_timing_formatted_group"
+                          text = c("groupColumn"),
+                          labels = NULL,
+                          input_id = "summarise_cohort_timing_formatted_3_groupColumn"
                         ),
                         sortable::add_rank_list(
-                          text = "Hide",
-                          labels = c("restrict_to_first_entry"),
-                          input_id = "summarise_cohort_timing_formatted_hide"
+                          text = c("hide"),
+                          labels = c("variable_level"),
+                          input_id = "summarise_cohort_timing_formatted_3_hide"
                         )
                       ),
                       position = "right"
                     ),
-                    gt::gt_output("summarise_cohort_timing_formatted")
+                    gt::gt_output("summarise_cohort_timing_formatted_3")
                   )
                 )
               ),
@@ -3155,14 +3192,14 @@
                     bslib::popover(
                       shiny::icon("download"),
                       shiny::selectizeInput(
-                        inputId = "summarise_large_scale_characteristics_formatted_download_type",
+                        inputId = "summarise_large_scale_characteristics_formatted_download_0_type",
                         label = "File",
                         choices = c("docx", "png", "pdf", "html"),
                         selected = c("docx"),
                         multiple = FALSE,
                         options = list(plugins = "remove_button")
                       ),
-                      shiny::downloadButton(outputId = "summarise_large_scale_characteristics_formatted_download", label = "Download")
+                      shiny::downloadButton(outputId = "summarise_large_scale_characteristics_formatted_download_0", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -3171,29 +3208,29 @@
                       sortable::bucket_list(
                         header = NULL,
                         sortable::add_rank_list(
-                          text = "None",
+                          text = c("none"),
                           labels = c("sex", "age_group", "concept_id", "variable_name", "variable_level", "estimate_name"),
-                          input_id = "summarise_large_scale_characteristics_formatted_none"
+                          input_id = "summarise_large_scale_characteristics_formatted_0_none"
                         ),
                         sortable::add_rank_list(
-                          text = "Header",
+                          text = c("header"),
                           labels = c("cdm_name"),
-                          input_id = "summarise_large_scale_characteristics_formatted_header"
+                          input_id = "summarise_large_scale_characteristics_formatted_0_header"
                         ),
                         sortable::add_rank_list(
-                          text = "Group",
+                          text = c("group"),
                           labels = c("cohort_name"),
-                          input_id = "summarise_large_scale_characteristics_formatted_group"
+                          input_id = "summarise_large_scale_characteristics_formatted_0_group"
                         ),
                         sortable::add_rank_list(
-                          text = "Hide",
+                          text = c("hide"),
                           labels = c("table_name", "type", "analysis"),
-                          input_id = "summarise_large_scale_characteristics_formatted_hide"
+                          input_id = "summarise_large_scale_characteristics_formatted_0_hide"
                         )
                       ),
                       position = "right"
                     ),
-                    gt::gt_output("summarise_large_scale_characteristics_formatted")
+                    gt::gt_output("summarise_large_scale_characteristics_formatted_0")
                   )
                 )
               ),
@@ -3446,21 +3483,21 @@
                 )
               ),
               bslib::nav_panel(
-                title = "Formatted",
+                title = "Table cohort count",
                 bslib::card(
                   full_screen = TRUE,
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
                       shiny::selectizeInput(
-                        inputId = "summarise_cohort_count_formatted_download_type",
+                        inputId = "summarise_cohort_count_formatted_download_5_type",
                         label = "File",
                         choices = c("docx", "png", "pdf", "html"),
                         selected = c("docx"),
                         multiple = FALSE,
                         options = list(plugins = "remove_button")
                       ),
-                      shiny::downloadButton(outputId = "summarise_cohort_count_formatted_download", label = "Download")
+                      shiny::downloadButton(outputId = "summarise_cohort_count_formatted_download_5", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -3469,29 +3506,29 @@
                       sortable::bucket_list(
                         header = NULL,
                         sortable::add_rank_list(
-                          text = "None",
-                          labels = c("variable_name", "variable_level", "estimate_name"),
-                          input_id = "summarise_cohort_count_formatted_none"
+                          text = c("none"),
+                          labels = c("cdm_name", "variable_name", "estimate_name"),
+                          input_id = "summarise_cohort_count_formatted_5_none"
                         ),
                         sortable::add_rank_list(
-                          text = "Header",
-                          labels = c("cdm_name"),
-                          input_id = "summarise_cohort_count_formatted_header"
-                        ),
-                        sortable::add_rank_list(
-                          text = "Group",
+                          text = c("header"),
                           labels = c("cohort_name"),
-                          input_id = "summarise_cohort_count_formatted_group"
+                          input_id = "summarise_cohort_count_formatted_5_header"
                         ),
                         sortable::add_rank_list(
-                          text = "Hide",
-                          labels = c("table_name"),
-                          input_id = "summarise_cohort_count_formatted_hide"
+                          text = c("groupColumn"),
+                          labels = NULL,
+                          input_id = "summarise_cohort_count_formatted_5_groupColumn"
+                        ),
+                        sortable::add_rank_list(
+                          text = c("hide"),
+                          labels = c("variable_level"),
+                          input_id = "summarise_cohort_count_formatted_5_hide"
                         )
                       ),
                       position = "right"
                     ),
-                    gt::gt_output("summarise_cohort_count_formatted")
+                    gt::gt_output("summarise_cohort_count_formatted_5")
                   )
                 )
               ),
@@ -3641,52 +3678,57 @@
                 )
               ),
               bslib::nav_panel(
-                title = "Formatted",
+                title = "Table cohort overlap",
                 bslib::card(
                   full_screen = TRUE,
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
                       shiny::selectizeInput(
-                        inputId = "summarise_cohort_overlap_formatted_download_type",
+                        inputId = "summarise_cohort_overlap_formatted_download_1_type",
                         label = "File",
                         choices = c("docx", "png", "pdf", "html"),
                         selected = c("docx"),
                         multiple = FALSE,
                         options = list(plugins = "remove_button")
                       ),
-                      shiny::downloadButton(outputId = "summarise_cohort_overlap_formatted_download", label = "Download")
+                      shiny::downloadButton(outputId = "summarise_cohort_overlap_formatted_download_1", label = "Download")
                     ),
                     class = "text-end"
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
+                      shiny::checkboxInput(
+                        inputId = "summarise_cohort_overlap_formatted_1_uniqueCombinations",
+                        label = "uniqueCombinations",
+                        value = c(TRUE)
+                      ),
                       sortable::bucket_list(
                         header = NULL,
                         sortable::add_rank_list(
-                          text = "None",
-                          labels = c("cohort_name_reference", "cohort_name_comparator", "variable_name", "variable_level", "estimate_name"),
-                          input_id = "summarise_cohort_overlap_formatted_none"
+                          text = c("none"),
+                          labels = c("cohort_name_reference", "cohort_name_comparator", "estimate_name"),
+                          input_id = "summarise_cohort_overlap_formatted_1_none"
                         ),
                         sortable::add_rank_list(
-                          text = "Header",
+                          text = c("header"),
+                          labels = c("variable_name"),
+                          input_id = "summarise_cohort_overlap_formatted_1_header"
+                        ),
+                        sortable::add_rank_list(
+                          text = c("groupColumn"),
                           labels = c("cdm_name"),
-                          input_id = "summarise_cohort_overlap_formatted_header"
+                          input_id = "summarise_cohort_overlap_formatted_1_groupColumn"
                         ),
                         sortable::add_rank_list(
-                          text = "Group",
-                          labels = character(),
-                          input_id = "summarise_cohort_overlap_formatted_group"
-                        ),
-                        sortable::add_rank_list(
-                          text = "Hide",
-                          labels = character(),
-                          input_id = "summarise_cohort_overlap_formatted_hide"
+                          text = c("hide"),
+                          labels = c("variable_level"),
+                          input_id = "summarise_cohort_overlap_formatted_1_hide"
                         )
                       ),
                       position = "right"
                     ),
-                    gt::gt_output("summarise_cohort_overlap_formatted")
+                    gt::gt_output("summarise_cohort_overlap_formatted_1")
                   )
                 )
               ),
@@ -3860,21 +3902,21 @@
                 )
               ),
               bslib::nav_panel(
-                title = "Formatted",
+                title = "Table cohort attrition",
                 bslib::card(
                   full_screen = TRUE,
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
                       shiny::selectizeInput(
-                        inputId = "summarise_cohort_attrition_formatted_download_type",
+                        inputId = "summarise_cohort_attrition_formatted_download_2_type",
                         label = "File",
                         choices = c("docx", "png", "pdf", "html"),
                         selected = c("docx"),
                         multiple = FALSE,
                         options = list(plugins = "remove_button")
                       ),
-                      shiny::downloadButton(outputId = "summarise_cohort_attrition_formatted_download", label = "Download")
+                      shiny::downloadButton(outputId = "summarise_cohort_attrition_formatted_download_2", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -3883,29 +3925,29 @@
                       sortable::bucket_list(
                         header = NULL,
                         sortable::add_rank_list(
-                          text = "None",
-                          labels = c("reason", "reason_id", "variable_name", "variable_level", "estimate_name"),
-                          input_id = "summarise_cohort_attrition_formatted_none"
+                          text = c("none"),
+                          labels = c("reason"),
+                          input_id = "summarise_cohort_attrition_formatted_2_none"
                         ),
                         sortable::add_rank_list(
-                          text = "Header",
-                          labels = c("cdm_name"),
-                          input_id = "summarise_cohort_attrition_formatted_header"
+                          text = c("header"),
+                          labels = c("variable_name"),
+                          input_id = "summarise_cohort_attrition_formatted_2_header"
                         ),
                         sortable::add_rank_list(
-                          text = "Group",
-                          labels = c("cohort_name"),
-                          input_id = "summarise_cohort_attrition_formatted_group"
+                          text = c("groupColumn"),
+                          labels = c("cdm_name", "cohort_name"),
+                          input_id = "summarise_cohort_attrition_formatted_2_groupColumn"
                         ),
                         sortable::add_rank_list(
-                          text = "Hide",
-                          labels = c("cohort_definition_id", "table_name"),
-                          input_id = "summarise_cohort_attrition_formatted_hide"
+                          text = c("hide"),
+                          labels = c("variable_level", "reason_id", "estimate_name"),
+                          input_id = "summarise_cohort_attrition_formatted_2_hide"
                         )
                       ),
                       position = "right"
                     ),
-                    gt::gt_output("summarise_cohort_attrition_formatted")
+                    gt::gt_output("summarise_cohort_attrition_formatted_2")
                   )
                 )
               ),
@@ -4103,52 +4145,57 @@
                 )
               ),
               bslib::nav_panel(
-                title = "Formatted",
+                title = "Table cohort overlap",
                 bslib::card(
                   full_screen = TRUE,
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
                       shiny::selectizeInput(
-                        inputId = "summarise_cohort_overlap_formatted_download_type",
+                        inputId = "summarise_cohort_overlap_formatted_download_1_type",
                         label = "File",
                         choices = c("docx", "png", "pdf", "html"),
                         selected = c("docx"),
                         multiple = FALSE,
                         options = list(plugins = "remove_button")
                       ),
-                      shiny::downloadButton(outputId = "summarise_cohort_overlap_formatted_download", label = "Download")
+                      shiny::downloadButton(outputId = "summarise_cohort_overlap_formatted_download_1", label = "Download")
                     ),
                     class = "text-end"
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
+                      shiny::checkboxInput(
+                        inputId = "summarise_cohort_overlap_formatted_1_uniqueCombinations",
+                        label = "uniqueCombinations",
+                        value = c(TRUE)
+                      ),
                       sortable::bucket_list(
                         header = NULL,
                         sortable::add_rank_list(
-                          text = "None",
-                          labels = c("cohort_name_reference", "cohort_name_comparator", "variable_name", "variable_level", "estimate_name"),
-                          input_id = "summarise_cohort_overlap_formatted_none"
+                          text = c("none"),
+                          labels = c("cohort_name_reference", "cohort_name_comparator", "estimate_name"),
+                          input_id = "summarise_cohort_overlap_formatted_1_none"
                         ),
                         sortable::add_rank_list(
-                          text = "Header",
+                          text = c("header"),
+                          labels = c("variable_name"),
+                          input_id = "summarise_cohort_overlap_formatted_1_header"
+                        ),
+                        sortable::add_rank_list(
+                          text = c("groupColumn"),
                           labels = c("cdm_name"),
-                          input_id = "summarise_cohort_overlap_formatted_header"
+                          input_id = "summarise_cohort_overlap_formatted_1_groupColumn"
                         ),
                         sortable::add_rank_list(
-                          text = "Group",
-                          labels = character(),
-                          input_id = "summarise_cohort_overlap_formatted_group"
-                        ),
-                        sortable::add_rank_list(
-                          text = "Hide",
-                          labels = character(),
-                          input_id = "summarise_cohort_overlap_formatted_hide"
+                          text = c("hide"),
+                          labels = c("variable_level"),
+                          input_id = "summarise_cohort_overlap_formatted_1_hide"
                         )
                       ),
                       position = "right"
                     ),
-                    gt::gt_output("summarise_cohort_overlap_formatted")
+                    gt::gt_output("summarise_cohort_overlap_formatted_1")
                   )
                 )
               ),
@@ -4322,21 +4369,21 @@
                 )
               ),
               bslib::nav_panel(
-                title = "Formatted",
+                title = "Table cohort attrition",
                 bslib::card(
                   full_screen = TRUE,
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
                       shiny::selectizeInput(
-                        inputId = "summarise_cohort_attrition_formatted_download_type",
+                        inputId = "summarise_cohort_attrition_formatted_download_2_type",
                         label = "File",
                         choices = c("docx", "png", "pdf", "html"),
                         selected = c("docx"),
                         multiple = FALSE,
                         options = list(plugins = "remove_button")
                       ),
-                      shiny::downloadButton(outputId = "summarise_cohort_attrition_formatted_download", label = "Download")
+                      shiny::downloadButton(outputId = "summarise_cohort_attrition_formatted_download_2", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -4345,29 +4392,29 @@
                       sortable::bucket_list(
                         header = NULL,
                         sortable::add_rank_list(
-                          text = "None",
-                          labels = c("reason", "reason_id", "variable_name", "variable_level", "estimate_name"),
-                          input_id = "summarise_cohort_attrition_formatted_none"
+                          text = c("none"),
+                          labels = c("reason"),
+                          input_id = "summarise_cohort_attrition_formatted_2_none"
                         ),
                         sortable::add_rank_list(
-                          text = "Header",
-                          labels = c("cdm_name"),
-                          input_id = "summarise_cohort_attrition_formatted_header"
+                          text = c("header"),
+                          labels = c("variable_name"),
+                          input_id = "summarise_cohort_attrition_formatted_2_header"
                         ),
                         sortable::add_rank_list(
-                          text = "Group",
-                          labels = c("cohort_name"),
-                          input_id = "summarise_cohort_attrition_formatted_group"
+                          text = c("groupColumn"),
+                          labels = c("cdm_name", "cohort_name"),
+                          input_id = "summarise_cohort_attrition_formatted_2_groupColumn"
                         ),
                         sortable::add_rank_list(
-                          text = "Hide",
-                          labels = c("cohort_definition_id", "table_name"),
-                          input_id = "summarise_cohort_attrition_formatted_hide"
+                          text = c("hide"),
+                          labels = c("variable_level", "reason_id", "estimate_name"),
+                          input_id = "summarise_cohort_attrition_formatted_2_hide"
                         )
                       ),
                       position = "right"
                     ),
-                    gt::gt_output("summarise_cohort_attrition_formatted")
+                    gt::gt_output("summarise_cohort_attrition_formatted_2")
                   )
                 )
               ),
@@ -4495,21 +4542,21 @@
                 )
               ),
               bslib::nav_panel(
-                title = "Formatted",
+                title = "Table cohort count",
                 bslib::card(
                   full_screen = TRUE,
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
                       shiny::selectizeInput(
-                        inputId = "summarise_cohort_count_formatted_download_type",
+                        inputId = "summarise_cohort_count_formatted_download_5_type",
                         label = "File",
                         choices = c("docx", "png", "pdf", "html"),
                         selected = c("docx"),
                         multiple = FALSE,
                         options = list(plugins = "remove_button")
                       ),
-                      shiny::downloadButton(outputId = "summarise_cohort_count_formatted_download", label = "Download")
+                      shiny::downloadButton(outputId = "summarise_cohort_count_formatted_download_5", label = "Download")
                     ),
                     class = "text-end"
                   ),
@@ -4518,29 +4565,29 @@
                       sortable::bucket_list(
                         header = NULL,
                         sortable::add_rank_list(
-                          text = "None",
-                          labels = c("variable_name", "variable_level", "estimate_name"),
-                          input_id = "summarise_cohort_count_formatted_none"
+                          text = c("none"),
+                          labels = c("cdm_name", "variable_name", "estimate_name"),
+                          input_id = "summarise_cohort_count_formatted_5_none"
                         ),
                         sortable::add_rank_list(
-                          text = "Header",
-                          labels = c("cdm_name"),
-                          input_id = "summarise_cohort_count_formatted_header"
-                        ),
-                        sortable::add_rank_list(
-                          text = "Group",
+                          text = c("header"),
                           labels = c("cohort_name"),
-                          input_id = "summarise_cohort_count_formatted_group"
+                          input_id = "summarise_cohort_count_formatted_5_header"
                         ),
                         sortable::add_rank_list(
-                          text = "Hide",
-                          labels = c("table_name"),
-                          input_id = "summarise_cohort_count_formatted_hide"
+                          text = c("groupColumn"),
+                          labels = NULL,
+                          input_id = "summarise_cohort_count_formatted_5_groupColumn"
+                        ),
+                        sortable::add_rank_list(
+                          text = c("hide"),
+                          labels = c("variable_level"),
+                          input_id = "summarise_cohort_count_formatted_5_hide"
                         )
                       ),
                       position = "right"
                     ),
-                    gt::gt_output("summarise_cohort_count_formatted")
+                    gt::gt_output("summarise_cohort_count_formatted_5")
                   )
                 )
               ),
@@ -4769,21 +4816,21 @@
                   )
                 ),
                 bslib::nav_panel(
-                  title = "Formatted",
+                  title = "Table cohort count",
                   bslib::card(
                     full_screen = TRUE,
                     bslib::card_header(
                       bslib::popover(
                         shiny::icon("download"),
                         shiny::selectizeInput(
-                          inputId = "summarise_cohort_count_formatted_download_type",
+                          inputId = "summarise_cohort_count_formatted_download_5_type",
                           label = "File",
                           choices = c("docx", "png", "pdf", "html"),
                           selected = c("docx"),
                           multiple = FALSE,
                           options = list(plugins = "remove_button")
                         ),
-                        shiny::downloadButton(outputId = "summarise_cohort_count_formatted_download", label = "Download")
+                        shiny::downloadButton(outputId = "summarise_cohort_count_formatted_download_5", label = "Download")
                       ),
                       class = "text-end"
                     ),
@@ -4792,29 +4839,29 @@
                         sortable::bucket_list(
                           header = NULL,
                           sortable::add_rank_list(
-                            text = "None",
-                            labels = c("variable_name", "variable_level", "estimate_name"),
-                            input_id = "summarise_cohort_count_formatted_none"
+                            text = c("none"),
+                            labels = c("cdm_name", "variable_name", "estimate_name"),
+                            input_id = "summarise_cohort_count_formatted_5_none"
                           ),
                           sortable::add_rank_list(
-                            text = "Header",
-                            labels = c("cdm_name"),
-                            input_id = "summarise_cohort_count_formatted_header"
-                          ),
-                          sortable::add_rank_list(
-                            text = "Group",
+                            text = c("header"),
                             labels = c("cohort_name"),
-                            input_id = "summarise_cohort_count_formatted_group"
+                            input_id = "summarise_cohort_count_formatted_5_header"
                           ),
                           sortable::add_rank_list(
-                            text = "Hide",
-                            labels = c("table_name"),
-                            input_id = "summarise_cohort_count_formatted_hide"
+                            text = c("groupColumn"),
+                            labels = NULL,
+                            input_id = "summarise_cohort_count_formatted_5_groupColumn"
+                          ),
+                          sortable::add_rank_list(
+                            text = c("hide"),
+                            labels = c("variable_level"),
+                            input_id = "summarise_cohort_count_formatted_5_hide"
                           )
                         ),
                         position = "right"
                       ),
-                      gt::gt_output("summarise_cohort_count_formatted")
+                      gt::gt_output("summarise_cohort_count_formatted_5")
                     )
                   )
                 ),
@@ -4991,21 +5038,21 @@
                   )
                 ),
                 bslib::nav_panel(
-                  title = "Formatted",
+                  title = "Table cohort attrition",
                   bslib::card(
                     full_screen = TRUE,
                     bslib::card_header(
                       bslib::popover(
                         shiny::icon("download"),
                         shiny::selectizeInput(
-                          inputId = "summarise_cohort_attrition_formatted_download_type",
+                          inputId = "summarise_cohort_attrition_formatted_download_2_type",
                           label = "File",
                           choices = c("docx", "png", "pdf", "html"),
                           selected = c("docx"),
                           multiple = FALSE,
                           options = list(plugins = "remove_button")
                         ),
-                        shiny::downloadButton(outputId = "summarise_cohort_attrition_formatted_download", label = "Download")
+                        shiny::downloadButton(outputId = "summarise_cohort_attrition_formatted_download_2", label = "Download")
                       ),
                       class = "text-end"
                     ),
@@ -5014,29 +5061,29 @@
                         sortable::bucket_list(
                           header = NULL,
                           sortable::add_rank_list(
-                            text = "None",
-                            labels = c("reason", "reason_id", "variable_name", "variable_level", "estimate_name"),
-                            input_id = "summarise_cohort_attrition_formatted_none"
+                            text = c("none"),
+                            labels = c("reason"),
+                            input_id = "summarise_cohort_attrition_formatted_2_none"
                           ),
                           sortable::add_rank_list(
-                            text = "Header",
-                            labels = c("cdm_name"),
-                            input_id = "summarise_cohort_attrition_formatted_header"
+                            text = c("header"),
+                            labels = c("variable_name"),
+                            input_id = "summarise_cohort_attrition_formatted_2_header"
                           ),
                           sortable::add_rank_list(
-                            text = "Group",
-                            labels = c("cohort_name"),
-                            input_id = "summarise_cohort_attrition_formatted_group"
+                            text = c("groupColumn"),
+                            labels = c("cdm_name", "cohort_name"),
+                            input_id = "summarise_cohort_attrition_formatted_2_groupColumn"
                           ),
                           sortable::add_rank_list(
-                            text = "Hide",
-                            labels = c("cohort_definition_id", "table_name"),
-                            input_id = "summarise_cohort_attrition_formatted_hide"
+                            text = c("hide"),
+                            labels = c("variable_level", "reason_id", "estimate_name"),
+                            input_id = "summarise_cohort_attrition_formatted_2_hide"
                           )
                         ),
                         position = "right"
                       ),
-                      gt::gt_output("summarise_cohort_attrition_formatted")
+                      gt::gt_output("summarise_cohort_attrition_formatted_2")
                     )
                   )
                 ),
@@ -5162,52 +5209,57 @@
                 )
               ),
               bslib::nav_panel(
-                title = "Formatted",
+                title = "Table cohort overlap",
                 bslib::card(
                   full_screen = TRUE,
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
                       shiny::selectizeInput(
-                        inputId = "summarise_cohort_overlap_formatted_download_type",
+                        inputId = "summarise_cohort_overlap_formatted_download_1_type",
                         label = "File",
                         choices = c("docx", "png", "pdf", "html"),
                         selected = c("docx"),
                         multiple = FALSE,
                         options = list(plugins = "remove_button")
                       ),
-                      shiny::downloadButton(outputId = "summarise_cohort_overlap_formatted_download", label = "Download")
+                      shiny::downloadButton(outputId = "summarise_cohort_overlap_formatted_download_1", label = "Download")
                     ),
                     class = "text-end"
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
+                      shiny::checkboxInput(
+                        inputId = "summarise_cohort_overlap_formatted_1_uniqueCombinations",
+                        label = "uniqueCombinations",
+                        value = c(TRUE)
+                      ),
                       sortable::bucket_list(
                         header = NULL,
                         sortable::add_rank_list(
-                          text = "None",
-                          labels = c("cohort_name_reference", "cohort_name_comparator", "variable_name", "variable_level", "estimate_name"),
-                          input_id = "summarise_cohort_overlap_formatted_none"
+                          text = c("none"),
+                          labels = c("cohort_name_reference", "cohort_name_comparator", "estimate_name"),
+                          input_id = "summarise_cohort_overlap_formatted_1_none"
                         ),
                         sortable::add_rank_list(
-                          text = "Header",
+                          text = c("header"),
+                          labels = c("variable_name"),
+                          input_id = "summarise_cohort_overlap_formatted_1_header"
+                        ),
+                        sortable::add_rank_list(
+                          text = c("groupColumn"),
                           labels = c("cdm_name"),
-                          input_id = "summarise_cohort_overlap_formatted_header"
+                          input_id = "summarise_cohort_overlap_formatted_1_groupColumn"
                         ),
                         sortable::add_rank_list(
-                          text = "Group",
-                          labels = character(),
-                          input_id = "summarise_cohort_overlap_formatted_group"
-                        ),
-                        sortable::add_rank_list(
-                          text = "Hide",
-                          labels = character(),
-                          input_id = "summarise_cohort_overlap_formatted_hide"
+                          text = c("hide"),
+                          labels = c("variable_level"),
+                          input_id = "summarise_cohort_overlap_formatted_1_hide"
                         )
                       ),
                       position = "right"
                     ),
-                    gt::gt_output("summarise_cohort_overlap_formatted")
+                    gt::gt_output("summarise_cohort_overlap_formatted_1")
                   )
                 )
               ),
