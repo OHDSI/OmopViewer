@@ -39,11 +39,66 @@ omopViewerPlotArguments <- dplyr::tribble(
   5L, "colour", "selector", "<grouping>, <variable>", TRUE,
 )
 
+omopViewerTables <- dplyr::tribble(
+  ~table_id, ~result_tab_id, ~title, ~fun, ~output,
+  0L, 0L, "Formatted", "omopViewer::visTable", "gt",
+  1L, 1L, "Table cohort overlap", "tableCohortOverlap", "gt",
+  2L, 2L, "Table cohort attrition", "tableCohortAttrition", "gt",
+  3L, 3L, "Table cohort timing", "tableCohortTiming", "gt",
+  4L, 4L, "Table cohort characteristics", "tableCharacteristics", "gt",
+  5L, 5L, "Table cohort count", "tableCohortCount", "gt"
+)
+
+omopViewerTablesArguments <- dplyr::tribble(
+  ~ table_id, ~argument, ~name, ~value,
+  0L, "header", "type", "rank",
+  0L, "header", "default", "cdm_name",
+  0L, "group", "type", "rank",
+  0L, "group", "default", "cohort_name",
+  0L, "hide", "type", "rank",
+  0L, "hide", "default", "<settings>",
+  0L, NA, "rank_options", "<grouping>, <variable>, <settings>",
+  1L, "uniqueCombinations", "type", "check",
+  1L, "header", "type", "rank",
+  1L, "groupColumn", "type", "rank",
+  1L, "hide", "type", "rank",
+  1L, NA, "rank_options", "<grouping>, <variable>",
+  2L, "header", "type", "rank",
+  2L, "groupColumn", "type", "rank",
+  2L, "hide", "type", "rank",
+  2L, NA, "rank_options", "<grouping>, <variable>",
+  3L, "uniqueCombinations", "type", "check",
+  3L, "timeScale", "type", "selector",
+  3L, "timeScale", "options", "days, years",
+  3L, "timeScale", "multiple", "FALSE",
+  3L, "header", "type", "rank",
+  3L, "groupColumn", "type", "rank",
+  3L, "hide", "type", "rank",
+  3L, NA, "rank_options", "<grouping>, <variable>",
+  4L, "header", "type", "rank",
+  4L, "groupColumn", "type", "rank",
+  4L, "hide", "type", "rank",
+  4L, NA, "rank_options", "<grouping>, <variable>",
+  5L, "header", "type", "rank",
+  5L, "groupColumn", "type", "rank",
+  5L, "hide", "type", "rank",
+  5L, NA, "rank_options", "<grouping>, <variable>"
+)
+
 omopViewerProj <- c(
-  "Version: 1.0", "", "RestoreWorkspace: Default", "SaveWorkspace: Default",
-  "AlwaysSaveHistory: Default", "", "EnableCodeIndexing: Yes",
-  "UseSpacesForTab: Yes", "NumSpacesForTab: 2", "Encoding: UTF-8", "",
-  "RnwWeave: Sweave", "LaTeX: pdfLaTeX"
+  "Version: 1.0",
+  "",
+  "RestoreWorkspace: Default",
+  "SaveWorkspace: Default",
+  "AlwaysSaveHistory: Default",
+  "",
+  "EnableCodeIndexing: Yes",
+  "UseSpacesForTab: Yes",
+  "NumSpacesForTab: 2",
+  "Encoding: UTF-8",
+  "",
+  "RnwWeave: Sweave",
+  "LaTeX: pdfLaTeX"
 )
 
 omopViewerGlobal <- c(
@@ -66,6 +121,5 @@ backgroundKeywords <- dplyr::tribble(
 
 usethis::use_data(
   omopViewerTabs, omopViewerPlots, omopViewerPlotArguments, omopViewerProj,
-  omopViewerGlobal, logoKeywords, backgroundKeywords, overwrite = TRUE,
-  internal = TRUE)
-
+  omopViewerGlobal, logoKeywords, backgroundKeywords, omopViewerTables,
+  omopViewerTablesArguments, overwrite = TRUE, internal = TRUE)
