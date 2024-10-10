@@ -51,7 +51,10 @@ omopViewerTables <- dplyr::tribble(
   3L, 3L, "Table cohort timing", "tableCohortTiming", "gt",
   4L, 4L, "Table cohort characteristics", "tableCharacteristics", "gt",
   5L, 5L, "Table cohort count", "tableCohortCount", "gt",
-  6L, 7L, "Table orphan codes", "tableOrphanCodes", "gt"
+  6L, 7L, "Table orphan codes", "tableOrphanCodes", "gt",
+  7L, 8L, "Table cohort code use", "tableCohortCodeUse", "gt",
+  8L, 9L, "Table code use", "tableCodeUse", "gt",
+  9L, 10L, "Table achilles code use", "tableAchillesCodeUse", "gt"
 )
 
 omopViewerTableArguments <- dplyr::tribble(
@@ -91,7 +94,20 @@ omopViewerTableArguments <- dplyr::tribble(
   6L, "header", "type", "rank",
   6L, "groupColumn", "type", "rank",
   6L, "hide", "type", "rank",
-  6L, NA, "rank_options", "<grouping>, <variable>"
+  6L, NA, "rank_options", "<grouping>, <variable>",
+  7L, "timing", "type", "check",
+  7L, "header", "type", "rank",
+  7L, "groupColumn", "type", "rank",
+  7L, "hide", "type", "rank",
+  7L, NA, "rank_options", "<grouping>, <variable>",
+  8L, "header", "type", "rank",
+  8L, "groupColumn", "type", "rank",
+  8L, "hide", "type", "rank",
+  8L, NA, "rank_options", "<grouping>, <variable>",
+  9L, "header", "type", "rank",
+  9L, "groupColumn", "type", "rank",
+  9L, "hide", "type", "rank",
+  9L, NA, "rank_options", "<grouping>, <variable>"
 )
 
 omopViewerProj <- c(

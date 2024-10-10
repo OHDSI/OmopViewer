@@ -70,6 +70,7 @@ test_that("CohortCharacteristics shiny", {
 })
 
 test_that("CodelistGenerator shiny", {
+  skip("Manual test: needs ohdsi credentials")
   # test cdm object
   db <- DBI::dbConnect(RPostgres::Postgres(),
                        dbname = Sys.getenv("CDM5_POSTGRESQL_DBNAME"),
