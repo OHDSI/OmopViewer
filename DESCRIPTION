@@ -42,6 +42,7 @@ Imports:
     yaml
 Suggests: 
     CDMConnector,
+    CodelistGenerator (>= 3.2.0),
     CohortCharacteristics (>= 0.3.0),
     duckdb,
     ggplot2,
@@ -49,7 +50,7 @@ Suggests:
     here,
     htmlwidgets,
     knitr,
-    omock,
+    omock (>= 0.3.0),
     PatientProfiles,
     plotly,
     rmarkdown,

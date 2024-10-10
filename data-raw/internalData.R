@@ -11,7 +11,11 @@ omopViewerTabs <- dplyr::tribble(
   3L, "summarise_cohort_timing", "CohortCharacteristics", "Cohort timing", "chart-simple", "",
   4L, "summarise_characteristics", "CohortCharacteristics", "Cohort characteristics", "users-gear", "",
   5L, "summarise_cohort_count", "CohortCharacteristics", "Cohort count", "users", "",
-  6L, "summarise_large_scale_characteristics", "CohortCharacteristics", "Large Scale Characteristics", "arrow-up-right-dots", ""
+  6L, "summarise_large_scale_characteristics", "CohortCharacteristics", "Large Scale Characteristics", "arrow-up-right-dots", "",
+  7L, "orphan_code_use", "CodelistGenerator", "Orphan codes", "magnifying-glass-arrow-right", "",
+  8L, "cohort_code_use", "CodelistGenerator", "Cohort code use", "chart-column", "",
+  9L, "code_use", "CodelistGenerator", "Code use", "chart-column", "",
+  10L, "achilles_code_use", "CodelistGenerator", "Achilles code use", "chart-column", ""
 )
 
 omopViewerPlots <- dplyr::tribble(
@@ -46,10 +50,11 @@ omopViewerTables <- dplyr::tribble(
   2L, 2L, "Table cohort attrition", "tableCohortAttrition", "gt",
   3L, 3L, "Table cohort timing", "tableCohortTiming", "gt",
   4L, 4L, "Table cohort characteristics", "tableCharacteristics", "gt",
-  5L, 5L, "Table cohort count", "tableCohortCount", "gt"
+  5L, 5L, "Table cohort count", "tableCohortCount", "gt",
+  6L, 7L, "Table orphan codes", "tableOrphanCodes", "gt"
 )
 
-omopViewerTablesArguments <- dplyr::tribble(
+omopViewerTableArguments <- dplyr::tribble(
   ~ table_id, ~argument, ~name, ~value,
   0L, "header", "type", "rank",
   0L, "header", "default", "cdm_name",
@@ -82,7 +87,11 @@ omopViewerTablesArguments <- dplyr::tribble(
   5L, "header", "type", "rank",
   5L, "groupColumn", "type", "rank",
   5L, "hide", "type", "rank",
-  5L, NA, "rank_options", "<grouping>, <variable>"
+  5L, NA, "rank_options", "<grouping>, <variable>",
+  6L, "header", "type", "rank",
+  6L, "groupColumn", "type", "rank",
+  6L, "hide", "type", "rank",
+  6L, NA, "rank_options", "<grouping>, <variable>"
 )
 
 omopViewerProj <- c(
@@ -122,4 +131,4 @@ backgroundKeywords <- dplyr::tribble(
 usethis::use_data(
   omopViewerTabs, omopViewerPlots, omopViewerPlotArguments, omopViewerProj,
   omopViewerGlobal, logoKeywords, backgroundKeywords, omopViewerTables,
-  omopViewerTablesArguments, overwrite = TRUE, internal = TRUE)
+  omopViewerTableArguments, overwrite = TRUE, internal = TRUE)

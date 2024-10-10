@@ -16,7 +16,7 @@ getTableDownload <- function(tableId, resultType) {
          cli::cli_abort("provide a supported output format"))
 }
 getTableSidebar <- function(tableId, resultType, choices) {
-  buttons <- omopViewerTablesArguments |>
+  buttons <- omopViewerTableArguments |>
     dplyr::filter(.data$table_id == .env$tableId)
 
   c(getNoRankButtons(buttons, tableId, resultType),
@@ -199,7 +199,7 @@ formattedServer <- function(rt, data) {
     getTableId() |>
     purrr::map_chr(\(x) {
       fun <- getTableFunction(x)
-      args <- omopViewerTablesArguments$argument[omopViewerTablesArguments$table_id == x] |>
+      args <- omopViewerTableArguments$argument[omopViewerTableArguments$table_id == x] |>
         unique() |>
         purrr::discard(is.na)
       args <- paste0(args, " = input$", rt, "_formatted_", x, "_", args, collapse = ",\n")

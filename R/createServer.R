@@ -28,7 +28,8 @@ selectiseServer <- function(resultTypes, data) {
           session,
           inputId = names(choices)[k],
           choices = choices[[k]],
-          selected = choices[[k]]
+          selected = choices[[k]],
+          server = TRUE
         )
       }
     })')
