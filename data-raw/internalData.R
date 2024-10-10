@@ -45,7 +45,7 @@ omopViewerPlotArguments <- dplyr::tribble(
 
 omopViewerTables <- dplyr::tribble(
   ~table_id, ~result_tab_id, ~title, ~fun, ~output,
-  0L, 0L, "Formatted", "omopViewer::visTable", "gt",
+  0L, 0L, "Formatted", "omopViewer::omopViewerTable", "gt",
   1L, 1L, "Table cohort overlap", "tableCohortOverlap", "gt",
   2L, 2L, "Table cohort attrition", "tableCohortAttrition", "gt",
   3L, 3L, "Table cohort timing", "tableCohortTiming", "gt",

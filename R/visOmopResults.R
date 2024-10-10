@@ -10,10 +10,10 @@
 #' @return A gt table.
 #' @export
 #'
-visTable <- function(result,
-                     header = character(),
-                     group = character(),
-                     hide = character()) {
+omopViewerTable <- function(result,
+                            header = character(),
+                            group = character(),
+                            hide = character()) {
   # initial checks
   if (length(header) == 0) header <- character()
   if (length(group) == 0) group <- NULL
