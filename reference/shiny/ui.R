@@ -18,6 +18,11 @@ ui <- bslib::page_navbar(
     icon = shiny::icon("disease"),
     omopViewer::cardFromMd("background.md")
   ),
+  bslib::nav_panel(
+    title = "Summary",
+    icon = shiny::icon("file-alt"),
+    omopViewer::cardSummary(data)
+  ),
   bslib::nav_spacer(),
   bslib::nav_item(
     bslib::popover(
