@@ -45,7 +45,6 @@ exportStaticApp <- function(result,
   omopgenerics::assertLogical(summary, length = 1)
   omopgenerics::assertCharacter(theme, length = 1, null = TRUE)
   omopgenerics::assertLogical(background, length = 1)
-  sum <- validateSummary(summary, result)
   directory <- validateDirectory(directory)
   if (isTRUE(directory)) {
     return(cli::cli_inform(c("i" = "{.strong shiny} folder will not be overwritten. Stopping process.")))
@@ -79,7 +78,7 @@ exportStaticApp <- function(result,
       choices = choices,
       logo = logo,
       title = title,
-      summary = sum,
+      summary = summary,
       background = background,
       theme = theme,
       panels = panels
@@ -87,7 +86,12 @@ exportStaticApp <- function(result,
   )
 
   # create server
-  server <- c(messageShiny(), serverStatic(resultTypes = resType))
+  server <- c(
+    messageShiny(),
+    serverStatic(
+      resultTypes = resType
+    )
+  )
 
   # check installed libraries
   libraries <- c(
@@ -186,7 +190,7 @@ uiStatic <- function(choices = list(),
                      logo = NULL,
                      title = "",
                      background = TRUE,
-                     summary = NULL,
+                     summary = FALSE,
                      theme = NULL,
                      panels = list()) {
   # Create the bslib::bs_theme() call, or use NULL if not provided
@@ -201,7 +205,7 @@ uiStatic <- function(choices = list(),
     c(
       pageTitle(title, logo),
       createBackground(background),
-      createSummary(summary, logo),
+      summaryTab(summary),
       createUi(choices, panels),
       "bslib::nav_spacer()",
       downloadRawDataUi(),

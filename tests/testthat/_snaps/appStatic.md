@@ -141,17 +141,7 @@
         bslib::nav_panel(
           title = "Summary",
           icon = shiny::icon("file-alt"),
-          bslib::card(
-            bslib::card_header("Summary of results"),
-            shiny::p(shiny::markdown("A summarised_result object with **0** rows, **0** different result_id, different cdm names, and **3** settings.")), shiny::p(shiny::markdown(" - **Settings:** result_type, package_name, and package_version.")),
-            shiny::tags$img(
-              src = "ohdsi_logo.svg",
-              width = "auto",
-              height = "100px",
-              alt = "logo",
-              align = "left"
-            )
-          )
+          omopViewer::cardSummary(data)
         ),
         bslib::nav_spacer(),
         bslib::nav_item(
@@ -214,17 +204,7 @@
         bslib::nav_panel(
           title = "Summary",
           icon = shiny::icon("file-alt"),
-          bslib::card(
-            bslib::card_header("Summary of results"),
-            shiny::p(shiny::markdown("A summarised_result object with **54** rows, **5** different result_id, **1** different cdm names, and **5** settings.")), shiny::p(shiny::markdown(" - **CDM names:** mock database.")), shiny::p(shiny::markdown(" - **Settings:** result_type, package_name, package_version, cohort_definition_id, and table_name.")),
-            shiny::tags$img(
-              src = "ohdsi_logo.svg",
-              width = "auto",
-              height = "100px",
-              alt = "logo",
-              align = "left"
-            )
-          )
+          omopViewer::cardSummary(data)
         ),
         bslib::nav_panel(
           title = c("Cohort count"),
@@ -879,17 +859,7 @@
         bslib::nav_panel(
           title = "Summary",
           icon = shiny::icon("file-alt"),
-          bslib::card(
-            bslib::card_header("Summary of results"),
-            shiny::p(shiny::markdown("A summarised_result object with **54** rows, **5** different result_id, **1** different cdm names, and **5** settings.")), shiny::p(shiny::markdown(" - **CDM names:** mock database.")), shiny::p(shiny::markdown(" - **Settings:** result_type, package_name, package_version, cohort_definition_id, and table_name.")),
-            shiny::tags$img(
-              src = "ohdsi_logo.svg",
-              width = "auto",
-              height = "100px",
-              alt = "logo",
-              align = "left"
-            )
-          )
+          omopViewer::cardSummary(data)
         ),
         bslib::nav_panel(
           title = c("Cohort overlap"),
@@ -1544,17 +1514,7 @@
         bslib::nav_panel(
           title = "Summary",
           icon = shiny::icon("file-alt"),
-          bslib::card(
-            bslib::card_header("Summary of results"),
-            shiny::p(shiny::markdown("A summarised_result object with **54** rows, **5** different result_id, **1** different cdm names, and **5** settings.")), shiny::p(shiny::markdown(" - **CDM names:** mock database.")), shiny::p(shiny::markdown(" - **Settings:** result_type, package_name, package_version, cohort_definition_id, and table_name.")),
-            shiny::tags$img(
-              src = "ohdsi_logo.svg",
-              width = "auto",
-              height = "100px",
-              alt = "logo",
-              align = "left"
-            )
-          )
+          omopViewer::cardSummary(data)
         ),
         bslib::nav_menu(
           title = c("DETAILS"),

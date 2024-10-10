@@ -23,6 +23,11 @@
           omopViewer::cardFromMd("background.md")
         ),
         bslib::nav_panel(
+          title = "Summary",
+          icon = shiny::icon("file-alt"),
+          omopViewer::cardSummary(data)
+        ),
+        bslib::nav_panel(
           title = c("Cohort characteristics"),
           icon = shiny::icon("users-gear"),
           bslib::layout_sidebar(

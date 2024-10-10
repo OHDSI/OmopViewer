@@ -37,7 +37,7 @@ test_that("CohortCharacteristics shiny", {
 
   # generate shiny
   tdir <- tempdir()
-  expect_no_error(exportStaticApp(result = result, directory = tdir, summary = FALSE))
+  expect_no_error(exportStaticApp(result = result, directory = tdir, summary = TRUE))
   expect_true("shiny" %in% list.files(tdir))
 
   # test ui snapshot
