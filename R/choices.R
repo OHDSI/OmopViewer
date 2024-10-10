@@ -104,6 +104,7 @@ getPossibilities <- function(x, split = FALSE) {
   uniquePos <- function(xx) {
     xx <- xx |>
       unique() |>
+      as.character() |>
       sort() # To remove when the output is constant and always equal
     xx[!is.na(xx)]
   }

@@ -38,7 +38,7 @@ filterData <- function(result,
   for (nm in nms) {
     if (nm %in% colnames(set)) {
       set <- set |>
-        dplyr::filter(.data[[nm]] %in% input[[paste0(setPrefix, nm)]])
+        dplyr::filter(as.character(.data[[nm]]) %in% input[[paste0(setPrefix, nm)]])
     }
   }
   result <- result |>
