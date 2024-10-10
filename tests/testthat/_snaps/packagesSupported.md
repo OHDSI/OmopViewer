@@ -1823,7 +1823,7 @@
         getFormattedDataSummariseLargeScaleCharacteristics <- shiny::reactive({
           data |>
             omopViewer::filterData("summarise_large_scale_characteristics", input) |>
-            omopViewer::visTable(
+            omopViewer::omopViewerTable(
               header = input$summarise_large_scale_characteristics_formatted_0_header,
               group = input$summarise_large_scale_characteristics_formatted_0_group,
               hide = input$summarise_large_scale_characteristics_formatted_0_hide

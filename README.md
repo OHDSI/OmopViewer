@@ -85,7 +85,7 @@ launchDynamicApp()
 
 - `tidyData` is an experimental version of the `tidy.summarised_result`
   method defined in **visOmopResults**.
-- `visTable` is an experimental version of the `visOmopTable` function
+- `omopViewerTable` is an experimental version of the `visOmopTable` function
   defined in **visOmopResults**.
 - `filterData` is a function used internally in the package to subset
   the result. It is not meant to be for user use. It is exported because
