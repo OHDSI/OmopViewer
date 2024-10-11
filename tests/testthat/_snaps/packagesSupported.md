@@ -469,6 +469,22 @@
                     selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_count_grouping_sex",
+                    label = "Sex",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_count_grouping_age_group",
+                    label = "Age group",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
                   )
                 ),
                 bslib::accordion_panel(
@@ -554,7 +570,7 @@
                         header = NULL,
                         sortable::add_rank_list(
                           text = c("none"),
-                          labels = c("cdm_name", "variable_name", "estimate_name"),
+                          labels = c("cdm_name", "sex", "age_group", "variable_name", "estimate_name"),
                           input_id = "summarise_cohort_count_formatted_5_none"
                         ),
                         sortable::add_rank_list(
@@ -606,7 +622,7 @@
                       shiny::selectizeInput(
                         inputId = "summarise_cohort_count_plot_5_facet",
                         label = "facet",
-                        choices = c("cdm_name", "cohort_name", "variable_name", "variable_level", "estimate_name"),
+                        choices = c("cdm_name", "cohort_name", "sex", "age_group", "variable_name", "variable_level", "estimate_name"),
                         selected = c("cdm_name"),
                         multiple = TRUE,
                         options = list(plugins = "remove_button")
@@ -614,7 +630,7 @@
                       shiny::selectizeInput(
                         inputId = "summarise_cohort_count_plot_5_colour",
                         label = "colour",
-                        choices = c("cdm_name", "cohort_name", "variable_name", "variable_level", "estimate_name"),
+                        choices = c("cdm_name", "cohort_name", "sex", "age_group", "variable_name", "variable_level", "estimate_name"),
                         selected = NULL,
                         multiple = TRUE,
                         options = list(plugins = "remove_button")
@@ -1121,22 +1137,6 @@
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
-                    inputId = "summarise_large_scale_characteristics_grouping_sex",
-                    label = "Sex",
-                    choices = NULL,
-                    selected = NULL,
-                    multiple = TRUE,
-                    options = list(plugins = "remove_button")
-                  ),
-                  shiny::selectizeInput(
-                    inputId = "summarise_large_scale_characteristics_grouping_age_group",
-                    label = "Age group",
-                    choices = NULL,
-                    selected = NULL,
-                    multiple = TRUE,
-                    options = list(plugins = "remove_button")
-                  ),
-                  shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_grouping_concept_id",
                     label = "Concept id",
                     choices = NULL,
@@ -1228,7 +1228,7 @@
                         header = NULL,
                         sortable::add_rank_list(
                           text = c("none"),
-                          labels = c("sex", "age_group", "concept_id", "variable_name", "variable_level", "estimate_name"),
+                          labels = c("concept_id", "variable_name", "variable_level", "estimate_name"),
                           input_id = "summarise_large_scale_characteristics_formatted_0_none"
                         ),
                         sortable::add_rank_list(
@@ -2340,6 +2340,22 @@
                     selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_count_grouping_sex",
+                    label = "Sex",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
+                  ),
+                  shiny::selectizeInput(
+                    inputId = "summarise_cohort_count_grouping_age_group",
+                    label = "Age group",
+                    choices = NULL,
+                    selected = NULL,
+                    multiple = TRUE,
+                    options = list(plugins = "remove_button")
                   )
                 ),
                 bslib::accordion_panel(
@@ -2425,7 +2441,7 @@
                         header = NULL,
                         sortable::add_rank_list(
                           text = c("none"),
-                          labels = c("cdm_name", "variable_name", "estimate_name"),
+                          labels = c("cdm_name", "sex", "age_group", "variable_name", "estimate_name"),
                           input_id = "summarise_cohort_count_formatted_5_none"
                         ),
                         sortable::add_rank_list(
@@ -2477,7 +2493,7 @@
                       shiny::selectizeInput(
                         inputId = "summarise_cohort_count_plot_5_facet",
                         label = "facet",
-                        choices = c("cdm_name", "cohort_name", "variable_name", "variable_level", "estimate_name"),
+                        choices = c("cdm_name", "cohort_name", "sex", "age_group", "variable_name", "variable_level", "estimate_name"),
                         selected = c("cdm_name"),
                         multiple = TRUE,
                         options = list(plugins = "remove_button")
@@ -2485,7 +2501,7 @@
                       shiny::selectizeInput(
                         inputId = "summarise_cohort_count_plot_5_colour",
                         label = "colour",
-                        choices = c("cdm_name", "cohort_name", "variable_name", "variable_level", "estimate_name"),
+                        choices = c("cdm_name", "cohort_name", "sex", "age_group", "variable_name", "variable_level", "estimate_name"),
                         selected = NULL,
                         multiple = TRUE,
                         options = list(plugins = "remove_button")
@@ -2992,22 +3008,6 @@
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
-                    inputId = "summarise_large_scale_characteristics_grouping_sex",
-                    label = "Sex",
-                    choices = NULL,
-                    selected = NULL,
-                    multiple = TRUE,
-                    options = list(plugins = "remove_button")
-                  ),
-                  shiny::selectizeInput(
-                    inputId = "summarise_large_scale_characteristics_grouping_age_group",
-                    label = "Age group",
-                    choices = NULL,
-                    selected = NULL,
-                    multiple = TRUE,
-                    options = list(plugins = "remove_button")
-                  ),
-                  shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_grouping_concept_id",
                     label = "Concept id",
                     choices = NULL,
@@ -3099,7 +3099,7 @@
                         header = NULL,
                         sortable::add_rank_list(
                           text = c("none"),
-                          labels = c("sex", "age_group", "concept_id", "variable_name", "variable_level", "estimate_name"),
+                          labels = c("concept_id", "variable_name", "variable_level", "estimate_name"),
                           input_id = "summarise_large_scale_characteristics_formatted_0_none"
                         ),
                         sortable::add_rank_list(
