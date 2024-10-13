@@ -61,7 +61,7 @@ resultVersions <- function(result) {
   x <- sets |>
     dplyr::group_by(.data$package_name, .data$package_version) |>
     dplyr::summarise(
-      result_ids = paste0(.data$result_id, collapse = "; "),
+      result_ids = glue::glue_collapse(.data$result_id, sep = ", ", last = " and "),
       .groups = "drop"
     ) |>
     dplyr::inner_join(
@@ -76,10 +76,19 @@ resultVersions <- function(result) {
     dplyr::mutate(message = paste0(
       dplyr::if_else(.data$n > 1, "x", "v"),
       "- **", .data$package_name, "** ", .data$package_version,
-      dplyr::if_else(.data$n > 1, paste0(": ", .data$result_ids), "")
+      " in result_id(s): ", .data$result_ids
     ))
 
-  c("### Package versions", x$message)
+  mes <- x$message
+  if (nrow(x) > 0) {
+    if (substr(mes[1], 1, 1) == "x") mes <- c("", "Inconsistent versions:", mes)
+    id <- which(substr(mes, 1, 1) == "v")[1]
+    if (!is.na(id)) {
+      mes <- subs(mes, mes[id], c("", "Consistent versions:", mes[id]))
+    }
+  }
+
+  c("### Package versions", mes)
 }
 resultSuppression <- function(result) {
   sets <- omopgenerics::settings(result)
@@ -118,6 +127,7 @@ createBody <- function(x) {
     }
     return(xx)
   }) |>
+    paste0(collapse = "\n") |>
     shiny::markdown()
 }
 

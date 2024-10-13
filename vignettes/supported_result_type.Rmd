@@ -39,7 +39,7 @@ omopViewer:::omopViewerPlots |>
 
 ## Note for developers
 
-There exist a default design for an "unconfigured" `result_type` if you wish to configure a new `result_type` this can be done editing the internal data: *omopViewerTabs*, *omopViewerPlots* and *omopViewerPlotArguments* in file [internalData.R](https://github.com/oxford-pharmacoepi/omopViewer/blob/main/data-raw/internalData.R). Please feel free to submit your PR.
+There exist a default design for an "unconfigured" `result_type` if you wish to configure a new `result_type` this can be done editing the internal data: *omopViewerTabs*, *omopViewerPlots* and *omopViewerPlotArguments* in file [internalData.R](https://github.com/OHDSI/omopViewer/blob/main/data-raw/internalData.R). Please feel free to submit your PR.
 
 <!-- :::{callout} -->
 <!-- ::: -->

@@ -10,7 +10,7 @@ launchDynamicApp <- function() {
 }
 
 createDynamicUi <- function(choices) {
-  logo <- "https://oxford-pharmacoepi.github.io/Oxinfer/images/hds_logo_noline.svg"
+  logo <- "https://OHDSI.github.io/Oxinfer/images/hds_logo_noline.svg"
   c(
     'bslib::page_navbar(',
     c(
