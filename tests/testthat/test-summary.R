@@ -31,5 +31,4 @@ test_that("test cardSummary", {
   expect_no_error(x <- cardSummary(res))
   expect_true(inherits(x, "bslib_fragment"))
   expect_snapshot(displayOutput(x))
-
 })

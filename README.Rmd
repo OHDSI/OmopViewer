@@ -16,10 +16,10 @@ knitr::opts_chunk$set(
 # omopViewer
 
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/oxford-pharmacoepi/omopViewer/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/oxford-pharmacoepi/omopViewer/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/OHDSI/omopViewer/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/OHDSI/omopViewer/actions/workflows/R-CMD-check.yaml)
 [![CRAN status](https://www.r-pkg.org/badges/version/omopViewer)](https://CRAN.R-project.org/package=omopViewer)
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![Codecov test coverage](https://codecov.io/gh/oxford-pharmacoepi/omopViewer/branch/main/graph/badge.svg)](https://app.codecov.io/gh/oxford-pharmacoepi/omopViewer?branch=main)
+[![Codecov test coverage](https://codecov.io/gh/OHDSI/omopViewer/branch/main/graph/badge.svg)](https://app.codecov.io/gh/OHDSI/omopViewer?branch=main)
 <!-- badges: end -->
 
 > [!IMPORTANT]
@@ -29,11 +29,11 @@ The goal of omopViewer is to allow the user to easily create Shiny Apps to visua
 
 ## Installation
 
-You can install the development version of omopViewer from [GitHub](https://github.com/oxford-pharmacoepi/omopViewer) with:
+You can install the development version of omopViewer from [GitHub](https://github.com/OHDSI/omopViewer) with:
 
 ``` {r, eval = FALSE}
 install.packages("pak")
-pak::pkg_install("oxford-pharmacoepi/omopViewer")
+pak::pkg_install("OHDSI/omopViewer")
 ```
 
 ## Main functionalities

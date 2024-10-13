@@ -1281,7 +1281,7 @@
             "This shiny app was generated with ",
             shiny::a(
               "omopViewer",
-              href = "https://github.com/oxford-pharmacoepi/omopViewer",
+              href = "https://github.com/OHDSI/omopViewer",
               target = "_blank"
             ),
             shiny::strong("v0.0.0.900")
@@ -3152,7 +3152,7 @@
             "This shiny app was generated with ",
             shiny::a(
               "omopViewer",
-              href = "https://github.com/oxford-pharmacoepi/omopViewer",
+              href = "https://github.com/OHDSI/omopViewer",
               target = "_blank"
             ),
             shiny::strong("v0.0.0.900")
@@ -3910,7 +3910,7 @@
             "This shiny app was generated with ",
             shiny::a(
               "omopViewer",
-              href = "https://github.com/oxford-pharmacoepi/omopViewer",
+              href = "https://github.com/OHDSI/omopViewer",
               target = "_blank"
             ),
             shiny::strong("v0.0.0.900")

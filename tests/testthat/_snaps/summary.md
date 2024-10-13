@@ -37,11 +37,13 @@
       <li>Results contain data from <strong>2</strong> different cdm objects: &quot;<em>mock</em>&quot; and &quot;<em>eunomia</em>&quot;.</li>
       </ul>
       <h3>Package versions</h3>
-      <p>Consistent versions:
-      Inconsistent versions:</p>
+      <p>Inconsistent versions:</p>
       <ul>
       <li><span style="color:red"> <strong>omopViewer</strong> 0.1.0 in result_id(s): 1</span></li>
       <li><span style="color:red"> <strong>omopViewer</strong> 0.2.0 in result_id(s): 2</span></li>
+      </ul>
+      <p>Consistent versions:</p>
+      <ul>
       <li><span style="color:green"> <strong>omopgenerics</strong> 1.0.0 in result_id(s): 3</span></li>
       </ul>
       <h3>Result suppression</h3>
