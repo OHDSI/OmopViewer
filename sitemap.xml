@@ -6,6 +6,7 @@
 <url><loc>https://ohdsi.github.io/OmopViewer/articles/supported_result_type.html</loc></url>
 <url><loc>https://ohdsi.github.io/OmopViewer/authors.html</loc></url>
 <url><loc>https://ohdsi.github.io/OmopViewer/index.html</loc></url>
+<url><loc>https://ohdsi.github.io/OmopViewer/reference/OmopViewer-package.html</loc></url>
 <url><loc>https://ohdsi.github.io/OmopViewer/reference/cardFromMd.html</loc></url>
 <url><loc>https://ohdsi.github.io/OmopViewer/reference/cardSummary.html</loc></url>
 <url><loc>https://ohdsi.github.io/OmopViewer/reference/correctSettings.html</loc></url>
@@ -14,7 +15,6 @@
 <url><loc>https://ohdsi.github.io/OmopViewer/reference/getChoices.html</loc></url>
 <url><loc>https://ohdsi.github.io/OmopViewer/reference/index.html</loc></url>
 <url><loc>https://ohdsi.github.io/OmopViewer/reference/launchDynamicApp.html</loc></url>
-<url><loc>https://ohdsi.github.io/OmopViewer/reference/omopViewer-package.html</loc></url>
 <url><loc>https://ohdsi.github.io/OmopViewer/reference/omopViewerTable.html</loc></url>
 <url><loc>https://ohdsi.github.io/OmopViewer/reference/reexports.html</loc></url>
 <url><loc>https://ohdsi.github.io/OmopViewer/reference/tidyData.html</loc></url>
