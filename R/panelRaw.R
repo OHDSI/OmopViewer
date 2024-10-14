@@ -19,7 +19,7 @@ downloadRawDataServer <- function(data) {
   output$download_raw <- shiny::downloadHandler(
     filename = "results.csv",
     content = function(file) {
-      omopViewer::exportSummarisedResult([data], fileName = file)
+      OmopViewer::exportSummarisedResult([data], fileName = file)
     }
   )' |>
     glue::glue(.open = "[", .close = "]") |>

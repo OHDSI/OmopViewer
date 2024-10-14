@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/articles/special-files.html
 
 library(testthat)
-library(omopViewer)
+library(OmopViewer)
 
-test_check("omopViewer")
+test_check("OmopViewer")

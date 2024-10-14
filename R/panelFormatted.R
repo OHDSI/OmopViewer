@@ -211,7 +211,7 @@ formattedServer <- function(rt, data) {
       c(
       'getFormattedData[formatCamel(rt)] <- shiny::reactive({
         [data] |>
-          omopViewer::filterData("[rt]", input) |>
+          OmopViewer::filterData("[rt]", input) |>
           [fun](
             [args]
           )

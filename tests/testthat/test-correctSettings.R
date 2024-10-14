@@ -34,7 +34,7 @@ test_that("correctSettings columns", {
     omopgenerics::newSummarisedResult(settings = dplyr::tibble(
       result_id = 1L,
       result_type = "toy_data",
-      package_name = "omopViewer",
+      package_name = "OmopViewer",
       package_version = "0.1.0"
     ))
   expect_no_error(xCorrected <- correctSettings(x))
@@ -73,7 +73,7 @@ test_that("correctSettings columns", {
     omopgenerics::newSummarisedResult(settings = dplyr::tibble(
       result_id = c(1L, 2L),
       result_type = "toy_data",
-      package_name = "omopViewer",
+      package_name = "OmopViewer",
       package_version = "0.1.0"
     ))
   expect_no_error(xCorrected <- correctSettings(x))
@@ -98,7 +98,7 @@ test_that("correctSettings columns", {
     omopgenerics::newSummarisedResult(settings = dplyr::tibble(
       result_id = c(1L, 2L, 3L),
       result_type = "toy_data",
-      package_name = "omopViewer",
+      package_name = "OmopViewer",
       package_version = "0.1.0"
     ))
   expect_no_error(xCorrected <- correctSettings(x))
@@ -127,7 +127,7 @@ test_that("correctSettings columns", {
     omopgenerics::newSummarisedResult(settings = dplyr::tibble(
       result_id = c(1L, 2L, 3L),
       result_type = "toy_data",
-      package_name = "omopViewer",
+      package_name = "OmopViewer",
       package_version = "0.1.0",
       strata = "test"
     ))

@@ -1,5 +1,5 @@
 ---
-title: "Plot tabs in omopViewer"
+title: "Plot tabs in OmopViewer"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{supported_result_type}
@@ -14,10 +14,10 @@ knitr::opts_chunk$set(
 )
 ```
 
-The **omopViewer** package supports `r omopViewer:::omopViewerTabs$result_type |> unique() |> length()` different result types of the following packages:
+The **OmopViewer** package supports `r OmopViewer:::omopViewerTabs$result_type |> unique() |> length()` different result types of the following packages:
 
 ```{r, results='asis', echo=FALSE}
-pkgs <- omopViewer:::omopViewerTabs$package |> unique() |> sort()
+pkgs <- OmopViewer:::omopViewerTabs$package |> unique() |> sort()
 for (k in seq_along(pkgs)) {
   cat(paste0("* ", pkgs[k], "\n"))
 }
@@ -26,9 +26,9 @@ for (k in seq_along(pkgs)) {
 You can see the plot functions that have been configured in the package per result type in the following table:
 
 ```{r, echo = FALSE}
-omopViewer:::omopViewerPlots |>
+OmopViewer:::omopViewerPlots |>
   dplyr::inner_join(
-    omopViewer:::omopViewerTabs, by = "result_tab_id"
+    OmopViewer:::omopViewerTabs, by = "result_tab_id"
   ) |>
   dplyr::select(
     "Result type" = "result_type", "package", "Plot function" = "fun") |>

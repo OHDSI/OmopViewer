@@ -14,7 +14,7 @@ createDynamicUi <- function(choices) {
   c(
     'bslib::page_navbar(',
     c(
-      pageTitle("omopViewer App", logo),
+      pageTitle("OmopViewer App", logo),
       loadDataUi(),
       createUi(choices),
       'bslib::nav_spacer()',
@@ -174,13 +174,13 @@ messageProcessFiles <- function(x) {
 }
 mergeData <- function(newData, originalData) {
   if (is.null(newData)) return(originalData)
-  id0 <- getOption("omopViewer.number_ids", 0L)
+  id0 <- getOption("OmopViewer.number_ids", 0L)
   newData <- newData |>
     dplyr::mutate(
       id = .env$id0 + dplyr::row_number(),
       upload_datetime = Sys.time() |> format("%Y-%m-%d %H:%M:%S")
     )
-  options("omopViewer.number_ids" = id0 + nrow(newData))
+  options("OmopViewer.number_ids" = id0 + nrow(newData))
   if (is.null(originalData)) {
     return(newData)
   } else {
