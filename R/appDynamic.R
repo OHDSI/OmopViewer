@@ -1,5 +1,5 @@
 
-#' Launch a dynamic shiny app wher you can upload results.
+#' Launch a dynamic shiny app where you can upload results.
 #'
 #' @return Launches the shiny app.
 #' @export

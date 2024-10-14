@@ -21,7 +21,7 @@ library(omopViewer)
 
 ## General markdown behaviour
 
-The markdown part is compiled using the function `markdown::markdownToHTML()`, so anything suported by this function can be included in the markdown part. Most commonly used markdown functionalities are:
+The markdown part is compiled using the function `markdown::markdownToHTML()`, so anything supported by this function can be included in the markdown part. Most commonly used markdown functionalities are:
 
 - `#` for titles
 - `##` for subtitles
@@ -87,7 +87,7 @@ BODY CONTENT
 
 The `yaml` metadata can contain two types of information:
 
-- keywords to add elemets to the card.
+- keywords to add elements to the card.
 - arguments of the `bslib::card` function.
 
 ### Keywords
