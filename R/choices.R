@@ -60,7 +60,7 @@ getChoices <- function(result, flatten = FALSE) {
       tidyCols
     )
   } else {
-    choices <- names(variables) |>
+    choices <- unique(c(names(settings), names(grouping), names(variables))) |>
       purrr::set_names() |>
       purrr::map(\(x) list(
         settings = settings[[x]],
