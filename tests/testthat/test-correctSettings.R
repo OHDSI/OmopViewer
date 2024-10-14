@@ -2,7 +2,17 @@ test_that("correctSettings columns", {
 
   # empty summarised_result
   expect_identical(
-    emptySummarisedResult(), emptySummarisedResult() |> correctSettings()
+    emptySummarisedResult(settings = dplyr::tibble(
+      result_id = integer(),
+      result_type = character(),
+      package_name = character(),
+      package_version = character(),
+      group = character(),
+      strata = character(),
+      additional = character()
+    )),
+    emptySummarisedResult() |>
+      correctSettings()
   )
 
   # simple example

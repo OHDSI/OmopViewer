@@ -11,8 +11,6 @@ correctSettings <- function(result) {
   # check input
   result <- omopgenerics::validateResultArgument(result)
 
-  if (nrow(result) == 0) return(result)
-
   set <- omopgenerics::settings(result)
 
   cols <- c("group", "strata", "additional")
