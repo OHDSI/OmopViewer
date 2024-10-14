@@ -24,7 +24,7 @@ test_that("test cardSummary", {
     omopgenerics::newSummarisedResult(settings = dplyr::tibble(
       result_id = c(1L, 2L, 3L),
       result_type = c("counts", "counts", "sums"),
-      package_name = c("omopViewer", "omopViewer", "omopgenerics"),
+      package_name = c("OmopViewer", "OmopViewer", "omopgenerics"),
       package_version = c("0.1.0", "0.2.0", "1.0.0"),
       min_cell_count = c(NA, 1, 5)
     ))

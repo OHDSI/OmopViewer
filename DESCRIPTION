@@ -1,4 +1,4 @@
-Package: omopViewer
+Package: OmopViewer
 Type: Package
 Title: Visualise OMOP Results in a Shiny App 
 Version: 0.0.0.900

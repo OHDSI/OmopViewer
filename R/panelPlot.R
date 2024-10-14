@@ -108,7 +108,7 @@ plotsServer <- function(rt, data) {
   plotServer <- purrr::map_chr(plots, \(id) {
     c('createPlot[id] <- shiny::reactive({
         result <- [data] |>
-          omopViewer::filterData("[rt]", input)
+          OmopViewer::filterData("[rt]", input)
         [createPlotFunction(id)]
       })',
       'output$[rt]_plot_[id] <- [renderPlotFunction(id)]({

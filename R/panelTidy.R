@@ -30,8 +30,8 @@ tidyUi <- function(tab) {
 tidyServer <- function(rt, data) {
   c(paste0('getTidyData', formatCamel(rt), ' <- shiny::reactive({
       res <- ', data, ' |>
-        omopViewer::filterData("', rt, '", input) |>
-        omopViewer::tidyData()
+        OmopViewer::filterData("', rt, '", input) |>
+        OmopViewer::tidyData()
 
       # columns to eliminate
       colsEliminate <- colnames(res)

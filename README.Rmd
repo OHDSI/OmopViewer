@@ -13,33 +13,33 @@ knitr::opts_chunk$set(
 )
 ```
 
-# omopViewer
+# OmopViewer
 
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/OHDSI/omopViewer/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/OHDSI/omopViewer/actions/workflows/R-CMD-check.yaml)
-[![CRAN status](https://www.r-pkg.org/badges/version/omopViewer)](https://CRAN.R-project.org/package=omopViewer)
+[![R-CMD-check](https://github.com/OHDSI/OmopViewer/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/OHDSI/OmopViewer/actions/workflows/R-CMD-check.yaml)
+[![CRAN status](https://www.r-pkg.org/badges/version/OmopViewer)](https://CRAN.R-project.org/package=OmopViewer)
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![Codecov test coverage](https://codecov.io/gh/OHDSI/omopViewer/branch/main/graph/badge.svg)](https://app.codecov.io/gh/OHDSI/omopViewer?branch=main)
+[![Codecov test coverage](https://codecov.io/gh/OHDSI/OmopViewer/branch/main/graph/badge.svg)](https://app.codecov.io/gh/OHDSI/OmopViewer?branch=main)
 <!-- badges: end -->
 
 > [!IMPORTANT]
 > This package is under construction and this is just a first Beta release, please use it carefully and report any issue that you encounter using it.
 
-The goal of omopViewer is to allow the user to easily create Shiny Apps to visualise study results in `<summarised_result>` format.
+The goal of OmopViewer is to allow the user to easily create Shiny Apps to visualise study results in `<summarised_result>` format.
 
 ## Installation
 
-You can install the development version of omopViewer from [GitHub](https://github.com/OHDSI/omopViewer) with:
+You can install the development version of OmopViewer from [GitHub](https://github.com/OHDSI/OmopViewer) with:
 
 ``` {r, eval = FALSE}
 install.packages("pak")
-pak::pkg_install("OHDSI/omopViewer")
+pak::pkg_install("OHDSI/OmopViewer")
 ```
 
 ## Main functionalities
 
 ```{r}
-library(omopViewer)
+library(OmopViewer)
 ```
 
 The package can be divided in 3 main functionalities:

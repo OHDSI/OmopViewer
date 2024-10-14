@@ -11,7 +11,7 @@ test_that("test getChoices", {
   res <- emptySummarisedResult(settings = dplyr::tibble(
     result_id = c(1L, 2L),
     result_type = resT,
-    package_name = "omopViewer",
+    package_name = "OmopViewer",
     package_version = "1.0.0",
     param = c(TRUE, NA),
     x = c(0, 1)
@@ -50,7 +50,7 @@ test_that("test getChoices", {
     settings = dplyr::tibble(
       result_id = c(1L, 2L),
       result_type = resT,
-      package_name = "omopViewer",
+      package_name = "OmopViewer",
       package_version = "1.0.0",
       param = c(TRUE, NA),
       x = c(0, 1)

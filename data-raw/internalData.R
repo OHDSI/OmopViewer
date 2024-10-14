@@ -45,7 +45,7 @@ omopViewerPlotArguments <- dplyr::tribble(
 
 omopViewerTables <- dplyr::tribble(
   ~table_id, ~result_tab_id, ~title, ~fun, ~output,
-  0L, 0L, "Formatted", "omopViewer::omopViewerTable", "gt",
+  0L, 0L, "Formatted", "OmopViewer::omopViewerTable", "gt",
   1L, 1L, "Table cohort overlap", "tableCohortOverlap", "gt",
   2L, 2L, "Table cohort attrition", "tableCohortAttrition", "gt",
   3L, 3L, "Table cohort timing", "tableCohortTiming", "gt",
@@ -127,8 +127,8 @@ omopViewerProj <- c(
 )
 
 omopViewerGlobal <- c(
-  "data <- omopViewer::importSummarisedResult(here::here(\"data\")) |>",
-  "omopViewer::correctSettings()"
+  "data <- OmopViewer::importSummarisedResult(here::here(\"data\")) |>",
+  "OmopViewer::correctSettings()"
 ) |>
   styleCode()
 
