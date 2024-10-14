@@ -46,12 +46,22 @@ resultOverview <- function(result){
 
   # present result_types
   resultTypes <- unique(sets$result_type)
-  s2 <- "- Results contain **{num(length(resultTypes))}** different result types: `{glue::glue_collapse(resultTypes, sep = '`, `', last = '` and `')}`." |>
+  rTypes <- ifelse(
+    length(resultTypes) == 0,
+    ".",
+    glue::glue(": `{glue::glue_collapse(resultTypes, sep = '`, `', last = '` and `')}`.")
+  )
+  s2 <- "- Results contain **{num(length(resultTypes))}** different result types{rTypes}" |>
     glue::glue()
 
   # present cdm names
   cdmNames <- unique(result$cdm_name)
-  s3 <- "- Results contain data from **{num(length(cdmNames))}** different cdm objects: \"*{glue::glue_collapse(cdmNames, sep = '*\", \"*', last = '*\" and \"*')}*\"." |>
+  cNames <- ifelse(
+    length(cdmNames) == 0,
+    ".",
+    glue::glue(": \"*{glue::glue_collapse(cdmNames, sep = '*\", \"*', last = '*\" and \"*')}*\".")
+  )
+  s3 <- "- Results contain data from **{num(length(cdmNames))}** different cdm objects{cNames}" |>
     glue::glue()
 
   c("### Result overview", s1, s2, s3)

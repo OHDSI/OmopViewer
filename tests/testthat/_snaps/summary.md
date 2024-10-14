@@ -9,8 +9,8 @@
           <h3>Result overview</h3>
       <ul>
       <li>Results contain <strong>0</strong> rows with <strong>0</strong> different result_ids.</li>
-      <li>Results contain <strong>0</strong> different result types: ``.</li>
-      <li>Results contain data from <strong>0</strong> different cdm objects: &quot;**&quot;.</li>
+      <li>Results contain <strong>0</strong> different result types.</li>
+      <li>Results contain data from <strong>0</strong> different cdm objects.</li>
       </ul>
       <h3>Package versions</h3>
       <h3>Result suppression</h3>
