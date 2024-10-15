@@ -1,5 +1,5 @@
 ---
-title: "Plot tabs in OmopViewer"
+title: "Plot and tables in OmopViewer"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{supported_result_type}
@@ -14,32 +14,28 @@ knitr::opts_chunk$set(
 )
 ```
 
-The **OmopViewer** package supports `r OmopViewer:::omopViewerTabs$result_type |> unique() |> length()` different result types of the following packages:
-
-```{r, results='asis', echo=FALSE}
-pkgs <- OmopViewer:::omopViewerTabs$package |> unique() |> sort()
-for (k in seq_along(pkgs)) {
-  cat(paste0("* ", pkgs[k], "\n"))
-}
-```
-
-You can see the plot functions that have been configured in the package per result type in the following table:
+The **OmopViewer** package will display by default the 'tidy' tab that will allow the user to explore the data. With the tidy tab there will be displayed different output tabs. By default a table created with `OmopViewer::omopViewerTable()` will be displayed, but some packages have some extra output tabs configured. In the following table you can see the `result_type` that are configured and which are the visualisations.
 
 ```{r, echo = FALSE}
-OmopViewer:::omopViewerPlots |>
+OmopViewer:::omopViewerOutput |>
   dplyr::inner_join(
     OmopViewer:::omopViewerTabs, by = "result_tab_id"
   ) |>
+  tidyr::separate_wider_delim(
+    cols = "output_function", 
+    delim = "::", 
+    names = c("package", "output_function")
+  ) |>
   dplyr::select(
-    "Result type" = "result_type", "package", "Plot function" = "fun") |>
-  visOmopResults::gtTable(
-    groupColumn = "package", colsToMergeRows = "Result type")
-  
+    "package", "Result type" = "result_type", "Function" = "output_function", 
+    "Output type" = "output_type") |>
+  visOmopResults::formatTable(
+    groupColumn = "package", merge = "Result type")
 ```
 
 ## Note for developers
 
-There exist a default design for an "unconfigured" `result_type` if you wish to configure a new `result_type` this can be done editing the internal data: *omopViewerTabs*, *omopViewerPlots* and *omopViewerPlotArguments* in file [internalData.R](https://github.com/OHDSI/omopViewer/blob/main/data-raw/internalData.R). Please feel free to submit your PR.
+If you wish to configure a new `result_type` this can be done editing the internal data: *omopViewerTabs*, *omopViewerOutput* and *omopViewerOutputArguments* in file [internalData.R](https://github.com/OHDSI/omopViewer/blob/main/data-raw/internalData.R). Please feel free to submit your PR.
 
 <!-- :::{callout} -->
 <!-- ::: -->
