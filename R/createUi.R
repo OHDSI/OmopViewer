@@ -56,8 +56,7 @@ panelSidebar <- function(tab, choic) {
   sidebar <- createSidebar(tab, choic)
   panels <- c(
     tidyUi(tab),
-    formattedUi(tab, choic),
-    plotsUi(tab, choic)
+    outputUi(tab, choic)
   ) |>
     paste0(collapse = ",\n")
   "bslib::layout_sidebar(

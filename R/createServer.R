@@ -7,10 +7,8 @@ createServer <- function(resultTypes, data) {
       c(glue::glue("# {x} -----"),
         glue::glue("## tidy {x} -----"),
         tidyServer(x, data),
-        glue::glue("## formatted {x} -----"),
-        formattedServer(x, data),
-        glue::glue("## plot {x} -----"),
-        plotsServer(x, data),
+        glue::glue("## output {x} -----"),
+        outputServer(x, data),
         "\n"
       ) |>
         paste0(collapse = "\n")
