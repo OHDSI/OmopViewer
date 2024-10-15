@@ -17,7 +17,11 @@ omopViewerTabs <- dplyr::tribble(
   9L, "code_use", "Code use", "chart-column", "",
   10L, "achilles_code_use", "Achilles code use", "chart-column", "",
   11L, "summarise_observation_period", "Observation period", "eye", "",
-  12L, "summarise_omop_snapshot", "Snapshot", "clipboard-list", ""
+  12L, "summarise_omop_snapshot", "Snapshot", "clipboard-list", "",
+  13L, "incidence", "Incidence", "chart-line", "",
+  14L, "incidence_attrition", "Incidence attrition", "layer-group", "",
+  15L, "prevalence", "Prevalence", "chart-line", "",
+  16L, "prevalence_attrition", "Prevalence attrition", "layer-group", ""
 )
 
 omopViewerOutput <- dplyr::tribble(
@@ -51,7 +55,17 @@ omopViewerOutput <- dplyr::tribble(
   15L, 11L, "Table observation period", "OmopSketch::tableObservationPeriod", "gt",
   16L, 11L, "Plot observation period", "OmopSketch::plotObservationPeriod", "ggplot2",
   # summarise_omop_snapshot
-  17L, 12L, "Snapshot table", "OmopSketch::tableOmopSnapshot", "gt"
+  17L, 12L, "Snapshot table", "OmopSketch::tableOmopSnapshot", "gt",
+  # incidence
+  18L, 13L, "Table incidence", "IncidencePrevalence::tableIncidence", "gt",
+  19L, 13L, "Plot incidence", "IncidencePrevalence::plotIncidence", "ggplot2",
+  # incidence attrition
+  22L, 14L, "Table incidence attrition", "IncidencePrevalence::tableIncidenceAttrition", "gt",
+  # prevalence
+  20L, 15L, "Table prevalence", "IncidencePrevalence::tablePrevalence", "gt",
+  21L, 15L, "Plot prevalence", "IncidencePrevalence::plotPrevalence", "ggplot2",
+  # prevalence attrition
+  23L, 16L, "Table prevalence attrition", "IncidencePrevalence::tablePrevalenceAttrition", "gt"
 )
 
 omopViewerOutputArguments <- dplyr::tribble(
@@ -160,8 +174,50 @@ omopViewerOutputArguments <- dplyr::tribble(
   16L, "plotType", "options", "barplot, boxplot, densityplot",
   16L, "facet", "type", "selector",
   16L, "facet", "options", "<grouping>",
-  16L, "facet", "multiple", "TRUE"
+  16L, "facet", "multiple", "TRUE",
   # OmopSketch::tableOmopSnapshot
+  # IncidencePrevalence::tableIncidence
+  18L, "header", "type", "rank",
+  18L, "groupColumn", "type", "rank",
+  18L, "hide", "type", "rank",
+  18L, NA, "rank_options", "<grouping>, <settings>, <variable>",
+  # IncidencePrevalence::plotIncidence
+  19L, "x", "type", "selector",
+  19L, "x", "options", "<grouping>, <settings>, <variable>",
+  19L, "x", "multiple", "FALSE",
+  19L, "ribbon", "type", "check",
+  19L, "facet", "type", "selector",
+  19L, "facet", "options", "<grouping>, <settings>, <variable>",
+  19L, "facet", "multiple", "TRUE",
+  19L, "colour", "type", "selector",
+  19L, "colour", "options", "<grouping>, <settings>, <variable>",
+  19L, "colour", "multiple", "TRUE",
+  # IncidencePrevalence::tablePrevalence
+  20L, "header", "type", "rank",
+  20L, "groupColumn", "type", "rank",
+  20L, "hide", "type", "rank",
+  20L, NA, "rank_options", "<grouping>, <settings>, <variable>",
+  # IncidencePrevalence::plotIncidence
+  21L, "x", "type", "selector",
+  21L, "x", "options", "<grouping>, <settings>, <variable>",
+  21L, "x", "multiple", "FALSE",
+  21L, "ribbon", "type", "check",
+  21L, "facet", "type", "selector",
+  21L, "facet", "options", "<grouping>, <settings>, <variable>",
+  21L, "facet", "multiple", "TRUE",
+  21L, "colour", "type", "selector",
+  21L, "colour", "options", "<grouping>, <settings>, <variable>",
+  21L, "colour", "multiple", "TRUE",
+  # IncidencePrevalence::tableIncidenceAttrition
+  22L, "header", "type", "rank",
+  22L, "groupColumn", "type", "rank",
+  22L, "hide", "type", "rank",
+  22L, NA, "rank_options", "<grouping>, <settings>, <variable>",
+  # IncidencePrevalence::tablePrevalenceAttrition
+  23L, "header", "type", "rank",
+  23L, "groupColumn", "type", "rank",
+  23L, "hide", "type", "rank",
+  23L, NA, "rank_options", "<grouping>, <settings>, <variable>"
 )
 
 omopViewerProj <- c(
