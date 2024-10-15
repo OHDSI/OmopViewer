@@ -1,3 +1,66 @@
+test_that("IncidencePrevalence shiny", {
+  cdm <- omock::mockPerson(nPerson = 100) |>
+    omock::mockObservationPeriod() |>
+    omock::mockCohort(recordPerson = 0.5)
+
+  con <- duckdb::dbConnect(duckdb::duckdb())
+  cdm <- CDMConnector::copyCdmTo(con = con, cdm = cdm, schema = "main")
+
+  ageGroup <- list(c(0, 19), c(20, 39), c(40, 59), c(60, 79), c(80, 150))
+
+  cdm <- IncidencePrevalence::generateDenominatorCohortSet(
+    cdm = cdm, name = "denominator", ageGroup = ageGroup,
+    sex = c("Male", "Female", "Both")
+  )
+
+  # mock results
+  result <- omopgenerics::bind(
+    IncidencePrevalence::estimateIncidence(
+      cdm = cdm, denominatorTable = "denominator", outcomeTable = "cohort",
+      outcomeWashout = c(0, 365, Inf)
+    ),
+    IncidencePrevalence::estimatePeriodPrevalence(
+      cdm = cdm, denominatorTable = "denominator", outcomeTable = "cohort"
+    ),
+    IncidencePrevalence::estimatePointPrevalence(
+      cdm = cdm, denominatorTable = "denominator", outcomeTable = "cohort"
+    )
+  )
+
+  # generate shiny
+  tdir <- tempdir()
+  expect_no_error(exportStaticApp(result = result, directory = tdir, summary = TRUE))
+  expect_true("shiny" %in% list.files(tdir))
+
+  # test ui snapshot
+  ui <- readLines(file.path(tdir, "shiny", "ui.R"))
+  expect_snapshot(cat(ui, sep = "\n"))
+
+  # test server snapshot
+  server <- readLines(file.path(tdir, "shiny", "server.R"))
+  expect_snapshot(cat(server, sep = "\n"))
+
+  # test global snapshot
+  global <- readLines(file.path(tdir, "shiny", "global.R"))
+  expect_snapshot(cat(global, sep = "\n"))
+
+  # delete created shiny
+  unlink(file.path(tdir, "shiny"), recursive = TRUE)
+
+  # test summary = FALSE
+  expect_no_error(exportStaticApp(result = result, directory = tdir, summary = FALSE))
+  expect_true("shiny" %in% list.files(tdir))
+
+  # test ui snapshot
+  ui <- readLines(file.path(tdir, "shiny", "ui.R"))
+  expect_snapshot(cat(ui, sep = "\n"))
+
+  # delete created shiny
+  unlink(file.path(tdir, "shiny"), recursive = TRUE)
+
+  PatientProfiles::mockDisconnect(cdm)
+})
+
 test_that("CohortCharacteristics shiny", {
   # create mock cdm
   set.seed(123456)

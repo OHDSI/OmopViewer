@@ -15,7 +15,11 @@ omopViewerTabs <- dplyr::tribble(
   7L, "orphan_code_use", "Orphan codes", "magnifying-glass-arrow-right", "",
   8L, "cohort_code_use", "Cohort code use", "chart-column", "",
   9L, "code_use", "Code use", "chart-column", "",
-  10L, "achilles_code_use", "Achilles code use", "chart-column", ""
+  10L, "achilles_code_use", "Achilles code use", "chart-column", "",
+  13L, "incidence", "Incidence", "chart-line", "",
+  14L, "incidence_attrition", "Incidence attrition", "layer-group", "",
+  15L, "prevalence", "Prevalence", "chart-line", "",
+  16L, "prevalence_attrition", "Prevalence attrition", "layer-group", ""
 )
 
 omopViewerOutput <- dplyr::tribble(
@@ -44,7 +48,10 @@ omopViewerOutput <- dplyr::tribble(
   # code use
   13L, 9L, "Table code use", "CodelistGenerator::tableCodeUse", "gt",
   # achilles code us
-  14L, 10L, "Table achilles code use", "CodelistGenerator::tableAchillesCodeUse", "gt"
+  14L, 10L, "Table achilles code use", "CodelistGenerator::tableAchillesCodeUse", "gt",
+  # incidence
+  18L, 13L, "Table incidence", "IncidencePrevalence::tableIncidence", "gt",
+  19L, 13L, "Plot incidence", "IncidencePrevalence::plotIncidence", "ggplot2"
 )
 
 omopViewerOutputArguments <- dplyr::tribble(
@@ -144,7 +151,14 @@ omopViewerOutputArguments <- dplyr::tribble(
   14L, "header", "type", "rank",
   14L, "groupColumn", "type", "rank",
   14L, "hide", "type", "rank",
-  14L, NA, "rank_options", "<grouping>, <variable>"
+  14L, NA, "rank_options", "<grouping>, <variable>",
+  # IncidencePrevalence::tableIncidence
+  18L, "header", "type", "rank",
+  18L, "groupColumn", "type", "rank",
+  18L, "hide", "type", "rank",
+  18L, NA, "rank_options", "<grouping>, <variable>",
+  # IncidencePrevalence::plotIncidence
+  19L, "ribbon", "type", "check"
 )
 
 omopViewerProj <- c(
