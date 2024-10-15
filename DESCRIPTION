@@ -52,6 +52,7 @@ Suggests:
     htmlwidgets,
     knitr,
     omock (>= 0.3.0),
+    OmopSketch,
     PatientProfiles,
     plotly,
     rmarkdown,
