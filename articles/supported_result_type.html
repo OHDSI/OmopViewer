@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Plot tabs in OmopViewer • OmopViewer</title>
+<title>Plot and tables in OmopViewer • OmopViewer</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Plot tabs in OmopViewer">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Plot and tables in OmopViewer">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -34,7 +34,7 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="../articles/background.html">Edit the background panel of your shiny using `background.md`</a></li>
-    <li><a class="dropdown-item" href="../articles/supported_result_type.html">Plot tabs in OmopViewer</a></li>
+    <li><a class="dropdown-item" href="../articles/supported_result_type.html">Plot and tables in OmopViewer</a></li>
   </ul>
 </li>
       </ul>
@@ -55,7 +55,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>Plot tabs in OmopViewer</h1>
+      <h1>Plot and tables in OmopViewer</h1>
             
       
 
@@ -64,19 +64,13 @@
 
     
     
-<p>The <strong>OmopViewer</strong> package supports 10 different result
-types of the following packages:</p>
-<ul>
-<li>CodelistGenerator</li>
-<li>CohortCharacteristics</li>
-</ul>
-<p>You can see the plot functions that have been configured in the
-package per result type in the following table:</p>
-<pre><code><span><span class="co">#&gt; Warning: `gtTable()` was deprecated in visOmopResults 0.4.0.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please use `formatTable()` instead.</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span></code></pre>
+<p>The <strong>OmopViewer</strong> package will display by default the
+‘tidy’ tab that will allow the user to explore the data. With the tidy
+tab there will be displayed different output tabs. By default a table
+created with <code><a href="../reference/omopViewerTable.html">OmopViewer::omopViewerTable()</a></code> will be
+displayed, but some packages have some extra output tabs configured. In
+the following table you can see the <code>result_type</code> that are
+configured and which are the visualisations.</p>
 <div id="mwlefoodfi" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>#mwlefoodfi table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
@@ -529,31 +523,85 @@ package per result type in the following table:</p>
 <table class="table gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
 <thead><tr class="gt_col_headings">
 <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="text-align: center; font-weight: bold;" scope="col" id="Result-type">Result type</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="text-align: center; font-weight: bold;" scope="col" id="Plot-function">Plot function</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="text-align: center; font-weight: bold;" scope="col" id="Function">Function</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="text-align: center; font-weight: bold;" scope="col" id="Output-type">Output type</th>
     </tr></thead>
 <tbody class="gt_table_body">
 <tr class="gt_group_heading_row">
-<th colspan="2" class="gt_group_heading" style="background-color: #E9E9E9; font-weight: bold;" scope="colgroup" id="CohortCharacteristics">CohortCharacteristics</th>
+<th colspan="3" class="gt_group_heading" style="background-color: #E9E9E9; font-weight: bold;" scope="colgroup" id="CohortCharacteristics">CohortCharacteristics</th>
     </tr>
 <tr class="gt_row_group_first">
 <td headers="CohortCharacteristics  Result type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">summarise_cohort_overlap</td>
-<td headers="CohortCharacteristics  Plot function" class="gt_row gt_left" style="text-align: left;">plotCohortOverlap</td>
+<td headers="CohortCharacteristics  Function" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">tableCohortOverlap</td>
+<td headers="CohortCharacteristics  Output type" class="gt_row gt_left" style="text-align: left;">gt</td>
+</tr>
+<tr>
+<td headers="CohortCharacteristics  Result type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: hidden; border-top-color: #000000; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"></td>
+<td headers="CohortCharacteristics  Function" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">plotCohortOverlap</td>
+<td headers="CohortCharacteristics  Output type" class="gt_row gt_left" style="text-align: left;">ggplot2</td>
 </tr>
 <tr>
 <td headers="CohortCharacteristics  Result type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">summarise_cohort_attrition</td>
-<td headers="CohortCharacteristics  Plot function" class="gt_row gt_left" style="text-align: left;">plotCohortAttrition</td>
+<td headers="CohortCharacteristics  Function" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">tableCohortAttrition</td>
+<td headers="CohortCharacteristics  Output type" class="gt_row gt_left" style="text-align: left;">gt</td>
+</tr>
+<tr>
+<td headers="CohortCharacteristics  Result type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: hidden; border-top-color: #000000; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"></td>
+<td headers="CohortCharacteristics  Function" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">plotCohortAttrition</td>
+<td headers="CohortCharacteristics  Output type" class="gt_row gt_left" style="text-align: left;">grViz</td>
 </tr>
 <tr>
 <td headers="CohortCharacteristics  Result type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">summarise_cohort_timing</td>
-<td headers="CohortCharacteristics  Plot function" class="gt_row gt_left" style="text-align: left;">plotCohortTiming</td>
+<td headers="CohortCharacteristics  Function" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">tableCohortTiming</td>
+<td headers="CohortCharacteristics  Output type" class="gt_row gt_left" style="text-align: left;">gt</td>
+</tr>
+<tr>
+<td headers="CohortCharacteristics  Result type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: hidden; border-top-color: #000000; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"></td>
+<td headers="CohortCharacteristics  Function" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">plotCohortTiming</td>
+<td headers="CohortCharacteristics  Output type" class="gt_row gt_left" style="text-align: left;">ggplot2</td>
 </tr>
 <tr>
 <td headers="CohortCharacteristics  Result type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">summarise_characteristics</td>
-<td headers="CohortCharacteristics  Plot function" class="gt_row gt_left" style="text-align: left;">plotCharacteristics</td>
+<td headers="CohortCharacteristics  Function" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">tableCharacteristics</td>
+<td headers="CohortCharacteristics  Output type" class="gt_row gt_left" style="text-align: left;">gt</td>
+</tr>
+<tr>
+<td headers="CohortCharacteristics  Result type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: hidden; border-top-color: #000000; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"></td>
+<td headers="CohortCharacteristics  Function" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">plotCharacteristics</td>
+<td headers="CohortCharacteristics  Output type" class="gt_row gt_left" style="text-align: left;">ggplot2</td>
 </tr>
 <tr>
 <td headers="CohortCharacteristics  Result type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">summarise_cohort_count</td>
-<td headers="CohortCharacteristics  Plot function" class="gt_row gt_left" style="text-align: left;">plotCohortCount</td>
+<td headers="CohortCharacteristics  Function" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">tableCohortCount</td>
+<td headers="CohortCharacteristics  Output type" class="gt_row gt_left" style="text-align: left;">gt</td>
+</tr>
+<tr>
+<td headers="CohortCharacteristics  Result type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: hidden; border-top-color: #000000; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"></td>
+<td headers="CohortCharacteristics  Function" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">plotCohortCount</td>
+<td headers="CohortCharacteristics  Output type" class="gt_row gt_left" style="text-align: left;">ggplot2</td>
+</tr>
+<tr class="gt_group_heading_row">
+<th colspan="3" class="gt_group_heading" style="background-color: #E9E9E9; font-weight: bold;" scope="colgroup" id="CodelistGenerator">CodelistGenerator</th>
+    </tr>
+<tr class="gt_row_group_first">
+<td headers="CodelistGenerator  Result type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">orphan_code_use</td>
+<td headers="CodelistGenerator  Function" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">tableOrphanCodes</td>
+<td headers="CodelistGenerator  Output type" class="gt_row gt_left" style="text-align: left;">gt</td>
+</tr>
+<tr>
+<td headers="CodelistGenerator  Result type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">cohort_code_use</td>
+<td headers="CodelistGenerator  Function" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">tableCohortCodeUse</td>
+<td headers="CodelistGenerator  Output type" class="gt_row gt_left" style="text-align: left;">gt</td>
+</tr>
+<tr>
+<td headers="CodelistGenerator  Result type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">code_use</td>
+<td headers="CodelistGenerator  Function" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">tableCodeUse</td>
+<td headers="CodelistGenerator  Output type" class="gt_row gt_left" style="text-align: left;">gt</td>
+</tr>
+<tr>
+<td headers="CodelistGenerator  Result type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">achilles_code_use</td>
+<td headers="CodelistGenerator  Function" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">tableAchillesCodeUse</td>
+<td headers="CodelistGenerator  Output type" class="gt_row gt_left" style="text-align: left;">gt</td>
 </tr>
 </tbody>
 </table>
@@ -561,11 +609,10 @@ package per result type in the following table:</p>
 <div class="section level2">
 <h2 id="note-for-developers">Note for developers<a class="anchor" aria-label="anchor" href="#note-for-developers"></a>
 </h2>
-<p>There exist a default design for an “unconfigured”
-<code>result_type</code> if you wish to configure a new
-<code>result_type</code> this can be done editing the internal data:
-<em>omopViewerTabs</em>, <em>omopViewerPlots</em> and
-<em>omopViewerPlotArguments</em> in file <a href="https://github.com/OHDSI/omopViewer/blob/main/data-raw/internalData.R" class="external-link">internalData.R</a>.
+<p>If you wish to configure a new <code>result_type</code> this can be
+done editing the internal data: <em>omopViewerTabs</em>,
+<em>omopViewerOutput</em> and <em>omopViewerOutputArguments</em> in file
+<a href="https://github.com/OHDSI/omopViewer/blob/main/data-raw/internalData.R" class="external-link">internalData.R</a>.
 Please feel free to submit your PR.</p>
 <!-- :::{callout} -->
 <!-- ::: -->
