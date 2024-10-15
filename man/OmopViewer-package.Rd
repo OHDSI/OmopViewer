@@ -28,7 +28,7 @@ Other contributors:
   \item Edward Burn \email{edward.burn@ndorms.ox.ac.uk} (\href{https://orcid.org/0000-0002-9286-1128}{ORCID}) [contributor]
   \item Nuria Mercade-Besora \email{nuria.mercadebesora@ndorms.ox.ac.uk} (\href{https://orcid.org/0009-0006-7948-3747}{ORCID}) [contributor]
   \item Elin Rowlands \email{elin.rowlands@ndorms.ox.ac.uk} (\href{https://orcid.org/0009-0005-5166-0417}{ORCID}) [contributor]
-  \item Cecilia Campanile \email{cecilia.campanile@ndorms.ox.ac.uk} [contributor]
+  \item Cecilia Campanile \email{cecilia.campanile@ndorms.ox.ac.uk} (\href{https://orcid.org/0009-0007-6629-4661}{ORCID}) [contributor]
 }
 
 }
