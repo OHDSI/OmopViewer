@@ -21,7 +21,13 @@ omopViewerTabs <- dplyr::tribble(
   13L, "incidence", "Incidence", "chart-line", "",
   14L, "incidence_attrition", "Incidence attrition", "layer-group", "",
   15L, "prevalence", "Prevalence", "chart-line", "",
-  16L, "prevalence_attrition", "Prevalence attrition", "layer-group", ""
+  16L, "prevalence_attrition", "Prevalence attrition", "layer-group", "",
+  17L, "summarise_dose_coverage", "Dose coverage", "pills", "",
+  18L, "summarise_drug_restart", "Drug restart", "tablets", "",
+  19L, "summarise_drug_utilisation", "Drug utilisation", "capsules", "",
+  20L, "summarise_indication", "Indication", "disease", "",
+  21L, "summarise_proportion_of_patients_covered", "Proportion of patients covered", "chart-gantt", "",
+  22L, "summarise_treatment", "Alternative treatments", "chart-bar", "",
 )
 
 omopViewerOutput <- dplyr::tribble(
@@ -65,7 +71,23 @@ omopViewerOutput <- dplyr::tribble(
   20L, 15L, "Table prevalence", "IncidencePrevalence::tablePrevalence", "gt",
   21L, 15L, "Plot prevalence", "IncidencePrevalence::plotPrevalence", "ggplot2",
   # prevalence attrition
-  23L, 16L, "Table prevalence attrition", "IncidencePrevalence::tablePrevalenceAttrition", "gt"
+  23L, 16L, "Table prevalence attrition", "IncidencePrevalence::tablePrevalenceAttrition", "gt",
+  # dose coverage
+  24L, 17L, "Table dose coverage", "DrugUtilisation::tableDoseCoverage", "gt",
+  # drug restart
+  25L, 18L, "Table drug restart", "DrugUtilisation::tableDrugRestart", "gt",
+  26L, 18L, "Plot drug restart", "DrugUtilisation::plotDrugRestart", "ggplot2",
+  # drug utilisation
+  27L, 19L, "Table drug utilisation", "DrugUtilisation::tableDrugUtilisation", "gt",
+  # indication
+  28L, 20L, "Table indication", "DrugUtilisation::tableIndication", "gt",
+  29L, 20L, "Plot indication", "DrugUtilisation::plotIndication", "ggplot2",
+  # ppc
+  30L, 21L, "Table PPC", "DrugUtilisation::tableProportionOfPatientsCovered", "gt",
+  31L, 21L, "Plot PPC", "DrugUtilisation::plotProportionOfPatientsCovered", "ggplot2",
+  # treatment
+  32L, 22L, "Table treatments", "DrugUtilisation::tableTreatment", "gt",
+  33L, 22L, "Plot treatments", "DrugUtilisation::plotTreatment", "ggplot2",
 )
 
 omopViewerOutputArguments <- dplyr::tribble(
@@ -218,6 +240,16 @@ omopViewerOutputArguments <- dplyr::tribble(
   23L, "groupColumn", "type", "rank",
   23L, "hide", "type", "rank",
   23L, NA, "rank_options", "<grouping>, <settings>, <variable>"
+  # DrugUtilisation::tableDoseCoverage
+  # DrugUtilisation::tableDrugRestart
+  # DrugUtilisation::plotDrugRestart
+  # DrugUtilisation::tableDrugUtilisation
+  # DrugUtilisation::tableIndication
+  # DrugUtilisation::plotIndication
+  # DrugUtilisation::tableProportionOfPatientsCovered
+  # DrugUtilisation::plotProportionOfPatientsCovered
+  # DrugUtilisation::tableTreatment
+  # DrugUtilisation::plotTreatment
 )
 
 omopViewerProj <- c(
