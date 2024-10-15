@@ -61,6 +61,111 @@ test_that("IncidencePrevalence shiny", {
   PatientProfiles::mockDisconnect(cdm)
 })
 
+test_that("DrugUtilisation shiny", {
+  skip_if(Sys.getenv("EUNOMIA_DATA_FOLDER") == "")
+  con <- duckdb::dbConnect(duckdb::duckdb(), CDMConnector::eunomiaDir())
+  cdm <- CDMConnector::cdmFromCon(
+    con = con, cdmSchema = "main", writeSchema = "main")
+
+  codes <- CodelistGenerator::getDrugIngredientCodes(
+    cdm = cdm, name = "acetaminophen")
+  ingredient <- 1125315
+
+  cdm <- DrugUtilisation::generateDrugUtilisationCohortSet(
+    cdm = cdm, name = "my_cohort", conceptSet = codes, gapEra = 30
+  )
+
+  codes <- CodelistGenerator::getDrugIngredientCodes(
+    cdm = cdm, name = c("amoxicillin", "morphine", "warfarin"))
+  cdm <- DrugUtilisation::generateDrugUtilisationCohortSet(
+    cdm = cdm, name = "switch_cohort", conceptSet = codes, gapEra = 30
+  )
+
+  codes <- list(
+    sinusitis = c(4294548, 40481087, 4283893, 257012),
+    bronchitis = c(260139, 258780)
+  )
+  cdm$indication <- CohortConstructor::conceptCohort(
+    cdm = cdm, conceptSet = codes, name = "indication"
+  )
+
+  ageGroup <- list(c(0, 19), c(20, 39), c(40, 59), c(60, 79), c(80, 150))
+
+  cdm$my_cohort <- cdm$my_cohort |>
+    PatientProfiles::addDemographics(
+      age = FALSE,
+      ageGroup = ageGroup,
+      sex = TRUE,
+      priorObservation = FALSE,
+      futureObservation = FALSE,
+      name = "my_cohort"
+    )
+
+  strata <- omopgenerics::combineStrata(c("age_group", "sex"))
+
+  # mock results
+  result <- omopgenerics::bind(
+    DrugUtilisation::summariseDoseCoverage(cdm = cdm, ingredientConceptId = ingredient),
+    cdm$my_cohort |>
+      DrugUtilisation::summariseDrugRestart(
+        switchCohortTable = "switch_cohort",
+        strata = strata,
+        restrictToFirstDiscontinuation = TRUE
+      ),
+    cdm$my_cohort |>
+      DrugUtilisation::summariseDrugUtilisation(
+        strata = strata, ingredientConceptId = ingredient
+      ),
+    cdm$my_cohort |>
+      DrugUtilisation::summariseIndication(
+        indicationCohortName = "indication",
+        indicationWindow = list(c(-Inf, 0), c(-30, 0), c(0, 0)),
+        unknownIndicationTable = "condition_occurrence"
+      ),
+    cdm$my_cohort |>
+      DrugUtilisation::summariseProportionOfPatientsCovered(strata = strata),
+    cdm$my_cohort |>
+      DrugUtilisation::summariseTreatment(
+        window = list(c(-Inf, -1), c(0, 0), c(1, 365), c(366, Inf)),
+        treatmentCohortName = "switch_cohort",
+        strata = strata
+      )
+  )
+
+  # generate shiny
+  tdir <- tempdir()
+  expect_no_error(exportStaticApp(result = result, directory = tdir, summary = TRUE))
+  expect_true("shiny" %in% list.files(tdir))
+
+  # test ui snapshot
+  ui <- readLines(file.path(tdir, "shiny", "ui.R"))
+  expect_snapshot(cat(ui, sep = "\n"))
+
+  # test server snapshot
+  server <- readLines(file.path(tdir, "shiny", "server.R"))
+  expect_snapshot(cat(server, sep = "\n"))
+
+  # test global snapshot
+  global <- readLines(file.path(tdir, "shiny", "global.R"))
+  expect_snapshot(cat(global, sep = "\n"))
+
+  # delete created shiny
+  unlink(file.path(tdir, "shiny"), recursive = TRUE)
+
+  # test summary = FALSE
+  expect_no_error(exportStaticApp(result = result, directory = tdir, summary = FALSE))
+  expect_true("shiny" %in% list.files(tdir))
+
+  # test ui snapshot
+  ui <- readLines(file.path(tdir, "shiny", "ui.R"))
+  expect_snapshot(cat(ui, sep = "\n"))
+
+  # delete created shiny
+  unlink(file.path(tdir, "shiny"), recursive = TRUE)
+
+  PatientProfiles::mockDisconnect(cdm)
+})
+
 test_that("CohortCharacteristics shiny", {
   # create mock cdm
   set.seed(123456)
