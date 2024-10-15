@@ -53,6 +53,7 @@ Suggests:
     IncidencePrevalence (>= 0.8.0),
     knitr,
     omock (>= 0.3.0),
+    OmopSketch,
     PatientProfiles,
     plotly,
     rmarkdown,

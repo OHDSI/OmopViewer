@@ -16,6 +16,8 @@ omopViewerTabs <- dplyr::tribble(
   8L, "cohort_code_use", "Cohort code use", "chart-column", "",
   9L, "code_use", "Code use", "chart-column", "",
   10L, "achilles_code_use", "Achilles code use", "chart-column", "",
+  11L, "summarise_observation_period", "Observation period", "eye", "",
+  12L, "summarise_omop_snapshot", "Snapshot", "clipboard-list", "",
   13L, "incidence", "Incidence", "chart-line", "",
   14L, "incidence_attrition", "Incidence attrition", "layer-group", "",
   15L, "prevalence", "Prevalence", "chart-line", "",
@@ -49,6 +51,11 @@ omopViewerOutput <- dplyr::tribble(
   13L, 9L, "Table code use", "CodelistGenerator::tableCodeUse", "gt",
   # achilles code us
   14L, 10L, "Table achilles code use", "CodelistGenerator::tableAchillesCodeUse", "gt",
+  # summarise_observation_period
+  15L, 11L, "Table observation period", "OmopSketch::tableObservationPeriod", "gt",
+  16L, 11L, "Plot observation period", "OmopSketch::plotObservationPeriod", "ggplot2",
+  # summarise_omop_snapshot
+  17L, 12L, "Snapshot table", "OmopSketch::tableOmopSnapshot", "gt",
   # incidence
   18L, 13L, "Table incidence", "IncidencePrevalence::tableIncidence", "gt",
   19L, 13L, "Plot incidence", "IncidencePrevalence::plotIncidence", "ggplot2",
@@ -159,6 +166,16 @@ omopViewerOutputArguments <- dplyr::tribble(
   14L, "groupColumn", "type", "rank",
   14L, "hide", "type", "rank",
   14L, NA, "rank_options", "<grouping>, <variable>",
+  # OmopSketch::tableObservationPeriod
+  # OmopSketch::plotObservationPeriod
+  16L, "variableName", "type", "selector",
+  16L, "variableName", "options", "number subjects, records per person, duration in days, days to next observation period",
+  16L, "plotType", "type", "selector",
+  16L, "plotType", "options", "barplot, boxplot, densityplot",
+  16L, "facet", "type", "selector",
+  16L, "facet", "options", "<grouping>",
+  16L, "facet", "multiple", "TRUE",
+  # OmopSketch::tableOmopSnapshot
   # IncidencePrevalence::tableIncidence
   18L, "header", "type", "rank",
   18L, "groupColumn", "type", "rank",
