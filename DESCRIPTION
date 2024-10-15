@@ -20,7 +20,7 @@ Authors@R: c(
         role = "ctb", comment = c(ORCID = "0009-0005-5166-0417")),
     person(
         "Cecilia", "Campanile", , "cecilia.campanile@ndorms.ox.ac.uk",
-        role = "ctb")
+        role = "ctb", comment = c(ORCID = "0009-0007-6629-4661"))
     )
 Maintainer: Martí Català <marti.catalasabate@ndorms.ox.ac.uk>
 Description: Visualise results obtained from analysing data mapped to the 
