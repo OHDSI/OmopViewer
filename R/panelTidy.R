@@ -5,10 +5,23 @@ tidyUi <- function(tab) {
     title = "Tidy",
     bslib::card(
       full_screen = TRUE,
-      {downloadTable("{tab}_tidy_download", "Download csv")},
+      bslib::card_header(
+        bslib::popover(
+          shiny::icon("download"),
+          shiny::downloadButton(outputId = "{tab}_tidy_download", label = "Download csv")
+        ),
+        class = "text-end"
+      ),
       bslib::layout_sidebar(
         sidebar = bslib::sidebar(
-          {selector("{tab}_tidy_columns", "Columns", "NULL", "NULL", TRUE)},
+          shiny::selectizeInput(
+            inputId = "{tab}_tidy_columns",
+            label = "Columns",
+            choices = NULL,
+            selected = NULL,
+            multiple = TRUE,
+            options = list(plugins = "remove_button")
+          ),
           shiny::radioButtons(
             inputId = "{tab}_tidy_pivot",
             label = "Pivot estimates/variables",
@@ -21,7 +34,6 @@ tidyUi <- function(tab) {
       )
     )
   )' |>
-    glue::glue() |>
     glue::glue() |>
     as.character()
 }
