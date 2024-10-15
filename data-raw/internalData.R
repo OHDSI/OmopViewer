@@ -5,80 +5,51 @@
 # to search icons see: https://fontawesome.com/search?m=free&o=r
 
 omopViewerTabs <- dplyr::tribble(
-  ~result_tab_id, ~result_type, ~package, ~title, ~icon, ~information,
-  1L, "summarise_cohort_overlap", "CohortCharacteristics", "Cohort overlap", "circle-half-stroke", "Cohort overlap shows the number of subjects that contribute to a pair of cohorts.",
-  2L, "summarise_cohort_attrition", "CohortCharacteristics", "Cohort Attrition", "layer-group", "",
-  3L, "summarise_cohort_timing", "CohortCharacteristics", "Cohort timing", "chart-simple", "",
-  4L, "summarise_characteristics", "CohortCharacteristics", "Cohort characteristics", "users-gear", "",
-  5L, "summarise_cohort_count", "CohortCharacteristics", "Cohort count", "users", "",
-  6L, "summarise_large_scale_characteristics", "CohortCharacteristics", "Large Scale Characteristics", "arrow-up-right-dots", "",
-  7L, "orphan_code_use", "CodelistGenerator", "Orphan codes", "magnifying-glass-arrow-right", "",
-  8L, "cohort_code_use", "CodelistGenerator", "Cohort code use", "chart-column", "",
-  9L, "code_use", "CodelistGenerator", "Code use", "chart-column", "",
-  10L, "achilles_code_use", "CodelistGenerator", "Achilles code use", "chart-column", ""
+  ~result_tab_id, ~result_type, ~title, ~icon, ~information,
+  1L, "summarise_cohort_overlap", "Cohort overlap", "circle-half-stroke", "Cohort overlap shows the number of subjects that contribute to a pair of cohorts.",
+  2L, "summarise_cohort_attrition", "Cohort Attrition", "layer-group", "",
+  3L, "summarise_cohort_timing", "Cohort timing", "chart-simple", "",
+  4L, "summarise_characteristics", "Cohort characteristics", "users-gear", "",
+  5L, "summarise_cohort_count", "Cohort count", "users", "",
+  6L, "summarise_large_scale_characteristics", "Large Scale Characteristics", "arrow-up-right-dots", "",
+  7L, "orphan_code_use", "Orphan codes", "magnifying-glass-arrow-right", "",
+  8L, "cohort_code_use", "Cohort code use", "chart-column", "",
+  9L, "code_use", "Code use", "chart-column", "",
+  10L, "achilles_code_use", "Achilles code use", "chart-column", ""
 )
 
-omopViewerPlots <- dplyr::tribble(
-  ~plot_id, ~result_tab_id, ~title, ~fun, ~output,
-  1L, 1L, "Plot cohort overlap", "plotCohortOverlap", "ggplot2",
-  2L, 2L, "Diagram", "plotCohortAttrition", "grViz",
-  3L, 3L, "Plot cohort timing", "plotCohortTiming", "ggplot2",
-  4L, 4L, "Plot characteristics", "plotCharacteristics", "ggplot2",
-  5L, 5L, "Plot cohort count", "plotCohortCount", "ggplot2"
-)
-
-omopViewerPlotArguments <- dplyr::tribble(
-  ~ table_id, ~argument, ~name, ~value,
-  1L, "facet", "type", "selector",
-  1L, "facet", "options", "<grouping>, <variable>, <settings>",
-  1L, "facet", "multiple", "TRUE",
-  1L, "uniqueCombinations", "type", "check",
-  3L, "plotType", "type", "selector",
-  3L, "plotType", "options", "boxplot, density",
-  3L, "plotType", "multiple", "FALSE",
-  3L, "timeScale", "type", "selector",
-  3L, "timeScale", "options", "days, years",
-  3L, "timeScale", "multiple", "FALSE",
-  3L, "facet", "type", "selector",
-  3L, "facet", "options", "<grouping>, <variable>, <settings>",
-  3L, "facet", "multiple", "TRUE",
-  3L, "colour", "type", "selector",
-  3L, "colour", "options", "<grouping>, <variable>, <settings>",
-  3L, "colour", "multiple", "TRUE",
-  3L, "uniqueCombinations", "type", "check",
-  4L, "plotType", "type", "selector",
-  4L, "plotType", "options", "boxplot, barplot, scatterplot",
-  4L, "plotType", "multiple", "FALSE",
-  4L, "facet", "type", "selector",
-  4L, "facet", "options", "<grouping>, <variable>, <settings>",
-  4L, "facet", "multiple", "TRUE",
-  4L, "colour", "type", "selector",
-  4L, "colour", "options", "<grouping>, <variable>, <settings>",
-  4L, "colour", "multiple", "TRUE",
-  5L, "facet", "type", "selector",
-  5L, "facet", "options", "<grouping>, <variable>",
-  5L, "facet", "multiple", "TRUE",
-  5L, "colour", "type", "selector",
-  5L, "colour", "options", "<grouping>, <variable>",
-  5L, "colour", "multiple", "TRUE"
-)
-
-omopViewerTables <- dplyr::tribble(
-  ~table_id, ~result_tab_id, ~title, ~fun, ~output,
+omopViewerOutput <- dplyr::tribble(
+  ~output_id, ~result_tab_id, ~output_title, ~output_function, ~output_type,
+  # default table
   0L, 0L, "Formatted", "OmopViewer::omopViewerTable", "gt",
-  1L, 1L, "Table cohort overlap", "tableCohortOverlap", "gt",
-  2L, 2L, "Table cohort attrition", "tableCohortAttrition", "gt",
-  3L, 3L, "Table cohort timing", "tableCohortTiming", "gt",
-  4L, 4L, "Table cohort characteristics", "tableCharacteristics", "gt",
-  5L, 5L, "Table cohort count", "tableCohortCount", "gt",
-  6L, 7L, "Table orphan codes", "tableOrphanCodes", "gt",
-  7L, 8L, "Table cohort code use", "tableCohortCodeUse", "gt",
-  8L, 9L, "Table code use", "tableCodeUse", "gt",
-  9L, 10L, "Table achilles code use", "tableAchillesCodeUse", "gt"
+  # cohort overlap
+  1L, 1L, "Table cohort overlap", "CohortCharacteristics::tableCohortOverlap", "gt",
+  2L, 1L, "Plot cohort overlap", "CohortCharacteristics::plotCohortOverlap", "ggplot2",
+  # cohort attrition
+  3L, 2L, "Table cohort attrition", "CohortCharacteristics::tableCohortAttrition", "gt",
+  4L, 2L, "Diagram", "CohortCharacteristics::plotCohortAttrition", "grViz",
+  # cohort timing
+  5L, 3L, "Table cohort timing", "CohortCharacteristics::tableCohortTiming", "gt",
+  6L, 3L, "Plot cohort timing", "CohortCharacteristics::plotCohortTiming", "ggplot2",
+  # cohort characteristics
+  7L, 4L, "Table cohort characteristics", "CohortCharacteristics::tableCharacteristics", "gt",
+  8L, 4L, "Plot characteristics", "CohortCharacteristics::plotCharacteristics", "ggplot2",
+  # cohort count
+  9L, 5L, "Table cohort count", "CohortCharacteristics::tableCohortCount", "gt",
+  10L, 5L, "Plot cohort count", "CohortCharacteristics::plotCohortCount", "ggplot2",
+  # orphan codes
+  11L, 7L, "Table orphan codes", "CodelistGenerator::tableOrphanCodes", "gt",
+  # cohort code use
+  12L, 8L, "Table cohort code use", "CodelistGenerator::tableCohortCodeUse", "gt",
+  # code use
+  13L, 9L, "Table code use", "CodelistGenerator::tableCodeUse", "gt",
+  # achilles code us
+  14L, 10L, "Table achilles code use", "CodelistGenerator::tableAchillesCodeUse", "gt"
 )
 
-omopViewerTableArguments <- dplyr::tribble(
-  ~ table_id, ~argument, ~name, ~value,
+omopViewerOutputArguments <- dplyr::tribble(
+  ~ output_id, ~argument, ~name, ~value,
+  # OmopViewer::omopViewerTable
   0L, "header", "type", "rank",
   0L, "header", "default", "cdm_name",
   0L, "group", "type", "rank",
@@ -86,48 +57,94 @@ omopViewerTableArguments <- dplyr::tribble(
   0L, "hide", "type", "rank",
   0L, "hide", "default", "<settings>",
   0L, NA, "rank_options", "<grouping>, <variable>, <settings>",
+  # CohortCharacteristics::tableCohortOverlap
   1L, "uniqueCombinations", "type", "check",
   1L, "header", "type", "rank",
   1L, "groupColumn", "type", "rank",
   1L, "hide", "type", "rank",
   1L, NA, "rank_options", "<grouping>, <variable>",
-  2L, "header", "type", "rank",
-  2L, "groupColumn", "type", "rank",
-  2L, "hide", "type", "rank",
-  2L, NA, "rank_options", "<grouping>, <variable>",
-  3L, "uniqueCombinations", "type", "check",
-  3L, "timeScale", "type", "selector",
-  3L, "timeScale", "options", "days, years",
-  3L, "timeScale", "multiple", "FALSE",
+  # CohortCharacteristics::plotCohortOverlap
+  2L, "facet", "type", "selector",
+  2L, "facet", "options", "<grouping>, <variable>, <settings>",
+  2L, "facet", "multiple", "TRUE",
+  2L, "uniqueCombinations", "type", "check",
+  # CohortCharacteristics::tableCohortAttrition
   3L, "header", "type", "rank",
   3L, "groupColumn", "type", "rank",
   3L, "hide", "type", "rank",
   3L, NA, "rank_options", "<grouping>, <variable>",
-  4L, "header", "type", "rank",
-  4L, "groupColumn", "type", "rank",
-  4L, "hide", "type", "rank",
-  4L, NA, "rank_options", "<grouping>, <variable>",
+  # CohortCharacteristics::plotCohortAttrition
+  # CohortCharacteristics::tableCohortTiming
+  5L, "uniqueCombinations", "type", "check",
+  5L, "timeScale", "type", "selector",
+  5L, "timeScale", "options", "days, years",
+  5L, "timeScale", "multiple", "FALSE",
   5L, "header", "type", "rank",
   5L, "groupColumn", "type", "rank",
   5L, "hide", "type", "rank",
   5L, NA, "rank_options", "<grouping>, <variable>",
-  6L, "header", "type", "rank",
-  6L, "groupColumn", "type", "rank",
-  6L, "hide", "type", "rank",
-  6L, NA, "rank_options", "<grouping>, <variable>",
-  7L, "timing", "type", "check",
+  # CohortCharacteristics::plotCohortTiming
+  6L, "plotType", "type", "selector",
+  6L, "plotType", "options", "boxplot, density",
+  6L, "plotType", "multiple", "FALSE",
+  6L, "timeScale", "type", "selector",
+  6L, "timeScale", "options", "days, years",
+  6L, "timeScale", "multiple", "FALSE",
+  6L, "facet", "type", "selector",
+  6L, "facet", "options", "<grouping>, <variable>, <settings>",
+  6L, "facet", "multiple", "TRUE",
+  6L, "colour", "type", "selector",
+  6L, "colour", "options", "<grouping>, <variable>, <settings>",
+  6L, "colour", "multiple", "TRUE",
+  6L, "uniqueCombinations", "type", "check",
+  # CohortCharacteristics::tableCharacteristics
   7L, "header", "type", "rank",
   7L, "groupColumn", "type", "rank",
   7L, "hide", "type", "rank",
   7L, NA, "rank_options", "<grouping>, <variable>",
-  8L, "header", "type", "rank",
-  8L, "groupColumn", "type", "rank",
-  8L, "hide", "type", "rank",
-  8L, NA, "rank_options", "<grouping>, <variable>",
+  # CohortCharacteristics::plotCharacteristics
+  8L, "plotType", "type", "selector",
+  8L, "plotType", "options", "boxplot, barplot, scatterplot",
+  8L, "plotType", "multiple", "FALSE",
+  8L, "facet", "type", "selector",
+  8L, "facet", "options", "<grouping>, <variable>, <settings>",
+  8L, "facet", "multiple", "TRUE",
+  8L, "colour", "type", "selector",
+  8L, "colour", "options", "<grouping>, <variable>, <settings>",
+  8L, "colour", "multiple", "TRUE",
+  # CohortCharacteristics::tableCohortCount
   9L, "header", "type", "rank",
   9L, "groupColumn", "type", "rank",
   9L, "hide", "type", "rank",
-  9L, NA, "rank_options", "<grouping>, <variable>"
+  9L, NA, "rank_options", "<grouping>, <variable>",
+  # CohortCharacteristics::plotCohortCount
+  10L, "facet", "type", "selector",
+  10L, "facet", "options", "<grouping>, <variable>",
+  10L, "facet", "multiple", "TRUE",
+  10L, "colour", "type", "selector",
+  10L, "colour", "options", "<grouping>, <variable>",
+  10L, "colour", "multiple", "TRUE",
+  # CodelistGenerator::tableOrphanCodes
+  11L, "header", "type", "rank",
+  11L, "groupColumn", "type", "rank",
+  11L, "hide", "type", "rank",
+  11L, NA, "rank_options", "<grouping>, <variable>",
+  # CodelistGenerator::tableCohortCodeUse
+  12L, "timing", "type", "check",
+  12L, "header", "type", "rank",
+  12L, "groupColumn", "type", "rank",
+  12L, "hide", "type", "rank",
+  12L, NA, "rank_options", "<grouping>, <variable>",
+  # CodelistGenerator::tableCodeUse
+  13L, "header", "type", "rank",
+  13L, "groupColumn", "type", "rank",
+  13L, "hide", "type", "rank",
+  13L, NA, "rank_options", "<grouping>, <variable>",
+  # CodelistGenerator::tableAchillesCodeUse
+  14L, "header", "type", "rank",
+  14L, "groupColumn", "type", "rank",
+  14L, "hide", "type", "rank",
+  14L, NA, "rank_options", "<grouping>, <variable>"
 )
 
 omopViewerProj <- c(
@@ -165,6 +182,6 @@ backgroundKeywords <- dplyr::tribble(
 )
 
 usethis::use_data(
-  omopViewerTabs, omopViewerPlots, omopViewerPlotArguments, omopViewerProj,
-  omopViewerGlobal, logoKeywords, backgroundKeywords, omopViewerTables,
-  omopViewerTableArguments, overwrite = TRUE, internal = TRUE)
+  omopViewerTabs, omopViewerOutput, omopViewerOutputArguments, omopViewerProj,
+  omopViewerGlobal, logoKeywords, backgroundKeywords, overwrite = TRUE,
+  internal = TRUE)

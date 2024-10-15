@@ -29,7 +29,6 @@ validateDirectory <- function(directory) {
   }
   return(directory)
 }
-
 validatePanels <- function(panels, resultTypes, call = parent.frame()) {
   omopgenerics::assertList(panels, call = call)
 

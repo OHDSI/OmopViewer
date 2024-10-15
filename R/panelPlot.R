@@ -53,38 +53,21 @@ getPlotOutput <- function(id) {
 }
 getPlotButtons <- function(rt, plotId, setCols, groupCols, varCols) {
   buts <- omopViewerPlotArguments |>
-    dplyr::filter(.data$plot_id == .env$plotId)
-  args <- omopViewerPlots |>
     dplyr::filter(.data$plot_id == .env$plotId) |>
-    dplyr::select("result_tab_id", "fun") |>
-    dplyr::inner_join(
-      omopViewerTabs |>
-        dplyr::select("result_tab_id", "package"),
-      by = "result_tab_id"
-    ) |>
-    dplyr::distinct() |>
-    dplyr::mutate(x = paste0(.data$package, "::", .data$fun)) |>
-    dplyr::pull("x") |>
+    substituteOptions(setCols, groupCols, varCols)
+  defaults <- getFunctionName(plotId, type = "plot") |>
     rlang::parse_expr() |>
-    eval() |>
+    rlang::eval_tidy() |>
     formals()
-  but <- purrr::map_chr(seq_len(nrow(buts)), \(k) {
-    arg <- buts$argument[k]
-    type <- buts$type[k]
-    opts <- getButtonOpts(buts$opts[k], setCols, groupCols, varCols) |>
-      cast()
-    def <- cast(args[[arg]])
-    multiple <- buts$multiple[k]
-    glue::glue(getButton(type))
+  prefix <- paste0(rt, "_plot_", plotId)
+  but <- purrr::map_chr(unique(buts$argument), \(x) {
+    buts |>
+      dplyr::filter(.data$argument == .env$x) |>
+      createButton(defaults, prefix)
   })
   return(but)
 }
-getButtonOpts <- function(opts, setCols, groupCols, varCols) {
-  stringr::str_split_1(opts, pattern = ", ") |>
-    subs("<grouping>", groupCols) |>
-    subs("<settings>", setCols) |>
-    subs("<variable>", varCols)
-}
+
 getButton <- function(type) {
   switch(type,
          "selector" = selector(

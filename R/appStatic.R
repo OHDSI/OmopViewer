@@ -269,6 +269,8 @@ cast <- function(x) {
   if (is.character(x)) {
     if (length(x) == 0) {
       x <- "character()"
+    } else if (length(x) == 1) {
+      x <- paste0('"', x, '"')
     } else {
       x <- paste0('c("', paste0(x, collapse = '", "'), '")')
     }
