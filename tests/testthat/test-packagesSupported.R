@@ -70,6 +70,38 @@ test_that("CohortCharacteristics shiny", {
   PatientProfiles::mockDisconnect(cdm)
 })
 
+test_that("OmopSketch shiny", {
+  cdm <- OmopSketch::mockOmopSketch()
+
+  # mock results
+  result <- omopgenerics::bind(
+    OmopSketch::summariseObservationPeriod(cdm$observation_period, sex = TRUE),
+    OmopSketch::summariseOmopSnapshot(cdm)
+  )
+
+  # generate shiny
+  tdir <- tempdir()
+  expect_no_error(exportStaticApp(result = result, directory = tdir, summary = FALSE))
+  expect_true("shiny" %in% list.files(tdir))
+
+  # test ui snapshot
+  ui <- readLines(file.path(tdir, "shiny", "ui.R"))
+  expect_snapshot(cat(ui, sep = "\n"))
+
+  # test server snapshot
+  server <- readLines(file.path(tdir, "shiny", "server.R"))
+  expect_snapshot(cat(server, sep = "\n"))
+
+  # test global snapshot
+  global <- readLines(file.path(tdir, "shiny", "global.R"))
+  expect_snapshot(cat(global, sep = "\n"))
+
+  # delete created shiny
+  unlink(file.path(tdir, "shiny"), recursive = TRUE)
+
+  CDMConnector::cdmDisconnect(cdm = cdm)
+})
+
 test_that("CodelistGenerator shiny", {
   skip_if(Sys.getenv("CDM5_POSTGRESQL_DBNAME") == "")
   # test cdm object
@@ -134,4 +166,3 @@ test_that("CodelistGenerator shiny", {
 
   CDMConnector::cdmDisconnect(cdm)
 })
-
