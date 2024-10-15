@@ -2,4 +2,4 @@
 
 0 errors | 0 warnings | 1 note
 
-* This is a new release. We do not cide any reference.
+* This is a new release. We do not cite any reference.
