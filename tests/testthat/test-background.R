@@ -22,6 +22,7 @@ test_that("background", {
 
 test_that("test cardFromMd", {
   tfile <- tempfile(fileext = ".md")
+
   def <- defaultBackground()
   writeLines(def, con = tfile)
 
