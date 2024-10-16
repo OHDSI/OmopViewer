@@ -1,5 +1,4 @@
 test_that("logo", {
-  #tdir <- here::here()
   tdir <- tempdir()
 
   # test no logo
@@ -18,8 +17,11 @@ test_that("logo", {
   }
 
   # custom logo
-  expect_no_error(exportStaticApp(result = emptySummarisedResult(),
-                                  directory = tdir, logo = here::here("inst", "oxford.png")))
+  expect_no_error(exportStaticApp(
+    result = emptySummarisedResult(),
+    directory = tdir,
+    logo = system.file("oxford.png", package = "OmopViewer")
+  ))
   expect_true("shiny" %in% list.files(tdir))
   unlink(file.path(tdir, "shiny"), recursive = TRUE)
 
@@ -28,7 +30,6 @@ test_that("logo", {
 })
 
 test_that("empty shiny", {
-  #tdir <- here::here()
   tdir <- tempdir()
   expect_no_error(exportStaticApp(result = emptySummarisedResult(),directory = tdir))
   expect_true("shiny" %in% list.files(tdir))
@@ -38,7 +39,6 @@ test_that("empty shiny", {
 })
 
 test_that("title", {
-  #tdir <- here::here()
   tdir <- tempdir()
   expect_no_error(exportStaticApp(
     result = emptySummarisedResult(), directory = tdir, title = "example"
@@ -53,7 +53,6 @@ test_that("title", {
 
   # delete created shiny
   unlink(file.path(tdir, "shiny"), recursive = TRUE)
-
 })
 
 test_that("order tabs", {
@@ -165,7 +164,6 @@ test_that("order tabs", {
 })
 
 test_that("theme", {
-  #tdir <- here::here()
   tdir <- tempdir()
 
   expect_no_error(exportStaticApp(result = emptySummarisedResult(), directory = tdir, theme = NULL, open = FALSE))
