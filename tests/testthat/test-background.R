@@ -1,12 +1,13 @@
 test_that("background", {
-  #tdir <- here::here()
   tdir <- tempdir()
+
   expect_no_error(exportStaticApp(
     result = emptySummarisedResult(),
     directory = tdir,
     background = TRUE
   ))
   unlink(file.path(tdir, "shiny"), recursive = TRUE)
+
   expect_no_error(exportStaticApp(
     result = emptySummarisedResult(),
     directory = tdir,
@@ -21,6 +22,7 @@ test_that("background", {
 
 test_that("test cardFromMd", {
   tfile <- tempfile(fileext = ".md")
+
   def <- defaultBackground()
   writeLines(def, con = tfile)
 

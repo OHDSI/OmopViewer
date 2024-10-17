@@ -20,12 +20,12 @@
 #'
 #' @export
 #'
-#' @examples {
+#' @examples
 #' exportStaticApp(
 #'   result = emptySummarisedResult(),
+#'   directory = tempdir(),
 #'   theme = "bslib::bs_theme(bg = '#bb0a1e', fg = '#0000ff')"
 #' )
-#' }
 #'
 exportStaticApp <- function(result,
                             logo = "ohdsi",
