@@ -107,17 +107,15 @@ results not specified will be included after the specified result tabs.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="op">{</span></span></span>
-<span class="r-in"><span><span class="fu">exportStaticApp</span><span class="op">(</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">exportStaticApp</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  result <span class="op">=</span> <span class="fu"><a href="https://darwin-eu-dev.github.io/omopgenerics/reference/emptySummarisedResult.html" class="external-link">emptySummarisedResult</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  directory <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  theme <span class="op">=</span> <span class="st">"bslib::bs_theme(bg = '#bb0a1e', fg = '#0000ff')"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Processing data</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> No result_type(s) found, the generated shiny will be empty.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Creating shiny from provided data</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Shiny created in:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   <span style="color: #0000BB;">/home/runner/work/OmopViewer/OmopViewer/docs/reference/shiny</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Shiny created in: <span style="color: #0000BB;">/tmp/RtmpCcgN3w/shiny</span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
