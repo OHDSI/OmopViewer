@@ -57,6 +57,7 @@ Suggests:
     CodelistGenerator (>= 3.2.0),
     CohortCharacteristics (>= 0.3.0),
     CohortConstructor,
+    DiagrammeR,
     DrugUtilisation (>= 0.7.1),
     duckdb,
     ggplot2,
