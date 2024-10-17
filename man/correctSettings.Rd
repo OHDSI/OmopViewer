@@ -11,6 +11,9 @@ correctSettings(result)
 \arguments{
 \item{result}{A `<summarised_result>` object.}
 }
+\value{
+The summarised_result object with the settings corrected
+}
 \description{
 Add the strata, group and additional columns to settings with the tidyColumns
 (`visOmopResults::splitGroup()`, `visOmopResults::splitStrata()`,

@@ -6,11 +6,11 @@
 \usage{
 exportStaticApp(
   result,
+  directory,
   logo = "ohdsi",
   title = "",
   background = TRUE,
   summary = TRUE,
-  directory = getwd(),
   panels = list(),
   theme = NULL,
   open = rlang::is_interactive()
@@ -18,6 +18,8 @@ exportStaticApp(
 }
 \arguments{
 \item{result}{A summarised_result object.}
+
+\item{directory}{Directory to create the shiny.}
 
 \item{logo}{Name of a logo or path to a logo. If NULL no logo is included.
 Only svg format allowed for the moment.}
@@ -29,8 +31,6 @@ content will be controlled from the generated background.md file.}
 
 \item{summary}{Whether to include a panel with a summary of content in the
 `result`.}
-
-\item{directory}{Directory to create the shiny.}
 
 \item{panels}{List specifying order of results. Each panel is determined
 by the available result types in the result object. Panels for any available

@@ -11,17 +11,14 @@ detectPackages <- function(code) {
 
   return(libraries)
 }
-checkInstalledPackages <- function(libraries_vector) {
+checkInstalledPackages <- function(x) {
 
-  installed_packages <- names(utils::installed.packages()[,3])
-  flag_vector <-  !(libraries_vector %in% installed_packages)
-
-  needed_packages <- libraries_vector[flag_vector]
-  if (length(needed_packages) > 0) {
+  notInstalled <- x[!purrr::map_lgl(x, rlang::is_installed)]
+  if (length(notInstalled) > 0) {
     cli::cli_warn(c(
-      "!" = "{length(needed_packages)} packages {?is/are} not installed: {.pkg {needed_packages}}."
+      "!" = "{length(notInstalled)} packages {?is/are} not installed: {.pkg {notInstalled}}."
     ))
-    install <- paste0(needed_packages, collapse = '", "')
+    install <- paste0(notInstalled, collapse = '", "')
     cli::cli_inform(c("i" = '{.run install.packages(c("{install}"))}'))
   }
 

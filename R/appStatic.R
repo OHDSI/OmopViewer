@@ -28,11 +28,11 @@
 #' )
 #'
 exportStaticApp <- function(result,
+                            directory,
                             logo = "ohdsi",
                             title = "",
                             background = TRUE,
                             summary = TRUE,
-                            directory = getwd(),
                             panels = list(),
                             theme = NULL,
                             open = rlang::is_interactive()) {

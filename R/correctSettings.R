@@ -7,6 +7,8 @@
 #'
 #' @export
 #'
+#' @return The summarised_result object with the settings corrected
+#'
 correctSettings <- function(result) {
   # check input
   result <- omopgenerics::validateResultArgument(result)
