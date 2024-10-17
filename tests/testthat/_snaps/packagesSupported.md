@@ -8900,7 +8900,7 @@
                       shiny::selectizeInput(
                         inputId = "summarise_observation_period_ggplot2_16_facet",
                         label = "facet",
-                        selected = "cdm_name",
+                        selected = NULL,
                         multiple = TRUE,
                         choices = c("cdm_name", "observation_period_ordinal", "sex"),
                         options = list(plugins = "remove_button")
