@@ -8,9 +8,6 @@ detectPackages <- function(code) {
 
   libraries <- gsub("::", "", libraries)
   libraries <- unique(libraries)
-  if (length(libraries) == 0) {
-    return()
-  }
 
   return(libraries)
 }
