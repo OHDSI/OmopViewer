@@ -71,8 +71,6 @@ omopViewerThemes <- list(
     bg = 'white',
     fg = 'black',
     success = '#3B9AB2',
-    base_font = bslib::font_google('Space Mono'),
-    code_font = bslib::font_google('Space Mono')
   )"
 )
 
