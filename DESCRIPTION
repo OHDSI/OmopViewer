@@ -1,6 +1,6 @@
 Package: OmopViewer
 Type: Package
-Title: Visualise OMOP Results using 'shiny' applications
+Title: Visualise OMOP Results using 'shiny' Applications
 Version: 0.1.0
 Authors@R: c(
     person(

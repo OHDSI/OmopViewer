@@ -4,7 +4,7 @@
 \name{OmopViewer-package}
 \alias{OmopViewer}
 \alias{OmopViewer-package}
-\title{OmopViewer: Visualise OMOP Results using 'shiny' applications}
+\title{OmopViewer: Visualise OMOP Results using 'shiny' Applications}
 \description{
 Visualise results obtained from analysing data mapped to the Observational Medical Outcomes Partnership (OMOP) common data model using 'shiny' applications.
 }
