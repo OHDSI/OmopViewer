@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   articles/background: background.html
   supported_result_type: supported_result_type.html
-last_built: 2024-10-25T15:29Z
+last_built: 2024-10-25T15:40Z
 urls:
   reference: https://ohdsi.github.io/OmopViewer/reference
   article: https://ohdsi.github.io/OmopViewer/articles
