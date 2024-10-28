@@ -44,7 +44,6 @@ exportStaticApp <- function(result,
   omopgenerics::assertCharacter(title, length = 1)
   omopgenerics::assertLogical(summary, length = 1)
   omopgenerics::assertCharacter(theme, length = 1, null = TRUE)
-  omopgenerics::assertLogical(background, length = 1)
   directory <- validateDirectory(directory)
   if (isTRUE(directory)) {
     return(cli::cli_inform(c("i" = "{.strong shiny} folder will not be overwritten. Stopping process.")))
@@ -71,6 +70,9 @@ exportStaticApp <- function(result,
   # copy the logos to the shiny folder
   logo <- copyLogos(logo, directory)
 
+  # background
+  background <- validateBackground(background, logo)
+
   # create ui
   ui <- c(
     messageShiny(),
@@ -79,7 +81,7 @@ exportStaticApp <- function(result,
       logo = logo,
       title = title,
       summary = summary,
-      background = background,
+      background = !is.null(background),
       theme = theme,
       panels = panels
     )
@@ -110,9 +112,8 @@ exportStaticApp <- function(result,
 
   # write files in the corresponding directory
   dir.create(file.path(directory, "data"), showWarnings = FALSE)
-  if (background) {
-    defaultBackground(logo) |>
-      writeLines(con = file.path(directory, "background.md"))
+  if (!is.null(background)) {
+    writeLines(background, con = file.path(directory, "background.md"))
   }
   writeLines(ui, con = file.path(directory, "ui.R"))
   writeLines(server, con = file.path(directory, "server.R"))

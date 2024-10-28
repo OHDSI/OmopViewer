@@ -93,3 +93,24 @@ panelNames <- function(x) {
 getTitle <- function(x) {
   getInfo(x, "title", formatTit(x))
 }
+validateBackground <- function(background, logo, call = parent.frame()) {
+  msg <- "'background' must be either TRUE/FALSE or a path to an existing `.md` file."
+  if (is.logical(background)) {
+    omopgenerics::assertLogical(background, length = 1, call = call, msg = msg)
+    if (background) {
+      background <- defaultBackground(logo = logo)
+    } else {
+      background <- NULL
+    }
+  } else if (is.character(background)) {
+    omopgenerics::assertCharacter(background, length = 1, call = call, msg = msg)
+    if (file.exists(background)) {
+      background <- readLines(background)
+    } else {
+      cli::cli_abort(message = "background file ({.path {background}}) does not exist.", call = call)
+    }
+  } else {
+    cli::cli_abort(message = msg, call = call)
+  }
+  return(background)
+}

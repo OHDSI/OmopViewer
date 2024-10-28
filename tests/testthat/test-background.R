@@ -18,6 +18,20 @@ test_that("background", {
   expect_snapshot(createBackground(TRUE) |> cat(sep = "\n"))
 
   expect_snapshot(createBackground(FALSE) |> cat(sep = "\n"))
+
+  # existing md file
+  backgroundFile <- tempfile(fileext = ".md")
+  content <- "# test\n\ncustom background"
+  writeLines(content, con = backgroundFile)
+  expect_no_error(exportStaticApp(
+    result = emptySummarisedResult(),
+    directory = tdir,
+    background = backgroundFile
+  ))
+  background <- readLines(file.path(tdir, "shiny", "background.md"))
+  expect_identical(content, paste0(background, collapse = "\n"))
+  unlink(file.path(tdir, "shiny"), recursive = TRUE)
+
 })
 
 test_that("test cardFromMd", {
