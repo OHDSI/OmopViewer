@@ -39,12 +39,12 @@
       <h3>Package versions</h3>
       <p>Inconsistent versions:</p>
       <ul>
-      <li><span style="color:red"> <strong>OmopViewer</strong> 0.1.0 in result_id(s): 1</span></li>
-      <li><span style="color:red"> <strong>OmopViewer</strong> 0.2.0 in result_id(s): 2</span></li>
+      <li><span style="color:red"> <strong>OmopViewer</strong> 0.1.0 in 1 result id(s).</span></li>
+      <li><span style="color:red"> <strong>OmopViewer</strong> 0.2.0 in 1 result id(s).</span></li>
       </ul>
       <p>Consistent versions:</p>
       <ul>
-      <li><span style="color:green"> <strong>omopgenerics</strong> 1.0.0 in result_id(s): 3</span></li>
+      <li><span style="color:green"> <strong>omopgenerics</strong> 1.0.0 in 1 result id(s).</span></li>
       </ul>
       <h3>Result suppression</h3>
       <ul>
