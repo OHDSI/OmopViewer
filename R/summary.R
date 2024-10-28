@@ -70,23 +70,17 @@ resultVersions <- function(result) {
   sets <- omopgenerics::settings(result)
   x <- sets |>
     dplyr::group_by(.data$package_name, .data$package_version) |>
-    dplyr::summarise(
-      result_ids = glue::glue_collapse(.data$result_id, sep = ", ", last = " and "),
-      .groups = "drop"
-    ) |>
-    dplyr::inner_join(
-      sets |>
-        dplyr::group_by(.data$package_name) |>
-        dplyr::summarise(n = dplyr::n_distinct(.data$package_version)),
-      by = "package_name"
-    ) |>
+    dplyr::summarise(result_ids = dplyr::n(), .groups = "drop") |>
+    dplyr::group_by(.data$package_name) |>
+    dplyr::mutate(n = dplyr::n_distinct(.data$package_version)) |>
+    dplyr::ungroup() |>
     dplyr::arrange(
       dplyr::desc(.data$n), .data$package_name, .data$package_version
     ) |>
     dplyr::mutate(message = paste0(
       dplyr::if_else(.data$n > 1, "x", "v"),
       "- **", .data$package_name, "** ", .data$package_version,
-      " in result_id(s): ", .data$result_ids
+      " in ", .data$result_ids, " result id(s)."
     ))
 
   mes <- x$message
