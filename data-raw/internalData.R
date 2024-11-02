@@ -268,9 +268,19 @@ omopViewerProj <- c(
   "LaTeX: pdfLaTeX"
 )
 
+omopViewerPreprocess <- c(
+  "data <- OmopViewer::importSummarisedResult(here::here(\"data\", \"raw\")) |>",
+  "OmopViewer::correctSettings()",
+  "choices <- OmopViewer::getChoices(data, flatten = TRUE)",
+  "save(data, choices,",
+  "file = here::here(\"data\", \"appData.RData\"))"
+) |>
+  styleCode()
+
 omopViewerGlobal <- c(
-  "data <- OmopViewer::importSummarisedResult(here::here(\"data\")) |>",
-  "OmopViewer::correctSettings()"
+  "if(!file.exists(here::here(\"data\", \"appData.RData\"))){",
+  "source(here::here(\"scripts\", \"preprocess.R\"))",
+  "}"
 ) |>
   styleCode()
 
@@ -288,5 +298,5 @@ backgroundKeywords <- dplyr::tribble(
 
 usethis::use_data(
   omopViewerTabs, omopViewerOutput, omopViewerOutputArguments, omopViewerProj,
-  omopViewerGlobal, logoKeywords, backgroundKeywords, overwrite = TRUE,
+  omopViewerPreprocess, omopViewerGlobal, logoKeywords, backgroundKeywords, overwrite = TRUE,
   internal = TRUE)

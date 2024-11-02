@@ -20,7 +20,6 @@ selectiseServer <- function(resultTypes, data) {
   c(
     '# fill selectise variables ----',
     paste0('shiny::observe({
-      choices <- OmopViewer::getChoices(', data, ', flatten = TRUE)
       for (k in seq_along(choices)) {
         shiny::updateSelectizeInput(
           session,

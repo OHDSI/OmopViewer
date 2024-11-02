@@ -1231,7 +1231,6 @@
         )
         # fill selectise variables ----
         shiny::observe({
-          choices <- OmopViewer::getChoices(data, flatten = TRUE)
           for (k in seq_along(choices)) {
             shiny::updateSelectizeInput(
               session,
@@ -1587,8 +1586,9 @@
       library(sortable)
       library(visOmopResults)
       
-      data <- OmopViewer::importSummarisedResult(here::here("data")) |>
-        OmopViewer::correctSettings()
+      if (!file.exists(here::here("data", "appData.RData"))) {
+        source(here::here("scripts", "preprocess.R"))
+      }
 
 ---
 
@@ -3870,7 +3870,6 @@
         )
         # fill selectise variables ----
         shiny::observe({
-          choices <- OmopViewer::getChoices(data, flatten = TRUE)
           for (k in seq_along(choices)) {
             shiny::updateSelectizeInput(
               session,
@@ -4383,8 +4382,9 @@
       library(shiny)
       library(visOmopResults)
       
-      data <- OmopViewer::importSummarisedResult(here::here("data")) |>
-        OmopViewer::correctSettings()
+      if (!file.exists(here::here("data", "appData.RData"))) {
+        source(here::here("scripts", "preprocess.R"))
+      }
 
 ---
 
@@ -6790,7 +6790,6 @@
         )
         # fill selectise variables ----
         shiny::observe({
-          choices <- OmopViewer::getChoices(data, flatten = TRUE)
           for (k in seq_along(choices)) {
             shiny::updateSelectizeInput(
               session,
@@ -7363,8 +7362,9 @@
       library(sortable)
       library(visOmopResults)
       
-      data <- OmopViewer::importSummarisedResult(here::here("data")) |>
-        OmopViewer::correctSettings()
+      if (!file.exists(here::here("data", "appData.RData"))) {
+        source(here::here("scripts", "preprocess.R"))
+      }
 
 ---
 
@@ -9075,7 +9075,6 @@
         )
         # fill selectise variables ----
         shiny::observe({
-          choices <- OmopViewer::getChoices(data, flatten = TRUE)
           for (k in seq_along(choices)) {
             shiny::updateSelectizeInput(
               session,
@@ -9261,8 +9260,9 @@
       library(shiny)
       library(visOmopResults)
       
-      data <- OmopViewer::importSummarisedResult(here::here("data")) |>
-        OmopViewer::correctSettings()
+      if (!file.exists(here::here("data", "appData.RData"))) {
+        source(here::here("scripts", "preprocess.R"))
+      }
 
 # CodelistGenerator shiny
 
@@ -10036,7 +10036,6 @@
         )
         # fill selectise variables ----
         shiny::observe({
-          choices <- OmopViewer::getChoices(data, flatten = TRUE)
           for (k in seq_along(choices)) {
             shiny::updateSelectizeInput(
               session,
@@ -10332,6 +10331,7 @@
       library(sortable)
       library(visOmopResults)
       
-      data <- OmopViewer::importSummarisedResult(here::here("data")) |>
-        OmopViewer::correctSettings()
+      if (!file.exists(here::here("data", "appData.RData"))) {
+        source(here::here("scripts", "preprocess.R"))
+      }
 

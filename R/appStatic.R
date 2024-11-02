@@ -99,7 +99,8 @@ exportStaticApp <- function(result,
   libraries <- c(
     detectPackages(ui),
     detectPackages(server),
-    detectPackages(omopViewerGlobal)
+    detectPackages(omopViewerGlobal),
+    detectPackages(omopViewerPreprocess)
   ) |>
     unique() |>
     sort()
@@ -109,22 +110,28 @@ exportStaticApp <- function(result,
   libraryStatementsList <- paste0("library(", libraries, ")")
   global <- c(messageShiny(), libraryStatementsList, "", omopViewerGlobal) |>
     styleCode()
+  omopViewerPreprocess  <- c(messageShiny(), libraryStatementsList, "", omopViewerPreprocess) |>
+    styleCode()
 
   # write files in the corresponding directory
   dir.create(file.path(directory, "data"), showWarnings = FALSE)
+  dir.create(file.path(directory, "data", "raw"), showWarnings = FALSE)
+  dir.create(file.path(directory, "scripts"), showWarnings = FALSE)
   if (!is.null(background)) {
     writeLines(background, con = file.path(directory, "background.md"))
   }
   writeLines(ui, con = file.path(directory, "ui.R"))
   writeLines(server, con = file.path(directory, "server.R"))
   writeLines(global, con = file.path(directory, "global.R"))
+  writeLines(omopViewerPreprocess, con = file.path(directory, "scripts", "preprocess.R"))
   writeLines(omopViewerProj, con = file.path(directory, "shiny.Rproj"))
   exportSummarisedResult(
     result,
     minCellCount = 0,
     fileName = "results.csv",
-    path = file.path(directory, "data")
+    path = file.path(directory, "data", "raw")
   )
+
 
   cli::cli_inform(c("v" = "Shiny created in: {.pkg {directory}}"))
 
