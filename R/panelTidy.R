@@ -14,13 +14,13 @@ tidyUi <- function(tab) {
       ),
       bslib::layout_sidebar(
         sidebar = bslib::sidebar(
-          shiny::selectizeInput(
+          shinyWidgets::pickerInput(
             inputId = "{tab}_tidy_columns",
             label = "Columns",
             choices = NULL,
             selected = NULL,
             multiple = TRUE,
-            options = list(plugins = "remove_button")
+            options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
           ),
           shiny::radioButtons(
             inputId = "{tab}_tidy_pivot",

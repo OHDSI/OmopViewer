@@ -219,54 +219,54 @@
                 ),
                 bslib::accordion_panel(
                   title = "Settings",
-                  shiny::selectizeInput(
+                  shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_count_settings_table_name",
                     label = "Table name",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
-                    options = list(plugins = "remove_button")
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
                 ),
                 bslib::accordion_panel(
                   title = "grouping",
-                  shiny::selectizeInput(
+                  shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_count_grouping_cdm_name",
                     label = "Cdm name",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
-                    options = list(plugins = "remove_button")
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
-                  shiny::selectizeInput(
+                  shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_count_grouping_cohort_name",
                     label = "Cohort name",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
-                    options = list(plugins = "remove_button")
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
                 ),
                 bslib::accordion_panel(
                   title = "Variables",
-                  shiny::selectizeInput(
+                  shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_count_variable_name",
                     label = "Variable name",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
-                    options = list(plugins = "remove_button")
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
                 ),
                 bslib::accordion_panel(
                   title = "Estimates",
-                  shiny::selectizeInput(
+                  shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_count_estimate_name",
                     label = "Estimate name",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
-                    options = list(plugins = "remove_button")
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
                 )
               )
@@ -285,13 +285,13 @@
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
-                      shiny::selectizeInput(
+                      shinyWidgets::pickerInput(
                         inputId = "summarise_cohort_count_tidy_columns",
                         label = "Columns",
                         choices = NULL,
                         selected = NULL,
                         multiple = TRUE,
-                        options = list(plugins = "remove_button")
+                        options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_cohort_count_tidy_pivot",
@@ -312,7 +312,7 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::selectizeInput(
+                      shinyWidgets::pickerInput(
                         inputId = "summarise_cohort_count_gt_9_download_type",
                         label = "File type",
                         selected = "docx",
@@ -371,7 +371,7 @@
                         label = "Height",
                         value = 10
                       ),
-                      shiny::selectizeInput(
+                      shinyWidgets::pickerInput(
                         inputId = "summarise_cohort_count_ggplot2_10_download_units",
                         label = "Units",
                         selected = "cm",
@@ -389,21 +389,21 @@
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
-                      shiny::selectizeInput(
+                      shinyWidgets::pickerInput(
                         inputId = "summarise_cohort_count_ggplot2_10_facet",
                         label = "facet",
                         selected = "cdm_name",
                         multiple = TRUE,
                         choices = c("cdm_name", "cohort_name", "variable_name", "variable_level", "estimate_name"),
-                        options = list(plugins = "remove_button")
+                        options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
-                      shiny::selectizeInput(
+                      shinyWidgets::pickerInput(
                         inputId = "summarise_cohort_count_ggplot2_10_colour",
                         label = "colour",
                         selected = NULL,
                         multiple = TRUE,
                         choices = c("cdm_name", "cohort_name", "variable_name", "variable_level", "estimate_name"),
-                        options = list(plugins = "remove_button")
+                        options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
                       position = "right"
                     ),
@@ -427,51 +427,51 @@
                 ),
                 bslib::accordion_panel(
                   title = "grouping",
-                  shiny::selectizeInput(
+                  shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_overlap_grouping_cdm_name",
                     label = "Cdm name",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
-                    options = list(plugins = "remove_button")
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
-                  shiny::selectizeInput(
+                  shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_overlap_grouping_cohort_name_reference",
                     label = "Cohort name reference",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
-                    options = list(plugins = "remove_button")
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
-                  shiny::selectizeInput(
+                  shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_overlap_grouping_cohort_name_comparator",
                     label = "Cohort name comparator",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
-                    options = list(plugins = "remove_button")
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
                 ),
                 bslib::accordion_panel(
                   title = "Variables",
-                  shiny::selectizeInput(
+                  shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_overlap_variable_name",
                     label = "Variable name",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
-                    options = list(plugins = "remove_button")
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
                 ),
                 bslib::accordion_panel(
                   title = "Estimates",
-                  shiny::selectizeInput(
+                  shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_overlap_estimate_name",
                     label = "Estimate name",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
-                    options = list(plugins = "remove_button")
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
                 )
               )
@@ -490,13 +490,13 @@
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
-                      shiny::selectizeInput(
+                      shinyWidgets::pickerInput(
                         inputId = "summarise_cohort_overlap_tidy_columns",
                         label = "Columns",
                         choices = NULL,
                         selected = NULL,
                         multiple = TRUE,
-                        options = list(plugins = "remove_button")
+                        options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_cohort_overlap_tidy_pivot",
@@ -517,7 +517,7 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::selectizeInput(
+                      shinyWidgets::pickerInput(
                         inputId = "summarise_cohort_overlap_gt_1_download_type",
                         label = "File type",
                         selected = "docx",
@@ -581,7 +581,7 @@
                         label = "Height",
                         value = 10
                       ),
-                      shiny::selectizeInput(
+                      shinyWidgets::pickerInput(
                         inputId = "summarise_cohort_overlap_ggplot2_2_download_units",
                         label = "Units",
                         selected = "cm",
@@ -599,13 +599,13 @@
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
-                      shiny::selectizeInput(
+                      shinyWidgets::pickerInput(
                         inputId = "summarise_cohort_overlap_ggplot2_2_facet",
                         label = "facet",
                         selected = c("cdm_name", "cohort_name_reference"),
                         multiple = TRUE,
                         choices = c("cdm_name", "cohort_name_reference", "cohort_name_comparator", "variable_name", "variable_level", "estimate_name"),
-                        options = list(plugins = "remove_button")
+                        options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
                       shiny::checkboxInput(
                         inputId = "summarise_cohort_overlap_ggplot2_2_uniqueCombinations",
@@ -634,78 +634,78 @@
                 ),
                 bslib::accordion_panel(
                   title = "Settings",
-                  shiny::selectizeInput(
+                  shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_attrition_settings_cohort_definition_id",
                     label = "Cohort definition id",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
-                    options = list(plugins = "remove_button")
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
-                  shiny::selectizeInput(
+                  shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_attrition_settings_table_name",
                     label = "Table name",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
-                    options = list(plugins = "remove_button")
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
                 ),
                 bslib::accordion_panel(
                   title = "grouping",
-                  shiny::selectizeInput(
+                  shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_attrition_grouping_cdm_name",
                     label = "Cdm name",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
-                    options = list(plugins = "remove_button")
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
-                  shiny::selectizeInput(
+                  shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_attrition_grouping_cohort_name",
                     label = "Cohort name",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
-                    options = list(plugins = "remove_button")
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
-                  shiny::selectizeInput(
+                  shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_attrition_grouping_reason",
                     label = "Reason",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
-                    options = list(plugins = "remove_button")
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
-                  shiny::selectizeInput(
+                  shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_attrition_grouping_reason_id",
                     label = "Reason id",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
-                    options = list(plugins = "remove_button")
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
                 ),
                 bslib::accordion_panel(
                   title = "Variables",
-                  shiny::selectizeInput(
+                  shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_attrition_variable_name",
                     label = "Variable name",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
-                    options = list(plugins = "remove_button")
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
                 ),
                 bslib::accordion_panel(
                   title = "Estimates",
-                  shiny::selectizeInput(
+                  shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_attrition_estimate_name",
                     label = "Estimate name",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
-                    options = list(plugins = "remove_button")
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
                 )
               )
@@ -724,13 +724,13 @@
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
-                      shiny::selectizeInput(
+                      shinyWidgets::pickerInput(
                         inputId = "summarise_cohort_attrition_tidy_columns",
                         label = "Columns",
                         choices = NULL,
                         selected = NULL,
                         multiple = TRUE,
-                        options = list(plugins = "remove_button")
+                        options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_cohort_attrition_tidy_pivot",
@@ -751,7 +751,7 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::selectizeInput(
+                      shinyWidgets::pickerInput(
                         inputId = "summarise_cohort_attrition_gt_3_download_type",
                         label = "File type",
                         selected = "docx",
@@ -901,51 +901,51 @@
                 ),
                 bslib::accordion_panel(
                   title = "grouping",
-                  shiny::selectizeInput(
+                  shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_overlap_grouping_cdm_name",
                     label = "Cdm name",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
-                    options = list(plugins = "remove_button")
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
-                  shiny::selectizeInput(
+                  shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_overlap_grouping_cohort_name_reference",
                     label = "Cohort name reference",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
-                    options = list(plugins = "remove_button")
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
-                  shiny::selectizeInput(
+                  shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_overlap_grouping_cohort_name_comparator",
                     label = "Cohort name comparator",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
-                    options = list(plugins = "remove_button")
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
                 ),
                 bslib::accordion_panel(
                   title = "Variables",
-                  shiny::selectizeInput(
+                  shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_overlap_variable_name",
                     label = "Variable name",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
-                    options = list(plugins = "remove_button")
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
                 ),
                 bslib::accordion_panel(
                   title = "Estimates",
-                  shiny::selectizeInput(
+                  shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_overlap_estimate_name",
                     label = "Estimate name",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
-                    options = list(plugins = "remove_button")
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
                 )
               )
@@ -964,13 +964,13 @@
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
-                      shiny::selectizeInput(
+                      shinyWidgets::pickerInput(
                         inputId = "summarise_cohort_overlap_tidy_columns",
                         label = "Columns",
                         choices = NULL,
                         selected = NULL,
                         multiple = TRUE,
-                        options = list(plugins = "remove_button")
+                        options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_cohort_overlap_tidy_pivot",
@@ -991,7 +991,7 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::selectizeInput(
+                      shinyWidgets::pickerInput(
                         inputId = "summarise_cohort_overlap_gt_1_download_type",
                         label = "File type",
                         selected = "docx",
@@ -1055,7 +1055,7 @@
                         label = "Height",
                         value = 10
                       ),
-                      shiny::selectizeInput(
+                      shinyWidgets::pickerInput(
                         inputId = "summarise_cohort_overlap_ggplot2_2_download_units",
                         label = "Units",
                         selected = "cm",
@@ -1073,13 +1073,13 @@
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
-                      shiny::selectizeInput(
+                      shinyWidgets::pickerInput(
                         inputId = "summarise_cohort_overlap_ggplot2_2_facet",
                         label = "facet",
                         selected = c("cdm_name", "cohort_name_reference"),
                         multiple = TRUE,
                         choices = c("cdm_name", "cohort_name_reference", "cohort_name_comparator", "variable_name", "variable_level", "estimate_name"),
-                        options = list(plugins = "remove_button")
+                        options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
                       shiny::checkboxInput(
                         inputId = "summarise_cohort_overlap_ggplot2_2_uniqueCombinations",
@@ -1108,78 +1108,78 @@
                 ),
                 bslib::accordion_panel(
                   title = "Settings",
-                  shiny::selectizeInput(
+                  shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_attrition_settings_cohort_definition_id",
                     label = "Cohort definition id",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
-                    options = list(plugins = "remove_button")
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
-                  shiny::selectizeInput(
+                  shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_attrition_settings_table_name",
                     label = "Table name",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
-                    options = list(plugins = "remove_button")
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
                 ),
                 bslib::accordion_panel(
                   title = "grouping",
-                  shiny::selectizeInput(
+                  shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_attrition_grouping_cdm_name",
                     label = "Cdm name",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
-                    options = list(plugins = "remove_button")
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
-                  shiny::selectizeInput(
+                  shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_attrition_grouping_cohort_name",
                     label = "Cohort name",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
-                    options = list(plugins = "remove_button")
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
-                  shiny::selectizeInput(
+                  shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_attrition_grouping_reason",
                     label = "Reason",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
-                    options = list(plugins = "remove_button")
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
-                  shiny::selectizeInput(
+                  shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_attrition_grouping_reason_id",
                     label = "Reason id",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
-                    options = list(plugins = "remove_button")
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
                 ),
                 bslib::accordion_panel(
                   title = "Variables",
-                  shiny::selectizeInput(
+                  shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_attrition_variable_name",
                     label = "Variable name",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
-                    options = list(plugins = "remove_button")
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
                 ),
                 bslib::accordion_panel(
                   title = "Estimates",
-                  shiny::selectizeInput(
+                  shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_attrition_estimate_name",
                     label = "Estimate name",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
-                    options = list(plugins = "remove_button")
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
                 )
               )
@@ -1198,13 +1198,13 @@
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
-                      shiny::selectizeInput(
+                      shinyWidgets::pickerInput(
                         inputId = "summarise_cohort_attrition_tidy_columns",
                         label = "Columns",
                         choices = NULL,
                         selected = NULL,
                         multiple = TRUE,
-                        options = list(plugins = "remove_button")
+                        options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_cohort_attrition_tidy_pivot",
@@ -1225,7 +1225,7 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::selectizeInput(
+                      shinyWidgets::pickerInput(
                         inputId = "summarise_cohort_attrition_gt_3_download_type",
                         label = "File type",
                         selected = "docx",
@@ -1312,54 +1312,54 @@
                 ),
                 bslib::accordion_panel(
                   title = "Settings",
-                  shiny::selectizeInput(
+                  shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_count_settings_table_name",
                     label = "Table name",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
-                    options = list(plugins = "remove_button")
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
                 ),
                 bslib::accordion_panel(
                   title = "grouping",
-                  shiny::selectizeInput(
+                  shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_count_grouping_cdm_name",
                     label = "Cdm name",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
-                    options = list(plugins = "remove_button")
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
-                  shiny::selectizeInput(
+                  shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_count_grouping_cohort_name",
                     label = "Cohort name",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
-                    options = list(plugins = "remove_button")
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
                 ),
                 bslib::accordion_panel(
                   title = "Variables",
-                  shiny::selectizeInput(
+                  shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_count_variable_name",
                     label = "Variable name",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
-                    options = list(plugins = "remove_button")
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
                 ),
                 bslib::accordion_panel(
                   title = "Estimates",
-                  shiny::selectizeInput(
+                  shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_count_estimate_name",
                     label = "Estimate name",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
-                    options = list(plugins = "remove_button")
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
                 )
               )
@@ -1378,13 +1378,13 @@
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
-                      shiny::selectizeInput(
+                      shinyWidgets::pickerInput(
                         inputId = "summarise_cohort_count_tidy_columns",
                         label = "Columns",
                         choices = NULL,
                         selected = NULL,
                         multiple = TRUE,
-                        options = list(plugins = "remove_button")
+                        options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_cohort_count_tidy_pivot",
@@ -1405,7 +1405,7 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::selectizeInput(
+                      shinyWidgets::pickerInput(
                         inputId = "summarise_cohort_count_gt_9_download_type",
                         label = "File type",
                         selected = "docx",
@@ -1464,7 +1464,7 @@
                         label = "Height",
                         value = 10
                       ),
-                      shiny::selectizeInput(
+                      shinyWidgets::pickerInput(
                         inputId = "summarise_cohort_count_ggplot2_10_download_units",
                         label = "Units",
                         selected = "cm",
@@ -1482,21 +1482,21 @@
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
-                      shiny::selectizeInput(
+                      shinyWidgets::pickerInput(
                         inputId = "summarise_cohort_count_ggplot2_10_facet",
                         label = "facet",
                         selected = "cdm_name",
                         multiple = TRUE,
                         choices = c("cdm_name", "cohort_name", "variable_name", "variable_level", "estimate_name"),
-                        options = list(plugins = "remove_button")
+                        options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
-                      shiny::selectizeInput(
+                      shinyWidgets::pickerInput(
                         inputId = "summarise_cohort_count_ggplot2_10_colour",
                         label = "colour",
                         selected = NULL,
                         multiple = TRUE,
                         choices = c("cdm_name", "cohort_name", "variable_name", "variable_level", "estimate_name"),
-                        options = list(plugins = "remove_button")
+                        options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
                       position = "right"
                     ),
@@ -1586,54 +1586,54 @@
                   ),
                   bslib::accordion_panel(
                     title = "Settings",
-                    shiny::selectizeInput(
+                    shinyWidgets::pickerInput(
                       inputId = "summarise_cohort_count_settings_table_name",
                       label = "Table name",
                       choices = NULL,
                       selected = NULL,
                       multiple = TRUE,
-                      options = list(plugins = "remove_button")
+                      options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                     )
                   ),
                   bslib::accordion_panel(
                     title = "grouping",
-                    shiny::selectizeInput(
+                    shinyWidgets::pickerInput(
                       inputId = "summarise_cohort_count_grouping_cdm_name",
                       label = "Cdm name",
                       choices = NULL,
                       selected = NULL,
                       multiple = TRUE,
-                      options = list(plugins = "remove_button")
+                      options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                     ),
-                    shiny::selectizeInput(
+                    shinyWidgets::pickerInput(
                       inputId = "summarise_cohort_count_grouping_cohort_name",
                       label = "Cohort name",
                       choices = NULL,
                       selected = NULL,
                       multiple = TRUE,
-                      options = list(plugins = "remove_button")
+                      options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                     )
                   ),
                   bslib::accordion_panel(
                     title = "Variables",
-                    shiny::selectizeInput(
+                    shinyWidgets::pickerInput(
                       inputId = "summarise_cohort_count_variable_name",
                       label = "Variable name",
                       choices = NULL,
                       selected = NULL,
                       multiple = TRUE,
-                      options = list(plugins = "remove_button")
+                      options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                     )
                   ),
                   bslib::accordion_panel(
                     title = "Estimates",
-                    shiny::selectizeInput(
+                    shinyWidgets::pickerInput(
                       inputId = "summarise_cohort_count_estimate_name",
                       label = "Estimate name",
                       choices = NULL,
                       selected = NULL,
                       multiple = TRUE,
-                      options = list(plugins = "remove_button")
+                      options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                     )
                   )
                 )
@@ -1652,13 +1652,13 @@
                     ),
                     bslib::layout_sidebar(
                       sidebar = bslib::sidebar(
-                        shiny::selectizeInput(
+                        shinyWidgets::pickerInput(
                           inputId = "summarise_cohort_count_tidy_columns",
                           label = "Columns",
                           choices = NULL,
                           selected = NULL,
                           multiple = TRUE,
-                          options = list(plugins = "remove_button")
+                          options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                         ),
                         shiny::radioButtons(
                           inputId = "summarise_cohort_count_tidy_pivot",
@@ -1679,7 +1679,7 @@
                     bslib::card_header(
                       bslib::popover(
                         shiny::icon("download"),
-                        shiny::selectizeInput(
+                        shinyWidgets::pickerInput(
                           inputId = "summarise_cohort_count_gt_9_download_type",
                           label = "File type",
                           selected = "docx",
@@ -1738,7 +1738,7 @@
                           label = "Height",
                           value = 10
                         ),
-                        shiny::selectizeInput(
+                        shinyWidgets::pickerInput(
                           inputId = "summarise_cohort_count_ggplot2_10_download_units",
                           label = "Units",
                           selected = "cm",
@@ -1756,21 +1756,21 @@
                     ),
                     bslib::layout_sidebar(
                       sidebar = bslib::sidebar(
-                        shiny::selectizeInput(
+                        shinyWidgets::pickerInput(
                           inputId = "summarise_cohort_count_ggplot2_10_facet",
                           label = "facet",
                           selected = "cdm_name",
                           multiple = TRUE,
                           choices = c("cdm_name", "cohort_name", "variable_name", "variable_level", "estimate_name"),
-                          options = list(plugins = "remove_button")
+                          options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                         ),
-                        shiny::selectizeInput(
+                        shinyWidgets::pickerInput(
                           inputId = "summarise_cohort_count_ggplot2_10_colour",
                           label = "colour",
                           selected = NULL,
                           multiple = TRUE,
                           choices = c("cdm_name", "cohort_name", "variable_name", "variable_level", "estimate_name"),
-                          options = list(plugins = "remove_button")
+                          options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                         ),
                         position = "right"
                       ),
@@ -1794,78 +1794,78 @@
                   ),
                   bslib::accordion_panel(
                     title = "Settings",
-                    shiny::selectizeInput(
+                    shinyWidgets::pickerInput(
                       inputId = "summarise_cohort_attrition_settings_cohort_definition_id",
                       label = "Cohort definition id",
                       choices = NULL,
                       selected = NULL,
                       multiple = TRUE,
-                      options = list(plugins = "remove_button")
+                      options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                     ),
-                    shiny::selectizeInput(
+                    shinyWidgets::pickerInput(
                       inputId = "summarise_cohort_attrition_settings_table_name",
                       label = "Table name",
                       choices = NULL,
                       selected = NULL,
                       multiple = TRUE,
-                      options = list(plugins = "remove_button")
+                      options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                     )
                   ),
                   bslib::accordion_panel(
                     title = "grouping",
-                    shiny::selectizeInput(
+                    shinyWidgets::pickerInput(
                       inputId = "summarise_cohort_attrition_grouping_cdm_name",
                       label = "Cdm name",
                       choices = NULL,
                       selected = NULL,
                       multiple = TRUE,
-                      options = list(plugins = "remove_button")
+                      options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                     ),
-                    shiny::selectizeInput(
+                    shinyWidgets::pickerInput(
                       inputId = "summarise_cohort_attrition_grouping_cohort_name",
                       label = "Cohort name",
                       choices = NULL,
                       selected = NULL,
                       multiple = TRUE,
-                      options = list(plugins = "remove_button")
+                      options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                     ),
-                    shiny::selectizeInput(
+                    shinyWidgets::pickerInput(
                       inputId = "summarise_cohort_attrition_grouping_reason",
                       label = "Reason",
                       choices = NULL,
                       selected = NULL,
                       multiple = TRUE,
-                      options = list(plugins = "remove_button")
+                      options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                     ),
-                    shiny::selectizeInput(
+                    shinyWidgets::pickerInput(
                       inputId = "summarise_cohort_attrition_grouping_reason_id",
                       label = "Reason id",
                       choices = NULL,
                       selected = NULL,
                       multiple = TRUE,
-                      options = list(plugins = "remove_button")
+                      options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                     )
                   ),
                   bslib::accordion_panel(
                     title = "Variables",
-                    shiny::selectizeInput(
+                    shinyWidgets::pickerInput(
                       inputId = "summarise_cohort_attrition_variable_name",
                       label = "Variable name",
                       choices = NULL,
                       selected = NULL,
                       multiple = TRUE,
-                      options = list(plugins = "remove_button")
+                      options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                     )
                   ),
                   bslib::accordion_panel(
                     title = "Estimates",
-                    shiny::selectizeInput(
+                    shinyWidgets::pickerInput(
                       inputId = "summarise_cohort_attrition_estimate_name",
                       label = "Estimate name",
                       choices = NULL,
                       selected = NULL,
                       multiple = TRUE,
-                      options = list(plugins = "remove_button")
+                      options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                     )
                   )
                 )
@@ -1884,13 +1884,13 @@
                     ),
                     bslib::layout_sidebar(
                       sidebar = bslib::sidebar(
-                        shiny::selectizeInput(
+                        shinyWidgets::pickerInput(
                           inputId = "summarise_cohort_attrition_tidy_columns",
                           label = "Columns",
                           choices = NULL,
                           selected = NULL,
                           multiple = TRUE,
-                          options = list(plugins = "remove_button")
+                          options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                         ),
                         shiny::radioButtons(
                           inputId = "summarise_cohort_attrition_tidy_pivot",
@@ -1911,7 +1911,7 @@
                     bslib::card_header(
                       bslib::popover(
                         shiny::icon("download"),
-                        shiny::selectizeInput(
+                        shinyWidgets::pickerInput(
                           inputId = "summarise_cohort_attrition_gt_3_download_type",
                           label = "File type",
                           selected = "docx",
@@ -1999,51 +1999,51 @@
                 ),
                 bslib::accordion_panel(
                   title = "grouping",
-                  shiny::selectizeInput(
+                  shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_overlap_grouping_cdm_name",
                     label = "Cdm name",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
-                    options = list(plugins = "remove_button")
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
-                  shiny::selectizeInput(
+                  shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_overlap_grouping_cohort_name_reference",
                     label = "Cohort name reference",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
-                    options = list(plugins = "remove_button")
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
-                  shiny::selectizeInput(
+                  shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_overlap_grouping_cohort_name_comparator",
                     label = "Cohort name comparator",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
-                    options = list(plugins = "remove_button")
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
                 ),
                 bslib::accordion_panel(
                   title = "Variables",
-                  shiny::selectizeInput(
+                  shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_overlap_variable_name",
                     label = "Variable name",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
-                    options = list(plugins = "remove_button")
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
                 ),
                 bslib::accordion_panel(
                   title = "Estimates",
-                  shiny::selectizeInput(
+                  shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_overlap_estimate_name",
                     label = "Estimate name",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
-                    options = list(plugins = "remove_button")
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
                 )
               )
@@ -2062,13 +2062,13 @@
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
-                      shiny::selectizeInput(
+                      shinyWidgets::pickerInput(
                         inputId = "summarise_cohort_overlap_tidy_columns",
                         label = "Columns",
                         choices = NULL,
                         selected = NULL,
                         multiple = TRUE,
-                        options = list(plugins = "remove_button")
+                        options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
                       shiny::radioButtons(
                         inputId = "summarise_cohort_overlap_tidy_pivot",
@@ -2089,7 +2089,7 @@
                   bslib::card_header(
                     bslib::popover(
                       shiny::icon("download"),
-                      shiny::selectizeInput(
+                      shinyWidgets::pickerInput(
                         inputId = "summarise_cohort_overlap_gt_1_download_type",
                         label = "File type",
                         selected = "docx",
@@ -2153,7 +2153,7 @@
                         label = "Height",
                         value = 10
                       ),
-                      shiny::selectizeInput(
+                      shinyWidgets::pickerInput(
                         inputId = "summarise_cohort_overlap_ggplot2_2_download_units",
                         label = "Units",
                         selected = "cm",
@@ -2171,13 +2171,13 @@
                   ),
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
-                      shiny::selectizeInput(
+                      shinyWidgets::pickerInput(
                         inputId = "summarise_cohort_overlap_ggplot2_2_facet",
                         label = "facet",
                         selected = c("cdm_name", "cohort_name_reference"),
                         multiple = TRUE,
                         choices = c("cdm_name", "cohort_name_reference", "cohort_name_comparator", "variable_name", "variable_level", "estimate_name"),
-                        options = list(plugins = "remove_button")
+                        options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
                       shiny::checkboxInput(
                         inputId = "summarise_cohort_overlap_ggplot2_2_uniqueCombinations",

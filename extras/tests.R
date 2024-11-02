@@ -90,19 +90,19 @@ ui <- page_navbar(
           ),
           bslib::accordion_panel(
             title = "Settings",
-            selectizeInput(inputId = "set1", label = "Setting1", choices = unique(penguins$species), multiple = TRUE, options = list(plugins = "remove_button")),
-            selectizeInput(inputId = "set2", label = "Setting2", choices = unique(penguins$species), multiple = FALSE)
+            shinyWidgets::pickerInput(inputId = "set1", label = "Setting1", choices = unique(penguins$species), multiple = TRUE, options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")),
+            shinyWidgets::pickerInput(inputId = "set2", label = "Setting2", choices = unique(penguins$species), multiple = FALSE)
           ),
           bslib::accordion_panel(
             title = "grouping",
-            selectizeInput(inputId = "group1", label = "Database name", choices = unique(penguins$species), multiple = TRUE, options = list(plugins = "remove_button")),
-            selectizeInput(inputId = "group2", label = "Cohort name", choices = unique(penguins$species), multiple = TRUE, options = list(plugins = "remove_button")),
-            selectizeInput(inputId = "group3", label = "Sex", choices = unique(penguins$species), multiple = FALSE)
+            shinyWidgets::pickerInput(inputId = "group1", label = "Database name", choices = unique(penguins$species), multiple = TRUE, options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")),
+            shinyWidgets::pickerInput(inputId = "group2", label = "Cohort name", choices = unique(penguins$species), multiple = TRUE, options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")),
+            shinyWidgets::pickerInput(inputId = "group3", label = "Sex", choices = unique(penguins$species), multiple = FALSE)
           ),
           bslib::accordion_panel(
             title = "Variables",
-            selectizeInput(inputId = "var1", label = "Variables", choices = unique(penguins$species), multiple = TRUE, options = list(plugins = "remove_button")),
-            selectizeInput(inputId = "var2", label = "Estimates", choices = unique(penguins$species), multiple = FALSE)
+            shinyWidgets::pickerInput(inputId = "var1", label = "Variables", choices = unique(penguins$species), multiple = TRUE, options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")),
+            shinyWidgets::pickerInput(inputId = "var2", label = "Estimates", choices = unique(penguins$species), multiple = FALSE)
           )
         )
       ),
@@ -128,9 +128,9 @@ ui <- page_navbar(
             layout_sidebar(
               sidebar = sidebar(
                 position = "right",
-                selectizeInput(inputId = "tab1", label = "Group", choices = unique(penguins$species), multiple = TRUE, options = list(plugins = "remove_button")),
-                selectizeInput(inputId = "tab2", label = "Header", choices = unique(penguins$species), multiple = TRUE, options = list(plugins = "remove_button")),
-                selectizeInput(inputId = "tab3", label = "Hide", choices = unique(penguins$species), multiple = TRUE, options = list(plugins = "remove_button"))
+                shinyWidgets::pickerInput(inputId = "tab1", label = "Group", choices = unique(penguins$species), multiple = TRUE, options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")),
+                shinyWidgets::pickerInput(inputId = "tab2", label = "Header", choices = unique(penguins$species), multiple = TRUE, options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")),
+                shinyWidgets::pickerInput(inputId = "tab3", label = "Hide", choices = unique(penguins$species), multiple = TRUE, options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3"))
               ),
               gt::gt(dplyr::tibble(a = 1))
             )
@@ -155,8 +155,8 @@ ui <- page_navbar(
             layout_sidebar(
               sidebar = sidebar(
                 position = "right",
-                selectizeInput(inputId = "plot11", label = "Facet", choices = unique(penguins$species), multiple = TRUE, options = list(plugins = "remove_button")),
-                selectizeInput(inputId = "plot12", label = "Colour", choices = unique(penguins$species), multiple = TRUE, options = list(plugins = "remove_button"))
+                shinyWidgets::pickerInput(inputId = "plot11", label = "Facet", choices = unique(penguins$species), multiple = TRUE, options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")),
+                shinyWidgets::pickerInput(inputId = "plot12", label = "Colour", choices = unique(penguins$species), multiple = TRUE, options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3"))
               ),
               shiny::plotOutput("plot")
             )
