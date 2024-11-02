@@ -1233,12 +1233,10 @@
         shiny::observe({
           choices <- OmopViewer::getChoices(data, flatten = TRUE)
           for (k in seq_along(choices)) {
-            shiny::updateshinyWidgets::pickerInput(
-              session,
+            shinyWidgets::updatePickerInput(session,
               inputId = names(choices)[k],
               choices = choices[[k]],
-              selected = choices[[k]],
-              server = TRUE
+              selected = choices[[k]]
             )
           }
         })
@@ -1584,6 +1582,7 @@
       library(here)
       library(readr)
       library(shiny)
+      library(shinyWidgets)
       library(sortable)
       library(visOmopResults)
       
@@ -3872,12 +3871,10 @@
         shiny::observe({
           choices <- OmopViewer::getChoices(data, flatten = TRUE)
           for (k in seq_along(choices)) {
-            shiny::updateshinyWidgets::pickerInput(
-              session,
+            shinyWidgets::updatePickerInput(session,
               inputId = names(choices)[k],
               choices = choices[[k]],
-              selected = choices[[k]],
-              server = TRUE
+              selected = choices[[k]]
             )
           }
         })
@@ -4381,6 +4378,7 @@
       library(here)
       library(readr)
       library(shiny)
+      library(shinyWidgets)
       library(visOmopResults)
       
       data <- OmopViewer::importSummarisedResult(here::here("data")) |>
@@ -6792,12 +6790,10 @@
         shiny::observe({
           choices <- OmopViewer::getChoices(data, flatten = TRUE)
           for (k in seq_along(choices)) {
-            shiny::updateshinyWidgets::pickerInput(
-              session,
+            shinyWidgets::updatePickerInput(session,
               inputId = names(choices)[k],
               choices = choices[[k]],
-              selected = choices[[k]],
-              server = TRUE
+              selected = choices[[k]]
             )
           }
         })
@@ -7360,6 +7356,7 @@
       library(here)
       library(readr)
       library(shiny)
+      library(shinyWidgets)
       library(sortable)
       library(visOmopResults)
       
@@ -9077,12 +9074,10 @@
         shiny::observe({
           choices <- OmopViewer::getChoices(data, flatten = TRUE)
           for (k in seq_along(choices)) {
-            shiny::updateshinyWidgets::pickerInput(
-              session,
+            shinyWidgets::updatePickerInput(session,
               inputId = names(choices)[k],
               choices = choices[[k]],
-              selected = choices[[k]],
-              server = TRUE
+              selected = choices[[k]]
             )
           }
         })
@@ -9259,6 +9254,7 @@
       library(here)
       library(readr)
       library(shiny)
+      library(shinyWidgets)
       library(visOmopResults)
       
       data <- OmopViewer::importSummarisedResult(here::here("data")) |>
@@ -10038,12 +10034,10 @@
         shiny::observe({
           choices <- OmopViewer::getChoices(data, flatten = TRUE)
           for (k in seq_along(choices)) {
-            shiny::updateshinyWidgets::pickerInput(
-              session,
+            shinyWidgets::updatePickerInput(session,
               inputId = names(choices)[k],
               choices = choices[[k]],
-              selected = choices[[k]],
-              server = TRUE
+              selected = choices[[k]]
             )
           }
         })
@@ -10329,6 +10323,7 @@
       library(here)
       library(readr)
       library(shiny)
+      library(shinyWidgets)
       library(sortable)
       library(visOmopResults)
       
