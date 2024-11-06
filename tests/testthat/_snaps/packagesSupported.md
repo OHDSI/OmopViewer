@@ -113,16 +113,16 @@
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
-                    inputId = "incidence_settings_denominator_time_at_risk",
-                    label = "Denominator time at risk",
+                    inputId = "incidence_settings_denominator_target_cohort_name",
+                    label = "Denominator target cohort name",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
-                    inputId = "incidence_settings_denominator_target_cohort_name",
-                    label = "Denominator target cohort name",
+                    inputId = "incidence_settings_denominator_time_at_risk",
+                    label = "Denominator time at risk",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
@@ -254,7 +254,7 @@
                         header = NULL,
                         sortable::add_rank_list(
                           text = "none",
-                          labels = c("cdm_name", "denominator_cohort_name", "incidence_start_date", "incidence_end_date", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_time_at_risk", "denominator_target_cohort_name", "outcome_cohort_name", "variable_name", "variable_level"),
+                          labels = c("cdm_name", "denominator_cohort_name", "incidence_start_date", "incidence_end_date", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "outcome_cohort_name", "variable_name", "variable_level"),
                           input_id = "incidence_gt_18_none"
                         ),
                         sortable::add_rank_list(
@@ -319,7 +319,7 @@
                         label = "x",
                         selected = "incidence_start_date",
                         multiple = FALSE,
-                        choices = c("cdm_name", "denominator_cohort_name", "incidence_start_date", "incidence_end_date", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_time_at_risk", "denominator_target_cohort_name", "outcome_cohort_name", "variable_name", "variable_level", "estimate_name"),
+                        choices = c("cdm_name", "denominator_cohort_name", "incidence_start_date", "incidence_end_date", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "outcome_cohort_name", "variable_name", "variable_level", "estimate_name"),
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
                       shiny::checkboxInput(
@@ -332,7 +332,7 @@
                         label = "facet",
                         selected = NULL,
                         multiple = TRUE,
-                        choices = c("cdm_name", "denominator_cohort_name", "incidence_start_date", "incidence_end_date", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_time_at_risk", "denominator_target_cohort_name", "outcome_cohort_name", "variable_name", "variable_level", "estimate_name"),
+                        choices = c("cdm_name", "denominator_cohort_name", "incidence_start_date", "incidence_end_date", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "outcome_cohort_name", "variable_name", "variable_level", "estimate_name"),
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
                       shinyWidgets::pickerInput(
@@ -340,7 +340,7 @@
                         label = "colour",
                         selected = NULL,
                         multiple = TRUE,
-                        choices = c("cdm_name", "denominator_cohort_name", "incidence_start_date", "incidence_end_date", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_time_at_risk", "denominator_target_cohort_name", "outcome_cohort_name", "variable_name", "variable_level", "estimate_name"),
+                        choices = c("cdm_name", "denominator_cohort_name", "incidence_start_date", "incidence_end_date", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "outcome_cohort_name", "variable_name", "variable_level", "estimate_name"),
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
                       position = "right"
@@ -438,16 +438,16 @@
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
-                    inputId = "incidence_attrition_settings_denominator_time_at_risk",
-                    label = "Denominator time at risk",
+                    inputId = "incidence_attrition_settings_denominator_target_cohort_name",
+                    label = "Denominator target cohort name",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
-                    inputId = "incidence_attrition_settings_denominator_target_cohort_name",
-                    label = "Denominator target cohort name",
+                    inputId = "incidence_attrition_settings_denominator_time_at_risk",
+                    label = "Denominator time at risk",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
@@ -579,7 +579,7 @@
                         header = NULL,
                         sortable::add_rank_list(
                           text = "none",
-                          labels = c("denominator_cohort_name", "reason", "reason_id", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_time_at_risk", "denominator_target_cohort_name", "outcome_cohort_name"),
+                          labels = c("denominator_cohort_name", "reason", "reason_id", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "outcome_cohort_name"),
                           input_id = "incidence_attrition_gt_22_none"
                         ),
                         sortable::add_rank_list(
@@ -677,16 +677,16 @@
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
-                    inputId = "prevalence_settings_denominator_time_at_risk",
-                    label = "Denominator time at risk",
+                    inputId = "prevalence_settings_denominator_target_cohort_name",
+                    label = "Denominator target cohort name",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
-                    inputId = "prevalence_settings_denominator_target_cohort_name",
-                    label = "Denominator target cohort name",
+                    inputId = "prevalence_settings_denominator_time_at_risk",
+                    label = "Denominator time at risk",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
@@ -826,7 +826,7 @@
                         header = NULL,
                         sortable::add_rank_list(
                           text = "none",
-                          labels = c("cdm_name", "denominator_cohort_name", "prevalence_start_date", "prevalence_end_date", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_time_at_risk", "denominator_target_cohort_name", "analysis_type", "analysis_full_contribution", "variable_name", "variable_level"),
+                          labels = c("cdm_name", "denominator_cohort_name", "prevalence_start_date", "prevalence_end_date", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "analysis_type", "analysis_full_contribution", "variable_name", "variable_level"),
                           input_id = "prevalence_gt_20_none"
                         ),
                         sortable::add_rank_list(
@@ -891,7 +891,7 @@
                         label = "x",
                         selected = "prevalence_start_date",
                         multiple = FALSE,
-                        choices = c("cdm_name", "denominator_cohort_name", "prevalence_start_date", "prevalence_end_date", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_time_at_risk", "denominator_target_cohort_name", "analysis_type", "analysis_full_contribution", "variable_name", "variable_level", "estimate_name"),
+                        choices = c("cdm_name", "denominator_cohort_name", "prevalence_start_date", "prevalence_end_date", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "analysis_type", "analysis_full_contribution", "variable_name", "variable_level", "estimate_name"),
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
                       shiny::checkboxInput(
@@ -904,7 +904,7 @@
                         label = "facet",
                         selected = NULL,
                         multiple = TRUE,
-                        choices = c("cdm_name", "denominator_cohort_name", "prevalence_start_date", "prevalence_end_date", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_time_at_risk", "denominator_target_cohort_name", "analysis_type", "analysis_full_contribution", "variable_name", "variable_level", "estimate_name"),
+                        choices = c("cdm_name", "denominator_cohort_name", "prevalence_start_date", "prevalence_end_date", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "analysis_type", "analysis_full_contribution", "variable_name", "variable_level", "estimate_name"),
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
                       shinyWidgets::pickerInput(
@@ -912,7 +912,7 @@
                         label = "colour",
                         selected = NULL,
                         multiple = TRUE,
-                        choices = c("cdm_name", "denominator_cohort_name", "prevalence_start_date", "prevalence_end_date", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_time_at_risk", "denominator_target_cohort_name", "analysis_type", "analysis_full_contribution", "variable_name", "variable_level", "estimate_name"),
+                        choices = c("cdm_name", "denominator_cohort_name", "prevalence_start_date", "prevalence_end_date", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "analysis_type", "analysis_full_contribution", "variable_name", "variable_level", "estimate_name"),
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
                       position = "right"
@@ -994,16 +994,16 @@
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
-                    inputId = "prevalence_attrition_settings_denominator_time_at_risk",
-                    label = "Denominator time at risk",
+                    inputId = "prevalence_attrition_settings_denominator_target_cohort_name",
+                    label = "Denominator target cohort name",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
-                    inputId = "prevalence_attrition_settings_denominator_target_cohort_name",
-                    label = "Denominator target cohort name",
+                    inputId = "prevalence_attrition_settings_denominator_time_at_risk",
+                    label = "Denominator time at risk",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
@@ -1151,7 +1151,7 @@
                         header = NULL,
                         sortable::add_rank_list(
                           text = "none",
-                          labels = c("denominator_cohort_name", "reason", "reason_id", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_time_at_risk", "denominator_target_cohort_name", "outcome_cohort_name", "analysis_type", "analysis_full_contribution"),
+                          labels = c("denominator_cohort_name", "reason", "reason_id", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "outcome_cohort_name", "analysis_type", "analysis_full_contribution"),
                           input_id = "prevalence_attrition_gt_23_none"
                         ),
                         sortable::add_rank_list(
@@ -1699,16 +1699,16 @@
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
-                    inputId = "incidence_settings_denominator_time_at_risk",
-                    label = "Denominator time at risk",
+                    inputId = "incidence_settings_denominator_target_cohort_name",
+                    label = "Denominator target cohort name",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
-                    inputId = "incidence_settings_denominator_target_cohort_name",
-                    label = "Denominator target cohort name",
+                    inputId = "incidence_settings_denominator_time_at_risk",
+                    label = "Denominator time at risk",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
@@ -1840,7 +1840,7 @@
                         header = NULL,
                         sortable::add_rank_list(
                           text = "none",
-                          labels = c("cdm_name", "denominator_cohort_name", "incidence_start_date", "incidence_end_date", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_time_at_risk", "denominator_target_cohort_name", "outcome_cohort_name", "variable_name", "variable_level"),
+                          labels = c("cdm_name", "denominator_cohort_name", "incidence_start_date", "incidence_end_date", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "outcome_cohort_name", "variable_name", "variable_level"),
                           input_id = "incidence_gt_18_none"
                         ),
                         sortable::add_rank_list(
@@ -1905,7 +1905,7 @@
                         label = "x",
                         selected = "incidence_start_date",
                         multiple = FALSE,
-                        choices = c("cdm_name", "denominator_cohort_name", "incidence_start_date", "incidence_end_date", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_time_at_risk", "denominator_target_cohort_name", "outcome_cohort_name", "variable_name", "variable_level", "estimate_name"),
+                        choices = c("cdm_name", "denominator_cohort_name", "incidence_start_date", "incidence_end_date", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "outcome_cohort_name", "variable_name", "variable_level", "estimate_name"),
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
                       shiny::checkboxInput(
@@ -1918,7 +1918,7 @@
                         label = "facet",
                         selected = NULL,
                         multiple = TRUE,
-                        choices = c("cdm_name", "denominator_cohort_name", "incidence_start_date", "incidence_end_date", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_time_at_risk", "denominator_target_cohort_name", "outcome_cohort_name", "variable_name", "variable_level", "estimate_name"),
+                        choices = c("cdm_name", "denominator_cohort_name", "incidence_start_date", "incidence_end_date", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "outcome_cohort_name", "variable_name", "variable_level", "estimate_name"),
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
                       shinyWidgets::pickerInput(
@@ -1926,7 +1926,7 @@
                         label = "colour",
                         selected = NULL,
                         multiple = TRUE,
-                        choices = c("cdm_name", "denominator_cohort_name", "incidence_start_date", "incidence_end_date", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_time_at_risk", "denominator_target_cohort_name", "outcome_cohort_name", "variable_name", "variable_level", "estimate_name"),
+                        choices = c("cdm_name", "denominator_cohort_name", "incidence_start_date", "incidence_end_date", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "outcome_cohort_name", "variable_name", "variable_level", "estimate_name"),
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
                       position = "right"
@@ -2024,16 +2024,16 @@
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
-                    inputId = "incidence_attrition_settings_denominator_time_at_risk",
-                    label = "Denominator time at risk",
+                    inputId = "incidence_attrition_settings_denominator_target_cohort_name",
+                    label = "Denominator target cohort name",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
-                    inputId = "incidence_attrition_settings_denominator_target_cohort_name",
-                    label = "Denominator target cohort name",
+                    inputId = "incidence_attrition_settings_denominator_time_at_risk",
+                    label = "Denominator time at risk",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
@@ -2165,7 +2165,7 @@
                         header = NULL,
                         sortable::add_rank_list(
                           text = "none",
-                          labels = c("denominator_cohort_name", "reason", "reason_id", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_time_at_risk", "denominator_target_cohort_name", "outcome_cohort_name"),
+                          labels = c("denominator_cohort_name", "reason", "reason_id", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "outcome_cohort_name"),
                           input_id = "incidence_attrition_gt_22_none"
                         ),
                         sortable::add_rank_list(
@@ -2263,16 +2263,16 @@
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
-                    inputId = "prevalence_settings_denominator_time_at_risk",
-                    label = "Denominator time at risk",
+                    inputId = "prevalence_settings_denominator_target_cohort_name",
+                    label = "Denominator target cohort name",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
-                    inputId = "prevalence_settings_denominator_target_cohort_name",
-                    label = "Denominator target cohort name",
+                    inputId = "prevalence_settings_denominator_time_at_risk",
+                    label = "Denominator time at risk",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
@@ -2412,7 +2412,7 @@
                         header = NULL,
                         sortable::add_rank_list(
                           text = "none",
-                          labels = c("cdm_name", "denominator_cohort_name", "prevalence_start_date", "prevalence_end_date", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_time_at_risk", "denominator_target_cohort_name", "analysis_type", "analysis_full_contribution", "variable_name", "variable_level"),
+                          labels = c("cdm_name", "denominator_cohort_name", "prevalence_start_date", "prevalence_end_date", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "analysis_type", "analysis_full_contribution", "variable_name", "variable_level"),
                           input_id = "prevalence_gt_20_none"
                         ),
                         sortable::add_rank_list(
@@ -2477,7 +2477,7 @@
                         label = "x",
                         selected = "prevalence_start_date",
                         multiple = FALSE,
-                        choices = c("cdm_name", "denominator_cohort_name", "prevalence_start_date", "prevalence_end_date", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_time_at_risk", "denominator_target_cohort_name", "analysis_type", "analysis_full_contribution", "variable_name", "variable_level", "estimate_name"),
+                        choices = c("cdm_name", "denominator_cohort_name", "prevalence_start_date", "prevalence_end_date", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "analysis_type", "analysis_full_contribution", "variable_name", "variable_level", "estimate_name"),
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
                       shiny::checkboxInput(
@@ -2490,7 +2490,7 @@
                         label = "facet",
                         selected = NULL,
                         multiple = TRUE,
-                        choices = c("cdm_name", "denominator_cohort_name", "prevalence_start_date", "prevalence_end_date", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_time_at_risk", "denominator_target_cohort_name", "analysis_type", "analysis_full_contribution", "variable_name", "variable_level", "estimate_name"),
+                        choices = c("cdm_name", "denominator_cohort_name", "prevalence_start_date", "prevalence_end_date", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "analysis_type", "analysis_full_contribution", "variable_name", "variable_level", "estimate_name"),
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
                       shinyWidgets::pickerInput(
@@ -2498,7 +2498,7 @@
                         label = "colour",
                         selected = NULL,
                         multiple = TRUE,
-                        choices = c("cdm_name", "denominator_cohort_name", "prevalence_start_date", "prevalence_end_date", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_time_at_risk", "denominator_target_cohort_name", "analysis_type", "analysis_full_contribution", "variable_name", "variable_level", "estimate_name"),
+                        choices = c("cdm_name", "denominator_cohort_name", "prevalence_start_date", "prevalence_end_date", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "analysis_type", "analysis_full_contribution", "variable_name", "variable_level", "estimate_name"),
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
                       position = "right"
@@ -2580,16 +2580,16 @@
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
-                    inputId = "prevalence_attrition_settings_denominator_time_at_risk",
-                    label = "Denominator time at risk",
+                    inputId = "prevalence_attrition_settings_denominator_target_cohort_name",
+                    label = "Denominator target cohort name",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
-                    inputId = "prevalence_attrition_settings_denominator_target_cohort_name",
-                    label = "Denominator target cohort name",
+                    inputId = "prevalence_attrition_settings_denominator_time_at_risk",
+                    label = "Denominator time at risk",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
@@ -2737,7 +2737,7 @@
                         header = NULL,
                         sortable::add_rank_list(
                           text = "none",
-                          labels = c("denominator_cohort_name", "reason", "reason_id", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_time_at_risk", "denominator_target_cohort_name", "outcome_cohort_name", "analysis_type", "analysis_full_contribution"),
+                          labels = c("denominator_cohort_name", "reason", "reason_id", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "outcome_cohort_name", "analysis_type", "analysis_full_contribution"),
                           input_id = "prevalence_attrition_gt_23_none"
                         ),
                         sortable::add_rank_list(
