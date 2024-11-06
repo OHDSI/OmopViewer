@@ -29,7 +29,7 @@ getOutputDownload <- function(outputId) {
   type <- getOutputType(outputId)
   extraButtons <- switch (
     type,
-    "gt" = 'shiny::selectizeInput(
+    "gt" = 'shinyWidgets::pickerInput(
       inputId = "{prefix}_download_type",
       label = "File type",
       selected = "docx",
@@ -59,7 +59,7 @@ getOutputDownload <- function(outputId) {
         label = "Height",
         value = 10
       )',
-      'shiny::selectizeInput(
+      'shinyWidgets::pickerInput(
         inputId = "{prefix}_download_units",
         label = "Units",
         selected = "cm",

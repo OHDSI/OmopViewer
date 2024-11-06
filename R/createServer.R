@@ -22,13 +22,10 @@ selectiseServer <- function(resultTypes, data) {
     paste0('shiny::observe({
       choices <- OmopViewer::getChoices(', data, ', flatten = TRUE)
       for (k in seq_along(choices)) {
-        shiny::updateSelectizeInput(
-          session,
-          inputId = names(choices)[k],
-          choices = choices[[k]],
-          selected = choices[[k]],
-          server = TRUE
-        )
+       shinyWidgets::updatePickerInput(session,
+                                      inputId = names(choices)[k],
+                                      choices = choices[[k]],
+                                      selected = choices[[k]])
       }
     })')
   )
