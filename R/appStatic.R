@@ -10,11 +10,13 @@
 #' content will be controlled from the generated background.md file.
 #' @param summary Whether to include a panel with a summary of content in the
 #' `result`.
-#' @param panels List specifying order of results. Each panel is determined
-#' by the available result types in the result object. Panels for any available
-#' results not specified will be included after the specified result tabs.
+#' @param panelStructure A named list to organise the different panels in
+#' dropdown menus.
+#' @param panelDetails A named list to provide details for each one of the
+#' panels, such as: result_id, result_type, title, icon, output_id, ...
 #' @param open Whether to open the shiny app project.
-#' @param theme Assign a theme to the shiny app using bslib::bs_theme()
+#' @param theme Assign a theme to the shiny app using bslib::bs_theme().
+#' @param panels deprecated.
 #'
 #' @return The shiny app will be created in directory.
 #'
@@ -33,9 +35,11 @@ exportStaticApp <- function(result,
                             title = "",
                             background = TRUE,
                             summary = TRUE,
-                            panels = list(),
+                            panelStructure = NULL,
+                            panelDetails = NULL,
                             theme = NULL,
-                            open = rlang::is_interactive()) {
+                            open = rlang::is_interactive(),
+                            panels = lifecycle::deprecated()) {
   # input check
   result <- omopgenerics::validateResultArgument(result)
   omopgenerics::assertCharacter(directory, length = 1)
@@ -48,17 +52,25 @@ exportStaticApp <- function(result,
   if (isTRUE(directory)) {
     return(cli::cli_inform(c("i" = "{.strong shiny} folder will not be overwritten. Stopping process.")))
   }
-  resType <- omopgenerics::settings(result)[["result_type"]] |> unique()
-  panels <- validatePanels(panels, resType)
+  if (lifecycle::is_present(panels)) {
+    lifecycle::deprecate_warn(
+      when = "0.2.0",
+      what = "exportStaticApp(panels= )",
+      with = "exportStaticApp(panelStructure= )"
+    )
+    if (missing(panelStructure)) panelStructure <- panels
+  }
+  panelDetails <- validatePanelDetails(panelDetails, result)
+  panelStructure <- validatePanelStructure(panelStructure, panelDetails, result)
 
   # processing data
   cli::cli_inform(c("i" = "Processing data"))
-  choices <- getChoices(result)
-  if (length(resType) == 0) {
-    c("!" = "No result_type(s) found, the generated shiny will be empty.") |>
+  choices <- getChoices(result, panelDetails = panelDetails)
+  if (length(panelDetails) == 0) {
+    c("!" = "No panels identified, generated shiny will be empty.") |>
       cli::cli_inform()
   } else {
-    c("v" = "Data processed: {length(resType)} result type{?s} idenfied: {.var {resType}}.") |>
+    c("v" = "Data processed: {length(panelDetails)} panel{?s} idenfied: {.var {names(panelDetails)}}.") |>
       cli::cli_inform()
   }
 
@@ -83,7 +95,8 @@ exportStaticApp <- function(result,
       summary = summary,
       background = !is.null(background),
       theme = theme,
-      panels = panels
+      panelStructure = panelStructure,
+      panelDetails = panelDetails
     )
   )
 
@@ -187,13 +200,14 @@ logoPath <- function(logo) {
 }
 
 # ui ----
-uiStatic <- function(choices = list(),
-                     logo = NULL,
-                     title = "",
-                     background = TRUE,
-                     summary = FALSE,
-                     theme = NULL,
-                     panels = list()) {
+uiStatic <- function(choices,
+                     logo,
+                     title,
+                     background,
+                     summary,
+                     theme,
+                     panelDetalis,
+                     panelStructure) {
   # Create the bslib::bs_theme() call, or use NULL if not provided
   theme_setting <- if (!is.null(theme)) {
     paste0("theme = ", theme, ",")

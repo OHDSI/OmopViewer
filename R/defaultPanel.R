@@ -1,39 +1,76 @@
 
 panelDetailsFromResult <- function(result) {
-  omopgenerics::settings(result) |>
-    dplyr::group_by(.data$result_type) |>
-    dplyr::summarise(result_id = paste0(.data$result_id, collapse = "; ")) |>
-    dplyr::left_join(
-      omopViewerTabs |>
-        dplyr::left_join(
-          omopViewerOutput |>
-            dplyr::group_by(.data$result_tab_id) |>
-            dplyr::summarise(output_id = paste0(.data$output_id, collapse = "; ")),
-          by = "result_tab_id"
-        ) |>
-        dplyr::select("result_type", "title", "icon", "output_id"),
-      by = "result_type"
-    ) |>
-    dplyr::mutate(
-      id = dplyr::row_number(),
-      title = dplyr::coalesce(.data$title, formatTit(.data$result_type)),
-      output_id = dplyr::coalesce(.data$output_id, "0")
-    ) |>
-    dplyr::select("id", "result_id", "title", "icon", "output_id")
+  set <- omopgenerics::settings(result)
+  panelDetailsFromSet(set)
+}
+panelDetailsFromSet <- function(set) {
+  set$result_type |>
+    unique() |>
+    rlang::set_names() |>
+    purrr::map(\(x) panelDetailsFromResultType(resultType = x, set = set))
+}
+panelDetailsFromResultType <- function(resultType, set) {
+  id <- omopViewerTabs$result_type == resultType
+  tabId <- omopViewerTabs$result_tab_id[id]
+  list(
+    result_type = resultType,
+    result_id = set$result_id[set$result_type == resultType],
+    output_id = omopViewerOutput$output_id[omopViewerOutput$result_tab_id == tabId],
+    icon = omopViewerTabs$icon[id],
+    title = omopViewerTabs$title[id],
+    information = omopViewerTabs$information[id]
+  )
 }
 panelStructureFromResult <- function(result) {
-  x <- omopgenerics::settings(result) |>
-    dplyr::select("result_type") |>
-    dplyr::distinct() |>
-    dplyr::left_join(
-      omopViewerTabs |>
-        dplyr::select("result_type", "title"),
-      by = "result_type"
-    ) |>
-    dplyr::mutate(name = dplyr::if_else(
-      is.na(.data$title), formatTit(.data$result_type), .data$title
-    ))
-  x$result_type |>
-    rlang::set_names(x$name) |>
-    as.list()
+  as.list(omopgenerics::settings(result)$result_type)
+}
+completePanelDetails <- function(panelDetails, result) {
+  set <- omopgenerics::settings(result)
+  panelDetails <- panelDetails |>
+    purrr::imap(\(x, nm) {
+      if (!is.list(x)) {
+        cli::cli_inform("Element {.var {nm}} eliminated from {.pkg panelDetails} as it is not a list.")
+        return(NULL)
+      } else if (!any(c("result_type", "result_id") %in% names(x))) {
+        cli::cli_inform("Element {.var {nm}} eliminated from {.pkg panelDetails}, {.var result_type} or {.var result_id} must be provided.")
+        return(NULL)
+      } else {
+        if (!"result_type" %in% names(x)) {
+          x$result_type <- unique(set$result_type[set$result_id == x$result_id])
+        }
+        def <- panelDetailsFromResultType(resultType = x$result_type, set = set)
+        cols <- c("result_id", "output_id", "icon", "title", "information")
+        for (col in cols) {
+          if (!col %in% names(x)) x[[col]] <- def[[col]]
+        }
+        x <- x[c("result_type", "result_id", "output_id", "icon", "title", "information")]
+        return(x)
+      }
+    }) |>
+    purrr::discard(is.null) |>
+    # correct types
+    purrr::map(\(x) {
+      x$result_type <- as.character(x$result_type)
+      x$result_id <- as.integer(x$result_id)
+      x$output_id <- as.integer(x$output_id)
+      x$icon <- as.character(x$icon)
+      x$title <- as.character(x$title)
+      x$information <- as.character(x$information)
+      return(x)
+    })
+
+  # add elements that may be missing
+  resId <- panelDetails |>
+    purrr::map(\(x) x$result_id) |>
+    unlist() |>
+    unique()
+  set <- omopgenerics::settings(result) |>
+    dplyr::filter(!.data$result_id %in% .env$resId)
+  if (nrow(set) > 0) {
+    extra <- panelDetailsFromSet(set = set)
+    cli::cli_inform("panelDetails created for: {.var {names(extra)}}, if you do not want them in your shiny please remove from results.")
+    panelDetails <- c(panelDetails, extra)
+  }
+
+  return(panelDetails)
 }

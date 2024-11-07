@@ -1,26 +1,8 @@
 
-#' Get the different options that a summarised_result have.
-#'
-#' @param result A `<summarised_result>` object.
-#' @param flatten Whether to flatten to a single list or not.
-#'
-#' @return A named list with the options
-#' @export
-#'
-#' @examples
-#' library(CohortCharacteristics)
-#'
-#' cdm <- mockCohortCharacteristics()
-#'
-#' result <- cdm$cohort1 |>
-#'   summariseCharacteristics()
-#'
-#' getChoices(result)
-#'
-getChoices <- function(result, flatten = FALSE) {
+getChoicesValues <- function(result, panelDetails) {
   # initial checks
   result <- omopgenerics::validateResultArgument(result)
-  omopgenerics::assertLogical(flatten, length = 1)
+  panelDetails <- validatePanelDetails(panelDetails, result)
 
   # get choices
   settings <- getPossibleSettings(result)
@@ -139,4 +121,41 @@ getCols <- function(x) {
     unique()
   cols <- cols[!is.na(cols)]
   return(cols)
+}
+
+getChoicesNames <- function(result, panelDetails) {
+  set <- omopgenerics::settings(result)
+  if (!all(c("group", "strata", "additional") %in% colnames(set))) {
+    set <- result |>
+      correctSettings() |>
+      omopgenerics::settings()
+  }
+  panelDetails |>
+    purrr::map(\(x) {
+      resId <- x$result_id
+      setx <- set |>
+        dplyr::filter(.data$result_id %in% .env$resId)
+      settingsCols <- colnames(set)
+      settingsCols <- settingsCols[!settingsCols %in% c(
+        "result_id", "package_name", "package_version", "result_type", "strata",
+        "group", "additional", "min_cell_count"
+      )]
+      settingsCols <- settingsCols[purrr::map_lgl(settingsCols, \(x) {
+        sum(!is.na(setx[[x]])) > 0
+      })]
+      groupingCols <- setx |>
+        dplyr::select("group", "strata", "additional") |>
+        as.list() |>
+        purrr::map(\(x) {
+          x <- x |>
+            unique() |>
+            stringr::str_split(pattern = " &&& ") |>
+            unlist() |>
+            unique()
+          x[!is.na(x)]
+        }) |>
+        unlist() |>
+        unique()
+      c(paste0("settings_", settingsCols), paste0("grouping_", groupingCols), "variable_name", "estimate_name")
+    })
 }

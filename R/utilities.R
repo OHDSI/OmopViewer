@@ -114,3 +114,28 @@ validateBackground <- function(background, logo, call = parent.frame()) {
   }
   return(background)
 }
+validatePanelDetails <- function(panelDetails, result, call = parent.frame()) {
+  if (length(panelDetails) == 0) {
+    panelDetails <- panelDetailsFromResult(result)
+  } else {
+    omopgenerics::assertList(panelDetails, named = TRUE, call = call)
+    panelDetails <- completePanelDetails(panelDetails, result)
+  }
+  return(panelDetails)
+}
+validatePanelStructure <- function(panelStructure, panelDetails, result, call = parent.frame()) {
+  if (length(panelStructure) == 0) {
+    panelStructure <- as.list(names(panelDetails))
+  } else {
+    omopgenerics::assertList(panelStructure, call = call)
+    panelStructure <- purrr::map(panelStructure, as.character)
+    present <- unique(unlist(panelStructure))
+    all <- names(panelDetails)
+    missing <- all[!all %in% present]
+    if (length(missing) > 0) {
+      cli::cli_inform("{.var {missing}} panels added to panelStrcuture.")
+      panelStructure <- c(panelStructure, as.list(missing))
+    }
+  }
+  return(panelStructure)
+}
