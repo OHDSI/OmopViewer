@@ -123,6 +123,10 @@ exportStaticApp <- function(result,
   global <- c(messageShiny(), libraryStatementsList, "", omopViewerGlobal) |>
     styleCode()
 
+  # prepare data
+  filterValues <- getFilterValues(panelDetails, result)
+  data <- prepareResult(panelDetails, result)
+
   # write files in the corresponding directory
   dir.create(file.path(directory, "data"), showWarnings = FALSE)
   if (!is.null(background)) {
@@ -138,6 +142,7 @@ exportStaticApp <- function(result,
     fileName = "results.csv",
     path = file.path(directory, "data")
   )
+  save(data, filterValues, file = file.path(directory, "data", "shinyData.RData"))
 
   cli::cli_inform(c("v" = "Shiny created in: {.pkg {directory}}"))
 

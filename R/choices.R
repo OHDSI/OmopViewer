@@ -199,3 +199,14 @@ prefixNames <- function(x, prefix) {
   names(x) <- paste0(prefix, names(x))
   return(x)
 }
+prepareResult <- function(panelDetails, result) {
+  panelDetails |>
+    purrr::map(\(x) {
+      result |>
+        dplyr::filter(.data$result_id %in% .env$x$result_id) |>
+        omopgenerics::newSummarisedResult(
+          settings = omopgenerics::settings(result) |>
+            dplyr::filter(.data$result_id %in% .env$x$result_id)
+        )
+    })
+}
