@@ -65,7 +65,6 @@ exportStaticApp <- function(result,
 
   # processing data
   cli::cli_inform(c("i" = "Processing data"))
-  choices <- getChoices(result, panelDetails = panelDetails)
   if (length(panelDetails) == 0) {
     c("!" = "No panels identified, generated shiny will be empty.") |>
       cli::cli_inform()
@@ -85,11 +84,14 @@ exportStaticApp <- function(result,
   # background
   background <- validateBackground(background, logo)
 
+  # add filter buttons
+  panelDetails <- panelDetails |>
+    addFilterNames(result)
+
   # create ui
   ui <- c(
     messageShiny(),
     uiStatic(
-      choices = choices,
       logo = logo,
       title = title,
       summary = summary,
@@ -103,9 +105,7 @@ exportStaticApp <- function(result,
   # create server
   server <- c(
     messageShiny(),
-    serverStatic(
-      resultTypes = resType
-    )
+    serverStatic(panelDetails = panelDetails)
   )
 
   # check installed libraries
@@ -200,13 +200,12 @@ logoPath <- function(logo) {
 }
 
 # ui ----
-uiStatic <- function(choices,
-                     logo,
+uiStatic <- function(logo,
                      title,
                      background,
                      summary,
                      theme,
-                     panelDetalis,
+                     panelDetails,
                      panelStructure) {
   # Create the bslib::bs_theme() call, or use NULL if not provided
   theme_setting <- if (!is.null(theme)) {
@@ -214,6 +213,12 @@ uiStatic <- function(choices,
   } else {
     ""
   }
+
+  # create panels
+  panels <- createUiPanels(panelDetails) |>
+    structurePanels(panelStructure)
+
+  # ui
   c(
     "ui <- bslib::page_navbar(",
     theme_setting,
@@ -221,7 +226,7 @@ uiStatic <- function(choices,
       pageTitle(title, logo),
       createBackground(background),
       summaryTab(summary),
-      createUi(choices, panels),
+      panels,
       "bslib::nav_spacer()",
       downloadRawDataUi(),
       createAbout("hds_logo.svg"),
@@ -254,11 +259,11 @@ pageTitle <- function(title, logo) {
 }
 
 # server ----
-serverStatic <- function(resultTypes = character()) {
+serverStatic <- function(panelDetails) {
   paste0(
     c(
       "server <- function(input, output, session) {",
-      createServer(resultTypes, data = "data"),
+      createServer(panelDetails, data = "data"),
       "}"
     ),
     collapse = "\n"

@@ -3,17 +3,16 @@
 #' following.
 #'
 #' @param result A summarised_result object.
+#' @param prefix Prefix for the inputs.
 #' @param input Input of the shiny to filter by.
 #'
 #' @return The filtered result.
 #' @export
 #'
 filterData <- function(result,
-                       input,
-                       prefix) {
-  # initial check
-  result <- omopgenerics::validateResultArgument(result)
-  omopgenerics::assertCharacter(prefix)
+                       prefix,
+                       input) {
+  result <- result[[prefix]]
 
   if (nrow(result) == 0) return(emptySummarisedResult())
 

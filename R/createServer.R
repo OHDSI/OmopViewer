@@ -1,35 +1,38 @@
 
-createServer <- function(resultTypes, data) {
+createServer <- function(panelDetails, data) {
+  filterValues <- switch (data,
+    "data" = "filterValues",
+    "workingData()" = "filterValues()"
+  )
   c(
     downloadRawDataServer(data),
-    selectiseServer(resultTypes, data),
-    purrr::map_chr(resultTypes, \(x) {
-      c(glue::glue("# {x} -----"),
-        glue::glue("## tidy {x} -----"),
-        tidyServer(x, data),
-        glue::glue("## output {x} -----"),
-        outputServer(x, data),
+    selectiseServer(panelDetails, filterValues),
+    purrr::imap_chr(panelDetails, \(x, nm) {
+      c(glue::glue("# {nm} -----"),
+        glue::glue("## tidy {nm} -----"),
+        tidyServer(nm, data),
+        glue::glue("## output {nm} -----"),
+        outputServer(nm, x$output_id, data),
         "\n"
       ) |>
         paste0(collapse = "\n")
     })
   )
 }
-selectiseServer <- function(resultTypes, data) {
-  if (length(resultTypes) == 0) return(character())
+selectiseServer <- function(panelDetails, filterValues) {
+  if (length(panelDetails) == 0) return(character())
   c(
-    '# fill selectise variables ----',
-    paste0('shiny::observe({
-      choices <- OmopViewer::getChoices(', data, ', flatten = TRUE)
-      for (k in seq_along(choices)) {
+    '# fill selectise variables ----
+     shiny::observe({
+      for (k in seq_along({filterValues})) {
         shiny::updateSelectizeInput(
           session,
-          inputId = names(choices)[k],
-          choices = choices[[k]],
-          selected = choices[[k]],
+          inputId = names({filterValues})[k],
+          choices = {filterValues}[[k]],
+          selected = {filterValues}[[k]],
           server = TRUE
         )
       }
-    })')
+    })'
   )
 }

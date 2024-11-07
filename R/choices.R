@@ -123,7 +123,7 @@ getCols <- function(x) {
   return(cols)
 }
 
-getChoicesNames <- function(result, panelDetails) {
+addFilterNames <- function(panelDetails, result) {
   set <- omopgenerics::settings(result)
   if (!all(c("group", "strata", "additional") %in% colnames(set))) {
     set <- result |>
@@ -136,13 +136,13 @@ getChoicesNames <- function(result, panelDetails) {
       setx <- set |>
         dplyr::filter(.data$result_id %in% .env$resId)
       settingsCols <- colnames(set)
-      settingsCols <- settingsCols[!settingsCols %in% c(
-        "result_id", "package_name", "package_version", "result_type", "strata",
-        "group", "additional", "min_cell_count"
-      )]
+      settingsCols <- settingsCols[!settingsCols %in% ignoreSettings]
       settingsCols <- settingsCols[purrr::map_lgl(settingsCols, \(x) {
         sum(!is.na(setx[[x]])) > 0
       })]
+      if (length(settingsCols) > 0) {
+        settingsCols <- paste0("settings_", settingsCols)
+      }
       groupingCols <- setx |>
         dplyr::select("group", "strata", "additional") |>
         as.list() |>
@@ -156,6 +156,46 @@ getChoicesNames <- function(result, panelDetails) {
         }) |>
         unlist() |>
         unique()
-      c(paste0("settings_", settingsCols), paste0("grouping_", groupingCols), "variable_name", "estimate_name")
+      if (length(groupingCols) > 0) {
+        groupingCols <- paste0("grouping_", groupingCols)
+      }
+      x$filters <- c(
+        settingsCols, groupingCols, "variable_name", "estimate_name"
+      )
+      return(x)
     })
+}
+getFilterValues <- function(panelDetails, result) {
+  panelDetails |>
+    purrr::map(\(x) {
+      resId <- x$result_id
+      filtersSettings <- omopgenerics::settings(result) |>
+        dplyr::filter(.data$result_id %in% .env$resId) |>
+        dplyr::select(!dplyr::any_of(ignoreSettings)) |>
+        as.list() |>
+        purrr::map(unique) |>
+        prefixNames(prefix = "settings_")
+      res <- result |>
+        dplyr::filter(.data$result_id %in% .env$resId)
+      filtersGrouping <- res |>
+        dplyr::select(c(
+          "cdm_name", "group_name", "group_level", "strata_name",
+          "strata_level", "additional_name", "additional_level"
+        )) |>
+        dplyr::distinct() |>
+        visOmopResults::splitAll() |>
+        as.list() |>
+        purrr::map(unique) |>
+        prefixNames(prefix = "grouping_")
+      filtersVariablesEstimates <- res |>
+        dplyr::select("variable_name", "estimate_name") |>
+        as.list() |>
+        purrr::map(unique)
+      c(filtersSettings, filtersGrouping, filtersVariablesEstimates)
+    })
+}
+prefixNames <- function(x, prefix) {
+  if (length(x) == 0) return(list())
+  names(x) <- paste0(prefix, names(x))
+  return(x)
 }

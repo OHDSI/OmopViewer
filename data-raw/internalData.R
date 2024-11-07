@@ -269,8 +269,11 @@ omopViewerProj <- c(
 )
 
 omopViewerGlobal <- c(
-  "data <- OmopViewer::importSummarisedResult(here::here(\"data\")) |>",
-  "OmopViewer::correctSettings()"
+  "# uncomment to load the raw data",
+  "# rawData <- OmopViewer::importSummarisedResult(here::here(\"data\"))",
+  "",
+  "# load shiny data",
+  "load(here::here(\"data\", \"shinyData.RData\"))"
 ) |>
   styleCode()
 
@@ -286,7 +289,12 @@ backgroundKeywords <- dplyr::tribble(
   "footer", "bslib::card_footer", "https://rstudio.github.io/bslib//reference/card_body.html"
 )
 
+ignoreSettings <- c(
+  "result_id", "package_name", "package_version", "result_type", "strata",
+  "group", "additional", "min_cell_count"
+)
+
 usethis::use_data(
   omopViewerTabs, omopViewerOutput, omopViewerOutputArguments, omopViewerProj,
-  omopViewerGlobal, logoKeywords, backgroundKeywords, overwrite = TRUE,
-  internal = TRUE)
+  omopViewerGlobal, logoKeywords, backgroundKeywords, ignoreSettings,
+  overwrite = TRUE, internal = TRUE)

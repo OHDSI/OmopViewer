@@ -12,12 +12,17 @@ panelDetailsFromSet <- function(set) {
 panelDetailsFromResultType <- function(resultType, set) {
   id <- omopViewerTabs$result_type == resultType
   tabId <- omopViewerTabs$result_tab_id[id]
+  outputId <- omopViewerOutput$output_id[omopViewerOutput$result_tab_id == tabId]
+  icon <- omopViewerTabs$icon[id]
+  title <- omopViewerTabs$title[id]
+  if (length(outputId) == 0) outputId <- 0L
+  if (length(title) == 0) title <- formatTit(resultType)
   list(
     result_type = resultType,
     result_id = set$result_id[set$result_type == resultType],
-    output_id = omopViewerOutput$output_id[omopViewerOutput$result_tab_id == tabId],
-    icon = omopViewerTabs$icon[id],
-    title = omopViewerTabs$title[id],
+    output_id = outputId,
+    icon = icon,
+    title = title,
     information = omopViewerTabs$information[id]
   )
 }
