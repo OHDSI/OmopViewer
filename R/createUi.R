@@ -1,6 +1,6 @@
 
 createUiPanels <- function(panelDetails) {
-  if (length(panelDetails) == 0) return(character())
+  if (length(panelDetails) == 0) return(list())
 
   # create a list with all the panel content
   panelDetails |>
@@ -31,6 +31,7 @@ createUiPanels <- function(panelDetails) {
     })
 }
 structurePanels <- function(panels, panelStructure) {
+  if (length(panels) == 0) return(character())
   panelStructure |>
     purrr::imap(\(x, nm) {
       if (length(x) == 1 & is.numeric(nm)) {

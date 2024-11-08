@@ -24,7 +24,7 @@ validateDirectory <- function(directory) {
     if (overwrite == "2") {
       return(TRUE)
     } else {
-      cli::cli_inform(c("i" = "{.strong shiny} folder will be overwritten."))
+      cli::cli_inform(c("i" = "{.strong shiny} folder will be overwritten. Prior shiny folder deleted."))
       unlink(file.path(directory, "shiny"), recursive = TRUE)
     }
   }

@@ -128,7 +128,6 @@ exportStaticApp <- function(result,
   data <- prepareResult(panelDetails, result)
 
   # write files in the corresponding directory
-  dir.create(file.path(directory, "data"), showWarnings = FALSE)
   if (!is.null(background)) {
     writeLines(background, con = file.path(directory, "background.md"))
   }
@@ -136,13 +135,14 @@ exportStaticApp <- function(result,
   writeLines(server, con = file.path(directory, "server.R"))
   writeLines(global, con = file.path(directory, "global.R"))
   writeLines(omopViewerProj, con = file.path(directory, "shiny.Rproj"))
+
+  # export data
+  dataPath <- file.path(directory, "data")
+  dir.create(dataPath, showWarnings = FALSE)
   exportSummarisedResult(
-    result,
-    minCellCount = 0,
-    fileName = "results.csv",
-    path = file.path(directory, "data")
+    result, minCellCount = 0, fileName = "results.csv", path = dataPath
   )
-  save(data, filterValues, file = file.path(directory, "data", "shinyData.RData"))
+  save(data, filterValues, file = file.path(dataPath, "shinyData.RData"))
 
   cli::cli_inform(c("v" = "Shiny created in: {.pkg {directory}}"))
 
