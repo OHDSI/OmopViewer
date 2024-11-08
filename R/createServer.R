@@ -21,18 +21,22 @@ createServer <- function(panelDetails, data) {
 }
 selectiseServer <- function(panelDetails, filterValues) {
   if (length(panelDetails) == 0) return(character())
-  c(
-    '# fill selectise variables ----
-     shiny::observe({
-      for (k in seq_along({filterValues})) {
-        shiny::updateSelectizeInput(
-          session,
-          inputId = names({filterValues})[k],
-          choices = {filterValues}[[k]],
-          selected = {filterValues}[[k]],
-          server = TRUE
-        )
-      }
-    })'
+  paste0(
+    '# fill selectise variables ----',
+    'shiny::observe({',
+    'for (k in seq_along([filterValues])) {' |>
+      glue::glue(.open = "[", .close = "]"),
+    'shiny::updateSelectizeInput(',
+    'session,',
+    'inputId = names({filterValues})[k],' |>
+      glue::glue(.open = "{", .close = "}"),
+    'choices = {filterValues}[[k]],' |>
+      glue::glue(.open = "{", .close = "}"),
+    'selected = {filterValues}[[k]],' |>
+      glue::glue(.open = "{", .close = "}"),
+    'server = TRUE',
+    ')',
+    '}',
+    '})'
   )
 }

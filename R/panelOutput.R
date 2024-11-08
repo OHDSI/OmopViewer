@@ -204,7 +204,9 @@ getOutputPrefix <- function(x, rt) {
 
 outputUi <- function(tab, choic) {
   setCols <- choic[startsWith(x = choic, prefix = "settings_")]
+  setCols <- substr(setCols, 10, nchar(setCols))
   groupCols <- choic[startsWith(x = choic, prefix = "grouping_")]
+  groupCols <- substr(groupCols, 10, nchar(groupCols))
   varCols <- c("variable_name", "variable_level", "estimate_name")
   tab |>
     getOutputIds() |>

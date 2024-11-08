@@ -10,10 +10,11 @@
 #' content will be controlled from the generated background.md file.
 #' @param summary Whether to include a panel with a summary of content in the
 #' `result`.
-#' @param panelStructure A named list to organise the different panels in
+#' @param panelStructure A named list of panel indetifiers to organise them in
 #' dropdown menus.
 #' @param panelDetails A named list to provide details for each one of the
-#' panels, such as: result_id, result_type, title, icon, output_id, ...
+#' panels, such as: result_id, result_type, title, icon, output_id, ... Name of
+#' each element must be the identifier name of `panelStructure`.
 #' @param open Whether to open the shiny app project.
 #' @param theme Assign a theme to the shiny app using bslib::bs_theme().
 #' @param panels deprecated.
@@ -42,16 +43,17 @@ exportStaticApp <- function(result,
                             panels = lifecycle::deprecated()) {
   # input check
   result <- omopgenerics::validateResultArgument(result)
+  if (!all(c("group", "strata", "additional") %in% colnames(omopgenerics::settings(result)))) {
+    result <- result |>
+      .correctSettings()
+  }
+
   omopgenerics::assertCharacter(directory, length = 1)
   omopgenerics::assertLogical(open, length = 1)
   omopgenerics::assertCharacter(logo, length = 1, null = TRUE)
   omopgenerics::assertCharacter(title, length = 1)
   omopgenerics::assertLogical(summary, length = 1)
   omopgenerics::assertCharacter(theme, length = 1, null = TRUE)
-  directory <- validateDirectory(directory)
-  if (isTRUE(directory)) {
-    return(cli::cli_inform(c("i" = "{.strong shiny} folder will not be overwritten. Stopping process.")))
-  }
   if (lifecycle::is_present(panels)) {
     lifecycle::deprecate_warn(
       when = "0.2.0",
@@ -60,6 +62,7 @@ exportStaticApp <- function(result,
     )
     if (missing(panelStructure)) panelStructure <- panels
   }
+
   panelDetails <- validatePanelDetails(panelDetails, result)
   panelStructure <- validatePanelStructure(panelStructure, panelDetails, result)
 
@@ -74,9 +77,14 @@ exportStaticApp <- function(result,
   }
 
   # create shiny
+  directory <- validateDirectory(directory)
+  if (isTRUE(directory)) {
+    return(cli::cli_inform(c("i" = "{.strong shiny} folder will not be overwritten. Stopping process.")))
+  }
   directory <- file.path(directory, "shiny")
   dir.create(path = directory, showWarnings = FALSE)
   cli::cli_inform(c("i" = "Creating shiny from provided data"))
+
 
   # copy the logos to the shiny folder
   logo <- copyLogos(logo, directory)

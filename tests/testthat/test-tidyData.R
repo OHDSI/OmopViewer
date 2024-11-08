@@ -21,19 +21,18 @@ test_that("test tidyData", {
       "package_version" = "",
       "my_param" = 1L,
       "analysis" = c(TRUE, FALSE, TRUE)
-    ))
+    )) |>
+    correctSettings()
 
   expect_no_error(x <- tidyData(result))
   expect_identical(colnames(x), c(
     "cdm_name", "cohort_name", "age_group", "sex", "time", "variable_name",
     "variable_level", "estimate_name", "estimate_type", "estimate_value",
-    "result_type", "package_name", "package_version", "my_param", "analysis",
-    "group", "strata", "additional"
+    "my_param", "analysis"
   ))
   expect_true(nrow(x) == nrow(result))
 
   cols <- result |>
-    correctSettings() |>
     visOmopResults::filterStrata(sex == "overall") |>
     tidyData() |>
     colnames()

@@ -34,19 +34,20 @@ structurePanels <- function(panels, panelStructure) {
   if (length(panels) == 0) return(character())
   panelStructure |>
     purrr::imap(\(x, nm) {
-      if (length(x) == 1 & is.numeric(nm)) {
+      if (length(x) == 1 & (is.numeric(nm) | nm == "")) {
         panels[[x]]
       } else {
         'bslib::nav_menu(
           title = {cast(nm)},
-          {paste0(panels[x], collapse = ",\n")},
-          icon = "list"
+          icon = shiny::icon("list"),
+          {paste0(panels[x], collapse = ",\n")}
         )' |>
           glue::glue() |>
           as.character()
       }
     }) |>
-    paste0(collapse = ",\n")
+    paste0(collapse = ",\n") |>
+    invisible()
 }
 panelIcon <- function(icon) {
   if (is.null(icon)) return(character())

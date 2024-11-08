@@ -50,7 +50,7 @@ test_that("correctSettings columns", {
       dplyr::mutate(
         group = "cohort_name_ref &&& cohort_name_comp",
         strata = "age &&& sex &&& year",
-        additional = NA_character_
+        additional = ""
       )
   )
 
@@ -89,7 +89,7 @@ test_that("correctSettings columns", {
       dplyr::mutate(
         group = "cohort_name_ref &&& cohort_name_comp",
         strata = c("age &&& sex", "year"),
-        additional = NA_character_
+        additional = ""
       )
   )
 
@@ -115,10 +115,10 @@ test_that("correctSettings columns", {
         group = c(
           "cohort_name_ref &&& cohort_name_comp",
           "cohort_name_ref &&& cohort_name_comp",
-          NA_character_
+          ""
         ),
-        strata = c("age &&& sex", "year", NA_character_),
-        additional = NA_character_
+        strata = c("age &&& sex", "year", ""),
+        additional = ""
       )
   )
 
@@ -145,10 +145,10 @@ test_that("correctSettings columns", {
         group = c(
           "cohort_name_ref &&& cohort_name_comp",
           "cohort_name_ref &&& cohort_name_comp",
-          NA_character_
+          ""
         ),
-        strata = c("age &&& sex", "year", NA_character_),
-        additional = NA_character_
+        strata = c("age &&& sex", "year", ""),
+        additional = ""
       )
   )
 })

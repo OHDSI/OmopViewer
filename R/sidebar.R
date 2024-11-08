@@ -30,12 +30,22 @@ sidebarInformation <- function(information) {
 sidebarSettings <- function(prefix, filters) {
   filters <- filters[startsWith(filters, "settings_")]
   if (length(filters) == 0) return(character())
-  writeSidebar(title = "Settings", prefix = prefix, filters = filters)
+  filters <- substr(filters, 10, nchar(filters))
+  writeSidebar(
+    title = "Settings",
+    prefix = paste0(prefix, "_settings"),
+    filters = filters
+  )
 }
 sidebarGrouping <- function(prefix, filters) {
   filters <- filters[startsWith(filters, "grouping_")]
   if (length(filters) == 0) return(character())
-  writeSidebar(title = "Grouping", prefix = prefix, filters = filters)
+  filters <- substr(filters, 10, nchar(filters))
+  writeSidebar(
+    title = "Grouping",
+    prefix = paste0(prefix, "_grouping"),
+    filters = filters
+  )
 }
 sidebarVariables <- function(prefix, filters) {
   if (!"variable_name" %in% filters) return(character())

@@ -73,7 +73,7 @@ completePanelDetails <- function(panelDetails, result) {
     dplyr::filter(!.data$result_id %in% .env$resId)
   if (nrow(set) > 0) {
     extra <- panelDetailsFromSet(set = set)
-    cli::cli_inform("panelDetails created for: {.var {names(extra)}}, if you do not want them in your shiny please remove from results.")
+    cli::cli_inform("{.var {names(extra)}} added to {.pkg panelDetails}, if you do not want them in your shiny please remove from results.")
     panelDetails <- c(panelDetails, extra)
   }
 
