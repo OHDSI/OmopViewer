@@ -39,7 +39,7 @@ addFilterNames <- function(panelDetails, result) {
 }
 getFilterValues <- function(panelDetails, result) {
   panelDetails |>
-    purrr::map(\(x) {
+    purrr::imap(\(x, nm) {
       resId <- x$result_id
       filtersSettings <- omopgenerics::settings(result) |>
         dplyr::filter(.data$result_id %in% .env$resId) |>
@@ -67,9 +67,17 @@ getFilterValues <- function(panelDetails, result) {
         dplyr::select("variable_name", "estimate_name") |>
         as.list() |>
         purrr::map(unique)
-      c(filtersSettings, filtersGrouping, filtersVariablesEstimates) |>
+      res <- c(filtersSettings, filtersGrouping, filtersVariablesEstimates) |>
         purrr::map(as.character)
-    })
+      res <- res |>
+        rlang::set_names(nm = paste0(nm, "_", names(res)))
+      tidyColumns <- x$filters
+      id <- startsWith(tidyColumns, "settings_") | startsWith(tidyColumns, "grouping_")
+      tidyColumns[id] <- substr(tidyColumns[id], 10, nchar(tidyColumns[id]))
+      res[[paste0(nm, "_tidy_columns")]] <- tidyColumns
+      return(res)
+    }) |>
+    purrr::flatten()
 }
 prefixNames <- function(x, prefix) {
   if (length(x) == 0) return(list())

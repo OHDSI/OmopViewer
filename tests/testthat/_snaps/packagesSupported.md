@@ -34,11 +34,6 @@
             sidebar = bslib::sidebar(
               bslib::accordion(
                 bslib::accordion_panel(
-                  title = "Information",
-                  icon = shiny::icon("info"),
-                  shiny::p("")
-                ),
-                bslib::accordion_panel(
                   title = "Settings",
                   shiny::selectizeInput(
                     inputId = "incidence_settings_analysis_outcome_washout",
@@ -113,16 +108,16 @@
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
-                    inputId = "incidence_settings_denominator_time_at_risk",
-                    label = "Denominator time at risk",
+                    inputId = "incidence_settings_denominator_target_cohort_name",
+                    label = "Denominator target cohort name",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
-                    inputId = "incidence_settings_denominator_target_cohort_name",
-                    label = "Denominator target cohort name",
+                    inputId = "incidence_settings_denominator_time_at_risk",
+                    label = "Denominator time at risk",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
@@ -138,7 +133,7 @@
                   )
                 ),
                 bslib::accordion_panel(
-                  title = "grouping",
+                  title = "Grouping",
                   shiny::selectizeInput(
                     inputId = "incidence_grouping_cdm_name",
                     label = "Cdm name",
@@ -254,7 +249,7 @@
                         header = NULL,
                         sortable::add_rank_list(
                           text = "none",
-                          labels = c("cdm_name", "denominator_cohort_name", "incidence_start_date", "incidence_end_date", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_time_at_risk", "denominator_target_cohort_name", "outcome_cohort_name", "variable_name", "variable_level"),
+                          labels = c("cdm_name", "denominator_cohort_name", "incidence_start_date", "incidence_end_date", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "outcome_cohort_name", "variable_name", "variable_level"),
                           input_id = "incidence_gt_18_none"
                         ),
                         sortable::add_rank_list(
@@ -319,7 +314,7 @@
                         label = "x",
                         selected = "incidence_start_date",
                         multiple = FALSE,
-                        choices = c("cdm_name", "denominator_cohort_name", "incidence_start_date", "incidence_end_date", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_time_at_risk", "denominator_target_cohort_name", "outcome_cohort_name", "variable_name", "variable_level", "estimate_name"),
+                        choices = c("cdm_name", "denominator_cohort_name", "incidence_start_date", "incidence_end_date", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "outcome_cohort_name", "variable_name", "variable_level", "estimate_name"),
                         options = list(plugins = "remove_button")
                       ),
                       shiny::checkboxInput(
@@ -332,7 +327,7 @@
                         label = "facet",
                         selected = NULL,
                         multiple = TRUE,
-                        choices = c("cdm_name", "denominator_cohort_name", "incidence_start_date", "incidence_end_date", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_time_at_risk", "denominator_target_cohort_name", "outcome_cohort_name", "variable_name", "variable_level", "estimate_name"),
+                        choices = c("cdm_name", "denominator_cohort_name", "incidence_start_date", "incidence_end_date", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "outcome_cohort_name", "variable_name", "variable_level", "estimate_name"),
                         options = list(plugins = "remove_button")
                       ),
                       shiny::selectizeInput(
@@ -340,7 +335,7 @@
                         label = "colour",
                         selected = NULL,
                         multiple = TRUE,
-                        choices = c("cdm_name", "denominator_cohort_name", "incidence_start_date", "incidence_end_date", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_time_at_risk", "denominator_target_cohort_name", "outcome_cohort_name", "variable_name", "variable_level", "estimate_name"),
+                        choices = c("cdm_name", "denominator_cohort_name", "incidence_start_date", "incidence_end_date", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "outcome_cohort_name", "variable_name", "variable_level", "estimate_name"),
                         options = list(plugins = "remove_button")
                       ),
                       position = "right"
@@ -358,11 +353,6 @@
           bslib::layout_sidebar(
             sidebar = bslib::sidebar(
               bslib::accordion(
-                bslib::accordion_panel(
-                  title = "Information",
-                  icon = shiny::icon("info"),
-                  shiny::p("")
-                ),
                 bslib::accordion_panel(
                   title = "Settings",
                   shiny::selectizeInput(
@@ -438,16 +428,16 @@
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
-                    inputId = "incidence_attrition_settings_denominator_time_at_risk",
-                    label = "Denominator time at risk",
+                    inputId = "incidence_attrition_settings_denominator_target_cohort_name",
+                    label = "Denominator target cohort name",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
-                    inputId = "incidence_attrition_settings_denominator_target_cohort_name",
-                    label = "Denominator target cohort name",
+                    inputId = "incidence_attrition_settings_denominator_time_at_risk",
+                    label = "Denominator time at risk",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
@@ -463,7 +453,7 @@
                   )
                 ),
                 bslib::accordion_panel(
-                  title = "grouping",
+                  title = "Grouping",
                   shiny::selectizeInput(
                     inputId = "incidence_attrition_grouping_cdm_name",
                     label = "Cdm name",
@@ -579,7 +569,7 @@
                         header = NULL,
                         sortable::add_rank_list(
                           text = "none",
-                          labels = c("denominator_cohort_name", "reason", "reason_id", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_time_at_risk", "denominator_target_cohort_name", "outcome_cohort_name"),
+                          labels = c("denominator_cohort_name", "reason", "reason_id", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "outcome_cohort_name"),
                           input_id = "incidence_attrition_gt_22_none"
                         ),
                         sortable::add_rank_list(
@@ -613,11 +603,6 @@
           bslib::layout_sidebar(
             sidebar = bslib::sidebar(
               bslib::accordion(
-                bslib::accordion_panel(
-                  title = "Information",
-                  icon = shiny::icon("info"),
-                  shiny::p("")
-                ),
                 bslib::accordion_panel(
                   title = "Settings",
                   shiny::selectizeInput(
@@ -677,16 +662,16 @@
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
-                    inputId = "prevalence_settings_denominator_time_at_risk",
-                    label = "Denominator time at risk",
+                    inputId = "prevalence_settings_denominator_target_cohort_name",
+                    label = "Denominator target cohort name",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
-                    inputId = "prevalence_settings_denominator_target_cohort_name",
-                    label = "Denominator target cohort name",
+                    inputId = "prevalence_settings_denominator_time_at_risk",
+                    label = "Denominator time at risk",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
@@ -710,7 +695,7 @@
                   )
                 ),
                 bslib::accordion_panel(
-                  title = "grouping",
+                  title = "Grouping",
                   shiny::selectizeInput(
                     inputId = "prevalence_grouping_cdm_name",
                     label = "Cdm name",
@@ -826,7 +811,7 @@
                         header = NULL,
                         sortable::add_rank_list(
                           text = "none",
-                          labels = c("cdm_name", "denominator_cohort_name", "prevalence_start_date", "prevalence_end_date", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_time_at_risk", "denominator_target_cohort_name", "analysis_type", "analysis_full_contribution", "variable_name", "variable_level"),
+                          labels = c("cdm_name", "denominator_cohort_name", "prevalence_start_date", "prevalence_end_date", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "analysis_type", "analysis_full_contribution", "variable_name", "variable_level"),
                           input_id = "prevalence_gt_20_none"
                         ),
                         sortable::add_rank_list(
@@ -891,7 +876,7 @@
                         label = "x",
                         selected = "prevalence_start_date",
                         multiple = FALSE,
-                        choices = c("cdm_name", "denominator_cohort_name", "prevalence_start_date", "prevalence_end_date", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_time_at_risk", "denominator_target_cohort_name", "analysis_type", "analysis_full_contribution", "variable_name", "variable_level", "estimate_name"),
+                        choices = c("cdm_name", "denominator_cohort_name", "prevalence_start_date", "prevalence_end_date", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "analysis_type", "analysis_full_contribution", "variable_name", "variable_level", "estimate_name"),
                         options = list(plugins = "remove_button")
                       ),
                       shiny::checkboxInput(
@@ -904,7 +889,7 @@
                         label = "facet",
                         selected = NULL,
                         multiple = TRUE,
-                        choices = c("cdm_name", "denominator_cohort_name", "prevalence_start_date", "prevalence_end_date", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_time_at_risk", "denominator_target_cohort_name", "analysis_type", "analysis_full_contribution", "variable_name", "variable_level", "estimate_name"),
+                        choices = c("cdm_name", "denominator_cohort_name", "prevalence_start_date", "prevalence_end_date", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "analysis_type", "analysis_full_contribution", "variable_name", "variable_level", "estimate_name"),
                         options = list(plugins = "remove_button")
                       ),
                       shiny::selectizeInput(
@@ -912,7 +897,7 @@
                         label = "colour",
                         selected = NULL,
                         multiple = TRUE,
-                        choices = c("cdm_name", "denominator_cohort_name", "prevalence_start_date", "prevalence_end_date", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_time_at_risk", "denominator_target_cohort_name", "analysis_type", "analysis_full_contribution", "variable_name", "variable_level", "estimate_name"),
+                        choices = c("cdm_name", "denominator_cohort_name", "prevalence_start_date", "prevalence_end_date", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "analysis_type", "analysis_full_contribution", "variable_name", "variable_level", "estimate_name"),
                         options = list(plugins = "remove_button")
                       ),
                       position = "right"
@@ -930,11 +915,6 @@
           bslib::layout_sidebar(
             sidebar = bslib::sidebar(
               bslib::accordion(
-                bslib::accordion_panel(
-                  title = "Information",
-                  icon = shiny::icon("info"),
-                  shiny::p("")
-                ),
                 bslib::accordion_panel(
                   title = "Settings",
                   shiny::selectizeInput(
@@ -994,16 +974,16 @@
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
-                    inputId = "prevalence_attrition_settings_denominator_time_at_risk",
-                    label = "Denominator time at risk",
+                    inputId = "prevalence_attrition_settings_denominator_target_cohort_name",
+                    label = "Denominator target cohort name",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
-                    inputId = "prevalence_attrition_settings_denominator_target_cohort_name",
-                    label = "Denominator target cohort name",
+                    inputId = "prevalence_attrition_settings_denominator_time_at_risk",
+                    label = "Denominator time at risk",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
@@ -1035,7 +1015,7 @@
                   )
                 ),
                 bslib::accordion_panel(
-                  title = "grouping",
+                  title = "Grouping",
                   shiny::selectizeInput(
                     inputId = "prevalence_attrition_grouping_cdm_name",
                     label = "Cdm name",
@@ -1151,7 +1131,7 @@
                         header = NULL,
                         sortable::add_rank_list(
                           text = "none",
-                          labels = c("denominator_cohort_name", "reason", "reason_id", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_time_at_risk", "denominator_target_cohort_name", "outcome_cohort_name", "analysis_type", "analysis_full_contribution"),
+                          labels = c("denominator_cohort_name", "reason", "reason_id", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "outcome_cohort_name", "analysis_type", "analysis_full_contribution"),
                           input_id = "prevalence_attrition_gt_23_none"
                         ),
                         sortable::add_rank_list(
@@ -1231,13 +1211,12 @@
         )
         # fill selectise variables ----
         shiny::observe({
-          choices <- OmopViewer::getChoices(data, flatten = TRUE)
-          for (k in seq_along(choices)) {
+          for (k in seq_along(filterValues)) {
             shiny::updateSelectizeInput(
               session,
-              inputId = names(choices)[k],
-              choices = choices[[k]],
-              selected = choices[[k]],
+              inputId = names(filterValues)[k],
+              choices = filterValues[[k]],
+              selected = filterValues[[k]],
               server = TRUE
             )
           }
@@ -1587,8 +1566,11 @@
       library(sortable)
       library(visOmopResults)
       
-      data <- OmopViewer::importSummarisedResult(here::here("data")) |>
-        OmopViewer::correctSettings()
+      # uncomment to load the raw data
+      # rawData <- OmopViewer::importSummarisedResult(here::here("data"))
+      
+      # load shiny data
+      load(here::here("data", "shinyData.RData"))
 
 ---
 
@@ -1620,11 +1602,6 @@
           bslib::layout_sidebar(
             sidebar = bslib::sidebar(
               bslib::accordion(
-                bslib::accordion_panel(
-                  title = "Information",
-                  icon = shiny::icon("info"),
-                  shiny::p("")
-                ),
                 bslib::accordion_panel(
                   title = "Settings",
                   shiny::selectizeInput(
@@ -1700,16 +1677,16 @@
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
-                    inputId = "incidence_settings_denominator_time_at_risk",
-                    label = "Denominator time at risk",
+                    inputId = "incidence_settings_denominator_target_cohort_name",
+                    label = "Denominator target cohort name",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
-                    inputId = "incidence_settings_denominator_target_cohort_name",
-                    label = "Denominator target cohort name",
+                    inputId = "incidence_settings_denominator_time_at_risk",
+                    label = "Denominator time at risk",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
@@ -1725,7 +1702,7 @@
                   )
                 ),
                 bslib::accordion_panel(
-                  title = "grouping",
+                  title = "Grouping",
                   shiny::selectizeInput(
                     inputId = "incidence_grouping_cdm_name",
                     label = "Cdm name",
@@ -1841,7 +1818,7 @@
                         header = NULL,
                         sortable::add_rank_list(
                           text = "none",
-                          labels = c("cdm_name", "denominator_cohort_name", "incidence_start_date", "incidence_end_date", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_time_at_risk", "denominator_target_cohort_name", "outcome_cohort_name", "variable_name", "variable_level"),
+                          labels = c("cdm_name", "denominator_cohort_name", "incidence_start_date", "incidence_end_date", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "outcome_cohort_name", "variable_name", "variable_level"),
                           input_id = "incidence_gt_18_none"
                         ),
                         sortable::add_rank_list(
@@ -1906,7 +1883,7 @@
                         label = "x",
                         selected = "incidence_start_date",
                         multiple = FALSE,
-                        choices = c("cdm_name", "denominator_cohort_name", "incidence_start_date", "incidence_end_date", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_time_at_risk", "denominator_target_cohort_name", "outcome_cohort_name", "variable_name", "variable_level", "estimate_name"),
+                        choices = c("cdm_name", "denominator_cohort_name", "incidence_start_date", "incidence_end_date", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "outcome_cohort_name", "variable_name", "variable_level", "estimate_name"),
                         options = list(plugins = "remove_button")
                       ),
                       shiny::checkboxInput(
@@ -1919,7 +1896,7 @@
                         label = "facet",
                         selected = NULL,
                         multiple = TRUE,
-                        choices = c("cdm_name", "denominator_cohort_name", "incidence_start_date", "incidence_end_date", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_time_at_risk", "denominator_target_cohort_name", "outcome_cohort_name", "variable_name", "variable_level", "estimate_name"),
+                        choices = c("cdm_name", "denominator_cohort_name", "incidence_start_date", "incidence_end_date", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "outcome_cohort_name", "variable_name", "variable_level", "estimate_name"),
                         options = list(plugins = "remove_button")
                       ),
                       shiny::selectizeInput(
@@ -1927,7 +1904,7 @@
                         label = "colour",
                         selected = NULL,
                         multiple = TRUE,
-                        choices = c("cdm_name", "denominator_cohort_name", "incidence_start_date", "incidence_end_date", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_time_at_risk", "denominator_target_cohort_name", "outcome_cohort_name", "variable_name", "variable_level", "estimate_name"),
+                        choices = c("cdm_name", "denominator_cohort_name", "incidence_start_date", "incidence_end_date", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "outcome_cohort_name", "variable_name", "variable_level", "estimate_name"),
                         options = list(plugins = "remove_button")
                       ),
                       position = "right"
@@ -1945,11 +1922,6 @@
           bslib::layout_sidebar(
             sidebar = bslib::sidebar(
               bslib::accordion(
-                bslib::accordion_panel(
-                  title = "Information",
-                  icon = shiny::icon("info"),
-                  shiny::p("")
-                ),
                 bslib::accordion_panel(
                   title = "Settings",
                   shiny::selectizeInput(
@@ -2025,16 +1997,16 @@
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
-                    inputId = "incidence_attrition_settings_denominator_time_at_risk",
-                    label = "Denominator time at risk",
+                    inputId = "incidence_attrition_settings_denominator_target_cohort_name",
+                    label = "Denominator target cohort name",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
-                    inputId = "incidence_attrition_settings_denominator_target_cohort_name",
-                    label = "Denominator target cohort name",
+                    inputId = "incidence_attrition_settings_denominator_time_at_risk",
+                    label = "Denominator time at risk",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
@@ -2050,7 +2022,7 @@
                   )
                 ),
                 bslib::accordion_panel(
-                  title = "grouping",
+                  title = "Grouping",
                   shiny::selectizeInput(
                     inputId = "incidence_attrition_grouping_cdm_name",
                     label = "Cdm name",
@@ -2166,7 +2138,7 @@
                         header = NULL,
                         sortable::add_rank_list(
                           text = "none",
-                          labels = c("denominator_cohort_name", "reason", "reason_id", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_time_at_risk", "denominator_target_cohort_name", "outcome_cohort_name"),
+                          labels = c("denominator_cohort_name", "reason", "reason_id", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "outcome_cohort_name"),
                           input_id = "incidence_attrition_gt_22_none"
                         ),
                         sortable::add_rank_list(
@@ -2200,11 +2172,6 @@
           bslib::layout_sidebar(
             sidebar = bslib::sidebar(
               bslib::accordion(
-                bslib::accordion_panel(
-                  title = "Information",
-                  icon = shiny::icon("info"),
-                  shiny::p("")
-                ),
                 bslib::accordion_panel(
                   title = "Settings",
                   shiny::selectizeInput(
@@ -2264,16 +2231,16 @@
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
-                    inputId = "prevalence_settings_denominator_time_at_risk",
-                    label = "Denominator time at risk",
+                    inputId = "prevalence_settings_denominator_target_cohort_name",
+                    label = "Denominator target cohort name",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
-                    inputId = "prevalence_settings_denominator_target_cohort_name",
-                    label = "Denominator target cohort name",
+                    inputId = "prevalence_settings_denominator_time_at_risk",
+                    label = "Denominator time at risk",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
@@ -2297,7 +2264,7 @@
                   )
                 ),
                 bslib::accordion_panel(
-                  title = "grouping",
+                  title = "Grouping",
                   shiny::selectizeInput(
                     inputId = "prevalence_grouping_cdm_name",
                     label = "Cdm name",
@@ -2413,7 +2380,7 @@
                         header = NULL,
                         sortable::add_rank_list(
                           text = "none",
-                          labels = c("cdm_name", "denominator_cohort_name", "prevalence_start_date", "prevalence_end_date", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_time_at_risk", "denominator_target_cohort_name", "analysis_type", "analysis_full_contribution", "variable_name", "variable_level"),
+                          labels = c("cdm_name", "denominator_cohort_name", "prevalence_start_date", "prevalence_end_date", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "analysis_type", "analysis_full_contribution", "variable_name", "variable_level"),
                           input_id = "prevalence_gt_20_none"
                         ),
                         sortable::add_rank_list(
@@ -2478,7 +2445,7 @@
                         label = "x",
                         selected = "prevalence_start_date",
                         multiple = FALSE,
-                        choices = c("cdm_name", "denominator_cohort_name", "prevalence_start_date", "prevalence_end_date", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_time_at_risk", "denominator_target_cohort_name", "analysis_type", "analysis_full_contribution", "variable_name", "variable_level", "estimate_name"),
+                        choices = c("cdm_name", "denominator_cohort_name", "prevalence_start_date", "prevalence_end_date", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "analysis_type", "analysis_full_contribution", "variable_name", "variable_level", "estimate_name"),
                         options = list(plugins = "remove_button")
                       ),
                       shiny::checkboxInput(
@@ -2491,7 +2458,7 @@
                         label = "facet",
                         selected = NULL,
                         multiple = TRUE,
-                        choices = c("cdm_name", "denominator_cohort_name", "prevalence_start_date", "prevalence_end_date", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_time_at_risk", "denominator_target_cohort_name", "analysis_type", "analysis_full_contribution", "variable_name", "variable_level", "estimate_name"),
+                        choices = c("cdm_name", "denominator_cohort_name", "prevalence_start_date", "prevalence_end_date", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "analysis_type", "analysis_full_contribution", "variable_name", "variable_level", "estimate_name"),
                         options = list(plugins = "remove_button")
                       ),
                       shiny::selectizeInput(
@@ -2499,7 +2466,7 @@
                         label = "colour",
                         selected = NULL,
                         multiple = TRUE,
-                        choices = c("cdm_name", "denominator_cohort_name", "prevalence_start_date", "prevalence_end_date", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_time_at_risk", "denominator_target_cohort_name", "analysis_type", "analysis_full_contribution", "variable_name", "variable_level", "estimate_name"),
+                        choices = c("cdm_name", "denominator_cohort_name", "prevalence_start_date", "prevalence_end_date", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "analysis_type", "analysis_full_contribution", "variable_name", "variable_level", "estimate_name"),
                         options = list(plugins = "remove_button")
                       ),
                       position = "right"
@@ -2517,11 +2484,6 @@
           bslib::layout_sidebar(
             sidebar = bslib::sidebar(
               bslib::accordion(
-                bslib::accordion_panel(
-                  title = "Information",
-                  icon = shiny::icon("info"),
-                  shiny::p("")
-                ),
                 bslib::accordion_panel(
                   title = "Settings",
                   shiny::selectizeInput(
@@ -2581,16 +2543,16 @@
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
-                    inputId = "prevalence_attrition_settings_denominator_time_at_risk",
-                    label = "Denominator time at risk",
+                    inputId = "prevalence_attrition_settings_denominator_target_cohort_name",
+                    label = "Denominator target cohort name",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
                     options = list(plugins = "remove_button")
                   ),
                   shiny::selectizeInput(
-                    inputId = "prevalence_attrition_settings_denominator_target_cohort_name",
-                    label = "Denominator target cohort name",
+                    inputId = "prevalence_attrition_settings_denominator_time_at_risk",
+                    label = "Denominator time at risk",
                     choices = NULL,
                     selected = NULL,
                     multiple = TRUE,
@@ -2622,7 +2584,7 @@
                   )
                 ),
                 bslib::accordion_panel(
-                  title = "grouping",
+                  title = "Grouping",
                   shiny::selectizeInput(
                     inputId = "prevalence_attrition_grouping_cdm_name",
                     label = "Cdm name",
@@ -2738,7 +2700,7 @@
                         header = NULL,
                         sortable::add_rank_list(
                           text = "none",
-                          labels = c("denominator_cohort_name", "reason", "reason_id", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_time_at_risk", "denominator_target_cohort_name", "outcome_cohort_name", "analysis_type", "analysis_full_contribution"),
+                          labels = c("denominator_cohort_name", "reason", "reason_id", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "outcome_cohort_name", "analysis_type", "analysis_full_contribution"),
                           input_id = "prevalence_attrition_gt_23_none"
                         ),
                         sortable::add_rank_list(
@@ -2836,12 +2798,7 @@
             sidebar = bslib::sidebar(
               bslib::accordion(
                 bslib::accordion_panel(
-                  title = "Information",
-                  icon = shiny::icon("info"),
-                  shiny::p("")
-                ),
-                bslib::accordion_panel(
-                  title = "grouping",
+                  title = "Grouping",
                   shiny::selectizeInput(
                     inputId = "summarise_dose_coverage_grouping_cdm_name",
                     label = "Cdm name",
@@ -2977,11 +2934,6 @@
             sidebar = bslib::sidebar(
               bslib::accordion(
                 bslib::accordion_panel(
-                  title = "Information",
-                  icon = shiny::icon("info"),
-                  shiny::p("")
-                ),
-                bslib::accordion_panel(
                   title = "Settings",
                   shiny::selectizeInput(
                     inputId = "summarise_drug_restart_settings_restrict_to_first_discontinuation",
@@ -2993,7 +2945,7 @@
                   )
                 ),
                 bslib::accordion_panel(
-                  title = "grouping",
+                  title = "Grouping",
                   shiny::selectizeInput(
                     inputId = "summarise_drug_restart_grouping_cdm_name",
                     label = "Cdm name",
@@ -3162,12 +3114,7 @@
             sidebar = bslib::sidebar(
               bslib::accordion(
                 bslib::accordion_panel(
-                  title = "Information",
-                  icon = shiny::icon("info"),
-                  shiny::p("")
-                ),
-                bslib::accordion_panel(
-                  title = "grouping",
+                  title = "Grouping",
                   shiny::selectizeInput(
                     inputId = "summarise_drug_utilisation_grouping_cdm_name",
                     label = "Cdm name",
@@ -3303,12 +3250,7 @@
             sidebar = bslib::sidebar(
               bslib::accordion(
                 bslib::accordion_panel(
-                  title = "Information",
-                  icon = shiny::icon("info"),
-                  shiny::p("")
-                ),
-                bslib::accordion_panel(
-                  title = "grouping",
+                  title = "Grouping",
                   shiny::selectizeInput(
                     inputId = "summarise_indication_grouping_cdm_name",
                     label = "Cdm name",
@@ -3461,12 +3403,7 @@
             sidebar = bslib::sidebar(
               bslib::accordion(
                 bslib::accordion_panel(
-                  title = "Information",
-                  icon = shiny::icon("info"),
-                  shiny::p("")
-                ),
-                bslib::accordion_panel(
-                  title = "grouping",
+                  title = "Grouping",
                   shiny::selectizeInput(
                     inputId = "summarise_proportion_of_patients_covered_grouping_cdm_name",
                     label = "Cdm name",
@@ -3643,12 +3580,7 @@
             sidebar = bslib::sidebar(
               bslib::accordion(
                 bslib::accordion_panel(
-                  title = "Information",
-                  icon = shiny::icon("info"),
-                  shiny::p("")
-                ),
-                bslib::accordion_panel(
-                  title = "grouping",
+                  title = "Grouping",
                   shiny::selectizeInput(
                     inputId = "summarise_treatment_grouping_cdm_name",
                     label = "Cdm name",
@@ -3870,13 +3802,12 @@
         )
         # fill selectise variables ----
         shiny::observe({
-          choices <- OmopViewer::getChoices(data, flatten = TRUE)
-          for (k in seq_along(choices)) {
+          for (k in seq_along(filterValues)) {
             shiny::updateSelectizeInput(
               session,
-              inputId = names(choices)[k],
-              choices = choices[[k]],
-              selected = choices[[k]],
+              inputId = names(filterValues)[k],
+              choices = filterValues[[k]],
+              selected = filterValues[[k]],
               server = TRUE
             )
           }
@@ -4383,8 +4314,11 @@
       library(shiny)
       library(visOmopResults)
       
-      data <- OmopViewer::importSummarisedResult(here::here("data")) |>
-        OmopViewer::correctSettings()
+      # uncomment to load the raw data
+      # rawData <- OmopViewer::importSummarisedResult(here::here("data"))
+      
+      # load shiny data
+      load(here::here("data", "shinyData.RData"))
 
 ---
 
@@ -4417,12 +4351,7 @@
             sidebar = bslib::sidebar(
               bslib::accordion(
                 bslib::accordion_panel(
-                  title = "Information",
-                  icon = shiny::icon("info"),
-                  shiny::p("")
-                ),
-                bslib::accordion_panel(
-                  title = "grouping",
+                  title = "Grouping",
                   shiny::selectizeInput(
                     inputId = "summarise_dose_coverage_grouping_cdm_name",
                     label = "Cdm name",
@@ -4558,11 +4487,6 @@
             sidebar = bslib::sidebar(
               bslib::accordion(
                 bslib::accordion_panel(
-                  title = "Information",
-                  icon = shiny::icon("info"),
-                  shiny::p("")
-                ),
-                bslib::accordion_panel(
                   title = "Settings",
                   shiny::selectizeInput(
                     inputId = "summarise_drug_restart_settings_restrict_to_first_discontinuation",
@@ -4574,7 +4498,7 @@
                   )
                 ),
                 bslib::accordion_panel(
-                  title = "grouping",
+                  title = "Grouping",
                   shiny::selectizeInput(
                     inputId = "summarise_drug_restart_grouping_cdm_name",
                     label = "Cdm name",
@@ -4743,12 +4667,7 @@
             sidebar = bslib::sidebar(
               bslib::accordion(
                 bslib::accordion_panel(
-                  title = "Information",
-                  icon = shiny::icon("info"),
-                  shiny::p("")
-                ),
-                bslib::accordion_panel(
-                  title = "grouping",
+                  title = "Grouping",
                   shiny::selectizeInput(
                     inputId = "summarise_drug_utilisation_grouping_cdm_name",
                     label = "Cdm name",
@@ -4884,12 +4803,7 @@
             sidebar = bslib::sidebar(
               bslib::accordion(
                 bslib::accordion_panel(
-                  title = "Information",
-                  icon = shiny::icon("info"),
-                  shiny::p("")
-                ),
-                bslib::accordion_panel(
-                  title = "grouping",
+                  title = "Grouping",
                   shiny::selectizeInput(
                     inputId = "summarise_indication_grouping_cdm_name",
                     label = "Cdm name",
@@ -5042,12 +4956,7 @@
             sidebar = bslib::sidebar(
               bslib::accordion(
                 bslib::accordion_panel(
-                  title = "Information",
-                  icon = shiny::icon("info"),
-                  shiny::p("")
-                ),
-                bslib::accordion_panel(
-                  title = "grouping",
+                  title = "Grouping",
                   shiny::selectizeInput(
                     inputId = "summarise_proportion_of_patients_covered_grouping_cdm_name",
                     label = "Cdm name",
@@ -5224,12 +5133,7 @@
             sidebar = bslib::sidebar(
               bslib::accordion(
                 bslib::accordion_panel(
-                  title = "Information",
-                  icon = shiny::icon("info"),
-                  shiny::p("")
-                ),
-                bslib::accordion_panel(
-                  title = "grouping",
+                  title = "Grouping",
                   shiny::selectizeInput(
                     inputId = "summarise_treatment_grouping_cdm_name",
                     label = "Cdm name",
@@ -5469,11 +5373,6 @@
             sidebar = bslib::sidebar(
               bslib::accordion(
                 bslib::accordion_panel(
-                  title = "Information",
-                  icon = shiny::icon("info"),
-                  shiny::p("")
-                ),
-                bslib::accordion_panel(
                   title = "Settings",
                   shiny::selectizeInput(
                     inputId = "summarise_characteristics_settings_table_name",
@@ -5485,7 +5384,7 @@
                   )
                 ),
                 bslib::accordion_panel(
-                  title = "grouping",
+                  title = "Grouping",
                   shiny::selectizeInput(
                     inputId = "summarise_characteristics_grouping_cdm_name",
                     label = "Cdm name",
@@ -5685,11 +5584,6 @@
             sidebar = bslib::sidebar(
               bslib::accordion(
                 bslib::accordion_panel(
-                  title = "Information",
-                  icon = shiny::icon("info"),
-                  shiny::p("")
-                ),
-                bslib::accordion_panel(
                   title = "Settings",
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_settings_table_name",
@@ -5709,7 +5603,7 @@
                   )
                 ),
                 bslib::accordion_panel(
-                  title = "grouping",
+                  title = "Grouping",
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_grouping_cdm_name",
                     label = "Cdm name",
@@ -5889,11 +5783,6 @@
             sidebar = bslib::sidebar(
               bslib::accordion(
                 bslib::accordion_panel(
-                  title = "Information",
-                  icon = shiny::icon("info"),
-                  shiny::p("")
-                ),
-                bslib::accordion_panel(
                   title = "Settings",
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_count_settings_table_name",
@@ -5905,7 +5794,7 @@
                   )
                 ),
                 bslib::accordion_panel(
-                  title = "grouping",
+                  title = "Grouping",
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_count_grouping_cdm_name",
                     label = "Cdm name",
@@ -6113,12 +6002,7 @@
             sidebar = bslib::sidebar(
               bslib::accordion(
                 bslib::accordion_panel(
-                  title = "Information",
-                  icon = shiny::icon("info"),
-                  shiny::p("Cohort overlap shows the number of subjects that contribute to a pair of cohorts.")
-                ),
-                bslib::accordion_panel(
-                  title = "grouping",
+                  title = "Grouping",
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_overlap_grouping_cdm_name",
                     label = "Cdm name",
@@ -6320,11 +6204,6 @@
             sidebar = bslib::sidebar(
               bslib::accordion(
                 bslib::accordion_panel(
-                  title = "Information",
-                  icon = shiny::icon("info"),
-                  shiny::p("")
-                ),
-                bslib::accordion_panel(
                   title = "Settings",
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_timing_settings_restrict_to_first_entry",
@@ -6336,7 +6215,7 @@
                   )
                 ),
                 bslib::accordion_panel(
-                  title = "grouping",
+                  title = "Grouping",
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_timing_grouping_cdm_name",
                     label = "Cdm name",
@@ -6570,11 +6449,6 @@
             sidebar = bslib::sidebar(
               bslib::accordion(
                 bslib::accordion_panel(
-                  title = "Information",
-                  icon = shiny::icon("info"),
-                  shiny::p("")
-                ),
-                bslib::accordion_panel(
                   title = "Settings",
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_settings_table_name",
@@ -6602,7 +6476,7 @@
                   )
                 ),
                 bslib::accordion_panel(
-                  title = "grouping",
+                  title = "Grouping",
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_grouping_cdm_name",
                     label = "Cdm name",
@@ -6790,13 +6664,12 @@
         )
         # fill selectise variables ----
         shiny::observe({
-          choices <- OmopViewer::getChoices(data, flatten = TRUE)
-          for (k in seq_along(choices)) {
+          for (k in seq_along(filterValues)) {
             shiny::updateSelectizeInput(
               session,
-              inputId = names(choices)[k],
-              choices = choices[[k]],
-              selected = choices[[k]],
+              inputId = names(filterValues)[k],
+              choices = filterValues[[k]],
+              selected = filterValues[[k]],
               server = TRUE
             )
           }
@@ -7363,8 +7236,11 @@
       library(sortable)
       library(visOmopResults)
       
-      data <- OmopViewer::importSummarisedResult(here::here("data")) |>
-        OmopViewer::correctSettings()
+      # uncomment to load the raw data
+      # rawData <- OmopViewer::importSummarisedResult(here::here("data"))
+      
+      # load shiny data
+      load(here::here("data", "shinyData.RData"))
 
 ---
 
@@ -7397,11 +7273,6 @@
             sidebar = bslib::sidebar(
               bslib::accordion(
                 bslib::accordion_panel(
-                  title = "Information",
-                  icon = shiny::icon("info"),
-                  shiny::p("")
-                ),
-                bslib::accordion_panel(
                   title = "Settings",
                   shiny::selectizeInput(
                     inputId = "summarise_characteristics_settings_table_name",
@@ -7413,7 +7284,7 @@
                   )
                 ),
                 bslib::accordion_panel(
-                  title = "grouping",
+                  title = "Grouping",
                   shiny::selectizeInput(
                     inputId = "summarise_characteristics_grouping_cdm_name",
                     label = "Cdm name",
@@ -7613,11 +7484,6 @@
             sidebar = bslib::sidebar(
               bslib::accordion(
                 bslib::accordion_panel(
-                  title = "Information",
-                  icon = shiny::icon("info"),
-                  shiny::p("")
-                ),
-                bslib::accordion_panel(
                   title = "Settings",
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_settings_table_name",
@@ -7637,7 +7503,7 @@
                   )
                 ),
                 bslib::accordion_panel(
-                  title = "grouping",
+                  title = "Grouping",
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_attrition_grouping_cdm_name",
                     label = "Cdm name",
@@ -7817,11 +7683,6 @@
             sidebar = bslib::sidebar(
               bslib::accordion(
                 bslib::accordion_panel(
-                  title = "Information",
-                  icon = shiny::icon("info"),
-                  shiny::p("")
-                ),
-                bslib::accordion_panel(
                   title = "Settings",
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_count_settings_table_name",
@@ -7833,7 +7694,7 @@
                   )
                 ),
                 bslib::accordion_panel(
-                  title = "grouping",
+                  title = "Grouping",
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_count_grouping_cdm_name",
                     label = "Cdm name",
@@ -8041,12 +7902,7 @@
             sidebar = bslib::sidebar(
               bslib::accordion(
                 bslib::accordion_panel(
-                  title = "Information",
-                  icon = shiny::icon("info"),
-                  shiny::p("Cohort overlap shows the number of subjects that contribute to a pair of cohorts.")
-                ),
-                bslib::accordion_panel(
-                  title = "grouping",
+                  title = "Grouping",
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_overlap_grouping_cdm_name",
                     label = "Cdm name",
@@ -8248,11 +8104,6 @@
             sidebar = bslib::sidebar(
               bslib::accordion(
                 bslib::accordion_panel(
-                  title = "Information",
-                  icon = shiny::icon("info"),
-                  shiny::p("")
-                ),
-                bslib::accordion_panel(
                   title = "Settings",
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_timing_settings_restrict_to_first_entry",
@@ -8264,7 +8115,7 @@
                   )
                 ),
                 bslib::accordion_panel(
-                  title = "grouping",
+                  title = "Grouping",
                   shiny::selectizeInput(
                     inputId = "summarise_cohort_timing_grouping_cdm_name",
                     label = "Cdm name",
@@ -8498,11 +8349,6 @@
             sidebar = bslib::sidebar(
               bslib::accordion(
                 bslib::accordion_panel(
-                  title = "Information",
-                  icon = shiny::icon("info"),
-                  shiny::p("")
-                ),
-                bslib::accordion_panel(
                   title = "Settings",
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_settings_table_name",
@@ -8530,7 +8376,7 @@
                   )
                 ),
                 bslib::accordion_panel(
-                  title = "grouping",
+                  title = "Grouping",
                   shiny::selectizeInput(
                     inputId = "summarise_large_scale_characteristics_grouping_cdm_name",
                     label = "Cdm name",
@@ -8731,12 +8577,7 @@
             sidebar = bslib::sidebar(
               bslib::accordion(
                 bslib::accordion_panel(
-                  title = "Information",
-                  icon = shiny::icon("info"),
-                  shiny::p("")
-                ),
-                bslib::accordion_panel(
-                  title = "grouping",
+                  title = "Grouping",
                   shiny::selectizeInput(
                     inputId = "summarise_observation_period_grouping_cdm_name",
                     label = "Cdm name",
@@ -8921,12 +8762,7 @@
             sidebar = bslib::sidebar(
               bslib::accordion(
                 bslib::accordion_panel(
-                  title = "Information",
-                  icon = shiny::icon("info"),
-                  shiny::p("")
-                ),
-                bslib::accordion_panel(
-                  title = "grouping",
+                  title = "Grouping",
                   shiny::selectizeInput(
                     inputId = "summarise_omop_snapshot_grouping_cdm_name",
                     label = "Cdm name",
@@ -9075,13 +8911,12 @@
         )
         # fill selectise variables ----
         shiny::observe({
-          choices <- OmopViewer::getChoices(data, flatten = TRUE)
-          for (k in seq_along(choices)) {
+          for (k in seq_along(filterValues)) {
             shiny::updateSelectizeInput(
               session,
-              inputId = names(choices)[k],
-              choices = choices[[k]],
-              selected = choices[[k]],
+              inputId = names(filterValues)[k],
+              choices = filterValues[[k]],
+              selected = filterValues[[k]],
               server = TRUE
             )
           }
@@ -9261,8 +9096,11 @@
       library(shiny)
       library(visOmopResults)
       
-      data <- OmopViewer::importSummarisedResult(here::here("data")) |>
-        OmopViewer::correctSettings()
+      # uncomment to load the raw data
+      # rawData <- OmopViewer::importSummarisedResult(here::here("data"))
+      
+      # load shiny data
+      load(here::here("data", "shinyData.RData"))
 
 # CodelistGenerator shiny
 
@@ -9295,12 +9133,7 @@
             sidebar = bslib::sidebar(
               bslib::accordion(
                 bslib::accordion_panel(
-                  title = "Information",
-                  icon = shiny::icon("info"),
-                  shiny::p("")
-                ),
-                bslib::accordion_panel(
-                  title = "grouping",
+                  title = "Grouping",
                   shiny::selectizeInput(
                     inputId = "orphan_code_use_grouping_cdm_name",
                     label = "Cdm name",
@@ -9459,11 +9292,6 @@
             sidebar = bslib::sidebar(
               bslib::accordion(
                 bslib::accordion_panel(
-                  title = "Information",
-                  icon = shiny::icon("info"),
-                  shiny::p("")
-                ),
-                bslib::accordion_panel(
                   title = "Settings",
                   shiny::selectizeInput(
                     inputId = "cohort_code_use_settings_timing",
@@ -9475,7 +9303,7 @@
                   )
                 ),
                 bslib::accordion_panel(
-                  title = "grouping",
+                  title = "Grouping",
                   shiny::selectizeInput(
                     inputId = "cohort_code_use_grouping_cdm_name",
                     label = "Cdm name",
@@ -9647,12 +9475,7 @@
             sidebar = bslib::sidebar(
               bslib::accordion(
                 bslib::accordion_panel(
-                  title = "Information",
-                  icon = shiny::icon("info"),
-                  shiny::p("")
-                ),
-                bslib::accordion_panel(
-                  title = "grouping",
+                  title = "Grouping",
                   shiny::selectizeInput(
                     inputId = "code_use_grouping_cdm_name",
                     label = "Cdm name",
@@ -9827,12 +9650,7 @@
             sidebar = bslib::sidebar(
               bslib::accordion(
                 bslib::accordion_panel(
-                  title = "Information",
-                  icon = shiny::icon("info"),
-                  shiny::p("")
-                ),
-                bslib::accordion_panel(
-                  title = "grouping",
+                  title = "Grouping",
                   shiny::selectizeInput(
                     inputId = "achilles_code_use_grouping_cdm_name",
                     label = "Cdm name",
@@ -10036,13 +9854,12 @@
         )
         # fill selectise variables ----
         shiny::observe({
-          choices <- OmopViewer::getChoices(data, flatten = TRUE)
-          for (k in seq_along(choices)) {
+          for (k in seq_along(filterValues)) {
             shiny::updateSelectizeInput(
               session,
-              inputId = names(choices)[k],
-              choices = choices[[k]],
-              selected = choices[[k]],
+              inputId = names(filterValues)[k],
+              choices = filterValues[[k]],
+              selected = filterValues[[k]],
               server = TRUE
             )
           }
@@ -10332,6 +10149,9 @@
       library(sortable)
       library(visOmopResults)
       
-      data <- OmopViewer::importSummarisedResult(here::here("data")) |>
-        OmopViewer::correctSettings()
+      # uncomment to load the raw data
+      # rawData <- OmopViewer::importSummarisedResult(here::here("data"))
+      
+      # load shiny data
+      load(here::here("data", "shinyData.RData"))
 

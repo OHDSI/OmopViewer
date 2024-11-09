@@ -21,7 +21,7 @@ createServer <- function(panelDetails, data) {
 }
 selectiseServer <- function(panelDetails, filterValues) {
   if (length(panelDetails) == 0) return(character())
-  paste0(
+  paste(
     '# fill selectise variables ----',
     'shiny::observe({',
     'for (k in seq_along([filterValues])) {' |>
@@ -37,6 +37,7 @@ selectiseServer <- function(panelDetails, filterValues) {
     'server = TRUE',
     ')',
     '}',
-    '})'
+    '})',
+    sep = "\n"
   )
 }
