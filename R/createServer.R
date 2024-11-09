@@ -26,7 +26,7 @@ selectiseServer <- function(panelDetails, filterValues) {
     'shiny::observe({',
     'for (k in seq_along([filterValues])) {' |>
       glue::glue(.open = "[", .close = "]"),
-    'shiny::updateSelectizeInput(',
+    'shiny::updatePickerInput(',
     'session,',
     'inputId = names({filterValues})[k],' |>
       glue::glue(.open = "{", .close = "}"),

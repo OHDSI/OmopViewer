@@ -24,23 +24,23 @@ createButton <- function(x, defaults, prefix) {
 button <- function(type, args) {
   x <- purrr::imap(args, \(x, nm) paste0(nm, " = ", x))
   if (type == "selector") {
-    x <- c(x, 'options = list(plugins = "remove_button")')
+    x <- c(x, 'options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")')
   }
   fun <- switch (
     type,
-    "selector" = 'shiny::selectizeInput(',
+    "selector" = 'shinyWidgets::pickerInput(',
     "check" = 'shiny::checkboxInput('
   )
   paste0(c(fun, paste0(x, collapse = ",\n"), ")"), collapse = "\n")
 }
 selector <- function(id, lab, cho, sel, mult) {
-  'shiny::selectizeInput(
+  'shinyWidgets::pickerInput(
     inputId = "{id}",
     label = "{lab}",
     choices = {cho},
     selected = {sel},
     multiple = {mult},
-    options = list(plugins = "remove_button")
+    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
   )' |>
     glue::glue() |>
     as.character()
