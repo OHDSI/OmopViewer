@@ -7,7 +7,7 @@
 cardSummary(result)
 }
 \arguments{
-\item{result}{A `<summarised_result>` object.}
+\item{result}{A list of `<summarised_result>` objects.}
 }
 \value{
 A `bslib::card()` object.

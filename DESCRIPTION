@@ -39,6 +39,7 @@ Imports:
     dplyr,
     DT,
     glue,
+    lifecycle,
     markdown,
     omopgenerics (>= 0.3.1),
     purrr,
@@ -49,7 +50,6 @@ Imports:
     styler,
     tidyr,
     usethis,
-    vctrs,
     visOmopResults (>= 0.4.0),
     yaml
 Suggests: 

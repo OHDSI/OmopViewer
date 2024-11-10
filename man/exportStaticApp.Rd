@@ -11,9 +11,11 @@ exportStaticApp(
   title = "",
   background = TRUE,
   summary = TRUE,
-  panels = list(),
+  panelStructure = NULL,
+  panelDetails = NULL,
   theme = NULL,
-  open = rlang::is_interactive()
+  open = rlang::is_interactive(),
+  panels = lifecycle::deprecated()
 )
 }
 \arguments{
@@ -32,13 +34,18 @@ content will be controlled from the generated background.md file.}
 \item{summary}{Whether to include a panel with a summary of content in the
 `result`.}
 
-\item{panels}{List specifying order of results. Each panel is determined
-by the available result types in the result object. Panels for any available
-results not specified will be included after the specified result tabs.}
+\item{panelStructure}{A named list of panel indetifiers to organise them in
+dropdown menus.}
 
-\item{theme}{Assign a theme to the shiny app using bslib::bs_theme()}
+\item{panelDetails}{A named list to provide details for each one of the
+panels, such as: result_id, result_type, title, icon, output_id, ... Name of
+each element must be the identifier name of `panelStructure`.}
+
+\item{theme}{Assign a theme to the shiny app using bslib::bs_theme().}
 
 \item{open}{Whether to open the shiny app project.}
+
+\item{panels}{deprecated.}
 }
 \value{
 The shiny app will be created in directory.
