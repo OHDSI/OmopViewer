@@ -49,9 +49,11 @@
 <span>  title <span class="op">=</span> <span class="st">""</span>,</span>
 <span>  background <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  summary <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  panels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  panelStructure <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  panelDetails <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  theme <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  open <span class="op">=</span> <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/is_interactive.html" class="external-link">is_interactive</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  open <span class="op">=</span> <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/is_interactive.html" class="external-link">is_interactive</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  panels <span class="op">=</span> <span class="fu">lifecycle</span><span class="fu">::</span><span class="fu"><a href="https://lifecycle.r-lib.org/reference/deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -86,18 +88,27 @@ content will be controlled from the generated background.md file.</p></dd>
 `result`.</p></dd>
 
 
-<dt id="arg-panels">panels<a class="anchor" aria-label="anchor" href="#arg-panels"></a></dt>
-<dd><p>List specifying order of results. Each panel is determined
-by the available result types in the result object. Panels for any available
-results not specified will be included after the specified result tabs.</p></dd>
+<dt id="arg-panelstructure">panelStructure<a class="anchor" aria-label="anchor" href="#arg-panelstructure"></a></dt>
+<dd><p>A named list of panel indetifiers to organise them in
+dropdown menus.</p></dd>
+
+
+<dt id="arg-paneldetails">panelDetails<a class="anchor" aria-label="anchor" href="#arg-paneldetails"></a></dt>
+<dd><p>A named list to provide details for each one of the
+panels, such as: result_id, result_type, title, icon, output_id, ... Name of
+each element must be the identifier name of `panelStructure`.</p></dd>
 
 
 <dt id="arg-theme">theme<a class="anchor" aria-label="anchor" href="#arg-theme"></a></dt>
-<dd><p>Assign a theme to the shiny app using bslib::bs_theme()</p></dd>
+<dd><p>Assign a theme to the shiny app using bslib::bs_theme().</p></dd>
 
 
 <dt id="arg-open">open<a class="anchor" aria-label="anchor" href="#arg-open"></a></dt>
 <dd><p>Whether to open the shiny app project.</p></dd>
+
+
+<dt id="arg-panels">panels<a class="anchor" aria-label="anchor" href="#arg-panels"></a></dt>
+<dd><p>deprecated.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -113,9 +124,9 @@ results not specified will be included after the specified result tabs.</p></dd>
 <span class="r-in"><span>  theme <span class="op">=</span> <span class="st">"bslib::bs_theme(bg = '#bb0a1e', fg = '#0000ff')"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Processing data</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> No result_type(s) found, the generated shiny will be empty.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> No panels identified, generated shiny will be empty.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Creating shiny from provided data</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Shiny created in: <span style="color: #0000BB;">/tmp/Rtmpbtwxwi/shiny</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Shiny created in: <span style="color: #0000BB;">/tmp/RtmpqHsqGu/shiny</span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
