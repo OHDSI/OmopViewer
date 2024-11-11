@@ -1,14 +1,19 @@
 
 #' Create a `bslib::card()` object from a `<summarised_result>` object.
 #'
-#' @param result A `<summarised_result>` object.
+#' @param result A list of `<summarised_result>` objects.
 #'
 #' @return A `bslib::card()` object.
 #' @export
 #'
 cardSummary <- function(result) {
-  # check input
-  result <- omopgenerics::validateResultArgument(result)
+  omopgenerics::assertList(result)
+
+  if (length(result) == 0) {
+    result <- omopgenerics::emptySummarisedResult()
+  } else {
+    result <- omopgenerics::bind(result)
+  }
 
   # result overview
   overview <- resultOverview(result)

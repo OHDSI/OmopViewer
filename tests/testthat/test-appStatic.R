@@ -23,18 +23,19 @@ test_that("logo", {
     logo = system.file("oxford.png", package = "OmopViewer")
   ))
   expect_true("shiny" %in% list.files(tdir))
+  ui <- readLines(file.path(tdir, "shiny", "ui.R"))
+  expect_snapshot(cat(ui, sep = "\n"))
   unlink(file.path(tdir, "shiny"), recursive = TRUE)
-
-  # test generated ui
-  expect_snapshot(uiStatic(logo = "my_pic.png") |> cat(sep = "\n"))
 })
 
 test_that("empty shiny", {
   tdir <- tempdir()
   expect_no_error(exportStaticApp(result = emptySummarisedResult(),directory = tdir))
   expect_true("shiny" %in% list.files(tdir))
-  expect_snapshot(uiStatic() |> cat(sep = "\n"))
-  expect_snapshot(serverStatic() |> cat(sep = "\n"))
+  ui <- readLines(file.path(tdir, "shiny", "ui.R"))
+  expect_snapshot(cat(ui, sep = "\n"))
+  server <- readLines(file.path(tdir, "shiny", "server.R"))
+  expect_snapshot(cat(server, sep = "\n"))
   unlink(file.path(tdir, "shiny"), recursive = TRUE)
 })
 
@@ -85,7 +86,7 @@ test_that("order tabs", {
   expect_no_error(exportStaticApp(
     result = result,
     directory = tdir,
-    panels = list(
+    panelStructure = list(
       "summarise_cohort_count",
       "summarise_cohort_overlap",
       "summarise_cohort_attrition"
@@ -103,7 +104,7 @@ test_that("order tabs", {
   expect_warning(exportStaticApp(
     result = result,
     directory = tdir,
-    panels = list(
+    panelStructure = list(
       "summarise_cohort_count", "summarise_cohort_attrition",
       "summarise_cohort_overlap", "not an option",
       "another missing result"
@@ -115,7 +116,7 @@ test_that("order tabs", {
 
   # expect warning if panel is not present
   expect_warning(exportStaticApp(
-    result = result, directory = tdir, panels = list("not an option")
+    result = result, directory = tdir, panelStructure = list("not an option")
   ))
 
   # delete created shiny
@@ -125,7 +126,7 @@ test_that("order tabs", {
   expect_warning(exportStaticApp(
     result = result,
     directory = tdir,
-    panels = list(
+    panelStructure = list(
       "CHARACTERISTICS" = c("summarise_characteristics", "summarise_large_scale_characteristics", "hi"),
       "summarise_cohort_overlap"
     )
@@ -142,9 +143,19 @@ test_that("order tabs", {
   expect_no_error(exportStaticApp(
     result = result,
     directory = tdir,
-    panels = list(
-      "DETAILS" = c("summarise_cohort_count", "Attrition" = "summarise_cohort_attrition"),
-      "Overlap" = "summarise_cohort_overlap"
+    panelStructure = list(
+      "DETAILS" = c("summarise_cohort_count", "summarise_cohort_attrition"),
+      "summarise_cohort_overlap"
+    ),
+    panelDetails = list(
+      "summarise_cohort_attrition" = list(
+        result_type = "summarise_cohort_attrition",
+        title = "Attrition"
+      ),
+      "summarise_cohort_overlap" = list(
+        result_type = "summarise_cohort_overlap",
+        title = "Overlap"
+      )
     )
   ))
 
@@ -156,22 +167,23 @@ test_that("order tabs", {
   unlink(file.path(tdir, "shiny"), recursive = TRUE)
 
   # expect error if it is not a list
-  expect_error(exportStaticApp(result = result, panels = c("must be a list")))
+  expect_error(exportStaticApp(result = result, directory = tdir, panelStructure = c("must be a list")))
 
   # expect error if duplicated elements
-  expect_error(exportStaticApp(result = result, panels = list(
+  expect_error(exportStaticApp(result = result, directory = tdir, panelStructure = list(
     "summarise_cohort_overlap", "summarise_cohort_overlap")))
 })
 
 test_that("theme", {
   tdir <- tempdir()
-
-  expect_no_error(exportStaticApp(result = emptySummarisedResult(), directory = tdir, theme = NULL, open = FALSE))
-
-  ui <- uiStatic(theme = "bslib::bs_theme(bg = '#bb0a1e', fg = '#0000ff')")
-
-  expect_true(grepl('theme = bslib::bs_theme\\(bg = "#bb0a1e", fg = "#0000ff"\\)', ui[2]))
-
+  expect_no_error(exportStaticApp(
+    result = emptySummarisedResult(),
+    directory = tdir,
+    theme = NULL,
+    open = FALSE
+  ))
+  ui <- readLines(file.path(tdir, "shiny", "ui.R"))
+  expect_snapshot(cat(ui, sep = "\n"))
   # delete created shiny
   unlink(file.path(tdir, "shiny"), recursive = TRUE)
 })

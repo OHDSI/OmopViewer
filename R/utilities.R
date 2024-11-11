@@ -26,72 +26,10 @@ validateDirectory <- function(directory) {
     } else {
       cli::cli_inform(c("i" = "{.strong shiny} folder will be overwritten."))
       unlink(file.path(directory, "shiny"), recursive = TRUE)
+      cli::cli_inform(c("v" = "Prior {.strong shiny} folder deleted."))
     }
   }
   return(directory)
-}
-validatePanels <- function(panels, resultTypes, call = parent.frame()) {
-  omopgenerics::assertList(panels, call = call)
-
-  # elements must be characters
-  if (length(panels) > 0 & !is.character(unlist(panels))) {
-    cli::cli_abort("{.var panels} should be a character list.", call = call)
-  }
-
-  # elements must be unique TO CONSIDER REMOVING
-  allPanels <- purrr::flatten_chr(panels)
-  uniquePanels <- unique(allPanels)
-  if (length(allPanels) != length(uniquePanels)) {
-    cli::cli_abort("{.var panels} can not have repeated elements.", call = call)
-  }
-
-  # eliminate not present panels
-  panels <- panels |>
-    purrr::map(\(x) purrr::keep(x, \(y) y %in% resultTypes)) |>
-    purrr::compact()
-  notPresent <- allPanels[!allPanels %in% resultTypes]
-  if (length(notPresent) > 0) {
-    cli::cli_warn("{.var {notPresent}} eliminated from panels as not present in results.")
-  }
-
-  # add panels not in choices
-  panels <- c(panels, as.list(resultTypes[!resultTypes %in% allPanels]))
-
-  # correct lengths
-  panels <- panels |>
-    purrr::map(\(x) if (length(x) > 1) as.list(x) else x)
-
-  # correct names of panels and title
-  panels <- panelNames(panels)
-
-  return(panels)
-}
-panelNames <- function(x) {
-  # correct names of menus
-  if (is.null(names(x))) names(x) <- rep("", length(x))
-  names(x) <- names(x) |>
-    purrr::imap_chr(\(nm, k) {
-      if (nm != "") return(nm)
-      if (length(x[[k]]) == 1) { # if single panel it is not a menu
-        return(getTitle(x[[k]]))
-      } else {
-        return("unnamed")
-      }
-    })
-  # correct names of panels if not provided the name is the default one
-  x <- x |>
-    purrr::map(\(xx) {
-      if (is.list(xx)) {
-        if (is.null(names(xx))) names(xx) <- rep("", length(xx))
-        names(xx) <- names(xx) |>
-          purrr::imap_chr(\(nm, k) if (nm != "") nm else getTitle(xx[[k]]))
-      }
-      return(xx)
-    })
-  return(x)
-}
-getTitle <- function(x) {
-  getInfo(x, "title", formatTit(x))
 }
 validateBackground <- function(background, logo, call = parent.frame()) {
   msg <- "'background' must be either TRUE/FALSE or a path to an existing `.md` file."
@@ -113,4 +51,45 @@ validateBackground <- function(background, logo, call = parent.frame()) {
     cli::cli_abort(message = msg, call = call)
   }
   return(background)
+}
+validatePanelDetails <- function(panelDetails, result, call = parent.frame()) {
+  if (length(panelDetails) == 0) {
+    panelDetails <- panelDetailsFromResult(result)
+  } else {
+    omopgenerics::assertList(panelDetails, named = TRUE, call = call)
+    panelDetails <- completePanelDetails(panelDetails, result)
+  }
+  return(panelDetails)
+}
+validatePanelStructure <- function(panelStructure, panelDetails, result, call = parent.frame()) {
+  if (length(panelStructure) == 0) {
+    panelStructure <- as.list(names(panelDetails))
+  } else {
+    omopgenerics::assertList(panelStructure, call = call)
+    panelStructure <- purrr::map(panelStructure, as.character)
+    present <- unlist(panelStructure)
+
+    if (length(present) != length(unique(present))) {
+      cli::cli_abort("panel identifiers in {.var panelStructure} must be unique.", call = call)
+    }
+
+    all <- names(panelDetails)
+
+    # warn eliminated
+    eliminate <- present[!present %in% all]
+    if (length(eliminate) > 0) {
+      cli::cli_warn("{.var {eliminate}} removed from panelStucture as not present in data.")
+      panelStructure <- panelStructure |>
+        purrr::map(\(x) x[x %in% all]) |>
+        purrr::discard(\(x) length(x) == 0)
+    }
+
+    # inform missing
+    missing <- all[!all %in% present]
+    if (length(missing) > 0) {
+      cli::cli_inform("{.var {missing}} panels added to panelStucture.")
+      panelStructure <- c(panelStructure, as.list(missing))
+    }
+  }
+  return(panelStructure)
 }

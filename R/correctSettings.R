@@ -13,6 +13,13 @@ correctSettings <- function(result) {
   # check input
   result <- omopgenerics::validateResultArgument(result)
 
+  .correctSettings(result)
+}
+joinCols <- function(x) {
+  if (length(x) == 0) return("")
+  stringr::str_flatten(x, collapse = " &&& ")
+}
+.correctSettings <- function(result) {
   set <- omopgenerics::settings(result)
 
   cols <- c("group", "strata", "additional")
@@ -43,8 +50,4 @@ correctSettings <- function(result) {
     )
 
   return(omopgenerics::newSummarisedResult(result, settings = set))
-}
-joinCols <- function(x) {
-  if (length(x) == 0) return(NA_character_)
-  stringr::str_flatten(x, collapse = " &&& ")
 }

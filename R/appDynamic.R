@@ -9,14 +9,18 @@ launchDynamicApp <- function() {
   shiny::shinyApp(ui = ui, server = serverDynamic)
 }
 
-createDynamicUi <- function(choices) {
+createDynamicUi <- function(result) {
   logo <- "https://OHDSI.github.io/Oxinfer/images/hds_logo_noline.svg"
+  panelDetails <- panelDetailsFromResult(result)
+  panelStructure <- panelStructureFromResult(result)
+  panels <- createUiPanels(panelDetails) |>
+    structurePanels(panelStructure)
   c(
     'bslib::page_navbar(',
     c(
       pageTitle("OmopViewer App", logo),
       loadDataUi(),
-      createUi(choices),
+      panels,
       'bslib::nav_spacer()',
       createAbout(logo),
       'bslib::nav_item(bslib::input_dark_mode(id ="dark_mode", mode = "light"))'
@@ -59,7 +63,9 @@ loadDataUi <- function() {
 
 serverDynamic <- function(input, output, session) {
 
-  output$dynamic_tabs_output <- shiny::renderUI(createDynamicUi(list()))
+  output$dynamic_tabs_output <- shiny::renderUI({
+    createDynamicUi(emptySummarisedResult())
+  })
 
   uploadedData <- shiny::reactiveVal(dplyr::tibble(
     id = integer(),
@@ -70,7 +76,7 @@ serverDynamic <- function(input, output, session) {
     is_empty = logical()
   ))
 
-  workingData <- shiny::reactiveVal(emptySummarisedResult())
+  workingData <- shiny::reactiveVal(prepareShinyData(emptySummarisedResult()))
 
   shiny::observeEvent(input$upload_data_content, {
     dataList <- processFiles(input$upload_data_content)
@@ -87,21 +93,21 @@ serverDynamic <- function(input, output, session) {
       dplyr::slice(input$upload_data_uploaded_rows_selected) |>
       dplyr::pull("content") |>
       omopgenerics::bind()
-    workingData(dataToUpload)
+    workingData(prepareShinyData(dataToUpload))
   })
 
   shiny::observeEvent(workingData(), {
-    choices <- getChoices(workingData())
-    output$dynamic_tabs_output <- shiny::renderUI(
-      createDynamicUi(choices)
-    )
-    for (rt in names(choices)) {
-      serverResultType <- paste0(
-        "function(input, output, session) {", createServer(rt, data = "workingData()"), "}") |>
-        rlang::parse_expr() |>
-        rlang::eval_tidy()
-      shiny::moduleServer(id = NULL, module = serverResultType)
-    }
+    # choices <- getChoices(workingData())
+    # output$dynamic_tabs_output <- shiny::renderUI(
+    #   createDynamicUi(choices)
+    # )
+    # for (rt in names(choices)) {
+    #   serverResultType <- paste0(
+    #     "function(input, output, session) {", createServer(rt, data = "workingData()"), "}") |>
+    #     rlang::parse_expr() |>
+    #     rlang::eval_tidy()
+    #   shiny::moduleServer(id = NULL, module = serverResultType)
+    # }
   })
 
 }

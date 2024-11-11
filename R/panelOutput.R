@@ -203,8 +203,10 @@ getOutputPrefix <- function(x, rt) {
 }
 
 outputUi <- function(tab, choic) {
-  setCols <- names(choic$settings)
-  groupCols <- names(choic$grouping)
+  setCols <- choic[startsWith(x = choic, prefix = "settings_")]
+  setCols <- substr(setCols, 10, nchar(setCols))
+  groupCols <- choic[startsWith(x = choic, prefix = "grouping_")]
+  groupCols <- substr(groupCols, 10, nchar(groupCols))
   varCols <- c("variable_name", "variable_level", "estimate_name")
   tab |>
     getOutputIds() |>
@@ -282,11 +284,10 @@ renderOutput <- function(id) {
          "grViz" = "DiagrammeR::renderGrViz")
 }
 
-outputServer <- function(rt, data) {
-  ids <- getOutputIds(rt)
-  if (length(ids) == 0) return(NULL)
+outputServer <- function(rt, outputId, data) {
+  if (length(outputId) == 0) return(NULL)
 
-  purrr::map_chr(ids, \(id) {
+  purrr::map_chr(outputId, \(id) {
     prefix <- getOutputPrefix(id, rt)
     args <- omopViewerOutputArguments |>
       dplyr::filter(.data$output_id == .env$id & !is.na(.data$argument)) |>
