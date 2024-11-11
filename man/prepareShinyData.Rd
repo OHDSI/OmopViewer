@@ -9,7 +9,7 @@ prepareShinyData(result, panelDetails = NULL)
 \arguments{
 \item{result}{A summarised_result object}
 
-\item{panelDetails}{A list ith the panel details.}
+\item{panelDetails}{A list with the panel details.}
 }
 \value{
 A list of summarised_result objects.

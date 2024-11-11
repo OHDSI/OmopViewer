@@ -187,3 +187,67 @@ test_that("theme", {
   # delete created shiny
   unlink(file.path(tdir, "shiny"), recursive = TRUE)
 })
+
+test_that("check preprocess file works", {
+  # create mock cdm
+  set.seed(123456)
+  cdm <- omock::mockCdmReference() |>
+    omock::mockPerson(nPerson = 100) |>
+    omock::mockObservationPeriod() |>
+    omock::mockConditionOccurrence(recordPerson = 3) |>
+    omock::mockDrugExposure(recordPerson = 4.5) |>
+    omock::mockCohort(
+      numberCohorts = 3, cohortName = c("covid", "tb", "asthma"))
+
+  # TO BE REMOVED WHEN CohortCharacteristics works with local cdms
+  cdm <- CDMConnector::copyCdmTo(
+    con = duckdb::dbConnect(duckdb::duckdb()), cdm = cdm, schema = "main")
+
+  # generate result set
+  result <- omopgenerics::bind(
+    cdm$cohort |>
+      CohortCharacteristics::summariseCharacteristics(),
+    cdm$cohort |>
+      CohortCharacteristics::summariseCohortAttrition(),
+    cdm$cohort |>
+      CohortCharacteristics::summariseCohortCount(),
+    cdm$cohort |>
+      CohortCharacteristics::summariseCohortOverlap(),
+    cdm$cohort |>
+      CohortCharacteristics::summariseCohortTiming()
+  )
+
+  # with no panelDetails
+  tdir <- tempdir()
+  expect_no_error(exportStaticApp(
+    result = result, directory = tdir, open = FALSE
+  ))
+  expect_true(dir.exists(file.path(tdir, "shiny")))
+  expect_true(file.exists(file.path(tdir, "shiny", "data", "preprocess.R")))
+  expect_true(file.exists(file.path(tdir, "shiny", "data", "shinyData.RData")))
+  load(file.path(tdir, "shiny", "data", "shinyData.RData"))
+  savedData <- data
+  savedFilterValues <- filterValues
+  # delete shinyData
+  unlink(file.path(tdir, "shiny", "data", "shinyData.RData"))
+  expect_false(file.exists(file.path(tdir, "shiny", "data", "shinyData.RData")))
+  # create same file file with
+  currentDirectory <- getwd()
+  setwd(file.path(tdir, "shiny"))
+  source(file.path(tdir, "shiny", "data", "preprocess.R"))
+  setwd(currentDirectory)
+  expect_true(file.exists(file.path(tdir, "shiny", "data", "shinyData.RData")))
+  load(file.path(tdir, "shiny", "data", "shinyData.RData"))
+  # settings are in different order
+  removeSettings <- function(x) {
+    purrr::map(x, \(x) {
+      attr(x, "settings") <- NULL
+      return(x)
+    })
+  }
+  expect_identical(removeSettings(savedData), removeSettings(data))
+  expect_identical(savedFilterValues, filterValues)
+  # delete created shiny
+  unlink(file.path(tdir, "shiny"), recursive = TRUE)
+
+})

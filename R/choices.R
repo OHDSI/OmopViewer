@@ -1,4 +1,23 @@
 
+#' Extract filter values.
+#'
+#' @param result A summarised_result object.
+#' @param panelDetails A list with the panel details.
+#'
+#' @return A lit with the values to filter by.
+#' @export
+#'
+filterValues <- function(result,
+                         panelDetails = NULL) {
+  # check inputs
+  result <- omopgenerics::validateResultArgument(result)
+  omopgenerics::assertList(panelDetails, null = TRUE)
+  panelDetails <- validatePanelDetails(panelDetails, result) |>
+    addFilterNames(result = result)
+
+  getFilterValues(panelDetails = panelDetails, result = result)
+}
+
 addFilterNames <- function(panelDetails, result) {
   set <- omopgenerics::settings(result)
   panelDetails |>
@@ -83,15 +102,4 @@ prefixNames <- function(x, prefix) {
   if (length(x) == 0) return(list())
   names(x) <- paste0(prefix, names(x))
   return(x)
-}
-prepareResult <- function(panelDetails, result) {
-  panelDetails |>
-    purrr::map(\(x) {
-      result |>
-        dplyr::filter(.data$result_id %in% .env$x$result_id) |>
-        omopgenerics::newSummarisedResult(
-          settings = omopgenerics::settings(result) |>
-            dplyr::filter(.data$result_id %in% .env$x$result_id)
-        )
-    })
 }

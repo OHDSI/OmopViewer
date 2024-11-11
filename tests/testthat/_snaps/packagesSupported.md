@@ -1560,18 +1560,24 @@
       library(dplyr)
       library(ggplot2)
       library(gt)
-      library(here)
+      library(omopgenerics)
       library(readr)
       library(shiny)
       library(shinyWidgets)
       library(sortable)
       library(visOmopResults)
       
+      # preprocess data if it has not been done
+      fileData <- file.path(getwd(), "data", "shinyData.RData")
+      if (!file.exists(fileData)) {
+        source(file.path(getwd(), "data", "preprocess.R"))
+      }
+      
       # uncomment to load the raw data
-      # rawData <- OmopViewer::importSummarisedResult(here::here("data"))
+      # rawData <- OmopViewer::importSummarisedResult(file.path(getwd(), "data"))
       
       # load shiny data
-      load(here::here("data", "shinyData.RData"))
+      load(fileData)
 
 ---
 
@@ -4310,17 +4316,23 @@
       library(dplyr)
       library(ggplot2)
       library(gt)
-      library(here)
+      library(omopgenerics)
       library(readr)
       library(shiny)
       library(shinyWidgets)
       library(visOmopResults)
       
+      # preprocess data if it has not been done
+      fileData <- file.path(getwd(), "data", "shinyData.RData")
+      if (!file.exists(fileData)) {
+        source(file.path(getwd(), "data", "preprocess.R"))
+      }
+      
       # uncomment to load the raw data
-      # rawData <- OmopViewer::importSummarisedResult(here::here("data"))
+      # rawData <- OmopViewer::importSummarisedResult(file.path(getwd(), "data"))
       
       # load shiny data
-      load(here::here("data", "shinyData.RData"))
+      load(fileData)
 
 ---
 
@@ -7232,18 +7244,24 @@
       library(dplyr)
       library(ggplot2)
       library(gt)
-      library(here)
+      library(omopgenerics)
       library(readr)
       library(shiny)
       library(shinyWidgets)
       library(sortable)
       library(visOmopResults)
       
+      # preprocess data if it has not been done
+      fileData <- file.path(getwd(), "data", "shinyData.RData")
+      if (!file.exists(fileData)) {
+        source(file.path(getwd(), "data", "preprocess.R"))
+      }
+      
       # uncomment to load the raw data
-      # rawData <- OmopViewer::importSummarisedResult(here::here("data"))
+      # rawData <- OmopViewer::importSummarisedResult(file.path(getwd(), "data"))
       
       # load shiny data
-      load(here::here("data", "shinyData.RData"))
+      load(fileData)
 
 ---
 
@@ -9094,17 +9112,23 @@
       library(dplyr)
       library(ggplot2)
       library(gt)
-      library(here)
+      library(omopgenerics)
       library(readr)
       library(shiny)
       library(shinyWidgets)
       library(visOmopResults)
       
+      # preprocess data if it has not been done
+      fileData <- file.path(getwd(), "data", "shinyData.RData")
+      if (!file.exists(fileData)) {
+        source(file.path(getwd(), "data", "preprocess.R"))
+      }
+      
       # uncomment to load the raw data
-      # rawData <- OmopViewer::importSummarisedResult(here::here("data"))
+      # rawData <- OmopViewer::importSummarisedResult(file.path(getwd(), "data"))
       
       # load shiny data
-      load(here::here("data", "shinyData.RData"))
+      load(fileData)
 
 # CodelistGenerator shiny
 
@@ -10147,16 +10171,22 @@
       library(bslib)
       library(dplyr)
       library(gt)
-      library(here)
+      library(omopgenerics)
       library(readr)
       library(shiny)
       library(shinyWidgets)
       library(sortable)
       library(visOmopResults)
       
+      # preprocess data if it has not been done
+      fileData <- file.path(getwd(), "data", "shinyData.RData")
+      if (!file.exists(fileData)) {
+        source(file.path(getwd(), "data", "preprocess.R"))
+      }
+      
       # uncomment to load the raw data
-      # rawData <- OmopViewer::importSummarisedResult(here::here("data"))
+      # rawData <- OmopViewer::importSummarisedResult(file.path(getwd(), "data"))
       
       # load shiny data
-      load(here::here("data", "shinyData.RData"))
+      load(fileData)
 
