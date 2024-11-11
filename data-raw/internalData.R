@@ -268,12 +268,29 @@ omopViewerProj <- c(
   "LaTeX: pdfLaTeX"
 )
 
+omopViewerPreprocess <- c(
+  "",
+  "result <- omopgenerics::importSummarisedResult(file.path(getwd(), \"data\"))",
+  "data <- OmopViewer::prepareShinyData(result, panelDetails)",
+  "filterValues <- OmopViewer::filterValues(result, panelDetails)",
+  "",
+  "save(data, filterValues, file = file.path(getwd(), \"data\", \"shinyData.RData\"))",
+  "",
+  "rm(result, filterValues, panelDetails, data)"
+)
+
 omopViewerGlobal <- c(
+  "# preprocess data if it has not been done",
+  "fileData <- file.path(getwd(), \"data\", \"shinyData.RData\")",
+  "if (!file.exists(fileData)) {",
+  "source(file.path(getwd(), \"data\", \"preprocess.R\"))",
+  "}",
+  "",
   "# uncomment to load the raw data",
-  "# rawData <- OmopViewer::importSummarisedResult(here::here(\"data\"))",
+  "# rawData <- OmopViewer::importSummarisedResult(file.path(getwd(), \"data\"))",
   "",
   "# load shiny data",
-  "load(here::here(\"data\", \"shinyData.RData\"))"
+  "load(fileData)"
 ) |>
   styleCode()
 
@@ -296,5 +313,5 @@ ignoreSettings <- c(
 
 usethis::use_data(
   omopViewerTabs, omopViewerOutput, omopViewerOutputArguments, omopViewerProj,
-  omopViewerGlobal, logoKeywords, backgroundKeywords, ignoreSettings,
-  overwrite = TRUE, internal = TRUE)
+  omopViewerGlobal, omopViewerPreprocess, logoKeywords, backgroundKeywords,
+  ignoreSettings, overwrite = TRUE, internal = TRUE)

@@ -85,6 +85,13 @@ exportStaticApp <- function(result,
   dir.create(path = directory, showWarnings = FALSE)
   cli::cli_inform(c("i" = "Creating shiny from provided data"))
 
+  # preprocess file
+  preprocess <- c(
+    "# shiny is prepared to work with this panelDetails, please do not change them",
+    paste0("panelDetails <- ", writePanelDetails(panelDetails)),
+    omopViewerPreprocess
+  ) |>
+    styleCode()
 
   # copy the logos to the shiny folder
   logo <- copyLogos(logo, directory)
@@ -120,7 +127,8 @@ exportStaticApp <- function(result,
   libraries <- c(
     detectPackages(ui),
     detectPackages(server),
-    detectPackages(omopViewerGlobal)
+    detectPackages(omopViewerGlobal),
+    detectPackages(preprocess)
   ) |>
     unique() |>
     sort()
@@ -133,7 +141,9 @@ exportStaticApp <- function(result,
 
   # prepare data
   filterValues <- getFilterValues(panelDetails, result)
-  data <- prepareResult(panelDetails, result)
+  data <- prepareResult(
+    panelDetails, result |> omopgenerics::suppress(minCellCount = 0)
+  )
 
   # write files in the corresponding directory
   if (!is.null(background)) {
@@ -151,6 +161,7 @@ exportStaticApp <- function(result,
     result, minCellCount = 0, fileName = "results.csv", path = dataPath
   )
   save(data, filterValues, file = file.path(dataPath, "shinyData.RData"))
+  writeLines(preprocess, con = file.path(dataPath, "preprocess.R"))
 
   cli::cli_inform(c("v" = "Shiny created in: {.pkg {directory}}"))
 
@@ -330,3 +341,21 @@ subs <- function(x, pat, subst) {
   }
   return(x)
 }
+writePanelDetails <- function(panelDetails) {
+  if (length(panelDetails) == 0) return("list()")
+  paste0(
+    "list(\n",
+    purrr::imap(panelDetails, \(x, nm) {
+      paste0(
+        cast(nm),
+        " = list(\n",
+        purrr::imap(x, \(x, nm) paste0(cast(nm), " = ", cast(x))) |>
+          paste0(collapse = ",\n"),
+        "\n)"
+      )
+    }) |>
+      paste0(collapse = ",\n"),
+    "\n)"
+  )
+}
+
