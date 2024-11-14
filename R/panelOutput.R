@@ -216,20 +216,32 @@ outputUi <- function(tab, choic) {
       sidebar <- getOutputSidebar(x, setCols, groupCols, varCols)
       output <- getOutputUi(x)
       prefix <- getOutputPrefix(x, tab)
-      'bslib::nav_panel(
-        title = "{title}",
-        bslib::card(
-          full_screen = TRUE,
-          {download},
-          bslib::layout_sidebar(
-            sidebar = bslib::sidebar(
-              {sidebar},
-              position = "right"
-            ),
+      if (sidebar == "") {
+        res <- 'bslib::nav_panel(
+          title = "{title}",
+          bslib::card(
+            full_screen = TRUE,
+            {download},
             {output}
           )
-        )
-      )' |>
+        )'
+      } else {
+        res <- 'bslib::nav_panel(
+          title = "{title}",
+          bslib::card(
+            full_screen = TRUE,
+            {download},
+            bslib::layout_sidebar(
+              sidebar = bslib::sidebar(
+                {sidebar},
+                position = "right"
+              ),
+              {output}
+            )
+          )
+        )'
+      }
+      res |>
         glue::glue() |>
         glue::glue() |>
         as.character()
