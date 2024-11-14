@@ -17,6 +17,7 @@
           ),
           ""
         ),
+        theme = bslib::bs_theme(),
         bslib::nav_panel(
           title = "Background",
           icon = shiny::icon("disease"),
@@ -80,6 +81,7 @@
           ),
           ""
         ),
+        theme = bslib::bs_theme(),
         bslib::nav_panel(
           title = "Background",
           icon = shiny::icon("disease"),
@@ -161,6 +163,7 @@
           ),
           "example"
         ),
+        theme = bslib::bs_theme(),
         bslib::nav_panel(
           title = "Background",
           icon = shiny::icon("disease"),
@@ -224,6 +227,7 @@
           ),
           ""
         ),
+        theme = bslib::bs_theme(),
         bslib::nav_panel(
           title = "Background",
           icon = shiny::icon("disease"),
@@ -891,6 +895,7 @@
           ),
           ""
         ),
+        theme = bslib::bs_theme(),
         bslib::nav_panel(
           title = "Background",
           icon = shiny::icon("disease"),
@@ -1558,6 +1563,7 @@
           ),
           ""
         ),
+        theme = bslib::bs_theme(),
         bslib::nav_panel(
           title = "Background",
           icon = shiny::icon("disease"),
@@ -2229,6 +2235,7 @@
           ),
           ""
         ),
+        theme = bslib::bs_theme(),
         bslib::nav_panel(
           title = "Background",
           icon = shiny::icon("disease"),
