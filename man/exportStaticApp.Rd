@@ -41,7 +41,11 @@ dropdown menus.}
 panels, such as: result_id, result_type, title, icon, output_id, ... Name of
 each element must be the identifier name of `panelStructure`.}
 
-\item{theme}{Assign a theme to the shiny app using bslib::bs_theme().}
+\item{theme}{Specify the theme for the Shiny application. You can either
+select a predefined theme provided by the package (e.g., `"theme1"`), or
+define a custom theme using `bslib::bs_theme()`. If using a custom theme, it
+must be provided as a character string (e.g.,
+`"bslib::bs_theme(bg = 'white', fg = 'black')"`).}
 
 \item{open}{Whether to open the shiny app project.}
 
@@ -57,7 +61,7 @@ Export and launch a static shiny specific to the provided results.
 exportStaticApp(
   result = emptySummarisedResult(),
   directory = tempdir(),
-  theme = "bslib::bs_theme(bg = '#bb0a1e', fg = '#0000ff')"
+  theme = "theme1"
 )
 
 }
