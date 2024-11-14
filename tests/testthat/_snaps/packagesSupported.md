@@ -1212,12 +1212,11 @@
         # fill selectise variables ----
         shiny::observe({
           for (k in seq_along(filterValues)) {
-            shiny::updatePickerInput(
+            shinyWidgets::updatePickerInput(
               session,
               inputId = names(filterValues)[k],
               choices = filterValues[[k]],
               selected = filterValues[[k]],
-              server = TRUE
             )
           }
         })
@@ -3810,12 +3809,11 @@
         # fill selectise variables ----
         shiny::observe({
           for (k in seq_along(filterValues)) {
-            shiny::updatePickerInput(
+            shinyWidgets::updatePickerInput(
               session,
               inputId = names(filterValues)[k],
               choices = filterValues[[k]],
               selected = filterValues[[k]],
-              server = TRUE
             )
           }
         })
@@ -6679,12 +6677,11 @@
         # fill selectise variables ----
         shiny::observe({
           for (k in seq_along(filterValues)) {
-            shiny::updatePickerInput(
+            shinyWidgets::updatePickerInput(
               session,
               inputId = names(filterValues)[k],
               choices = filterValues[[k]],
               selected = filterValues[[k]],
-              server = TRUE
             )
           }
         })
@@ -8933,12 +8930,11 @@
         # fill selectise variables ----
         shiny::observe({
           for (k in seq_along(filterValues)) {
-            shiny::updatePickerInput(
+            shinyWidgets::updatePickerInput(
               session,
               inputId = names(filterValues)[k],
               choices = filterValues[[k]],
               selected = filterValues[[k]],
-              server = TRUE
             )
           }
         })
@@ -9883,12 +9879,11 @@
         # fill selectise variables ----
         shiny::observe({
           for (k in seq_along(filterValues)) {
-            shiny::updatePickerInput(
+            shinyWidgets::updatePickerInput(
               session,
               inputId = names(filterValues)[k],
               choices = filterValues[[k]],
               selected = filterValues[[k]],
-              server = TRUE
             )
           }
         })
