@@ -176,6 +176,50 @@ test_that("order tabs", {
 
 test_that("theme", {
   tdir <- tempdir()
+
+  expect_no_error(exportStaticApp(result = emptySummarisedResult(), directory = tdir, theme = "theme1", open = FALSE))
+
+  ui <- readLines(file.path(tdir, "shiny", "ui.R")) |>
+    stringr::str_flatten() |>
+    stringr::str_replace_all(" ", "") |>
+    stringr::str_replace_all('"', "'")
+
+  expectedTheme <- omopViewerThemes$theme1 |>
+    stringr::str_replace_all("\n| ", "") |>
+    stringr::str_replace_all('"', "'")
+
+  expect_true(grepl(expectedTheme, ui, fixed = TRUE))
+
+  # delete created shiny
+  unlink(file.path(tdir, "shiny"), recursive = TRUE)
+
+  # custom theme
+  theme <- "bslib::bs_theme(bootswatch = 'sandstone',
+    primary = '#605ca8',
+    bg = 'white',
+    fg = 'black',
+    success = '#3B9AB2',
+    base_font = bslib::font_google('Space Mono'),
+    code_font = bslib::font_google('Space Mono'))"
+
+  expect_message(exportStaticApp(
+    result = emptySummarisedResult(),
+    theme = theme,
+    directory = tdir,
+    open = FALSE
+  ))
+
+  ui <- readLines(file.path(tdir, "shiny", "ui.R")) |>
+    stringr::str_flatten() |>
+    stringr::str_replace_all(" ", "") |>
+    stringr::str_replace_all('"', "'")
+
+  expectedTheme <- theme |>
+    stringr::str_replace_all("\n| ", "") |>
+    stringr::str_replace_all('"', "'")
+
+  expect_true(grepl(expectedTheme, ui, fixed = TRUE))
+
   expect_no_error(exportStaticApp(
     result = emptySummarisedResult(),
     directory = tdir,
@@ -184,6 +228,7 @@ test_that("theme", {
   ))
   ui <- readLines(file.path(tdir, "shiny", "ui.R"))
   expect_snapshot(cat(ui, sep = "\n"))
+
   # delete created shiny
   unlink(file.path(tdir, "shiny"), recursive = TRUE)
 })

@@ -306,6 +306,16 @@ backgroundKeywords <- dplyr::tribble(
   "footer", "bslib::card_footer", "https://rstudio.github.io/bslib//reference/card_body.html"
 )
 
+omopViewerThemes <- list(
+  theme1 = "bslib::bs_theme(
+    bootswatch = 'sandstone',
+    primary = '#605ca8',
+    bg = 'white',
+    fg = 'black',
+    success = '#3B9AB2',
+  )"
+)
+
 ignoreSettings <- c(
   "result_id", "package_name", "package_version", "result_type", "strata",
   "group", "additional", "min_cell_count"
@@ -314,4 +324,4 @@ ignoreSettings <- c(
 usethis::use_data(
   omopViewerTabs, omopViewerOutput, omopViewerOutputArguments, omopViewerProj,
   omopViewerGlobal, omopViewerPreprocess, logoKeywords, backgroundKeywords,
-  ignoreSettings, overwrite = TRUE, internal = TRUE)
+  ignoreSettings, omopViewerThemes, overwrite = TRUE, internal = TRUE)

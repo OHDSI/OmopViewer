@@ -16,7 +16,11 @@
 #' panels, such as: result_id, result_type, title, icon, output_id, ... Name of
 #' each element must be the identifier name of `panelStructure`.
 #' @param open Whether to open the shiny app project.
-#' @param theme Assign a theme to the shiny app using bslib::bs_theme().
+#' @param theme Specify the theme for the Shiny application. You can either
+#' select a predefined theme provided by the package (e.g., `"theme1"`), or
+#' define a custom theme using `bslib::bs_theme()`. If using a custom theme, it
+#' must be provided as a character string (e.g.,
+#' `"bslib::bs_theme(bg = 'white', fg = 'black')"`).
 #' @param panels deprecated.
 #'
 #' @return The shiny app will be created in directory.
@@ -27,7 +31,7 @@
 #' exportStaticApp(
 #'   result = emptySummarisedResult(),
 #'   directory = tempdir(),
-#'   theme = "bslib::bs_theme(bg = '#bb0a1e', fg = '#0000ff')"
+#'   theme = "theme1"
 #' )
 #'
 exportStaticApp <- function(result,
@@ -54,6 +58,7 @@ exportStaticApp <- function(result,
   omopgenerics::assertCharacter(title, length = 1)
   omopgenerics::assertLogical(summary, length = 1)
   omopgenerics::assertCharacter(theme, length = 1, null = TRUE)
+  theme <- validateTheme(theme)
   if (lifecycle::is_present(panels)) {
     lifecycle::deprecate_warn(
       when = "0.2.0",
@@ -223,6 +228,8 @@ logoPath <- function(logo) {
   }
 }
 
+
+
 # ui ----
 uiStatic <- function(logo,
                      title,
@@ -245,9 +252,9 @@ uiStatic <- function(logo,
   # ui
   c(
     "ui <- bslib::page_navbar(",
-    theme_setting,
     c(
       pageTitle(title, logo),
+      pageTheme(theme),
       createBackground(background),
       summaryTab(summary),
       panels,
