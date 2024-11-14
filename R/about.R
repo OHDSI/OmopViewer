@@ -13,11 +13,11 @@ createAbout <- function(logo) {
       ),
       "This shiny app was generated with ",
       shiny::a(
-        "omopViewer",
-        href = "https://github.com/oxford-pharmacoepi/omopViewer",
+        "OmopViewer",
+        href = "https://github.com/OHDSI/OmopViewer",
         target = "_blank"
       ),
-      shiny::strong("v{as.character(utils::packageVersion("omopViewer"))}")
+      shiny::strong("v{as.character(utils::packageVersion("OmopViewer"))}")
     )
   )' |>
     glue::glue() |>

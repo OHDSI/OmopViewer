@@ -13,3 +13,5 @@
 ^doc$
 ^Meta$
 ^vignettes/articles$
+^cran-comments\.md$
+^CRAN-SUBMISSION$

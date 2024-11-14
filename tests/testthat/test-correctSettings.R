@@ -2,7 +2,17 @@ test_that("correctSettings columns", {
 
   # empty summarised_result
   expect_identical(
-    emptySummarisedResult(), emptySummarisedResult() |> correctSettings()
+    emptySummarisedResult(settings = dplyr::tibble(
+      result_id = integer(),
+      result_type = character(),
+      package_name = character(),
+      package_version = character(),
+      group = character(),
+      strata = character(),
+      additional = character()
+    )),
+    emptySummarisedResult() |>
+      correctSettings()
   )
 
   # simple example
@@ -24,7 +34,7 @@ test_that("correctSettings columns", {
     omopgenerics::newSummarisedResult(settings = dplyr::tibble(
       result_id = 1L,
       result_type = "toy_data",
-      package_name = "omopViewer",
+      package_name = "OmopViewer",
       package_version = "0.1.0"
     ))
   expect_no_error(xCorrected <- correctSettings(x))
@@ -40,7 +50,7 @@ test_that("correctSettings columns", {
       dplyr::mutate(
         group = "cohort_name_ref &&& cohort_name_comp",
         strata = "age &&& sex &&& year",
-        additional = NA_character_
+        additional = ""
       )
   )
 
@@ -63,7 +73,7 @@ test_that("correctSettings columns", {
     omopgenerics::newSummarisedResult(settings = dplyr::tibble(
       result_id = c(1L, 2L),
       result_type = "toy_data",
-      package_name = "omopViewer",
+      package_name = "OmopViewer",
       package_version = "0.1.0"
     ))
   expect_no_error(xCorrected <- correctSettings(x))
@@ -79,7 +89,7 @@ test_that("correctSettings columns", {
       dplyr::mutate(
         group = "cohort_name_ref &&& cohort_name_comp",
         strata = c("age &&& sex", "year"),
-        additional = NA_character_
+        additional = ""
       )
   )
 
@@ -88,7 +98,7 @@ test_that("correctSettings columns", {
     omopgenerics::newSummarisedResult(settings = dplyr::tibble(
       result_id = c(1L, 2L, 3L),
       result_type = "toy_data",
-      package_name = "omopViewer",
+      package_name = "OmopViewer",
       package_version = "0.1.0"
     ))
   expect_no_error(xCorrected <- correctSettings(x))
@@ -105,10 +115,10 @@ test_that("correctSettings columns", {
         group = c(
           "cohort_name_ref &&& cohort_name_comp",
           "cohort_name_ref &&& cohort_name_comp",
-          NA_character_
+          ""
         ),
-        strata = c("age &&& sex", "year", NA_character_),
-        additional = NA_character_
+        strata = c("age &&& sex", "year", ""),
+        additional = ""
       )
   )
 
@@ -117,7 +127,7 @@ test_that("correctSettings columns", {
     omopgenerics::newSummarisedResult(settings = dplyr::tibble(
       result_id = c(1L, 2L, 3L),
       result_type = "toy_data",
-      package_name = "omopViewer",
+      package_name = "OmopViewer",
       package_version = "0.1.0",
       strata = "test"
     ))
@@ -135,10 +145,10 @@ test_that("correctSettings columns", {
         group = c(
           "cohort_name_ref &&& cohort_name_comp",
           "cohort_name_ref &&& cohort_name_comp",
-          NA_character_
+          ""
         ),
-        strata = c("age &&& sex", "year", NA_character_),
-        additional = NA_character_
+        strata = c("age &&& sex", "year", ""),
+        additional = ""
       )
   )
 })

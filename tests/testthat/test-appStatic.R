@@ -1,5 +1,4 @@
 test_that("logo", {
-  #tdir <- here::here()
   tdir <- tempdir()
 
   # test no logo
@@ -18,98 +17,29 @@ test_that("logo", {
   }
 
   # custom logo
-  expect_no_error(exportStaticApp(result = emptySummarisedResult(),
-                                  directory = tdir, logo = here::here("inst", "oxford.png")))
+  expect_no_error(exportStaticApp(
+    result = emptySummarisedResult(),
+    directory = tdir,
+    logo = system.file("oxford.png", package = "OmopViewer")
+  ))
   expect_true("shiny" %in% list.files(tdir))
+  ui <- readLines(file.path(tdir, "shiny", "ui.R"))
+  expect_snapshot(cat(ui, sep = "\n"))
   unlink(file.path(tdir, "shiny"), recursive = TRUE)
-
-  # test generated ui
-  expect_snapshot(uiStatic(logo = "my_pic.png") |> cat(sep = "\n"))
 })
 
 test_that("empty shiny", {
-  #tdir <- here::here()
   tdir <- tempdir()
   expect_no_error(exportStaticApp(result = emptySummarisedResult(),directory = tdir))
   expect_true("shiny" %in% list.files(tdir))
-  expect_snapshot(uiStatic() |> cat(sep = "\n"))
-  expect_snapshot(serverStatic() |> cat(sep = "\n"))
-  unlink(file.path(tdir, "shiny"), recursive = TRUE)
-})
-
-test_that("CohortCharacteristics shiny", {
-  # create mock cdm
-  set.seed(123456)
-  cdm <- omock::mockCdmReference() |>
-    omock::mockPerson(nPerson = 100) |>
-    omock::mockObservationPeriod() |>
-    omock::mockConditionOccurrence(recordPerson = 3) |>
-    omock::mockDrugExposure(recordPerson = 4.5) |>
-    omock::mockCohort(
-      numberCohorts = 3, cohortName = c("covid", "tb", "asthma"))
-
-  # TO BE REMOVED WHEN CohortCharacteristics works with local cdms
-  cdm <- CDMConnector::copyCdmTo(
-    con = duckdb::dbConnect(duckdb::duckdb()), cdm = cdm, schema = "main")
-
-  # generate result set
-  result <- omopgenerics::bind(
-    cdm$cohort |>
-      CohortCharacteristics::summariseCharacteristics(),
-    cdm$cohort |>
-      CohortCharacteristics::summariseCohortAttrition(),
-    cdm$cohort |>
-      CohortCharacteristics::summariseCohortCount(),
-    cdm$cohort |>
-      CohortCharacteristics::summariseCohortOverlap(),
-    cdm$cohort |>
-      CohortCharacteristics::summariseCohortTiming(),
-    cdm$cohort |>
-      PatientProfiles::addAge(ageGroup = list(c(0, 44), c(45, Inf))) |>
-      PatientProfiles::addSex(name = "cohort") |>
-      CohortCharacteristics::summariseLargeScaleCharacteristics(
-        strata = list("sex", "age_group", c("age_group", "sex")),
-        eventInWindow = "condition_occurrence",
-        episodeInWindow = "drug_exposure"
-      )
-  )
-
-  # generate shiny
-  tdir <- tempdir()
-  expect_no_error(exportStaticApp(result = result, directory = tdir, summary = FALSE))
-  expect_true("shiny" %in% list.files(tdir))
-
-  # test ui snapshot
   ui <- readLines(file.path(tdir, "shiny", "ui.R"))
   expect_snapshot(cat(ui, sep = "\n"))
-
-  # test server snapshot
   server <- readLines(file.path(tdir, "shiny", "server.R"))
   expect_snapshot(cat(server, sep = "\n"))
-
-  # test global snapshot
-  global <- readLines(file.path(tdir, "shiny", "global.R"))
-  expect_snapshot(cat(global, sep = "\n"))
-
-  # delete created shiny
   unlink(file.path(tdir, "shiny"), recursive = TRUE)
-
-  # test summary = FALSE
-  expect_no_error(exportStaticApp(result = result, directory = tdir, summary = FALSE))
-  expect_true("shiny" %in% list.files(tdir))
-
-  # test ui snapshot
-  ui <- readLines(file.path(tdir, "shiny", "ui.R"))
-  expect_snapshot(cat(ui, sep = "\n"))
-
-  # delete created shiny
-  unlink(file.path(tdir, "shiny"), recursive = TRUE)
-
-  PatientProfiles::mockDisconnect(cdm)
 })
 
 test_that("title", {
-  #tdir <- here::here()
   tdir <- tempdir()
   expect_no_error(exportStaticApp(
     result = emptySummarisedResult(), directory = tdir, title = "example"
@@ -124,7 +54,6 @@ test_that("title", {
 
   # delete created shiny
   unlink(file.path(tdir, "shiny"), recursive = TRUE)
-
 })
 
 test_that("order tabs", {
@@ -157,7 +86,7 @@ test_that("order tabs", {
   expect_no_error(exportStaticApp(
     result = result,
     directory = tdir,
-    panels = list(
+    panelStructure = list(
       "summarise_cohort_count",
       "summarise_cohort_overlap",
       "summarise_cohort_attrition"
@@ -175,7 +104,7 @@ test_that("order tabs", {
   expect_warning(exportStaticApp(
     result = result,
     directory = tdir,
-    panels = list(
+    panelStructure = list(
       "summarise_cohort_count", "summarise_cohort_attrition",
       "summarise_cohort_overlap", "not an option",
       "another missing result"
@@ -187,7 +116,7 @@ test_that("order tabs", {
 
   # expect warning if panel is not present
   expect_warning(exportStaticApp(
-    result = result, directory = tdir, panels = list("not an option")
+    result = result, directory = tdir, panelStructure = list("not an option")
   ))
 
   # delete created shiny
@@ -197,7 +126,7 @@ test_that("order tabs", {
   expect_warning(exportStaticApp(
     result = result,
     directory = tdir,
-    panels = list(
+    panelStructure = list(
       "CHARACTERISTICS" = c("summarise_characteristics", "summarise_large_scale_characteristics", "hi"),
       "summarise_cohort_overlap"
     )
@@ -214,9 +143,19 @@ test_that("order tabs", {
   expect_no_error(exportStaticApp(
     result = result,
     directory = tdir,
-    panels = list(
-      "DETAILS" = c("summarise_cohort_count", "Attrition" = "summarise_cohort_attrition"),
-      "Overlap" = "summarise_cohort_overlap"
+    panelStructure = list(
+      "DETAILS" = c("summarise_cohort_count", "summarise_cohort_attrition"),
+      "summarise_cohort_overlap"
+    ),
+    panelDetails = list(
+      "summarise_cohort_attrition" = list(
+        result_type = "summarise_cohort_attrition",
+        title = "Attrition"
+      ),
+      "summarise_cohort_overlap" = list(
+        result_type = "summarise_cohort_overlap",
+        title = "Overlap"
+      )
     )
   ))
 
@@ -228,15 +167,14 @@ test_that("order tabs", {
   unlink(file.path(tdir, "shiny"), recursive = TRUE)
 
   # expect error if it is not a list
-  expect_error(exportStaticApp(result = result, panels = c("must be a list")))
+  expect_error(exportStaticApp(result = result, directory = tdir, panelStructure = c("must be a list")))
 
   # expect error if duplicated elements
-  expect_error(exportStaticApp(result = result, panels = list(
+  expect_error(exportStaticApp(result = result, directory = tdir, panelStructure = list(
     "summarise_cohort_overlap", "summarise_cohort_overlap")))
 })
 
 test_that("theme", {
-  #tdir <- here::here()
   tdir <- tempdir()
 
   expect_no_error(exportStaticApp(result = emptySummarisedResult(), directory = tdir, theme = "theme1", open = FALSE))
@@ -282,7 +220,79 @@ test_that("theme", {
 
   expect_true(grepl(expectedTheme, ui, fixed = TRUE))
 
+  expect_no_error(exportStaticApp(
+    result = emptySummarisedResult(),
+    directory = tdir,
+    theme = NULL,
+    open = FALSE
+  ))
+  ui <- readLines(file.path(tdir, "shiny", "ui.R"))
+  expect_snapshot(cat(ui, sep = "\n"))
+
   # delete created shiny
   unlink(file.path(tdir, "shiny"), recursive = TRUE)
 })
 
+test_that("check preprocess file works", {
+  # create mock cdm
+  set.seed(123456)
+  cdm <- omock::mockCdmReference() |>
+    omock::mockPerson(nPerson = 100) |>
+    omock::mockObservationPeriod() |>
+    omock::mockConditionOccurrence(recordPerson = 3) |>
+    omock::mockDrugExposure(recordPerson = 4.5) |>
+    omock::mockCohort(
+      numberCohorts = 3, cohortName = c("covid", "tb", "asthma"))
+
+  # TO BE REMOVED WHEN CohortCharacteristics works with local cdms
+  cdm <- CDMConnector::copyCdmTo(
+    con = duckdb::dbConnect(duckdb::duckdb()), cdm = cdm, schema = "main")
+
+  # generate result set
+  result <- omopgenerics::bind(
+    cdm$cohort |>
+      CohortCharacteristics::summariseCharacteristics(),
+    cdm$cohort |>
+      CohortCharacteristics::summariseCohortAttrition(),
+    cdm$cohort |>
+      CohortCharacteristics::summariseCohortCount(),
+    cdm$cohort |>
+      CohortCharacteristics::summariseCohortOverlap(),
+    cdm$cohort |>
+      CohortCharacteristics::summariseCohortTiming()
+  )
+
+  # with no panelDetails
+  tdir <- tempdir()
+  expect_no_error(exportStaticApp(
+    result = result, directory = tdir, open = FALSE
+  ))
+  expect_true(dir.exists(file.path(tdir, "shiny")))
+  expect_true(file.exists(file.path(tdir, "shiny", "data", "preprocess.R")))
+  expect_true(file.exists(file.path(tdir, "shiny", "data", "shinyData.RData")))
+  load(file.path(tdir, "shiny", "data", "shinyData.RData"))
+  savedData <- data
+  savedFilterValues <- filterValues
+  # delete shinyData
+  unlink(file.path(tdir, "shiny", "data", "shinyData.RData"))
+  expect_false(file.exists(file.path(tdir, "shiny", "data", "shinyData.RData")))
+  # create same file file with
+  currentDirectory <- getwd()
+  setwd(file.path(tdir, "shiny"))
+  source(file.path(tdir, "shiny", "data", "preprocess.R"))
+  setwd(currentDirectory)
+  expect_true(file.exists(file.path(tdir, "shiny", "data", "shinyData.RData")))
+  load(file.path(tdir, "shiny", "data", "shinyData.RData"))
+  # settings are in different order
+  removeSettings <- function(x) {
+    purrr::map(x, \(x) {
+      attr(x, "settings") <- NULL
+      return(x)
+    })
+  }
+  expect_identical(removeSettings(savedData), removeSettings(data))
+  expect_identical(savedFilterValues, filterValues)
+  # delete created shiny
+  unlink(file.path(tdir, "shiny"), recursive = TRUE)
+
+})

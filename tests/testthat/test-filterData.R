@@ -21,50 +21,58 @@ test_that("check filterData functionality", {
       "package_version" = "",
       "my_param" = 1L,
       "analysis" = c(TRUE, FALSE, TRUE)
-    ))
+    )) |>
+    prepareShinyData()
 
   input <- list()
-  class(input)
   expect_no_error(
     x <- result |>
-      filterData(
-        resultType = "custom",
-        input = input)
+      filterData(prefix = "custom", input = input)
   )
-  idCustom <- omopgenerics::settings(result) |>
-    dplyr::filter(.data$result_type == "custom") |>
-    dplyr::pull("result_id")
-  expect_true(nrow(x) == sum(result$result_id %in% idCustom))
+  expect_identical(x, result$custom)
 
   # filtering works
   input <- list(custom_grouping_cdm_name = "cdm1")
   expect_no_error(
-    x <- filterData(result = result, resultType = "custom", input = input)
+    x <- filterData(result = result, prefix = "custom", input = input)
   )
-  expect_true(nrow(x) == sum(result$cdm_name == "cdm1" & result$result_id %in% idCustom))
+  expect_identical(x, result$custom |> dplyr::filter(.data$cdm_name == "cdm1"))
 
   input <- list(
     custom_grouping_cdm_name = "cdm1",
     custom_random = 1L,
     custom_settings_analysis = TRUE)
   expect_no_error(
-    x <- filterData(result = result, resultType = "custom", input = input)
+    x <- filterData(result = result, prefix = "custom", input = input)
   )
-  idAnalysis <- omopgenerics::settings(result) |>
+  idAnalysis <- result$custom |>
+    omopgenerics::settings() |>
     dplyr::filter(.data$analysis == TRUE) |>
     dplyr::pull("result_id")
-  expect_true(nrow(x) == sum(
-    result$cdm_name == "cdm1" & result$result_id %in% idCustom &
-      result$result_id %in% idAnalysis))
+  expect_identical(
+    x,
+    result$custom |>
+      dplyr::filter(
+        .data$cdm_name == "cdm1", .data$result_id %in% .env$idAnalysis
+      ) |>
+      omopgenerics::newSummarisedResult(
+        settings = omopgenerics::settings(result$custom) |>
+          dplyr::filter(.data$result_id %in% .env$idAnalysis)
+      )
+  )
 
   input <- list(
     custom_grouping_cdm_name = "cdm1",
     custom_random = 1L,
     custom_variable_name = "number subjects")
   expect_no_error(
-    x <- filterData(result = result, resultType = "custom", input = input)
+    x <- filterData(result = result, prefix = "custom", input = input)
   )
-  expect_true(nrow(x) == sum(
-    result$cdm_name == "cdm1" & result$result_id %in% idCustom &
-      result$variable_name == "number subjects"))
+  expect_identical(
+    x,
+    result$custom |>
+      dplyr::filter(
+        .data$cdm_name == "cdm1", .data$variable_name == "number subjects"
+      )
+  )
 })

@@ -1,40 +1,40 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# omopViewer
+# OmopViewer
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/oxford-pharmacoepi/omopViewer/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/oxford-pharmacoepi/omopViewer/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/OHDSI/OmopViewer/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/OHDSI/OmopViewer/actions/workflows/R-CMD-check.yaml)
 [![CRAN
-status](https://www.r-pkg.org/badges/version/omopViewer)](https://CRAN.R-project.org/package=omopViewer)
+status](https://www.r-pkg.org/badges/version/OmopViewer)](https://CRAN.R-project.org/package=OmopViewer)
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![Codecov test
-coverage](https://codecov.io/gh/oxford-pharmacoepi/omopViewer/branch/main/graph/badge.svg)](https://app.codecov.io/gh/oxford-pharmacoepi/omopViewer?branch=main)
+coverage](https://codecov.io/gh/OHDSI/OmopViewer/branch/main/graph/badge.svg)](https://app.codecov.io/gh/OHDSI/OmopViewer?branch=main)
 <!-- badges: end -->
 
-> [!IMPORTANT] 
-> This package is under construction and this is just a first Beta release, 
-> please use it carefully and report any issue that you encounter using it.
+> \[!IMPORTANT\] This package is under construction and this is just a
+> first Beta release, please use it carefully and report any issue that
+> you encounter using it.
 
-The goal of omopViewer is to allow the user to easily create Shiny Apps
+The goal of OmopViewer is to allow the user to easily create Shiny Apps
 to visualise study results in `<summarised_result>` format.
 
 ## Installation
 
-You can install the development version of omopViewer from
-[GitHub](https://github.com/oxford-pharmacoepi/omopViewer) with:
+You can install the development version of OmopViewer from
+[GitHub](https://github.com/OHDSI/OmopViewer) with:
 
 ``` r
 install.packages("pak")
-pak::pkg_install("oxford-pharmacoepi/omopViewer")
+pak::pkg_install("OHDSI/OmopViewer")
 ```
 
 ## Main functionalities
 
 ``` r
-library(omopViewer)
+library(OmopViewer)
 ```
 
 The package can be divided in 3 main functionalities: - Static shiny
@@ -50,13 +50,6 @@ results and can be modified later locally.
 # lets generate some results
 library(CohortCharacteristics)
 cdm <- mockCohortCharacteristics()
-#> Note: method with signature 'DBIConnection#Id' chosen for function 'dbExistsTable',
-#>  target signature 'duckdb_connection#Id'.
-#>  "duckdb_connection#ANY" would also be valid
-#> ! cohort columns will be reordered to match the expected order:
-#>   cohort_definition_id, subject_id, cohort_start_date, and cohort_end_date.
-#> ! cohort columns will be reordered to match the expected order:
-#>   cohort_definition_id, subject_id, cohort_start_date, and cohort_end_date.
 result <- summariseCharacteristics(cdm$cohort1) |>
   bind(summariseCohortAttrition(cdm$cohort1))
 #> ℹ adding demographics columns
@@ -68,7 +61,7 @@ exportStaticApp(result = result)
 #> ✔ Data processed: 2 result types idenfied: `summarise_characteristics` and
 #>   `summarise_cohort_attrition`.
 #> ℹ Creating shiny from provided data
-#> ✔ Shiny created in: /Users/martics/Documents/GitHub/omopViewer/shiny
+#> ✔ Shiny created in: C:/Users/martics/Documents/GitHub/omopViewer/shiny
 ```
 
 ## Dynamic shiny app
@@ -85,8 +78,8 @@ launchDynamicApp()
 
 - `tidyData` is an experimental version of the `tidy.summarised_result`
   method defined in **visOmopResults**.
-- `visTable` is an experimental version of the `visOmopTable` function
-  defined in **visOmopResults**.
+- `omopViewerTable` is an experimental version of the `visOmopTable`
+  function defined in **visOmopResults**.
 - `filterData` is a function used internally in the package to subset
   the result. It is not meant to be for user use. It is exported because
   it is used in the *exportStaticApp()* function.

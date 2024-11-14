@@ -1,24 +1,36 @@
-Package: omopViewer
+Package: OmopViewer
 Type: Package
-Title: Visualise OMOP Results in a Shiny App 
-Version: 0.0.0.900
+Title: Visualise OMOP Results using 'shiny' Applications
+Version: 0.1.0.900
 Authors@R: c(
     person(
         "Martí", "Català", , "marti.catalasabate@ndorms.ox.ac.uk", 
         role = c("aut", "cre"), comment = c(ORCID = "0000-0003-3308-9905")),
     person(
-        "Yuchen", "Guo", , "yuchen.guo@ndorms.ox.ac.uk", role = c("aut"),
-        comment = c(ORCID = "0000-0002-0847-4855"))
+        "Yuchen", "Guo", , "yuchen.guo@ndorms.ox.ac.uk", role = "aut",
+        comment = c(ORCID = "0000-0002-0847-4855")),
+    person(
+        "Edward", "Burn", , "edward.burn@ndorms.ox.ac.uk", role = "ctb",
+        comment = c(ORCID = "0000-0002-9286-1128")),
+    person(
+        "Nuria", "Mercade-Besora", , "nuria.mercadebesora@ndorms.ox.ac.uk", 
+        role = "ctb", comment = c(ORCID = "0009-0006-7948-3747")),
+    person(
+        "Elin", "Rowlands", , "elin.rowlands@ndorms.ox.ac.uk", 
+        role = "ctb", comment = c(ORCID = "0009-0005-5166-0417")),
+    person(
+        "Cecilia", "Campanile", , "cecilia.campanile@ndorms.ox.ac.uk",
+        role = "ctb", comment = c(ORCID = "0009-0007-6629-4661"))
     )
 Maintainer: Martí Català <marti.catalasabate@ndorms.ox.ac.uk>
 Description: Visualise results obtained from analysing data mapped to the 
     Observational Medical Outcomes Partnership (OMOP) common data model using
-    Shiny Apps.
+    'shiny' applications.
 License: Apache License (>= 2)
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.3.2
-URL: https://oxford-pharmacoepi.github.io/omopViewer/
+URL: https://ohdsi.github.io/OmopViewer/
 Depends: 
     R (>= 2.10)
 Imports: 
@@ -27,6 +39,7 @@ Imports:
     dplyr,
     DT,
     glue,
+    lifecycle,
     markdown,
     omopgenerics (>= 0.3.1),
     purrr,
@@ -37,22 +50,28 @@ Imports:
     styler,
     tidyr,
     usethis,
-    vctrs,
     visOmopResults (>= 0.4.0),
     yaml
 Suggests: 
     CDMConnector,
+    CodelistGenerator (>= 3.2.0),
     CohortCharacteristics (>= 0.3.0),
+    CohortConstructor,
+    DiagrammeR,
+    DrugUtilisation (>= 0.7.1),
     duckdb,
     ggplot2,
     gt,
     here,
     htmlwidgets,
+    IncidencePrevalence (>= 0.8.0),
     knitr,
-    omock,
+    omock (>= 0.3.0),
+    OmopSketch,
     PatientProfiles,
     plotly,
     rmarkdown,
+    RPostgres,
     shinycssloaders,
     shinyWidgets,
     sortable,

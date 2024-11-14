@@ -96,7 +96,7 @@ createBackground <- function(background) {
   'bslib::nav_panel(
     title = "Background",
     icon = shiny::icon("disease"),
-    omopViewer::cardFromMd("background.md")
+    OmopViewer::cardFromMd("background.md")
   )'
 }
 

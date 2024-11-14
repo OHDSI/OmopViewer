@@ -6,18 +6,22 @@
 \usage{
 exportStaticApp(
   result,
+  directory,
   logo = "ohdsi",
   title = "",
   background = TRUE,
   summary = TRUE,
-  directory = getwd(),
-  panels = list(),
+  panelStructure = NULL,
+  panelDetails = NULL,
   theme = NULL,
-  open = rlang::is_interactive()
+  open = rlang::is_interactive(),
+  panels = lifecycle::deprecated()
 )
 }
 \arguments{
 \item{result}{A summarised_result object.}
+
+\item{directory}{Directory to create the shiny.}
 
 \item{logo}{Name of a logo or path to a logo. If NULL no logo is included.
 Only svg format allowed for the moment.}
@@ -30,18 +34,18 @@ content will be controlled from the generated background.md file.}
 \item{summary}{Whether to include a panel with a summary of content in the
 `result`.}
 
-\item{directory}{Directory to create the shiny.}
+\item{panelStructure}{A named list of panel indetifiers to organise them in
+dropdown menus.}
 
-\item{panels}{List specifying order of results. Each panel is determined
-by the available result types in the result object. Panels for any available
-results not specified will be included after the specified result tabs.}
+\item{panelDetails}{A named list to provide details for each one of the
+panels, such as: result_id, result_type, title, icon, output_id, ... Name of
+each element must be the identifier name of `panelStructure`.}
 
-\item{theme}{Specify the theme for the Shiny application. You can either select a predefined
-theme provided by the package (e.g., `"theme1"`), or define a custom theme using `bslib::bs_theme()`.
-If using a custom theme, it must be provided as a character string (e.g., `"bslib::bs_theme(bg = 'white', fg = 'black')"`).
-The custom theme allows for advanced customization of the app's appearance, including colours, fonts, and other styling options.}
+\item{theme}{Assign a theme to the shiny app using bslib::bs_theme().}
 
 \item{open}{Whether to open the shiny app project.}
+
+\item{panels}{deprecated.}
 }
 \value{
 The shiny app will be created in directory.
@@ -50,11 +54,10 @@ The shiny app will be created in directory.
 Export and launch a static shiny specific to the provided results.
 }
 \examples{
-{
 exportStaticApp(
   result = emptySummarisedResult(),
-  theme = "theme1"
+  directory = tempdir(),
+  theme = "bslib::bs_theme(bg = '#bb0a1e', fg = '#0000ff')"
 )
-}
 
 }

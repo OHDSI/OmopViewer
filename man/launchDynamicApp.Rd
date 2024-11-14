@@ -2,7 +2,7 @@
 % Please edit documentation in R/appDynamic.R
 \name{launchDynamicApp}
 \alias{launchDynamicApp}
-\title{Launch a dynamic shiny app wher you can upload results.}
+\title{Launch a dynamic shiny app where you can upload results.}
 \usage{
 launchDynamicApp()
 }
@@ -10,5 +10,5 @@ launchDynamicApp()
 Launches the shiny app.
 }
 \description{
-Launch a dynamic shiny app wher you can upload results.
+Launch a dynamic shiny app where you can upload results.
 }

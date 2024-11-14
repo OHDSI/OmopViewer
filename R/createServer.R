@@ -1,36 +1,42 @@
 
-createServer <- function(resultTypes, data) {
+createServer <- function(panelDetails, data) {
+  filterValues <- switch (data,
+    "data" = "filterValues",
+    "workingData()" = "filterValues()"
+  )
   c(
     downloadRawDataServer(data),
-    selectiseServer(resultTypes, data),
-    purrr::map_chr(resultTypes, \(x) {
-      c(glue::glue("# {x} -----"),
-        glue::glue("## tidy {x} -----"),
-        tidyServer(x, data),
-        glue::glue("## formatted {x} -----"),
-        formattedServer(x, data),
-        glue::glue("## plot {x} -----"),
-        plotsServer(x, data),
+    selectiseServer(panelDetails, filterValues),
+    purrr::imap_chr(panelDetails, \(x, nm) {
+      c(glue::glue("# {nm} -----"),
+        glue::glue("## tidy {nm} -----"),
+        tidyServer(nm, data),
+        glue::glue("## output {nm} -----"),
+        outputServer(nm, x$output_id, data),
         "\n"
       ) |>
         paste0(collapse = "\n")
     })
   )
 }
-selectiseServer <- function(resultTypes, data) {
-  if (length(resultTypes) == 0) return(character())
-  c(
+selectiseServer <- function(panelDetails, filterValues) {
+  if (length(panelDetails) == 0) return(character())
+  paste(
     '# fill selectise variables ----',
-    paste0('shiny::observe({
-      choices <- omopViewer::getChoices(', data, ', flatten = TRUE)
-      for (k in seq_along(choices)) {
-        shiny::updateSelectizeInput(
-          session,
-          inputId = names(choices)[k],
-          choices = choices[[k]],
-          selected = choices[[k]]
-        )
-      }
-    })')
+    'shiny::observe({',
+    'for (k in seq_along([filterValues])) {' |>
+      glue::glue(.open = "[", .close = "]"),
+    'shinyWidgets::updatePickerInput(',
+    'session,',
+    'inputId = names({filterValues})[k],' |>
+      glue::glue(.open = "{", .close = "}"),
+    'choices = {filterValues}[[k]],' |>
+      glue::glue(.open = "{", .close = "}"),
+    'selected = {filterValues}[[k]],' |>
+      glue::glue(.open = "{", .close = "}"),
+    ')',
+    '}',
+    '})',
+    sep = "\n"
   )
 }

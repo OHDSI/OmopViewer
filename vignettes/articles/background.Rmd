@@ -16,12 +16,12 @@ knitr::opts_chunk$set(
 The background panel is triggered when `background = TRUE` argument is used in the `exportStaticApp()` function. If background is set to TRUE a 'background' panel is added and a default 'background.md' file is created. The content of this 'background' panel will be always a card generated with the `cardFromMd()` function using the content of 'background.md'. In this vignette we are going to show different options how to populate the 'background.md' file.
 
 ```{r}
-library(omopViewer)
+library(OmopViewer)
 ```
 
 ## General markdown behaviour
 
-The markdown part is compiled using the function `markdown::markdownToHTML()`, so anything suported by this function can be included in the markdown part. Most commonly used markdown functionalities are:
+The markdown part is compiled using the function `markdown::markdownToHTML()`, so anything supported by this function can be included in the markdown part. Most commonly used markdown functionalities are:
 
 - `#` for titles
 - `##` for subtitles
@@ -62,7 +62,7 @@ This shiny *contains information* on:
 The **ohdsi** logo:
 
 ![](',
-system.file("logos", "ohdsi_logo.svg", package = "omopViewer"), 
+system.file("logos", "ohdsi_logo.svg", package = "OmopViewer"), 
 '){width=100px}')
 
 tmpFile <- tempfile(fileext = ".md")
@@ -87,7 +87,7 @@ BODY CONTENT
 
 The `yaml` metadata can contain two types of information:
 
-- keywords to add elemets to the card.
+- keywords to add elements to the card.
 - arguments of the `bslib::card` function.
 
 ### Keywords
@@ -95,7 +95,7 @@ The `yaml` metadata can contain two types of information:
 The following keywords can be used to edit the `bslib::card()` content:
 
 ```{r, echo=FALSE}
-omopViewer:::backgroundKeywords |>
+OmopViewer:::backgroundKeywords |>
   dplyr::mutate(`function` = purrr::map2(.data$link, .data$fun, \(x, y) {
     shiny::a(href = x, y) |>
       as.character() |>

@@ -10,10 +10,10 @@
 #' @return A gt table.
 #' @export
 #'
-visTable <- function(result,
-                     header = character(),
-                     group = character(),
-                     hide = character()) {
+omopViewerTable <- function(result,
+                            header = character(),
+                            group = character(),
+                            hide = character()) {
   # initial checks
   if (length(header) == 0) header <- character()
   if (length(group) == 0) group <- NULL
@@ -82,7 +82,7 @@ tidyData <- function(result) {
   sets <- omopgenerics::settings(result)
   if (!all(c("group", "strata", "additional") %in% colnames(sets))) {
     sets <- result |>
-      correctSettings() |>
+      .correctSettings() |>
       omopgenerics::settings()
   }
   sets <- removeSettingsNa(sets)
@@ -109,15 +109,27 @@ tidyData <- function(result) {
   # grouping will be located before variable
   result <- result |>
     dplyr::relocate(dplyr::all_of(groupingCols), .before = "variable_name") |>
-    dplyr::select(!"result_id")
+    dplyr::select(!dplyr::any_of(ignoreSettings))
 
   return(result)
 }
-
+getCols <- function(x) {
+  x <- x |>
+    unique() |>
+    stringr::str_split(pattern = " &&& ") |>
+    unlist() |>
+    unique()
+  x[x != ""]
+}
 removeSettingsNa <- function(x) {
   cols <- x |>
-    purrr::map(unique)
-  cols <- names(cols)[is.na(cols)]
+    as.list() |>
+    purrr::map(\(x) {
+      x <- unique(x)
+      x[!is.na(x)]
+    }) |>
+    purrr::discard(\(x) length(x) == 0) |>
+    names()
   x |>
-    dplyr::select(!dplyr::all_of(cols))
+    dplyr::select(dplyr::all_of(cols))
 }
