@@ -2922,12 +2922,7 @@
                     ),
                     class = "text-end"
                   ),
-                  bslib::layout_sidebar(
-                    sidebar = bslib::sidebar(,
-                      position = "right"
-                    ),
-                    gt::gt_output("summarise_dose_coverage_gt_24")
-                  )
+                  gt::gt_output("summarise_dose_coverage_gt_24")
                 )
               )
             )
@@ -3061,12 +3056,7 @@
                     ),
                     class = "text-end"
                   ),
-                  bslib::layout_sidebar(
-                    sidebar = bslib::sidebar(,
-                      position = "right"
-                    ),
-                    gt::gt_output("summarise_drug_restart_gt_25")
-                  )
+                  gt::gt_output("summarise_drug_restart_gt_25")
                 )
               ),
               bslib::nav_panel(
@@ -3102,12 +3092,7 @@
                     ),
                     class = "text-end"
                   ),
-                  bslib::layout_sidebar(
-                    sidebar = bslib::sidebar(,
-                      position = "right"
-                    ),
-                    shiny::plotOutput("summarise_drug_restart_ggplot2_26")
-                  )
+                  shiny::plotOutput("summarise_drug_restart_ggplot2_26")
                 )
               )
             )
@@ -3238,12 +3223,7 @@
                     ),
                     class = "text-end"
                   ),
-                  bslib::layout_sidebar(
-                    sidebar = bslib::sidebar(,
-                      position = "right"
-                    ),
-                    gt::gt_output("summarise_drug_utilisation_gt_27")
-                  )
+                  gt::gt_output("summarise_drug_utilisation_gt_27")
                 )
               )
             )
@@ -3350,12 +3330,7 @@
                     ),
                     class = "text-end"
                   ),
-                  bslib::layout_sidebar(
-                    sidebar = bslib::sidebar(,
-                      position = "right"
-                    ),
-                    gt::gt_output("summarise_indication_gt_28")
-                  )
+                  gt::gt_output("summarise_indication_gt_28")
                 )
               ),
               bslib::nav_panel(
@@ -3391,12 +3366,7 @@
                     ),
                     class = "text-end"
                   ),
-                  bslib::layout_sidebar(
-                    sidebar = bslib::sidebar(,
-                      position = "right"
-                    ),
-                    shiny::plotOutput("summarise_indication_ggplot2_29")
-                  )
+                  shiny::plotOutput("summarise_indication_ggplot2_29")
                 )
               )
             )
@@ -3527,12 +3497,7 @@
                     ),
                     class = "text-end"
                   ),
-                  bslib::layout_sidebar(
-                    sidebar = bslib::sidebar(,
-                      position = "right"
-                    ),
-                    gt::gt_output("summarise_proportion_of_patients_covered_gt_30")
-                  )
+                  gt::gt_output("summarise_proportion_of_patients_covered_gt_30")
                 )
               ),
               bslib::nav_panel(
@@ -3568,12 +3533,7 @@
                     ),
                     class = "text-end"
                   ),
-                  bslib::layout_sidebar(
-                    sidebar = bslib::sidebar(,
-                      position = "right"
-                    ),
-                    shiny::plotOutput("summarise_proportion_of_patients_covered_ggplot2_31")
-                  )
+                  shiny::plotOutput("summarise_proportion_of_patients_covered_ggplot2_31")
                 )
               )
             )
@@ -3704,12 +3664,7 @@
                     ),
                     class = "text-end"
                   ),
-                  bslib::layout_sidebar(
-                    sidebar = bslib::sidebar(,
-                      position = "right"
-                    ),
-                    gt::gt_output("summarise_treatment_gt_32")
-                  )
+                  gt::gt_output("summarise_treatment_gt_32")
                 )
               ),
               bslib::nav_panel(
@@ -3745,12 +3700,7 @@
                     ),
                     class = "text-end"
                   ),
-                  bslib::layout_sidebar(
-                    sidebar = bslib::sidebar(,
-                      position = "right"
-                    ),
-                    shiny::plotOutput("summarise_treatment_ggplot2_33")
-                  )
+                  shiny::plotOutput("summarise_treatment_ggplot2_33")
                 )
               )
             )
@@ -4481,12 +4431,7 @@
                     ),
                     class = "text-end"
                   ),
-                  bslib::layout_sidebar(
-                    sidebar = bslib::sidebar(,
-                      position = "right"
-                    ),
-                    gt::gt_output("summarise_dose_coverage_gt_24")
-                  )
+                  gt::gt_output("summarise_dose_coverage_gt_24")
                 )
               )
             )
@@ -4620,12 +4565,7 @@
                     ),
                     class = "text-end"
                   ),
-                  bslib::layout_sidebar(
-                    sidebar = bslib::sidebar(,
-                      position = "right"
-                    ),
-                    gt::gt_output("summarise_drug_restart_gt_25")
-                  )
+                  gt::gt_output("summarise_drug_restart_gt_25")
                 )
               ),
               bslib::nav_panel(
@@ -4661,12 +4601,7 @@
                     ),
                     class = "text-end"
                   ),
-                  bslib::layout_sidebar(
-                    sidebar = bslib::sidebar(,
-                      position = "right"
-                    ),
-                    shiny::plotOutput("summarise_drug_restart_ggplot2_26")
-                  )
+                  shiny::plotOutput("summarise_drug_restart_ggplot2_26")
                 )
               )
             )
@@ -4797,12 +4732,7 @@
                     ),
                     class = "text-end"
                   ),
-                  bslib::layout_sidebar(
-                    sidebar = bslib::sidebar(,
-                      position = "right"
-                    ),
-                    gt::gt_output("summarise_drug_utilisation_gt_27")
-                  )
+                  gt::gt_output("summarise_drug_utilisation_gt_27")
                 )
               )
             )
@@ -4909,12 +4839,7 @@
                     ),
                     class = "text-end"
                   ),
-                  bslib::layout_sidebar(
-                    sidebar = bslib::sidebar(,
-                      position = "right"
-                    ),
-                    gt::gt_output("summarise_indication_gt_28")
-                  )
+                  gt::gt_output("summarise_indication_gt_28")
                 )
               ),
               bslib::nav_panel(
@@ -4950,12 +4875,7 @@
                     ),
                     class = "text-end"
                   ),
-                  bslib::layout_sidebar(
-                    sidebar = bslib::sidebar(,
-                      position = "right"
-                    ),
-                    shiny::plotOutput("summarise_indication_ggplot2_29")
-                  )
+                  shiny::plotOutput("summarise_indication_ggplot2_29")
                 )
               )
             )
@@ -5086,12 +5006,7 @@
                     ),
                     class = "text-end"
                   ),
-                  bslib::layout_sidebar(
-                    sidebar = bslib::sidebar(,
-                      position = "right"
-                    ),
-                    gt::gt_output("summarise_proportion_of_patients_covered_gt_30")
-                  )
+                  gt::gt_output("summarise_proportion_of_patients_covered_gt_30")
                 )
               ),
               bslib::nav_panel(
@@ -5127,12 +5042,7 @@
                     ),
                     class = "text-end"
                   ),
-                  bslib::layout_sidebar(
-                    sidebar = bslib::sidebar(,
-                      position = "right"
-                    ),
-                    shiny::plotOutput("summarise_proportion_of_patients_covered_ggplot2_31")
-                  )
+                  shiny::plotOutput("summarise_proportion_of_patients_covered_ggplot2_31")
                 )
               )
             )
@@ -5263,12 +5173,7 @@
                     ),
                     class = "text-end"
                   ),
-                  bslib::layout_sidebar(
-                    sidebar = bslib::sidebar(,
-                      position = "right"
-                    ),
-                    gt::gt_output("summarise_treatment_gt_32")
-                  )
+                  gt::gt_output("summarise_treatment_gt_32")
                 )
               ),
               bslib::nav_panel(
@@ -5304,12 +5209,7 @@
                     ),
                     class = "text-end"
                   ),
-                  bslib::layout_sidebar(
-                    sidebar = bslib::sidebar(,
-                      position = "right"
-                    ),
-                    shiny::plotOutput("summarise_treatment_ggplot2_33")
-                  )
+                  shiny::plotOutput("summarise_treatment_ggplot2_33")
                 )
               )
             )
@@ -5777,12 +5677,7 @@
                     ),
                     class = "text-end"
                   ),
-                  bslib::layout_sidebar(
-                    sidebar = bslib::sidebar(,
-                      position = "right"
-                    ),
-                    DiagrammeR::grVizOutput("summarise_cohort_attrition_grViz_4")
-                  )
+                  DiagrammeR::grVizOutput("summarise_cohort_attrition_grViz_4")
                 )
               )
             )
@@ -7683,12 +7578,7 @@
                     ),
                     class = "text-end"
                   ),
-                  bslib::layout_sidebar(
-                    sidebar = bslib::sidebar(,
-                      position = "right"
-                    ),
-                    DiagrammeR::grVizOutput("summarise_cohort_attrition_grViz_4")
-                  )
+                  DiagrammeR::grVizOutput("summarise_cohort_attrition_grViz_4")
                 )
               )
             )
@@ -8697,12 +8587,7 @@
                     ),
                     class = "text-end"
                   ),
-                  bslib::layout_sidebar(
-                    sidebar = bslib::sidebar(,
-                      position = "right"
-                    ),
-                    gt::gt_output("summarise_observation_period_gt_15")
-                  )
+                  gt::gt_output("summarise_observation_period_gt_15")
                 )
               ),
               bslib::nav_panel(
@@ -8866,12 +8751,7 @@
                     ),
                     class = "text-end"
                   ),
-                  bslib::layout_sidebar(
-                    sidebar = bslib::sidebar(,
-                      position = "right"
-                    ),
-                    gt::gt_output("summarise_omop_snapshot_gt_17")
-                  )
+                  gt::gt_output("summarise_omop_snapshot_gt_17")
                 )
               )
             )

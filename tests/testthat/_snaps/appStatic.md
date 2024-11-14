@@ -827,12 +827,7 @@
                     ),
                     class = "text-end"
                   ),
-                  bslib::layout_sidebar(
-                    sidebar = bslib::sidebar(,
-                      position = "right"
-                    ),
-                    DiagrammeR::grVizOutput("summarise_cohort_attrition_grViz_4")
-                  )
+                  DiagrammeR::grVizOutput("summarise_cohort_attrition_grViz_4")
                 )
               )
             )
@@ -1291,12 +1286,7 @@
                     ),
                     class = "text-end"
                   ),
-                  bslib::layout_sidebar(
-                    sidebar = bslib::sidebar(,
-                      position = "right"
-                    ),
-                    DiagrammeR::grVizOutput("summarise_cohort_attrition_grViz_4")
-                  )
+                  DiagrammeR::grVizOutput("summarise_cohort_attrition_grViz_4")
                 )
               )
             )
@@ -1962,12 +1952,7 @@
                       ),
                       class = "text-end"
                     ),
-                    bslib::layout_sidebar(
-                      sidebar = bslib::sidebar(,
-                        position = "right"
-                      ),
-                      DiagrammeR::grVizOutput("summarise_cohort_attrition_grViz_4")
-                    )
+                    DiagrammeR::grVizOutput("summarise_cohort_attrition_grViz_4")
                   )
                 )
               )
