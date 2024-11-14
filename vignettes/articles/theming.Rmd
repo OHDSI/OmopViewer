@@ -22,7 +22,7 @@ The first colour defines the primary theme colour, which is applied to key inter
 ## Predefined themes
 
 ```{r, echo=FALSE}
-themes <- omopViewer:::omopViewerThemes
+themes <- OmopViewer:::omopViewerThemes
 createPage <- function(tit, them) {
   bslib::page_navbar(
     title = tit, 
