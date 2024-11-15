@@ -39,96 +39,96 @@
                   shinyWidgets::pickerInput(
                     inputId = "incidence_settings_analysis_outcome_washout",
                     label = "Analysis outcome washout",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_settings_analysis_outcome_washout,
+                    selected = filterValues$incidence_settings_analysis_outcome_washout,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_settings_analysis_repeated_events",
                     label = "Analysis repeated events",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_settings_analysis_repeated_events,
+                    selected = filterValues$incidence_settings_analysis_repeated_events,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_settings_analysis_interval",
                     label = "Analysis interval",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_settings_analysis_interval,
+                    selected = filterValues$incidence_settings_analysis_interval,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_settings_analysis_complete_database_intervals",
                     label = "Analysis complete database intervals",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_settings_analysis_complete_database_intervals,
+                    selected = filterValues$incidence_settings_analysis_complete_database_intervals,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_settings_denominator_age_group",
                     label = "Denominator age group",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_settings_denominator_age_group,
+                    selected = filterValues$incidence_settings_denominator_age_group,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_settings_denominator_sex",
                     label = "Denominator sex",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_settings_denominator_sex,
+                    selected = filterValues$incidence_settings_denominator_sex,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_settings_denominator_days_prior_observation",
                     label = "Denominator days prior observation",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_settings_denominator_days_prior_observation,
+                    selected = filterValues$incidence_settings_denominator_days_prior_observation,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_settings_denominator_start_date",
                     label = "Denominator start date",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_settings_denominator_start_date,
+                    selected = filterValues$incidence_settings_denominator_start_date,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_settings_denominator_end_date",
                     label = "Denominator end date",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_settings_denominator_end_date,
+                    selected = filterValues$incidence_settings_denominator_end_date,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_settings_denominator_target_cohort_name",
                     label = "Denominator target cohort name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_settings_denominator_target_cohort_name,
+                    selected = filterValues$incidence_settings_denominator_target_cohort_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_settings_denominator_time_at_risk",
                     label = "Denominator time at risk",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_settings_denominator_time_at_risk,
+                    selected = filterValues$incidence_settings_denominator_time_at_risk,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_settings_outcome_cohort_name",
                     label = "Outcome cohort name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_settings_outcome_cohort_name,
+                    selected = filterValues$incidence_settings_outcome_cohort_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -138,32 +138,32 @@
                   shinyWidgets::pickerInput(
                     inputId = "incidence_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_grouping_cdm_name,
+                    selected = filterValues$incidence_grouping_cdm_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_grouping_denominator_cohort_name",
                     label = "Denominator cohort name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_grouping_denominator_cohort_name,
+                    selected = filterValues$incidence_grouping_denominator_cohort_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_grouping_incidence_start_date",
                     label = "Incidence start date",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_grouping_incidence_start_date,
+                    selected = filterValues$incidence_grouping_incidence_start_date,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_grouping_incidence_end_date",
                     label = "Incidence end date",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_grouping_incidence_end_date,
+                    selected = filterValues$incidence_grouping_incidence_end_date,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -173,8 +173,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "incidence_variable_name",
                     label = "Variable name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_variable_name,
+                    selected = filterValues$incidence_variable_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -184,8 +184,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "incidence_estimate_name",
                     label = "Estimate name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_estimate_name,
+                    selected = filterValues$incidence_estimate_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -209,8 +209,8 @@
                       shinyWidgets::pickerInput(
                         inputId = "incidence_tidy_columns",
                         label = "Columns",
-                        choices = NULL,
-                        selected = NULL,
+                        choices = filterValues$incidence_tidy_columns,
+                        selected = filterValues$incidence_tidy_columns,
                         multiple = TRUE,
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
@@ -359,96 +359,96 @@
                   shinyWidgets::pickerInput(
                     inputId = "incidence_attrition_settings_analysis_outcome_washout",
                     label = "Analysis outcome washout",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_attrition_settings_analysis_outcome_washout,
+                    selected = filterValues$incidence_attrition_settings_analysis_outcome_washout,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_attrition_settings_analysis_repeated_events",
                     label = "Analysis repeated events",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_attrition_settings_analysis_repeated_events,
+                    selected = filterValues$incidence_attrition_settings_analysis_repeated_events,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_attrition_settings_analysis_interval",
                     label = "Analysis interval",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_attrition_settings_analysis_interval,
+                    selected = filterValues$incidence_attrition_settings_analysis_interval,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_attrition_settings_analysis_complete_database_intervals",
                     label = "Analysis complete database intervals",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_attrition_settings_analysis_complete_database_intervals,
+                    selected = filterValues$incidence_attrition_settings_analysis_complete_database_intervals,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_attrition_settings_denominator_age_group",
                     label = "Denominator age group",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_attrition_settings_denominator_age_group,
+                    selected = filterValues$incidence_attrition_settings_denominator_age_group,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_attrition_settings_denominator_sex",
                     label = "Denominator sex",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_attrition_settings_denominator_sex,
+                    selected = filterValues$incidence_attrition_settings_denominator_sex,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_attrition_settings_denominator_days_prior_observation",
                     label = "Denominator days prior observation",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_attrition_settings_denominator_days_prior_observation,
+                    selected = filterValues$incidence_attrition_settings_denominator_days_prior_observation,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_attrition_settings_denominator_start_date",
                     label = "Denominator start date",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_attrition_settings_denominator_start_date,
+                    selected = filterValues$incidence_attrition_settings_denominator_start_date,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_attrition_settings_denominator_end_date",
                     label = "Denominator end date",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_attrition_settings_denominator_end_date,
+                    selected = filterValues$incidence_attrition_settings_denominator_end_date,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_attrition_settings_denominator_target_cohort_name",
                     label = "Denominator target cohort name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_attrition_settings_denominator_target_cohort_name,
+                    selected = filterValues$incidence_attrition_settings_denominator_target_cohort_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_attrition_settings_denominator_time_at_risk",
                     label = "Denominator time at risk",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_attrition_settings_denominator_time_at_risk,
+                    selected = filterValues$incidence_attrition_settings_denominator_time_at_risk,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_attrition_settings_outcome_cohort_name",
                     label = "Outcome cohort name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_attrition_settings_outcome_cohort_name,
+                    selected = filterValues$incidence_attrition_settings_outcome_cohort_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -458,32 +458,32 @@
                   shinyWidgets::pickerInput(
                     inputId = "incidence_attrition_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_attrition_grouping_cdm_name,
+                    selected = filterValues$incidence_attrition_grouping_cdm_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_attrition_grouping_denominator_cohort_name",
                     label = "Denominator cohort name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_attrition_grouping_denominator_cohort_name,
+                    selected = filterValues$incidence_attrition_grouping_denominator_cohort_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_attrition_grouping_reason",
                     label = "Reason",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_attrition_grouping_reason,
+                    selected = filterValues$incidence_attrition_grouping_reason,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_attrition_grouping_reason_id",
                     label = "Reason id",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_attrition_grouping_reason_id,
+                    selected = filterValues$incidence_attrition_grouping_reason_id,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -493,8 +493,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "incidence_attrition_variable_name",
                     label = "Variable name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_attrition_variable_name,
+                    selected = filterValues$incidence_attrition_variable_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -504,8 +504,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "incidence_attrition_estimate_name",
                     label = "Estimate name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_attrition_estimate_name,
+                    selected = filterValues$incidence_attrition_estimate_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -529,8 +529,8 @@
                       shinyWidgets::pickerInput(
                         inputId = "incidence_attrition_tidy_columns",
                         label = "Columns",
-                        choices = NULL,
-                        selected = NULL,
+                        choices = filterValues$incidence_attrition_tidy_columns,
+                        selected = filterValues$incidence_attrition_tidy_columns,
                         multiple = TRUE,
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
@@ -609,88 +609,88 @@
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_settings_analysis_interval",
                     label = "Analysis interval",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_settings_analysis_interval,
+                    selected = filterValues$prevalence_settings_analysis_interval,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_settings_analysis_complete_database_intervals",
                     label = "Analysis complete database intervals",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_settings_analysis_complete_database_intervals,
+                    selected = filterValues$prevalence_settings_analysis_complete_database_intervals,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_settings_denominator_age_group",
                     label = "Denominator age group",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_settings_denominator_age_group,
+                    selected = filterValues$prevalence_settings_denominator_age_group,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_settings_denominator_sex",
                     label = "Denominator sex",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_settings_denominator_sex,
+                    selected = filterValues$prevalence_settings_denominator_sex,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_settings_denominator_days_prior_observation",
                     label = "Denominator days prior observation",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_settings_denominator_days_prior_observation,
+                    selected = filterValues$prevalence_settings_denominator_days_prior_observation,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_settings_denominator_start_date",
                     label = "Denominator start date",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_settings_denominator_start_date,
+                    selected = filterValues$prevalence_settings_denominator_start_date,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_settings_denominator_end_date",
                     label = "Denominator end date",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_settings_denominator_end_date,
+                    selected = filterValues$prevalence_settings_denominator_end_date,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_settings_denominator_target_cohort_name",
                     label = "Denominator target cohort name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_settings_denominator_target_cohort_name,
+                    selected = filterValues$prevalence_settings_denominator_target_cohort_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_settings_denominator_time_at_risk",
                     label = "Denominator time at risk",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_settings_denominator_time_at_risk,
+                    selected = filterValues$prevalence_settings_denominator_time_at_risk,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_settings_analysis_type",
                     label = "Analysis type",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_settings_analysis_type,
+                    selected = filterValues$prevalence_settings_analysis_type,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_settings_analysis_full_contribution",
                     label = "Analysis full contribution",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_settings_analysis_full_contribution,
+                    selected = filterValues$prevalence_settings_analysis_full_contribution,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -700,32 +700,32 @@
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_grouping_cdm_name,
+                    selected = filterValues$prevalence_grouping_cdm_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_grouping_denominator_cohort_name",
                     label = "Denominator cohort name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_grouping_denominator_cohort_name,
+                    selected = filterValues$prevalence_grouping_denominator_cohort_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_grouping_prevalence_start_date",
                     label = "Prevalence start date",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_grouping_prevalence_start_date,
+                    selected = filterValues$prevalence_grouping_prevalence_start_date,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_grouping_prevalence_end_date",
                     label = "Prevalence end date",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_grouping_prevalence_end_date,
+                    selected = filterValues$prevalence_grouping_prevalence_end_date,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -735,8 +735,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_variable_name",
                     label = "Variable name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_variable_name,
+                    selected = filterValues$prevalence_variable_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -746,8 +746,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_estimate_name",
                     label = "Estimate name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_estimate_name,
+                    selected = filterValues$prevalence_estimate_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -771,8 +771,8 @@
                       shinyWidgets::pickerInput(
                         inputId = "prevalence_tidy_columns",
                         label = "Columns",
-                        choices = NULL,
-                        selected = NULL,
+                        choices = filterValues$prevalence_tidy_columns,
+                        selected = filterValues$prevalence_tidy_columns,
                         multiple = TRUE,
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
@@ -921,96 +921,96 @@
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_attrition_settings_analysis_interval",
                     label = "Analysis interval",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_attrition_settings_analysis_interval,
+                    selected = filterValues$prevalence_attrition_settings_analysis_interval,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_attrition_settings_analysis_complete_database_intervals",
                     label = "Analysis complete database intervals",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_attrition_settings_analysis_complete_database_intervals,
+                    selected = filterValues$prevalence_attrition_settings_analysis_complete_database_intervals,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_attrition_settings_denominator_age_group",
                     label = "Denominator age group",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_attrition_settings_denominator_age_group,
+                    selected = filterValues$prevalence_attrition_settings_denominator_age_group,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_attrition_settings_denominator_sex",
                     label = "Denominator sex",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_attrition_settings_denominator_sex,
+                    selected = filterValues$prevalence_attrition_settings_denominator_sex,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_attrition_settings_denominator_days_prior_observation",
                     label = "Denominator days prior observation",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_attrition_settings_denominator_days_prior_observation,
+                    selected = filterValues$prevalence_attrition_settings_denominator_days_prior_observation,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_attrition_settings_denominator_start_date",
                     label = "Denominator start date",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_attrition_settings_denominator_start_date,
+                    selected = filterValues$prevalence_attrition_settings_denominator_start_date,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_attrition_settings_denominator_end_date",
                     label = "Denominator end date",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_attrition_settings_denominator_end_date,
+                    selected = filterValues$prevalence_attrition_settings_denominator_end_date,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_attrition_settings_denominator_target_cohort_name",
                     label = "Denominator target cohort name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_attrition_settings_denominator_target_cohort_name,
+                    selected = filterValues$prevalence_attrition_settings_denominator_target_cohort_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_attrition_settings_denominator_time_at_risk",
                     label = "Denominator time at risk",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_attrition_settings_denominator_time_at_risk,
+                    selected = filterValues$prevalence_attrition_settings_denominator_time_at_risk,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_attrition_settings_outcome_cohort_name",
                     label = "Outcome cohort name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_attrition_settings_outcome_cohort_name,
+                    selected = filterValues$prevalence_attrition_settings_outcome_cohort_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_attrition_settings_analysis_type",
                     label = "Analysis type",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_attrition_settings_analysis_type,
+                    selected = filterValues$prevalence_attrition_settings_analysis_type,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_attrition_settings_analysis_full_contribution",
                     label = "Analysis full contribution",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_attrition_settings_analysis_full_contribution,
+                    selected = filterValues$prevalence_attrition_settings_analysis_full_contribution,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -1020,32 +1020,32 @@
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_attrition_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_attrition_grouping_cdm_name,
+                    selected = filterValues$prevalence_attrition_grouping_cdm_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_attrition_grouping_denominator_cohort_name",
                     label = "Denominator cohort name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_attrition_grouping_denominator_cohort_name,
+                    selected = filterValues$prevalence_attrition_grouping_denominator_cohort_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_attrition_grouping_reason",
                     label = "Reason",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_attrition_grouping_reason,
+                    selected = filterValues$prevalence_attrition_grouping_reason,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_attrition_grouping_reason_id",
                     label = "Reason id",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_attrition_grouping_reason_id,
+                    selected = filterValues$prevalence_attrition_grouping_reason_id,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -1055,8 +1055,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_attrition_variable_name",
                     label = "Variable name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_attrition_variable_name,
+                    selected = filterValues$prevalence_attrition_variable_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -1066,8 +1066,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_attrition_estimate_name",
                     label = "Estimate name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_attrition_estimate_name,
+                    selected = filterValues$prevalence_attrition_estimate_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -1091,8 +1091,8 @@
                       shinyWidgets::pickerInput(
                         inputId = "prevalence_attrition_tidy_columns",
                         label = "Columns",
-                        choices = NULL,
-                        selected = NULL,
+                        choices = filterValues$prevalence_attrition_tidy_columns,
+                        selected = filterValues$prevalence_attrition_tidy_columns,
                         multiple = TRUE,
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
@@ -1210,17 +1210,6 @@
             OmopViewer::exportSummarisedResult(data, fileName = file)
           }
         )
-        # fill selectise variables ----
-        shiny::observe({
-          for (k in seq_along(filterValues)) {
-            shinyWidgets::updatePickerInput(
-              session,
-              inputId = names(filterValues)[k],
-              choices = filterValues[[k]],
-              selected = filterValues[[k]],
-            )
-          }
-        })
         # incidence -----
         ## tidy incidence -----
         getTidyDataIncidence <- shiny::reactive({
@@ -1615,96 +1604,96 @@
                   shinyWidgets::pickerInput(
                     inputId = "incidence_settings_analysis_outcome_washout",
                     label = "Analysis outcome washout",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_settings_analysis_outcome_washout,
+                    selected = filterValues$incidence_settings_analysis_outcome_washout,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_settings_analysis_repeated_events",
                     label = "Analysis repeated events",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_settings_analysis_repeated_events,
+                    selected = filterValues$incidence_settings_analysis_repeated_events,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_settings_analysis_interval",
                     label = "Analysis interval",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_settings_analysis_interval,
+                    selected = filterValues$incidence_settings_analysis_interval,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_settings_analysis_complete_database_intervals",
                     label = "Analysis complete database intervals",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_settings_analysis_complete_database_intervals,
+                    selected = filterValues$incidence_settings_analysis_complete_database_intervals,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_settings_denominator_age_group",
                     label = "Denominator age group",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_settings_denominator_age_group,
+                    selected = filterValues$incidence_settings_denominator_age_group,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_settings_denominator_sex",
                     label = "Denominator sex",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_settings_denominator_sex,
+                    selected = filterValues$incidence_settings_denominator_sex,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_settings_denominator_days_prior_observation",
                     label = "Denominator days prior observation",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_settings_denominator_days_prior_observation,
+                    selected = filterValues$incidence_settings_denominator_days_prior_observation,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_settings_denominator_start_date",
                     label = "Denominator start date",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_settings_denominator_start_date,
+                    selected = filterValues$incidence_settings_denominator_start_date,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_settings_denominator_end_date",
                     label = "Denominator end date",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_settings_denominator_end_date,
+                    selected = filterValues$incidence_settings_denominator_end_date,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_settings_denominator_target_cohort_name",
                     label = "Denominator target cohort name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_settings_denominator_target_cohort_name,
+                    selected = filterValues$incidence_settings_denominator_target_cohort_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_settings_denominator_time_at_risk",
                     label = "Denominator time at risk",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_settings_denominator_time_at_risk,
+                    selected = filterValues$incidence_settings_denominator_time_at_risk,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_settings_outcome_cohort_name",
                     label = "Outcome cohort name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_settings_outcome_cohort_name,
+                    selected = filterValues$incidence_settings_outcome_cohort_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -1714,32 +1703,32 @@
                   shinyWidgets::pickerInput(
                     inputId = "incidence_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_grouping_cdm_name,
+                    selected = filterValues$incidence_grouping_cdm_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_grouping_denominator_cohort_name",
                     label = "Denominator cohort name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_grouping_denominator_cohort_name,
+                    selected = filterValues$incidence_grouping_denominator_cohort_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_grouping_incidence_start_date",
                     label = "Incidence start date",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_grouping_incidence_start_date,
+                    selected = filterValues$incidence_grouping_incidence_start_date,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_grouping_incidence_end_date",
                     label = "Incidence end date",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_grouping_incidence_end_date,
+                    selected = filterValues$incidence_grouping_incidence_end_date,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -1749,8 +1738,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "incidence_variable_name",
                     label = "Variable name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_variable_name,
+                    selected = filterValues$incidence_variable_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -1760,8 +1749,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "incidence_estimate_name",
                     label = "Estimate name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_estimate_name,
+                    selected = filterValues$incidence_estimate_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -1785,8 +1774,8 @@
                       shinyWidgets::pickerInput(
                         inputId = "incidence_tidy_columns",
                         label = "Columns",
-                        choices = NULL,
-                        selected = NULL,
+                        choices = filterValues$incidence_tidy_columns,
+                        selected = filterValues$incidence_tidy_columns,
                         multiple = TRUE,
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
@@ -1935,96 +1924,96 @@
                   shinyWidgets::pickerInput(
                     inputId = "incidence_attrition_settings_analysis_outcome_washout",
                     label = "Analysis outcome washout",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_attrition_settings_analysis_outcome_washout,
+                    selected = filterValues$incidence_attrition_settings_analysis_outcome_washout,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_attrition_settings_analysis_repeated_events",
                     label = "Analysis repeated events",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_attrition_settings_analysis_repeated_events,
+                    selected = filterValues$incidence_attrition_settings_analysis_repeated_events,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_attrition_settings_analysis_interval",
                     label = "Analysis interval",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_attrition_settings_analysis_interval,
+                    selected = filterValues$incidence_attrition_settings_analysis_interval,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_attrition_settings_analysis_complete_database_intervals",
                     label = "Analysis complete database intervals",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_attrition_settings_analysis_complete_database_intervals,
+                    selected = filterValues$incidence_attrition_settings_analysis_complete_database_intervals,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_attrition_settings_denominator_age_group",
                     label = "Denominator age group",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_attrition_settings_denominator_age_group,
+                    selected = filterValues$incidence_attrition_settings_denominator_age_group,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_attrition_settings_denominator_sex",
                     label = "Denominator sex",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_attrition_settings_denominator_sex,
+                    selected = filterValues$incidence_attrition_settings_denominator_sex,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_attrition_settings_denominator_days_prior_observation",
                     label = "Denominator days prior observation",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_attrition_settings_denominator_days_prior_observation,
+                    selected = filterValues$incidence_attrition_settings_denominator_days_prior_observation,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_attrition_settings_denominator_start_date",
                     label = "Denominator start date",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_attrition_settings_denominator_start_date,
+                    selected = filterValues$incidence_attrition_settings_denominator_start_date,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_attrition_settings_denominator_end_date",
                     label = "Denominator end date",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_attrition_settings_denominator_end_date,
+                    selected = filterValues$incidence_attrition_settings_denominator_end_date,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_attrition_settings_denominator_target_cohort_name",
                     label = "Denominator target cohort name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_attrition_settings_denominator_target_cohort_name,
+                    selected = filterValues$incidence_attrition_settings_denominator_target_cohort_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_attrition_settings_denominator_time_at_risk",
                     label = "Denominator time at risk",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_attrition_settings_denominator_time_at_risk,
+                    selected = filterValues$incidence_attrition_settings_denominator_time_at_risk,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_attrition_settings_outcome_cohort_name",
                     label = "Outcome cohort name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_attrition_settings_outcome_cohort_name,
+                    selected = filterValues$incidence_attrition_settings_outcome_cohort_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -2034,32 +2023,32 @@
                   shinyWidgets::pickerInput(
                     inputId = "incidence_attrition_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_attrition_grouping_cdm_name,
+                    selected = filterValues$incidence_attrition_grouping_cdm_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_attrition_grouping_denominator_cohort_name",
                     label = "Denominator cohort name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_attrition_grouping_denominator_cohort_name,
+                    selected = filterValues$incidence_attrition_grouping_denominator_cohort_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_attrition_grouping_reason",
                     label = "Reason",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_attrition_grouping_reason,
+                    selected = filterValues$incidence_attrition_grouping_reason,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_attrition_grouping_reason_id",
                     label = "Reason id",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_attrition_grouping_reason_id,
+                    selected = filterValues$incidence_attrition_grouping_reason_id,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -2069,8 +2058,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "incidence_attrition_variable_name",
                     label = "Variable name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_attrition_variable_name,
+                    selected = filterValues$incidence_attrition_variable_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -2080,8 +2069,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "incidence_attrition_estimate_name",
                     label = "Estimate name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$incidence_attrition_estimate_name,
+                    selected = filterValues$incidence_attrition_estimate_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -2105,8 +2094,8 @@
                       shinyWidgets::pickerInput(
                         inputId = "incidence_attrition_tidy_columns",
                         label = "Columns",
-                        choices = NULL,
-                        selected = NULL,
+                        choices = filterValues$incidence_attrition_tidy_columns,
+                        selected = filterValues$incidence_attrition_tidy_columns,
                         multiple = TRUE,
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
@@ -2185,88 +2174,88 @@
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_settings_analysis_interval",
                     label = "Analysis interval",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_settings_analysis_interval,
+                    selected = filterValues$prevalence_settings_analysis_interval,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_settings_analysis_complete_database_intervals",
                     label = "Analysis complete database intervals",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_settings_analysis_complete_database_intervals,
+                    selected = filterValues$prevalence_settings_analysis_complete_database_intervals,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_settings_denominator_age_group",
                     label = "Denominator age group",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_settings_denominator_age_group,
+                    selected = filterValues$prevalence_settings_denominator_age_group,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_settings_denominator_sex",
                     label = "Denominator sex",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_settings_denominator_sex,
+                    selected = filterValues$prevalence_settings_denominator_sex,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_settings_denominator_days_prior_observation",
                     label = "Denominator days prior observation",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_settings_denominator_days_prior_observation,
+                    selected = filterValues$prevalence_settings_denominator_days_prior_observation,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_settings_denominator_start_date",
                     label = "Denominator start date",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_settings_denominator_start_date,
+                    selected = filterValues$prevalence_settings_denominator_start_date,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_settings_denominator_end_date",
                     label = "Denominator end date",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_settings_denominator_end_date,
+                    selected = filterValues$prevalence_settings_denominator_end_date,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_settings_denominator_target_cohort_name",
                     label = "Denominator target cohort name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_settings_denominator_target_cohort_name,
+                    selected = filterValues$prevalence_settings_denominator_target_cohort_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_settings_denominator_time_at_risk",
                     label = "Denominator time at risk",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_settings_denominator_time_at_risk,
+                    selected = filterValues$prevalence_settings_denominator_time_at_risk,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_settings_analysis_type",
                     label = "Analysis type",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_settings_analysis_type,
+                    selected = filterValues$prevalence_settings_analysis_type,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_settings_analysis_full_contribution",
                     label = "Analysis full contribution",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_settings_analysis_full_contribution,
+                    selected = filterValues$prevalence_settings_analysis_full_contribution,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -2276,32 +2265,32 @@
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_grouping_cdm_name,
+                    selected = filterValues$prevalence_grouping_cdm_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_grouping_denominator_cohort_name",
                     label = "Denominator cohort name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_grouping_denominator_cohort_name,
+                    selected = filterValues$prevalence_grouping_denominator_cohort_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_grouping_prevalence_start_date",
                     label = "Prevalence start date",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_grouping_prevalence_start_date,
+                    selected = filterValues$prevalence_grouping_prevalence_start_date,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_grouping_prevalence_end_date",
                     label = "Prevalence end date",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_grouping_prevalence_end_date,
+                    selected = filterValues$prevalence_grouping_prevalence_end_date,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -2311,8 +2300,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_variable_name",
                     label = "Variable name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_variable_name,
+                    selected = filterValues$prevalence_variable_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -2322,8 +2311,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_estimate_name",
                     label = "Estimate name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_estimate_name,
+                    selected = filterValues$prevalence_estimate_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -2347,8 +2336,8 @@
                       shinyWidgets::pickerInput(
                         inputId = "prevalence_tidy_columns",
                         label = "Columns",
-                        choices = NULL,
-                        selected = NULL,
+                        choices = filterValues$prevalence_tidy_columns,
+                        selected = filterValues$prevalence_tidy_columns,
                         multiple = TRUE,
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
@@ -2497,96 +2486,96 @@
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_attrition_settings_analysis_interval",
                     label = "Analysis interval",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_attrition_settings_analysis_interval,
+                    selected = filterValues$prevalence_attrition_settings_analysis_interval,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_attrition_settings_analysis_complete_database_intervals",
                     label = "Analysis complete database intervals",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_attrition_settings_analysis_complete_database_intervals,
+                    selected = filterValues$prevalence_attrition_settings_analysis_complete_database_intervals,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_attrition_settings_denominator_age_group",
                     label = "Denominator age group",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_attrition_settings_denominator_age_group,
+                    selected = filterValues$prevalence_attrition_settings_denominator_age_group,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_attrition_settings_denominator_sex",
                     label = "Denominator sex",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_attrition_settings_denominator_sex,
+                    selected = filterValues$prevalence_attrition_settings_denominator_sex,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_attrition_settings_denominator_days_prior_observation",
                     label = "Denominator days prior observation",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_attrition_settings_denominator_days_prior_observation,
+                    selected = filterValues$prevalence_attrition_settings_denominator_days_prior_observation,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_attrition_settings_denominator_start_date",
                     label = "Denominator start date",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_attrition_settings_denominator_start_date,
+                    selected = filterValues$prevalence_attrition_settings_denominator_start_date,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_attrition_settings_denominator_end_date",
                     label = "Denominator end date",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_attrition_settings_denominator_end_date,
+                    selected = filterValues$prevalence_attrition_settings_denominator_end_date,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_attrition_settings_denominator_target_cohort_name",
                     label = "Denominator target cohort name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_attrition_settings_denominator_target_cohort_name,
+                    selected = filterValues$prevalence_attrition_settings_denominator_target_cohort_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_attrition_settings_denominator_time_at_risk",
                     label = "Denominator time at risk",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_attrition_settings_denominator_time_at_risk,
+                    selected = filterValues$prevalence_attrition_settings_denominator_time_at_risk,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_attrition_settings_outcome_cohort_name",
                     label = "Outcome cohort name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_attrition_settings_outcome_cohort_name,
+                    selected = filterValues$prevalence_attrition_settings_outcome_cohort_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_attrition_settings_analysis_type",
                     label = "Analysis type",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_attrition_settings_analysis_type,
+                    selected = filterValues$prevalence_attrition_settings_analysis_type,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_attrition_settings_analysis_full_contribution",
                     label = "Analysis full contribution",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_attrition_settings_analysis_full_contribution,
+                    selected = filterValues$prevalence_attrition_settings_analysis_full_contribution,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -2596,32 +2585,32 @@
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_attrition_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_attrition_grouping_cdm_name,
+                    selected = filterValues$prevalence_attrition_grouping_cdm_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_attrition_grouping_denominator_cohort_name",
                     label = "Denominator cohort name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_attrition_grouping_denominator_cohort_name,
+                    selected = filterValues$prevalence_attrition_grouping_denominator_cohort_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_attrition_grouping_reason",
                     label = "Reason",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_attrition_grouping_reason,
+                    selected = filterValues$prevalence_attrition_grouping_reason,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_attrition_grouping_reason_id",
                     label = "Reason id",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_attrition_grouping_reason_id,
+                    selected = filterValues$prevalence_attrition_grouping_reason_id,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -2631,8 +2620,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_attrition_variable_name",
                     label = "Variable name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_attrition_variable_name,
+                    selected = filterValues$prevalence_attrition_variable_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -2642,8 +2631,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "prevalence_attrition_estimate_name",
                     label = "Estimate name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$prevalence_attrition_estimate_name,
+                    selected = filterValues$prevalence_attrition_estimate_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -2667,8 +2656,8 @@
                       shinyWidgets::pickerInput(
                         inputId = "prevalence_attrition_tidy_columns",
                         label = "Columns",
-                        choices = NULL,
-                        selected = NULL,
+                        choices = filterValues$prevalence_attrition_tidy_columns,
+                        selected = filterValues$prevalence_attrition_tidy_columns,
                         multiple = TRUE,
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
@@ -2811,40 +2800,40 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_dose_coverage_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_dose_coverage_grouping_cdm_name,
+                    selected = filterValues$summarise_dose_coverage_grouping_cdm_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_dose_coverage_grouping_ingredient_name",
                     label = "Ingredient name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_dose_coverage_grouping_ingredient_name,
+                    selected = filterValues$summarise_dose_coverage_grouping_ingredient_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_dose_coverage_grouping_unit",
                     label = "Unit",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_dose_coverage_grouping_unit,
+                    selected = filterValues$summarise_dose_coverage_grouping_unit,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_dose_coverage_grouping_route",
                     label = "Route",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_dose_coverage_grouping_route,
+                    selected = filterValues$summarise_dose_coverage_grouping_route,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_dose_coverage_grouping_pattern_id",
                     label = "Pattern id",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_dose_coverage_grouping_pattern_id,
+                    selected = filterValues$summarise_dose_coverage_grouping_pattern_id,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -2854,8 +2843,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_dose_coverage_variable_name",
                     label = "Variable name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_dose_coverage_variable_name,
+                    selected = filterValues$summarise_dose_coverage_variable_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -2865,8 +2854,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_dose_coverage_estimate_name",
                     label = "Estimate name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_dose_coverage_estimate_name,
+                    selected = filterValues$summarise_dose_coverage_estimate_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -2890,8 +2879,8 @@
                       shinyWidgets::pickerInput(
                         inputId = "summarise_dose_coverage_tidy_columns",
                         label = "Columns",
-                        choices = NULL,
-                        selected = NULL,
+                        choices = filterValues$summarise_dose_coverage_tidy_columns,
+                        selected = filterValues$summarise_dose_coverage_tidy_columns,
                         multiple = TRUE,
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
@@ -2942,8 +2931,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_drug_restart_settings_restrict_to_first_discontinuation",
                     label = "Restrict to first discontinuation",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_drug_restart_settings_restrict_to_first_discontinuation,
+                    selected = filterValues$summarise_drug_restart_settings_restrict_to_first_discontinuation,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -2953,32 +2942,32 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_drug_restart_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_drug_restart_grouping_cdm_name,
+                    selected = filterValues$summarise_drug_restart_grouping_cdm_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_drug_restart_grouping_cohort_name",
                     label = "Cohort name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_drug_restart_grouping_cohort_name,
+                    selected = filterValues$summarise_drug_restart_grouping_cohort_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_drug_restart_grouping_age_group",
                     label = "Age group",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_drug_restart_grouping_age_group,
+                    selected = filterValues$summarise_drug_restart_grouping_age_group,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_drug_restart_grouping_sex",
                     label = "Sex",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_drug_restart_grouping_sex,
+                    selected = filterValues$summarise_drug_restart_grouping_sex,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -2988,8 +2977,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_drug_restart_variable_name",
                     label = "Variable name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_drug_restart_variable_name,
+                    selected = filterValues$summarise_drug_restart_variable_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -2999,8 +2988,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_drug_restart_estimate_name",
                     label = "Estimate name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_drug_restart_estimate_name,
+                    selected = filterValues$summarise_drug_restart_estimate_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -3024,8 +3013,8 @@
                       shinyWidgets::pickerInput(
                         inputId = "summarise_drug_restart_tidy_columns",
                         label = "Columns",
-                        choices = NULL,
-                        selected = NULL,
+                        choices = filterValues$summarise_drug_restart_tidy_columns,
+                        selected = filterValues$summarise_drug_restart_tidy_columns,
                         multiple = TRUE,
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
@@ -3112,40 +3101,40 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_drug_utilisation_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_drug_utilisation_grouping_cdm_name,
+                    selected = filterValues$summarise_drug_utilisation_grouping_cdm_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_drug_utilisation_grouping_cohort_name",
                     label = "Cohort name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_drug_utilisation_grouping_cohort_name,
+                    selected = filterValues$summarise_drug_utilisation_grouping_cohort_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_drug_utilisation_grouping_age_group",
                     label = "Age group",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_drug_utilisation_grouping_age_group,
+                    selected = filterValues$summarise_drug_utilisation_grouping_age_group,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_drug_utilisation_grouping_sex",
                     label = "Sex",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_drug_utilisation_grouping_sex,
+                    selected = filterValues$summarise_drug_utilisation_grouping_sex,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_drug_utilisation_grouping_concept_set",
                     label = "Concept set",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_drug_utilisation_grouping_concept_set,
+                    selected = filterValues$summarise_drug_utilisation_grouping_concept_set,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -3155,8 +3144,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_drug_utilisation_variable_name",
                     label = "Variable name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_drug_utilisation_variable_name,
+                    selected = filterValues$summarise_drug_utilisation_variable_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -3166,8 +3155,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_drug_utilisation_estimate_name",
                     label = "Estimate name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_drug_utilisation_estimate_name,
+                    selected = filterValues$summarise_drug_utilisation_estimate_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -3191,8 +3180,8 @@
                       shinyWidgets::pickerInput(
                         inputId = "summarise_drug_utilisation_tidy_columns",
                         label = "Columns",
-                        choices = NULL,
-                        selected = NULL,
+                        choices = filterValues$summarise_drug_utilisation_tidy_columns,
+                        selected = filterValues$summarise_drug_utilisation_tidy_columns,
                         multiple = TRUE,
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
@@ -3243,16 +3232,16 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_indication_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_indication_grouping_cdm_name,
+                    selected = filterValues$summarise_indication_grouping_cdm_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_indication_grouping_cohort_name",
                     label = "Cohort name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_indication_grouping_cohort_name,
+                    selected = filterValues$summarise_indication_grouping_cohort_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -3262,8 +3251,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_indication_variable_name",
                     label = "Variable name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_indication_variable_name,
+                    selected = filterValues$summarise_indication_variable_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -3273,8 +3262,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_indication_estimate_name",
                     label = "Estimate name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_indication_estimate_name,
+                    selected = filterValues$summarise_indication_estimate_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -3298,8 +3287,8 @@
                       shinyWidgets::pickerInput(
                         inputId = "summarise_indication_tidy_columns",
                         label = "Columns",
-                        choices = NULL,
-                        selected = NULL,
+                        choices = filterValues$summarise_indication_tidy_columns,
+                        selected = filterValues$summarise_indication_tidy_columns,
                         multiple = TRUE,
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
@@ -3386,40 +3375,40 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_proportion_of_patients_covered_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_proportion_of_patients_covered_grouping_cdm_name,
+                    selected = filterValues$summarise_proportion_of_patients_covered_grouping_cdm_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_proportion_of_patients_covered_grouping_cohort",
                     label = "Cohort",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_proportion_of_patients_covered_grouping_cohort,
+                    selected = filterValues$summarise_proportion_of_patients_covered_grouping_cohort,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_proportion_of_patients_covered_grouping_age_group",
                     label = "Age group",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_proportion_of_patients_covered_grouping_age_group,
+                    selected = filterValues$summarise_proportion_of_patients_covered_grouping_age_group,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_proportion_of_patients_covered_grouping_sex",
                     label = "Sex",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_proportion_of_patients_covered_grouping_sex,
+                    selected = filterValues$summarise_proportion_of_patients_covered_grouping_sex,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_proportion_of_patients_covered_grouping_time",
                     label = "Time",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_proportion_of_patients_covered_grouping_time,
+                    selected = filterValues$summarise_proportion_of_patients_covered_grouping_time,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -3429,8 +3418,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_proportion_of_patients_covered_variable_name",
                     label = "Variable name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_proportion_of_patients_covered_variable_name,
+                    selected = filterValues$summarise_proportion_of_patients_covered_variable_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -3440,8 +3429,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_proportion_of_patients_covered_estimate_name",
                     label = "Estimate name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_proportion_of_patients_covered_estimate_name,
+                    selected = filterValues$summarise_proportion_of_patients_covered_estimate_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -3465,8 +3454,8 @@
                       shinyWidgets::pickerInput(
                         inputId = "summarise_proportion_of_patients_covered_tidy_columns",
                         label = "Columns",
-                        choices = NULL,
-                        selected = NULL,
+                        choices = filterValues$summarise_proportion_of_patients_covered_tidy_columns,
+                        selected = filterValues$summarise_proportion_of_patients_covered_tidy_columns,
                         multiple = TRUE,
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
@@ -3553,40 +3542,40 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_treatment_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_treatment_grouping_cdm_name,
+                    selected = filterValues$summarise_treatment_grouping_cdm_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_treatment_grouping_cohort_name",
                     label = "Cohort name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_treatment_grouping_cohort_name,
+                    selected = filterValues$summarise_treatment_grouping_cohort_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_treatment_grouping_age_group",
                     label = "Age group",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_treatment_grouping_age_group,
+                    selected = filterValues$summarise_treatment_grouping_age_group,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_treatment_grouping_sex",
                     label = "Sex",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_treatment_grouping_sex,
+                    selected = filterValues$summarise_treatment_grouping_sex,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_treatment_grouping_window_name",
                     label = "Window name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_treatment_grouping_window_name,
+                    selected = filterValues$summarise_treatment_grouping_window_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -3596,8 +3585,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_treatment_variable_name",
                     label = "Variable name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_treatment_variable_name,
+                    selected = filterValues$summarise_treatment_variable_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -3607,8 +3596,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_treatment_estimate_name",
                     label = "Estimate name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_treatment_estimate_name,
+                    selected = filterValues$summarise_treatment_estimate_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -3632,8 +3621,8 @@
                       shinyWidgets::pickerInput(
                         inputId = "summarise_treatment_tidy_columns",
                         label = "Columns",
-                        choices = NULL,
-                        selected = NULL,
+                        choices = filterValues$summarise_treatment_tidy_columns,
+                        selected = filterValues$summarise_treatment_tidy_columns,
                         multiple = TRUE,
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
@@ -3759,17 +3748,6 @@
             OmopViewer::exportSummarisedResult(data, fileName = file)
           }
         )
-        # fill selectise variables ----
-        shiny::observe({
-          for (k in seq_along(filterValues)) {
-            shinyWidgets::updatePickerInput(
-              session,
-              inputId = names(filterValues)[k],
-              choices = filterValues[[k]],
-              selected = filterValues[[k]],
-            )
-          }
-        })
         # summarise_dose_coverage -----
         ## tidy summarise_dose_coverage -----
         getTidyDataSummariseDoseCoverage <- shiny::reactive({
@@ -4321,40 +4299,40 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_dose_coverage_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_dose_coverage_grouping_cdm_name,
+                    selected = filterValues$summarise_dose_coverage_grouping_cdm_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_dose_coverage_grouping_ingredient_name",
                     label = "Ingredient name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_dose_coverage_grouping_ingredient_name,
+                    selected = filterValues$summarise_dose_coverage_grouping_ingredient_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_dose_coverage_grouping_unit",
                     label = "Unit",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_dose_coverage_grouping_unit,
+                    selected = filterValues$summarise_dose_coverage_grouping_unit,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_dose_coverage_grouping_route",
                     label = "Route",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_dose_coverage_grouping_route,
+                    selected = filterValues$summarise_dose_coverage_grouping_route,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_dose_coverage_grouping_pattern_id",
                     label = "Pattern id",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_dose_coverage_grouping_pattern_id,
+                    selected = filterValues$summarise_dose_coverage_grouping_pattern_id,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -4364,8 +4342,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_dose_coverage_variable_name",
                     label = "Variable name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_dose_coverage_variable_name,
+                    selected = filterValues$summarise_dose_coverage_variable_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -4375,8 +4353,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_dose_coverage_estimate_name",
                     label = "Estimate name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_dose_coverage_estimate_name,
+                    selected = filterValues$summarise_dose_coverage_estimate_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -4400,8 +4378,8 @@
                       shinyWidgets::pickerInput(
                         inputId = "summarise_dose_coverage_tidy_columns",
                         label = "Columns",
-                        choices = NULL,
-                        selected = NULL,
+                        choices = filterValues$summarise_dose_coverage_tidy_columns,
+                        selected = filterValues$summarise_dose_coverage_tidy_columns,
                         multiple = TRUE,
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
@@ -4452,8 +4430,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_drug_restart_settings_restrict_to_first_discontinuation",
                     label = "Restrict to first discontinuation",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_drug_restart_settings_restrict_to_first_discontinuation,
+                    selected = filterValues$summarise_drug_restart_settings_restrict_to_first_discontinuation,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -4463,32 +4441,32 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_drug_restart_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_drug_restart_grouping_cdm_name,
+                    selected = filterValues$summarise_drug_restart_grouping_cdm_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_drug_restart_grouping_cohort_name",
                     label = "Cohort name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_drug_restart_grouping_cohort_name,
+                    selected = filterValues$summarise_drug_restart_grouping_cohort_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_drug_restart_grouping_age_group",
                     label = "Age group",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_drug_restart_grouping_age_group,
+                    selected = filterValues$summarise_drug_restart_grouping_age_group,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_drug_restart_grouping_sex",
                     label = "Sex",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_drug_restart_grouping_sex,
+                    selected = filterValues$summarise_drug_restart_grouping_sex,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -4498,8 +4476,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_drug_restart_variable_name",
                     label = "Variable name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_drug_restart_variable_name,
+                    selected = filterValues$summarise_drug_restart_variable_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -4509,8 +4487,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_drug_restart_estimate_name",
                     label = "Estimate name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_drug_restart_estimate_name,
+                    selected = filterValues$summarise_drug_restart_estimate_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -4534,8 +4512,8 @@
                       shinyWidgets::pickerInput(
                         inputId = "summarise_drug_restart_tidy_columns",
                         label = "Columns",
-                        choices = NULL,
-                        selected = NULL,
+                        choices = filterValues$summarise_drug_restart_tidy_columns,
+                        selected = filterValues$summarise_drug_restart_tidy_columns,
                         multiple = TRUE,
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
@@ -4622,40 +4600,40 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_drug_utilisation_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_drug_utilisation_grouping_cdm_name,
+                    selected = filterValues$summarise_drug_utilisation_grouping_cdm_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_drug_utilisation_grouping_cohort_name",
                     label = "Cohort name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_drug_utilisation_grouping_cohort_name,
+                    selected = filterValues$summarise_drug_utilisation_grouping_cohort_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_drug_utilisation_grouping_age_group",
                     label = "Age group",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_drug_utilisation_grouping_age_group,
+                    selected = filterValues$summarise_drug_utilisation_grouping_age_group,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_drug_utilisation_grouping_sex",
                     label = "Sex",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_drug_utilisation_grouping_sex,
+                    selected = filterValues$summarise_drug_utilisation_grouping_sex,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_drug_utilisation_grouping_concept_set",
                     label = "Concept set",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_drug_utilisation_grouping_concept_set,
+                    selected = filterValues$summarise_drug_utilisation_grouping_concept_set,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -4665,8 +4643,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_drug_utilisation_variable_name",
                     label = "Variable name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_drug_utilisation_variable_name,
+                    selected = filterValues$summarise_drug_utilisation_variable_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -4676,8 +4654,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_drug_utilisation_estimate_name",
                     label = "Estimate name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_drug_utilisation_estimate_name,
+                    selected = filterValues$summarise_drug_utilisation_estimate_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -4701,8 +4679,8 @@
                       shinyWidgets::pickerInput(
                         inputId = "summarise_drug_utilisation_tidy_columns",
                         label = "Columns",
-                        choices = NULL,
-                        selected = NULL,
+                        choices = filterValues$summarise_drug_utilisation_tidy_columns,
+                        selected = filterValues$summarise_drug_utilisation_tidy_columns,
                         multiple = TRUE,
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
@@ -4753,16 +4731,16 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_indication_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_indication_grouping_cdm_name,
+                    selected = filterValues$summarise_indication_grouping_cdm_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_indication_grouping_cohort_name",
                     label = "Cohort name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_indication_grouping_cohort_name,
+                    selected = filterValues$summarise_indication_grouping_cohort_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -4772,8 +4750,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_indication_variable_name",
                     label = "Variable name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_indication_variable_name,
+                    selected = filterValues$summarise_indication_variable_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -4783,8 +4761,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_indication_estimate_name",
                     label = "Estimate name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_indication_estimate_name,
+                    selected = filterValues$summarise_indication_estimate_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -4808,8 +4786,8 @@
                       shinyWidgets::pickerInput(
                         inputId = "summarise_indication_tidy_columns",
                         label = "Columns",
-                        choices = NULL,
-                        selected = NULL,
+                        choices = filterValues$summarise_indication_tidy_columns,
+                        selected = filterValues$summarise_indication_tidy_columns,
                         multiple = TRUE,
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
@@ -4896,40 +4874,40 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_proportion_of_patients_covered_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_proportion_of_patients_covered_grouping_cdm_name,
+                    selected = filterValues$summarise_proportion_of_patients_covered_grouping_cdm_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_proportion_of_patients_covered_grouping_cohort",
                     label = "Cohort",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_proportion_of_patients_covered_grouping_cohort,
+                    selected = filterValues$summarise_proportion_of_patients_covered_grouping_cohort,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_proportion_of_patients_covered_grouping_age_group",
                     label = "Age group",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_proportion_of_patients_covered_grouping_age_group,
+                    selected = filterValues$summarise_proportion_of_patients_covered_grouping_age_group,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_proportion_of_patients_covered_grouping_sex",
                     label = "Sex",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_proportion_of_patients_covered_grouping_sex,
+                    selected = filterValues$summarise_proportion_of_patients_covered_grouping_sex,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_proportion_of_patients_covered_grouping_time",
                     label = "Time",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_proportion_of_patients_covered_grouping_time,
+                    selected = filterValues$summarise_proportion_of_patients_covered_grouping_time,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -4939,8 +4917,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_proportion_of_patients_covered_variable_name",
                     label = "Variable name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_proportion_of_patients_covered_variable_name,
+                    selected = filterValues$summarise_proportion_of_patients_covered_variable_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -4950,8 +4928,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_proportion_of_patients_covered_estimate_name",
                     label = "Estimate name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_proportion_of_patients_covered_estimate_name,
+                    selected = filterValues$summarise_proportion_of_patients_covered_estimate_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -4975,8 +4953,8 @@
                       shinyWidgets::pickerInput(
                         inputId = "summarise_proportion_of_patients_covered_tidy_columns",
                         label = "Columns",
-                        choices = NULL,
-                        selected = NULL,
+                        choices = filterValues$summarise_proportion_of_patients_covered_tidy_columns,
+                        selected = filterValues$summarise_proportion_of_patients_covered_tidy_columns,
                         multiple = TRUE,
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
@@ -5063,40 +5041,40 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_treatment_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_treatment_grouping_cdm_name,
+                    selected = filterValues$summarise_treatment_grouping_cdm_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_treatment_grouping_cohort_name",
                     label = "Cohort name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_treatment_grouping_cohort_name,
+                    selected = filterValues$summarise_treatment_grouping_cohort_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_treatment_grouping_age_group",
                     label = "Age group",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_treatment_grouping_age_group,
+                    selected = filterValues$summarise_treatment_grouping_age_group,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_treatment_grouping_sex",
                     label = "Sex",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_treatment_grouping_sex,
+                    selected = filterValues$summarise_treatment_grouping_sex,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_treatment_grouping_window_name",
                     label = "Window name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_treatment_grouping_window_name,
+                    selected = filterValues$summarise_treatment_grouping_window_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -5106,8 +5084,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_treatment_variable_name",
                     label = "Variable name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_treatment_variable_name,
+                    selected = filterValues$summarise_treatment_variable_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -5117,8 +5095,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_treatment_estimate_name",
                     label = "Estimate name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_treatment_estimate_name,
+                    selected = filterValues$summarise_treatment_estimate_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -5142,8 +5120,8 @@
                       shinyWidgets::pickerInput(
                         inputId = "summarise_treatment_tidy_columns",
                         label = "Columns",
-                        choices = NULL,
-                        selected = NULL,
+                        choices = filterValues$summarise_treatment_tidy_columns,
+                        selected = filterValues$summarise_treatment_tidy_columns,
                         multiple = TRUE,
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
@@ -5294,8 +5272,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_characteristics_settings_table_name",
                     label = "Table name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_characteristics_settings_table_name,
+                    selected = filterValues$summarise_characteristics_settings_table_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -5305,16 +5283,16 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_characteristics_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_characteristics_grouping_cdm_name,
+                    selected = filterValues$summarise_characteristics_grouping_cdm_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_characteristics_grouping_cohort_name",
                     label = "Cohort name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_characteristics_grouping_cohort_name,
+                    selected = filterValues$summarise_characteristics_grouping_cohort_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -5324,8 +5302,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_characteristics_variable_name",
                     label = "Variable name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_characteristics_variable_name,
+                    selected = filterValues$summarise_characteristics_variable_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -5335,8 +5313,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_characteristics_estimate_name",
                     label = "Estimate name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_characteristics_estimate_name,
+                    selected = filterValues$summarise_characteristics_estimate_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -5360,8 +5338,8 @@
                       shinyWidgets::pickerInput(
                         inputId = "summarise_characteristics_tidy_columns",
                         label = "Columns",
-                        choices = NULL,
-                        selected = NULL,
+                        choices = filterValues$summarise_characteristics_tidy_columns,
+                        selected = filterValues$summarise_characteristics_tidy_columns,
                         multiple = TRUE,
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
@@ -5505,16 +5483,16 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_attrition_settings_table_name",
                     label = "Table name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_attrition_settings_table_name,
+                    selected = filterValues$summarise_cohort_attrition_settings_table_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_attrition_settings_cohort_definition_id",
                     label = "Cohort definition id",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_attrition_settings_cohort_definition_id,
+                    selected = filterValues$summarise_cohort_attrition_settings_cohort_definition_id,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -5524,32 +5502,32 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_attrition_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_attrition_grouping_cdm_name,
+                    selected = filterValues$summarise_cohort_attrition_grouping_cdm_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_attrition_grouping_cohort_name",
                     label = "Cohort name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_attrition_grouping_cohort_name,
+                    selected = filterValues$summarise_cohort_attrition_grouping_cohort_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_attrition_grouping_reason",
                     label = "Reason",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_attrition_grouping_reason,
+                    selected = filterValues$summarise_cohort_attrition_grouping_reason,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_attrition_grouping_reason_id",
                     label = "Reason id",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_attrition_grouping_reason_id,
+                    selected = filterValues$summarise_cohort_attrition_grouping_reason_id,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -5559,8 +5537,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_attrition_variable_name",
                     label = "Variable name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_attrition_variable_name,
+                    selected = filterValues$summarise_cohort_attrition_variable_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -5570,8 +5548,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_attrition_estimate_name",
                     label = "Estimate name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_attrition_estimate_name,
+                    selected = filterValues$summarise_cohort_attrition_estimate_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -5595,8 +5573,8 @@
                       shinyWidgets::pickerInput(
                         inputId = "summarise_cohort_attrition_tidy_columns",
                         label = "Columns",
-                        choices = NULL,
-                        selected = NULL,
+                        choices = filterValues$summarise_cohort_attrition_tidy_columns,
+                        selected = filterValues$summarise_cohort_attrition_tidy_columns,
                         multiple = TRUE,
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
@@ -5699,8 +5677,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_count_settings_table_name",
                     label = "Table name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_count_settings_table_name,
+                    selected = filterValues$summarise_cohort_count_settings_table_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -5710,32 +5688,32 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_count_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_count_grouping_cdm_name,
+                    selected = filterValues$summarise_cohort_count_grouping_cdm_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_count_grouping_cohort_name",
                     label = "Cohort name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_count_grouping_cohort_name,
+                    selected = filterValues$summarise_cohort_count_grouping_cohort_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_count_grouping_sex",
                     label = "Sex",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_count_grouping_sex,
+                    selected = filterValues$summarise_cohort_count_grouping_sex,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_count_grouping_age_group",
                     label = "Age group",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_count_grouping_age_group,
+                    selected = filterValues$summarise_cohort_count_grouping_age_group,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -5745,8 +5723,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_count_variable_name",
                     label = "Variable name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_count_variable_name,
+                    selected = filterValues$summarise_cohort_count_variable_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -5756,8 +5734,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_count_estimate_name",
                     label = "Estimate name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_count_estimate_name,
+                    selected = filterValues$summarise_cohort_count_estimate_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -5781,8 +5759,8 @@
                       shinyWidgets::pickerInput(
                         inputId = "summarise_cohort_count_tidy_columns",
                         label = "Columns",
-                        choices = NULL,
-                        selected = NULL,
+                        choices = filterValues$summarise_cohort_count_tidy_columns,
+                        selected = filterValues$summarise_cohort_count_tidy_columns,
                         multiple = TRUE,
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
@@ -5918,24 +5896,24 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_overlap_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_overlap_grouping_cdm_name,
+                    selected = filterValues$summarise_cohort_overlap_grouping_cdm_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_overlap_grouping_cohort_name_reference",
                     label = "Cohort name reference",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_overlap_grouping_cohort_name_reference,
+                    selected = filterValues$summarise_cohort_overlap_grouping_cohort_name_reference,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_overlap_grouping_cohort_name_comparator",
                     label = "Cohort name comparator",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_overlap_grouping_cohort_name_comparator,
+                    selected = filterValues$summarise_cohort_overlap_grouping_cohort_name_comparator,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -5945,8 +5923,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_overlap_variable_name",
                     label = "Variable name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_overlap_variable_name,
+                    selected = filterValues$summarise_cohort_overlap_variable_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -5956,8 +5934,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_overlap_estimate_name",
                     label = "Estimate name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_overlap_estimate_name,
+                    selected = filterValues$summarise_cohort_overlap_estimate_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -5981,8 +5959,8 @@
                       shinyWidgets::pickerInput(
                         inputId = "summarise_cohort_overlap_tidy_columns",
                         label = "Columns",
-                        choices = NULL,
-                        selected = NULL,
+                        choices = filterValues$summarise_cohort_overlap_tidy_columns,
+                        selected = filterValues$summarise_cohort_overlap_tidy_columns,
                         multiple = TRUE,
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
@@ -6120,8 +6098,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_timing_settings_restrict_to_first_entry",
                     label = "Restrict to first entry",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_timing_settings_restrict_to_first_entry,
+                    selected = filterValues$summarise_cohort_timing_settings_restrict_to_first_entry,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -6131,24 +6109,24 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_timing_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_timing_grouping_cdm_name,
+                    selected = filterValues$summarise_cohort_timing_grouping_cdm_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_timing_grouping_cohort_name_reference",
                     label = "Cohort name reference",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_timing_grouping_cohort_name_reference,
+                    selected = filterValues$summarise_cohort_timing_grouping_cohort_name_reference,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_timing_grouping_cohort_name_comparator",
                     label = "Cohort name comparator",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_timing_grouping_cohort_name_comparator,
+                    selected = filterValues$summarise_cohort_timing_grouping_cohort_name_comparator,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -6158,8 +6136,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_timing_variable_name",
                     label = "Variable name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_timing_variable_name,
+                    selected = filterValues$summarise_cohort_timing_variable_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -6169,8 +6147,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_timing_estimate_name",
                     label = "Estimate name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_timing_estimate_name,
+                    selected = filterValues$summarise_cohort_timing_estimate_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -6194,8 +6172,8 @@
                       shinyWidgets::pickerInput(
                         inputId = "summarise_cohort_timing_tidy_columns",
                         label = "Columns",
-                        choices = NULL,
-                        selected = NULL,
+                        choices = filterValues$summarise_cohort_timing_tidy_columns,
+                        selected = filterValues$summarise_cohort_timing_tidy_columns,
                         multiple = TRUE,
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
@@ -6365,24 +6343,24 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_large_scale_characteristics_settings_table_name",
                     label = "Table name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_large_scale_characteristics_settings_table_name,
+                    selected = filterValues$summarise_large_scale_characteristics_settings_table_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_large_scale_characteristics_settings_type",
                     label = "Type",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_large_scale_characteristics_settings_type,
+                    selected = filterValues$summarise_large_scale_characteristics_settings_type,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_large_scale_characteristics_settings_analysis",
                     label = "Analysis",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_large_scale_characteristics_settings_analysis,
+                    selected = filterValues$summarise_large_scale_characteristics_settings_analysis,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -6392,24 +6370,24 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_large_scale_characteristics_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_large_scale_characteristics_grouping_cdm_name,
+                    selected = filterValues$summarise_large_scale_characteristics_grouping_cdm_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_large_scale_characteristics_grouping_cohort_name",
                     label = "Cohort name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_large_scale_characteristics_grouping_cohort_name,
+                    selected = filterValues$summarise_large_scale_characteristics_grouping_cohort_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_large_scale_characteristics_grouping_concept_id",
                     label = "Concept id",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_large_scale_characteristics_grouping_concept_id,
+                    selected = filterValues$summarise_large_scale_characteristics_grouping_concept_id,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -6419,8 +6397,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_large_scale_characteristics_variable_name",
                     label = "Variable name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_large_scale_characteristics_variable_name,
+                    selected = filterValues$summarise_large_scale_characteristics_variable_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -6430,8 +6408,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_large_scale_characteristics_estimate_name",
                     label = "Estimate name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_large_scale_characteristics_estimate_name,
+                    selected = filterValues$summarise_large_scale_characteristics_estimate_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -6455,8 +6433,8 @@
                       shinyWidgets::pickerInput(
                         inputId = "summarise_large_scale_characteristics_tidy_columns",
                         label = "Columns",
-                        choices = NULL,
-                        selected = NULL,
+                        choices = filterValues$summarise_large_scale_characteristics_tidy_columns,
+                        selected = filterValues$summarise_large_scale_characteristics_tidy_columns,
                         multiple = TRUE,
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
@@ -6574,17 +6552,6 @@
             OmopViewer::exportSummarisedResult(data, fileName = file)
           }
         )
-        # fill selectise variables ----
-        shiny::observe({
-          for (k in seq_along(filterValues)) {
-            shinyWidgets::updatePickerInput(
-              session,
-              inputId = names(filterValues)[k],
-              choices = filterValues[[k]],
-              selected = filterValues[[k]],
-            )
-          }
-        })
         # summarise_characteristics -----
         ## tidy summarise_characteristics -----
         getTidyDataSummariseCharacteristics <- shiny::reactive({
@@ -7196,8 +7163,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_characteristics_settings_table_name",
                     label = "Table name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_characteristics_settings_table_name,
+                    selected = filterValues$summarise_characteristics_settings_table_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -7207,16 +7174,16 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_characteristics_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_characteristics_grouping_cdm_name,
+                    selected = filterValues$summarise_characteristics_grouping_cdm_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_characteristics_grouping_cohort_name",
                     label = "Cohort name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_characteristics_grouping_cohort_name,
+                    selected = filterValues$summarise_characteristics_grouping_cohort_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -7226,8 +7193,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_characteristics_variable_name",
                     label = "Variable name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_characteristics_variable_name,
+                    selected = filterValues$summarise_characteristics_variable_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -7237,8 +7204,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_characteristics_estimate_name",
                     label = "Estimate name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_characteristics_estimate_name,
+                    selected = filterValues$summarise_characteristics_estimate_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -7262,8 +7229,8 @@
                       shinyWidgets::pickerInput(
                         inputId = "summarise_characteristics_tidy_columns",
                         label = "Columns",
-                        choices = NULL,
-                        selected = NULL,
+                        choices = filterValues$summarise_characteristics_tidy_columns,
+                        selected = filterValues$summarise_characteristics_tidy_columns,
                         multiple = TRUE,
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
@@ -7407,16 +7374,16 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_attrition_settings_table_name",
                     label = "Table name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_attrition_settings_table_name,
+                    selected = filterValues$summarise_cohort_attrition_settings_table_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_attrition_settings_cohort_definition_id",
                     label = "Cohort definition id",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_attrition_settings_cohort_definition_id,
+                    selected = filterValues$summarise_cohort_attrition_settings_cohort_definition_id,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -7426,32 +7393,32 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_attrition_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_attrition_grouping_cdm_name,
+                    selected = filterValues$summarise_cohort_attrition_grouping_cdm_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_attrition_grouping_cohort_name",
                     label = "Cohort name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_attrition_grouping_cohort_name,
+                    selected = filterValues$summarise_cohort_attrition_grouping_cohort_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_attrition_grouping_reason",
                     label = "Reason",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_attrition_grouping_reason,
+                    selected = filterValues$summarise_cohort_attrition_grouping_reason,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_attrition_grouping_reason_id",
                     label = "Reason id",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_attrition_grouping_reason_id,
+                    selected = filterValues$summarise_cohort_attrition_grouping_reason_id,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -7461,8 +7428,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_attrition_variable_name",
                     label = "Variable name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_attrition_variable_name,
+                    selected = filterValues$summarise_cohort_attrition_variable_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -7472,8 +7439,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_attrition_estimate_name",
                     label = "Estimate name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_attrition_estimate_name,
+                    selected = filterValues$summarise_cohort_attrition_estimate_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -7497,8 +7464,8 @@
                       shinyWidgets::pickerInput(
                         inputId = "summarise_cohort_attrition_tidy_columns",
                         label = "Columns",
-                        choices = NULL,
-                        selected = NULL,
+                        choices = filterValues$summarise_cohort_attrition_tidy_columns,
+                        selected = filterValues$summarise_cohort_attrition_tidy_columns,
                         multiple = TRUE,
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
@@ -7601,8 +7568,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_count_settings_table_name",
                     label = "Table name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_count_settings_table_name,
+                    selected = filterValues$summarise_cohort_count_settings_table_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -7612,32 +7579,32 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_count_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_count_grouping_cdm_name,
+                    selected = filterValues$summarise_cohort_count_grouping_cdm_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_count_grouping_cohort_name",
                     label = "Cohort name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_count_grouping_cohort_name,
+                    selected = filterValues$summarise_cohort_count_grouping_cohort_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_count_grouping_sex",
                     label = "Sex",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_count_grouping_sex,
+                    selected = filterValues$summarise_cohort_count_grouping_sex,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_count_grouping_age_group",
                     label = "Age group",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_count_grouping_age_group,
+                    selected = filterValues$summarise_cohort_count_grouping_age_group,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -7647,8 +7614,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_count_variable_name",
                     label = "Variable name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_count_variable_name,
+                    selected = filterValues$summarise_cohort_count_variable_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -7658,8 +7625,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_count_estimate_name",
                     label = "Estimate name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_count_estimate_name,
+                    selected = filterValues$summarise_cohort_count_estimate_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -7683,8 +7650,8 @@
                       shinyWidgets::pickerInput(
                         inputId = "summarise_cohort_count_tidy_columns",
                         label = "Columns",
-                        choices = NULL,
-                        selected = NULL,
+                        choices = filterValues$summarise_cohort_count_tidy_columns,
+                        selected = filterValues$summarise_cohort_count_tidy_columns,
                         multiple = TRUE,
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
@@ -7820,24 +7787,24 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_overlap_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_overlap_grouping_cdm_name,
+                    selected = filterValues$summarise_cohort_overlap_grouping_cdm_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_overlap_grouping_cohort_name_reference",
                     label = "Cohort name reference",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_overlap_grouping_cohort_name_reference,
+                    selected = filterValues$summarise_cohort_overlap_grouping_cohort_name_reference,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_overlap_grouping_cohort_name_comparator",
                     label = "Cohort name comparator",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_overlap_grouping_cohort_name_comparator,
+                    selected = filterValues$summarise_cohort_overlap_grouping_cohort_name_comparator,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -7847,8 +7814,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_overlap_variable_name",
                     label = "Variable name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_overlap_variable_name,
+                    selected = filterValues$summarise_cohort_overlap_variable_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -7858,8 +7825,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_overlap_estimate_name",
                     label = "Estimate name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_overlap_estimate_name,
+                    selected = filterValues$summarise_cohort_overlap_estimate_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -7883,8 +7850,8 @@
                       shinyWidgets::pickerInput(
                         inputId = "summarise_cohort_overlap_tidy_columns",
                         label = "Columns",
-                        choices = NULL,
-                        selected = NULL,
+                        choices = filterValues$summarise_cohort_overlap_tidy_columns,
+                        selected = filterValues$summarise_cohort_overlap_tidy_columns,
                         multiple = TRUE,
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
@@ -8022,8 +7989,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_timing_settings_restrict_to_first_entry",
                     label = "Restrict to first entry",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_timing_settings_restrict_to_first_entry,
+                    selected = filterValues$summarise_cohort_timing_settings_restrict_to_first_entry,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -8033,24 +8000,24 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_timing_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_timing_grouping_cdm_name,
+                    selected = filterValues$summarise_cohort_timing_grouping_cdm_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_timing_grouping_cohort_name_reference",
                     label = "Cohort name reference",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_timing_grouping_cohort_name_reference,
+                    selected = filterValues$summarise_cohort_timing_grouping_cohort_name_reference,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_timing_grouping_cohort_name_comparator",
                     label = "Cohort name comparator",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_timing_grouping_cohort_name_comparator,
+                    selected = filterValues$summarise_cohort_timing_grouping_cohort_name_comparator,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -8060,8 +8027,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_timing_variable_name",
                     label = "Variable name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_timing_variable_name,
+                    selected = filterValues$summarise_cohort_timing_variable_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -8071,8 +8038,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_timing_estimate_name",
                     label = "Estimate name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_cohort_timing_estimate_name,
+                    selected = filterValues$summarise_cohort_timing_estimate_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -8096,8 +8063,8 @@
                       shinyWidgets::pickerInput(
                         inputId = "summarise_cohort_timing_tidy_columns",
                         label = "Columns",
-                        choices = NULL,
-                        selected = NULL,
+                        choices = filterValues$summarise_cohort_timing_tidy_columns,
+                        selected = filterValues$summarise_cohort_timing_tidy_columns,
                         multiple = TRUE,
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
@@ -8267,24 +8234,24 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_large_scale_characteristics_settings_table_name",
                     label = "Table name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_large_scale_characteristics_settings_table_name,
+                    selected = filterValues$summarise_large_scale_characteristics_settings_table_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_large_scale_characteristics_settings_type",
                     label = "Type",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_large_scale_characteristics_settings_type,
+                    selected = filterValues$summarise_large_scale_characteristics_settings_type,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_large_scale_characteristics_settings_analysis",
                     label = "Analysis",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_large_scale_characteristics_settings_analysis,
+                    selected = filterValues$summarise_large_scale_characteristics_settings_analysis,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -8294,24 +8261,24 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_large_scale_characteristics_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_large_scale_characteristics_grouping_cdm_name,
+                    selected = filterValues$summarise_large_scale_characteristics_grouping_cdm_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_large_scale_characteristics_grouping_cohort_name",
                     label = "Cohort name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_large_scale_characteristics_grouping_cohort_name,
+                    selected = filterValues$summarise_large_scale_characteristics_grouping_cohort_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_large_scale_characteristics_grouping_concept_id",
                     label = "Concept id",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_large_scale_characteristics_grouping_concept_id,
+                    selected = filterValues$summarise_large_scale_characteristics_grouping_concept_id,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -8321,8 +8288,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_large_scale_characteristics_variable_name",
                     label = "Variable name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_large_scale_characteristics_variable_name,
+                    selected = filterValues$summarise_large_scale_characteristics_variable_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -8332,8 +8299,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_large_scale_characteristics_estimate_name",
                     label = "Estimate name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_large_scale_characteristics_estimate_name,
+                    selected = filterValues$summarise_large_scale_characteristics_estimate_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -8357,8 +8324,8 @@
                       shinyWidgets::pickerInput(
                         inputId = "summarise_large_scale_characteristics_tidy_columns",
                         label = "Columns",
-                        choices = NULL,
-                        selected = NULL,
+                        choices = filterValues$summarise_large_scale_characteristics_tidy_columns,
+                        selected = filterValues$summarise_large_scale_characteristics_tidy_columns,
                         multiple = TRUE,
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
@@ -8496,24 +8463,24 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_observation_period_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_observation_period_grouping_cdm_name,
+                    selected = filterValues$summarise_observation_period_grouping_cdm_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_observation_period_grouping_observation_period_ordinal",
                     label = "Observation period ordinal",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_observation_period_grouping_observation_period_ordinal,
+                    selected = filterValues$summarise_observation_period_grouping_observation_period_ordinal,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "summarise_observation_period_grouping_sex",
                     label = "Sex",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_observation_period_grouping_sex,
+                    selected = filterValues$summarise_observation_period_grouping_sex,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -8523,8 +8490,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_observation_period_variable_name",
                     label = "Variable name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_observation_period_variable_name,
+                    selected = filterValues$summarise_observation_period_variable_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -8534,8 +8501,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_observation_period_estimate_name",
                     label = "Estimate name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_observation_period_estimate_name,
+                    selected = filterValues$summarise_observation_period_estimate_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -8559,8 +8526,8 @@
                       shinyWidgets::pickerInput(
                         inputId = "summarise_observation_period_tidy_columns",
                         label = "Columns",
-                        choices = NULL,
-                        selected = NULL,
+                        choices = filterValues$summarise_observation_period_tidy_columns,
+                        selected = filterValues$summarise_observation_period_tidy_columns,
                         multiple = TRUE,
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
@@ -8676,8 +8643,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_omop_snapshot_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_omop_snapshot_grouping_cdm_name,
+                    selected = filterValues$summarise_omop_snapshot_grouping_cdm_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -8687,8 +8654,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_omop_snapshot_variable_name",
                     label = "Variable name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_omop_snapshot_variable_name,
+                    selected = filterValues$summarise_omop_snapshot_variable_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -8698,8 +8665,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "summarise_omop_snapshot_estimate_name",
                     label = "Estimate name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$summarise_omop_snapshot_estimate_name,
+                    selected = filterValues$summarise_omop_snapshot_estimate_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -8723,8 +8690,8 @@
                       shinyWidgets::pickerInput(
                         inputId = "summarise_omop_snapshot_tidy_columns",
                         label = "Columns",
-                        choices = NULL,
-                        selected = NULL,
+                        choices = filterValues$summarise_omop_snapshot_tidy_columns,
+                        selected = filterValues$summarise_omop_snapshot_tidy_columns,
                         multiple = TRUE,
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
@@ -8814,17 +8781,6 @@
             OmopViewer::exportSummarisedResult(data, fileName = file)
           }
         )
-        # fill selectise variables ----
-        shiny::observe({
-          for (k in seq_along(filterValues)) {
-            shinyWidgets::updatePickerInput(
-              session,
-              inputId = names(filterValues)[k],
-              choices = filterValues[[k]],
-              selected = filterValues[[k]],
-            )
-          }
-        })
         # summarise_observation_period -----
         ## tidy summarise_observation_period -----
         getTidyDataSummariseObservationPeriod <- shiny::reactive({
@@ -9049,40 +9005,40 @@
                   shinyWidgets::pickerInput(
                     inputId = "orphan_code_use_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$orphan_code_use_grouping_cdm_name,
+                    selected = filterValues$orphan_code_use_grouping_cdm_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "orphan_code_use_grouping_codelist_name",
                     label = "Codelist name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$orphan_code_use_grouping_codelist_name,
+                    selected = filterValues$orphan_code_use_grouping_codelist_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "orphan_code_use_grouping_domain_id",
                     label = "Domain id",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$orphan_code_use_grouping_domain_id,
+                    selected = filterValues$orphan_code_use_grouping_domain_id,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "orphan_code_use_grouping_standard_concept",
                     label = "Standard concept",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$orphan_code_use_grouping_standard_concept,
+                    selected = filterValues$orphan_code_use_grouping_standard_concept,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "orphan_code_use_grouping_vocabulary_id",
                     label = "Vocabulary id",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$orphan_code_use_grouping_vocabulary_id,
+                    selected = filterValues$orphan_code_use_grouping_vocabulary_id,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -9092,8 +9048,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "orphan_code_use_variable_name",
                     label = "Variable name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$orphan_code_use_variable_name,
+                    selected = filterValues$orphan_code_use_variable_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -9103,8 +9059,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "orphan_code_use_estimate_name",
                     label = "Estimate name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$orphan_code_use_estimate_name,
+                    selected = filterValues$orphan_code_use_estimate_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -9128,8 +9084,8 @@
                       shinyWidgets::pickerInput(
                         inputId = "orphan_code_use_tidy_columns",
                         label = "Columns",
-                        choices = NULL,
-                        selected = NULL,
+                        choices = filterValues$orphan_code_use_tidy_columns,
+                        selected = filterValues$orphan_code_use_tidy_columns,
                         multiple = TRUE,
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
@@ -9208,8 +9164,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "cohort_code_use_settings_timing",
                     label = "Timing",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$cohort_code_use_settings_timing,
+                    selected = filterValues$cohort_code_use_settings_timing,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -9219,48 +9175,48 @@
                   shinyWidgets::pickerInput(
                     inputId = "cohort_code_use_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$cohort_code_use_grouping_cdm_name,
+                    selected = filterValues$cohort_code_use_grouping_cdm_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "cohort_code_use_grouping_cohort_name",
                     label = "Cohort name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$cohort_code_use_grouping_cohort_name,
+                    selected = filterValues$cohort_code_use_grouping_cohort_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "cohort_code_use_grouping_codelist_name",
                     label = "Codelist name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$cohort_code_use_grouping_codelist_name,
+                    selected = filterValues$cohort_code_use_grouping_codelist_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "cohort_code_use_grouping_source_concept_name",
                     label = "Source concept name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$cohort_code_use_grouping_source_concept_name,
+                    selected = filterValues$cohort_code_use_grouping_source_concept_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "cohort_code_use_grouping_source_concept_id",
                     label = "Source concept id",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$cohort_code_use_grouping_source_concept_id,
+                    selected = filterValues$cohort_code_use_grouping_source_concept_id,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "cohort_code_use_grouping_domain_id",
                     label = "Domain id",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$cohort_code_use_grouping_domain_id,
+                    selected = filterValues$cohort_code_use_grouping_domain_id,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -9270,8 +9226,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "cohort_code_use_variable_name",
                     label = "Variable name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$cohort_code_use_variable_name,
+                    selected = filterValues$cohort_code_use_variable_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -9281,8 +9237,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "cohort_code_use_estimate_name",
                     label = "Estimate name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$cohort_code_use_estimate_name,
+                    selected = filterValues$cohort_code_use_estimate_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -9306,8 +9262,8 @@
                       shinyWidgets::pickerInput(
                         inputId = "cohort_code_use_tidy_columns",
                         label = "Columns",
-                        choices = NULL,
-                        selected = NULL,
+                        choices = filterValues$cohort_code_use_tidy_columns,
+                        selected = filterValues$cohort_code_use_tidy_columns,
                         multiple = TRUE,
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
@@ -9391,56 +9347,56 @@
                   shinyWidgets::pickerInput(
                     inputId = "code_use_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$code_use_grouping_cdm_name,
+                    selected = filterValues$code_use_grouping_cdm_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "code_use_grouping_codelist_name",
                     label = "Codelist name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$code_use_grouping_codelist_name,
+                    selected = filterValues$code_use_grouping_codelist_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "code_use_grouping_year",
                     label = "Year",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$code_use_grouping_year,
+                    selected = filterValues$code_use_grouping_year,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "code_use_grouping_sex",
                     label = "Sex",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$code_use_grouping_sex,
+                    selected = filterValues$code_use_grouping_sex,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "code_use_grouping_source_concept_name",
                     label = "Source concept name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$code_use_grouping_source_concept_name,
+                    selected = filterValues$code_use_grouping_source_concept_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "code_use_grouping_source_concept_id",
                     label = "Source concept id",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$code_use_grouping_source_concept_id,
+                    selected = filterValues$code_use_grouping_source_concept_id,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "code_use_grouping_domain_id",
                     label = "Domain id",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$code_use_grouping_domain_id,
+                    selected = filterValues$code_use_grouping_domain_id,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -9450,8 +9406,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "code_use_variable_name",
                     label = "Variable name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$code_use_variable_name,
+                    selected = filterValues$code_use_variable_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -9461,8 +9417,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "code_use_estimate_name",
                     label = "Estimate name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$code_use_estimate_name,
+                    selected = filterValues$code_use_estimate_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -9486,8 +9442,8 @@
                       shinyWidgets::pickerInput(
                         inputId = "code_use_tidy_columns",
                         label = "Columns",
-                        choices = NULL,
-                        selected = NULL,
+                        choices = filterValues$code_use_tidy_columns,
+                        selected = filterValues$code_use_tidy_columns,
                         multiple = TRUE,
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
@@ -9566,40 +9522,40 @@
                   shinyWidgets::pickerInput(
                     inputId = "achilles_code_use_grouping_cdm_name",
                     label = "Cdm name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$achilles_code_use_grouping_cdm_name,
+                    selected = filterValues$achilles_code_use_grouping_cdm_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "achilles_code_use_grouping_codelist_name",
                     label = "Codelist name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$achilles_code_use_grouping_codelist_name,
+                    selected = filterValues$achilles_code_use_grouping_codelist_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "achilles_code_use_grouping_domain_id",
                     label = "Domain id",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$achilles_code_use_grouping_domain_id,
+                    selected = filterValues$achilles_code_use_grouping_domain_id,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "achilles_code_use_grouping_standard_concept",
                     label = "Standard concept",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$achilles_code_use_grouping_standard_concept,
+                    selected = filterValues$achilles_code_use_grouping_standard_concept,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
                     inputId = "achilles_code_use_grouping_vocabulary_id",
                     label = "Vocabulary id",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$achilles_code_use_grouping_vocabulary_id,
+                    selected = filterValues$achilles_code_use_grouping_vocabulary_id,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -9609,8 +9565,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "achilles_code_use_variable_name",
                     label = "Variable name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$achilles_code_use_variable_name,
+                    selected = filterValues$achilles_code_use_variable_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -9620,8 +9576,8 @@
                   shinyWidgets::pickerInput(
                     inputId = "achilles_code_use_estimate_name",
                     label = "Estimate name",
-                    choices = NULL,
-                    selected = NULL,
+                    choices = filterValues$achilles_code_use_estimate_name,
+                    selected = filterValues$achilles_code_use_estimate_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -9645,8 +9601,8 @@
                       shinyWidgets::pickerInput(
                         inputId = "achilles_code_use_tidy_columns",
                         label = "Columns",
-                        choices = NULL,
-                        selected = NULL,
+                        choices = filterValues$achilles_code_use_tidy_columns,
+                        selected = filterValues$achilles_code_use_tidy_columns,
                         multiple = TRUE,
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
@@ -9764,17 +9720,6 @@
             OmopViewer::exportSummarisedResult(data, fileName = file)
           }
         )
-        # fill selectise variables ----
-        shiny::observe({
-          for (k in seq_along(filterValues)) {
-            shinyWidgets::updatePickerInput(
-              session,
-              inputId = names(filterValues)[k],
-              choices = filterValues[[k]],
-              selected = filterValues[[k]],
-            )
-          }
-        })
         # orphan_code_use -----
         ## tidy orphan_code_use -----
         getTidyDataOrphanCodeUse <- shiny::reactive({

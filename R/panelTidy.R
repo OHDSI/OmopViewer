@@ -17,8 +17,8 @@ tidyUi <- function(tab) {
           shinyWidgets::pickerInput(
             inputId = "{tab}_tidy_columns",
             label = "Columns",
-            choices = NULL,
-            selected = NULL,
+            choices = filterValues${tab}_tidy_columns,
+            selected = filterValues${tab}_tidy_columns,
             multiple = TRUE,
             options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
           ),

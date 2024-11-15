@@ -56,9 +56,11 @@ sidebarEstimates <- function(prefix, filters) {
   writeSidebar(title = "Estimates", prefix = prefix, filters = "estimate_name")
 }
 writeSidebar <- function(title, prefix, filters) {
-  selectors <- purrr::map_chr(filters, \(x) selector(
-    paste0(prefix, "_", x), formatTit(x), 'NULL', 'NULL', TRUE
-  )) |>
+  selectors <- purrr::map_chr(filters, \(x) {
+    id <- paste0(prefix, "_", x)
+    def <- paste0("filterValues$", id)
+    selector(id, formatTit(x), def, def, TRUE)
+  }) |>
     paste0(collapse = ",\n")
   'bslib::accordion_panel(
     title = "{title}",
