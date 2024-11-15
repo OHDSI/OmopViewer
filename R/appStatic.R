@@ -91,9 +91,11 @@ exportStaticApp <- function(result,
   cli::cli_inform(c("i" = "Creating shiny from provided data"))
 
   # preprocess file
+  panelList <- panelDetails |>
+    purrr::map(\(x) x$result_id)
   preprocess <- c(
-    "# shiny is prepared to work with this panelDetails, please do not change them",
-    paste0("panelDetails <- ", writePanelDetails(panelDetails)),
+    "# shiny is prepared to work with this panelList, please do not change them",
+    paste0("panelList <- ", writePanelDetails(panelList)),
     omopViewerPreprocess
   ) |>
     styleCode()
@@ -227,7 +229,32 @@ logoPath <- function(logo) {
     logo
   }
 }
-
+addFilterNames <- function(panelDetails, result) {
+  panelDetails |>
+    purrr::map(\(x) {
+      x$filter_names <- omopgenerics::settings(result) |>
+        dplyr::filter(.data$result_id %in% .env$x$result_id) |>
+        dplyr::select(!dplyr::any_of(c(
+          "result_id", "result_type", "package_version", "package_name",
+          "min_cell_count"
+        ))) |>
+        purrr::imap(\(x, nm) {
+          if (nm %in% c("group", "strata", "additional")) {
+            x <- x |>
+              stringr::str_split(pattern = " &&& ") |>
+              unlist() |>
+              unique()
+          } else if (sum(!is.na()) > 0){
+            nm
+          } else {
+            NULL
+          }
+        }) |>
+        purrr::compact() |>
+        unlist()
+      x
+    })
+}
 
 
 # ui ----
