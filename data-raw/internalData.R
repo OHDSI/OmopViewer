@@ -300,6 +300,7 @@ omopViewerGlobal <- c(
 logoKeywords <- c("hds", "ohdsi") |>
   stringr::str_to_lower()
 
+# IT HAS TO BE EDITED HERE AND IN `functions.R`!!
 backgroundKeywords <- dplyr::tribble(
   ~keyword, ~fun, ~link,
   "header", "bslib::card_header", "https://rstudio.github.io/bslib//reference/card_body.html",
