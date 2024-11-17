@@ -232,7 +232,7 @@ logoPath <- function(logo) {
 addFilterNames <- function(panelDetails, result) {
   panelDetails |>
     purrr::map(\(x) {
-      x$filter_names <- omopgenerics::settings(result) |>
+      filters <- omopgenerics::settings(result) |>
         dplyr::filter(.data$result_id %in% .env$x$result_id) |>
         dplyr::select(!dplyr::any_of(c(
           "result_id", "result_type", "package_version", "package_name",
@@ -244,14 +244,18 @@ addFilterNames <- function(panelDetails, result) {
               stringr::str_split(pattern = " &&& ") |>
               unlist() |>
               unique()
-          } else if (sum(!is.na()) > 0){
+            x[x != ""]
+          } else if (sum(!is.na(x)) > 0){
             nm
           } else {
             NULL
           }
         }) |>
         purrr::compact() |>
+        unname() |>
         unlist()
+      if (length(filters) == 0) filters <- character()
+      x$filter_name <- filters
       x
     })
 }
