@@ -22,14 +22,17 @@ knitr::opts_chunk$set(
 [![Codecov test coverage](https://codecov.io/gh/OHDSI/OmopViewer/branch/main/graph/badge.svg)](https://app.codecov.io/gh/OHDSI/OmopViewer?branch=main)
 <!-- badges: end -->
 
-> [!IMPORTANT]
-> This package is under construction and this is just a first Beta release, please use it carefully and report any issue that you encounter using it.
-
 The goal of OmopViewer is to allow the user to easily create Shiny Apps to visualise study results in `<summarised_result>` format.
 
 ## Installation
 
-You can install the development version of OmopViewer from [GitHub](https://github.com/OHDSI/OmopViewer) with:
+Install it from cran:
+
+```{r}
+install.packages("OmopViewer")
+```
+
+Or you can install the development version of OmopViewer from [GitHub](https://github.com/OHDSI/OmopViewer) with:
 
 ``` {r, eval = FALSE}
 install.packages("pak")
@@ -42,10 +45,9 @@ pak::pkg_install("OHDSI/OmopViewer")
 library(OmopViewer)
 ```
 
-The package can be divided in 3 main functionalities:
-- Static shiny app
-- Dynamic shiny app
-- Utility functions
+The package has two functionalities:
+- Static app
+- Dynamic app
 
 ## Static shiny app
 
@@ -58,8 +60,26 @@ cdm <- mockCohortCharacteristics()
 result <- summariseCharacteristics(cdm$cohort1) |>
   bind(summariseCohortAttrition(cdm$cohort1))
 
-exportStaticApp(result = result)
+exportStaticApp(result = result, directory = tempdir())
 ```
+
+This function allow some customisation of the shiny with the arguments:
+- `theme` (to choose a pre-built theme or a bslib one).
+- `logo` (you can point to one of the pre-builr logos or to a local image).
+- `title`
+- `background` whether to allow for an .md file for customisation of a background panel.
+- `summary` whether to include or not a summary panel.
+- `panelStructure` allows you to structure the different panels in dropdown menus.
+- `panelDetails` allows you to create panels at result_id level and assign which are the outputs that we want to include in each panel.
+
+The shiny generated will have the following structure:
+- `global.R` loads the data.
+- `ui.R` with all the ui code. You can edit there the buttons and its default values.
+- `server.R` server logic, you can edit that file to change some of the displays.
+- `functions.R` some utility functions that are used in the shiny app.
+- `data/result.csv` the original summarised_result provided.
+- `data/ShinyData.RData` the .RData file that contains the data used in the shiny.
+- `data/preprocess.R` the file to generate ShinyData.RData from results.csv
 
 ## Dynamic shiny app
 
@@ -69,8 +89,4 @@ The dynamic shiny app can be easily launched with `launchDynamicApp()` function.
 launchDynamicApp()
 ```
 
-## Utility functions
-
-- `tidyData` is an experimental version of the `tidy.summarised_result` method defined in **visOmopResults**.
-- `omopViewerTable` is an experimental version of the `visOmopTable` function defined in **visOmopResults**.
-- `filterData` is a function used internally in the package to subset the result. It is not meant to be for user use. It is exported because it is used in the *exportStaticApp()* function.
+By default the shiny generated will have no data, you have to upload data from a csv or zip file that you have it locally. The summarised_results will be processed and you will be allowed to choose which results to visualise.
