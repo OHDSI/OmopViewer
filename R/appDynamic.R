@@ -5,111 +5,178 @@
 #' @export
 #'
 launchDynamicApp <- function() {
-  ui <- bslib::page_fluid(shiny::uiOutput("dynamic_tabs_output"))
+  ui <- shiny::uiOutput("ui")
   shiny::shinyApp(ui = ui, server = serverDynamic)
-}
-
-createDynamicUi <- function(result) {
-  logo <- "https://OHDSI.github.io/Oxinfer/images/hds_logo_noline.svg"
-  panelDetails <- panelDetailsFromResult(result)
-  panelStructure <- panelStructureFromResult(result)
-  panels <- createUiPanels(panelDetails) |>
-    structurePanels(panelStructure)
-  c(
-    'bslib::page_navbar(',
-    c(
-      pageTitle("OmopViewer App", logo),
-      loadDataUi(),
-      panels,
-      'bslib::nav_spacer()',
-      createAbout(logo),
-      'bslib::nav_item(bslib::input_dark_mode(id ="dark_mode", mode = "light"))'
-    ) |>
-      paste0(collapse = ",\n"),
-    ')'
-  ) |>
-    paste0(collapse = "\n") |>
-    rlang::parse_expr() |>
-    rlang::eval_tidy()
-}
-loadDataUi <- function() {
-  'bslib::nav_panel(
-    title = "Load data",
-    icon = shiny::icon("upload"),
-    bslib::card(
-      bslib::card_header("Upload data to the server"),
-      shiny::fileInput(
-        inputId = "upload_data_content",
-        label = "Choose zip or csv file",
-        accept = c(".zip", ".csv"),
-        multiple = TRUE
-      ),
-      shiny::textOutput(outputId = "upload_data_message")
-    ),
-    bslib::card(
-      bslib::card_header("Select data to load"),
-      fill = FALSE,
-      shiny::p("Select the data do you want to load:"),
-      DT::dataTableOutput(outputId = "upload_data_uploaded"),
-      shiny::actionButton(
-        inputId = "load_data_go",
-        label = "Bind data and load to shiny",
-        icon = shiny::icon("gears")
-      ),
-      shiny::textOutput(outputId = "load_data_message")
-    )
-  )'
 }
 
 serverDynamic <- function(input, output, session) {
 
-  # output$dynamic_tabs_output <- shiny::renderUI({
-  #   createDynamicUi(omopgenerics::emptySummarisedResult())
-  # })
-  #
-  # uploadedData <- shiny::reactiveVal(dplyr::tibble(
-  #   id = integer(),
-  #   name_export = character(),
-  #   upload_datetime = character(),
-  #   number_rows = integer(),
-  #   content = list(),
-  #   is_empty = logical()
-  # ))
-  #
-  # workingData <- shiny::reactiveVal(prepareShinyData(omopgenerics::emptySummarisedResult()))
-  #
-  # shiny::observeEvent(input$upload_data_content, {
-  #   dataList <- processFiles(input$upload_data_content)
-  #   uploadedData(mergeData(dataList$data, uploadedData()))
-  #   output$upload_data_message <- shiny::renderText(dataList$message)
-  # })
-  #
-  # output$upload_data_uploaded <- DT::renderDataTable({
-  #   uploadedDatatable(uploadedData())
-  # })
-  #
-  # shiny::observeEvent(input$load_data_go, {
-  #   dataToUpload <- uploadedData() |>
-  #     dplyr::slice(input$upload_data_uploaded_rows_selected) |>
-  #     dplyr::pull("content") |>
-  #     omopgenerics::bind()
-  #   workingData(prepareShinyData(dataToUpload))
-  # })
-  #
-  # shiny::observeEvent(workingData(), {
-  #   # choices <- getChoices(workingData())
-  #   # output$dynamic_tabs_output <- shiny::renderUI(
-  #   #   createDynamicUi(choices)
-  #   # )
-  #   # for (rt in names(choices)) {
-  #   #   serverResultType <- paste0(
-  #   #     "function(input, output, session) {", createServer(rt, data = "workingData()"), "}") |>
-  #   #     rlang::parse_expr() |>
-  #   #     rlang::eval_tidy()
-  #   #   shiny::moduleServer(id = NULL, module = serverResultType)
-  #   # }
-  # })
+  # reactive data
+  panels <- shiny::reactiveVal(list())
+  workingData <- shiny::reactiveVal(list())
+  uploadedData <- shiny::reactiveVal(dplyr::tibble(
+    id = integer(), name_export = character(), upload_datetime = character(),
+    number_rows = integer(), content = list(), is_empty = logical()
+  ))
 
+  # render ui
+  output$ui <- shiny::renderUI(
+    createDynamicUi(panels(), input$configuration_summary, workingData(), input$configuration_theme)
+  )
+
+  # change the theme of the shiny
+  observeEvent(input$configuration_theme, {
+    theme <- omopViewerThemes[[input$configuration_theme]] |>
+      rlang::parse_expr() |>
+      rlang::eval_tidy()
+    session$setCurrentTheme(theme)
+  })
+
+  # upload data to shiny
+  shiny::observeEvent(input$upload_data_content, {
+    dataList <- processFiles(input$upload_data_content)
+    uploadedData(mergeData(dataList$data, uploadedData()))
+    output$upload_data_message <- shiny::renderText(dataList$message)
+  })
+
+  # show loaded data in shiny
+  output$upload_data_uploaded <- DT::renderDataTable(
+    uploadedDatatable(uploadedData())
+  )
+
+  # update shiny with the new data
+  shiny::observeEvent(input$load_data_go, {
+    # bind all data together
+    dataToUpload <- uploadedData() |>
+      dplyr::slice(input$upload_data_uploaded_rows_selected) |>
+      dplyr::pull("content") |>
+      omopgenerics::bind()
+    if (is.null(dataToUpload)) {
+      dataToUpload <- omopgenerics::emptySummarisedResult()
+    }
+
+    # update panels
+    panels(panelsUi(dataToUpload))
+
+    # panelDetails
+    panelDetails <- panelDetailsFromResult(dataToUpload)
+
+    # create the new workingData()
+    set <- omopgenerics::settings(dataToUpload)
+    resultList <- purrr::map(panelDetails, \(x) x$result_id)
+    workingData(prepareResult(dataToUpload, resultList))
+
+    # add server modules
+    serverModeule <- paste0(c(
+      "function(input, output, session) {",
+      createServer(panelDetails, data = "workingData()"),
+      "}"
+    ), collapse = "\n") |>
+      rlang::parse_expr() |>
+      rlang::eval_tidy()
+    shiny::moduleServer(id = NULL, module = serverModeule)
+  })
+
+}
+createDynamicUi <- function(panels, summary, data, theme) {
+  logo <- "https://raw.githubusercontent.com/OHDSI/OmopViewer/12fbe3ad94529a91f46f3652e47b417e9a7f4bb6/inst/logos/hds_logo.svg"
+
+  if (isTRUE(summary)) {
+    panels <- c(
+      list(bslib::nav_panel(
+        title = "Summary", icon = shiny::icon("file-alt"), summaryCard(data)
+      )),
+      panels
+    )
+    summary <- TRUE
+  } else {
+    summary <- FALSE
+  }
+
+  if (!isTRUE(theme %in% names(omopViewerThemes))) {
+    theme <- "default"
+  }
+
+  panels <- unname(panels)
+  bslib::page_navbar(
+    # title
+    title = shiny::tags$span(
+      shiny::tags$img(
+        src = logo, width = "auto", height = "46px", class = "me-3",alt = "logo"
+      ),
+      "OmopViewer App"
+    ),
+    # load ui
+    bslib::nav_panel(
+      title = "Load data",
+      icon = shiny::icon("upload"),
+      bslib::card(
+        bslib::card_header("Upload data to the server"),
+        shiny::fileInput(
+          inputId = "upload_data_content",
+          label = "Choose zip or csv file",
+          accept = c(".zip", ".csv"),
+          multiple = TRUE
+        ),
+        shiny::textOutput(outputId = "upload_data_message")
+      ),
+      bslib::card(
+        bslib::card_header("Select data to load"),
+        fill = FALSE,
+        shiny::p("Select the data do you want to load:"),
+        DT::dataTableOutput(outputId = "upload_data_uploaded"),
+        shiny::actionButton(
+          inputId = "load_data_go",
+          label = "Bind data and load to shiny",
+          icon = shiny::icon("gears")
+        ),
+        shiny::textOutput(outputId = "load_data_message")
+      )
+    ),
+    # ui created by server
+    !!!panels,
+    # separator
+    bslib::nav_spacer(),
+    # flag that it was created by OmopViewer
+    createAbout(logo) |>
+      rlang::parse_expr() |>
+      rlang::eval_tidy(),
+    # configuration
+    bslib::nav_item(
+      bslib::popover(
+        trigger = shiny::icon("gear"),
+        title = "Configuration",
+        shinyWidgets::pickerInput(
+          inputId = "configuration_theme",
+          label = "Choose theme",
+          choices = names(omopViewerThemes),
+          selected = theme,
+          multiple = FALSE
+        ),
+        shiny::checkboxInput(
+          inputId = "configuration_summary",
+          label = "Summary",
+          value = summary
+        )
+      )
+    ),
+    # dark mode
+    bslib::nav_item(bslib::input_dark_mode(id ="dark_mode", mode = "light"))
+  )
+}
+panelsUi <- function(result) {
+  # create panelDetails
+  panelDetails <- addFilterNames(panelDetailsFromResult(result), result)
+  # create panels
+  panels <- createUiPanels(panelDetails)
+
+  # resultList from panelDetails
+  resultList <- purrr::map(panelDetails, \(x) x$result_id)
+  # filterValues from resultList
+  filterValues <- defaultFilterValues(result, resultList)
+
+  # evaluate the panels
+  purrr::map(panels, \(x) rlang::eval_tidy(rlang::parse_expr(x)))
 }
 processFiles <- function(content) {
   if (is.null(content)) return(list(message = "No data selected!"))
