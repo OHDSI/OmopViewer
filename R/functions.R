@@ -196,7 +196,8 @@ summaryCard <- function(result) {
     ) |>
     dplyr::group_by(.data$group) |>
     dplyr::group_split() |>
-    purrr::map_chr(\(x) c(unique(x$group), x$message))
+    purrr::map(\(x) c(unique(x$group), x$message)) |>
+    purrr::flatten_chr()
 
   # result suppression
   resultSuppression <- sets |>
@@ -243,7 +244,10 @@ simpleTable <- function(result,
     return(gt::gt(dplyr::tibble()))
   }
 
-  result <- omopgenerics::tidy(result)
+  result <- result |>
+    omopgenerics::addSettings() |>
+    omopgenerics::splitAll() |>
+    dplyr::select(-"result_id")
 
   # format estimate column
   formatEstimates <- c(
@@ -284,7 +288,7 @@ prepareResult <- function(result, resultList) {
         )
     })
 }
-filterValues <- function(result, resultList) {
+defaultFilterValues <- function(result, resultList) {
   resultList |>
     purrr::imap(\(x, nm) {
       sOpts <- omopgenerics::settings(result) |>
@@ -316,7 +320,8 @@ filterValues <- function(result, resultList) {
         dplyr::select("variable_name", "estimate_name") |>
         as.list() |>
         purrr::map(unique)
-      res <- c(sOpts, gOpts, veOpts)
+      res <- c(sOpts, gOpts, veOpts) |>
+        purrr::compact()
       tidyColumns <- names(res)
       id <- startsWith(tidyColumns, "settings_") | startsWith(tidyColumns, "grouping_")
       tidyColumns[id] <- substr(tidyColumns[id], 10, nchar(tidyColumns[id]))

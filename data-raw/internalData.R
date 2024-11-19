@@ -146,9 +146,9 @@ omopViewerOutputArguments <- dplyr::tribble(
   7L, "hide", "type", "rank",
   7L, NA, "rank_options", "<grouping>, <variable>",
   # CohortCharacteristics::plotCharacteristics
-  8L, "plotType", "type", "selector",
-  8L, "plotType", "options", "boxplot, barplot, scatterplot",
-  8L, "plotType", "multiple", "FALSE",
+  8L, "plotStyle", "type", "selector",
+  8L, "plotStyle", "options", "boxplot, barplot, scatterplot",
+  8L, "plotStyle", "multiple", "FALSE",
   8L, "facet", "type", "selector",
   8L, "facet", "options", "<grouping>, <variable>, <settings>",
   8L, "facet", "multiple", "TRUE",
@@ -274,7 +274,7 @@ omopViewerPreprocess <- c(
   "",
   "result <- omopgenerics::importSummarisedResult(file.path(getwd(), \"data\"))",
   "data <- prepareResult(result, resultList)",
-  "filterValues <- filterValues(result, resultList)",
+  "filterValues <- defaultFilterValues(result, resultList)",
   "",
   "save(data, filterValues, file = file.path(getwd(), \"data\", \"shinyData.RData\"))",
   "",
@@ -304,6 +304,22 @@ omopViewerGlobal <- c(
 # NOTE IT IS NOT CASE SENSITIVE
 logoKeywords <- c("hds", "ohdsi") |>
   stringr::str_to_lower()
+
+# To put names in lowercase
+# logosPath <- here::here("inst", "logos")
+# files <- list.files(logosPath)
+# lowFiles <- stringr::str_to_lower(files)
+# purrr::map2(files, lowFiles, \(x, y) {
+#   if (x != y) {
+#     x <- file.path(logosPath, x)
+#     yTemp <- file.path(tempdir(), y)
+#     y <- file.path(logosPath, y)
+#     file.copy(from = x, to = yTemp)
+#     file.remove(x)
+#     file.copy(from = yTemp, to = y)
+#   }
+# }) |>
+#   invisible()
 
 # IT HAS TO BE EDITED HERE AND IN `functions.R`!!
 backgroundKeywords <- dplyr::tribble(

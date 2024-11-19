@@ -21,12 +21,12 @@
         bslib::nav_panel(
           title = "Background",
           icon = shiny::icon("disease"),
-          OmopViewer::cardFromMd("background.md")
+          backgroundCard("background.md")
         ),
         bslib::nav_panel(
           title = "Summary",
           icon = shiny::icon("file-alt"),
-          OmopViewer::cardSummary(data)
+          summaryCard(data)
         ),
         bslib::nav_panel(
           title = "Incidence",
@@ -36,6 +36,22 @@
               bslib::accordion(
                 bslib::accordion_panel(
                   title = "Settings",
+                  shinyWidgets::pickerInput(
+                    inputId = "incidence_settings_analysis_complete_database_intervals",
+                    label = "Analysis complete database intervals",
+                    choices = filterValues$incidence_settings_analysis_complete_database_intervals,
+                    selected = filterValues$incidence_settings_analysis_complete_database_intervals,
+                    multiple = TRUE,
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
+                  ),
+                  shinyWidgets::pickerInput(
+                    inputId = "incidence_settings_analysis_interval",
+                    label = "Analysis interval",
+                    choices = filterValues$incidence_settings_analysis_interval,
+                    selected = filterValues$incidence_settings_analysis_interval,
+                    multiple = TRUE,
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
+                  ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_settings_analysis_outcome_washout",
                     label = "Analysis outcome washout",
@@ -53,34 +69,10 @@
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
-                    inputId = "incidence_settings_analysis_interval",
-                    label = "Analysis interval",
-                    choices = filterValues$incidence_settings_analysis_interval,
-                    selected = filterValues$incidence_settings_analysis_interval,
-                    multiple = TRUE,
-                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
-                  ),
-                  shinyWidgets::pickerInput(
-                    inputId = "incidence_settings_analysis_complete_database_intervals",
-                    label = "Analysis complete database intervals",
-                    choices = filterValues$incidence_settings_analysis_complete_database_intervals,
-                    selected = filterValues$incidence_settings_analysis_complete_database_intervals,
-                    multiple = TRUE,
-                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
-                  ),
-                  shinyWidgets::pickerInput(
                     inputId = "incidence_settings_denominator_age_group",
                     label = "Denominator age group",
                     choices = filterValues$incidence_settings_denominator_age_group,
                     selected = filterValues$incidence_settings_denominator_age_group,
-                    multiple = TRUE,
-                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
-                  ),
-                  shinyWidgets::pickerInput(
-                    inputId = "incidence_settings_denominator_sex",
-                    label = "Denominator sex",
-                    choices = filterValues$incidence_settings_denominator_sex,
-                    selected = filterValues$incidence_settings_denominator_sex,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
@@ -93,18 +85,26 @@
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
-                    inputId = "incidence_settings_denominator_start_date",
-                    label = "Denominator start date",
-                    choices = filterValues$incidence_settings_denominator_start_date,
-                    selected = filterValues$incidence_settings_denominator_start_date,
-                    multiple = TRUE,
-                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
-                  ),
-                  shinyWidgets::pickerInput(
                     inputId = "incidence_settings_denominator_end_date",
                     label = "Denominator end date",
                     choices = filterValues$incidence_settings_denominator_end_date,
                     selected = filterValues$incidence_settings_denominator_end_date,
+                    multiple = TRUE,
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
+                  ),
+                  shinyWidgets::pickerInput(
+                    inputId = "incidence_settings_denominator_sex",
+                    label = "Denominator sex",
+                    choices = filterValues$incidence_settings_denominator_sex,
+                    selected = filterValues$incidence_settings_denominator_sex,
+                    multiple = TRUE,
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
+                  ),
+                  shinyWidgets::pickerInput(
+                    inputId = "incidence_settings_denominator_start_date",
+                    label = "Denominator start date",
+                    choices = filterValues$incidence_settings_denominator_start_date,
+                    selected = filterValues$incidence_settings_denominator_start_date,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
@@ -250,7 +250,7 @@
                         header = NULL,
                         sortable::add_rank_list(
                           text = "none",
-                          labels = c("cdm_name", "denominator_cohort_name", "incidence_start_date", "incidence_end_date", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "outcome_cohort_name", "variable_name", "variable_level"),
+                          labels = c("cdm_name", "denominator_cohort_name", "incidence_start_date", "incidence_end_date", "analysis_complete_database_intervals", "analysis_interval", "analysis_outcome_washout", "analysis_repeated_events", "denominator_age_group", "denominator_days_prior_observation", "denominator_end_date", "denominator_sex", "denominator_start_date", "denominator_target_cohort_name", "denominator_time_at_risk", "outcome_cohort_name", "variable_name", "variable_level"),
                           input_id = "incidence_gt_18_none"
                         ),
                         sortable::add_rank_list(
@@ -315,7 +315,7 @@
                         label = "x",
                         selected = "incidence_start_date",
                         multiple = FALSE,
-                        choices = c("cdm_name", "denominator_cohort_name", "incidence_start_date", "incidence_end_date", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "outcome_cohort_name", "variable_name", "variable_level", "estimate_name"),
+                        choices = c("cdm_name", "denominator_cohort_name", "incidence_start_date", "incidence_end_date", "analysis_complete_database_intervals", "analysis_interval", "analysis_outcome_washout", "analysis_repeated_events", "denominator_age_group", "denominator_days_prior_observation", "denominator_end_date", "denominator_sex", "denominator_start_date", "denominator_target_cohort_name", "denominator_time_at_risk", "outcome_cohort_name", "variable_name", "variable_level", "estimate_name"),
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
                       shiny::checkboxInput(
@@ -328,7 +328,7 @@
                         label = "facet",
                         selected = NULL,
                         multiple = TRUE,
-                        choices = c("cdm_name", "denominator_cohort_name", "incidence_start_date", "incidence_end_date", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "outcome_cohort_name", "variable_name", "variable_level", "estimate_name"),
+                        choices = c("cdm_name", "denominator_cohort_name", "incidence_start_date", "incidence_end_date", "analysis_complete_database_intervals", "analysis_interval", "analysis_outcome_washout", "analysis_repeated_events", "denominator_age_group", "denominator_days_prior_observation", "denominator_end_date", "denominator_sex", "denominator_start_date", "denominator_target_cohort_name", "denominator_time_at_risk", "outcome_cohort_name", "variable_name", "variable_level", "estimate_name"),
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
                       shinyWidgets::pickerInput(
@@ -336,7 +336,7 @@
                         label = "colour",
                         selected = NULL,
                         multiple = TRUE,
-                        choices = c("cdm_name", "denominator_cohort_name", "incidence_start_date", "incidence_end_date", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "outcome_cohort_name", "variable_name", "variable_level", "estimate_name"),
+                        choices = c("cdm_name", "denominator_cohort_name", "incidence_start_date", "incidence_end_date", "analysis_complete_database_intervals", "analysis_interval", "analysis_outcome_washout", "analysis_repeated_events", "denominator_age_group", "denominator_days_prior_observation", "denominator_end_date", "denominator_sex", "denominator_start_date", "denominator_target_cohort_name", "denominator_time_at_risk", "outcome_cohort_name", "variable_name", "variable_level", "estimate_name"),
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
                       position = "right"
@@ -357,6 +357,22 @@
                 bslib::accordion_panel(
                   title = "Settings",
                   shinyWidgets::pickerInput(
+                    inputId = "incidence_attrition_settings_analysis_complete_database_intervals",
+                    label = "Analysis complete database intervals",
+                    choices = filterValues$incidence_attrition_settings_analysis_complete_database_intervals,
+                    selected = filterValues$incidence_attrition_settings_analysis_complete_database_intervals,
+                    multiple = TRUE,
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
+                  ),
+                  shinyWidgets::pickerInput(
+                    inputId = "incidence_attrition_settings_analysis_interval",
+                    label = "Analysis interval",
+                    choices = filterValues$incidence_attrition_settings_analysis_interval,
+                    selected = filterValues$incidence_attrition_settings_analysis_interval,
+                    multiple = TRUE,
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
+                  ),
+                  shinyWidgets::pickerInput(
                     inputId = "incidence_attrition_settings_analysis_outcome_washout",
                     label = "Analysis outcome washout",
                     choices = filterValues$incidence_attrition_settings_analysis_outcome_washout,
@@ -373,34 +389,10 @@
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
-                    inputId = "incidence_attrition_settings_analysis_interval",
-                    label = "Analysis interval",
-                    choices = filterValues$incidence_attrition_settings_analysis_interval,
-                    selected = filterValues$incidence_attrition_settings_analysis_interval,
-                    multiple = TRUE,
-                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
-                  ),
-                  shinyWidgets::pickerInput(
-                    inputId = "incidence_attrition_settings_analysis_complete_database_intervals",
-                    label = "Analysis complete database intervals",
-                    choices = filterValues$incidence_attrition_settings_analysis_complete_database_intervals,
-                    selected = filterValues$incidence_attrition_settings_analysis_complete_database_intervals,
-                    multiple = TRUE,
-                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
-                  ),
-                  shinyWidgets::pickerInput(
                     inputId = "incidence_attrition_settings_denominator_age_group",
                     label = "Denominator age group",
                     choices = filterValues$incidence_attrition_settings_denominator_age_group,
                     selected = filterValues$incidence_attrition_settings_denominator_age_group,
-                    multiple = TRUE,
-                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
-                  ),
-                  shinyWidgets::pickerInput(
-                    inputId = "incidence_attrition_settings_denominator_sex",
-                    label = "Denominator sex",
-                    choices = filterValues$incidence_attrition_settings_denominator_sex,
-                    selected = filterValues$incidence_attrition_settings_denominator_sex,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
@@ -413,18 +405,26 @@
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
-                    inputId = "incidence_attrition_settings_denominator_start_date",
-                    label = "Denominator start date",
-                    choices = filterValues$incidence_attrition_settings_denominator_start_date,
-                    selected = filterValues$incidence_attrition_settings_denominator_start_date,
-                    multiple = TRUE,
-                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
-                  ),
-                  shinyWidgets::pickerInput(
                     inputId = "incidence_attrition_settings_denominator_end_date",
                     label = "Denominator end date",
                     choices = filterValues$incidence_attrition_settings_denominator_end_date,
                     selected = filterValues$incidence_attrition_settings_denominator_end_date,
+                    multiple = TRUE,
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
+                  ),
+                  shinyWidgets::pickerInput(
+                    inputId = "incidence_attrition_settings_denominator_sex",
+                    label = "Denominator sex",
+                    choices = filterValues$incidence_attrition_settings_denominator_sex,
+                    selected = filterValues$incidence_attrition_settings_denominator_sex,
+                    multiple = TRUE,
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
+                  ),
+                  shinyWidgets::pickerInput(
+                    inputId = "incidence_attrition_settings_denominator_start_date",
+                    label = "Denominator start date",
+                    choices = filterValues$incidence_attrition_settings_denominator_start_date,
+                    selected = filterValues$incidence_attrition_settings_denominator_start_date,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
@@ -570,7 +570,7 @@
                         header = NULL,
                         sortable::add_rank_list(
                           text = "none",
-                          labels = c("denominator_cohort_name", "reason", "reason_id", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "outcome_cohort_name"),
+                          labels = c("denominator_cohort_name", "reason", "reason_id", "analysis_complete_database_intervals", "analysis_interval", "analysis_outcome_washout", "analysis_repeated_events", "denominator_age_group", "denominator_days_prior_observation", "denominator_end_date", "denominator_sex", "denominator_start_date", "denominator_target_cohort_name", "denominator_time_at_risk", "outcome_cohort_name"),
                           input_id = "incidence_attrition_gt_22_none"
                         ),
                         sortable::add_rank_list(
@@ -607,6 +607,22 @@
                 bslib::accordion_panel(
                   title = "Settings",
                   shinyWidgets::pickerInput(
+                    inputId = "prevalence_settings_analysis_complete_database_intervals",
+                    label = "Analysis complete database intervals",
+                    choices = filterValues$prevalence_settings_analysis_complete_database_intervals,
+                    selected = filterValues$prevalence_settings_analysis_complete_database_intervals,
+                    multiple = TRUE,
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
+                  ),
+                  shinyWidgets::pickerInput(
+                    inputId = "prevalence_settings_analysis_full_contribution",
+                    label = "Analysis full contribution",
+                    choices = filterValues$prevalence_settings_analysis_full_contribution,
+                    selected = filterValues$prevalence_settings_analysis_full_contribution,
+                    multiple = TRUE,
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
+                  ),
+                  shinyWidgets::pickerInput(
                     inputId = "prevalence_settings_analysis_interval",
                     label = "Analysis interval",
                     choices = filterValues$prevalence_settings_analysis_interval,
@@ -615,10 +631,10 @@
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
-                    inputId = "prevalence_settings_analysis_complete_database_intervals",
-                    label = "Analysis complete database intervals",
-                    choices = filterValues$prevalence_settings_analysis_complete_database_intervals,
-                    selected = filterValues$prevalence_settings_analysis_complete_database_intervals,
+                    inputId = "prevalence_settings_analysis_type",
+                    label = "Analysis type",
+                    choices = filterValues$prevalence_settings_analysis_type,
+                    selected = filterValues$prevalence_settings_analysis_type,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
@@ -631,14 +647,6 @@
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
-                    inputId = "prevalence_settings_denominator_sex",
-                    label = "Denominator sex",
-                    choices = filterValues$prevalence_settings_denominator_sex,
-                    selected = filterValues$prevalence_settings_denominator_sex,
-                    multiple = TRUE,
-                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
-                  ),
-                  shinyWidgets::pickerInput(
                     inputId = "prevalence_settings_denominator_days_prior_observation",
                     label = "Denominator days prior observation",
                     choices = filterValues$prevalence_settings_denominator_days_prior_observation,
@@ -647,18 +655,26 @@
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
-                    inputId = "prevalence_settings_denominator_start_date",
-                    label = "Denominator start date",
-                    choices = filterValues$prevalence_settings_denominator_start_date,
-                    selected = filterValues$prevalence_settings_denominator_start_date,
-                    multiple = TRUE,
-                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
-                  ),
-                  shinyWidgets::pickerInput(
                     inputId = "prevalence_settings_denominator_end_date",
                     label = "Denominator end date",
                     choices = filterValues$prevalence_settings_denominator_end_date,
                     selected = filterValues$prevalence_settings_denominator_end_date,
+                    multiple = TRUE,
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
+                  ),
+                  shinyWidgets::pickerInput(
+                    inputId = "prevalence_settings_denominator_sex",
+                    label = "Denominator sex",
+                    choices = filterValues$prevalence_settings_denominator_sex,
+                    selected = filterValues$prevalence_settings_denominator_sex,
+                    multiple = TRUE,
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
+                  ),
+                  shinyWidgets::pickerInput(
+                    inputId = "prevalence_settings_denominator_start_date",
+                    label = "Denominator start date",
+                    choices = filterValues$prevalence_settings_denominator_start_date,
+                    selected = filterValues$prevalence_settings_denominator_start_date,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
@@ -675,22 +691,6 @@
                     label = "Denominator time at risk",
                     choices = filterValues$prevalence_settings_denominator_time_at_risk,
                     selected = filterValues$prevalence_settings_denominator_time_at_risk,
-                    multiple = TRUE,
-                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
-                  ),
-                  shinyWidgets::pickerInput(
-                    inputId = "prevalence_settings_analysis_type",
-                    label = "Analysis type",
-                    choices = filterValues$prevalence_settings_analysis_type,
-                    selected = filterValues$prevalence_settings_analysis_type,
-                    multiple = TRUE,
-                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
-                  ),
-                  shinyWidgets::pickerInput(
-                    inputId = "prevalence_settings_analysis_full_contribution",
-                    label = "Analysis full contribution",
-                    choices = filterValues$prevalence_settings_analysis_full_contribution,
-                    selected = filterValues$prevalence_settings_analysis_full_contribution,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -812,7 +812,7 @@
                         header = NULL,
                         sortable::add_rank_list(
                           text = "none",
-                          labels = c("cdm_name", "denominator_cohort_name", "prevalence_start_date", "prevalence_end_date", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "analysis_type", "analysis_full_contribution", "variable_name", "variable_level"),
+                          labels = c("cdm_name", "denominator_cohort_name", "prevalence_start_date", "prevalence_end_date", "analysis_complete_database_intervals", "analysis_full_contribution", "analysis_interval", "analysis_type", "denominator_age_group", "denominator_days_prior_observation", "denominator_end_date", "denominator_sex", "denominator_start_date", "denominator_target_cohort_name", "denominator_time_at_risk", "variable_name", "variable_level"),
                           input_id = "prevalence_gt_20_none"
                         ),
                         sortable::add_rank_list(
@@ -877,7 +877,7 @@
                         label = "x",
                         selected = "prevalence_start_date",
                         multiple = FALSE,
-                        choices = c("cdm_name", "denominator_cohort_name", "prevalence_start_date", "prevalence_end_date", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "analysis_type", "analysis_full_contribution", "variable_name", "variable_level", "estimate_name"),
+                        choices = c("cdm_name", "denominator_cohort_name", "prevalence_start_date", "prevalence_end_date", "analysis_complete_database_intervals", "analysis_full_contribution", "analysis_interval", "analysis_type", "denominator_age_group", "denominator_days_prior_observation", "denominator_end_date", "denominator_sex", "denominator_start_date", "denominator_target_cohort_name", "denominator_time_at_risk", "variable_name", "variable_level", "estimate_name"),
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
                       shiny::checkboxInput(
@@ -890,7 +890,7 @@
                         label = "facet",
                         selected = NULL,
                         multiple = TRUE,
-                        choices = c("cdm_name", "denominator_cohort_name", "prevalence_start_date", "prevalence_end_date", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "analysis_type", "analysis_full_contribution", "variable_name", "variable_level", "estimate_name"),
+                        choices = c("cdm_name", "denominator_cohort_name", "prevalence_start_date", "prevalence_end_date", "analysis_complete_database_intervals", "analysis_full_contribution", "analysis_interval", "analysis_type", "denominator_age_group", "denominator_days_prior_observation", "denominator_end_date", "denominator_sex", "denominator_start_date", "denominator_target_cohort_name", "denominator_time_at_risk", "variable_name", "variable_level", "estimate_name"),
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
                       shinyWidgets::pickerInput(
@@ -898,7 +898,7 @@
                         label = "colour",
                         selected = NULL,
                         multiple = TRUE,
-                        choices = c("cdm_name", "denominator_cohort_name", "prevalence_start_date", "prevalence_end_date", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "analysis_type", "analysis_full_contribution", "variable_name", "variable_level", "estimate_name"),
+                        choices = c("cdm_name", "denominator_cohort_name", "prevalence_start_date", "prevalence_end_date", "analysis_complete_database_intervals", "analysis_full_contribution", "analysis_interval", "analysis_type", "denominator_age_group", "denominator_days_prior_observation", "denominator_end_date", "denominator_sex", "denominator_start_date", "denominator_target_cohort_name", "denominator_time_at_risk", "variable_name", "variable_level", "estimate_name"),
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
                       position = "right"
@@ -919,6 +919,22 @@
                 bslib::accordion_panel(
                   title = "Settings",
                   shinyWidgets::pickerInput(
+                    inputId = "prevalence_attrition_settings_analysis_complete_database_intervals",
+                    label = "Analysis complete database intervals",
+                    choices = filterValues$prevalence_attrition_settings_analysis_complete_database_intervals,
+                    selected = filterValues$prevalence_attrition_settings_analysis_complete_database_intervals,
+                    multiple = TRUE,
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
+                  ),
+                  shinyWidgets::pickerInput(
+                    inputId = "prevalence_attrition_settings_analysis_full_contribution",
+                    label = "Analysis full contribution",
+                    choices = filterValues$prevalence_attrition_settings_analysis_full_contribution,
+                    selected = filterValues$prevalence_attrition_settings_analysis_full_contribution,
+                    multiple = TRUE,
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
+                  ),
+                  shinyWidgets::pickerInput(
                     inputId = "prevalence_attrition_settings_analysis_interval",
                     label = "Analysis interval",
                     choices = filterValues$prevalence_attrition_settings_analysis_interval,
@@ -927,10 +943,10 @@
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
-                    inputId = "prevalence_attrition_settings_analysis_complete_database_intervals",
-                    label = "Analysis complete database intervals",
-                    choices = filterValues$prevalence_attrition_settings_analysis_complete_database_intervals,
-                    selected = filterValues$prevalence_attrition_settings_analysis_complete_database_intervals,
+                    inputId = "prevalence_attrition_settings_analysis_type",
+                    label = "Analysis type",
+                    choices = filterValues$prevalence_attrition_settings_analysis_type,
+                    selected = filterValues$prevalence_attrition_settings_analysis_type,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
@@ -943,14 +959,6 @@
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
-                    inputId = "prevalence_attrition_settings_denominator_sex",
-                    label = "Denominator sex",
-                    choices = filterValues$prevalence_attrition_settings_denominator_sex,
-                    selected = filterValues$prevalence_attrition_settings_denominator_sex,
-                    multiple = TRUE,
-                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
-                  ),
-                  shinyWidgets::pickerInput(
                     inputId = "prevalence_attrition_settings_denominator_days_prior_observation",
                     label = "Denominator days prior observation",
                     choices = filterValues$prevalence_attrition_settings_denominator_days_prior_observation,
@@ -959,18 +967,26 @@
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
-                    inputId = "prevalence_attrition_settings_denominator_start_date",
-                    label = "Denominator start date",
-                    choices = filterValues$prevalence_attrition_settings_denominator_start_date,
-                    selected = filterValues$prevalence_attrition_settings_denominator_start_date,
-                    multiple = TRUE,
-                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
-                  ),
-                  shinyWidgets::pickerInput(
                     inputId = "prevalence_attrition_settings_denominator_end_date",
                     label = "Denominator end date",
                     choices = filterValues$prevalence_attrition_settings_denominator_end_date,
                     selected = filterValues$prevalence_attrition_settings_denominator_end_date,
+                    multiple = TRUE,
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
+                  ),
+                  shinyWidgets::pickerInput(
+                    inputId = "prevalence_attrition_settings_denominator_sex",
+                    label = "Denominator sex",
+                    choices = filterValues$prevalence_attrition_settings_denominator_sex,
+                    selected = filterValues$prevalence_attrition_settings_denominator_sex,
+                    multiple = TRUE,
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
+                  ),
+                  shinyWidgets::pickerInput(
+                    inputId = "prevalence_attrition_settings_denominator_start_date",
+                    label = "Denominator start date",
+                    choices = filterValues$prevalence_attrition_settings_denominator_start_date,
+                    selected = filterValues$prevalence_attrition_settings_denominator_start_date,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
@@ -995,22 +1011,6 @@
                     label = "Outcome cohort name",
                     choices = filterValues$prevalence_attrition_settings_outcome_cohort_name,
                     selected = filterValues$prevalence_attrition_settings_outcome_cohort_name,
-                    multiple = TRUE,
-                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
-                  ),
-                  shinyWidgets::pickerInput(
-                    inputId = "prevalence_attrition_settings_analysis_type",
-                    label = "Analysis type",
-                    choices = filterValues$prevalence_attrition_settings_analysis_type,
-                    selected = filterValues$prevalence_attrition_settings_analysis_type,
-                    multiple = TRUE,
-                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
-                  ),
-                  shinyWidgets::pickerInput(
-                    inputId = "prevalence_attrition_settings_analysis_full_contribution",
-                    label = "Analysis full contribution",
-                    choices = filterValues$prevalence_attrition_settings_analysis_full_contribution,
-                    selected = filterValues$prevalence_attrition_settings_analysis_full_contribution,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -1132,7 +1132,7 @@
                         header = NULL,
                         sortable::add_rank_list(
                           text = "none",
-                          labels = c("denominator_cohort_name", "reason", "reason_id", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "outcome_cohort_name", "analysis_type", "analysis_full_contribution"),
+                          labels = c("denominator_cohort_name", "reason", "reason_id", "analysis_complete_database_intervals", "analysis_full_contribution", "analysis_interval", "analysis_type", "denominator_age_group", "denominator_days_prior_observation", "denominator_end_date", "denominator_sex", "denominator_start_date", "denominator_target_cohort_name", "denominator_time_at_risk", "outcome_cohort_name"),
                           input_id = "prevalence_attrition_gt_23_none"
                         ),
                         sortable::add_rank_list(
@@ -1207,15 +1207,17 @@
         output$download_raw <- shiny::downloadHandler(
           filename = "results.csv",
           content = function(file) {
-            OmopViewer::exportSummarisedResult(data, fileName = file)
+            omopgenerics::exportSummarisedResult(data, fileName = file)
           }
         )
         # incidence -----
         ## tidy incidence -----
         getTidyDataIncidence <- shiny::reactive({
           res <- data |>
-            OmopViewer::filterData("incidence", input) |>
-            OmopViewer::tidyData()
+            filterData("incidence", input) |>
+            omopgenerics::addSettings() |>
+            omopgenerics::splitAll() |>
+            dplyr::select(!"result_id")
       
           # columns to eliminate
           colsEliminate <- colnames(res)
@@ -1256,7 +1258,7 @@
         ## output 18 -----
         createOutput18 <- shiny::reactive({
           result <- data |>
-            OmopViewer::filterData("incidence", input)
+            filterData("incidence", input)
           IncidencePrevalence::tableIncidence(
             result,
             header = input$incidence_gt_18_header,
@@ -1278,7 +1280,7 @@
         ## output 19 -----
         createOutput19 <- shiny::reactive({
           result <- data |>
-            OmopViewer::filterData("incidence", input)
+            filterData("incidence", input)
           IncidencePrevalence::plotIncidence(
             result,
             x = input$incidence_ggplot2_19_x,
@@ -1310,8 +1312,10 @@
         ## tidy incidence_attrition -----
         getTidyDataIncidenceAttrition <- shiny::reactive({
           res <- data |>
-            OmopViewer::filterData("incidence_attrition", input) |>
-            OmopViewer::tidyData()
+            filterData("incidence_attrition", input) |>
+            omopgenerics::addSettings() |>
+            omopgenerics::splitAll() |>
+            dplyr::select(!"result_id")
       
           # columns to eliminate
           colsEliminate <- colnames(res)
@@ -1352,7 +1356,7 @@
         ## output 22 -----
         createOutput22 <- shiny::reactive({
           result <- data |>
-            OmopViewer::filterData("incidence_attrition", input)
+            filterData("incidence_attrition", input)
           IncidencePrevalence::tableIncidenceAttrition(
             result,
             header = input$incidence_attrition_gt_22_header,
@@ -1376,8 +1380,10 @@
         ## tidy prevalence -----
         getTidyDataPrevalence <- shiny::reactive({
           res <- data |>
-            OmopViewer::filterData("prevalence", input) |>
-            OmopViewer::tidyData()
+            filterData("prevalence", input) |>
+            omopgenerics::addSettings() |>
+            omopgenerics::splitAll() |>
+            dplyr::select(!"result_id")
       
           # columns to eliminate
           colsEliminate <- colnames(res)
@@ -1418,7 +1424,7 @@
         ## output 20 -----
         createOutput20 <- shiny::reactive({
           result <- data |>
-            OmopViewer::filterData("prevalence", input)
+            filterData("prevalence", input)
           IncidencePrevalence::tablePrevalence(
             result,
             header = input$prevalence_gt_20_header,
@@ -1440,7 +1446,7 @@
         ## output 21 -----
         createOutput21 <- shiny::reactive({
           result <- data |>
-            OmopViewer::filterData("prevalence", input)
+            filterData("prevalence", input)
           IncidencePrevalence::plotPrevalence(
             result,
             x = input$prevalence_ggplot2_21_x,
@@ -1472,8 +1478,10 @@
         ## tidy prevalence_attrition -----
         getTidyDataPrevalenceAttrition <- shiny::reactive({
           res <- data |>
-            OmopViewer::filterData("prevalence_attrition", input) |>
-            OmopViewer::tidyData()
+            filterData("prevalence_attrition", input) |>
+            omopgenerics::addSettings() |>
+            omopgenerics::splitAll() |>
+            dplyr::select(!"result_id")
       
           # columns to eliminate
           colsEliminate <- colnames(res)
@@ -1514,7 +1522,7 @@
         ## output 23 -----
         createOutput23 <- shiny::reactive({
           result <- data |>
-            OmopViewer::filterData("prevalence_attrition", input)
+            filterData("prevalence_attrition", input)
           IncidencePrevalence::tablePrevalenceAttrition(
             result,
             header = input$prevalence_attrition_gt_23_header,
@@ -1544,17 +1552,22 @@
       
       library(DT)
       library(IncidencePrevalence)
-      library(OmopViewer)
       library(bslib)
       library(dplyr)
       library(ggplot2)
+      library(glue)
       library(gt)
+      library(markdown)
       library(omopgenerics)
+      library(purrr)
       library(readr)
+      library(rlang)
       library(shiny)
       library(shinyWidgets)
       library(sortable)
+      library(tidyr)
       library(visOmopResults)
+      library(yaml)
       
       # preprocess data if it has not been done
       fileData <- file.path(getwd(), "data", "shinyData.RData")
@@ -1563,10 +1576,13 @@
       }
       
       # uncomment to load the raw data
-      # rawData <- OmopViewer::importSummarisedResult(file.path(getwd(), "data"))
+      # rawData <- omopgenerics::importSummarisedResult(file.path(getwd(), "data"))
       
       # load shiny data
       load(fileData)
+      
+      # source functions
+      source(file.path(getwd(), "functions.R"))
 
 ---
 
@@ -1591,7 +1607,7 @@
         bslib::nav_panel(
           title = "Background",
           icon = shiny::icon("disease"),
-          OmopViewer::cardFromMd("background.md")
+          backgroundCard("background.md")
         ),
         bslib::nav_panel(
           title = "Incidence",
@@ -1601,6 +1617,22 @@
               bslib::accordion(
                 bslib::accordion_panel(
                   title = "Settings",
+                  shinyWidgets::pickerInput(
+                    inputId = "incidence_settings_analysis_complete_database_intervals",
+                    label = "Analysis complete database intervals",
+                    choices = filterValues$incidence_settings_analysis_complete_database_intervals,
+                    selected = filterValues$incidence_settings_analysis_complete_database_intervals,
+                    multiple = TRUE,
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
+                  ),
+                  shinyWidgets::pickerInput(
+                    inputId = "incidence_settings_analysis_interval",
+                    label = "Analysis interval",
+                    choices = filterValues$incidence_settings_analysis_interval,
+                    selected = filterValues$incidence_settings_analysis_interval,
+                    multiple = TRUE,
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
+                  ),
                   shinyWidgets::pickerInput(
                     inputId = "incidence_settings_analysis_outcome_washout",
                     label = "Analysis outcome washout",
@@ -1618,34 +1650,10 @@
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
-                    inputId = "incidence_settings_analysis_interval",
-                    label = "Analysis interval",
-                    choices = filterValues$incidence_settings_analysis_interval,
-                    selected = filterValues$incidence_settings_analysis_interval,
-                    multiple = TRUE,
-                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
-                  ),
-                  shinyWidgets::pickerInput(
-                    inputId = "incidence_settings_analysis_complete_database_intervals",
-                    label = "Analysis complete database intervals",
-                    choices = filterValues$incidence_settings_analysis_complete_database_intervals,
-                    selected = filterValues$incidence_settings_analysis_complete_database_intervals,
-                    multiple = TRUE,
-                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
-                  ),
-                  shinyWidgets::pickerInput(
                     inputId = "incidence_settings_denominator_age_group",
                     label = "Denominator age group",
                     choices = filterValues$incidence_settings_denominator_age_group,
                     selected = filterValues$incidence_settings_denominator_age_group,
-                    multiple = TRUE,
-                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
-                  ),
-                  shinyWidgets::pickerInput(
-                    inputId = "incidence_settings_denominator_sex",
-                    label = "Denominator sex",
-                    choices = filterValues$incidence_settings_denominator_sex,
-                    selected = filterValues$incidence_settings_denominator_sex,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
@@ -1658,18 +1666,26 @@
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
-                    inputId = "incidence_settings_denominator_start_date",
-                    label = "Denominator start date",
-                    choices = filterValues$incidence_settings_denominator_start_date,
-                    selected = filterValues$incidence_settings_denominator_start_date,
-                    multiple = TRUE,
-                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
-                  ),
-                  shinyWidgets::pickerInput(
                     inputId = "incidence_settings_denominator_end_date",
                     label = "Denominator end date",
                     choices = filterValues$incidence_settings_denominator_end_date,
                     selected = filterValues$incidence_settings_denominator_end_date,
+                    multiple = TRUE,
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
+                  ),
+                  shinyWidgets::pickerInput(
+                    inputId = "incidence_settings_denominator_sex",
+                    label = "Denominator sex",
+                    choices = filterValues$incidence_settings_denominator_sex,
+                    selected = filterValues$incidence_settings_denominator_sex,
+                    multiple = TRUE,
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
+                  ),
+                  shinyWidgets::pickerInput(
+                    inputId = "incidence_settings_denominator_start_date",
+                    label = "Denominator start date",
+                    choices = filterValues$incidence_settings_denominator_start_date,
+                    selected = filterValues$incidence_settings_denominator_start_date,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
@@ -1815,7 +1831,7 @@
                         header = NULL,
                         sortable::add_rank_list(
                           text = "none",
-                          labels = c("cdm_name", "denominator_cohort_name", "incidence_start_date", "incidence_end_date", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "outcome_cohort_name", "variable_name", "variable_level"),
+                          labels = c("cdm_name", "denominator_cohort_name", "incidence_start_date", "incidence_end_date", "analysis_complete_database_intervals", "analysis_interval", "analysis_outcome_washout", "analysis_repeated_events", "denominator_age_group", "denominator_days_prior_observation", "denominator_end_date", "denominator_sex", "denominator_start_date", "denominator_target_cohort_name", "denominator_time_at_risk", "outcome_cohort_name", "variable_name", "variable_level"),
                           input_id = "incidence_gt_18_none"
                         ),
                         sortable::add_rank_list(
@@ -1880,7 +1896,7 @@
                         label = "x",
                         selected = "incidence_start_date",
                         multiple = FALSE,
-                        choices = c("cdm_name", "denominator_cohort_name", "incidence_start_date", "incidence_end_date", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "outcome_cohort_name", "variable_name", "variable_level", "estimate_name"),
+                        choices = c("cdm_name", "denominator_cohort_name", "incidence_start_date", "incidence_end_date", "analysis_complete_database_intervals", "analysis_interval", "analysis_outcome_washout", "analysis_repeated_events", "denominator_age_group", "denominator_days_prior_observation", "denominator_end_date", "denominator_sex", "denominator_start_date", "denominator_target_cohort_name", "denominator_time_at_risk", "outcome_cohort_name", "variable_name", "variable_level", "estimate_name"),
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
                       shiny::checkboxInput(
@@ -1893,7 +1909,7 @@
                         label = "facet",
                         selected = NULL,
                         multiple = TRUE,
-                        choices = c("cdm_name", "denominator_cohort_name", "incidence_start_date", "incidence_end_date", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "outcome_cohort_name", "variable_name", "variable_level", "estimate_name"),
+                        choices = c("cdm_name", "denominator_cohort_name", "incidence_start_date", "incidence_end_date", "analysis_complete_database_intervals", "analysis_interval", "analysis_outcome_washout", "analysis_repeated_events", "denominator_age_group", "denominator_days_prior_observation", "denominator_end_date", "denominator_sex", "denominator_start_date", "denominator_target_cohort_name", "denominator_time_at_risk", "outcome_cohort_name", "variable_name", "variable_level", "estimate_name"),
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
                       shinyWidgets::pickerInput(
@@ -1901,7 +1917,7 @@
                         label = "colour",
                         selected = NULL,
                         multiple = TRUE,
-                        choices = c("cdm_name", "denominator_cohort_name", "incidence_start_date", "incidence_end_date", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "outcome_cohort_name", "variable_name", "variable_level", "estimate_name"),
+                        choices = c("cdm_name", "denominator_cohort_name", "incidence_start_date", "incidence_end_date", "analysis_complete_database_intervals", "analysis_interval", "analysis_outcome_washout", "analysis_repeated_events", "denominator_age_group", "denominator_days_prior_observation", "denominator_end_date", "denominator_sex", "denominator_start_date", "denominator_target_cohort_name", "denominator_time_at_risk", "outcome_cohort_name", "variable_name", "variable_level", "estimate_name"),
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
                       position = "right"
@@ -1922,6 +1938,22 @@
                 bslib::accordion_panel(
                   title = "Settings",
                   shinyWidgets::pickerInput(
+                    inputId = "incidence_attrition_settings_analysis_complete_database_intervals",
+                    label = "Analysis complete database intervals",
+                    choices = filterValues$incidence_attrition_settings_analysis_complete_database_intervals,
+                    selected = filterValues$incidence_attrition_settings_analysis_complete_database_intervals,
+                    multiple = TRUE,
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
+                  ),
+                  shinyWidgets::pickerInput(
+                    inputId = "incidence_attrition_settings_analysis_interval",
+                    label = "Analysis interval",
+                    choices = filterValues$incidence_attrition_settings_analysis_interval,
+                    selected = filterValues$incidence_attrition_settings_analysis_interval,
+                    multiple = TRUE,
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
+                  ),
+                  shinyWidgets::pickerInput(
                     inputId = "incidence_attrition_settings_analysis_outcome_washout",
                     label = "Analysis outcome washout",
                     choices = filterValues$incidence_attrition_settings_analysis_outcome_washout,
@@ -1938,34 +1970,10 @@
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
-                    inputId = "incidence_attrition_settings_analysis_interval",
-                    label = "Analysis interval",
-                    choices = filterValues$incidence_attrition_settings_analysis_interval,
-                    selected = filterValues$incidence_attrition_settings_analysis_interval,
-                    multiple = TRUE,
-                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
-                  ),
-                  shinyWidgets::pickerInput(
-                    inputId = "incidence_attrition_settings_analysis_complete_database_intervals",
-                    label = "Analysis complete database intervals",
-                    choices = filterValues$incidence_attrition_settings_analysis_complete_database_intervals,
-                    selected = filterValues$incidence_attrition_settings_analysis_complete_database_intervals,
-                    multiple = TRUE,
-                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
-                  ),
-                  shinyWidgets::pickerInput(
                     inputId = "incidence_attrition_settings_denominator_age_group",
                     label = "Denominator age group",
                     choices = filterValues$incidence_attrition_settings_denominator_age_group,
                     selected = filterValues$incidence_attrition_settings_denominator_age_group,
-                    multiple = TRUE,
-                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
-                  ),
-                  shinyWidgets::pickerInput(
-                    inputId = "incidence_attrition_settings_denominator_sex",
-                    label = "Denominator sex",
-                    choices = filterValues$incidence_attrition_settings_denominator_sex,
-                    selected = filterValues$incidence_attrition_settings_denominator_sex,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
@@ -1978,18 +1986,26 @@
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
-                    inputId = "incidence_attrition_settings_denominator_start_date",
-                    label = "Denominator start date",
-                    choices = filterValues$incidence_attrition_settings_denominator_start_date,
-                    selected = filterValues$incidence_attrition_settings_denominator_start_date,
-                    multiple = TRUE,
-                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
-                  ),
-                  shinyWidgets::pickerInput(
                     inputId = "incidence_attrition_settings_denominator_end_date",
                     label = "Denominator end date",
                     choices = filterValues$incidence_attrition_settings_denominator_end_date,
                     selected = filterValues$incidence_attrition_settings_denominator_end_date,
+                    multiple = TRUE,
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
+                  ),
+                  shinyWidgets::pickerInput(
+                    inputId = "incidence_attrition_settings_denominator_sex",
+                    label = "Denominator sex",
+                    choices = filterValues$incidence_attrition_settings_denominator_sex,
+                    selected = filterValues$incidence_attrition_settings_denominator_sex,
+                    multiple = TRUE,
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
+                  ),
+                  shinyWidgets::pickerInput(
+                    inputId = "incidence_attrition_settings_denominator_start_date",
+                    label = "Denominator start date",
+                    choices = filterValues$incidence_attrition_settings_denominator_start_date,
+                    selected = filterValues$incidence_attrition_settings_denominator_start_date,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
@@ -2135,7 +2151,7 @@
                         header = NULL,
                         sortable::add_rank_list(
                           text = "none",
-                          labels = c("denominator_cohort_name", "reason", "reason_id", "analysis_outcome_washout", "analysis_repeated_events", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "outcome_cohort_name"),
+                          labels = c("denominator_cohort_name", "reason", "reason_id", "analysis_complete_database_intervals", "analysis_interval", "analysis_outcome_washout", "analysis_repeated_events", "denominator_age_group", "denominator_days_prior_observation", "denominator_end_date", "denominator_sex", "denominator_start_date", "denominator_target_cohort_name", "denominator_time_at_risk", "outcome_cohort_name"),
                           input_id = "incidence_attrition_gt_22_none"
                         ),
                         sortable::add_rank_list(
@@ -2172,6 +2188,22 @@
                 bslib::accordion_panel(
                   title = "Settings",
                   shinyWidgets::pickerInput(
+                    inputId = "prevalence_settings_analysis_complete_database_intervals",
+                    label = "Analysis complete database intervals",
+                    choices = filterValues$prevalence_settings_analysis_complete_database_intervals,
+                    selected = filterValues$prevalence_settings_analysis_complete_database_intervals,
+                    multiple = TRUE,
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
+                  ),
+                  shinyWidgets::pickerInput(
+                    inputId = "prevalence_settings_analysis_full_contribution",
+                    label = "Analysis full contribution",
+                    choices = filterValues$prevalence_settings_analysis_full_contribution,
+                    selected = filterValues$prevalence_settings_analysis_full_contribution,
+                    multiple = TRUE,
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
+                  ),
+                  shinyWidgets::pickerInput(
                     inputId = "prevalence_settings_analysis_interval",
                     label = "Analysis interval",
                     choices = filterValues$prevalence_settings_analysis_interval,
@@ -2180,10 +2212,10 @@
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
-                    inputId = "prevalence_settings_analysis_complete_database_intervals",
-                    label = "Analysis complete database intervals",
-                    choices = filterValues$prevalence_settings_analysis_complete_database_intervals,
-                    selected = filterValues$prevalence_settings_analysis_complete_database_intervals,
+                    inputId = "prevalence_settings_analysis_type",
+                    label = "Analysis type",
+                    choices = filterValues$prevalence_settings_analysis_type,
+                    selected = filterValues$prevalence_settings_analysis_type,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
@@ -2196,14 +2228,6 @@
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
-                    inputId = "prevalence_settings_denominator_sex",
-                    label = "Denominator sex",
-                    choices = filterValues$prevalence_settings_denominator_sex,
-                    selected = filterValues$prevalence_settings_denominator_sex,
-                    multiple = TRUE,
-                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
-                  ),
-                  shinyWidgets::pickerInput(
                     inputId = "prevalence_settings_denominator_days_prior_observation",
                     label = "Denominator days prior observation",
                     choices = filterValues$prevalence_settings_denominator_days_prior_observation,
@@ -2212,18 +2236,26 @@
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
-                    inputId = "prevalence_settings_denominator_start_date",
-                    label = "Denominator start date",
-                    choices = filterValues$prevalence_settings_denominator_start_date,
-                    selected = filterValues$prevalence_settings_denominator_start_date,
-                    multiple = TRUE,
-                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
-                  ),
-                  shinyWidgets::pickerInput(
                     inputId = "prevalence_settings_denominator_end_date",
                     label = "Denominator end date",
                     choices = filterValues$prevalence_settings_denominator_end_date,
                     selected = filterValues$prevalence_settings_denominator_end_date,
+                    multiple = TRUE,
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
+                  ),
+                  shinyWidgets::pickerInput(
+                    inputId = "prevalence_settings_denominator_sex",
+                    label = "Denominator sex",
+                    choices = filterValues$prevalence_settings_denominator_sex,
+                    selected = filterValues$prevalence_settings_denominator_sex,
+                    multiple = TRUE,
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
+                  ),
+                  shinyWidgets::pickerInput(
+                    inputId = "prevalence_settings_denominator_start_date",
+                    label = "Denominator start date",
+                    choices = filterValues$prevalence_settings_denominator_start_date,
+                    selected = filterValues$prevalence_settings_denominator_start_date,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
@@ -2240,22 +2272,6 @@
                     label = "Denominator time at risk",
                     choices = filterValues$prevalence_settings_denominator_time_at_risk,
                     selected = filterValues$prevalence_settings_denominator_time_at_risk,
-                    multiple = TRUE,
-                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
-                  ),
-                  shinyWidgets::pickerInput(
-                    inputId = "prevalence_settings_analysis_type",
-                    label = "Analysis type",
-                    choices = filterValues$prevalence_settings_analysis_type,
-                    selected = filterValues$prevalence_settings_analysis_type,
-                    multiple = TRUE,
-                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
-                  ),
-                  shinyWidgets::pickerInput(
-                    inputId = "prevalence_settings_analysis_full_contribution",
-                    label = "Analysis full contribution",
-                    choices = filterValues$prevalence_settings_analysis_full_contribution,
-                    selected = filterValues$prevalence_settings_analysis_full_contribution,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -2377,7 +2393,7 @@
                         header = NULL,
                         sortable::add_rank_list(
                           text = "none",
-                          labels = c("cdm_name", "denominator_cohort_name", "prevalence_start_date", "prevalence_end_date", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "analysis_type", "analysis_full_contribution", "variable_name", "variable_level"),
+                          labels = c("cdm_name", "denominator_cohort_name", "prevalence_start_date", "prevalence_end_date", "analysis_complete_database_intervals", "analysis_full_contribution", "analysis_interval", "analysis_type", "denominator_age_group", "denominator_days_prior_observation", "denominator_end_date", "denominator_sex", "denominator_start_date", "denominator_target_cohort_name", "denominator_time_at_risk", "variable_name", "variable_level"),
                           input_id = "prevalence_gt_20_none"
                         ),
                         sortable::add_rank_list(
@@ -2442,7 +2458,7 @@
                         label = "x",
                         selected = "prevalence_start_date",
                         multiple = FALSE,
-                        choices = c("cdm_name", "denominator_cohort_name", "prevalence_start_date", "prevalence_end_date", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "analysis_type", "analysis_full_contribution", "variable_name", "variable_level", "estimate_name"),
+                        choices = c("cdm_name", "denominator_cohort_name", "prevalence_start_date", "prevalence_end_date", "analysis_complete_database_intervals", "analysis_full_contribution", "analysis_interval", "analysis_type", "denominator_age_group", "denominator_days_prior_observation", "denominator_end_date", "denominator_sex", "denominator_start_date", "denominator_target_cohort_name", "denominator_time_at_risk", "variable_name", "variable_level", "estimate_name"),
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
                       shiny::checkboxInput(
@@ -2455,7 +2471,7 @@
                         label = "facet",
                         selected = NULL,
                         multiple = TRUE,
-                        choices = c("cdm_name", "denominator_cohort_name", "prevalence_start_date", "prevalence_end_date", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "analysis_type", "analysis_full_contribution", "variable_name", "variable_level", "estimate_name"),
+                        choices = c("cdm_name", "denominator_cohort_name", "prevalence_start_date", "prevalence_end_date", "analysis_complete_database_intervals", "analysis_full_contribution", "analysis_interval", "analysis_type", "denominator_age_group", "denominator_days_prior_observation", "denominator_end_date", "denominator_sex", "denominator_start_date", "denominator_target_cohort_name", "denominator_time_at_risk", "variable_name", "variable_level", "estimate_name"),
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
                       shinyWidgets::pickerInput(
@@ -2463,7 +2479,7 @@
                         label = "colour",
                         selected = NULL,
                         multiple = TRUE,
-                        choices = c("cdm_name", "denominator_cohort_name", "prevalence_start_date", "prevalence_end_date", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "analysis_type", "analysis_full_contribution", "variable_name", "variable_level", "estimate_name"),
+                        choices = c("cdm_name", "denominator_cohort_name", "prevalence_start_date", "prevalence_end_date", "analysis_complete_database_intervals", "analysis_full_contribution", "analysis_interval", "analysis_type", "denominator_age_group", "denominator_days_prior_observation", "denominator_end_date", "denominator_sex", "denominator_start_date", "denominator_target_cohort_name", "denominator_time_at_risk", "variable_name", "variable_level", "estimate_name"),
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
                       position = "right"
@@ -2484,6 +2500,22 @@
                 bslib::accordion_panel(
                   title = "Settings",
                   shinyWidgets::pickerInput(
+                    inputId = "prevalence_attrition_settings_analysis_complete_database_intervals",
+                    label = "Analysis complete database intervals",
+                    choices = filterValues$prevalence_attrition_settings_analysis_complete_database_intervals,
+                    selected = filterValues$prevalence_attrition_settings_analysis_complete_database_intervals,
+                    multiple = TRUE,
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
+                  ),
+                  shinyWidgets::pickerInput(
+                    inputId = "prevalence_attrition_settings_analysis_full_contribution",
+                    label = "Analysis full contribution",
+                    choices = filterValues$prevalence_attrition_settings_analysis_full_contribution,
+                    selected = filterValues$prevalence_attrition_settings_analysis_full_contribution,
+                    multiple = TRUE,
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
+                  ),
+                  shinyWidgets::pickerInput(
                     inputId = "prevalence_attrition_settings_analysis_interval",
                     label = "Analysis interval",
                     choices = filterValues$prevalence_attrition_settings_analysis_interval,
@@ -2492,10 +2524,10 @@
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
-                    inputId = "prevalence_attrition_settings_analysis_complete_database_intervals",
-                    label = "Analysis complete database intervals",
-                    choices = filterValues$prevalence_attrition_settings_analysis_complete_database_intervals,
-                    selected = filterValues$prevalence_attrition_settings_analysis_complete_database_intervals,
+                    inputId = "prevalence_attrition_settings_analysis_type",
+                    label = "Analysis type",
+                    choices = filterValues$prevalence_attrition_settings_analysis_type,
+                    selected = filterValues$prevalence_attrition_settings_analysis_type,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
@@ -2508,14 +2540,6 @@
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
-                    inputId = "prevalence_attrition_settings_denominator_sex",
-                    label = "Denominator sex",
-                    choices = filterValues$prevalence_attrition_settings_denominator_sex,
-                    selected = filterValues$prevalence_attrition_settings_denominator_sex,
-                    multiple = TRUE,
-                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
-                  ),
-                  shinyWidgets::pickerInput(
                     inputId = "prevalence_attrition_settings_denominator_days_prior_observation",
                     label = "Denominator days prior observation",
                     choices = filterValues$prevalence_attrition_settings_denominator_days_prior_observation,
@@ -2524,18 +2548,26 @@
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
                   shinyWidgets::pickerInput(
-                    inputId = "prevalence_attrition_settings_denominator_start_date",
-                    label = "Denominator start date",
-                    choices = filterValues$prevalence_attrition_settings_denominator_start_date,
-                    selected = filterValues$prevalence_attrition_settings_denominator_start_date,
-                    multiple = TRUE,
-                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
-                  ),
-                  shinyWidgets::pickerInput(
                     inputId = "prevalence_attrition_settings_denominator_end_date",
                     label = "Denominator end date",
                     choices = filterValues$prevalence_attrition_settings_denominator_end_date,
                     selected = filterValues$prevalence_attrition_settings_denominator_end_date,
+                    multiple = TRUE,
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
+                  ),
+                  shinyWidgets::pickerInput(
+                    inputId = "prevalence_attrition_settings_denominator_sex",
+                    label = "Denominator sex",
+                    choices = filterValues$prevalence_attrition_settings_denominator_sex,
+                    selected = filterValues$prevalence_attrition_settings_denominator_sex,
+                    multiple = TRUE,
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
+                  ),
+                  shinyWidgets::pickerInput(
+                    inputId = "prevalence_attrition_settings_denominator_start_date",
+                    label = "Denominator start date",
+                    choices = filterValues$prevalence_attrition_settings_denominator_start_date,
+                    selected = filterValues$prevalence_attrition_settings_denominator_start_date,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   ),
@@ -2560,22 +2592,6 @@
                     label = "Outcome cohort name",
                     choices = filterValues$prevalence_attrition_settings_outcome_cohort_name,
                     selected = filterValues$prevalence_attrition_settings_outcome_cohort_name,
-                    multiple = TRUE,
-                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
-                  ),
-                  shinyWidgets::pickerInput(
-                    inputId = "prevalence_attrition_settings_analysis_type",
-                    label = "Analysis type",
-                    choices = filterValues$prevalence_attrition_settings_analysis_type,
-                    selected = filterValues$prevalence_attrition_settings_analysis_type,
-                    multiple = TRUE,
-                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
-                  ),
-                  shinyWidgets::pickerInput(
-                    inputId = "prevalence_attrition_settings_analysis_full_contribution",
-                    label = "Analysis full contribution",
-                    choices = filterValues$prevalence_attrition_settings_analysis_full_contribution,
-                    selected = filterValues$prevalence_attrition_settings_analysis_full_contribution,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -2697,7 +2713,7 @@
                         header = NULL,
                         sortable::add_rank_list(
                           text = "none",
-                          labels = c("denominator_cohort_name", "reason", "reason_id", "analysis_interval", "analysis_complete_database_intervals", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_start_date", "denominator_end_date", "denominator_target_cohort_name", "denominator_time_at_risk", "outcome_cohort_name", "analysis_type", "analysis_full_contribution"),
+                          labels = c("denominator_cohort_name", "reason", "reason_id", "analysis_complete_database_intervals", "analysis_full_contribution", "analysis_interval", "analysis_type", "denominator_age_group", "denominator_days_prior_observation", "denominator_end_date", "denominator_sex", "denominator_start_date", "denominator_target_cohort_name", "denominator_time_at_risk", "outcome_cohort_name"),
                           input_id = "prevalence_attrition_gt_23_none"
                         ),
                         sortable::add_rank_list(
@@ -2782,12 +2798,12 @@
         bslib::nav_panel(
           title = "Background",
           icon = shiny::icon("disease"),
-          OmopViewer::cardFromMd("background.md")
+          backgroundCard("background.md")
         ),
         bslib::nav_panel(
           title = "Summary",
           icon = shiny::icon("file-alt"),
-          OmopViewer::cardSummary(data)
+          summaryCard(data)
         ),
         bslib::nav_panel(
           title = "Dose coverage",
@@ -3745,15 +3761,17 @@
         output$download_raw <- shiny::downloadHandler(
           filename = "results.csv",
           content = function(file) {
-            OmopViewer::exportSummarisedResult(data, fileName = file)
+            omopgenerics::exportSummarisedResult(data, fileName = file)
           }
         )
         # summarise_dose_coverage -----
         ## tidy summarise_dose_coverage -----
         getTidyDataSummariseDoseCoverage <- shiny::reactive({
           res <- data |>
-            OmopViewer::filterData("summarise_dose_coverage", input) |>
-            OmopViewer::tidyData()
+            filterData("summarise_dose_coverage", input) |>
+            omopgenerics::addSettings() |>
+            omopgenerics::splitAll() |>
+            dplyr::select(!"result_id")
       
           # columns to eliminate
           colsEliminate <- colnames(res)
@@ -3794,7 +3812,7 @@
         ## output 24 -----
         createOutput24 <- shiny::reactive({
           result <- data |>
-            OmopViewer::filterData("summarise_dose_coverage", input)
+            filterData("summarise_dose_coverage", input)
           DrugUtilisation::tableDoseCoverage(
             result
           )
@@ -3815,8 +3833,10 @@
         ## tidy summarise_drug_restart -----
         getTidyDataSummariseDrugRestart <- shiny::reactive({
           res <- data |>
-            OmopViewer::filterData("summarise_drug_restart", input) |>
-            OmopViewer::tidyData()
+            filterData("summarise_drug_restart", input) |>
+            omopgenerics::addSettings() |>
+            omopgenerics::splitAll() |>
+            dplyr::select(!"result_id")
       
           # columns to eliminate
           colsEliminate <- colnames(res)
@@ -3857,7 +3877,7 @@
         ## output 25 -----
         createOutput25 <- shiny::reactive({
           result <- data |>
-            OmopViewer::filterData("summarise_drug_restart", input)
+            filterData("summarise_drug_restart", input)
           DrugUtilisation::tableDrugRestart(
             result
           )
@@ -3876,7 +3896,7 @@
         ## output 26 -----
         createOutput26 <- shiny::reactive({
           result <- data |>
-            OmopViewer::filterData("summarise_drug_restart", input)
+            filterData("summarise_drug_restart", input)
           DrugUtilisation::plotDrugRestart(
             result
           )
@@ -3904,8 +3924,10 @@
         ## tidy summarise_drug_utilisation -----
         getTidyDataSummariseDrugUtilisation <- shiny::reactive({
           res <- data |>
-            OmopViewer::filterData("summarise_drug_utilisation", input) |>
-            OmopViewer::tidyData()
+            filterData("summarise_drug_utilisation", input) |>
+            omopgenerics::addSettings() |>
+            omopgenerics::splitAll() |>
+            dplyr::select(!"result_id")
       
           # columns to eliminate
           colsEliminate <- colnames(res)
@@ -3946,7 +3968,7 @@
         ## output 27 -----
         createOutput27 <- shiny::reactive({
           result <- data |>
-            OmopViewer::filterData("summarise_drug_utilisation", input)
+            filterData("summarise_drug_utilisation", input)
           DrugUtilisation::tableDrugUtilisation(
             result
           )
@@ -3967,8 +3989,10 @@
         ## tidy summarise_indication -----
         getTidyDataSummariseIndication <- shiny::reactive({
           res <- data |>
-            OmopViewer::filterData("summarise_indication", input) |>
-            OmopViewer::tidyData()
+            filterData("summarise_indication", input) |>
+            omopgenerics::addSettings() |>
+            omopgenerics::splitAll() |>
+            dplyr::select(!"result_id")
       
           # columns to eliminate
           colsEliminate <- colnames(res)
@@ -4009,7 +4033,7 @@
         ## output 28 -----
         createOutput28 <- shiny::reactive({
           result <- data |>
-            OmopViewer::filterData("summarise_indication", input)
+            filterData("summarise_indication", input)
           DrugUtilisation::tableIndication(
             result
           )
@@ -4028,7 +4052,7 @@
         ## output 29 -----
         createOutput29 <- shiny::reactive({
           result <- data |>
-            OmopViewer::filterData("summarise_indication", input)
+            filterData("summarise_indication", input)
           DrugUtilisation::plotIndication(
             result
           )
@@ -4056,8 +4080,10 @@
         ## tidy summarise_proportion_of_patients_covered -----
         getTidyDataSummariseProportionOfPatientsCovered <- shiny::reactive({
           res <- data |>
-            OmopViewer::filterData("summarise_proportion_of_patients_covered", input) |>
-            OmopViewer::tidyData()
+            filterData("summarise_proportion_of_patients_covered", input) |>
+            omopgenerics::addSettings() |>
+            omopgenerics::splitAll() |>
+            dplyr::select(!"result_id")
       
           # columns to eliminate
           colsEliminate <- colnames(res)
@@ -4098,7 +4124,7 @@
         ## output 30 -----
         createOutput30 <- shiny::reactive({
           result <- data |>
-            OmopViewer::filterData("summarise_proportion_of_patients_covered", input)
+            filterData("summarise_proportion_of_patients_covered", input)
           DrugUtilisation::tableProportionOfPatientsCovered(
             result
           )
@@ -4117,7 +4143,7 @@
         ## output 31 -----
         createOutput31 <- shiny::reactive({
           result <- data |>
-            OmopViewer::filterData("summarise_proportion_of_patients_covered", input)
+            filterData("summarise_proportion_of_patients_covered", input)
           DrugUtilisation::plotProportionOfPatientsCovered(
             result
           )
@@ -4145,8 +4171,10 @@
         ## tidy summarise_treatment -----
         getTidyDataSummariseTreatment <- shiny::reactive({
           res <- data |>
-            OmopViewer::filterData("summarise_treatment", input) |>
-            OmopViewer::tidyData()
+            filterData("summarise_treatment", input) |>
+            omopgenerics::addSettings() |>
+            omopgenerics::splitAll() |>
+            dplyr::select(!"result_id")
       
           # columns to eliminate
           colsEliminate <- colnames(res)
@@ -4187,7 +4215,7 @@
         ## output 32 -----
         createOutput32 <- shiny::reactive({
           result <- data |>
-            OmopViewer::filterData("summarise_treatment", input)
+            filterData("summarise_treatment", input)
           DrugUtilisation::tableTreatment(
             result
           )
@@ -4206,7 +4234,7 @@
         ## output 33 -----
         createOutput33 <- shiny::reactive({
           result <- data |>
-            OmopViewer::filterData("summarise_treatment", input)
+            filterData("summarise_treatment", input)
           DrugUtilisation::plotTreatment(
             result
           )
@@ -4240,16 +4268,21 @@
       
       library(DT)
       library(DrugUtilisation)
-      library(OmopViewer)
       library(bslib)
       library(dplyr)
       library(ggplot2)
+      library(glue)
       library(gt)
+      library(markdown)
       library(omopgenerics)
+      library(purrr)
       library(readr)
+      library(rlang)
       library(shiny)
       library(shinyWidgets)
+      library(tidyr)
       library(visOmopResults)
+      library(yaml)
       
       # preprocess data if it has not been done
       fileData <- file.path(getwd(), "data", "shinyData.RData")
@@ -4258,10 +4291,13 @@
       }
       
       # uncomment to load the raw data
-      # rawData <- OmopViewer::importSummarisedResult(file.path(getwd(), "data"))
+      # rawData <- omopgenerics::importSummarisedResult(file.path(getwd(), "data"))
       
       # load shiny data
       load(fileData)
+      
+      # source functions
+      source(file.path(getwd(), "functions.R"))
 
 ---
 
@@ -4286,7 +4322,7 @@
         bslib::nav_panel(
           title = "Background",
           icon = shiny::icon("disease"),
-          OmopViewer::cardFromMd("background.md")
+          backgroundCard("background.md")
         ),
         bslib::nav_panel(
           title = "Dose coverage",
@@ -5254,12 +5290,12 @@
         bslib::nav_panel(
           title = "Background",
           icon = shiny::icon("disease"),
-          OmopViewer::cardFromMd("background.md")
+          backgroundCard("background.md")
         ),
         bslib::nav_panel(
           title = "Summary",
           icon = shiny::icon("file-alt"),
-          OmopViewer::cardSummary(data)
+          summaryCard(data)
         ),
         bslib::nav_panel(
           title = "Cohort characteristics",
@@ -5440,9 +5476,9 @@
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
                       shinyWidgets::pickerInput(
-                        inputId = "summarise_characteristics_ggplot2_8_plotType",
-                        label = "plotType",
-                        selected = NULL,
+                        inputId = "summarise_characteristics_ggplot2_8_plotStyle",
+                        label = "plotStyle",
+                        selected = "barplot",
                         multiple = FALSE,
                         choices = c("boxplot", "barplot", "scatterplot"),
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
@@ -5481,18 +5517,18 @@
                 bslib::accordion_panel(
                   title = "Settings",
                   shinyWidgets::pickerInput(
-                    inputId = "summarise_cohort_attrition_settings_table_name",
-                    label = "Table name",
-                    choices = filterValues$summarise_cohort_attrition_settings_table_name,
-                    selected = filterValues$summarise_cohort_attrition_settings_table_name,
-                    multiple = TRUE,
-                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
-                  ),
-                  shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_attrition_settings_cohort_definition_id",
                     label = "Cohort definition id",
                     choices = filterValues$summarise_cohort_attrition_settings_cohort_definition_id,
                     selected = filterValues$summarise_cohort_attrition_settings_cohort_definition_id,
+                    multiple = TRUE,
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
+                  ),
+                  shinyWidgets::pickerInput(
+                    inputId = "summarise_cohort_attrition_settings_table_name",
+                    label = "Table name",
+                    choices = filterValues$summarise_cohort_attrition_settings_table_name,
+                    selected = filterValues$summarise_cohort_attrition_settings_table_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -6341,6 +6377,14 @@
                 bslib::accordion_panel(
                   title = "Settings",
                   shinyWidgets::pickerInput(
+                    inputId = "summarise_large_scale_characteristics_settings_analysis",
+                    label = "Analysis",
+                    choices = filterValues$summarise_large_scale_characteristics_settings_analysis,
+                    selected = filterValues$summarise_large_scale_characteristics_settings_analysis,
+                    multiple = TRUE,
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
+                  ),
+                  shinyWidgets::pickerInput(
                     inputId = "summarise_large_scale_characteristics_settings_table_name",
                     label = "Table name",
                     choices = filterValues$summarise_large_scale_characteristics_settings_table_name,
@@ -6353,14 +6397,6 @@
                     label = "Type",
                     choices = filterValues$summarise_large_scale_characteristics_settings_type,
                     selected = filterValues$summarise_large_scale_characteristics_settings_type,
-                    multiple = TRUE,
-                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
-                  ),
-                  shinyWidgets::pickerInput(
-                    inputId = "summarise_large_scale_characteristics_settings_analysis",
-                    label = "Analysis",
-                    choices = filterValues$summarise_large_scale_characteristics_settings_analysis,
-                    selected = filterValues$summarise_large_scale_characteristics_settings_analysis,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -6474,7 +6510,7 @@
                         header = NULL,
                         sortable::add_rank_list(
                           text = "none",
-                          labels = c("concept_id", "variable_name", "variable_level", "estimate_name", "table_name", "type", "analysis"),
+                          labels = c("concept_id", "variable_name", "variable_level", "estimate_name", "analysis", "table_name", "type"),
                           input_id = "summarise_large_scale_characteristics_gt_0_none"
                         ),
                         sortable::add_rank_list(
@@ -6549,15 +6585,17 @@
         output$download_raw <- shiny::downloadHandler(
           filename = "results.csv",
           content = function(file) {
-            OmopViewer::exportSummarisedResult(data, fileName = file)
+            omopgenerics::exportSummarisedResult(data, fileName = file)
           }
         )
         # summarise_characteristics -----
         ## tidy summarise_characteristics -----
         getTidyDataSummariseCharacteristics <- shiny::reactive({
           res <- data |>
-            OmopViewer::filterData("summarise_characteristics", input) |>
-            OmopViewer::tidyData()
+            filterData("summarise_characteristics", input) |>
+            omopgenerics::addSettings() |>
+            omopgenerics::splitAll() |>
+            dplyr::select(!"result_id")
       
           # columns to eliminate
           colsEliminate <- colnames(res)
@@ -6598,7 +6636,7 @@
         ## output 7 -----
         createOutput7 <- shiny::reactive({
           result <- data |>
-            OmopViewer::filterData("summarise_characteristics", input)
+            filterData("summarise_characteristics", input)
           CohortCharacteristics::tableCharacteristics(
             result,
             header = input$summarise_characteristics_gt_7_header,
@@ -6620,10 +6658,10 @@
         ## output 8 -----
         createOutput8 <- shiny::reactive({
           result <- data |>
-            OmopViewer::filterData("summarise_characteristics", input)
+            filterData("summarise_characteristics", input)
           CohortCharacteristics::plotCharacteristics(
             result,
-            plotType = input$summarise_characteristics_ggplot2_8_plotType,
+            plotStyle = input$summarise_characteristics_ggplot2_8_plotStyle,
             facet = input$summarise_characteristics_ggplot2_8_facet,
             colour = input$summarise_characteristics_ggplot2_8_colour
           )
@@ -6651,8 +6689,10 @@
         ## tidy summarise_cohort_attrition -----
         getTidyDataSummariseCohortAttrition <- shiny::reactive({
           res <- data |>
-            OmopViewer::filterData("summarise_cohort_attrition", input) |>
-            OmopViewer::tidyData()
+            filterData("summarise_cohort_attrition", input) |>
+            omopgenerics::addSettings() |>
+            omopgenerics::splitAll() |>
+            dplyr::select(!"result_id")
       
           # columns to eliminate
           colsEliminate <- colnames(res)
@@ -6693,7 +6733,7 @@
         ## output 3 -----
         createOutput3 <- shiny::reactive({
           result <- data |>
-            OmopViewer::filterData("summarise_cohort_attrition", input)
+            filterData("summarise_cohort_attrition", input)
           CohortCharacteristics::tableCohortAttrition(
             result,
             header = input$summarise_cohort_attrition_gt_3_header,
@@ -6715,7 +6755,7 @@
         ## output 4 -----
         createOutput4 <- shiny::reactive({
           result <- data |>
-            OmopViewer::filterData("summarise_cohort_attrition", input)
+            filterData("summarise_cohort_attrition", input)
           CohortCharacteristics::plotCohortAttrition(
             result
           )
@@ -6742,8 +6782,10 @@
         ## tidy summarise_cohort_count -----
         getTidyDataSummariseCohortCount <- shiny::reactive({
           res <- data |>
-            OmopViewer::filterData("summarise_cohort_count", input) |>
-            OmopViewer::tidyData()
+            filterData("summarise_cohort_count", input) |>
+            omopgenerics::addSettings() |>
+            omopgenerics::splitAll() |>
+            dplyr::select(!"result_id")
       
           # columns to eliminate
           colsEliminate <- colnames(res)
@@ -6784,7 +6826,7 @@
         ## output 9 -----
         createOutput9 <- shiny::reactive({
           result <- data |>
-            OmopViewer::filterData("summarise_cohort_count", input)
+            filterData("summarise_cohort_count", input)
           CohortCharacteristics::tableCohortCount(
             result,
             header = input$summarise_cohort_count_gt_9_header,
@@ -6806,7 +6848,7 @@
         ## output 10 -----
         createOutput10 <- shiny::reactive({
           result <- data |>
-            OmopViewer::filterData("summarise_cohort_count", input)
+            filterData("summarise_cohort_count", input)
           CohortCharacteristics::plotCohortCount(
             result,
             facet = input$summarise_cohort_count_ggplot2_10_facet,
@@ -6836,8 +6878,10 @@
         ## tidy summarise_cohort_overlap -----
         getTidyDataSummariseCohortOverlap <- shiny::reactive({
           res <- data |>
-            OmopViewer::filterData("summarise_cohort_overlap", input) |>
-            OmopViewer::tidyData()
+            filterData("summarise_cohort_overlap", input) |>
+            omopgenerics::addSettings() |>
+            omopgenerics::splitAll() |>
+            dplyr::select(!"result_id")
       
           # columns to eliminate
           colsEliminate <- colnames(res)
@@ -6878,7 +6922,7 @@
         ## output 1 -----
         createOutput1 <- shiny::reactive({
           result <- data |>
-            OmopViewer::filterData("summarise_cohort_overlap", input)
+            filterData("summarise_cohort_overlap", input)
           CohortCharacteristics::tableCohortOverlap(
             result,
             uniqueCombinations = input$summarise_cohort_overlap_gt_1_uniqueCombinations,
@@ -6901,7 +6945,7 @@
         ## output 2 -----
         createOutput2 <- shiny::reactive({
           result <- data |>
-            OmopViewer::filterData("summarise_cohort_overlap", input)
+            filterData("summarise_cohort_overlap", input)
           CohortCharacteristics::plotCohortOverlap(
             result,
             facet = input$summarise_cohort_overlap_ggplot2_2_facet,
@@ -6931,8 +6975,10 @@
         ## tidy summarise_cohort_timing -----
         getTidyDataSummariseCohortTiming <- shiny::reactive({
           res <- data |>
-            OmopViewer::filterData("summarise_cohort_timing", input) |>
-            OmopViewer::tidyData()
+            filterData("summarise_cohort_timing", input) |>
+            omopgenerics::addSettings() |>
+            omopgenerics::splitAll() |>
+            dplyr::select(!"result_id")
       
           # columns to eliminate
           colsEliminate <- colnames(res)
@@ -6973,7 +7019,7 @@
         ## output 5 -----
         createOutput5 <- shiny::reactive({
           result <- data |>
-            OmopViewer::filterData("summarise_cohort_timing", input)
+            filterData("summarise_cohort_timing", input)
           CohortCharacteristics::tableCohortTiming(
             result,
             uniqueCombinations = input$summarise_cohort_timing_gt_5_uniqueCombinations,
@@ -6997,7 +7043,7 @@
         ## output 6 -----
         createOutput6 <- shiny::reactive({
           result <- data |>
-            OmopViewer::filterData("summarise_cohort_timing", input)
+            filterData("summarise_cohort_timing", input)
           CohortCharacteristics::plotCohortTiming(
             result,
             plotType = input$summarise_cohort_timing_ggplot2_6_plotType,
@@ -7030,8 +7076,10 @@
         ## tidy summarise_large_scale_characteristics -----
         getTidyDataSummariseLargeScaleCharacteristics <- shiny::reactive({
           res <- data |>
-            OmopViewer::filterData("summarise_large_scale_characteristics", input) |>
-            OmopViewer::tidyData()
+            filterData("summarise_large_scale_characteristics", input) |>
+            omopgenerics::addSettings() |>
+            omopgenerics::splitAll() |>
+            dplyr::select(!"result_id")
       
           # columns to eliminate
           colsEliminate <- colnames(res)
@@ -7072,8 +7120,8 @@
         ## output 0 -----
         createOutput0 <- shiny::reactive({
           result <- data |>
-            OmopViewer::filterData("summarise_large_scale_characteristics", input)
-          OmopViewer::omopViewerTable(
+            filterData("summarise_large_scale_characteristics", input)
+          simpleTable(
             result,
             header = input$summarise_large_scale_characteristics_gt_0_header,
             group = input$summarise_large_scale_characteristics_gt_0_group,
@@ -7103,17 +7151,22 @@
       library(CohortCharacteristics)
       library(DT)
       library(DiagrammeR)
-      library(OmopViewer)
       library(bslib)
       library(dplyr)
       library(ggplot2)
+      library(glue)
       library(gt)
+      library(markdown)
       library(omopgenerics)
+      library(purrr)
       library(readr)
+      library(rlang)
       library(shiny)
       library(shinyWidgets)
       library(sortable)
+      library(tidyr)
       library(visOmopResults)
+      library(yaml)
       
       # preprocess data if it has not been done
       fileData <- file.path(getwd(), "data", "shinyData.RData")
@@ -7122,10 +7175,13 @@
       }
       
       # uncomment to load the raw data
-      # rawData <- OmopViewer::importSummarisedResult(file.path(getwd(), "data"))
+      # rawData <- omopgenerics::importSummarisedResult(file.path(getwd(), "data"))
       
       # load shiny data
       load(fileData)
+      
+      # source functions
+      source(file.path(getwd(), "functions.R"))
 
 ---
 
@@ -7150,7 +7206,7 @@
         bslib::nav_panel(
           title = "Background",
           icon = shiny::icon("disease"),
-          OmopViewer::cardFromMd("background.md")
+          backgroundCard("background.md")
         ),
         bslib::nav_panel(
           title = "Cohort characteristics",
@@ -7331,9 +7387,9 @@
                   bslib::layout_sidebar(
                     sidebar = bslib::sidebar(
                       shinyWidgets::pickerInput(
-                        inputId = "summarise_characteristics_ggplot2_8_plotType",
-                        label = "plotType",
-                        selected = NULL,
+                        inputId = "summarise_characteristics_ggplot2_8_plotStyle",
+                        label = "plotStyle",
+                        selected = "barplot",
                         multiple = FALSE,
                         choices = c("boxplot", "barplot", "scatterplot"),
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
@@ -7372,18 +7428,18 @@
                 bslib::accordion_panel(
                   title = "Settings",
                   shinyWidgets::pickerInput(
-                    inputId = "summarise_cohort_attrition_settings_table_name",
-                    label = "Table name",
-                    choices = filterValues$summarise_cohort_attrition_settings_table_name,
-                    selected = filterValues$summarise_cohort_attrition_settings_table_name,
-                    multiple = TRUE,
-                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
-                  ),
-                  shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_attrition_settings_cohort_definition_id",
                     label = "Cohort definition id",
                     choices = filterValues$summarise_cohort_attrition_settings_cohort_definition_id,
                     selected = filterValues$summarise_cohort_attrition_settings_cohort_definition_id,
+                    multiple = TRUE,
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
+                  ),
+                  shinyWidgets::pickerInput(
+                    inputId = "summarise_cohort_attrition_settings_table_name",
+                    label = "Table name",
+                    choices = filterValues$summarise_cohort_attrition_settings_table_name,
+                    selected = filterValues$summarise_cohort_attrition_settings_table_name,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -8232,6 +8288,14 @@
                 bslib::accordion_panel(
                   title = "Settings",
                   shinyWidgets::pickerInput(
+                    inputId = "summarise_large_scale_characteristics_settings_analysis",
+                    label = "Analysis",
+                    choices = filterValues$summarise_large_scale_characteristics_settings_analysis,
+                    selected = filterValues$summarise_large_scale_characteristics_settings_analysis,
+                    multiple = TRUE,
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
+                  ),
+                  shinyWidgets::pickerInput(
                     inputId = "summarise_large_scale_characteristics_settings_table_name",
                     label = "Table name",
                     choices = filterValues$summarise_large_scale_characteristics_settings_table_name,
@@ -8244,14 +8308,6 @@
                     label = "Type",
                     choices = filterValues$summarise_large_scale_characteristics_settings_type,
                     selected = filterValues$summarise_large_scale_characteristics_settings_type,
-                    multiple = TRUE,
-                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
-                  ),
-                  shinyWidgets::pickerInput(
-                    inputId = "summarise_large_scale_characteristics_settings_analysis",
-                    label = "Analysis",
-                    choices = filterValues$summarise_large_scale_characteristics_settings_analysis,
-                    selected = filterValues$summarise_large_scale_characteristics_settings_analysis,
                     multiple = TRUE,
                     options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                   )
@@ -8365,7 +8421,7 @@
                         header = NULL,
                         sortable::add_rank_list(
                           text = "none",
-                          labels = c("concept_id", "variable_name", "variable_level", "estimate_name", "table_name", "type", "analysis"),
+                          labels = c("concept_id", "variable_name", "variable_level", "estimate_name", "analysis", "table_name", "type"),
                           input_id = "summarise_large_scale_characteristics_gt_0_none"
                         ),
                         sortable::add_rank_list(
@@ -8450,7 +8506,7 @@
         bslib::nav_panel(
           title = "Background",
           icon = shiny::icon("disease"),
-          OmopViewer::cardFromMd("background.md")
+          backgroundCard("background.md")
         ),
         bslib::nav_panel(
           title = "Observation period",
@@ -8778,15 +8834,17 @@
         output$download_raw <- shiny::downloadHandler(
           filename = "results.csv",
           content = function(file) {
-            OmopViewer::exportSummarisedResult(data, fileName = file)
+            omopgenerics::exportSummarisedResult(data, fileName = file)
           }
         )
         # summarise_observation_period -----
         ## tidy summarise_observation_period -----
         getTidyDataSummariseObservationPeriod <- shiny::reactive({
           res <- data |>
-            OmopViewer::filterData("summarise_observation_period", input) |>
-            OmopViewer::tidyData()
+            filterData("summarise_observation_period", input) |>
+            omopgenerics::addSettings() |>
+            omopgenerics::splitAll() |>
+            dplyr::select(!"result_id")
       
           # columns to eliminate
           colsEliminate <- colnames(res)
@@ -8827,7 +8885,7 @@
         ## output 15 -----
         createOutput15 <- shiny::reactive({
           result <- data |>
-            OmopViewer::filterData("summarise_observation_period", input)
+            filterData("summarise_observation_period", input)
           OmopSketch::tableObservationPeriod(
             result
           )
@@ -8846,7 +8904,7 @@
         ## output 16 -----
         createOutput16 <- shiny::reactive({
           result <- data |>
-            OmopViewer::filterData("summarise_observation_period", input)
+            filterData("summarise_observation_period", input)
           OmopSketch::plotObservationPeriod(
             result,
             variableName = input$summarise_observation_period_ggplot2_16_variableName,
@@ -8877,8 +8935,10 @@
         ## tidy summarise_omop_snapshot -----
         getTidyDataSummariseOmopSnapshot <- shiny::reactive({
           res <- data |>
-            OmopViewer::filterData("summarise_omop_snapshot", input) |>
-            OmopViewer::tidyData()
+            filterData("summarise_omop_snapshot", input) |>
+            omopgenerics::addSettings() |>
+            omopgenerics::splitAll() |>
+            dplyr::select(!"result_id")
       
           # columns to eliminate
           colsEliminate <- colnames(res)
@@ -8919,7 +8979,7 @@
         ## output 17 -----
         createOutput17 <- shiny::reactive({
           result <- data |>
-            OmopViewer::filterData("summarise_omop_snapshot", input)
+            filterData("summarise_omop_snapshot", input)
           OmopSketch::tableOmopSnapshot(
             result
           )
@@ -8946,16 +9006,21 @@
       
       library(DT)
       library(OmopSketch)
-      library(OmopViewer)
       library(bslib)
       library(dplyr)
       library(ggplot2)
+      library(glue)
       library(gt)
+      library(markdown)
       library(omopgenerics)
+      library(purrr)
       library(readr)
+      library(rlang)
       library(shiny)
       library(shinyWidgets)
+      library(tidyr)
       library(visOmopResults)
+      library(yaml)
       
       # preprocess data if it has not been done
       fileData <- file.path(getwd(), "data", "shinyData.RData")
@@ -8964,10 +9029,13 @@
       }
       
       # uncomment to load the raw data
-      # rawData <- OmopViewer::importSummarisedResult(file.path(getwd(), "data"))
+      # rawData <- omopgenerics::importSummarisedResult(file.path(getwd(), "data"))
       
       # load shiny data
       load(fileData)
+      
+      # source functions
+      source(file.path(getwd(), "functions.R"))
 
 # CodelistGenerator shiny
 
@@ -8992,7 +9060,7 @@
         bslib::nav_panel(
           title = "Background",
           icon = shiny::icon("disease"),
-          OmopViewer::cardFromMd("background.md")
+          backgroundCard("background.md")
         ),
         bslib::nav_panel(
           title = "Orphan codes",
@@ -9717,15 +9785,17 @@
         output$download_raw <- shiny::downloadHandler(
           filename = "results.csv",
           content = function(file) {
-            OmopViewer::exportSummarisedResult(data, fileName = file)
+            omopgenerics::exportSummarisedResult(data, fileName = file)
           }
         )
         # orphan_code_use -----
         ## tidy orphan_code_use -----
         getTidyDataOrphanCodeUse <- shiny::reactive({
           res <- data |>
-            OmopViewer::filterData("orphan_code_use", input) |>
-            OmopViewer::tidyData()
+            filterData("orphan_code_use", input) |>
+            omopgenerics::addSettings() |>
+            omopgenerics::splitAll() |>
+            dplyr::select(!"result_id")
       
           # columns to eliminate
           colsEliminate <- colnames(res)
@@ -9766,7 +9836,7 @@
         ## output 11 -----
         createOutput11 <- shiny::reactive({
           result <- data |>
-            OmopViewer::filterData("orphan_code_use", input)
+            filterData("orphan_code_use", input)
           CodelistGenerator::tableOrphanCodes(
             result,
             header = input$orphan_code_use_gt_11_header,
@@ -9790,8 +9860,10 @@
         ## tidy cohort_code_use -----
         getTidyDataCohortCodeUse <- shiny::reactive({
           res <- data |>
-            OmopViewer::filterData("cohort_code_use", input) |>
-            OmopViewer::tidyData()
+            filterData("cohort_code_use", input) |>
+            omopgenerics::addSettings() |>
+            omopgenerics::splitAll() |>
+            dplyr::select(!"result_id")
       
           # columns to eliminate
           colsEliminate <- colnames(res)
@@ -9832,7 +9904,7 @@
         ## output 12 -----
         createOutput12 <- shiny::reactive({
           result <- data |>
-            OmopViewer::filterData("cohort_code_use", input)
+            filterData("cohort_code_use", input)
           CodelistGenerator::tableCohortCodeUse(
             result,
             timing = input$cohort_code_use_gt_12_timing,
@@ -9857,8 +9929,10 @@
         ## tidy code_use -----
         getTidyDataCodeUse <- shiny::reactive({
           res <- data |>
-            OmopViewer::filterData("code_use", input) |>
-            OmopViewer::tidyData()
+            filterData("code_use", input) |>
+            omopgenerics::addSettings() |>
+            omopgenerics::splitAll() |>
+            dplyr::select(!"result_id")
       
           # columns to eliminate
           colsEliminate <- colnames(res)
@@ -9899,7 +9973,7 @@
         ## output 13 -----
         createOutput13 <- shiny::reactive({
           result <- data |>
-            OmopViewer::filterData("code_use", input)
+            filterData("code_use", input)
           CodelistGenerator::tableCodeUse(
             result,
             header = input$code_use_gt_13_header,
@@ -9923,8 +9997,10 @@
         ## tidy achilles_code_use -----
         getTidyDataAchillesCodeUse <- shiny::reactive({
           res <- data |>
-            OmopViewer::filterData("achilles_code_use", input) |>
-            OmopViewer::tidyData()
+            filterData("achilles_code_use", input) |>
+            omopgenerics::addSettings() |>
+            omopgenerics::splitAll() |>
+            dplyr::select(!"result_id")
       
           # columns to eliminate
           colsEliminate <- colnames(res)
@@ -9965,7 +10041,7 @@
         ## output 14 -----
         createOutput14 <- shiny::reactive({
           result <- data |>
-            OmopViewer::filterData("achilles_code_use", input)
+            filterData("achilles_code_use", input)
           CodelistGenerator::tableAchillesCodeUse(
             result,
             header = input$achilles_code_use_gt_14_header,
@@ -9995,16 +10071,21 @@
       
       library(CodelistGenerator)
       library(DT)
-      library(OmopViewer)
       library(bslib)
       library(dplyr)
+      library(glue)
       library(gt)
+      library(markdown)
       library(omopgenerics)
+      library(purrr)
       library(readr)
+      library(rlang)
       library(shiny)
       library(shinyWidgets)
       library(sortable)
+      library(tidyr)
       library(visOmopResults)
+      library(yaml)
       
       # preprocess data if it has not been done
       fileData <- file.path(getwd(), "data", "shinyData.RData")
@@ -10013,8 +10094,11 @@
       }
       
       # uncomment to load the raw data
-      # rawData <- OmopViewer::importSummarisedResult(file.path(getwd(), "data"))
+      # rawData <- omopgenerics::importSummarisedResult(file.path(getwd(), "data"))
       
       # load shiny data
       load(fileData)
+      
+      # source functions
+      source(file.path(getwd(), "functions.R"))
 

@@ -150,7 +150,7 @@ exportStaticApp <- function(result,
     styleCode()
 
   # prepare data
-  filterValues <- filterValues(result, resultList)
+  filterValues <- defaultFilterValues(result, resultList)
   data <- prepareResult(result, resultList)
 
   # write files in the corresponding directory
@@ -246,9 +246,10 @@ addFilterNames <- function(panelDetails, result) {
               stringr::str_split(pattern = " &&& ") |>
               unlist() |>
               unique()
-            x[x != ""]
+            glue::glue("grouping_{x[x != \"\"]}") |>
+              as.character()
           } else if (sum(!is.na(x)) > 0){
-            nm
+            paste0("settings_", nm)
           } else {
             NULL
           }
@@ -256,6 +257,11 @@ addFilterNames <- function(panelDetails, result) {
         purrr::compact() |>
         unname() |>
         unlist()
+      if (any(result$result_id %in% x$result_id)) {
+        filters <- c(
+          "grouping_cdm_name", "variable_name", "estimate_name", filters
+        )
+      }
       if (length(filters) == 0) filters <- character()
       x$filter_name <- filters
       x

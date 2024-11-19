@@ -45,7 +45,8 @@ tidyServer <- function(prefix, data) {
       res <- ', data, ' |>
         filterData("', prefix, '", input) |>
         omopgenerics::addSettings() |>
-        omopgenerics::splitAll()
+        omopgenerics::splitAll() |>
+        dplyr::select(!"result_id")
 
       # columns to eliminate
       colsEliminate <- colnames(res)

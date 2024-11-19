@@ -21,12 +21,12 @@
         bslib::nav_panel(
           title = "Background",
           icon = shiny::icon("disease"),
-          OmopViewer::cardFromMd("background.md")
+          backgroundCard("background.md")
         ),
         bslib::nav_panel(
           title = "Summary",
           icon = shiny::icon("file-alt"),
-          OmopViewer::cardSummary(data)
+          summaryCard(data)
         ),
         bslib::nav_spacer(),
         bslib::nav_item(
@@ -85,12 +85,12 @@
         bslib::nav_panel(
           title = "Background",
           icon = shiny::icon("disease"),
-          OmopViewer::cardFromMd("background.md")
+          backgroundCard("background.md")
         ),
         bslib::nav_panel(
           title = "Summary",
           icon = shiny::icon("file-alt"),
-          OmopViewer::cardSummary(data)
+          summaryCard(data)
         ),
         bslib::nav_spacer(),
         bslib::nav_item(
@@ -139,7 +139,7 @@
         output$download_raw <- shiny::downloadHandler(
           filename = "results.csv",
           content = function(file) {
-            OmopViewer::exportSummarisedResult(data, fileName = file)
+            omopgenerics::exportSummarisedResult(data, fileName = file)
           }
         )
       }
@@ -167,12 +167,12 @@
         bslib::nav_panel(
           title = "Background",
           icon = shiny::icon("disease"),
-          OmopViewer::cardFromMd("background.md")
+          backgroundCard("background.md")
         ),
         bslib::nav_panel(
           title = "Summary",
           icon = shiny::icon("file-alt"),
-          OmopViewer::cardSummary(data)
+          summaryCard(data)
         ),
         bslib::nav_spacer(),
         bslib::nav_item(
@@ -231,12 +231,12 @@
         bslib::nav_panel(
           title = "Background",
           icon = shiny::icon("disease"),
-          OmopViewer::cardFromMd("background.md")
+          backgroundCard("background.md")
         ),
         bslib::nav_panel(
           title = "Summary",
           icon = shiny::icon("file-alt"),
-          OmopViewer::cardSummary(data)
+          summaryCard(data)
         ),
         bslib::nav_panel(
           title = "Cohort count",
@@ -894,12 +894,12 @@
         bslib::nav_panel(
           title = "Background",
           icon = shiny::icon("disease"),
-          OmopViewer::cardFromMd("background.md")
+          backgroundCard("background.md")
         ),
         bslib::nav_panel(
           title = "Summary",
           icon = shiny::icon("file-alt"),
-          OmopViewer::cardSummary(data)
+          summaryCard(data)
         ),
         bslib::nav_panel(
           title = "Cohort overlap",
@@ -1557,12 +1557,12 @@
         bslib::nav_panel(
           title = "Background",
           icon = shiny::icon("disease"),
-          OmopViewer::cardFromMd("background.md")
+          backgroundCard("background.md")
         ),
         bslib::nav_panel(
           title = "Summary",
           icon = shiny::icon("file-alt"),
-          OmopViewer::cardSummary(data)
+          summaryCard(data)
         ),
         bslib::nav_menu(
           title = "DETAILS",
@@ -2224,12 +2224,12 @@
         bslib::nav_panel(
           title = "Background",
           icon = shiny::icon("disease"),
-          OmopViewer::cardFromMd("background.md")
+          backgroundCard("background.md")
         ),
         bslib::nav_panel(
           title = "Summary",
           icon = shiny::icon("file-alt"),
-          OmopViewer::cardSummary(data)
+          summaryCard(data)
         ),
         bslib::nav_spacer(),
         bslib::nav_item(

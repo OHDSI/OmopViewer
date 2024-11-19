@@ -4,7 +4,7 @@ test_that("test choices", {
   panelList <- res |>
     panelDetailsFromResult() |>
     purrr::map(\(x) x$result_id)
-  expect_no_error(x <- filterValues(res, panelList))
+  expect_no_error(x <- defaultFilterValues(res, panelList))
   expected <- list()
   expect_identical(x, expected)
 
@@ -23,7 +23,7 @@ test_that("test choices", {
     addFilterNames(result = res)
   panelList <- panelDetails |>
     purrr::map(\(x) x$result_id)
-  expect_no_error(x <- filterValues(res, panelList))
+  expect_no_error(x <- defaultFilterValues(res, panelList))
   nm <- names(x)
   expect_true(all(startsWith(nm, "custom_result_1") | startsWith(nm, "custom_result_2")))
   # names
@@ -68,16 +68,18 @@ test_that("test choices", {
   panelDetails <- res |>
     panelDetailsFromResult() |>
     addFilterNames(result = res)
-  expect_no_error(x <- getFilterValues(panelDetails, res))
+  panelList <- panelDetails |>
+    purrr::map(\(x) x$result_id)
+  expect_no_error(x <- defaultFilterValues(res, panelList))
   nm <- names(x)
   expect_true(all(startsWith(nm, "custom_result_1") | startsWith(nm, "custom_result_2")))
   # names
   nm1 <- nm[startsWith(nm, "custom_result_1")]
-  nm1 <- substr(nm1, 17, nchar(nm1))
-  expect_identical(nm1, c(panelDetails$custom_result_1$filters, "tidy_columns"))
+  nm1 <- substr(nm1, 17, nchar(nm1)) |> sort()
+  expect_identical(nm1, sort(c(panelDetails$custom_result_1$filter_name, "tidy_columns")))
   nm2 <- nm[startsWith(nm, "custom_result_2")]
-  nm2 <- substr(nm2, 17, nchar(nm2))
-  expect_identical(nm2, c(panelDetails$custom_result_2$filters, "tidy_columns"))
+  nm2 <- substr(nm2, 17, nchar(nm2)) |> sort()
+  expect_identical(nm2, sort(c(panelDetails$custom_result_2$filter_name, "tidy_columns")))
   # settings
   expect_identical(x$custom_result_1_settings_param, "TRUE")
   expect_identical(x$custom_result_1_settings_x, "0")
