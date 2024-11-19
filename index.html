@@ -57,64 +57,71 @@
 </h1></div>
 <!-- badges: start -->
 
-<blockquote>
-<p>[!IMPORTANT] This package is under construction and this is just a first Beta release, please use it carefully and report any issue that you encounter using it.</p>
-</blockquote>
 <p>The goal of OmopViewer is to allow the user to easily create Shiny Apps to visualise study results in <code>&lt;summarised_result&gt;</code> format.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the development version of OmopViewer from <a href="https://github.com/OHDSI/OmopViewer" class="external-link">GitHub</a> with:</p>
+<p>Install it from cran:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"OmopViewer"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Installing package into '/private/var/folders/pl/k11lm9710hlgl02nvzx4z9wr0000gp/T/RtmpuP5k7q/temp_libpath6f1aaa4d6b0'</span></span>
+<span><span class="co">#&gt; (as 'lib' is unspecified)</span></span>
+<span><span class="co">#&gt; Warning: package 'OmopViewer' is not available for this version of R</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; A version of this package for your version of R might be available elsewhere,</span></span>
+<span><span class="co">#&gt; see the ideas at</span></span>
+<span><span class="co">#&gt; https://cran.r-project.org/doc/manuals/r-patched/R-admin.html#Installing-packages</span></span></code></pre></div>
+<p>Or you can install the development version of OmopViewer from <a href="https://github.com/OHDSI/OmopViewer" class="external-link">GitHub</a> with:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"pak"</span><span class="op">)</span></span>
 <span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pkg_install.html" class="external-link">pkg_install</a></span><span class="op">(</span><span class="st">"OHDSI/OmopViewer"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="main-functionalities">Main functionalities<a class="anchor" aria-label="anchor" href="#main-functionalities"></a>
 </h2>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ohdsi.github.io/OmopViewer/">OmopViewer</a></span><span class="op">)</span></span></code></pre></div>
-<p>The package can be divided in 3 main functionalities: - Static shiny app - Dynamic shiny app - Utility functions</p>
+<p>The package has two functionalities: - Static app - Dynamic app</p>
 </div>
 <div class="section level2">
 <h2 id="static-shiny-app">Static shiny app<a class="anchor" aria-label="anchor" href="#static-shiny-app"></a>
 </h2>
 <p>The static shiny app functionality creates a static shiny from a list of <code>summarised_result</code> objects. This shiny is specific to the set of results and can be modified later locally.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># lets generate some results</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://darwin-eu-dev.github.io/CohortCharacteristics/" class="external-link">CohortCharacteristics</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Registered S3 method overwritten by 'visOmopResults':</span></span>
+<span><span class="co">#&gt;   method                 from        </span></span>
+<span><span class="co">#&gt;   tidy.summarised_result omopgenerics</span></span>
 <span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://darwin-eu.github.io/CohortCharacteristics/reference/mockCohortCharacteristics.html" class="external-link">mockCohortCharacteristics</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Note: method with signature 'DBIConnection#Id' chosen for function 'dbExistsTable',</span></span>
+<span><span class="co">#&gt;  target signature 'duckdb_connection#Id'.</span></span>
+<span><span class="co">#&gt;  "duckdb_connection#ANY" would also be valid</span></span>
 <span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://darwin-eu.github.io/CohortCharacteristics/reference/summariseCharacteristics.html" class="external-link">summariseCharacteristics</a></span><span class="op">(</span><span class="va">cdm</span><span class="op">$</span><span class="va">cohort1</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/omopgenerics/man/bind.html" class="external-link">bind</a></span><span class="op">(</span><span class="fu"><a href="https://darwin-eu.github.io/CohortCharacteristics/reference/summariseCohortAttrition.html" class="external-link">summariseCohortAttrition</a></span><span class="op">(</span><span class="va">cdm</span><span class="op">$</span><span class="va">cohort1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ℹ adding demographics columns</span></span>
 <span><span class="co">#&gt; ℹ summarising data</span></span>
 <span><span class="co">#&gt; ✔ summariseCharacteristics finished!</span></span>
+<span><span class="co">#&gt; `cohort_definition_id` casted to character.</span></span>
 <span></span>
-<span><span class="fu"><a href="reference/exportStaticApp.html">exportStaticApp</a></span><span class="op">(</span>result <span class="op">=</span> <span class="va">result</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/exportStaticApp.html">exportStaticApp</a></span><span class="op">(</span>result <span class="op">=</span> <span class="va">result</span>, directory <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ℹ Processing data</span></span>
-<span><span class="co">#&gt; ✔ Data processed: 2 result types idenfied: `summarise_characteristics` and</span></span>
+<span><span class="co">#&gt; ✔ Data processed: 2 panels idenfied: `summarise_characteristics` and</span></span>
 <span><span class="co">#&gt;   `summarise_cohort_attrition`.</span></span>
 <span><span class="co">#&gt; ℹ Creating shiny from provided data</span></span>
-<span><span class="co">#&gt; ✔ Shiny created in: C:/Users/martics/Documents/GitHub/omopViewer/shiny</span></span></code></pre></div>
+<span><span class="co">#&gt; `cohort_definition_id` eliminated from settings as all elements are NA.</span></span>
+<span><span class="co">#&gt; ✔ Shiny created in:</span></span>
+<span><span class="co">#&gt;   /var/folders/pl/k11lm9710hlgl02nvzx4z9wr0000gp/T//RtmpO1NU2D/shiny</span></span></code></pre></div>
+<p>This function allow some customisation of the shiny with the arguments: - <code>theme</code> (to choose a pre-built theme or a bslib one). - <code>logo</code> (you can point to one of the pre-builr logos or to a local image). - <code>title</code> - <code>background</code> whether to allow for an .md file for customisation of a background panel. - <code>summary</code> whether to include or not a summary panel. - <code>panelStructure</code> allows you to structure the different panels in dropdown menus. - <code>panelDetails</code> allows you to create panels at result_id level and assign which are the outputs that we want to include in each panel.</p>
+<p>The shiny generated will have the following structure: - <code>global.R</code> loads the data. - <code>ui.R</code> with all the ui code. You can edit there the buttons and its default values. - <code>server.R</code> server logic, you can edit that file to change some of the displays. - <code>functions.R</code> some utility functions that are used in the shiny app. - <code>data/result.csv</code> the original summarised_result provided. - <code>data/ShinyData.RData</code> the .RData file that contains the data used in the shiny. - <code>data/preprocess.R</code> the file to generate ShinyData.RData from results.csv</p>
 </div>
 <div class="section level2">
 <h2 id="dynamic-shiny-app">Dynamic shiny app<a class="anchor" aria-label="anchor" href="#dynamic-shiny-app"></a>
 </h2>
 <p>The dynamic shiny app can be easily launched with <code><a href="reference/launchDynamicApp.html">launchDynamicApp()</a></code> function. This function creates a shinyApp where you can upload multiple results sets and visualise them.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/launchDynamicApp.html">launchDynamicApp</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="utility-functions">Utility functions<a class="anchor" aria-label="anchor" href="#utility-functions"></a>
-</h2>
-<ul>
-<li>
-<code>tidyData</code> is an experimental version of the <code>tidy.summarised_result</code> method defined in <strong>visOmopResults</strong>.</li>
-<li>
-<code>omopViewerTable</code> is an experimental version of the <code>visOmopTable</code> function defined in <strong>visOmopResults</strong>.</li>
-<li>
-<code>filterData</code> is a function used internally in the package to subset the result. It is not meant to be for user use. It is exported because it is used in the <em>exportStaticApp()</em> function.</li>
-</ul>
+<p>By default the shiny generated will have no data, you have to upload data from a csv or zip file that you have it locally. The summarised_results will be processed and you will be allowed to choose which results to visualise.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
