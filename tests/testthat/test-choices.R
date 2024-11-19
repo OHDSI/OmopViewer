@@ -1,10 +1,10 @@
 test_that("test choices", {
   # empty result
   res <- omopgenerics::emptySummarisedResult()
-  panelDetails <- res |>
+  panelList <- res |>
     panelDetailsFromResult() |>
-    addFilterNames(result = res)
-  expect_no_error(x <- getFilterValues(panelDetails, res))
+    purrr::map(\(x) x$result_id)
+  expect_no_error(x <- filterValues(res, panelList))
   expected <- list()
   expect_identical(x, expected)
 
