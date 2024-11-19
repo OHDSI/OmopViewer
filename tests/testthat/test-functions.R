@@ -13,6 +13,6 @@ test_that("test functions.R is correctly copied", {
   expect_identical(functionsInst, styleCode(functionsR))
 
   # code to copy
-  # file.copy(from = fileR, to = fileInst)
+  # file.copy(from = here::here("R", "functions.R"), to = here::here("inst", "functions.R"), overwrite = TRUE)
 })
 

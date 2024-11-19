@@ -21,30 +21,11 @@ The first colour defines the primary theme colour, which is applied to key inter
 
 ## Predefined themes
 
-```{r, echo=FALSE}
-themes <- OmopViewer:::omopViewerThemes
-createPage <- function(tit, them) {
-  bslib::page_navbar(
-    title = tit, 
-    theme = them, 
-    bslib::nav_panel(
-      title = "Tab", 
-      bslib::card(
-        shiny::selectizeInput(
-          inputId = "test",
-          label = "Selectise",
-          choices = c("A", "B"),
-          selected = "A",
-          multiple = TRUE,
-          options = list(plugins = "remove_button")
-        )
-      )
-    )
-  )
-}
-for (key in names(themes)) {
-  theme <- themes[[key]] |> rlang::parse_expr() |> rlang::eval_tidy()
-  createPage(key, theme)
-}
-```
+See our predefined themes:
 
+<div style="border: 1px solid #ccc; overflow: hidden;">
+  <iframe 
+    src="https://dpa-pde-oxford.shinyapps.io/OmopViewerThemes/" 
+    style="border: none; width: 100%; height: 300px;">
+  </iframe>
+</div>

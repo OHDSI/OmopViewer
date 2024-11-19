@@ -329,6 +329,7 @@ backgroundKeywords <- dplyr::tribble(
 )
 
 omopViewerThemes <- list(
+  default = "bslib::bs_theme()",
   theme1 = "bslib::bs_theme(
     bootswatch = 'sandstone',
     primary = '#605ca8',
