@@ -301,7 +301,7 @@ filterValues <- function(result, resultList) {
         purrr::compact()
       names(sOpts) <- glue::glue("settings_{names(sOpts)}")
       res <- result |>
-        dplyr::filter(.data$result_id %in% .env$resId)
+        dplyr::filter(.data$result_id %in% .env$x)
       gOpts <- res |>
         dplyr::select(c(
           "cdm_name", "group_name", "group_level", "strata_name",
