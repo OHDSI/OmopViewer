@@ -1,6 +1,10 @@
 test_that("test summaryCard", {
   displayOutput <- function(x) {
-    x |> as.character() |> stringr::str_split_1("\n") |> cat(sep = "\n")
+    x |>
+      as.character() |>
+      stringr::str_split_1("\n") |>
+      purrr::keep(\(x) !grepl("htmlwidget-", x)) |>
+      cat(sep = "\n")
   }
 
   # empty summarised result
