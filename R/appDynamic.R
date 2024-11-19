@@ -63,52 +63,52 @@ loadDataUi <- function() {
 
 serverDynamic <- function(input, output, session) {
 
-  output$dynamic_tabs_output <- shiny::renderUI({
-    createDynamicUi(omopgenerics::emptySummarisedResult())
-  })
-
-  uploadedData <- shiny::reactiveVal(dplyr::tibble(
-    id = integer(),
-    name_export = character(),
-    upload_datetime = character(),
-    number_rows = integer(),
-    content = list(),
-    is_empty = logical()
-  ))
-
-  workingData <- shiny::reactiveVal(prepareShinyData(omopgenerics::emptySummarisedResult()))
-
-  shiny::observeEvent(input$upload_data_content, {
-    dataList <- processFiles(input$upload_data_content)
-    uploadedData(mergeData(dataList$data, uploadedData()))
-    output$upload_data_message <- shiny::renderText(dataList$message)
-  })
-
-  output$upload_data_uploaded <- DT::renderDataTable({
-    uploadedDatatable(uploadedData())
-  })
-
-  shiny::observeEvent(input$load_data_go, {
-    dataToUpload <- uploadedData() |>
-      dplyr::slice(input$upload_data_uploaded_rows_selected) |>
-      dplyr::pull("content") |>
-      omopgenerics::bind()
-    workingData(prepareShinyData(dataToUpload))
-  })
-
-  shiny::observeEvent(workingData(), {
-    # choices <- getChoices(workingData())
-    # output$dynamic_tabs_output <- shiny::renderUI(
-    #   createDynamicUi(choices)
-    # )
-    # for (rt in names(choices)) {
-    #   serverResultType <- paste0(
-    #     "function(input, output, session) {", createServer(rt, data = "workingData()"), "}") |>
-    #     rlang::parse_expr() |>
-    #     rlang::eval_tidy()
-    #   shiny::moduleServer(id = NULL, module = serverResultType)
-    # }
-  })
+  # output$dynamic_tabs_output <- shiny::renderUI({
+  #   createDynamicUi(omopgenerics::emptySummarisedResult())
+  # })
+  #
+  # uploadedData <- shiny::reactiveVal(dplyr::tibble(
+  #   id = integer(),
+  #   name_export = character(),
+  #   upload_datetime = character(),
+  #   number_rows = integer(),
+  #   content = list(),
+  #   is_empty = logical()
+  # ))
+  #
+  # workingData <- shiny::reactiveVal(prepareShinyData(omopgenerics::emptySummarisedResult()))
+  #
+  # shiny::observeEvent(input$upload_data_content, {
+  #   dataList <- processFiles(input$upload_data_content)
+  #   uploadedData(mergeData(dataList$data, uploadedData()))
+  #   output$upload_data_message <- shiny::renderText(dataList$message)
+  # })
+  #
+  # output$upload_data_uploaded <- DT::renderDataTable({
+  #   uploadedDatatable(uploadedData())
+  # })
+  #
+  # shiny::observeEvent(input$load_data_go, {
+  #   dataToUpload <- uploadedData() |>
+  #     dplyr::slice(input$upload_data_uploaded_rows_selected) |>
+  #     dplyr::pull("content") |>
+  #     omopgenerics::bind()
+  #   workingData(prepareShinyData(dataToUpload))
+  # })
+  #
+  # shiny::observeEvent(workingData(), {
+  #   # choices <- getChoices(workingData())
+  #   # output$dynamic_tabs_output <- shiny::renderUI(
+  #   #   createDynamicUi(choices)
+  #   # )
+  #   # for (rt in names(choices)) {
+  #   #   serverResultType <- paste0(
+  #   #     "function(input, output, session) {", createServer(rt, data = "workingData()"), "}") |>
+  #   #     rlang::parse_expr() |>
+  #   #     rlang::eval_tidy()
+  #   #   shiny::moduleServer(id = NULL, module = serverResultType)
+  #   # }
+  # })
 
 }
 processFiles <- function(content) {

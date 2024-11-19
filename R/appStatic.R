@@ -30,8 +30,7 @@
 #' @examples
 #' exportStaticApp(
 #'   result = omopgenerics::emptySummarisedResult(),
-#'   directory = tempdir(),
-#'   theme = "theme1"
+#'   directory = tempdir()
 #' )
 #'
 exportStaticApp <- function(result,
@@ -129,8 +128,7 @@ exportStaticApp <- function(result,
     styleCode()
 
   # functions to copy
-  functions <- readLines(file.path(find.package("OmopViewer"), "R", "functions.R")) |>
-    styleCode()
+  functions <- readLines(system.file("functions.R", package = "OmopViewer"))
 
   # check installed libraries
   libraries <- c(
