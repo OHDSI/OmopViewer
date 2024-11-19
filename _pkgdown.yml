@@ -2,3 +2,12 @@ url: https://ohdsi.github.io/OmopViewer/
 template:
   bootstrap: 5
 
+reference:
+- subtitle: Static app
+  desc: This function allows to generate local apps that can be later customised.
+- contents:
+  - exportStaticApp
+- subtitle: Dynamic app
+  desc: This function allows to generate dynamic apps. This app will visualise any summarised_result that you upload on it.
+- contents:
+  - launchDynamicApp
