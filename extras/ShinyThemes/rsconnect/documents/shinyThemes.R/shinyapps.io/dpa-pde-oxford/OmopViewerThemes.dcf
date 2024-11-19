@@ -1,0 +1,13 @@
+name: OmopViewerThemes
+title: OmopViewerThemes
+username: dpa-pde-oxford
+account: dpa-pde-oxford
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 13388910
+bundleId: 9387243
+url: https://dpa-pde-oxford.shinyapps.io/OmopViewerThemes/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: deployShinyThemes.R
