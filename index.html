@@ -63,14 +63,7 @@
 </h2>
 <p>Install it from cran:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"OmopViewer"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Installing package into '/private/var/folders/pl/k11lm9710hlgl02nvzx4z9wr0000gp/T/RtmpuP5k7q/temp_libpath6f1aaa4d6b0'</span></span>
-<span><span class="co">#&gt; (as 'lib' is unspecified)</span></span>
-<span><span class="co">#&gt; Warning: package 'OmopViewer' is not available for this version of R</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; A version of this package for your version of R might be available elsewhere,</span></span>
-<span><span class="co">#&gt; see the ideas at</span></span>
-<span><span class="co">#&gt; https://cran.r-project.org/doc/manuals/r-patched/R-admin.html#Installing-packages</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"OmopViewer"</span><span class="op">)</span></span></code></pre></div>
 <p>Or you can install the development version of OmopViewer from <a href="https://github.com/OHDSI/OmopViewer" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"pak"</span><span class="op">)</span></span>
@@ -111,9 +104,40 @@
 <span><span class="co">#&gt; ℹ Creating shiny from provided data</span></span>
 <span><span class="co">#&gt; `cohort_definition_id` eliminated from settings as all elements are NA.</span></span>
 <span><span class="co">#&gt; ✔ Shiny created in:</span></span>
-<span><span class="co">#&gt;   /var/folders/pl/k11lm9710hlgl02nvzx4z9wr0000gp/T//RtmpO1NU2D/shiny</span></span></code></pre></div>
-<p>This function allow some customisation of the shiny with the arguments: - <code>theme</code> (to choose a pre-built theme or a bslib one). - <code>logo</code> (you can point to one of the pre-builr logos or to a local image). - <code>title</code> - <code>background</code> whether to allow for an .md file for customisation of a background panel. - <code>summary</code> whether to include or not a summary panel. - <code>panelStructure</code> allows you to structure the different panels in dropdown menus. - <code>panelDetails</code> allows you to create panels at result_id level and assign which are the outputs that we want to include in each panel.</p>
-<p>The shiny generated will have the following structure: - <code>global.R</code> loads the data. - <code>ui.R</code> with all the ui code. You can edit there the buttons and its default values. - <code>server.R</code> server logic, you can edit that file to change some of the displays. - <code>functions.R</code> some utility functions that are used in the shiny app. - <code>data/result.csv</code> the original summarised_result provided. - <code>data/ShinyData.RData</code> the .RData file that contains the data used in the shiny. - <code>data/preprocess.R</code> the file to generate ShinyData.RData from results.csv</p>
+<span><span class="co">#&gt;   /var/folders/pl/k11lm9710hlgl02nvzx4z9wr0000gp/T//RtmpLC6wb7/shiny</span></span></code></pre></div>
+<p>This function allow some customisation of the shiny with the arguments:</p>
+<ul>
+<li>
+<code>theme</code> (to choose a pre-built theme or a bslib one).</li>
+<li>
+<code>logo</code> (you can point to one of the pre-builr logos or to a local image).</li>
+<li><code>title</code></li>
+<li>
+<code>background</code> whether to allow for an .md file for customisation of a background panel.</li>
+<li>
+<code>summary</code> whether to include or not a summary panel.</li>
+<li>
+<code>panelStructure</code> allows you to structure the different panels in dropdown menus.</li>
+<li>
+<code>panelDetails</code> allows you to create panels at result_id level and assign which are the outputs that we want to include in each panel.</li>
+</ul>
+<p>The shiny generated will have the following structure:</p>
+<ul>
+<li>
+<code>global.R</code> loads the data.</li>
+<li>
+<code>ui.R</code> with all the ui code. You can edit there the buttons and its default values.</li>
+<li>
+<code>server.R</code> server logic, you can edit that file to change some of the displays.</li>
+<li>
+<code>functions.R</code> some utility functions that are used in the shiny app.</li>
+<li>
+<code>data/result.csv</code> the original summarised_result provided.</li>
+<li>
+<code>data/ShinyData.RData</code> the .RData file that contains the data used in the shiny.</li>
+<li>
+<code>data/preprocess.R</code> the file to generate ShinyData.RData from results.csv</li>
+</ul>
 </div>
 <div class="section level2">
 <h2 id="dynamic-shiny-app">Dynamic shiny app<a class="anchor" aria-label="anchor" href="#dynamic-shiny-app"></a>
