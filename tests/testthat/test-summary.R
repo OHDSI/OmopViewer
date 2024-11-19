@@ -4,8 +4,7 @@ test_that("test cardSummary", {
   }
 
   # empty summarised result
-  res <- emptySummarisedResult() |>
-    correctSettings() |>
+  res <- omopgenerics::emptySummarisedResult() |>
     prepareShinyData()
   expect_no_error(x <- cardSummary(res))
   expect_true(inherits(x, "bslib_fragment"))
@@ -31,7 +30,6 @@ test_that("test cardSummary", {
       package_version = c("0.1.0", "0.2.0", "1.0.0"),
       min_cell_count = c(NA, 1, 5)
     )) |>
-    correctSettings() |>
     prepareShinyData()
   expect_no_error(x <- cardSummary(res))
   expect_true(inherits(x, "bslib_fragment"))

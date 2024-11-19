@@ -33,7 +33,7 @@ omopViewerTabs <- dplyr::tribble(
 omopViewerOutput <- dplyr::tribble(
   ~output_id, ~result_tab_id, ~output_title, ~output_function, ~output_type,
   # default table
-  0L, 0L, "Formatted", "OmopViewer::omopViewerTable", "gt",
+  0L, 0L, "Formatted", "simpleTable", "gt",
   # cohort overlap
   1L, 1L, "Table cohort overlap", "CohortCharacteristics::tableCohortOverlap", "gt",
   2L, 1L, "Plot cohort overlap", "CohortCharacteristics::plotCohortOverlap", "ggplot2",
@@ -92,7 +92,7 @@ omopViewerOutput <- dplyr::tribble(
 
 omopViewerOutputArguments <- dplyr::tribble(
   ~ output_id, ~argument, ~name, ~value,
-  # OmopViewer::omopViewerTable
+  # simpleTable
   0L, "header", "type", "rank",
   0L, "header", "default", "cdm_name",
   0L, "group", "type", "rank",
@@ -270,13 +270,15 @@ omopViewerProj <- c(
 
 omopViewerPreprocess <- c(
   "",
+  "source(file.path(getwd(), \"functions.R\"))",
+  "",
   "result <- omopgenerics::importSummarisedResult(file.path(getwd(), \"data\"))",
-  "data <- OmopViewer::prepareShinyData(result, panelDetails)",
-  "filterValues <- OmopViewer::filterValues(result, panelDetails)",
+  "data <- prepareResult(result, resultList)",
+  "filterValues <- filterValues(result, resultList)",
   "",
   "save(data, filterValues, file = file.path(getwd(), \"data\", \"shinyData.RData\"))",
   "",
-  "rm(result, filterValues, panelDetails, data)"
+  "rm(result, filterValues, resultList, data)"
 )
 
 omopViewerGlobal <- c(
@@ -287,10 +289,13 @@ omopViewerGlobal <- c(
   "}",
   "",
   "# uncomment to load the raw data",
-  "# rawData <- OmopViewer::importSummarisedResult(file.path(getwd(), \"data\"))",
+  "# rawData <- omopgenerics::importSummarisedResult(file.path(getwd(), \"data\"))",
   "",
   "# load shiny data",
-  "load(fileData)"
+  "load(fileData)",
+  "",
+  "# source functions",
+  "source(file.path(getwd(), \"functions.R\"))"
 ) |>
   styleCode()
 

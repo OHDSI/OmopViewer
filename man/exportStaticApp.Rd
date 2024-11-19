@@ -59,7 +59,7 @@ Export and launch a static shiny specific to the provided results.
 }
 \examples{
 exportStaticApp(
-  result = emptySummarisedResult(),
+  result = omopgenerics::emptySummarisedResult(),
   directory = tempdir(),
   theme = "theme1"
 )

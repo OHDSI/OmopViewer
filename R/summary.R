@@ -3,6 +3,6 @@ summaryTab <- function(summary) {
   'bslib::nav_panel(
     title = "Summary",
     icon = shiny::icon("file-alt"),
-    OmopViewer::cardSummary(data)
+    summaryCard(data)
   )'
 }

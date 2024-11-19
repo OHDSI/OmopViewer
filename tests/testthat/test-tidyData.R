@@ -21,8 +21,7 @@ test_that("test tidyData", {
       "package_version" = "",
       "my_param" = 1L,
       "analysis" = c(TRUE, FALSE, TRUE)
-    )) |>
-    correctSettings()
+    ))
 
   expect_no_error(x <- tidyData(result))
   expect_identical(colnames(x), c(

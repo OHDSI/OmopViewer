@@ -1,10 +1,11 @@
-
 filterData <- function(result,
                        prefix,
                        input) {
   result <- result[[prefix]]
 
-  if (nrow(result) == 0) return(emptySummarisedResult())
+  if (nrow(result) == 0) {
+    return(omopgenerics::emptySummarisedResult())
+  }
 
   if (length(input) == 0) inputs <- character() else inputs <- names(input)
 
@@ -15,7 +16,7 @@ filterData <- function(result,
   set <- omopgenerics::settings(result)
   setPrefix <- paste0(c(prefix, "settings_"), collapse = "_")
   toFilter <- inputs[startsWith(inputs, setPrefix)]
-  nms <- substr(toFilter, nchar(setPrefix)+1, nchar(toFilter))
+  nms <- substr(toFilter, nchar(setPrefix) + 1, nchar(toFilter))
   for (nm in nms) {
     if (nm %in% colnames(set)) {
       set <- set |>
@@ -25,12 +26,15 @@ filterData <- function(result,
   result <- result |>
     dplyr::filter(.data$result_id %in% set$result_id)
 
-  if (nrow(result) == 0) return(emptySummarisedResult())
+  if (nrow(result) == 0) {
+    return(omopgenerics::emptySummarisedResult())
+  }
 
   # filter grouping
   cols <- c(
     "cdm_name", "group_name", "group_level", "strata_name", "strata_level",
-    "additional_name", "additional_level")
+    "additional_name", "additional_level"
+  )
   groupCols <- visOmopResults::groupColumns(result)
   strataCols <- visOmopResults::strataColumns(result)
   additionalCols <- visOmopResults::additionalColumns(result)
@@ -40,7 +44,7 @@ filterData <- function(result,
     visOmopResults::splitAll()
   groupPrefix <- paste0(c(prefix, "grouping_"), collapse = "_")
   toFilter <- inputs[startsWith(inputs, groupPrefix)]
-  nms <- substr(toFilter, nchar(groupPrefix)+1, nchar(toFilter))
+  nms <- substr(toFilter, nchar(groupPrefix) + 1, nchar(toFilter))
   for (nm in nms) {
     if (nm %in% colnames(group)) {
       group <- group |>
@@ -102,10 +106,7 @@ backgroundCard <- function(fileName) {
     rlang::set_names() |>
     purrr::map(\(x) {
       if (x %in% names(metadata)) {
-        paste0(
-          backgroundKeywords$fun[backgroundKeywords$keyword == x],
-          "(metadata[[x]])"
-        ) |>
+        paste0(backgroundKeywords[[x]], "(metadata[[x]])") |>
           rlang::parse_expr() |>
           rlang::eval_tidy()
       } else {
@@ -140,7 +141,9 @@ summaryCard <- function(result) {
     purrr::compact() |>
     omopgenerics::bind() |>
     suppressMessages()
-  if (is.null(result)) result <- omopgenerics::emptySummarisedResult()
+  if (is.null(result)) {
+    result <- omopgenerics::emptySummarisedResult()
+  }
   sets <- omopgenerics::settings(result)
 
   # result overview
@@ -149,13 +152,20 @@ summaryCard <- function(result) {
   nResultType <- format(length(unique(sets$result_type)), big.mark = ",")
   cdmNames <- unique(result$cdm_name)
   nCdm <- format(length(cdmNames), big.mark = ",")
+  cdms <- if (length(cdmNames) > 0) {
+    paste0(": ", paste0("*", cdmNames, "*", collapse = ", "))
+  } else {
+    ""
+  }
   overview <- c(
     "### Result overview",
-    "- Results contain **{nResult}** rows with **{nSets}** different result_id.",
-    "- Results contain **{nPanels}** panels with **{nResultType}** diferent result_type",
-    "- Results contain data from **{nCdm}** different cdm objects *{glue::glue_collapse(cdmNames, sep = '*, *', last = '* and *')}*"
-  ) |>
-    purrr::map(glue::glue)
+    "- Results contain **{nResult}** rows with **{nSets}** different result_id." |>
+      glue::glue(),
+    "- Results contain **{nPanels}** panels with **{nResultType}** diferent result_type." |>
+      glue::glue(),
+    "- Results contain data from **{nCdm}** different cdm objects{cdms}." |>
+      glue::glue()
+  )
 
   # packages versions
   packageVersions <- sets |>
@@ -180,8 +190,8 @@ summaryCard <- function(result) {
       ),
       message = dplyr::if_else(
         .data$n > 1,
-        paste0('- <span style="color:red">', .data$message, '</span>'),
-        paste0('- <span style="color:green">', .data$message, '</span>'),
+        paste0('- <span style="color:red">', .data$message, "</span>"),
+        paste0('- <span style="color:green">', .data$message, "</span>"),
       )
     ) |>
     dplyr::group_by(.data$group) |>
@@ -205,8 +215,8 @@ summaryCard <- function(result) {
       )),
       message = dplyr::if_else(
         .data$min_cell_count == "0",
-        paste0('- <span style="color:red">', .data$message, '</span>'),
-        paste0('- <span style="color:green">', .data$message, '</span>'),
+        paste0('- <span style="color:red">', .data$message, "</span>"),
+        paste0('- <span style="color:green">', .data$message, "</span>"),
       )
     ) |>
     dplyr::pull("message")
@@ -229,7 +239,9 @@ simpleTable <- function(result,
   if (length(group) == 0) group <- NULL
   if (length(hide) == 0) hide <- character()
 
-  if (nrow(result) == 0) return(gt::gt(dplyr::tibble()))
+  if (nrow(result) == 0) {
+    return(gt::gt(dplyr::tibble()))
+  }
 
   result <- omopgenerics::tidy(result)
 
@@ -245,7 +257,8 @@ simpleTable <- function(result,
   )
   result <- result |>
     visOmopResults::formatEstimateValue(
-      decimals = c(integer = 0, numeric = 1, percentage = 0)) |>
+      decimals = c(integer = 0, numeric = 1, percentage = 0)
+    ) |>
     visOmopResults::formatEstimateName(estimateNameFormat = formatEstimates) |>
     suppressMessages() |>
     visOmopResults::formatHeader(header = header) |>

@@ -313,7 +313,7 @@ outputServer <- function(rt, outputId, data) {
     c("## output [id] -----",
       'createOutput[id] <- shiny::reactive({
         result <- [data] |>
-          OmopViewer::filterData("[rt]", input)
+          filterData("[rt]", input)
         [getOutputFunction(id)](
           [inputs]
         )

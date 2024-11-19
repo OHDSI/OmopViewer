@@ -64,7 +64,7 @@ loadDataUi <- function() {
 serverDynamic <- function(input, output, session) {
 
   output$dynamic_tabs_output <- shiny::renderUI({
-    createDynamicUi(emptySummarisedResult())
+    createDynamicUi(omopgenerics::emptySummarisedResult())
   })
 
   uploadedData <- shiny::reactiveVal(dplyr::tibble(
@@ -76,7 +76,7 @@ serverDynamic <- function(input, output, session) {
     is_empty = logical()
   ))
 
-  workingData <- shiny::reactiveVal(prepareShinyData(emptySummarisedResult()))
+  workingData <- shiny::reactiveVal(prepareShinyData(omopgenerics::emptySummarisedResult()))
 
   shiny::observeEvent(input$upload_data_content, {
     dataList <- processFiles(input$upload_data_content)

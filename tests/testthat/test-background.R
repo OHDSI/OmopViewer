@@ -2,14 +2,14 @@ test_that("background", {
   tdir <- tempdir()
 
   expect_no_error(exportStaticApp(
-    result = emptySummarisedResult(),
+    result = omopgenerics::emptySummarisedResult(),
     directory = tdir,
     background = TRUE
   ))
   unlink(file.path(tdir, "shiny"), recursive = TRUE)
 
   expect_no_error(exportStaticApp(
-    result = emptySummarisedResult(),
+    result = omopgenerics::emptySummarisedResult(),
     directory = tdir,
     background = FALSE
   ))
@@ -24,7 +24,7 @@ test_that("background", {
   content <- "# test\n\ncustom background"
   writeLines(content, con = backgroundFile)
   expect_no_error(exportStaticApp(
-    result = emptySummarisedResult(),
+    result = omopgenerics::emptySummarisedResult(),
     directory = tdir,
     background = backgroundFile
   ))

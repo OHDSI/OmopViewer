@@ -1,7 +1,6 @@
 test_that("test choices", {
   # empty result
-  res <- emptySummarisedResult() |>
-    correctSettings()
+  res <- omopgenerics::emptySummarisedResult()
   panelDetails <- res |>
     panelDetailsFromResult() |>
     addFilterNames(result = res)
@@ -11,15 +10,14 @@ test_that("test choices", {
 
   # check only settings
   resT <- c("custom_result_1", "custom_result_2")
-  res <- emptySummarisedResult(settings = dplyr::tibble(
+  res <- omopgenerics::emptySummarisedResult(settings = dplyr::tibble(
     result_id = c(1L, 2L),
     result_type = resT,
     package_name = "OmopViewer",
     package_version = "1.0.0",
     param = c(TRUE, NA),
     x = c(0, 1)
-  )) |>
-    correctSettings()
+  ))
   panelDetails <- res |>
     panelDetailsFromResult() |>
     addFilterNames(result = res)
@@ -64,8 +62,7 @@ test_that("test choices", {
       param = c(TRUE, NA),
       x = c(0, 1)
     )
-  ) |>
-    correctSettings()
+  )
   panelDetails <- res |>
     panelDetailsFromResult() |>
     addFilterNames(result = res)

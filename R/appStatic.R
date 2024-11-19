@@ -29,7 +29,7 @@
 #'
 #' @examples
 #' exportStaticApp(
-#'   result = emptySummarisedResult(),
+#'   result = omopgenerics::emptySummarisedResult(),
 #'   directory = tempdir(),
 #'   theme = "theme1"
 #' )
@@ -47,10 +47,6 @@ exportStaticApp <- function(result,
                             panels = lifecycle::deprecated()) {
   # input check
   result <- omopgenerics::validateResultArgument(result)
-  if (!all(c("group", "strata", "additional") %in% colnames(omopgenerics::settings(result)))) {
-    result <- result |>
-      .correctSettings()
-  }
 
   omopgenerics::assertCharacter(directory, length = 1)
   omopgenerics::assertLogical(open, length = 1)
@@ -91,11 +87,11 @@ exportStaticApp <- function(result,
   cli::cli_inform(c("i" = "Creating shiny from provided data"))
 
   # preprocess file
-  panelList <- panelDetails |>
+  resultList <- panelDetails |>
     purrr::map(\(x) x$result_id)
   preprocess <- c(
-    "# shiny is prepared to work with this panelList, please do not change them",
-    paste0("panelList <- ", writePanelDetails(panelList)),
+    "# shiny is prepared to work with this resultList, please do not change them",
+    paste0("resultList <- ", writeResultList(resultList)),
     omopViewerPreprocess
   ) |>
     styleCode()
@@ -122,20 +118,27 @@ exportStaticApp <- function(result,
       panelStructure = panelStructure,
       panelDetails = panelDetails
     )
-  )
+  ) |>
+    styleCode()
 
   # create server
   server <- c(
     messageShiny(),
     serverStatic(panelDetails = panelDetails)
-  )
+  ) |>
+    styleCode()
+
+  # functions to copy
+  functions <- readLines(file.path(find.package("OmopViewer"), "R", "functions.R")) |>
+    styleCode()
 
   # check installed libraries
   libraries <- c(
     detectPackages(ui),
     detectPackages(server),
     detectPackages(omopViewerGlobal),
-    detectPackages(preprocess)
+    detectPackages(preprocess),
+    detectPackages(functions)
   ) |>
     unique() |>
     sort()
@@ -147,10 +150,8 @@ exportStaticApp <- function(result,
     styleCode()
 
   # prepare data
-  filterValues <- getFilterValues(panelDetails, result)
-  data <- prepareResult(
-    panelDetails, result |> omopgenerics::suppress(minCellCount = 0)
-  )
+  filterValues <- filterValues(result, resultList)
+  data <- prepareResult(result, resultList)
 
   # write files in the corresponding directory
   if (!is.null(background)) {
@@ -159,12 +160,13 @@ exportStaticApp <- function(result,
   writeLines(ui, con = file.path(directory, "ui.R"))
   writeLines(server, con = file.path(directory, "server.R"))
   writeLines(global, con = file.path(directory, "global.R"))
+  writeLines(functions, con = file.path(directory, "functions.R"))
   writeLines(omopViewerProj, con = file.path(directory, "shiny.Rproj"))
 
   # export data
   dataPath <- file.path(directory, "data")
   dir.create(dataPath, showWarnings = FALSE)
-  exportSummarisedResult(
+  omopgenerics::exportSummarisedResult(
     result, minCellCount = 0, fileName = "results.csv", path = dataPath
   )
   save(data, filterValues, file = file.path(dataPath, "shinyData.RData"))
@@ -269,12 +271,8 @@ uiStatic <- function(logo,
                      theme,
                      panelDetails,
                      panelStructure) {
-  # Create the bslib::bs_theme() call, or use NULL if not provided
-  theme_setting <- if (!is.null(theme)) {
-    paste0("theme = ", theme, ",")
-  } else {
-    ""
-  }
+  # theme
+  theme_setting <- paste0("theme = ", theme, ",")
 
   # create panels
   panels <- createUiPanels(panelDetails) |>
@@ -297,8 +295,7 @@ uiStatic <- function(logo,
       paste0(collapse = ",\n"),
     ")"
   ) |>
-    paste0(collapse = "\n") |>
-    styleCode()
+    paste0(collapse = "\n")
 }
 
 pageTitle <- function(title, logo) {
@@ -329,8 +326,7 @@ serverStatic <- function(panelDetails) {
       "}"
     ),
     collapse = "\n"
-  ) |>
-    styleCode()
+  )
 }
 
 # utilities ----
@@ -379,18 +375,12 @@ subs <- function(x, pat, subst) {
   }
   return(x)
 }
-writePanelDetails <- function(panelDetails) {
-  if (length(panelDetails) == 0) return("list()")
+writeResultList <- function(resultList) {
+  if (length(resultList) == 0) return("list()")
   paste0(
     "list(\n",
-    purrr::imap(panelDetails, \(x, nm) {
-      paste0(
-        cast(nm),
-        " = list(\n",
-        purrr::imap(x, \(x, nm) paste0(cast(nm), " = ", cast(x))) |>
-          paste0(collapse = ",\n"),
-        "\n)"
-      )
+    purrr::imap_chr(resultList, \(x, nm) {
+      paste0(cast(nm), " = c(", paste0(x, collapse = "L, "), "L)")
     }) |>
       paste0(collapse = ",\n"),
     "\n)"
