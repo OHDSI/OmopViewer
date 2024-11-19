@@ -39,7 +39,10 @@ pak::pkg_install("OHDSI/OmopViewer")
 library(OmopViewer)
 ```
 
-The package has two functionalities: - Static app - Dynamic app
+The package has two functionalities:
+
+- Static app
+- Dynamic app
 
 ## Static shiny app
 
@@ -71,7 +74,7 @@ exportStaticApp(result = result, directory = tempdir())
 #> ℹ Creating shiny from provided data
 #> `cohort_definition_id` eliminated from settings as all elements are NA.
 #> ✔ Shiny created in:
-#>   /var/folders/pl/k11lm9710hlgl02nvzx4z9wr0000gp/T//RtmpLC6wb7/shiny
+#>   /var/folders/pl/k11lm9710hlgl02nvzx4z9wr0000gp/T//RtmpYP9P88/shiny
 ```
 
 This function allow some customisation of the shiny with the arguments:

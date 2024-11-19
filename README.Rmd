@@ -46,6 +46,7 @@ library(OmopViewer)
 ```
 
 The package has two functionalities:
+
 - Static app
 - Dynamic app
 
