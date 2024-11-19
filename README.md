@@ -23,13 +23,6 @@ Install it from cran:
 
 ``` r
 install.packages("OmopViewer")
-#> Installing package into '/private/var/folders/pl/k11lm9710hlgl02nvzx4z9wr0000gp/T/RtmpuP5k7q/temp_libpath6f1aaa4d6b0'
-#> (as 'lib' is unspecified)
-#> Warning: package 'OmopViewer' is not available for this version of R
-#> 
-#> A version of this package for your version of R might be available elsewhere,
-#> see the ideas at
-#> https://cran.r-project.org/doc/manuals/r-patched/R-admin.html#Installing-packages
 ```
 
 Or you can install the development version of OmopViewer from
@@ -78,27 +71,36 @@ exportStaticApp(result = result, directory = tempdir())
 #> ℹ Creating shiny from provided data
 #> `cohort_definition_id` eliminated from settings as all elements are NA.
 #> ✔ Shiny created in:
-#>   /var/folders/pl/k11lm9710hlgl02nvzx4z9wr0000gp/T//RtmpO1NU2D/shiny
+#>   /var/folders/pl/k11lm9710hlgl02nvzx4z9wr0000gp/T//RtmpLC6wb7/shiny
 ```
 
-This function allow some customisation of the shiny with the
-arguments: - `theme` (to choose a pre-built theme or a bslib one). -
-`logo` (you can point to one of the pre-builr logos or to a local
-image). - `title` - `background` whether to allow for an .md file for
-customisation of a background panel. - `summary` whether to include or
-not a summary panel. - `panelStructure` allows you to structure the
-different panels in dropdown menus. - `panelDetails` allows you to
-create panels at result_id level and assign which are the outputs that
-we want to include in each panel.
+This function allow some customisation of the shiny with the arguments:
 
-The shiny generated will have the following structure: - `global.R`
-loads the data. - `ui.R` with all the ui code. You can edit there the
-buttons and its default values. - `server.R` server logic, you can edit
-that file to change some of the displays. - `functions.R` some utility
-functions that are used in the shiny app. - `data/result.csv` the
-original summarised_result provided. - `data/ShinyData.RData` the .RData
-file that contains the data used in the shiny. - `data/preprocess.R` the
-file to generate ShinyData.RData from results.csv
+- `theme` (to choose a pre-built theme or a bslib one).
+- `logo` (you can point to one of the pre-builr logos or to a local
+  image).
+- `title`
+- `background` whether to allow for an .md file for customisation of a
+  background panel.
+- `summary` whether to include or not a summary panel.
+- `panelStructure` allows you to structure the different panels in
+  dropdown menus.
+- `panelDetails` allows you to create panels at result_id level and
+  assign which are the outputs that we want to include in each panel.
+
+The shiny generated will have the following structure:
+
+- `global.R` loads the data.
+- `ui.R` with all the ui code. You can edit there the buttons and its
+  default values.
+- `server.R` server logic, you can edit that file to change some of the
+  displays.
+- `functions.R` some utility functions that are used in the shiny app.
+- `data/result.csv` the original summarised_result provided.
+- `data/ShinyData.RData` the .RData file that contains the data used in
+  the shiny.
+- `data/preprocess.R` the file to generate ShinyData.RData from
+  results.csv
 
 ## Dynamic shiny app
 

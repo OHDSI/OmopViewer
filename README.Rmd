@@ -28,7 +28,7 @@ The goal of OmopViewer is to allow the user to easily create Shiny Apps to visua
 
 Install it from cran:
 
-```{r}
+```{r, eval = FALSE}
 install.packages("OmopViewer")
 ```
 
@@ -64,6 +64,7 @@ exportStaticApp(result = result, directory = tempdir())
 ```
 
 This function allow some customisation of the shiny with the arguments:
+
 - `theme` (to choose a pre-built theme or a bslib one).
 - `logo` (you can point to one of the pre-builr logos or to a local image).
 - `title`
@@ -73,6 +74,7 @@ This function allow some customisation of the shiny with the arguments:
 - `panelDetails` allows you to create panels at result_id level and assign which are the outputs that we want to include in each panel.
 
 The shiny generated will have the following structure:
+
 - `global.R` loads the data.
 - `ui.R` with all the ui code. You can edit there the buttons and its default values.
 - `server.R` server logic, you can edit that file to change some of the displays.
