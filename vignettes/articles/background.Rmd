@@ -13,10 +13,13 @@ knitr::opts_chunk$set(
 )
 ```
 
-The background panel is triggered when `background = TRUE` argument is used in the `exportStaticApp()` function. If background is set to TRUE a 'background' panel is added and a default 'background.md' file is created. The content of this 'background' panel will be always a card generated with the `cardFromMd()` function using the content of 'background.md'. In this vignette we are going to show different options how to populate the 'background.md' file.
+The background panel is triggered when `background = TRUE` argument is used in the `exportStaticApp()` function. If background is set to TRUE a 'background' panel is added and a default 'background.md' file is created. The content of this 'background' panel will be always a card generated with the `backgroundCard()` function using the content of 'background.md'. In this vignette we are going to show different options how to populate the 'background.md' file.
 
 ```{r}
 library(OmopViewer)
+
+# this functions will be copied in your shiny folder
+source(system.file("functions.R", package = "OmopViewer")) 
 ```
 
 ## General markdown behaviour
@@ -67,7 +70,7 @@ system.file("logos", "ohdsi_logo.svg", package = "OmopViewer"),
 
 tmpFile <- tempfile(fileext = ".md")
 writeLines(text = text, con = tmpFile)
-x <- cardFromMd(tmpFile)
+x <- backgroundCard(tmpFile)
 unlink(tmpFile)
 x
 ```
@@ -128,7 +131,7 @@ bla bla bla bla...'
 
 tmpFile <- tempfile(fileext = ".md")
 writeLines(text = text, con = tmpFile)
-x <- cardFromMd(tmpFile)
+x <- backgroundCard(tmpFile)
 unlink(tmpFile)
 x
 ```
@@ -182,7 +185,7 @@ This shiny *contains information* on:
 
 tmpFile <- tempfile(fileext = ".md")
 writeLines(text = text, con = tmpFile)
-x <- cardFromMd(tmpFile)
+x <- backgroundCard(tmpFile)
 unlink(tmpFile)
 x
 ```

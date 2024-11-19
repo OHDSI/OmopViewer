@@ -6,7 +6,7 @@
       bslib::nav_panel(
           title = "Background",
           icon = shiny::icon("disease"),
-          OmopViewer::cardFromMd("background.md")
+          backgroundCard("background.md")
         )
 
 ---
@@ -16,7 +16,7 @@
     Output
       
 
-# test cardFromMd
+# test backgroundCard
 
     Code
       cat(as.character(bkg))

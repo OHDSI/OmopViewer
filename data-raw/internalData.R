@@ -33,7 +33,7 @@ omopViewerTabs <- dplyr::tribble(
 omopViewerOutput <- dplyr::tribble(
   ~output_id, ~result_tab_id, ~output_title, ~output_function, ~output_type,
   # default table
-  0L, 0L, "Formatted", "OmopViewer::omopViewerTable", "gt",
+  0L, 0L, "Formatted", "simpleTable", "gt",
   # cohort overlap
   1L, 1L, "Table cohort overlap", "CohortCharacteristics::tableCohortOverlap", "gt",
   2L, 1L, "Plot cohort overlap", "CohortCharacteristics::plotCohortOverlap", "ggplot2",
@@ -92,7 +92,7 @@ omopViewerOutput <- dplyr::tribble(
 
 omopViewerOutputArguments <- dplyr::tribble(
   ~ output_id, ~argument, ~name, ~value,
-  # OmopViewer::omopViewerTable
+  # simpleTable
   0L, "header", "type", "rank",
   0L, "header", "default", "cdm_name",
   0L, "group", "type", "rank",
@@ -146,9 +146,9 @@ omopViewerOutputArguments <- dplyr::tribble(
   7L, "hide", "type", "rank",
   7L, NA, "rank_options", "<grouping>, <variable>",
   # CohortCharacteristics::plotCharacteristics
-  8L, "plotType", "type", "selector",
-  8L, "plotType", "options", "boxplot, barplot, scatterplot",
-  8L, "plotType", "multiple", "FALSE",
+  8L, "plotStyle", "type", "selector",
+  8L, "plotStyle", "options", "boxplot, barplot, scatterplot",
+  8L, "plotStyle", "multiple", "FALSE",
   8L, "facet", "type", "selector",
   8L, "facet", "options", "<grouping>, <variable>, <settings>",
   8L, "facet", "multiple", "TRUE",
@@ -270,13 +270,15 @@ omopViewerProj <- c(
 
 omopViewerPreprocess <- c(
   "",
+  "source(file.path(getwd(), \"functions.R\"))",
+  "",
   "result <- omopgenerics::importSummarisedResult(file.path(getwd(), \"data\"))",
-  "data <- OmopViewer::prepareShinyData(result, panelDetails)",
-  "filterValues <- OmopViewer::filterValues(result, panelDetails)",
+  "data <- prepareResult(result, resultList)",
+  "filterValues <- defaultFilterValues(result, resultList)",
   "",
   "save(data, filterValues, file = file.path(getwd(), \"data\", \"shinyData.RData\"))",
   "",
-  "rm(result, filterValues, panelDetails, data)"
+  "rm(result, filterValues, resultList, data)"
 )
 
 omopViewerGlobal <- c(
@@ -287,10 +289,13 @@ omopViewerGlobal <- c(
   "}",
   "",
   "# uncomment to load the raw data",
-  "# rawData <- OmopViewer::importSummarisedResult(file.path(getwd(), \"data\"))",
+  "# rawData <- omopgenerics::importSummarisedResult(file.path(getwd(), \"data\"))",
   "",
   "# load shiny data",
-  "load(fileData)"
+  "load(fileData)",
+  "",
+  "# source functions",
+  "source(file.path(getwd(), \"functions.R\"))"
 ) |>
   styleCode()
 
@@ -300,6 +305,23 @@ omopViewerGlobal <- c(
 logoKeywords <- c("hds", "ohdsi") |>
   stringr::str_to_lower()
 
+# To put names in lowercase
+# logosPath <- here::here("inst", "logos")
+# files <- list.files(logosPath)
+# lowFiles <- stringr::str_to_lower(files)
+# purrr::map2(files, lowFiles, \(x, y) {
+#   if (x != y) {
+#     x <- file.path(logosPath, x)
+#     yTemp <- file.path(tempdir(), y)
+#     y <- file.path(logosPath, y)
+#     file.copy(from = x, to = yTemp)
+#     file.remove(x)
+#     file.copy(from = yTemp, to = y)
+#   }
+# }) |>
+#   invisible()
+
+# IT HAS TO BE EDITED HERE AND IN `functions.R`!!
 backgroundKeywords <- dplyr::tribble(
   ~keyword, ~fun, ~link,
   "header", "bslib::card_header", "https://rstudio.github.io/bslib//reference/card_body.html",

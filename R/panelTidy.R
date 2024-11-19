@@ -43,8 +43,10 @@ tidyServer <- function(prefix, data) {
   funPrefix <- formatCamel(prefix)
   c(paste0('getTidyData', funPrefix, ' <- shiny::reactive({
       res <- ', data, ' |>
-        OmopViewer::filterData("', prefix, '", input) |>
-        OmopViewer::tidyData()
+        filterData("', prefix, '", input) |>
+        omopgenerics::addSettings() |>
+        omopgenerics::splitAll() |>
+        dplyr::select(!"result_id")
 
       # columns to eliminate
       colsEliminate <- colnames(res)

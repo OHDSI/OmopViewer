@@ -1,38 +1,38 @@
 test_that("test choices", {
   # empty result
-  res <- emptySummarisedResult() |>
-    correctSettings()
-  panelDetails <- res |>
+  res <- omopgenerics::emptySummarisedResult()
+  panelList <- res |>
     panelDetailsFromResult() |>
-    addFilterNames(result = res)
-  expect_no_error(x <- getFilterValues(panelDetails, res))
+    purrr::map(\(x) x$result_id)
+  expect_no_error(x <- defaultFilterValues(res, panelList))
   expected <- list()
   expect_identical(x, expected)
 
   # check only settings
   resT <- c("custom_result_1", "custom_result_2")
-  res <- emptySummarisedResult(settings = dplyr::tibble(
+  res <- omopgenerics::emptySummarisedResult(settings = dplyr::tibble(
     result_id = c(1L, 2L),
     result_type = resT,
     package_name = "OmopViewer",
     package_version = "1.0.0",
     param = c(TRUE, NA),
     x = c(0, 1)
-  )) |>
-    correctSettings()
+  ))
   panelDetails <- res |>
     panelDetailsFromResult() |>
     addFilterNames(result = res)
-  expect_no_error(x <- getFilterValues(panelDetails, res))
+  panelList <- panelDetails |>
+    purrr::map(\(x) x$result_id)
+  expect_no_error(x <- defaultFilterValues(res, panelList))
   nm <- names(x)
   expect_true(all(startsWith(nm, "custom_result_1") | startsWith(nm, "custom_result_2")))
   # names
   nm1 <- nm[startsWith(nm, "custom_result_1")]
   nm1 <- substr(nm1, 17, nchar(nm1))
-  expect_identical(nm1, c(panelDetails$custom_result_1$filters, "tidy_columns"))
+  expect_identical(nm1, c(panelDetails$custom_result_1$filter_name, "tidy_columns"))
   nm2 <- nm[startsWith(nm, "custom_result_2")]
   nm2 <- substr(nm2, 17, nchar(nm2))
-  expect_identical(nm2, c(panelDetails$custom_result_2$filters, "tidy_columns"))
+  expect_identical(nm2, c(panelDetails$custom_result_2$filter_name, "tidy_columns"))
   # settings
   expect_identical(x$custom_result_1_settings_param, "TRUE")
   expect_identical(x$custom_result_1_settings_x, "0")
@@ -64,21 +64,22 @@ test_that("test choices", {
       param = c(TRUE, NA),
       x = c(0, 1)
     )
-  ) |>
-    correctSettings()
+  )
   panelDetails <- res |>
     panelDetailsFromResult() |>
     addFilterNames(result = res)
-  expect_no_error(x <- getFilterValues(panelDetails, res))
+  panelList <- panelDetails |>
+    purrr::map(\(x) x$result_id)
+  expect_no_error(x <- defaultFilterValues(res, panelList))
   nm <- names(x)
   expect_true(all(startsWith(nm, "custom_result_1") | startsWith(nm, "custom_result_2")))
   # names
   nm1 <- nm[startsWith(nm, "custom_result_1")]
-  nm1 <- substr(nm1, 17, nchar(nm1))
-  expect_identical(nm1, c(panelDetails$custom_result_1$filters, "tidy_columns"))
+  nm1 <- substr(nm1, 17, nchar(nm1)) |> sort()
+  expect_identical(nm1, sort(c(panelDetails$custom_result_1$filter_name, "tidy_columns")))
   nm2 <- nm[startsWith(nm, "custom_result_2")]
-  nm2 <- substr(nm2, 17, nchar(nm2))
-  expect_identical(nm2, c(panelDetails$custom_result_2$filters, "tidy_columns"))
+  nm2 <- substr(nm2, 17, nchar(nm2)) |> sort()
+  expect_identical(nm2, sort(c(panelDetails$custom_result_2$filter_name, "tidy_columns")))
   # settings
   expect_identical(x$custom_result_1_settings_param, "TRUE")
   expect_identical(x$custom_result_1_settings_x, "0")

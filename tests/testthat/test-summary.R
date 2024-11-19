@@ -1,13 +1,16 @@
-test_that("test cardSummary", {
+test_that("test summaryCard", {
   displayOutput <- function(x) {
-    x |> as.character() |> stringr::str_split_1("\n") |> cat(sep = "\n")
+    x |>
+      as.character() |>
+      stringr::str_split_1("\n") |>
+      purrr::keep(\(x) !grepl("htmlwidget-", x)) |>
+      cat(sep = "\n")
   }
 
   # empty summarised result
-  res <- emptySummarisedResult() |>
-    correctSettings() |>
-    prepareShinyData()
-  expect_no_error(x <- cardSummary(res))
+  res <- omopgenerics::emptySummarisedResult() |>
+    prepareResult(list())
+  expect_no_error(x <- summaryCard(res))
   expect_true(inherits(x, "bslib_fragment"))
   expect_snapshot(displayOutput(x))
 
@@ -31,9 +34,8 @@ test_that("test cardSummary", {
       package_version = c("0.1.0", "0.2.0", "1.0.0"),
       min_cell_count = c(NA, 1, 5)
     )) |>
-    correctSettings() |>
-    prepareShinyData()
-  expect_no_error(x <- cardSummary(res))
+    prepareResult(list(counts = c(1, 2), sums = 3))
+  expect_no_error(x <- summaryCard(res))
   expect_true(inherits(x, "bslib_fragment"))
   expect_snapshot(displayOutput(x))
 })

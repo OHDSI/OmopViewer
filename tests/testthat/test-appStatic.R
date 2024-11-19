@@ -3,7 +3,9 @@ test_that("logo", {
 
   # test no logo
   expect_no_error(exportStaticApp(
-    result = emptySummarisedResult(), directory = tdir, logo = NULL
+    result = omopgenerics::emptySummarisedResult(),
+    directory = tdir,
+    logo = NULL
   ))
   expect_true("shiny" %in% list.files(tdir))
   unlink(file.path(tdir, "shiny"), recursive = TRUE)
@@ -11,14 +13,18 @@ test_that("logo", {
   # test keywords
   for (key in logoKeywords) {
     expect_identical(basename(logoPath(key)), paste0(key, "_logo.svg"))
-    expect_no_error(exportStaticApp(result = emptySummarisedResult(),directory = tdir, logo = key))
+    expect_no_error(exportStaticApp(
+      result = omopgenerics::emptySummarisedResult(),
+      directory = tdir,
+      logo = key
+    ))
     expect_true("shiny" %in% list.files(tdir))
     unlink(file.path(tdir, "shiny"), recursive = TRUE)
   }
 
   # custom logo
   expect_no_error(exportStaticApp(
-    result = emptySummarisedResult(),
+    result = omopgenerics::emptySummarisedResult(),
     directory = tdir,
     logo = system.file("oxford.png", package = "OmopViewer")
   ))
@@ -30,7 +36,10 @@ test_that("logo", {
 
 test_that("empty shiny", {
   tdir <- tempdir()
-  expect_no_error(exportStaticApp(result = emptySummarisedResult(),directory = tdir))
+  expect_no_error(exportStaticApp(
+    result = omopgenerics::emptySummarisedResult(),
+    directory = tdir
+  ))
   expect_true("shiny" %in% list.files(tdir))
   ui <- readLines(file.path(tdir, "shiny", "ui.R"))
   expect_snapshot(cat(ui, sep = "\n"))
@@ -42,7 +51,9 @@ test_that("empty shiny", {
 test_that("title", {
   tdir <- tempdir()
   expect_no_error(exportStaticApp(
-    result = emptySummarisedResult(), directory = tdir, title = "example"
+    result = omopgenerics::emptySummarisedResult(),
+    directory = tdir,
+    title = "example"
   ))
 
   # check shiny is created
@@ -177,7 +188,12 @@ test_that("order tabs", {
 test_that("theme", {
   tdir <- tempdir()
 
-  expect_no_error(exportStaticApp(result = emptySummarisedResult(), directory = tdir, theme = "theme1", open = FALSE))
+  expect_no_error(exportStaticApp(
+    result = omopgenerics::emptySummarisedResult(),
+    directory = tdir,
+    theme = "theme1",
+    open = FALSE
+  ))
 
   ui <- readLines(file.path(tdir, "shiny", "ui.R")) |>
     stringr::str_flatten() |>
@@ -203,7 +219,7 @@ test_that("theme", {
     code_font = bslib::font_google('Space Mono'))"
 
   expect_message(exportStaticApp(
-    result = emptySummarisedResult(),
+    result = omopgenerics::emptySummarisedResult(),
     theme = theme,
     directory = tdir,
     open = FALSE
@@ -221,7 +237,7 @@ test_that("theme", {
   expect_true(grepl(expectedTheme, ui, fixed = TRUE))
 
   expect_no_error(exportStaticApp(
-    result = emptySummarisedResult(),
+    result = omopgenerics::emptySummarisedResult(),
     directory = tdir,
     theme = NULL,
     open = FALSE

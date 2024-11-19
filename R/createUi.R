@@ -5,9 +5,9 @@ createUiPanels <- function(panelDetails) {
   # create a list with all the panel content
   panelDetails |>
     purrr::imap(\(x, nm) {
-      sidebar <- createSidebar(prefix = nm, filters = x$filters, information = x$information)
+      sidebar <- createSidebar(prefix = nm, filters = x$filter_name, information = x$information)
       outputPanels <- c(
-        tidyUi(tab = nm), outputUi(tab = nm, choic = x$filters)
+        tidyUi(tab = nm), outputUi(tab = nm, choic = x$filter_name)
       ) |>
         paste0(collapse = ",\n")
       c(

@@ -1,4 +1,5 @@
 test_that("check filterData functionality", {
+  resultList <- list(custom = c(1, 2), type2 = 3)
   result <- dplyr::tibble(
     result_id = c(1L, 1L, 1L, 1L, 1L, 2L, 2L, 2L, 3L),
     cdm_name = c(rep("cdm1", 3), rep("cdm2", 2), rep("cdm1", 4)),
@@ -22,7 +23,7 @@ test_that("check filterData functionality", {
       "my_param" = 1L,
       "analysis" = c(TRUE, FALSE, TRUE)
     )) |>
-    prepareShinyData()
+    prepareResult(resultList)
 
   input <- list()
   expect_no_error(
