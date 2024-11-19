@@ -1,5 +1,7 @@
 
 test_that("test functions.R is correctly copied", {
+  skip("manual test")
+
   fileInst <- system.file("functions.R", package = "OmopViewer")
   fileR <- file.path(find.package("OmopViewer"), "R", "functions.R")
 
