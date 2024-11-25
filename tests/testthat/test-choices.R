@@ -15,8 +15,8 @@ test_that("test choices", {
     result_type = resT,
     package_name = "OmopViewer",
     package_version = "1.0.0",
-    param = c(TRUE, NA),
-    x = c(0, 1)
+    param = c("TRUE", NA),
+    x = c("0", "1")
   ))
   panelDetails <- res |>
     panelDetailsFromResult() |>
@@ -61,8 +61,8 @@ test_that("test choices", {
       result_type = resT,
       package_name = "OmopViewer",
       package_version = "1.0.0",
-      param = c(TRUE, NA),
-      x = c(0, 1)
+      param = c("TRUE", NA),
+      x = c("0", "1")
     )
   )
   panelDetails <- res |>

@@ -306,6 +306,11 @@ defaultFilterValues <- function(result, resultList) {
       names(sOpts) <- glue::glue("settings_{names(sOpts)}")
       res <- result |>
         dplyr::filter(.data$result_id %in% .env$x)
+
+      # omopgenerics 0.4.1 should fix this
+      attr(res, "settings") <- attr(res, "settings") |>
+        dplyr::filter(.data$result_id %in% .env$x)
+
       gOpts <- res |>
         dplyr::select(c(
           "cdm_name", "group_name", "group_level", "strata_name",
