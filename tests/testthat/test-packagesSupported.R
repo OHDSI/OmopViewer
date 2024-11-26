@@ -1,4 +1,5 @@
 test_that("IncidencePrevalence shiny", {
+  skip_on_cran()
   cdm <- omock::mockPerson(nPerson = 100) |>
     omock::mockObservationPeriod() |>
     omock::mockCohort(recordPerson = 0.5)
@@ -62,6 +63,7 @@ test_that("IncidencePrevalence shiny", {
 })
 
 test_that("DrugUtilisation shiny", {
+  skip_on_cran()
   skip_if(Sys.getenv("EUNOMIA_DATA_FOLDER") == "")
   con <- duckdb::dbConnect(duckdb::duckdb(), CDMConnector::eunomiaDir())
   cdm <- CDMConnector::cdmFromCon(
@@ -167,6 +169,7 @@ test_that("DrugUtilisation shiny", {
 })
 
 test_that("CohortCharacteristics shiny", {
+  skip_on_cran()
   # create mock cdm
   set.seed(123456)
   cdm <- omock::mockCdmReference() |>
@@ -239,6 +242,7 @@ test_that("CohortCharacteristics shiny", {
 })
 
 test_that("OmopSketch shiny", {
+  skip_on_cran()
   cdm <- OmopSketch::mockOmopSketch()
 
   # mock results
@@ -271,6 +275,7 @@ test_that("OmopSketch shiny", {
 })
 
 test_that("CodelistGenerator shiny", {
+  skip_on_cran()
   skip_if(Sys.getenv("CDM5_POSTGRESQL_DBNAME") == "")
   # test cdm object
   db <- RPostgres::dbConnect(RPostgres::Postgres(),
