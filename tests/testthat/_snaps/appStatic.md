@@ -356,7 +356,7 @@
                         header = NULL,
                         sortable::add_rank_list(
                           text = "none",
-                          labels = c("cdm_name", "variable_name", "estimate_name"),
+                          labels = c("cdm_name", "variable_name", "variable_level", "estimate_name"),
                           input_id = "summarise_cohort_count_gt_9_none"
                         ),
                         sortable::add_rank_list(
@@ -366,12 +366,12 @@
                         ),
                         sortable::add_rank_list(
                           text = "groupColumn",
-                          labels = NULL,
+                          labels = character(),
                           input_id = "summarise_cohort_count_gt_9_groupColumn"
                         ),
                         sortable::add_rank_list(
                           text = "hide",
-                          labels = "variable_level",
+                          labels = character(),
                           input_id = "summarise_cohort_count_gt_9_hide"
                         )
                       ),
@@ -447,6 +447,17 @@
           bslib::layout_sidebar(
             sidebar = bslib::sidebar(
               bslib::accordion(
+                bslib::accordion_panel(
+                  title = "Settings",
+                  shinyWidgets::pickerInput(
+                    inputId = "summarise_cohort_overlap_settings_overlap_by",
+                    label = "Overlap by",
+                    choices = filterValues$summarise_cohort_overlap_settings_overlap_by,
+                    selected = filterValues$summarise_cohort_overlap_settings_overlap_by,
+                    multiple = TRUE,
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
+                  )
+                ),
                 bslib::accordion_panel(
                   title = "Grouping",
                   shinyWidgets::pickerInput(
@@ -556,7 +567,7 @@
                         header = NULL,
                         sortable::add_rank_list(
                           text = "none",
-                          labels = c("cohort_name_reference", "cohort_name_comparator", "estimate_name"),
+                          labels = c("cohort_name_reference", "cohort_name_comparator", "variable_level", "estimate_name"),
                           input_id = "summarise_cohort_overlap_gt_1_none"
                         ),
                         sortable::add_rank_list(
@@ -571,7 +582,7 @@
                         ),
                         sortable::add_rank_list(
                           text = "hide",
-                          labels = "variable_level",
+                          labels = character(),
                           input_id = "summarise_cohort_overlap_gt_1_hide"
                         )
                       ),
@@ -626,7 +637,7 @@
                         label = "facet",
                         selected = c("cdm_name", "cohort_name_reference"),
                         multiple = TRUE,
-                        choices = c("cdm_name", "cohort_name_reference", "cohort_name_comparator", "variable_name", "variable_level", "estimate_name"),
+                        choices = c("cdm_name", "cohort_name_reference", "cohort_name_comparator", "variable_name", "variable_level", "estimate_name", "overlap_by"),
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
                       shiny::checkboxInput(
@@ -785,7 +796,7 @@
                         header = NULL,
                         sortable::add_rank_list(
                           text = "none",
-                          labels = "reason",
+                          labels = c("reason", "reason_id", "variable_level", "estimate_name"),
                           input_id = "summarise_cohort_attrition_gt_3_none"
                         ),
                         sortable::add_rank_list(
@@ -800,7 +811,7 @@
                         ),
                         sortable::add_rank_list(
                           text = "hide",
-                          labels = c("variable_level", "reason_id", "estimate_name"),
+                          labels = character(),
                           input_id = "summarise_cohort_attrition_gt_3_hide"
                         )
                       ),
@@ -908,6 +919,17 @@
             sidebar = bslib::sidebar(
               bslib::accordion(
                 bslib::accordion_panel(
+                  title = "Settings",
+                  shinyWidgets::pickerInput(
+                    inputId = "summarise_cohort_overlap_settings_overlap_by",
+                    label = "Overlap by",
+                    choices = filterValues$summarise_cohort_overlap_settings_overlap_by,
+                    selected = filterValues$summarise_cohort_overlap_settings_overlap_by,
+                    multiple = TRUE,
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
+                  )
+                ),
+                bslib::accordion_panel(
                   title = "Grouping",
                   shinyWidgets::pickerInput(
                     inputId = "summarise_cohort_overlap_grouping_cdm_name",
@@ -1016,7 +1038,7 @@
                         header = NULL,
                         sortable::add_rank_list(
                           text = "none",
-                          labels = c("cohort_name_reference", "cohort_name_comparator", "estimate_name"),
+                          labels = c("cohort_name_reference", "cohort_name_comparator", "variable_level", "estimate_name"),
                           input_id = "summarise_cohort_overlap_gt_1_none"
                         ),
                         sortable::add_rank_list(
@@ -1031,7 +1053,7 @@
                         ),
                         sortable::add_rank_list(
                           text = "hide",
-                          labels = "variable_level",
+                          labels = character(),
                           input_id = "summarise_cohort_overlap_gt_1_hide"
                         )
                       ),
@@ -1086,7 +1108,7 @@
                         label = "facet",
                         selected = c("cdm_name", "cohort_name_reference"),
                         multiple = TRUE,
-                        choices = c("cdm_name", "cohort_name_reference", "cohort_name_comparator", "variable_name", "variable_level", "estimate_name"),
+                        choices = c("cdm_name", "cohort_name_reference", "cohort_name_comparator", "variable_name", "variable_level", "estimate_name", "overlap_by"),
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
                       shiny::checkboxInput(
@@ -1245,7 +1267,7 @@
                         header = NULL,
                         sortable::add_rank_list(
                           text = "none",
-                          labels = "reason",
+                          labels = c("reason", "reason_id", "variable_level", "estimate_name"),
                           input_id = "summarise_cohort_attrition_gt_3_none"
                         ),
                         sortable::add_rank_list(
@@ -1260,7 +1282,7 @@
                         ),
                         sortable::add_rank_list(
                           text = "hide",
-                          labels = c("variable_level", "reason_id", "estimate_name"),
+                          labels = character(),
                           input_id = "summarise_cohort_attrition_gt_3_hide"
                         )
                       ),
@@ -1415,7 +1437,7 @@
                         header = NULL,
                         sortable::add_rank_list(
                           text = "none",
-                          labels = c("cdm_name", "variable_name", "estimate_name"),
+                          labels = c("cdm_name", "variable_name", "variable_level", "estimate_name"),
                           input_id = "summarise_cohort_count_gt_9_none"
                         ),
                         sortable::add_rank_list(
@@ -1425,12 +1447,12 @@
                         ),
                         sortable::add_rank_list(
                           text = "groupColumn",
-                          labels = NULL,
+                          labels = character(),
                           input_id = "summarise_cohort_count_gt_9_groupColumn"
                         ),
                         sortable::add_rank_list(
                           text = "hide",
-                          labels = "variable_level",
+                          labels = character(),
                           input_id = "summarise_cohort_count_gt_9_hide"
                         )
                       ),
@@ -1685,7 +1707,7 @@
                           header = NULL,
                           sortable::add_rank_list(
                             text = "none",
-                            labels = c("cdm_name", "variable_name", "estimate_name"),
+                            labels = c("cdm_name", "variable_name", "variable_level", "estimate_name"),
                             input_id = "summarise_cohort_count_gt_9_none"
                           ),
                           sortable::add_rank_list(
@@ -1695,12 +1717,12 @@
                           ),
                           sortable::add_rank_list(
                             text = "groupColumn",
-                            labels = NULL,
+                            labels = character(),
                             input_id = "summarise_cohort_count_gt_9_groupColumn"
                           ),
                           sortable::add_rank_list(
                             text = "hide",
-                            labels = "variable_level",
+                            labels = character(),
                             input_id = "summarise_cohort_count_gt_9_hide"
                           )
                         ),
@@ -1912,7 +1934,7 @@
                           header = NULL,
                           sortable::add_rank_list(
                             text = "none",
-                            labels = "reason",
+                            labels = c("reason", "reason_id", "variable_level", "estimate_name"),
                             input_id = "summarise_cohort_attrition_gt_3_none"
                           ),
                           sortable::add_rank_list(
@@ -1927,7 +1949,7 @@
                           ),
                           sortable::add_rank_list(
                             text = "hide",
-                            labels = c("variable_level", "reason_id", "estimate_name"),
+                            labels = character(),
                             input_id = "summarise_cohort_attrition_gt_3_hide"
                           )
                         ),
@@ -1971,6 +1993,17 @@
           bslib::layout_sidebar(
             sidebar = bslib::sidebar(
               bslib::accordion(
+                bslib::accordion_panel(
+                  title = "Settings",
+                  shinyWidgets::pickerInput(
+                    inputId = "summarise_cohort_overlap_settings_overlap_by",
+                    label = "Overlap by",
+                    choices = filterValues$summarise_cohort_overlap_settings_overlap_by,
+                    selected = filterValues$summarise_cohort_overlap_settings_overlap_by,
+                    multiple = TRUE,
+                    options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
+                  )
+                ),
                 bslib::accordion_panel(
                   title = "Grouping",
                   shinyWidgets::pickerInput(
@@ -2080,7 +2113,7 @@
                         header = NULL,
                         sortable::add_rank_list(
                           text = "none",
-                          labels = c("cohort_name_reference", "cohort_name_comparator", "estimate_name"),
+                          labels = c("cohort_name_reference", "cohort_name_comparator", "variable_level", "estimate_name"),
                           input_id = "summarise_cohort_overlap_gt_1_none"
                         ),
                         sortable::add_rank_list(
@@ -2095,7 +2128,7 @@
                         ),
                         sortable::add_rank_list(
                           text = "hide",
-                          labels = "variable_level",
+                          labels = character(),
                           input_id = "summarise_cohort_overlap_gt_1_hide"
                         )
                       ),
@@ -2150,7 +2183,7 @@
                         label = "facet",
                         selected = c("cdm_name", "cohort_name_reference"),
                         multiple = TRUE,
-                        choices = c("cdm_name", "cohort_name_reference", "cohort_name_comparator", "variable_name", "variable_level", "estimate_name"),
+                        choices = c("cdm_name", "cohort_name_reference", "cohort_name_comparator", "variable_name", "variable_level", "estimate_name", "overlap_by"),
                         options = list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")
                       ),
                       shiny::checkboxInput(

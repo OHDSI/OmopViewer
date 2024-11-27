@@ -8,6 +8,7 @@ createButton <- function(x, defaults, prefix) {
   def <- x$value[x$name == "default"]
   if (length(def) == 0) {
     def <- tryCatch(rlang::eval_tidy(defaults[[arg]]), error = function(e) NULL)
+    if (!lifecycle::is_present(def)) def <- NULL
   }
   def <- cast(def)
   if (type == "selector") {
