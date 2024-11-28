@@ -68,6 +68,7 @@ test_that("title", {
 })
 
 test_that("order tabs", {
+  skip_on_cran()
   # create mock cdm
   set.seed(123456)
   cdm <- omock::mockCdmReference() |>
@@ -250,6 +251,7 @@ test_that("theme", {
 })
 
 test_that("check preprocess file works", {
+  skip_on_cran()
   # create mock cdm
   set.seed(123456)
   cdm <- omock::mockCdmReference() |>

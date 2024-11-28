@@ -25,7 +25,7 @@ serverDynamic <- function(input, output, session) {
   )
 
   # change the theme of the shiny
-  observeEvent(input$configuration_theme, {
+  shiny::observeEvent(input$configuration_theme, {
     theme <- omopViewerThemes[[input$configuration_theme]] |>
       rlang::parse_expr() |>
       rlang::eval_tidy()
