@@ -74,10 +74,5 @@ test_that("check filterData functionality", {
     dplyr::filter(
       .data$cdm_name == "cdm1", .data$variable_name == "number subjects"
     )
-  res <- res |>
-    omopgenerics::newSummarisedResult(
-      settings = omopgenerics::settings(res) |>
-        dplyr::filter(.data$result_id %in% unique(res$result_id))
-    )
   expect_identical(x, res)
 })
