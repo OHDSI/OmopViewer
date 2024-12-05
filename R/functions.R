@@ -32,8 +32,8 @@ filterData <- function(result,
 
   # filter grouping
   cols <- c(
-    "result_id", "cdm_name", "group_name", "group_level", "strata_name",
-    "strata_level", "additional_name", "additional_level"
+    "cdm_name", "group_name", "group_level", "strata_name", "strata_level",
+    "additional_name", "additional_level"
   )
   groupCols <- visOmopResults::groupColumns(result)
   strataCols <- visOmopResults::strataColumns(result)
@@ -280,12 +280,19 @@ simpleTable <- function(result,
 prepareResult <- function(result, resultList) {
   resultList |>
     purrr::map(\(x) {
+      set <- omopgenerics::settings(result) |>
+        dplyr::filter(.data$result_id %in% .env$x)
+      cols <- set |>
+        as.list() |>
+        purrr::keep(\(x) all(is.na(unique(x)))) |>
+        names()
+      set <- set |>
+        dplyr::mutate(dplyr::across(
+          !dplyr::all_of(c(cols, "result_id")), \(x) dplyr::coalesce(x, "NA")
+        ))
       result |>
         dplyr::filter(.data$result_id %in% .env$x) |>
-        omopgenerics::newSummarisedResult(
-          settings = omopgenerics::settings(result) |>
-            dplyr::filter(.data$result_id %in% .env$x)
-        )
+        omopgenerics::newSummarisedResult(settings = set)
     })
 }
 defaultFilterValues <- function(result, resultList) {
@@ -300,7 +307,12 @@ defaultFilterValues <- function(result, resultList) {
         as.list() |>
         purrr::map(\(x) {
           x <- unique(x)
-          x[!is.na(x)]
+          if (all(is.na(x))) {
+            x <- character()
+          } else {
+            x[is.na(x)] <- "NA"
+          }
+          x
         }) |>
         purrr::compact()
       names(sOpts) <- glue::glue("settings_{names(sOpts)}")

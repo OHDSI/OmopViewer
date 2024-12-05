@@ -115,7 +115,7 @@ omopViewerOutputArguments <- dplyr::tribble(
   3L, "header", "type", "rank",
   3L, "groupColumn", "type", "rank",
   3L, "hide", "type", "rank",
-  3L, NA, "rank_options", "<grouping>, <variable>",
+  3L, NA, "rank_options", "<grouping>, <variable>, <settings>",
   # CohortCharacteristics::plotCohortAttrition
   # CohortCharacteristics::tableCohortTiming
   5L, "uniqueCombinations", "type", "check",
