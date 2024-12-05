@@ -69,11 +69,15 @@ test_that("check filterData functionality", {
   expect_no_error(
     x <- filterData(result = result, prefix = "custom", input = input)
   )
-  expect_identical(
-    x,
-    result$custom |>
-      dplyr::filter(
-        .data$cdm_name == "cdm1", .data$variable_name == "number subjects"
-      )
-  )
+  # manual filter
+  res <- result$custom |>
+    dplyr::filter(
+      .data$cdm_name == "cdm1", .data$variable_name == "number subjects"
+    )
+  res <- res |>
+    omopgenerics::newSummarisedResult(
+      settings = omopgenerics::settings(res) |>
+        dplyr::filter(.data$result_id %in% unique(res$result_id))
+    )
+  expect_identical(x, res)
 })

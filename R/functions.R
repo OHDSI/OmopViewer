@@ -32,8 +32,8 @@ filterData <- function(result,
 
   # filter grouping
   cols <- c(
-    "cdm_name", "group_name", "group_level", "strata_name", "strata_level",
-    "additional_name", "additional_level"
+    "result_id", "cdm_name", "group_name", "group_level", "strata_name",
+    "strata_level", "additional_name", "additional_level"
   )
   groupCols <- visOmopResults::groupColumns(result)
   strataCols <- visOmopResults::strataColumns(result)
