@@ -796,7 +796,7 @@
                         header = NULL,
                         sortable::add_rank_list(
                           text = "none",
-                          labels = c("reason", "reason_id", "variable_level", "estimate_name"),
+                          labels = c("reason", "reason_id", "variable_level", "estimate_name", "cohort_definition_id", "table_name"),
                           input_id = "summarise_cohort_attrition_gt_3_none"
                         ),
                         sortable::add_rank_list(
@@ -1267,7 +1267,7 @@
                         header = NULL,
                         sortable::add_rank_list(
                           text = "none",
-                          labels = c("reason", "reason_id", "variable_level", "estimate_name"),
+                          labels = c("reason", "reason_id", "variable_level", "estimate_name", "cohort_definition_id", "table_name"),
                           input_id = "summarise_cohort_attrition_gt_3_none"
                         ),
                         sortable::add_rank_list(
@@ -1934,7 +1934,7 @@
                           header = NULL,
                           sortable::add_rank_list(
                             text = "none",
-                            labels = c("reason", "reason_id", "variable_level", "estimate_name"),
+                            labels = c("reason", "reason_id", "variable_level", "estimate_name", "cohort_definition_id", "table_name"),
                             input_id = "summarise_cohort_attrition_gt_3_none"
                           ),
                           sortable::add_rank_list(
