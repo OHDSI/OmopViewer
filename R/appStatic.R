@@ -10,18 +10,18 @@
 #' content will be controlled from the generated background.md file.
 #' @param summary Whether to include a panel with a summary of content in the
 #' `result`.
+#' @param panelDetails A named list to provide details for each one of the
+#' panels, such as: result_id, result_type, title, icon, filters and content.
+#' Name of each element must be the identifier name of `panelStructure`. By
+#' default it is created using the `panelDetailsFromResult()` function.
 #' @param panelStructure A named list of panel indetifiers to organise them in
 #' dropdown menus.
-#' @param panelDetails A named list to provide details for each one of the
-#' panels, such as: result_id, result_type, title, icon, output_id, ... Name of
-#' each element must be the identifier name of `panelStructure`.
 #' @param open Whether to open the shiny app project.
 #' @param theme Specify the theme for the Shiny application. You can either
 #' select a predefined theme provided by the package (e.g., `"theme1"`), or
 #' define a custom theme using `bslib::bs_theme()`. If using a custom theme, it
 #' must be provided as a character string (e.g.,
 #' `"bslib::bs_theme(bg = 'white', fg = 'black')"`).
-#' @param panels deprecated.
 #'
 #' @return The shiny app will be created in directory.
 #'
@@ -39,11 +39,10 @@ exportStaticApp <- function(result,
                             title = "",
                             background = TRUE,
                             summary = TRUE,
-                            panelStructure = NULL,
-                            panelDetails = NULL,
+                            panelDetails = panelDetailsFromResult(result),
+                            panelStructure = rlang::set_names(names(panelDetails)),
                             theme = NULL,
-                            open = rlang::is_interactive(),
-                            panels = lifecycle::deprecated()) {
+                            open = rlang::is_interactive()) {
   # input check
   result <- omopgenerics::validateResultArgument(result)
 
@@ -54,17 +53,8 @@ exportStaticApp <- function(result,
   omopgenerics::assertLogical(summary, length = 1)
   omopgenerics::assertCharacter(theme, length = 1, null = TRUE)
   theme <- validateTheme(theme)
-  if (lifecycle::is_present(panels)) {
-    lifecycle::deprecate_warn(
-      when = "0.2.0",
-      what = "exportStaticApp(panels= )",
-      with = "exportStaticApp(panelStructure= )"
-    )
-    if (missing(panelStructure)) panelStructure <- panels
-  }
-
   panelDetails <- validatePanelDetails(panelDetails, result)
-  panelStructure <- validatePanelStructure(panelStructure, panelDetails, result)
+  panelStructure <- validatePanelStructure(panelStructure, names(panelDetails))
 
   # processing data
   cli::cli_inform(c("i" = "Processing data"))
@@ -87,9 +77,12 @@ exportStaticApp <- function(result,
 
   # preprocess file
   resultList <- panelDetails |>
-    purrr::map(\(x) x$result_id)
+    purrr::map(\(x) {
+      list(result_id = x$result_id, result_type = x$result_type) |>
+        purrr::compact()
+    })
   preprocess <- c(
-    "# shiny is prepared to work with this resultList, please do not change them",
+    "# shiny is prepared to work with this resultList:",
     paste0("resultList <- ", writeResultList(resultList)),
     omopViewerPreprocess
   ) |>
@@ -101,9 +94,8 @@ exportStaticApp <- function(result,
   # background
   background <- validateBackground(background, logo)
 
-  # add filter buttons
-  panelDetails <- panelDetails |>
-    addFilterNames(result)
+  # populate options
+  panelDetails <- populateValues(panelDetails, result)
 
   # create ui
   ui <- c(
@@ -274,12 +266,13 @@ uiStatic <- function(logo,
                      summary,
                      theme,
                      panelDetails,
-                     panelStructure) {
+                     panelStructure,
+                     values) {
   # theme
   theme_setting <- paste0("theme = ", theme, ",")
 
   # create panels
-  panels <- createUiPanels(panelDetails) |>
+  panels <- createUiPanels(panelDetails, values) |>
     structurePanels(panelStructure)
 
   # ui

@@ -280,71 +280,88 @@ simpleTable <- function(result,
 prepareResult <- function(result, resultList) {
   resultList |>
     purrr::map(\(x) {
-      set <- omopgenerics::settings(result) |>
-        dplyr::filter(.data$result_id %in% .env$x)
-      cols <- set |>
-        as.list() |>
-        purrr::keep(\(x) all(is.na(unique(x)))) |>
-        names()
-      set <- set |>
-        dplyr::mutate(dplyr::across(
-          !dplyr::all_of(c(cols, "result_id")), \(x) dplyr::coalesce(x, "NA")
-        ))
-      result |>
-        dplyr::filter(.data$result_id %in% .env$x) |>
-        omopgenerics::newSummarisedResult(settings = set)
+      if (is.numeric(x)) {
+        resultId <- x
+        resultType <- NULL
+      } else if (is.character(x)) {
+        resultId <- NULL
+        resultType <- x
+      } else {
+        resultId <- x$result_id
+        resultType <- x$result_type
+      }
+      resultId <- unique(resultId)
+      resultType <- unique(resultType)
+      if (is.null(resultType)) {
+        if (is.null(resultId)) {
+          res <- omopgenerics::emptySummarisedResult()
+        } else {
+          res <- result |>
+            omopgenerics::filterSettings(.data$result_id %in% .env$resultId)
+        }
+      } else {
+        if (is.null(resultId)) {
+          res <- result |>
+            omopgenerics::filterSettings(.data$result_type %in% .env$resultType)
+        } else {
+          res <- result |>
+            omopgenerics::filterSettings(
+              .data$result_id %in% .env$resultId |
+                .data$result_type %in% .env$resultType
+            )
+        }
+      }
+      res
     })
 }
-defaultFilterValues <- function(result, resultList) {
-  resultList |>
-    purrr::imap(\(x, nm) {
-      sOpts <- omopgenerics::settings(result) |>
-        dplyr::filter(.data$result_id %in% .env$x) |>
-        dplyr::select(!dplyr::any_of(c(
-          "result_id", "result_type", "package_name", "package_version",
-          "strata", "group", "additional", "min_cell_count"
-        ))) |>
-        as.list() |>
-        purrr::map(\(x) {
-          x <- unique(x)
-          if (all(is.na(x))) {
-            x <- character()
-          } else {
-            x[is.na(x)] <- "NA"
-          }
-          x
-        }) |>
-        purrr::compact()
-      names(sOpts) <- glue::glue("settings_{names(sOpts)}")
-      res <- result |>
-        dplyr::filter(.data$result_id %in% .env$x)
+tidyDT <- function(x,
+                   columns,
+                   pivotEstimates) {
+  # split and add settings
+  x <- x |>
+    omopgenerics::splitAll() |>
+    omopgenerics::addSettings()
 
-      # omopgenerics 0.4.1 should fix this
-      attr(res, "settings") <- attr(res, "settings") |>
-        dplyr::filter(.data$result_id %in% .env$x)
+  # estimate columns
+  if (pivotEstimates) {
+    estCols <- unique(x$estimate_name)
+    x <- x |>
+      omopgenerics::pivotEstimates()
+  } else {
+    estCols <- c("estimate_name", "estimate_type", "estimate_value")
+  }
 
-      gOpts <- res |>
-        dplyr::select(c(
-          "cdm_name", "group_name", "group_level", "strata_name",
-          "strata_level", "additional_name", "additional_level"
-        )) |>
-        dplyr::distinct() |>
-        visOmopResults::splitAll() |>
-        as.list() |>
-        purrr::map(unique)
-      names(gOpts) <- glue::glue("grouping_{names(gOpts)}")
-      veOpts <- res |>
-        dplyr::select("variable_name", "estimate_name") |>
-        as.list() |>
-        purrr::map(unique)
-      res <- c(sOpts, gOpts, veOpts) |>
-        purrr::compact()
-      tidyColumns <- names(res)
-      id <- startsWith(tidyColumns, "settings_") | startsWith(tidyColumns, "grouping_")
-      tidyColumns[id] <- substr(tidyColumns[id], 10, nchar(tidyColumns[id]))
-      res$tidy_columns <- tidyColumns
-      names(res) <- glue::glue("{nm}_{names(res)}")
-      return(res)
-    }) |>
-    purrr::flatten()
+  # order columns
+  groupColumns <- omopgenerics::groupColumns(x)
+  strataColumns <- omopgenerics::strataColumns(x)
+  additionalColumns <- omopgenerics::additionalColumns(x)
+  settingsColumns <- omopgenerics::settingsColumns(x)
+  cols <- list(
+    'CDM name' = "cdm_name", 'Group' = groupColumns, 'Strata' = strataColumns,
+    'Additional' = additionalColumns, 'Settings' = settingsColumns
+  ) |>
+    purrr::map(\(x) x[x %in% columns]) |>
+    purrr::compact()
+  cols[["Estimates"]] <- estCols
+  x <- x |>
+    dplyr::select(dplyr::all_of(unname(unlist(cols))))
+
+  # prepare the header
+  container <- shiny::tags$table(
+    class = "display",
+    shiny::tags$thead(
+      purrr::imap(cols, \(x, nm) shiny::tags$th(colspan = length(x), nm)) |>
+        shiny::tags$tr(),
+      shiny::tags$tr(purrr::map(unlist(cols), shiny::tags$th))
+    )
+  )
+
+  # create DT table
+  DT::datatable(
+    data = x,
+    filter = "top",
+    container = container,
+    rownames = FALSE,
+    options = list(searching = FALSE)
+  )
 }

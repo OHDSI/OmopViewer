@@ -1,3 +1,55 @@
+
+shiny <- list(
+  incidence = list(
+    title = "Tab title",
+    icon = "eye",
+    filters = list(
+      "cdm_name" = list(
+        title = "CDM name",
+        column_name = "cdm_name",
+        button_type = "pickerInput",
+        selected = "<cdm_name>",
+        choices = "<cdm_name>",
+        multiple = TRUE,
+        fixed_keyword = "cohort_name"
+      )
+    ),
+    content = list(
+      tidy = list(
+        title = "Tidy",
+        output_type = "DT",
+        render_function = "
+      IncidencePrevalence::plotIncidence(
+        result = x,
+        facet = input$facet,
+        colour = input$colour
+      )",
+        buttons = list(
+          facet = list(
+            title = "Facet",
+            button_type = "pickerInput",
+            selected = "<strata>",
+            choices = "<strata>",
+            multiple = TRUE
+          )
+        )
+      )
+    )
+  )
+)
+
+fixKeyWords <- list(
+  cohort_name = c("")
+)
+filters <- dplyr::tribble(
+  ~data_id, ~input_id, ~column_name,
+  "incidence", "incidence_cdm_name", "cdm_name"
+)
+
+createPanel <- function(template, data) {
+
+}
+
 # panel_details class
 # export
 panelDetailsFromResult()

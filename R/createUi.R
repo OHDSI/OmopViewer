@@ -5,10 +5,8 @@ createUiPanels <- function(panelDetails) {
   # create a list with all the panel content
   panelDetails |>
     purrr::imap(\(x, nm) {
-      sidebar <- createSidebar(prefix = nm, filters = x$filter_name, information = x$information)
-      outputPanels <- c(
-        tidyUi(tab = nm), outputUi(tab = nm, choic = x$filter_name)
-      ) |>
+      sidebar <- createSidebar(prefix = nm, filters = x$filters)
+      outputPanels <- createContent(prefix = nm, content = x$content) |>
         paste0(collapse = ",\n")
       c(
         'bslib::nav_panel(',
@@ -52,4 +50,75 @@ structurePanels <- function(panels, panelStructure) {
 panelIcon <- function(icon) {
   if (is.null(icon)) return(character())
   paste0('icon = shiny::icon("', icon, '")')
+}
+createSidebar <- function(prefix, filters) {
+  paste0(
+    "sidebar = bslib::sidebar(\n",
+    filters |>
+      purrr::imap(\(x, nm) {
+        x$inputId <- paste0("'", prefix, "_", nm, "'")
+        createButton(x)
+      }),
+    ",\nposition = 'left'\n)"
+  )
+}
+populateValues <- function(panelDetails, result) {
+  panelDetails |>
+    purrr::map(\(x) {
+      # filter result
+      resultId <- unique(x$result_id)
+      resultType <- unique(x$result_type)
+      if (is.null(resultType)) {
+        if (is.null(resultId)) {
+          res <- omopgenerics::emptySummarisedResult()
+        } else {
+          res <- result |>
+            omopgenerics::filterSettings(.data$result_id %in% .env$resultId)
+        }
+      } else {
+        if (is.null(resultId)) {
+          res <- result |>
+            omopgenerics::filterSettings(.data$result_type %in% .env$resultType)
+        } else {
+          res <- result |>
+            omopgenerics::filterSettings(
+              .data$result_id %in% .env$resultId |
+                .data$result_type %in% .env$resultType
+            )
+        }
+      }
+
+      # get values
+      values <- res |>
+        omopgenerics::splitAll() |>
+        omopgenerics::addSettings() |>
+        dplyr::select(!c("result_id", "estimate_type", "estimate_value")) |>
+        purrr::map(unique)
+      values$group <- omopgenerics::groupColumns(res)
+      values$strata <- omopgenerics::strataColumns(res)
+      values$additional <- omopgenerics::additionalColumns(res)
+      values$settings <- omopgenerics::settingsColumns(res)
+
+      # populate filters
+      x$filters <- x$filters |>
+        purrr::imap(\(x, nm) {
+          if (nm %in% c("choices", "selected")) {
+            x <- substitueValues(x, values)
+          }
+          x
+        })
+    })
+}
+substitueValues <- function(x, values) {
+  if (length(x) == 1 & any(stringr::str_detect(x, "\\$"))) {
+    return(x)
+  }
+  id <- stringr::str_detect(x, "^<.*>$")
+  for (k in seq_along(x)) {
+    if (id[k]) {
+      keyWord <- substr(x, 2, nchar(x) - 1)
+      x[k] <- paste0(values[[keyWord]], collapse = "', '")
+    }
+  }
+  paste0("c('", paste0(x, collapse = "', '"), "')")
 }

@@ -11,11 +11,10 @@ exportStaticApp(
   title = "",
   background = TRUE,
   summary = TRUE,
-  panelStructure = NULL,
-  panelDetails = NULL,
+  panelDetails = panelDetailsFromResult(result),
+  panelStructure = rlang::set_names(names(panelDetails)),
   theme = NULL,
-  open = rlang::is_interactive(),
-  panels = lifecycle::deprecated()
+  open = rlang::is_interactive()
 )
 }
 \arguments{
@@ -34,12 +33,13 @@ content will be controlled from the generated background.md file.}
 \item{summary}{Whether to include a panel with a summary of content in the
 `result`.}
 
+\item{panelDetails}{A named list to provide details for each one of the
+panels, such as: result_id, result_type, title, icon, filters and content.
+Name of each element must be the identifier name of `panelStructure`. By
+default it is created using the `panelDetailsFromResult()` function.}
+
 \item{panelStructure}{A named list of panel indetifiers to organise them in
 dropdown menus.}
-
-\item{panelDetails}{A named list to provide details for each one of the
-panels, such as: result_id, result_type, title, icon, output_id, ... Name of
-each element must be the identifier name of `panelStructure`.}
 
 \item{theme}{Specify the theme for the Shiny application. You can either
 select a predefined theme provided by the package (e.g., `"theme1"`), or
@@ -48,8 +48,6 @@ must be provided as a character string (e.g.,
 `"bslib::bs_theme(bg = 'white', fg = 'black')"`).}
 
 \item{open}{Whether to open the shiny app project.}
-
-\item{panels}{deprecated.}
 }
 \value{
 The shiny app will be created in directory.

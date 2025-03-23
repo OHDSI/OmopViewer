@@ -61,35 +61,33 @@ validatePanelDetails <- function(panelDetails, result, call = parent.frame()) {
   }
   return(panelDetails)
 }
-validatePanelStructure <- function(panelStructure, panelDetails, result, call = parent.frame()) {
-  if (length(panelStructure) == 0) {
-    panelStructure <- as.list(names(panelDetails))
-  } else {
-    omopgenerics::assertList(panelStructure, call = call)
-    panelStructure <- purrr::map(panelStructure, as.character)
-    present <- unlist(panelStructure)
+validatePanelStructure <- function(panelStructure, panels, call = parent.frame()) {
+  panelStructure <- as.list(panelStructure)
+  omopgenerics::assertList(panelStructure, call = call)
+  panelStructure <- panelStructure |>
+    purrr::map(\(x) {
+      x <- unique(as.character(x))
+      x[!is.na(x)]
+    }) |>
+    purrr::compact()
 
-    if (length(present) != length(unique(present))) {
-      cli::cli_abort("panel identifiers in {.var panelStructure} must be unique.", call = call)
-    }
+  present <- unique(unlist(panelStructure))
 
-    all <- names(panelDetails)
-
-    # warn eliminated
-    eliminate <- present[!present %in% all]
-    if (length(eliminate) > 0) {
-      cli::cli_warn("{.var {eliminate}} removed from panelStucture as not present in data.")
-      panelStructure <- panelStructure |>
-        purrr::map(\(x) x[x %in% all]) |>
-        purrr::discard(\(x) length(x) == 0)
-    }
-
-    # inform missing
-    missing <- all[!all %in% present]
-    if (length(missing) > 0) {
-      cli::cli_inform("{.var {missing}} panels added to panelStucture.")
-      panelStructure <- c(panelStructure, as.list(missing))
-    }
+  # warn eliminated
+  eliminate <- present[!present %in% panels]
+  if (length(eliminate) > 0) {
+    cli::cli_warn("{.var {eliminate}} removed from panelStucture as not present in `panelDetails`.")
+    panelStructure <- panelStructure |>
+      purrr::map(\(x) x[x %in% panels]) |>
+      purrr::compact()
   }
+
+  # inform missing
+  missing <- panels[!panels %in% present]
+  if (length(missing) > 0) {
+    cli::cli_inform("{.var {missing}} panels added to panelStucture.")
+    panelStructure <- c(panelStructure, as.list(panels))
+  }
+
   return(panelStructure)
 }
