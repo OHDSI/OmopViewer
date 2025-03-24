@@ -4,6 +4,12 @@ createButton <- function(x) {
     x$options = 'list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")'
     args <- names(formals(shinyWidgets::pickerInput))
     args <- args[args %in% names(x)]
+    if (identical(x$selected, "selected$")) {
+      x$selected <- paste0("selected$", x$inputId)
+    }
+    if (identical(x$choices, "choices$")) {
+      x$choices <- paste0("choices$", x$inputId)
+    }
     button <- paste0(
       "shinyWidgets::pickerInput(\n",
       purrr::imap(x[args], \(x, nm) paste(nm, "=", x)) |>

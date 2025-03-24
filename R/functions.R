@@ -290,28 +290,7 @@ prepareResult <- function(result, resultList) {
         resultId <- x$result_id
         resultType <- x$result_type
       }
-      resultId <- unique(resultId)
-      resultType <- unique(resultType)
-      if (is.null(resultType)) {
-        if (is.null(resultId)) {
-          res <- omopgenerics::emptySummarisedResult()
-        } else {
-          res <- result |>
-            omopgenerics::filterSettings(.data$result_id %in% .env$resultId)
-        }
-      } else {
-        if (is.null(resultId)) {
-          res <- result |>
-            omopgenerics::filterSettings(.data$result_type %in% .env$resultType)
-        } else {
-          res <- result |>
-            omopgenerics::filterSettings(
-              .data$result_id %in% .env$resultId |
-                .data$result_type %in% .env$resultType
-            )
-        }
-      }
-      res
+      filterResult(result, resultId = resultId, resultType = resultType)
     })
 }
 tidyDT <- function(x,
@@ -364,4 +343,72 @@ tidyDT <- function(x,
     rownames = FALSE,
     options = list(searching = FALSE)
   )
+}
+filterResult <- function(result, resultId = NULL, resultType = NULL) {
+  resultId <- unique(resultId)
+  resultType <- unique(resultType)
+  if (is.null(resultType)) {
+    if (is.null(resultId)) {
+      res <- omopgenerics::emptySummarisedResult()
+    } else {
+      res <- result |>
+        omopgenerics::filterSettings(.data$result_id %in% .env$resultId)
+    }
+  } else {
+    if (is.null(resultId)) {
+      res <- result |>
+        omopgenerics::filterSettings(.data$result_type %in% .env$resultType)
+    } else {
+      res <- result |>
+        omopgenerics::filterSettings(
+          .data$result_id %in% .env$resultId |
+            .data$result_type %in% .env$resultType
+        )
+    }
+  }
+  return(res)
+}
+populateChoices <- function(panelDetails, result) {
+  choices <- list()
+  for (nm1 in names(panelDetails)) {
+    res <- filterResult(
+      result = result,
+      resultId = panelDetails[[nm1]]$result_id,
+      resultType = panelDetails[[nm1]]$result_type
+    ) |>
+      omopgenerics::splitAll() |>
+      omopgenerics::addSettings() |>
+      dplyr::select(!c("result_id", "estimate_type", "estimate_value")) |>
+      as.list() |>
+      purrr::map(unique)
+    filters <- panelDetails[[nm1]]$filters
+    for (nm2 in names(filters)) {
+      if (identical(filters[[nm2]]$choices, "choices$")) {
+        choices[[paste0(nm1, "_", nm2)]] <- res[[filters[[nm2]]$column]]
+      }
+    }
+  }
+  return(choices)
+}
+populateSelected <- function(panelDetails, result) {
+  selected <- list()
+  for (nm1 in names(panelDetails)) {
+    res <- filterResult(
+      result = result,
+      resultId = panelDetails[[nm1]]$result_id,
+      resultType = panelDetails[[nm1]]$result_type
+    ) |>
+      omopgenerics::splitAll() |>
+      omopgenerics::addSettings() |>
+      dplyr::select(!c("result_id", "estimate_type", "estimate_value")) |>
+      as.list() |>
+      purrr::map(unique)
+    filters <- panelDetails[[nm1]]$filters
+    for (nm2 in names(filters)) {
+      if (identical(filters[[nm2]]$selected, "selected$")) {
+        selected[[paste0(nm1, "_", nm2)]] <- res[[filters[[nm2]]$column]]
+      }
+    }
+  }
+  return(selected)
 }

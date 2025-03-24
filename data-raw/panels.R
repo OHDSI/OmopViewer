@@ -33,8 +33,8 @@ incidencePanel <- list(
     cdm_name = list(
       button_type = "pickerInput",
       column = "cdm_name",
-      choices = "choices$cdm_name",
-      selected = "selected$cdm_name",
+      choices = "choices$",
+      selected = "selected$",
       multiple = TRUE
     )
   ),

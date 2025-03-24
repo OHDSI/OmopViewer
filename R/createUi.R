@@ -66,27 +66,7 @@ populateValues <- function(panelDetails, result) {
   panelDetails |>
     purrr::map(\(x) {
       # filter result
-      resultId <- unique(x$result_id)
-      resultType <- unique(x$result_type)
-      if (is.null(resultType)) {
-        if (is.null(resultId)) {
-          res <- omopgenerics::emptySummarisedResult()
-        } else {
-          res <- result |>
-            omopgenerics::filterSettings(.data$result_id %in% .env$resultId)
-        }
-      } else {
-        if (is.null(resultId)) {
-          res <- result |>
-            omopgenerics::filterSettings(.data$result_type %in% .env$resultType)
-        } else {
-          res <- result |>
-            omopgenerics::filterSettings(
-              .data$result_id %in% .env$resultId |
-                .data$result_type %in% .env$resultType
-            )
-        }
-      }
+      res <- filterResult(result, x$result_id, x$result_type)
 
       # get values
       values <- res |>
@@ -107,6 +87,8 @@ populateValues <- function(panelDetails, result) {
           }
           x
         })
+
+      x
     })
 }
 substitueValues <- function(x, values) {
@@ -122,3 +104,4 @@ substitueValues <- function(x, values) {
   }
   paste0("c('", paste0(x, collapse = "', '"), "')")
 }
+

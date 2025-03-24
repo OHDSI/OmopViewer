@@ -97,6 +97,10 @@ exportStaticApp <- function(result,
   # populate options
   panelDetails <- populateValues(panelDetails, result)
 
+  # populate selected and choices
+  choices <- populateChoices(panelDetails, result)
+  selected <- populateSelected(panelDetails, result)
+
   # create ui
   ui <- c(
     messageShiny(),
