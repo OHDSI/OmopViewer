@@ -38,7 +38,7 @@ writeFilterData <- function(x, nm, data) {
   ) |>
     paste0(collapse = " |>\n")
   paste0(
-    "## get ", nm, " data\n", x$filter_function_name, "() <- shiny::reactive({\n", filtersText, "\n})"
+    "## get ", nm, " data\n", x$filter_function_name, " <- shiny::reactive({\n", filtersText, "\n})"
   )
 }
 writeContentServer <- function(content, data) {

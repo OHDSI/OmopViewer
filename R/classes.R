@@ -46,12 +46,9 @@ getData <- function(x) {
   return(data)
 }
 getFilters <- function(x) {
-  fi <- x$filters
-  if (length(fi) == 0) {
-    "-no filters-"
-  } else {
-    paste0(length(fi), " filters")
-  }
+  fi <- length(x$filters)
+  af <- length(x$automatic_filters)
+  glue::glue("{fi} filters + {af} automatic filters")
 }
 getContent <- function(x) {
   co <- x$content

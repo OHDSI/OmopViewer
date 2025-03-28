@@ -417,6 +417,25 @@ populateValues <- function(panelDetails, result) {
       values$additional <- omopgenerics::additionalColumns(res)
       values$settings <- omopgenerics::settingsColumns(res)
 
+      # create automatic filters
+      for (val in unique(x$automatic_filters)) {
+        omopgenerics::assertChoice(val, c("group", "strata", "additional", "settings"))
+        newFilters <- values[[val]] |>
+          rlang::set_names() |>
+          purrr::map(\(x) {
+            list(
+              button_type = "pickerInput",
+              label = cast(formatTit(x)),
+              column = x,
+              column_type = val,
+              choices = "choices$",
+              selected = "selected$",
+              multiple = TRUE
+            )
+          })
+        x$filters <- c(x$filters, newFilters)
+      }
+
       # populate filters
       x$filters <- substituteFilters(x$filters, values)
 

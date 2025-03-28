@@ -221,6 +221,11 @@ prepareResult <- function(result, resultList) {
 tidyDT <- function(x,
                    columns,
                    pivotEstimates) {
+  groupColumns <- omopgenerics::groupColumns(x)
+  strataColumns <- omopgenerics::strataColumns(x)
+  additionalColumns <- omopgenerics::additionalColumns(x)
+  settingsColumns <- omopgenerics::settingsColumns(x)
+
   # split and add settings
   x <- x |>
     omopgenerics::splitAll() |>
@@ -236,10 +241,6 @@ tidyDT <- function(x,
   }
 
   # order columns
-  groupColumns <- omopgenerics::groupColumns(x)
-  strataColumns <- omopgenerics::strataColumns(x)
-  additionalColumns <- omopgenerics::additionalColumns(x)
-  settingsColumns <- omopgenerics::settingsColumns(x)
   cols <- list(
     'CDM name' = "cdm_name", 'Group' = groupColumns, 'Strata' = strataColumns,
     'Additional' = additionalColumns, 'Settings' = settingsColumns
@@ -297,11 +298,12 @@ getValues <- function(result, resultList) {
   resultList |>
     purrr::imap(\(x, nm) {
       values <- result |>
-        filterResult(resultId = x$data$result_id, resultType = x$data$result_type) |>
-        dplyr::select(!c("result_id", "estimate_type", "estimate_value")) |>
+        filterResult(resultId = x$result_id, resultType = x$result_type) |>
+        dplyr::select(!c("estimate_type", "estimate_value")) |>
         dplyr::distinct() |>
         omopgenerics::splitAll() |>
         omopgenerics::addSettings() |>
+        dplyr::select(!"result_id") |>
         as.list() |>
         purrr::map(unique)
       names(values) <- paste0(nm, "_", names(values))

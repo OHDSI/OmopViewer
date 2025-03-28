@@ -11,7 +11,7 @@ tidyContent <- list(
       label = "\"Columns\"",
       choices = c("cdm_name", "<group>", "<strata>", "<additional>", "<settings>"),
       selected = c("cdm_name", "<group>", "<strata>", "<additional>"),
-      multiple = FALSE
+      multiple = TRUE
     ),
     pivot_estimates = list(
       button_type = "checkbox",
@@ -28,22 +28,25 @@ tidyContent <- list(
 ## table content ----
 ## plot incidence content ----
 
+# predefined filters ----
+cdmFilter <- list(
+  button_type = "pickerInput",
+  label = "\"CDM name\"",
+  column = "cdm_name",
+  column_type = "main",
+  choices = "choices$",
+  selected = "selected$",
+  multiple = TRUE
+)
+
 # predefined panels ----
 ## incidence ----
 incidencePanel <- list(
   title = "Incidence",
   icon = "chart-line",
   data = list(result_type = "incidence"),
-  filters = list(
-    cdm_name = list(
-      button_type = "pickerInput",
-      column = "cdm_name",
-      column_type = "main",
-      choices = "choices$",
-      selected = "selected$",
-      multiple = TRUE
-    )
-  ),
+  automatic_filters = c("strata", "additional", "settings"),
+  filters = list(cdm_name = cdmFilter),
   content = list(tidy = tidyContent)
 )
 ## prevalence ----
