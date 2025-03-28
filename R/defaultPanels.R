@@ -35,7 +35,7 @@ defaultPanels <- function() {
 #'
 #' @param result A `summarised_result` object.
 #'
-#' @return
+#' @return A list of `omop_viewer_panel` objects.
 #' @export
 #'
 #' @examples
@@ -43,39 +43,13 @@ defaultPanels <- function() {
 #' panelDetailsFromResult(omopViewerResults)
 #'
 panelDetailsFromResult <- function(result) {
-  definedPanels <- purrr::map(omopViewerPanels, \(x) x$result_type)
-  result |>
-    # input check
-    omopgenerics::validateResultArgument() |>
-    # settings
-    omopgenerics::settings() |>
-    # result_type
-    dplyr::pull("result_type") |>
-    unique() |>
-    rlang::set_names() |>
-    as.list() |>
-    purrr::map(\(result_type) {
-      id <- definedPanels |>
-        purrr::keep(\(x) x %in% result_type) |>
-        names()
-      if (length(id) == 1) {
-        omopViewerPanels[[id]]
-      } else {
-        NULL
-      }
-    }) |>
-    purrr::compact() |>
-    purrr::map(newOmopViewerPanel)
-}
+  # initial check
+  result <- omopgenerics::validateResultArgument(result)
 
-getValues <- function(x) {
-  x |>
-    purrr::map(\(x) {
-      x |>
-        omopgenerics::splitAll() |>
-        omopgenerics::addSettings() |>
-        dplyr::select(!c("result_id", "estimate_type", "estimate_value")) |>
-        as.list() |>
-        purrr::map(unique)
-    })
+  # get result types
+  resultTypes <- unique(omopgenerics::settings(result)$result_type)
+
+  # get the panels that are contained in the data
+  omopViewerPanels |>
+    purrr::keep(\(x) x$data$result_type %in% resultTypes)
 }

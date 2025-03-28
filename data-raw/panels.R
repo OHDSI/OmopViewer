@@ -5,19 +5,24 @@ tidyContent <- list(
   title = "Tidy",
   output_type = "DT",
   render_content = "tidyDT(x, input$columns, input$pivot_estimates)",
-  sidebar = list(
+  filters = list(
     columns = list(
       button_type = "pickerInput",
-      label = "Columns",
+      label = "\"Columns\"",
       choices = c("cdm_name", "<group>", "<strata>", "<additional>", "<settings>"),
       selected = c("cdm_name", "<group>", "<strata>", "<additional>"),
       multiple = FALSE
     ),
     pivot_estimates = list(
       button_type = "checkbox",
-      label = "Pivot estimates",
+      label = "\"Pivot estimates\"",
       value = TRUE
     )
+  ),
+  download = list(
+    label = "Download csv",
+    render = "",
+    filename = ""
   )
 )
 ## table content ----
@@ -26,13 +31,14 @@ tidyContent <- list(
 # predefined panels ----
 ## incidence ----
 incidencePanel <- list(
-  result_type = "incidence",
   title = "Incidence",
   icon = "chart-line",
+  data = list(result_type = "incidence"),
   filters = list(
     cdm_name = list(
       button_type = "pickerInput",
       column = "cdm_name",
+      column_type = "main",
       choices = "choices$",
       selected = "selected$",
       multiple = TRUE
@@ -42,9 +48,9 @@ incidencePanel <- list(
 )
 ## prevalence ----
 prevalencePanel <- list(
-  result_type = "prevalence",
   title = "Prevalence",
   icon = "chart-column",
+  data = list(result_type = "prevalence"),
   filters = list(),
   content = list(tidy = tidyContent)
 )

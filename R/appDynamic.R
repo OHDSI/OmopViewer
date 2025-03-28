@@ -168,7 +168,7 @@ panelsUi <- function(result) {
   # create panelDetails
   panelDetails <- addFilterNames(panelDetailsFromResult(result), result)
   # create panels
-  panels <- createUiPanels(panelDetails)
+  panels <- writeUiPanels(panelDetails)
 
   # resultList from panelDetails
   resultList <- purrr::map(panelDetails, \(x) x$result_id)

@@ -9,6 +9,14 @@ panelDetailsFromResult(result)
 \arguments{
 \item{result}{A `summarised_result` object.}
 }
+\value{
+A list of `omop_viewer_panel` objects.
+}
 \description{
 Obtain default panel details from a `<summarised_result>` object.
+}
+\examples{
+
+panelDetailsFromResult(omopViewerResults)
+
 }

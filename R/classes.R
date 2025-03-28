@@ -10,13 +10,13 @@ newOmopViewerPanel <- function(x) {
 print.omopviewer_panel <- function(x, ...) {
   tit <- getTitle(x)
   icon <- getIcon(x)
-  resultId <- getResultId(x)
+  data <- getData(x)
   filters <- getFilters(x)
   content <- getContent(x)
   cli::cli_inform(c(
     "{.pkg {tit}} (OmopViewer panel)",
     "*" = "{.strong icon:} {icon}",
-    "*" = "{.strong result ids:} {resultId}",
+    "*" = "{.strong data:} {data}",
     "*" = "{.strong filters:} {filters}",
     "*" = paste0("{.strong content:} ", content)
   ))
@@ -29,13 +29,21 @@ getTitle <- function(x) {
 getIcon <- function(x) {
   x$icon %||% "-"
 }
-getResultId <- function(x) {
-  ri <- x$result_id
-  if (length(ri) == 0) {
-    paste0("-no result_id-")
-  } else {
-    paste0(ri, collapse = ", ")
+getData <- function(x) {
+  x <- x$data
+  data <- character()
+  if (length(x$result_type) > 0) {
+    data <- c(data, paste0("result_type: <", paste0(x$result_type, collapse = ">, <"), ">"))
   }
+  if (length(x$result_id) > 0) {
+    data <- c(data, paste0("result_id: ", paste0(x$result_id, collapse = ", ")))
+  }
+  if (length(data) == 0) {
+    data <- paste0("-no data-")
+  } else {
+    data <- paste0(data, collapse = "; ")
+  }
+  return(data)
 }
 getFilters <- function(x) {
   fi <- x$filters

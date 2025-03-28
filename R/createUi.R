@@ -1,12 +1,15 @@
 
-createUiPanels <- function(panelDetails) {
-  if (length(panelDetails) == 0) return(list())
-
+writeUiPanels <- function(panelDetails) {
   # create a list with all the panel content
   panelDetails |>
     purrr::imap(\(x, nm) {
-      sidebar <- createSidebar(prefix = nm, filters = x$filters)
-      outputPanels <- createContent(prefix = nm, content = x$content) |>
+      if (length(x$filters) > 0) {
+        sidebar <- writeSidebar(prefix = nm, filters = x$filters, position = "left") |>
+          paste0(",")
+      } else {
+        sidebar <- ""
+      }
+      outputPanels <- writeContent(prefix = nm, content = x$content) |>
         paste0(collapse = ",\n")
       c(
         'bslib::nav_panel(',
@@ -44,64 +47,65 @@ structurePanels <- function(panels, panelStructure) {
           as.character()
       }
     }) |>
-    paste0(collapse = ",\n") |>
-    invisible()
+    paste0(collapse = ",\n")
 }
 panelIcon <- function(icon) {
   if (is.null(icon)) return(character())
   paste0('icon = shiny::icon("', icon, '")')
 }
-createSidebar <- function(prefix, filters) {
+writeSidebar <- function(prefix, filters, position) {
   paste0(
     "sidebar = bslib::sidebar(\n",
     filters |>
       purrr::imap(\(x, nm) {
-        x$inputId <- paste0("'", prefix, "_", nm, "'")
+        if (identical(x$selected, "selected$")) {
+          x$selected <- paste0("selected$", prefix, "_", nm)
+        }
+        if (identical(x$choices, "choices$")) {
+          x$choices <- paste0("choices$", prefix, "_", nm)
+        }
         createButton(x)
-      }),
-    ",\nposition = 'left'\n)"
+      }) |>
+      paste0(collapse = ",\n"),
+    ",\nposition = '",
+    position,
+    "'\n)"
   )
 }
-populateValues <- function(panelDetails, result) {
-  panelDetails |>
-    purrr::map(\(x) {
-      # filter result
-      res <- filterResult(result, x$result_id, x$result_type)
-
-      # get values
-      values <- res |>
-        omopgenerics::splitAll() |>
-        omopgenerics::addSettings() |>
-        dplyr::select(!c("result_id", "estimate_type", "estimate_value")) |>
-        purrr::map(unique)
-      values$group <- omopgenerics::groupColumns(res)
-      values$strata <- omopgenerics::strataColumns(res)
-      values$additional <- omopgenerics::additionalColumns(res)
-      values$settings <- omopgenerics::settingsColumns(res)
-
-      # populate filters
-      x$filters <- x$filters |>
-        purrr::imap(\(x, nm) {
-          if (nm %in% c("choices", "selected")) {
-            x <- substitueValues(x, values)
-          }
-          x
-        })
-
-      x
-    })
+writeContent <- function(prefix, content) {
+  content |>
+    purrr::imap(\(x, nm) {
+      id <- paste0(prefix, "_", nm)
+      out <- writeOutput(ot = x$output_type, id = id)
+      download <- writeDownload(do = x$download, id = id)
+      if (length(x$filters) > 0) {
+        sb <- writeSidebar(prefix = id, filters = x$filters, position = "right")
+        res <- paste0("bslib::layout_sidebar(\n", sb, ",\n", out, "\n)")
+      } else {
+        res <- out
+      }
+      paste0(
+        'bslib::nav_panel(\ntitle = "',
+        x$title,
+        '",\nbslib::card(\nfull_screen = TRUE,\n',
+        download,
+        res,
+        "\n)\n)"
+      )
+    }) |>
+    paste0(collapse = ",\n")
 }
-substitueValues <- function(x, values) {
-  if (length(x) == 1 & any(stringr::str_detect(x, "\\$"))) {
-    return(x)
-  }
-  id <- stringr::str_detect(x, "^<.*>$")
-  for (k in seq_along(x)) {
-    if (id[k]) {
-      keyWord <- substr(x, 2, nchar(x) - 1)
-      x[k] <- paste0(values[[keyWord]], collapse = "', '")
-    }
-  }
-  paste0("c('", paste0(x, collapse = "', '"), "')")
+writeOutput <- function(ot, id) {
+  res <- switch(ot,
+                "DT" = "DT::DTOutput",
+                "gt" = "gt::gt_output",
+                "plot" = "shiny::plotOutput")
+  paste0(res, '("', id, '")')
 }
-
+writeDownload <- function(do, id) {
+  if (length(do) == 0) return("")
+  paste0(
+    'bslib::card_header(\nbslib::popover(\nshiny::icon("download"),\nshiny::downloadButton(outputId = "',
+    id, '_download", label = "', do$label, '")\n),\nclass = "text-end"\n),\n'
+  )
+}

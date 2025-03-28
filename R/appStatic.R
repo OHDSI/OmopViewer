@@ -12,16 +12,16 @@
 #' `result`.
 #' @param panelDetails A named list to provide details for each one of the
 #' panels, such as: result_id, result_type, title, icon, filters and content.
-#' Name of each element must be the identifier name of `panelStructure`. By
-#' default it is created using the `panelDetailsFromResult()` function.
-#' @param panelStructure A named list of panel indetifiers to organise them in
-#' dropdown menus.
-#' @param open Whether to open the shiny app project.
+#' By default it is created using the `panelDetailsFromResult()` function.
+#' @param panelStructure A named list of panel identifiers to organise them in
+#' drop-down menus. Identifiers names are the ones used in `panelDetails`. By
+#' default one panel per each `panelDetails` element is created.
 #' @param theme Specify the theme for the Shiny application. You can either
 #' select a predefined theme provided by the package (e.g., `"theme1"`), or
 #' define a custom theme using `bslib::bs_theme()`. If using a custom theme, it
 #' must be provided as a character string (e.g.,
 #' `"bslib::bs_theme(bg = 'white', fg = 'black')"`).
+#' @param open Whether to open the shiny app project.
 #'
 #' @return The shiny app will be created in directory.
 #'
@@ -40,7 +40,7 @@ exportStaticApp <- function(result,
                             background = TRUE,
                             summary = TRUE,
                             panelDetails = panelDetailsFromResult(result),
-                            panelStructure = rlang::set_names(names(panelDetails)),
+                            panelStructure = as.list(names(panelDetails)),
                             theme = NULL,
                             open = rlang::is_interactive()) {
   # input check
@@ -78,7 +78,7 @@ exportStaticApp <- function(result,
   # preprocess file
   resultList <- panelDetails |>
     purrr::map(\(x) {
-      list(result_id = x$result_id, result_type = x$result_type) |>
+      list(result_id = x$data$result_id, result_type = x$data$result_type) |>
         purrr::compact()
     })
   preprocess <- c(
@@ -94,8 +94,9 @@ exportStaticApp <- function(result,
   # background
   background <- validateBackground(background, logo)
 
-  # populate options
-  panelDetails <- populateValues(panelDetails, result)
+  # populate options of panelDetails
+  panelDetails <- populateValues(panelDetails, result) |>
+    pouplateInputIds()
 
   # populate selected and choices
   choices <- populateChoices(panelDetails, result)
@@ -262,7 +263,6 @@ addFilterNames <- function(panelDetails, result) {
     })
 }
 
-
 # ui ----
 uiStatic <- function(logo,
                      title,
@@ -270,13 +270,12 @@ uiStatic <- function(logo,
                      summary,
                      theme,
                      panelDetails,
-                     panelStructure,
-                     values) {
+                     panelStructure) {
   # theme
   theme_setting <- paste0("theme = ", theme, ",")
 
   # create panels
-  panels <- createUiPanels(panelDetails, values) |>
+  panels <- writeUiPanels(panelDetails) |>
     structurePanels(panelStructure)
 
   # ui
@@ -377,14 +376,99 @@ subs <- function(x, pat, subst) {
   return(x)
 }
 writeResultList <- function(resultList) {
+  #paste0(deparse(resultList), collapse = "")
   if (length(resultList) == 0) return("list()")
   paste0(
     "list(\n",
     purrr::imap_chr(resultList, \(x, nm) {
-      paste0(cast(nm), " = c(", paste0(x, collapse = "L, "), "L)")
+      rt <- x$result_type
+      ri <- x$result_id
+      if (is.null(rt)) {
+        if (is.null(ri)) {
+          res <- "list()"
+        } else {
+          res <- paste0("list(result_id = c(", paste0(ri, collapse = "L, "), "L))")
+        }
+      } else {
+        if (is.null(ri)) {
+          res <- paste0("list(result_type = ", cast(rt), ")")
+        } else {
+          res <- paste0("list(\nresult_type = ", cast(rt), ",\nresult_id = c(", paste0(ri, collapse = "L, "), "L)\n)")
+        }
+      }
+      paste0(cast(nm), " = ", res)
     }) |>
       paste0(collapse = ",\n"),
     "\n)"
   )
 }
+populateValues <- function(panelDetails, result) {
+  res <- panelDetails |>
+    purrr::map(\(x) {
+      # filter result
+      res <- filterResult(result, x$data$result_id, x$data$result_type)
 
+      # get values
+      values <- res |>
+        omopgenerics::splitAll() |>
+        omopgenerics::addSettings() |>
+        dplyr::select(!c("result_id", "estimate_type", "estimate_value")) |>
+        purrr::map(unique)
+      values$group <- omopgenerics::groupColumns(res)
+      values$strata <- omopgenerics::strataColumns(res)
+      values$additional <- omopgenerics::additionalColumns(res)
+      values$settings <- omopgenerics::settingsColumns(res)
+
+      # populate filters
+      x$filters <- substituteFilters(x$filters, values)
+
+      # populate filters of content
+      x$content <- x$content |>
+        purrr::map(\(cont) {
+          cont$filters <- substituteFilters(cont$filters, values)
+          cont
+        })
+
+      x
+    })
+}
+substituteFilters <- function(filters, values) {
+  filters |>
+    purrr::map(\(filt) {
+      purrr::imap(filt, \(x, nm) {
+        if (nm %in% c("choices", "selected")) {
+          x <- substituteValues(x, values)
+        }
+        x
+      })
+    })
+}
+substituteValues <- function(x, values) {
+  if (length(x) == 1 & any(stringr::str_detect(x, "\\$"))) {
+    return(x)
+  }
+  id <- stringr::str_detect(x, "^<.*>$")
+  for (k in which(id)) {
+    keyWord <- substr(x[k], 2, nchar(x[k]) - 1)
+    x[k] <- paste0(values[[keyWord]], collapse = "\", \"")
+  }
+  x <- x[nchar(x) > 0]
+  paste0("c(\"", paste0(x, collapse = "\", \""), "\")")
+}
+populateInputIds <- function(panelDetails) {
+  panelDetails |>
+    purrr::imap(\(x, nm) {
+      x$filters <- populateInputId(x$filters, nm)
+
+      # populate filters of content
+      x$content <- x$content |>
+        purrr::map(\(cont) {
+          cont$filters <- substituteFilters(cont$filters, values)
+          cont
+        })
+    })
+
+}
+populateInputId <- function() {
+  x$inputId <- paste0("'", prefix, "_", nm, "'")
+}
