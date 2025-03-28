@@ -25,11 +25,15 @@ omopViewerPreprocess <- c(
   "",
   "result <- omopgenerics::importSummarisedResult(file.path(getwd(), \"data\"))",
   "data <- prepareResult(result, resultList)",
-  "filterValues <- defaultFilterValues(result, resultList)",
+  "values <- getValues(result, resultList)",
   "",
-  "save(data, filterValues, file = file.path(getwd(), \"data\", \"shinyData.RData\"))",
+  "# edit choices and values of interest",
+  "choices <- values",
+  "selected <- values",
   "",
-  "rm(result, filterValues, resultList, data)"
+  "save(data, choices, selected, file = file.path(getwd(), \"data\", \"shinyData.RData\"))",
+  "",
+  "rm(result, values, choices, selected, resultList, data)"
 )
 
 # global -----

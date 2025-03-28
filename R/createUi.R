@@ -2,20 +2,20 @@
 writeUiPanels <- function(panelDetails) {
   # create a list with all the panel content
   panelDetails |>
-    purrr::imap(\(x, nm) {
+    purrr::map(\(x) {
       if (length(x$filters) > 0) {
-        sidebar <- writeSidebar(prefix = nm, filters = x$filters, position = "left") |>
+        sidebar <- writeSidebar(filters = x$filters, position = "left") |>
           paste0(",")
       } else {
         sidebar <- ""
       }
-      outputPanels <- writeContent(prefix = nm, content = x$content) |>
+      outputPanels <- writeContent(content = x$content) |>
         paste0(collapse = ",\n")
       c(
         'bslib::nav_panel(',
         c(
           paste0('title = ', cast(x$title)),
-          panelIcon(x$icon),
+          writeIcon(x$icon),
           "bslib::layout_sidebar(
             {sidebar}
             bslib::navset_card_tab(
@@ -49,21 +49,22 @@ structurePanels <- function(panels, panelStructure) {
     }) |>
     paste0(collapse = ",\n")
 }
-panelIcon <- function(icon) {
+writeIcon <- function(icon) {
   if (is.null(icon)) return(character())
   paste0('icon = shiny::icon("', icon, '")')
 }
-writeSidebar <- function(prefix, filters, position) {
+writeSidebar <- function(filters, position) {
   paste0(
     "sidebar = bslib::sidebar(\n",
     filters |>
       purrr::imap(\(x, nm) {
         if (identical(x$selected, "selected$")) {
-          x$selected <- paste0("selected$", prefix, "_", nm)
+          x$selected <- paste0("selected$", x$inputId)
         }
         if (identical(x$choices, "choices$")) {
-          x$choices <- paste0("choices$", prefix, "_", nm)
+          x$choices <- paste0("choices$", x$inputId)
         }
+        x$inputId <- cast(x$inputId)
         createButton(x)
       }) |>
       paste0(collapse = ",\n"),
@@ -72,14 +73,14 @@ writeSidebar <- function(prefix, filters, position) {
     "'\n)"
   )
 }
-writeContent <- function(prefix, content) {
+writeContent <- function(content) {
   content |>
-    purrr::imap(\(x, nm) {
-      id <- paste0(prefix, "_", nm)
+    purrr::map(\(x) {
+      id <- x$output_id
       out <- writeOutput(ot = x$output_type, id = id)
       download <- writeDownload(do = x$download, id = id)
       if (length(x$filters) > 0) {
-        sb <- writeSidebar(prefix = id, filters = x$filters, position = "right")
+        sb <- writeSidebar(filters = x$filters, position = "right")
         res <- paste0("bslib::layout_sidebar(\n", sb, ",\n", out, "\n)")
       } else {
         res <- out
@@ -96,11 +97,7 @@ writeContent <- function(prefix, content) {
     paste0(collapse = ",\n")
 }
 writeOutput <- function(ot, id) {
-  res <- switch(ot,
-                "DT" = "DT::DTOutput",
-                "gt" = "gt::gt_output",
-                "plot" = "shiny::plotOutput")
-  paste0(res, '("', id, '")')
+  paste0(outputFunction(ot), '("', id, '")')
 }
 writeDownload <- function(do, id) {
   if (length(do) == 0) return("")

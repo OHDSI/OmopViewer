@@ -4,39 +4,61 @@ createServer <- function(panelDetails, data) {
     downloadRawDataServer(data),
     purrr::imap_chr(panelDetails, \(x, nm) {
       c(glue::glue("# {nm} -----"),
-        filterData(filters = x$filters, nm = nm, data = data),
-        "\n"
+        writeFilterData(x = x, nm = nm, data = data),
+        writeContentServer(content = x$content, data = data)
       ) |>
         paste0(collapse = "\n")
     })
   )
 }
-filterData <- function(filters, nm, data = data) {
-  funName <- snakecase::to_lower_camel_case(paste0("get_", nm, "_data"))
+writeFilterData <- function(x, nm, data) {
+  # join by filter function
   filtersToApply <- list()
+  filters <- x$filters
   for (k in seq_along(filters)) {
     type <- filters[[k]]$column_type
     filtersToApply[[type]] <- c(
       filtersToApply[[type]],
-      rlang::set_names(x = filters[[k]]$column, nm = filters[[k]]$inputId)
+      rlang::set_names(x = filters[[k]]$inputId, nm = filters[[k]]$column)
     )
   }
-  filtersText <- purrr::imap(filtersToApply, \(x, nm) {
-    fun <- switch(nm,
-                  "main" = 'dplyr::filter(',
-                  "group" = 'omopgenerics::filterGroup(',
-                  "strata" = 'omopgenerics::filterStrata(',
-                  "additional" = 'omopgenerics::filterAdditional(',
-                  "settings" = 'omopgenerics::filterSettings(')
-    paste0(".data$", names(x), " %in% input$" x)
-  }) |>
-    paste0(collapse = " ")
+  # filter functions
+  filtersText <- c(
+    paste0(data, "[['", nm, "']]"),
+    filtersToApply |>
+      purrr::imap_chr(\(x, nm) {
+        fun <- switch(nm,
+                      "main" = 'dplyr::filter(',
+                      "group" = 'omopgenerics::filterGroup(',
+                      "strata" = 'omopgenerics::filterStrata(',
+                      "additional" = 'omopgenerics::filterAdditional(',
+                      "settings" = 'omopgenerics::filterSettings(')
+        paste0(fun, paste0(".data$", names(x), " %in% input$", x, collapse = ",\n"), ")")
+      })
+  ) |>
+    paste0(collapse = " |>\n")
   paste0(
-    "## get ", nm, " data\n", funName, "() <- shiny::reactive({\n", data, "[['",
-    nm, "']]", filtersText, "\n})"
+    "## get ", nm, " data\n", x$filter_function_name, "() <- shiny::reactive({\n", filtersText, "\n})"
   )
 }
-getDataName <- function(panelName) {
-  snakecase::to_cam
+writeContentServer <- function(content, data) {
+  purrr::map_chr(content, \(cont) {
+    paste0(
+      "output$", cont$output_id, " <- ", renderFunction(cont$output_type),
+      "({\n", cont$render_content, "\n})"
+    )
+  }) |>
+    paste0(collapse = "\n")
 }
-getFunctionName <- function(panel)
+outputFunction <- function(outputType) {
+  switch(outputType,
+         "DT" = "DT::DTOutput",
+         "gt" = "gt::gt_output",
+         "plot" = "shiny::plotOutput")
+}
+renderFunction <- function(outputType) {
+  switch(outputType,
+         "DT" = "DT::renderDT",
+         "gt" = "gt::render_gt",
+         "plot" = "shiny::renderPlot")
+}

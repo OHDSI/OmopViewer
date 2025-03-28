@@ -4,7 +4,7 @@
 tidyContent <- list(
   title = "Tidy",
   output_type = "DT",
-  render_content = "tidyDT(x, input$columns, input$pivot_estimates)",
+  render_content = "tidyDT(<filteredData>, input$columns, input$pivot_estimates)",
   filters = list(
     columns = list(
       button_type = "pickerInput",

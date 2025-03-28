@@ -293,47 +293,19 @@ filterResult <- function(result, resultId = NULL, resultType = NULL) {
   }
   return(res)
 }
-populateChoices <- function(panelDetails, result) {
-  choices <- list()
-  for (nm1 in names(panelDetails)) {
-    res <- filterResult(
-      result = result,
-      resultId = panelDetails[[nm1]]$data$result_id,
-      resultType = panelDetails[[nm1]]$data$result_type
-    ) |>
-      omopgenerics::splitAll() |>
-      omopgenerics::addSettings() |>
-      dplyr::select(!c("result_id", "estimate_type", "estimate_value")) |>
-      as.list() |>
-      purrr::map(unique)
-    filters <- panelDetails[[nm1]]$filters
-    for (nm2 in names(filters)) {
-      if (identical(filters[[nm2]]$choices, "choices$")) {
-        choices[[paste0(nm1, "_", nm2)]] <- res[[filters[[nm2]]$column]]
-      }
-    }
-  }
-  return(choices)
-}
-populateSelected <- function(panelDetails, result) {
-  selected <- list()
-  for (nm1 in names(panelDetails)) {
-    res <- filterResult(
-      result = result,
-      resultId = panelDetails[[nm1]]$data$result_id,
-      resultType = panelDetails[[nm1]]$data$result_type
-    ) |>
-      omopgenerics::splitAll() |>
-      omopgenerics::addSettings() |>
-      dplyr::select(!c("result_id", "estimate_type", "estimate_value")) |>
-      as.list() |>
-      purrr::map(unique)
-    filters <- panelDetails[[nm1]]$filters
-    for (nm2 in names(filters)) {
-      if (identical(filters[[nm2]]$selected, "selected$")) {
-        selected[[paste0(nm1, "_", nm2)]] <- res[[filters[[nm2]]$column]]
-      }
-    }
-  }
-  return(selected)
+getValues <- function(result, resultList) {
+  resultList |>
+    purrr::imap(\(x, nm) {
+      values <- result |>
+        filterResult(resultId = x$data$result_id, resultType = x$data$result_type) |>
+        dplyr::select(!c("result_id", "estimate_type", "estimate_value")) |>
+        dplyr::distinct() |>
+        omopgenerics::splitAll() |>
+        omopgenerics::addSettings() |>
+        as.list() |>
+        purrr::map(unique)
+      names(values) <- paste0(nm, "_", names(values))
+      values
+    }) |>
+    purrr::flatten()
 }

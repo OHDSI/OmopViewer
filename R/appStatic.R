@@ -95,12 +95,15 @@ exportStaticApp <- function(result,
   background <- validateBackground(background, logo)
 
   # populate options of panelDetails
-  panelDetails <- populateValues(panelDetails, result) |>
-    pouplateInputIds()
-
-  # populate selected and choices
-  choices <- populateChoices(panelDetails, result)
-  selected <- populateSelected(panelDetails, result)
+  panelDetails <- panelDetails |>
+    # populate <values>
+    populateValues(result) |>
+    # populate inputId and outputId names
+    populateIds() |>
+    # get filter function name
+    populateFilterFunctions() |>
+    # populate in filte the prefix and the name of the function
+    populateRender()
 
   # create ui
   ui <- c(
@@ -144,10 +147,6 @@ exportStaticApp <- function(result,
   global <- c(messageShiny(), libraryStatementsList, "", omopViewerGlobal) |>
     styleCode()
 
-  # prepare data
-  filterValues <- defaultFilterValues(result, resultList)
-  data <- prepareResult(result, resultList)
-
   # write files in the corresponding directory
   if (!is.null(background)) {
     writeLines(background, con = file.path(directory, "background.md"))
@@ -164,7 +163,6 @@ exportStaticApp <- function(result,
   omopgenerics::exportSummarisedResult(
     result, minCellCount = 0, fileName = "results.csv", path = dataPath
   )
-  save(data, filterValues, file = file.path(dataPath, "shinyData.RData"))
   writeLines(preprocess, con = file.path(dataPath, "preprocess.R"))
 
   cli::cli_inform(c("v" = "Shiny created in: {.pkg {directory}}"))
@@ -455,20 +453,66 @@ substituteValues <- function(x, values) {
   x <- x[nchar(x) > 0]
   paste0("c(\"", paste0(x, collapse = "\", \""), "\")")
 }
-populateInputIds <- function(panelDetails) {
+populateIds <- function(panelDetails) {
   panelDetails |>
     purrr::imap(\(x, nm) {
       x$filters <- populateInputId(x$filters, nm)
-
-      # populate filters of content
       x$content <- x$content |>
-        purrr::map(\(cont) {
-          cont$filters <- substituteFilters(cont$filters, values)
+        purrr::imap(\(cont, nmc) {
+          id <- paste0(nm, "_", nmc)
+          cont$output_id <- id
+          cont$filters <- populateInputId(cont$filters, id)
+          cont$download$output_id <- paste0(id, "_download")
           cont
         })
+      x
     })
-
 }
-populateInputId <- function() {
-  x$inputId <- paste0("'", prefix, "_", nm, "'")
+populateInputId <- function(filters, prefix) {
+  filters |>
+    purrr::imap(\(x, nm) {
+      x$inputId <- paste0(prefix, "_", nm)
+      x
+    })
+}
+populateOutputId <- function(panelDetails) {
+  panelDetails |>
+    purrr::imap(\(x, nm) {
+      x$content <- x$content |>
+        purrr::imap(\(cont, nc) {
+          cont$output_id <- paste0(nm, "_", nc)
+          cont
+        })
+      x
+    })
+}
+populateFilterFunctions <- function(panelDetails) {
+  panelDetails |>
+    purrr::imap(\(x, nm) {
+      if ("filters" %in% names(x)) {
+        x$filter_function_name <- paste0("get", formatCamel(paste0(nm, "_data")))
+      }
+      x
+    })
+}
+populateRender <- function(panelDetails) {
+  panelDetails |>
+    purrr::imap(\(pd, pref) {
+      pd$content <- pd$content |>
+        purrr::imap(\(cont, nm) {
+          filtData <-  paste0(pd$filter_function_name, "()")
+          prefix <- paste0("input$", pref, "_", nm, "_")
+          cont$render_content <- cont$render_content |>
+            substituteRender(filtData = filtData, inputPrefix = prefix)
+          cont$download$render <- cont$download$render |>
+            substituteRender(filtData = filtData, inputPrefix = prefix)
+          cont
+        })
+      pd
+    })
+}
+substituteRender <- function(render, filtData, inputPrefix) {
+  render |>
+    stringr::str_replace_all(pattern = "<filteredData>", replacement = filtData) |>
+    stringr::str_replace_all(pattern = "input\\$", replacement = inputPrefix)
 }
