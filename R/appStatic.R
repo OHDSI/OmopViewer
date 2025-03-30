@@ -125,6 +125,7 @@ exportStaticApp <- function(result,
     messageShiny(),
     serverStatic(panelDetails = panelDetails)
   ) |>
+    paste0(collapse = "\n") |>
     styleCode()
 
   # functions to copy
@@ -418,23 +419,34 @@ populateValues <- function(panelDetails, result) {
       values$settings <- omopgenerics::settingsColumns(res)
 
       # create automatic filters
-      for (val in unique(x$automatic_filters)) {
-        omopgenerics::assertChoice(val, c("group", "strata", "additional", "settings"))
-        newFilters <- values[[val]] |>
-          rlang::set_names() |>
-          purrr::map(\(x) {
-            list(
-              button_type = "pickerInput",
-              label = cast(formatTit(x)),
-              column = x,
-              column_type = val,
-              choices = "choices$",
-              selected = "selected$",
-              multiple = TRUE
-            )
-          })
-        x$filters <- c(x$filters, newFilters)
-      }
+      automaticFilters <- unique(x$automatic_filters) |>
+        purrr::map(\(x) {
+          if (!x %in% c("group", "strata", "additional", "settings")) {
+            rlang::set_names("main", x)
+          } else {
+            vals <- values[[x]]
+            rlang::set_names(rep(x, length(vals)), vals)
+          }
+        }) |>
+        purrr::flatten_chr()
+      # exclude filters
+      automaticFilters <- automaticFilters[
+        !names(automaticFilters) %in% as.character(unique(x$exclude_filters))
+      ]
+      # create filters
+      automaticFilters <- automaticFilters |>
+        purrr::imap(\(x, nm) {
+          list(
+            button_type = "pickerInput",
+            label = cast(formatTit(nm)),
+            column = nm,
+            column_type = x,
+            choices = "choices$",
+            selected = "selected$",
+            multiple = TRUE
+          )
+        })
+      x$filters <- c(x$filters, automaticFilters)
 
       # populate filters
       x$filters <- substituteFilters(x$filters, values)

@@ -243,7 +243,8 @@ tidyDT <- function(x,
   # order columns
   cols <- list(
     'CDM name' = "cdm_name", 'Group' = groupColumns, 'Strata' = strataColumns,
-    'Additional' = additionalColumns, 'Settings' = settingsColumns
+    'Additional' = additionalColumns, 'Settings' = settingsColumns,
+    'Variable' = c("variable_name", "variable_level")
   ) |>
     purrr::map(\(x) x[x %in% columns]) |>
     purrr::compact()

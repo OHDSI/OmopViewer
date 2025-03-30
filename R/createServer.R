@@ -43,12 +43,16 @@ writeFilterData <- function(x, nm, data) {
 }
 writeContentServer <- function(content, data) {
   purrr::map_chr(content, \(cont) {
-    paste0(
-      "output$", cont$output_id, " <- ", renderFunction(cont$output_type),
-      "({\n", cont$render_content, "\n})"
-    )
+    c(writeOutputServer(cont), writeDownloadServer(cont)) |>
+      paste0(collapse = "\n")
   }) |>
     paste0(collapse = "\n")
+}
+writeOutputServer <- function(content) {
+  paste0(
+    "output$", content$output_id, " <- ", renderFunction(content$output_type),
+    "({\n", content$render_content, "\n})"
+  )
 }
 outputFunction <- function(outputType) {
   switch(outputType,
@@ -61,4 +65,13 @@ renderFunction <- function(outputType) {
          "DT" = "DT::renderDT",
          "gt" = "gt::render_gt",
          "plot" = "shiny::renderPlot")
+}
+writeDownloadServer <- function(content) {
+  download <- content$download
+  if (length(download) == 0) return(character())
+  paste0(
+    "output$", download$output_id, " <- shiny::downloadHandler(\nfilename = \"",
+    download$filename, "\",\ncontent = function(file) {\n", download$render,
+    "\n}\n)"
+  )
 }

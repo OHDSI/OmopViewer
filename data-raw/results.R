@@ -51,9 +51,14 @@ incidence <- IncidencePrevalence::estimateIncidence(
   cdm = cdm, denominatorTable = "denominator", outcomeTable = "acetaminophen",
   interval = "years", outcomeWashout = 365
 )
+pointPrevalence <- IncidencePrevalence::estimatePointPrevalence(
+  cdm = cdm, denominatorTable = "denominator", outcomeTable = "acetaminophen",
+  interval = "years"
+)
 
 omopViewerResults <- omopgenerics::bind(
-  snapshot, counts, attrition, characteristics, treatmentPersistence, incidence
+  snapshot, counts, attrition, characteristics, treatmentPersistence, incidence,
+  pointPrevalence
 ) |>
   omopgenerics::suppress()
 
