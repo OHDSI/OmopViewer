@@ -8,14 +8,14 @@ tidyContent <- list(
   filters = list(
     columns = list(
       button_type = "pickerInput",
-      label = "\"Columns\"",
+      label = "Columns",
       choices = c("cdm_name", "<group>", "<strata>", "<additional>", "<settings>", "variable_name", "variable_level"),
       selected = c("cdm_name", "<group>", "<strata>", "<additional>", "variable_name", "variable_level"),
       multiple = TRUE
     ),
     pivot_estimates = list(
       button_type = "checkbox",
-      label = "\"Pivot estimates\"",
+      label = "Pivot estimates",
       value = TRUE
     )
   ),

@@ -96,12 +96,10 @@ exportStaticApp <- function(result,
 
   # populate options of panelDetails
   panelDetails <- panelDetails |>
-    # populate <values>
-    populateValues(result) |>
     # populate inputId and outputId names
     populateIds() |>
-    # get filter function name
-    populateFilterFunctions() |>
+    # get filter and render function name
+    populateFunctionNames() |>
     # populate in filte the prefix and the name of the function
     populateRender()
 
@@ -486,64 +484,55 @@ substituteValues <- function(x, values) {
 }
 populateIds <- function(panelDetails) {
   panelDetails |>
-    purrr::imap(\(x, nm) {
-      x$filters <- populateInputId(x$filters, nm)
+    purrr::imap(\(x, nmp) {
+      x$filters <- x$filters |>
+        purrr::imap(\(x, nmf) addInputId(x, paste0(nmp, "_", nmf)))
       x$content <- x$content |>
         purrr::imap(\(cont, nmc) {
-          id <- paste0(nm, "_", nmc)
-          cont$output_id <- id
-          cont$filters <- populateInputId(cont$filters, id)
-          cont$download$output_id <- paste0(id, "_download")
+          if (!"output_id" %in% names(cont)) {
+            cont$output_id <- paste0(nm, "_", nmc)
+          }
+          cont$filters <- cont$filters |>
+            purrr::imap(\(x, nmf) addInputId(x, paste0(nmp, "_", nmc, "_", nmf)))
+          if ("download" %in% names(cont) & !"output_id" %in% names(con$download)) {
+            cont$download$output_id <- paste0(nm, "_", nmc, "_download")
+          }
           cont
         })
       x
     })
 }
-populateInputId <- function(filters, prefix) {
-  filters |>
-    purrr::imap(\(x, nm) {
-      x$inputId <- paste0(prefix, "_", nm)
-      x
-    })
+addInputId <- function(x, def) {
+  if ("inputId" %in% names(x)) {
+    x$input_id <- x$inputId
+  } else if ("input_id" %in% names(x)) {
+    x$inputId <- x$input_id
+  } else {
+    x$input_id <- def
+    x$inputId <- def
+  }
+  x
 }
-populateOutputId <- function(panelDetails) {
+populateFunctionNames <- function(panelDetails) {
   panelDetails |>
+    # filter function name
     purrr::imap(\(x, nm) {
-      x$content <- x$content |>
-        purrr::imap(\(cont, nc) {
-          cont$output_id <- paste0(nm, "_", nc)
-          cont
-        })
-      x
-    })
-}
-populateFilterFunctions <- function(panelDetails) {
-  panelDetails |>
-    purrr::imap(\(x, nm) {
-      if ("filters" %in% names(x)) {
+      if ("filters" %in% names(x) & !"filter_function_name" %in% names(x)) {
         x$filter_function_name <- paste0("get", formatCamel(paste0(nm, "_data")))
       }
       x
-    })
-}
-populateRender <- function(panelDetails) {
-  panelDetails |>
-    purrr::imap(\(pd, pref) {
-      pd$content <- pd$content |>
-        purrr::imap(\(cont, nm) {
-          filtData <-  paste0(pd$filter_function_name, "()")
-          prefix <- paste0("input$", pref, "_", nm, "_")
-          cont$render_content <- cont$render_content |>
-            substituteRender(filtData = filtData, inputPrefix = prefix)
-          cont$download$render <- cont$download$render |>
-            substituteRender(filtData = filtData, inputPrefix = prefix)
+    }) |>
+    # render function name
+    purrr::imap(\(x, nmp) {
+      x$content <- x$content |>
+        purrr::imap(\(cont, nmc) {
+          if (!"render_content_name" %in% names(cont)) {
+            cont$render_content_name <- paste0("get", formatCamel(paste0(
+              nmp, "_", nmc
+            )))
+          }
           cont
         })
-      pd
+      x
     })
-}
-substituteRender <- function(render, filtData, inputPrefix) {
-  render |>
-    stringr::str_replace_all(pattern = "<filteredData>", replacement = filtData) |>
-    stringr::str_replace_all(pattern = "input\\$", replacement = inputPrefix)
 }
