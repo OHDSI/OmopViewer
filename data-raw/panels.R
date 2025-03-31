@@ -4,7 +4,7 @@
 tidyContent <- list(
   title = "Tidy",
   output_type = "DT",
-  render_content = "tidyDT(<filteredData>, input$columns, input$pivot_estimates)",
+  render_content = "tidyDT(<filtered_data>, input$columns, input$pivot_estimates)",
   filters = list(
     columns = list(
       button_type = "pickerInput",
@@ -21,7 +21,7 @@ tidyContent <- list(
   ),
   download = list(
     label = "Download csv",
-    render = "<filteredData> |>
+    render = "<filtered_data> |>
     omopgenerics::tidy() |>
     readr::write_csv(file = file)",
     filename = "tidy_results.csv"
@@ -33,7 +33,7 @@ tidyContent <- list(
 # predefined filters ----
 cdmFilter <- list(
   button_type = "pickerInput",
-  label = "\"CDM name\"",
+  label = "CDM name",
   column = "cdm_name",
   column_type = "main",
   choices = "choices$",
@@ -55,7 +55,7 @@ incidencePanel <- list(
     table = list(
       title = "table Incidence",
       output_type = "gt",
-      render_content = "<filteredData> |>
+      render_content = "<filtered_data> |>
       IncidencePrevalence::plotIncidence(
       x = input$x,
       facet = input$facet,
@@ -64,21 +64,21 @@ incidencePanel <- list(
       filters = list(
         x = list(
           button_type = "pickerInput",
-          label = "\"x axis\"",
+          label = "x axis",
           choices = c("cdm_name", "<group>", "<strata>", "<additional>", "<settings>"),
           selected = c("incidence_start_date"),
           multiple = FALSE
         ),
         facet = list(
           button_type = "pickerInput",
-          label = "\"Facet\"",
+          label = "Facet",
           choices = c("cdm_name", "<group>", "<strata>", "<additional>", "<settings>"),
           selected = c("cdm_name"),
           multiple = TRUE
         ),
         colour = list(
           button_type = "pickerInput",
-          label = "\"Colour\"",
+          label = "Colour",
           choices = c("cdm_name", "<group>", "<strata>", "<additional>", "<settings>"),
           selected = c("outcome_cohort_name"),
           multiple = TRUE
@@ -89,7 +89,7 @@ incidencePanel <- list(
         filters = list(
           format = list(
             button_type = "pickerInput",
-            label = "\"Format\"",
+            label = "Format",
             choices = c("docx", "png", "pdf", "html"),
             selected = "docx",
             multiple = FALSE
