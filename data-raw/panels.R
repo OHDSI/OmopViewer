@@ -55,6 +55,30 @@ incidencePanel <- list(
     table = list(
       title = "Table Incidence",
       output_type = "gt",
+      render = "res <- <filtered_data>
+      res |>
+      IncidencePrevalence::tableIncidence(
+      settingsColumn = settingsColumn(res)
+      )",
+      filters = list(),
+      download = list(
+        label = "Download table",
+        filters = list(
+          format = list(
+            button_type = "pickerInput",
+            label = "Format",
+            choices = c("docx", "png", "pdf", "html"),
+            selected = "docx",
+            multiple = FALSE
+          )
+        ),
+        render = "gt::gtsave(<rendered_data>, file)",
+        filename = "paste0(\"table_incidence.\", input$format)"
+      )
+    ),
+    plot = list(
+      title = "Plot Incidence",
+      output_type = "plot",
       render = "<filtered_data> |>
       IncidencePrevalence::plotIncidence(
       x = input$x,
@@ -85,18 +109,41 @@ incidencePanel <- list(
         )
       ),
       download = list(
-        label = "Download table",
+        label = "Download plot",
         filters = list(
-          format = list(
+          width = list(
+            button_type = "numericInput",
+            label = "Width",
+            value = 15
+          ),
+          height = list(
+            button_type = "numericInput",
+            label = "Height",
+            value = 15
+          ),
+          units = list(
             button_type = "pickerInput",
-            label = "Format",
-            choices = c("docx", "png", "pdf", "html"),
-            selected = "docx",
+            label = "Units",
+            selected = "cm",
+            choices = c("px", "cm", "inch"),
             multiple = FALSE
+          ),
+          dpi = list(
+            button_type = "numericInput",
+            label = "DPI",
+            value = 300
           )
         ),
-        render = "gt::gtsave(<rendered_data>, file)",
-        filename = "paste0(\"table_incidence.\", input$format)"
+        render = "plt <- <rendered_data>
+        ggplot2::ggsave(
+          filename = file,
+          plot = plt,
+          width = as.numeric(input$width),
+          height = as.numeric(input$height),
+          units = input$units,
+          dpi = as.numeric(input$dpi)
+        )",
+        filename = "plot_incidence.png"
       )
     )
   )

@@ -124,14 +124,9 @@ writeSidebar <- function(filters, position) {
   paste0(
     "sidebar = bslib::sidebar(\n",
     filters |>
-      purrr::imap(\(x, nm) {
-        if (identical(x$selected, "selected$")) {
-          x$selected <- paste0("selected$", x$inputId)
-        }
-        if (identical(x$choices, "choices$")) {
-          x$choices <- paste0("choices$", x$inputId)
-        }
+      purrr::map(\(x) {
         x$inputId <- cast(x$inputId)
+        x$input_id <- cast(x$input_id)
         createButton(x)
       }) |>
       paste0(collapse = ",\n"),
@@ -143,9 +138,8 @@ writeSidebar <- function(filters, position) {
 writeContent <- function(content) {
   content |>
     purrr::map(\(x) {
-      id <- x$output_id
-      out <- writeOutput(ot = x$output_type, id = id)
-      download <- writeDownload(do = x$download, id = id)
+      out <- writeOutput(ot = x$output_type, id = x$output_id)
+      download <- writeDownload(do = x$download)
       if (length(x$filters) > 0) {
         sb <- writeSidebar(filters = x$filters, position = "right")
         res <- paste0("bslib::layout_sidebar(\n", sb, ",\n", out, "\n)")
@@ -166,10 +160,22 @@ writeContent <- function(content) {
 writeOutput <- function(ot, id) {
   paste0(outputFunction(ot), '("', id, '")')
 }
-writeDownload <- function(do, id) {
+writeDownload <- function(do) {
   if (length(do) == 0) return("")
+  buttons <- do$filters |>
+    purrr::map(\(x) {
+      x$inputId <- cast(x$inputId)
+      x$input_id <- cast(x$input_id)
+      createButton(x)
+    })
   paste0(
-    'bslib::card_header(\nbslib::popover(\nshiny::icon("download"),\nshiny::downloadButton(outputId = "',
-    id, '_download", label = "', do$label, '")\n),\nclass = "text-end"\n),\n'
+    'bslib::card_header(\nbslib::popover(\n',
+    paste0(
+      c('shiny::icon("download")', buttons, paste0(
+        'shiny::downloadButton(outputId = ', cast(do$output_id), ', label = ',
+        cast(do$label), ')')),
+      collapse = ",\n"
+    ),
+    '\n),\nclass = "text-end"\n),\n'
   )
 }

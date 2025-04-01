@@ -11,7 +11,9 @@ populatePanelDetailsOptions <- function(panelDetails, result) {
     # populate in filter the prefix and the name of the function
     populateInputIds() |>
     # populate <values>
-    populateValues(result)
+    populateValues(result) |>
+    # populate choices$ and selected$
+    populateChoicesSelected()
 }
 populateValues <- function(panelDetails, result) {
   panelDetails |>
@@ -49,15 +51,16 @@ populateValues <- function(panelDetails, result) {
             })
           cont
         })
-
       pd
     })
 }
 substituteValues <- function(x, values) {
   if (is.null(x)) return(x)
-  id <- stringr::str_detect(x, "^<.*>$")
-  for (k in which(id)) {
-    x <- subs(x = x, pat = id, subst = values[[keyWord]])
+  keys <- stringr::str_extract(x, "(?<=<)[^>]+(?=>)") |>
+    purrr::keep(\(x) !is.na(x)) |>
+    unique()
+  for (key in keys) {
+    x <- subs(x = x, pat = paste0("<", key, ">"), subst = values[[key]])
   }
   x[nchar(x) > 0]
 }
@@ -234,4 +237,20 @@ populateAutomaticFilters <- function(panelDetails) {
       pd$exclude_filters <- NULL
       pd
     })
+}
+populateChoicesSelected <- function(panelDetails) {
+  panelDetails |>
+    purrr::imap(\(pd, nm) {
+      pd$filters <- purrr::map(pd$filters, \(filt) populatecs(filt, nm))
+      pd
+    })
+}
+populatecs <- function(filt, nm) {
+  if (identical(filt$selected, "selected$")) {
+    filt$selected <- paste0("selected$", nm, "_", filt$column)
+  }
+  if (identical(filt$choices, "choices$")) {
+    filt$choices <- paste0("choices$", nm, "_", filt$column)
+  }
+  filt
 }

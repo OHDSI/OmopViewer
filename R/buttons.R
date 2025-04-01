@@ -23,6 +23,16 @@ createButton <- function(x) {
         paste0(collapse = ",\n"),
       "\n)"
     )
+  } else if (x$button_type == "numericInput") {
+    x$label <- cast(x$label)
+    args <- names(formals(shiny::numericInput))
+    args <- args[args %in% names(x)]
+    button <- paste0(
+      "shiny::numericInput(\n",
+      purrr::imap(x[args], \(x, nm) paste(nm, "=", x)) |>
+        paste0(collapse = ",\n"),
+      "\n)"
+    )
   } else {
     cli::cli_abort("unexpected button_type")
   }
