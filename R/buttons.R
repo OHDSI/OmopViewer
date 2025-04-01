@@ -33,6 +33,15 @@ createButton <- function(x) {
         paste0(collapse = ",\n"),
       "\n)"
     )
+  } else if (x$button_type == "bucket_list") {
+    args <- names(formals(sortable::bucket_list))
+    args <- args[args %in% names(x)]
+    dots <- x$rank |>
+      purrr::map(\(rnk) {
+        rnk$title <- cast(rnk$title)
+        rnk$labels <- cast(rnk$labels)
+        rnk$input_id <- cast(rnk$input_id)
+      })
   } else {
     cli::cli_abort("unexpected button_type")
   }
