@@ -96,12 +96,16 @@ exportStaticApp <- function(result,
 
   # populate options of panelDetails
   panelDetails <- panelDetails |>
+    # populate automatic filters
+    populateAutomaticFilters() |>
     # populate inputId and outputId names
     populateIds() |>
     # get filter and render function name
     populateFunctionNames() |>
     # populate in filter the prefix and the name of the function
-    populateInputIds()
+    populateInputIds() |>
+    # populate <values>
+    populateValues(result)
 
   # create ui
   ui <- c(
@@ -345,7 +349,9 @@ cast <- function(x) {
     if (length(x) == 0) {
       x <- "character()"
     } else if (length(x) == 1) {
-      x <- paste0('"', x, '"')
+      if (!stringr::str_detect(x, "\"")) {
+        x <- paste0("\"", x, "\"")
+      }
     } else {
       x <- paste0('c("', paste0(x, collapse = '", "'), '")')
     }
@@ -400,87 +406,52 @@ writeResultList <- function(resultList) {
   )
 }
 populateValues <- function(panelDetails, result) {
-  res <- panelDetails |>
-    purrr::map(\(x) {
+  panelDetails |>
+    purrr::map(\(pd) {
       # filter result
-      res <- filterResult(result, x$data$result_id, x$data$result_type)
-
+      res <- result |>
+        filterResult(pd$data$result_id, pd$data$result_type)
       # get values
       values <- res |>
+        dplyr::select(!c("estimate_type", "estimate_value")) |>
+        dplyr::distinct() |>
         omopgenerics::splitAll() |>
         omopgenerics::addSettings() |>
-        dplyr::select(!c("result_id", "estimate_type", "estimate_value")) |>
+        dplyr::select(!"result_id") |>
         purrr::map(unique)
       values$group <- omopgenerics::groupColumns(res)
       values$strata <- omopgenerics::strataColumns(res)
       values$additional <- omopgenerics::additionalColumns(res)
       values$settings <- omopgenerics::settingsColumns(res)
 
-      # create automatic filters
-      automaticFilters <- unique(x$automatic_filters) |>
-        purrr::map(\(x) {
-          if (!x %in% c("group", "strata", "additional", "settings")) {
-            rlang::set_names("main", x)
-          } else {
-            vals <- values[[x]]
-            rlang::set_names(rep(x, length(vals)), vals)
-          }
-        }) |>
-        purrr::flatten_chr()
-      # exclude filters
-      automaticFilters <- automaticFilters[
-        !names(automaticFilters) %in% as.character(unique(x$exclude_filters))
-      ]
-      # create filters
-      automaticFilters <- automaticFilters |>
-        purrr::imap(\(x, nm) {
-          list(
-            button_type = "pickerInput",
-            label = cast(formatTit(nm)),
-            column = nm,
-            column_type = x,
-            choices = "choices$",
-            selected = "selected$",
-            multiple = TRUE
-          )
-        })
-      x$filters <- c(x$filters, automaticFilters)
-
       # populate filters
-      x$filters <- substituteFilters(x$filters, values)
-
-      # populate filters of content
-      x$content <- x$content |>
+      pd$filters <- pd$filters |>
+        purrr::map(\(filt) {
+          filt$choices <- substituteValues(filt$choices, values)
+          filt$selected <- substituteValues(filt$selected, values)
+          filt
+        })
+      pd$content <- pd$content |>
         purrr::map(\(cont) {
-          cont$filters <- substituteFilters(cont$filters, values)
+          cont$filters <- cont$filters |>
+            purrr::map(\(filt) {
+              filt$choices <- substituteValues(filt$choices, values)
+              filt$selected <- substituteValues(filt$selected, values)
+              filt
+            })
           cont
         })
 
-      x
-    })
-}
-substituteFilters <- function(filters, values) {
-  filters |>
-    purrr::map(\(filt) {
-      purrr::imap(filt, \(x, nm) {
-        if (nm %in% c("choices", "selected")) {
-          x <- substituteValues(x, values)
-        }
-        x
-      })
+      pd
     })
 }
 substituteValues <- function(x, values) {
-  if (length(x) == 1 & any(stringr::str_detect(x, "\\$"))) {
-    return(x)
-  }
+  if (is.null(x)) return(x)
   id <- stringr::str_detect(x, "^<.*>$")
   for (k in which(id)) {
-    keyWord <- substr(x[k], 2, nchar(x[k]) - 1)
-    x[k] <- paste0(values[[keyWord]], collapse = "\", \"")
+    x <- subs(x = x, pat = id, subst = values[[keyWord]])
   }
-  x <- x[nchar(x) > 0]
-  paste0("c(\"", paste0(x, collapse = "\", \""), "\")")
+  x[nchar(x) > 0]
 }
 populateIds <- function(panelDetails) {
   panelDetails |>
@@ -491,6 +462,8 @@ populateIds <- function(panelDetails) {
         purrr::imap(\(cont, nmc) {
           cont <- addOutputId(cont, paste0(nmp, "_", nmc))
           cont$filters <- cont$filters |>
+            purrr::imap(\(x, nmf) addInputId(x, paste0(nmp, "_", nmc, "_", nmf)))
+          cont$download$filters <- cont$download$filters |>
             purrr::imap(\(x, nmf) addInputId(x, paste0(nmp, "_", nmc, "_", nmf)))
           cont$download <- addOutputId(cont$download, paste0(nmp, "_", nmc, "_download"))
           cont
@@ -543,16 +516,94 @@ populateFunctionNames <- function(panelDetails) {
 populateInputIds <- function(panelDetails) {
   panelDetails |>
     purrr::map(\(pd) {
-      purrr::map(pd$content, \(cont) {
-        browser()
-        # where to find the inputs
-        inputs <- c(x$render_content, x$download$render_download, x$download$filename) |>
-          # split in words
-          stringr::str_split(pattern = " ") |>
-          unlist() |>
-          # find words that start with input$
-          purrr::keep(\(x) stringr::str_starts(x, "input\\$"))
-        browser()
-      })
+      pd$content <- pd$content |>
+        purrr::map(\(cont) {
+          # where to find the inputs
+          inputsToSubstitute <- c(
+            cont$render_content,
+            cont$download$render_download,
+            cont$download$filename
+          ) |>
+            # split in words
+            stringr::str_split(pattern = "[[:punct:]&&[^_]]|\\s+") |>
+            unlist() |>
+            unique() |>
+            # find words that start with input$
+            purrr::keep(\(x) stringr::str_starts(x, "input\\$")) |>
+            rlang::set_names() |>
+            # find the id
+            purrr::map_chr(\(x) {
+              id <- stringr::str_sub(x, start = 7, end = nchar(x))
+              if (id %in% names(pd$filters)) {
+                nm <- pd$filters[[id]]$input_id
+              } else if (id %in% names(cont$filters)) {
+                nm <- cont$filters[[id]]$input_id
+              } else if (id %in% names(cont$download$filters)) {
+                nm <- cont$download$filters[[id]]$input_id
+              } else {
+                nm <- NULL
+                cli::cli_warn("filter {id} not found!")
+              }
+              paste0("input$", nm)
+            })
+          for (k in seq_along(inputsToSubstitute)) {
+            new <- unname(inputsToSubstitute[k])
+            original <- names(inputsToSubstitute)[k] |>
+              stringr::str_replace_all(pattern = "\\$", replacement = "\\\\$")
+            cont$render_content <- cont$render_content |>
+              stringr::str_replace_all(pattern = original, replacement = new)
+            cont$download$render_download <- cont$download$render_download |>
+              stringr::str_replace_all(pattern = original, replacement = new)
+            cont$download$filename <- cont$download$filename |>
+              stringr::str_replace_all(pattern = original, replacement = new)
+          }
+          cont
+        })
+      pd
+    })
+}
+populateAutomaticFilters <- function(panelDetails) {
+  panelDetails |>
+    purrr::map(\(pd) {
+      res <- result |>
+        filterResult(pd$data$result_id, pd$data$result_type)
+      values <- list()
+      values$group <- omopgenerics::groupColumns(res)
+      values$strata <- omopgenerics::strataColumns(res)
+      values$additional <- omopgenerics::additionalColumns(res)
+      values$settings <- omopgenerics::settingsColumns(res)
+
+      # create automatic filters
+      automaticFilters <- unique(pd$automatic_filters) |>
+        purrr::map(\(x) {
+          if (!x %in% c("group", "strata", "additional", "settings")) {
+            rlang::set_names("main", x)
+          } else {
+            vals <- values[[x]]
+            rlang::set_names(rep(x, length(vals)), vals)
+          }
+        }) |>
+        purrr::flatten_chr()
+      # exclude filters
+      automaticFilters <- automaticFilters[
+        !names(automaticFilters) %in% as.character(unique(pd$exclude_filters))
+      ]
+      # create filters
+      automaticFilters <- automaticFilters |>
+        purrr::imap(\(x, nm) {
+          list(
+            button_type = "pickerInput",
+            label = formatTit(nm),
+            column = nm,
+            column_type = x,
+            choices = "choices$",
+            selected = "selected$",
+            multiple = TRUE
+          )
+        })
+      pd$filters <- c(pd$filters, automaticFilters)
+      pd$automatic_filters <- NULL
+      pd$exclude_filters <- NULL
+      pd
     })
 }

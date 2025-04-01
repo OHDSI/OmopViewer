@@ -48,7 +48,20 @@ getData <- function(x) {
 getFilters <- function(x) {
   fi <- length(x$filters)
   af <- length(x$automatic_filters)
-  glue::glue("{fi} filters + {af} automatic filters")
+  if (af > 0) {
+    if (fi > 0) {
+      glue::glue("{fi} filters + {af} automatic filters")
+    } else {
+      glue::glue("{af} automatic filters")
+    }
+  } else {
+    if (fi > 0) {
+      glue::glue("{fi} filters")
+    } else {
+      "-no filters-"
+    }
+  }
+
 }
 getContent <- function(x) {
   co <- x$content

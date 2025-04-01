@@ -53,7 +53,7 @@ incidencePanel <- list(
   content = list(
     tidy = tidyContent,
     table = list(
-      title = "table Incidence",
+      title = "Table Incidence",
       output_type = "gt",
       render_content = "<filtered_data> |>
       IncidencePrevalence::plotIncidence(
@@ -96,7 +96,7 @@ incidencePanel <- list(
           )
         ),
         render_download = "gt::gtsave(<render_content>, file)",
-        filename = "paste0(\"table_incidence.\", input$download_format)"
+        filename = "paste0(\"table_incidence.\", input$format)"
       )
     )
   )
