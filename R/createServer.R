@@ -1,4 +1,21 @@
 
+# static ----
+serverStatic <- function(panelDetails) {
+  paste0(
+    c(
+      messageShiny(),
+      "server <- function(input, output, session) {",
+      createServer(panelDetails, data = "data"),
+      "}"
+    ),
+    collapse = "\n"
+  ) |>
+    styleCode()
+}
+
+# dynamic ----
+
+# functions ----
 createServer <- function(panelDetails, data) {
   c(
     downloadRawDataServer(data),
@@ -10,6 +27,17 @@ createServer <- function(panelDetails, data) {
         paste0(collapse = "\n")
     })
   )
+}
+downloadRawDataServer <- function(data) {
+  '# download raw data -----
+  output$download_raw <- shiny::downloadHandler(
+    filename = "results.csv",
+    content = function(file) {
+      omopgenerics::exportSummarisedResult([data], fileName = file)
+    }
+  )' |>
+    glue::glue(.open = "[", .close = "]") |>
+    as.character()
 }
 writeFilterData <- function(x, nm, data) {
   # join by filter function
@@ -38,7 +66,7 @@ writeFilterData <- function(x, nm, data) {
   ) |>
     paste0(collapse = " |>\n")
   paste0(
-    "## get ", nm, " data\n", x$filter_function_name, " <- shiny::reactive({\n", filtersText, "\n})"
+    "## get ", nm, " data\n", x$filter_function, " <- shiny::reactive({\n", filtersText, "\n})"
   )
 }
 writeContentServer <- function(content, data) {
@@ -50,8 +78,9 @@ writeContentServer <- function(content, data) {
 }
 writeOutputServer <- function(content) {
   paste0(
-    "output$", content$output_id, " <- ", renderFunction(content$output_type),
-    "({\n", content$render_content, "\n})"
+    content$render_function, " <- shiny::reactive({\n", content$render,
+    "\n})\noutput$", content$output_id, " <- ", renderFunction(content$output_type),
+    "({\n", content$render_function, "()\n})"
   )
 }
 outputFunction <- function(outputType) {
@@ -70,8 +99,8 @@ writeDownloadServer <- function(content) {
   download <- content$download
   if (length(download) == 0) return(character())
   paste0(
-    "output$", download$output_id, " <- shiny::downloadHandler(\nfilename = \"",
-    download$filename, "\",\ncontent = function(file) {\n", download$render,
+    "output$", download$output_id, " <- shiny::downloadHandler(\nfilename = ",
+    cast(download$filename), ",\ncontent = function(file) {\n", download$render,
     "\n}\n)"
   )
 }

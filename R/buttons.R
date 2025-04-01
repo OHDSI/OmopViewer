@@ -1,6 +1,9 @@
 createButton <- function(x) {
   # write the button
   if (x$button_type == "pickerInput") {
+    x$label <- cast(x$label)
+    x$choices <- cast(x$choices)
+    x$selected <- cast(x$selected)
     x$options = 'list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")'
     args <- names(formals(shinyWidgets::pickerInput))
     args <- args[args %in% names(x)]
@@ -11,6 +14,7 @@ createButton <- function(x) {
       "\n)"
     )
   } else if (x$button_type == "checkbox") {
+    x$label <- cast(x$label)
     args <- names(formals(shiny::checkboxInput))
     args <- args[args %in% names(x)]
     button <- paste0(

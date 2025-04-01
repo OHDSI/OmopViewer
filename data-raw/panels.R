@@ -4,7 +4,7 @@
 tidyContent <- list(
   title = "Tidy",
   output_type = "DT",
-  render_content = "tidyDT(<filtered_data>, input$columns, input$pivot_estimates)",
+  render = "tidyDT(<filtered_data>, input$columns, input$pivot_estimates)",
   filters = list(
     columns = list(
       button_type = "pickerInput",
@@ -21,7 +21,7 @@ tidyContent <- list(
   ),
   download = list(
     label = "Download csv",
-    render_download = "<filtered_data> |>
+    render = "<filtered_data> |>
     omopgenerics::tidy() |>
     readr::write_csv(file = file)",
     filename = "tidy_results.csv"
@@ -55,7 +55,7 @@ incidencePanel <- list(
     table = list(
       title = "Table Incidence",
       output_type = "gt",
-      render_content = "<filtered_data> |>
+      render = "<filtered_data> |>
       IncidencePrevalence::plotIncidence(
       x = input$x,
       facet = input$facet,
@@ -95,7 +95,7 @@ incidencePanel <- list(
             multiple = FALSE
           )
         ),
-        render_download = "gt::gtsave(<render_content>, file)",
+        render = "gt::gtsave(<rendered_data>, file)",
         filename = "paste0(\"table_incidence.\", input$format)"
       )
     )

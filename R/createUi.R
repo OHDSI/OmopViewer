@@ -1,4 +1,71 @@
 
+# static ----
+uiStatic <- function(logo,
+                     title,
+                     background,
+                     summary,
+                     theme,
+                     panelDetails,
+                     panelStructure) {
+  # create panels
+  panels <- writeUiPanels(panelDetails) |>
+    structurePanels(panelStructure)
+
+  # ui
+  c(
+    messageShiny(),
+    "ui <- bslib::page_navbar(",
+    c(
+      writeTitle(title, logo),
+      writeTheme(theme),
+      createBackground(background),
+      summaryTab(summary),
+      panels,
+      "bslib::nav_spacer()",
+      downloadRawDataUi(),
+      createAbout("hds_logo.svg"),
+      'bslib::nav_item(bslib::input_dark_mode(id ="dark_mode", mode = "light"))'
+    ) |>
+      paste0(collapse = ",\n"),
+    ")"
+  ) |>
+    paste0(collapse = "\n") |>
+    styleCode()
+}
+downloadRawDataUi <- function() {
+  'bslib::nav_item(
+    bslib::popover(
+      shiny::icon("download"),
+      shiny::downloadButton(
+        outputId = "download_raw",
+        label = "Download raw data",
+        icon = shiny::icon("download")
+      )
+    )
+  )'
+}
+
+# dynamic ----
+
+# functions ----
+writeTitle <- function(title, logo) {
+  if (is.null(logo)) {
+    x <- 'title = "{title}"'
+  } else {
+    x <- 'title = shiny::tags$span(
+      shiny::tags$img(
+        src = "{logo}",
+        width = "auto",
+        height = "46px",
+        class = "me-3",
+        alt = "logo"
+      ),
+      "{title}"
+    )'
+  }
+  x <- glue::glue(x) |> as.character()
+  return(x)
+}
 writeUiPanels <- function(panelDetails) {
   # create a list with all the panel content
   panelDetails |>

@@ -20,7 +20,7 @@ validateTheme <- function(theme, call = parent.frame()) {
   }
   return(theme)
 }
-pageTheme <- function(theme) {
+writeTheme <- function(theme) {
   if (is.null(theme)) return(character())
   return(paste0('theme = ', theme))
 }

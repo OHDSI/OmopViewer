@@ -57,36 +57,19 @@ exportStaticApp <- function(result,
   panelStructure <- validatePanelStructure(panelStructure, names(panelDetails))
 
   # processing data
-  cli::cli_inform(c("i" = "Processing data"))
-  if (length(panelDetails) == 0) {
-    c("!" = "No panels identified, generated shiny will be empty.") |>
-      cli::cli_inform()
-  } else {
-    c("v" = "Data processed: {length(panelDetails)} panel{?s} idenfied: {.var {names(panelDetails)}}.") |>
-      cli::cli_inform()
-  }
+  processingData(panelDetails)
 
   # create shiny
-  directory <- validateDirectory(directory)
+  directory <- createDirectory(directory)
   if (isTRUE(directory)) {
-    return(cli::cli_inform(c("i" = "{.strong shiny} folder will not be overwritten. Stopping process.")))
+    "{.strong shiny} folder will not be overwritten. Stopping process." |>
+      rlang::set_names("i") |>
+      cli::cli_inform()
+    return(invisible())
   }
-  directory <- file.path(directory, "shiny")
-  dir.create(path = directory, showWarnings = FALSE)
-  cli::cli_inform(c("i" = "Creating shiny from provided data"))
 
   # preprocess file
-  resultList <- panelDetails |>
-    purrr::map(\(x) {
-      list(result_id = x$data$result_id, result_type = x$data$result_type) |>
-        purrr::compact()
-    })
-  preprocess <- c(
-    "# shiny is prepared to work with this resultList:",
-    paste0("resultList <- ", writeResultList(resultList)),
-    omopViewerPreprocess
-  ) |>
-    styleCode()
+  preprocess <- preprocessData(panelDetails)
 
   # copy the logos to the shiny folder
   logo <- copyLogos(logo, directory)
@@ -95,60 +78,21 @@ exportStaticApp <- function(result,
   background <- validateBackground(background, logo)
 
   # populate options of panelDetails
-  panelDetails <- panelDetails |>
-    # populate automatic filters
-    populateAutomaticFilters() |>
-    # populate inputId and outputId names
-    populateIds() |>
-    # get filter and render function name
-    populateFunctionNames() |>
-    # populate in filter the prefix and the name of the function
-    populateInputIds() |>
-    # populate <values>
-    populateValues(result)
+  panelDetails <- populatePanelDetailsOptions(panelDetails, result)
 
   # create ui
-  ui <- c(
-    messageShiny(),
-    uiStatic(
-      logo = logo,
-      title = title,
-      summary = summary,
-      background = !is.null(background),
-      theme = theme,
-      panelStructure = panelStructure,
-      panelDetails = panelDetails
-    )
-  ) |>
-    styleCode()
+  ui <- uiStatic(
+    logo, title, background, summary, theme, panelDetails, panelStructure
+  )
 
   # create server
-  server <- c(
-    messageShiny(),
-    serverStatic(panelDetails = panelDetails)
-  ) |>
-    paste0(collapse = "\n") |>
-    styleCode()
+  server <- serverStatic(panelDetails)
 
   # functions to copy
   functions <- readLines(system.file("functions.R", package = "OmopViewer"))
 
-  # check installed libraries
-  libraries <- c(
-    detectPackages(ui),
-    detectPackages(server),
-    detectPackages(omopViewerGlobal),
-    detectPackages(preprocess),
-    detectPackages(functions)
-  ) |>
-    unique() |>
-    sort()
-  checkInstalledPackages(libraries)
-
   # create global
-  libraryStatementsList <- paste0("library(", libraries, ")")
-  global <- c(messageShiny(), libraryStatementsList, "", omopViewerGlobal) |>
-    styleCode()
+  global <- createGlobal(c(ui, server, preprocess, functions))
 
   # write files in the corresponding directory
   if (!is.null(background)) {
@@ -179,6 +123,7 @@ exportStaticApp <- function(result,
   return(invisible())
 }
 
+# utilities ----
 messageShiny <- function() {
   c(
     paste0(
@@ -227,110 +172,6 @@ logoPath <- function(logo) {
     logo
   }
 }
-addFilterNames <- function(panelDetails, result) {
-  panelDetails |>
-    purrr::map(\(x) {
-      filters <- omopgenerics::settings(result) |>
-        dplyr::filter(.data$result_id %in% .env$x$result_id) |>
-        dplyr::select(!dplyr::any_of(c(
-          "result_id", "result_type", "package_version", "package_name",
-          "min_cell_count"
-        ))) |>
-        purrr::imap(\(x, nm) {
-          if (nm %in% c("group", "strata", "additional")) {
-            x <- x |>
-              stringr::str_split(pattern = " &&& ") |>
-              unlist() |>
-              unique()
-            glue::glue("grouping_{x[x != \"\"]}") |>
-              as.character()
-          } else if (sum(!is.na(x)) > 0){
-            paste0("settings_", nm)
-          } else {
-            NULL
-          }
-        }) |>
-        purrr::compact() |>
-        unname() |>
-        unlist()
-      if (any(result$result_id %in% x$result_id)) {
-        filters <- c(
-          "grouping_cdm_name", "variable_name", "estimate_name", filters
-        )
-      }
-      if (length(filters) == 0) filters <- character()
-      x$filter_name <- filters
-      x
-    })
-}
-
-# ui ----
-uiStatic <- function(logo,
-                     title,
-                     background,
-                     summary,
-                     theme,
-                     panelDetails,
-                     panelStructure) {
-  # theme
-  theme_setting <- paste0("theme = ", theme, ",")
-
-  # create panels
-  panels <- writeUiPanels(panelDetails) |>
-    structurePanels(panelStructure)
-
-  # ui
-  c(
-    "ui <- bslib::page_navbar(",
-    c(
-      pageTitle(title, logo),
-      pageTheme(theme),
-      createBackground(background),
-      summaryTab(summary),
-      panels,
-      "bslib::nav_spacer()",
-      downloadRawDataUi(),
-      createAbout("hds_logo.svg"),
-      'bslib::nav_item(bslib::input_dark_mode(id ="dark_mode", mode = "light"))'
-    ) |>
-      paste0(collapse = ",\n"),
-    ")"
-  ) |>
-    paste0(collapse = "\n")
-}
-
-pageTitle <- function(title, logo) {
-  if (is.null(logo)) {
-    x <- 'title = "{title}"'
-  } else {
-    x <- 'title = shiny::tags$span(
-      shiny::tags$img(
-        src = "{logo}",
-        width = "auto",
-        height = "46px",
-        class = "me-3",
-        alt = "logo"
-      ),
-      "{title}"
-    )'
-  }
-  x <- glue::glue(x) |> as.character()
-  return(x)
-}
-
-# server ----
-serverStatic <- function(panelDetails) {
-  paste0(
-    c(
-      "server <- function(input, output, session) {",
-      createServer(panelDetails, data = "data"),
-      "}"
-    ),
-    collapse = "\n"
-  )
-}
-
-# utilities ----
 formatTit <- function(x) {
   x |>
     stringr::str_replace_all(pattern = "_", replacement = " ") |>
@@ -349,7 +190,7 @@ cast <- function(x) {
     if (length(x) == 0) {
       x <- "character()"
     } else if (length(x) == 1) {
-      if (!stringr::str_detect(x, "\"")) {
+      if (!stringr::str_detect(x, "\"") & !stringr::str_detect(x, "\\$")) {
         x <- paste0("\"", x, "\"")
       }
     } else {
@@ -378,6 +219,70 @@ subs <- function(x, pat, subst) {
   }
   return(x)
 }
+
+# processing data ----
+processingData <- function(panelDetails) {
+  cli::cli_inform(c("i" = "Processing data"))
+  if (length(panelDetails) == 0) {
+    c("!" = "No panels identified, generated shiny will be empty.") |>
+      cli::cli_inform()
+  } else {
+    c("v" = "Data processed: {length(panelDetails)} panel{?s} idenfied: {.var {names(panelDetails)}}.") |>
+      cli::cli_inform()
+  }
+  invisible(NULL)
+}
+
+# create directory ----
+createDirectory <- function(directory) {
+  directoryShiny <- file.path(directory, "shiny")
+  # create directory if it does not exit
+  if (!dir.exists(directory)) {
+    cli::cli_inform(c("i" = "Provided directory does not exist, it will be created."))
+    dir.create(path = directory, recursive = TRUE)
+    cli::cli_inform(c("v" = "directory created: {.pkg {directory}}"))
+  } else if (file.exists(file.path(directory, "shiny"))) {
+    # ask overwrite shiny
+    overwrite <- "1"  # overwrite if non-interactive
+    if (rlang::is_interactive()) {
+      cli::cli_inform(c(
+        "!" = "A {.strong shiny} folder already exists in the provided directory. Enter choice 1 or 2:",
+        " " = "1) Overwrite",
+        " " = "2) Cancel"
+      ))
+      overwrite <- readline()
+      while (!overwrite %in% c("1", "2")) {
+        cli::cli_inform(c("x" = "Invalid input. Please choose 1 to overwrite or 2 to cancel:"))
+        overwrite <- readline()
+      }
+    }
+    if (overwrite == "2") {
+      return(TRUE)
+    } else {
+      cli::cli_inform(c("i" = "{.strong shiny} folder will be overwritten."))
+      unlink(directoryShiny, recursive = TRUE)
+      cli::cli_inform(c("v" = "Prior {.strong shiny} folder deleted."))
+    }
+  }
+  dir.create(path = directoryShiny, showWarnings = FALSE)
+  cli::cli_inform(c("i" = "Creating shiny from provided data"))
+  directoryShiny
+}
+
+# preprocess file ----
+preprocessData <- function(panelDetails) {
+  resultList <- panelDetails |>
+    purrr::map(\(x) {
+      list(result_id = x$data$result_id, result_type = x$data$result_type) |>
+        purrr::compact()
+    })
+  c(
+    "# shiny is prepared to work with this resultList:",
+    paste0("resultList <- ", writeResultList(resultList)),
+    omopViewerPreprocess
+  ) |>
+    styleCode()
+}
 writeResultList <- function(resultList) {
   #paste0(deparse(resultList), collapse = "")
   if (length(resultList) == 0) return("list()")
@@ -405,205 +310,32 @@ writeResultList <- function(resultList) {
     "\n)"
   )
 }
-populateValues <- function(panelDetails, result) {
-  panelDetails |>
-    purrr::map(\(pd) {
-      # filter result
-      res <- result |>
-        filterResult(pd$data$result_id, pd$data$result_type)
-      # get values
-      values <- res |>
-        dplyr::select(!c("estimate_type", "estimate_value")) |>
-        dplyr::distinct() |>
-        omopgenerics::splitAll() |>
-        omopgenerics::addSettings() |>
-        dplyr::select(!"result_id") |>
-        purrr::map(unique)
-      values$group <- omopgenerics::groupColumns(res)
-      values$strata <- omopgenerics::strataColumns(res)
-      values$additional <- omopgenerics::additionalColumns(res)
-      values$settings <- omopgenerics::settingsColumns(res)
 
-      # populate filters
-      pd$filters <- pd$filters |>
-        purrr::map(\(filt) {
-          filt$choices <- substituteValues(filt$choices, values)
-          filt$selected <- substituteValues(filt$selected, values)
-          filt
-        })
-      pd$content <- pd$content |>
-        purrr::map(\(cont) {
-          cont$filters <- cont$filters |>
-            purrr::map(\(filt) {
-              filt$choices <- substituteValues(filt$choices, values)
-              filt$selected <- substituteValues(filt$selected, values)
-              filt
-            })
-          cont
-        })
+# create global ----
+createGlobal <- function(code) {
+  libraries <- detectPackages(c(code, omopViewerGlobal))
+  libraryStatementsList <- paste0("library(", libraries, ")")
 
-      pd
-    })
+  c(messageShiny(), libraryStatementsList, "", omopViewerGlobal) |>
+    styleCode()
 }
-substituteValues <- function(x, values) {
-  if (is.null(x)) return(x)
-  id <- stringr::str_detect(x, "^<.*>$")
-  for (k in which(id)) {
-    x <- subs(x = x, pat = id, subst = values[[keyWord]])
+detectPackages <- function(code) {
+  code |>
+    stringr::str_extract_all(pattern = "\\b([a-zA-Z0-9\\.]+)::") |>
+    unlist() |>
+    stringr::str_replace("::", "") |>
+    unique() |>
+    sort() |>
+    checkInstalledPackages()
+}
+checkInstalledPackages <- function(x) {
+  notInstalled <- purrr::keep(x, \(x) !rlang::is_installed(x))
+  if (length(notInstalled) > 0) {
+    cli::cli_warn(c(
+      "!" = "{length(notInstalled)} package{?s} {?is/are} not installed: {.pkg {notInstalled}}."
+    ))
+    install <- paste0(notInstalled, collapse = '", "')
+    cli::cli_inform(c("i" = '{.run install.packages(c("{install}"))}'))
   }
-  x[nchar(x) > 0]
-}
-populateIds <- function(panelDetails) {
-  panelDetails |>
-    purrr::imap(\(x, nmp) {
-      x$filters <- x$filters |>
-        purrr::imap(\(x, nmf) addInputId(x, paste0(nmp, "_", nmf)))
-      x$content <- x$content |>
-        purrr::imap(\(cont, nmc) {
-          cont <- addOutputId(cont, paste0(nmp, "_", nmc))
-          cont$filters <- cont$filters |>
-            purrr::imap(\(x, nmf) addInputId(x, paste0(nmp, "_", nmc, "_", nmf)))
-          cont$download$filters <- cont$download$filters |>
-            purrr::imap(\(x, nmf) addInputId(x, paste0(nmp, "_", nmc, "_", nmf)))
-          cont$download <- addOutputId(cont$download, paste0(nmp, "_", nmc, "_download"))
-          cont
-        })
-      x
-    })
-}
-addInputId <- function(x, def) {
-  if (!is.null(x)) {
-    if ("inputId" %in% names(x)) {
-      x$input_id <- x$inputId
-    } else if ("input_id" %in% names(x)) {
-      x$inputId <- x$input_id
-    } else {
-      x$input_id <- def
-      x$inputId <- def
-    }
-  }
-  x
-}
-addOutputId <- function(x, def) {
-  if (!is.null(x) & !"output_id" %in% names(x)) {
-    x$output_id <- def
-  }
-  x
-}
-populateFunctionNames <- function(panelDetails) {
-  panelDetails |>
-    # filter function name
-    purrr::imap(\(x, nm) {
-      if ("filters" %in% names(x) & !"filter_function_name" %in% names(x)) {
-        x$filter_function_name <- paste0("get", formatCamel(paste0(nm, "_data")))
-      }
-      x
-    }) |>
-    # render function name
-    purrr::imap(\(x, nmp) {
-      x$content <- x$content |>
-        purrr::imap(\(cont, nmc) {
-          if (!"render_content_name" %in% names(cont)) {
-            cont$render_content_name <- paste0("get", formatCamel(paste0(
-              nmp, "_", nmc
-            )))
-          }
-          cont
-        })
-      x
-    })
-}
-populateInputIds <- function(panelDetails) {
-  panelDetails |>
-    purrr::map(\(pd) {
-      pd$content <- pd$content |>
-        purrr::map(\(cont) {
-          # where to find the inputs
-          inputsToSubstitute <- c(
-            cont$render_content,
-            cont$download$render_download,
-            cont$download$filename
-          ) |>
-            # split in words
-            stringr::str_split(pattern = "[[:punct:]&&[^_]]|\\s+") |>
-            unlist() |>
-            unique() |>
-            # find words that start with input$
-            purrr::keep(\(x) stringr::str_starts(x, "input\\$")) |>
-            rlang::set_names() |>
-            # find the id
-            purrr::map_chr(\(x) {
-              id <- stringr::str_sub(x, start = 7, end = nchar(x))
-              if (id %in% names(pd$filters)) {
-                nm <- pd$filters[[id]]$input_id
-              } else if (id %in% names(cont$filters)) {
-                nm <- cont$filters[[id]]$input_id
-              } else if (id %in% names(cont$download$filters)) {
-                nm <- cont$download$filters[[id]]$input_id
-              } else {
-                nm <- NULL
-                cli::cli_warn("filter {id} not found!")
-              }
-              paste0("input$", nm)
-            })
-          for (k in seq_along(inputsToSubstitute)) {
-            new <- unname(inputsToSubstitute[k])
-            original <- names(inputsToSubstitute)[k] |>
-              stringr::str_replace_all(pattern = "\\$", replacement = "\\\\$")
-            cont$render_content <- cont$render_content |>
-              stringr::str_replace_all(pattern = original, replacement = new)
-            cont$download$render_download <- cont$download$render_download |>
-              stringr::str_replace_all(pattern = original, replacement = new)
-            cont$download$filename <- cont$download$filename |>
-              stringr::str_replace_all(pattern = original, replacement = new)
-          }
-          cont
-        })
-      pd
-    })
-}
-populateAutomaticFilters <- function(panelDetails) {
-  panelDetails |>
-    purrr::map(\(pd) {
-      res <- result |>
-        filterResult(pd$data$result_id, pd$data$result_type)
-      values <- list()
-      values$group <- omopgenerics::groupColumns(res)
-      values$strata <- omopgenerics::strataColumns(res)
-      values$additional <- omopgenerics::additionalColumns(res)
-      values$settings <- omopgenerics::settingsColumns(res)
-
-      # create automatic filters
-      automaticFilters <- unique(pd$automatic_filters) |>
-        purrr::map(\(x) {
-          if (!x %in% c("group", "strata", "additional", "settings")) {
-            rlang::set_names("main", x)
-          } else {
-            vals <- values[[x]]
-            rlang::set_names(rep(x, length(vals)), vals)
-          }
-        }) |>
-        purrr::flatten_chr()
-      # exclude filters
-      automaticFilters <- automaticFilters[
-        !names(automaticFilters) %in% as.character(unique(pd$exclude_filters))
-      ]
-      # create filters
-      automaticFilters <- automaticFilters |>
-        purrr::imap(\(x, nm) {
-          list(
-            button_type = "pickerInput",
-            label = formatTit(nm),
-            column = nm,
-            column_type = x,
-            choices = "choices$",
-            selected = "selected$",
-            multiple = TRUE
-          )
-        })
-      pd$filters <- c(pd$filters, automaticFilters)
-      pd$automatic_filters <- NULL
-      pd$exclude_filters <- NULL
-      pd
-    })
+  return(x)
 }
