@@ -21,7 +21,7 @@ tidyContent <- list(
   ),
   download = list(
     label = "Download csv",
-    render = "<filtered_data> |>
+    render_download = "<filtered_data> |>
     omopgenerics::tidy() |>
     readr::write_csv(file = file)",
     filename = "tidy_results.csv"
@@ -95,7 +95,7 @@ incidencePanel <- list(
             multiple = FALSE
           )
         ),
-        render = "gt::gtsave(<render_content>, file)",
+        render_download = "gt::gtsave(<render_content>, file)",
         filename = "paste0(\"table_incidence.\", input$download_format)"
       )
     )

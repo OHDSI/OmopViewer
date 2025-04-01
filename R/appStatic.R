@@ -100,8 +100,8 @@ exportStaticApp <- function(result,
     populateIds() |>
     # get filter and render function name
     populateFunctionNames() |>
-    # populate in filte the prefix and the name of the function
-    populateRender()
+    # populate in filter the prefix and the name of the function
+    populateInputIds()
 
   # create ui
   ui <- c(
@@ -489,27 +489,31 @@ populateIds <- function(panelDetails) {
         purrr::imap(\(x, nmf) addInputId(x, paste0(nmp, "_", nmf)))
       x$content <- x$content |>
         purrr::imap(\(cont, nmc) {
-          if (!"output_id" %in% names(cont)) {
-            cont$output_id <- paste0(nm, "_", nmc)
-          }
+          cont <- addOutputId(cont, paste0(nmp, "_", nmc))
           cont$filters <- cont$filters |>
             purrr::imap(\(x, nmf) addInputId(x, paste0(nmp, "_", nmc, "_", nmf)))
-          if ("download" %in% names(cont) & !"output_id" %in% names(con$download)) {
-            cont$download$output_id <- paste0(nm, "_", nmc, "_download")
-          }
+          cont$download <- addOutputId(cont$download, paste0(nmp, "_", nmc, "_download"))
           cont
         })
       x
     })
 }
 addInputId <- function(x, def) {
-  if ("inputId" %in% names(x)) {
-    x$input_id <- x$inputId
-  } else if ("input_id" %in% names(x)) {
-    x$inputId <- x$input_id
-  } else {
-    x$input_id <- def
-    x$inputId <- def
+  if (!is.null(x)) {
+    if ("inputId" %in% names(x)) {
+      x$input_id <- x$inputId
+    } else if ("input_id" %in% names(x)) {
+      x$inputId <- x$input_id
+    } else {
+      x$input_id <- def
+      x$inputId <- def
+    }
+  }
+  x
+}
+addOutputId <- function(x, def) {
+  if (!is.null(x) & !"output_id" %in% names(x)) {
+    x$output_id <- def
   }
   x
 }
@@ -534,5 +538,21 @@ populateFunctionNames <- function(panelDetails) {
           cont
         })
       x
+    })
+}
+populateInputIds <- function(panelDetails) {
+  panelDetails |>
+    purrr::map(\(pd) {
+      purrr::map(pd$content, \(cont) {
+        browser()
+        # where to find the inputs
+        inputs <- c(x$render_content, x$download$render_download, x$download$filename) |>
+          # split in words
+          stringr::str_split(pattern = " ") |>
+          unlist() |>
+          # find words that start with input$
+          purrr::keep(\(x) stringr::str_starts(x, "input\\$"))
+        browser()
+      })
     })
 }
