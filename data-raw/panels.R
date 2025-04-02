@@ -736,6 +736,35 @@ orphanCodesPanel <- list(
     )
   )
 )
+## cohort code use ----
+cohortCodeUsePanel <- list(
+  title = "Cohort code use",
+  icon = "hart-column",
+  data = list(result_type = "cohort_code_use"),
+  automatic_filters = c("group", "strata", "variable_name", "estimate_name"),
+  filters = list(cdm_name = cdmFilter),
+  content = list(
+    tidy = tidyContent,
+    table = list(
+      title = "Table Cohort code use",
+      output_type = "gt",
+      render = "<filtered_data> |>
+      CodelistGenerator::tableCohortCodeUse(
+      timing = TRUE,
+      header = input$header,
+      groupColumn = input$group_column,
+      hide = input$hide
+      )",
+      filters = rankTableButton(
+        none = c("cdm_name", "<group>", "<strata>", "<additional>", "variable_name", "variable_level"),
+        groupColumn = character(),
+        header = c("cdm_name", "estimate_name"),
+        hide = character()
+      ),
+      download = downloadGtTable("table_orphan_codes")
+    )
+  )
+)
 ## dose coverage ----
 doseCoveragePanel <- list(
   title = "Incidence",
@@ -948,6 +977,99 @@ dusPanel <- list(
     )
   )
 )
+## indication ----
+indicationPanel <- list(
+  title = "Indication",
+  icon = "disease",
+  data = list(result_type = "summarise_indication"),
+  automatic_filters = c("cohort_name", "strata", "additional", "variable_name", "estimate_name", "settings"),
+  filters = list(cdm_name = cdmFilter),
+  content = list(
+    tidy = tidyContent,
+    table = list(
+      title = "Table Indication",
+      output_type = "gt",
+      render = "<filtered_data> |>
+      DrugUtilisation::tableIndication(
+      header = input$header,
+      groupColumn = input$group_column,
+      hide = input$hide
+      )",
+      filters = rankTableButton(
+        none = c("variable_level", "estimate_name"),
+        header = c("cdm_name", "cohort_name", "<strata>"),
+        groupColumn = c("variable_name"),
+        hide = c("window_name", "<settings>")
+      ),
+      download = downloadGtTable("table_indication")
+    ),
+    plot = list(
+      title = "Plot Indication",
+      output_type = "plot",
+      render = "<filtered_data> |>
+      DrugUtilisation::plotIndication(
+      facet = input$facet,
+      )",
+      filters = list(
+        facet = list(
+          button_type = "pickerInput",
+          label = "Facet",
+          choices = c("cdm_name", "cohort_name", "<strata>", "window_name", "<settings>"),
+          selected = c("cdm_name", "cohort_name", "<strata>", "window_name"),
+          multiple = TRUE
+        )
+      ),
+      download = downloadPlot("plot_indication.png")
+    )
+  )
+)
+## treatment ----
+treatmentPanel <- list(
+  title = "Treatments",
+  icon = "disease",
+  data = list(result_type = "summarise_treatment"),
+  automatic_filters = c("cohort_name", "strata", "additional", "variable_name", "estimate_name", "settings"),
+  filters = list(cdm_name = cdmFilter),
+  content = list(
+    tidy = tidyContent,
+    table = list(
+      title = "Table Treatments",
+      output_type = "gt",
+      render = "<filtered_data> |>
+      DrugUtilisation::tableTreatment(
+      header = input$header,
+      groupColumn = input$group_column,
+      hide = input$hide
+      )",
+      filters = rankTableButton(
+        none = c("variable_level", "estimate_name"),
+        header = c("cdm_name", "cohort_name", "<strata>"),
+        groupColumn = c("variable_name"),
+        hide = c("window_name", "<settings>")
+      ),
+      download = downloadGtTable("table_treatment")
+    ),
+    plot = list(
+      title = "Plot Treatment",
+      output_type = "plot",
+      render = "<filtered_data> |>
+      DrugUtilisation::plotTreatment(
+      facet = input$facet,
+      )",
+      filters = list(
+        facet = list(
+          button_type = "pickerInput",
+          label = "Facet",
+          choices = c("cdm_name", "cohort_name", "<strata>", "window_name", "<settings>"),
+          selected = c("cdm_name", "cohort_name", "<strata>", "window_name"),
+          multiple = TRUE
+        )
+      ),
+      download = downloadPlot("plot_treatment.png")
+    )
+  )
+)
+
 
 # all panels ----
 omopViewerPanels <- list(
@@ -967,11 +1089,14 @@ omopViewerPanels <- list(
   summarise_observation_period = observationPeriodPanel,
   # CodelistGenerator
   orphan_code_use = orphanCodesPanel,
+  cohort_code_use = cohortCodeUsePanel,
   # DrugUtilisation
   summarise_dose_coverage = doseCoveragePanel,
   summarise_proportion_of_patients_covered = ppcPanel,
   summarise_drug_restart = drugRestartPanel,
-  summarise_drug_utilisation = dusPanel
+  summarise_drug_utilisation = dusPanel,
+  summarise_indication = indicationPanel,
+  summarise_treatment = treatmentPanel
 ) |>
   purrr::map(\(x) newOmopViewerPanel(x))
 
