@@ -54,7 +54,7 @@ cdm <- IncidencePrevalence::generateDenominatorCohortSet(
   ),
   daysPriorObservation = 365,
   sex = c("Both", "Male", "Female"),
-  cohortDateRange = as.Date(c("1990-01-01", "1999-12-31"))
+  cohortDateRange = as.Date(c("2000-01-01", "2009-12-31"))
 )
 incidence <- IncidencePrevalence::estimateIncidence(
   cdm = cdm, denominatorTable = "denominator", outcomeTable = "acetaminophen",
@@ -65,8 +65,10 @@ pointPrevalence <- IncidencePrevalence::estimatePointPrevalence(
   interval = "years"
 )
 
+op <- OmopSketch::summariseObservationPeriod(cdm$observation_period)
+
 omopViewerResults <- omopgenerics::bind(
-  snapshot, overlap, counts, counts2, attrition, attrition2, characteristics,
+  snapshot, op, overlap, counts, counts2, attrition, attrition2, characteristics,
   timing, treatmentPersistence, incidence, pointPrevalence
 ) |>
   omopgenerics::suppress()

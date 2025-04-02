@@ -630,18 +630,132 @@ characteristicsPanel <- list(
     )
   )
 )
+## summarise omop snapshot ----
+snapshotPanel <- list(
+  title = "Snapshot",
+  icon = "clipboard-list",
+  data = list(result_type = "summarise_omop_snapshot"),
+  automatic_filters = c("variable_name"),
+  filters = list(cdm_name = cdmFilter),
+  content = list(
+    tidy = tidyContent,
+    table = list(
+      title = "Table Characteristics",
+      output_type = "gt",
+      render = "<filtered_data> |>
+      OmopSkech::tableOmopSnapshot()",
+      download = downloadGtTable("table_snapshot")
+    )
+  )
+)
+## summarise observation period ----
+observationPeriodPanel <- list(
+  title = "Observation period",
+  icon = "eye",
+  data = list(result_type = "summarise_observation_period"),
+  automatic_filters = c("cohort_name", "strata", "variable_name", "estimate_name"),
+  filters = list(cdm_name = cdmFilter),
+  content = list(
+    tidy = tidyContent,
+    table = list(
+      title = "Table Observation period",
+      output_type = "gt",
+      render = "<filtered_data> |>
+      OmopSketch::tableObservationPeriod()",
+      download = downloadGtTable("table_obsevation_period")
+    ),
+    plot = list(
+      title = "Plot Observation period",
+      output_type = "plot",
+      render = "<filtered_data> |>
+      OmopSketch::plotObservationPeriod(
+      variableName = input$variable
+      plotType = input$plot_type,
+      facet = input$facet,
+      colour = input$colour
+      )",
+      filters = list(
+        variable = list(
+          button_type = "pickerInput",
+          label = "Plot type",
+          choices = c("number subjects", "records per person", "duration", "days to next observation period"),
+          selected = c("number subjects"),
+          multiple = FALSE
+        ),
+        plot_type = list(
+          button_type = "pickerInput",
+          label = "Plot type",
+          choices = c("boxplot", "barplot", "densityplot"),
+          selected = c("barplot"),
+          multiple = FALSE
+        ),
+        facet = list(
+          button_type = "pickerInput",
+          label = "Facet",
+          choices = c("cdm_name", "observation_period_ordinal"),
+          selected = c("cdm_name"),
+          multiple = TRUE
+        ),
+        colour = list(
+          button_type = "pickerInput",
+          label = "Facet",
+          choices = c("cdm_name", "observation_period_ordinal"),
+          selected = c("observation_period_ordinal"),
+          multiple = TRUE
+        )
+      ),
+      download = downloadPlot("plot_observation_period.png")
+    )
+  )
+)
+## orphan code use ----
+orphanCodesPanel <- list(
+  title = "Orphan codes",
+  icon = "magnifying-glass-arrow-right",
+  data = list(result_type = "orphan_code_use"),
+  automatic_filters = c("codelist_name", "domain_id", "standard_concept", "vocabulary_id"),
+  filters = list(cdm_name = cdmFilter),
+  content = list(
+    tidy = tidyContent,
+    table = list(
+      title = "Table Orphan codes",
+      output_type = "gt",
+      render = "<filtered_data> |>
+      CodelistGenerator::tableOrphanCodes(
+      header = input$header,
+      groupColumn = input$group_column,
+      hide = input$hide
+      )",
+      filters = rankTableButton(
+        none = c("codelist_name", "domain_id", "variable_name", "variable_level", "standard_concept", "vocabulary_id"),
+        groupColumn = character(),
+        header = c("cdm_name", "estimate_name"),
+        hide = character()
+      ),
+      download = downloadGtTable("table_orphan_codes")
+    )
+  )
+)
 
 # all panels ----
 omopViewerPanels <- list(
+  # IncidencePrevalence
   incidence = incidencePanel,
   incidence_attrition = incidenceAttritionPanel,
   prevalence = prevalencePanel,
   prevalence_attrition = prevalenceAttritionPanel,
+  # CohortCharacteristics
   summarise_cohort_overlap = cohortOverlapPanel,
   summarise_cohort_count = cohortCountPanel,
   summarise_cohort_attrition = cohortAttritionPanel,
   summarise_cohort_timing = cohortTimingPanel,
-  summarise_characteristics = characteristicsPanel
+  summarise_characteristics = characteristicsPanel,
+  # OmopSketch
+  summarise_omop_snapshot = snapshotPanel,
+  summarise_observation_period = observationPeriodPanel,
+  # CodelistGenerator
+  orphan_code_use = orphanCodesPanel
+  # DrugUtilisation
 ) |>
   purrr::map(\(x) newOmopViewerPanel(x))
 
