@@ -31,8 +31,12 @@ cdm$conditions <- CohortConstructor::conceptCohort(
   cdm = cdm, name = "conditions", conceptSet = codelistConditions
 )
 
+overlap <- CohortCharacteristics::summariseCohortOverlap(cdm$conditions)
+timing <- CohortCharacteristics::summariseCohortTiming(cdm$conditions)
 counts <- CohortCharacteristics::summariseCohortCount(cdm$target)
+counts2 <- CohortCharacteristics::summariseCohortCount(cdm$conditions)
 attrition <- CohortCharacteristics::summariseCohortAttrition(cdm$target)
+attrition2 <- CohortCharacteristics::summariseCohortAttrition(cdm$conditions)
 characteristics <- cdm$target |>
   CohortCharacteristics::summariseCharacteristics(
     cohortIntersectFlag = list(
@@ -62,8 +66,8 @@ pointPrevalence <- IncidencePrevalence::estimatePointPrevalence(
 )
 
 omopViewerResults <- omopgenerics::bind(
-  snapshot, counts, attrition, characteristics, treatmentPersistence, incidence,
-  pointPrevalence
+  snapshot, overlap, counts, counts2, attrition, attrition2, characteristics,
+  timing, treatmentPersistence, incidence, pointPrevalence
 ) |>
   omopgenerics::suppress()
 

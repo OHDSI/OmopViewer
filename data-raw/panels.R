@@ -95,6 +95,31 @@ cdmFilter <- list(
   selected = "selected$",
   multiple = TRUE
 )
+rankTableButton <- function(none = character(), header = character(), groupColumn = character(), hide = character()) {
+  list(
+    none = list(
+      button_type = "rank_list",
+      text = "None",
+      labels = none
+    ),
+    header = list(
+      button_type = "rank_list",
+      text = "Header",
+      labels = header
+    ),
+    group_column = list(
+      button_type = "rank_list",
+      text = "Group columns",
+      labels = groupColumn
+    ),
+    hide = list(
+      button_type = "rank_list",
+      text = "Hide",
+      labels = hide
+    )
+  )
+}
+
 
 # predefined panels ----
 ## incidence ----
@@ -118,27 +143,11 @@ incidencePanel <- list(
       hide = input$hide,
       settingsColumn = omopgenerics::settingsColumns(res)
       )",
-      filters = list(
-        none = list(
-          button_type = "rank_list",
-          text = "None",
-          labels = c("<strata>", "incidence_start_date", "incidence_end_date", "denominator_age_group", "denominator_sex")
-        ),
-        header = list(
-          button_type = "rank_list",
-          text = "Header",
-          labels = "estimate_name"
-        ),
-        group_column = list(
-          button_type = "rank_list",
-          text = "Group columns",
-          labels = c("cdm_name", "outcome_cohort_name")
-        ),
-        hide = list(
-          button_type = "rank_list",
-          text = "Hide",
-          labels = c("denominator_cohort_name", "analysis_interval", "analysis_censor_cohort_name", "analysis_complete_database_intervals", "analysis_outcome_washout", "analysis_repeated_events", "denominator_days_prior_observation", "denominator_end_date", "denominator_requirements_at_entry", "denominator_start_date", "denominator_target_cohort_name", "denominator_time_at_risk")
-        )
+      filters = rankTableButton(
+        none = c("<strata>", "incidence_start_date", "incidence_end_date", "denominator_age_group", "denominator_sex"),
+        header = "estimate_name",
+        groupColumn = c("cdm_name", "outcome_cohort_name"),
+        hide = c("denominator_cohort_name", "analysis_interval", "analysis_censor_cohort_name", "analysis_complete_database_intervals", "analysis_outcome_washout", "analysis_repeated_events", "denominator_days_prior_observation", "denominator_end_date", "denominator_requirements_at_entry", "denominator_start_date", "denominator_target_cohort_name", "denominator_time_at_risk")
       ),
       download = downloadGtTable("table_incidence")
     ),
@@ -199,27 +208,11 @@ prevalencePanel <- list(
       hide = input$hide,
       settingsColumn = omopgenerics::settingsColumns(res)
       )",
-      filters = list(
-        none = list(
-          button_type = "rank_list",
-          text = "None",
-          labels = c("<strata>", "prevalence_start_date", "prevalence_end_date", "denominator_age_group", "denominator_sex")
-        ),
-        header = list(
-          button_type = "rank_list",
-          text = "Header",
-          labels = "estimate_name"
-        ),
-        group_column = list(
-          button_type = "rank_list",
-          text = "Group columns",
-          labels = c("cdm_name", "outcome_cohort_name")
-        ),
-        hide = list(
-          button_type = "rank_list",
-          text = "Hide",
-          labels = c("denominator_cohort_name", "analysis_interval", "analysis_complete_database_intervals", "analysis_full_contribution", "analysis_type", "denominator_days_prior_observation", "denominator_end_date", "denominator_requirements_at_entry", "denominator_start_date", "denominator_target_cohort_name", "denominator_time_at_risk")
-        )
+      filters = rankTableButton(
+        none = c("<strata>", "prevalence_start_date", "prevalence_end_date", "denominator_age_group", "denominator_sex"),
+        header = "estimate_name",
+        groupColumn = c("cdm_name", "outcome_cohort_name"),
+        hide = c("denominator_cohort_name", "analysis_interval", "analysis_complete_database_intervals", "analysis_full_contribution", "analysis_type", "denominator_days_prior_observation", "denominator_end_date", "denominator_requirements_at_entry", "denominator_start_date", "denominator_target_cohort_name", "denominator_time_at_risk")
       ),
       download = downloadGtTable("table_prevalence")
     ),
@@ -259,10 +252,396 @@ prevalencePanel <- list(
     )
   )
 )
-## all panels ----
+## incidence attrition ----
+incidenceAttritionPanel <- list(
+  title = "Incidence Attrition",
+  icon = "layer-group",
+  data = list(result_type = "incidence_attrition"),
+  automatic_filters = c("settings", "reason", "variable_name"),
+  filters = list(cdm_name = cdmFilter),
+  content = list(
+    tidy = tidyContent,
+    table = list(
+      title = "Table Incidence Attrition",
+      output_type = "gt",
+      render = "res <- <filtered_data>
+      res |>
+      IncidencePrevalence::tableIncidenceAttrition(
+      header = input$header,
+      settingsColumn = omopgenerics::settingsColumns(res),
+      groupColumn = input$group_column,
+      hide = input$hide
+      )",
+      filters = rankTableButton(
+        none = c("reason"),
+        header = "variable_name",
+        groupColumn = c("cdm_name", "outcome_cohort_name"),
+        hide = c("denominator_cohort_name", "estimate_name", "reason_id", "variable_level", "analysis_censor_cohort_name", "analysis_complete_database_intervals", "analysis_outcome_washout", "analysis_repeated_events", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_end_date", "denominator_requirements_at_entry", "denominator_start_date", "denominator_target_cohort_name", "denominator_time_at_risk")
+      ),
+      download = downloadGtTable("table_incidence_attrition")
+    )
+  )
+)
+## prevalence attrition ----
+prevalenceAttritionPanel <- list(
+  title = "Prevalence Attrition",
+  icon = "layer-group",
+  data = list(result_type = "prevalence_attrition"),
+  automatic_filters = c("settings", "reason", "variable_name"),
+  filters = list(cdm_name = cdmFilter),
+  content = list(
+    tidy = tidyContent,
+    table = list(
+      title = "Table Prevalence Attrition",
+      output_type = "gt",
+      render = "res <- <filtered_data>
+      res |>
+      IncidencePrevalence::tablePrevalenceAttrition(
+      header = input$header,
+      settingsColumn = omopgenerics::settingsColumns(res),
+      groupColumn = input$group_column,
+      hide = input$hide
+      )",
+      filters = rankTableButton(
+        none = c("<strata>"),
+        header = "variable_name",
+        groupColumn = c("cdm_name", "outcome_cohort_name"),
+        hide = c("denominator_cohort_name", "estimate_name", "reason_id", "variable_level", "analysis_interval", "analysis_complete_database_intervals", "analysis_full_contribution", "analysis_type", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_end_date", "denominator_requirements_at_entry", "denominator_start_date", "denominator_target_cohort_name", "denominator_time_at_risk")
+      ),
+      download = downloadGtTable("table_prevalence_attrition")
+    )
+  )
+)
+## summarise cohort overlap ----
+cohortOverlapPanel <- list(
+  title = "Cohort Overlap",
+  icon = "circle-half-stroke",
+  data = list(result_type = "summarise_cohort_overlap"),
+  automatic_filters = c("group", "strata", "variable_name", "estimate_name", "settings"),
+  filters = list(cdm_name = cdmFilter),
+  content = list(
+    tidy = tidyContent,
+    table = list(
+      title = "Table Overlap",
+      output_type = "gt",
+      render = "<filtered_data> |>
+      CohortCharacteristics::tableCohortOverlap(
+      uniqueCombinations = input$unique_combinations,
+      header = input$header,
+      groupColumn = input$group_column,
+      hide = input$hide
+      )",
+      filters = c(
+        list(
+          unique_combinations = list(
+            button_type = "checkbox",
+            label = "Unique combinations",
+            value = TRUE
+          )
+        ),
+        rankTableButton(
+          none = c("cohort_name_reference", "cohort_name_comparator", "<strata>", "estimate_name"),
+          header = "variable_name",
+          groupColumn = "cdm_name",
+          hide = c("variable_level", "overlap_by")
+        )
+      ),
+      download = downloadGtTable("table_overlap")
+    ),
+    plot = list(
+      title = "Plot Overlap",
+      output_type = "plot",
+      render = "<filtered_data> |>
+      CohortCharacteristics::plotCohortOverlap(
+      facet = input$facet
+      )",
+      filters = list(
+        facet = list(
+          button_type = "pickerInput",
+          label = "Facet",
+          choices = c("cdm_name", "cohort_name_reference", "cohort_name_comparator", "<strata>", "<settings>"),
+          selected = c("cdm_name", "cohort_name_reference"),
+          multiple = TRUE
+        )
+      ),
+      download = downloadPlot("plot_overlap.png")
+    )
+  )
+)
+## summarise cohort count ----
+cohortCountPanel <- list(
+  title = "Cohort Count",
+  icon = "users",
+  data = list(result_type = "summarise_cohort_count"),
+  automatic_filters = c("group", "strata", "variable_name", "settings"),
+  filters = list(cdm_name = cdmFilter),
+  content = list(
+    tidy = tidyContent,
+    table = list(
+      title = "Table Counts",
+      output_type = "gt",
+      render = "<filtered_data> |>
+      CohortCharacteristics::tableCohortCount(
+      header = input$header,
+      groupColumn = input$group_column,
+      hide = input$hide
+      )",
+      filters = rankTableButton(
+        none = c("<strata>", "variable_name", "estimate_name"),
+        groupColumn = "cdm_name",
+        header = "cohort_name",
+        hide = c("variable_level", "table_name")
+      ),
+      download = downloadGtTable("table_count")
+    ),
+    plot = list(
+      title = "Plot Counts",
+      output_type = "plot",
+      render = "<filtered_data> |>
+      CohortCharacteristics::plotCohortCount(
+      facet = input$facet,
+      colour = input$colour
+      )",
+      filters = list(
+        facet = list(
+          button_type = "pickerInput",
+          label = "Facet",
+          choices = c("cdm_name", "cohort_name", "<strata>", "<settings>"),
+          selected = c("cdm_name", "<strata>"),
+          multiple = TRUE
+        ),
+        colour = list(
+          button_type = "pickerInput",
+          label = "Colour",
+          choices = c("cdm_name", "cohort_name", "<strata>", "<settings>"),
+          selected = c("cohort_name"),
+          multiple = TRUE
+        )
+      ),
+      download = downloadPlot("plot_count.png")
+    )
+  )
+)
+## summarise cohort attrition ----
+cohortAttritionPanel <- list(
+  title = "Cohort Attrition",
+  icon = "layer-group",
+  data = list(result_type = "summarise_cohort_attrition"),
+  automatic_filters = c("cohort_name", "variable_name"),
+  filters = list(cdm_name = cdmFilter),
+  content = list(
+    tidy = tidyContent,
+    table = list(
+      title = "Table Attrition",
+      output_type = "gt",
+      render = "<filtered_data> |>
+      CohortCharacteristics::tableCohortAttrition(
+      header = input$header,
+      groupColumn = input$group_column,
+      hide = input$hide
+      )",
+      filters = rankTableButton(
+        none = c("reason"),
+        groupColumn = c("cdm_name", "cohort_name"),
+        header = "variable_name",
+        hide = c("variable_level", "reason_id", "estimate_name", "<settings>")
+      ),
+      download = downloadGtTable("table_attrition")
+    ),
+    diagram = list(
+      title = "Diagram",
+      output_type = "grViz",
+      render = "<filtered_data> |>
+      CohortCharacteristics::plotCohortAttrition(
+      show = input$show
+      )",
+      filters = list(
+        show = list(
+          button_type = "pickerInput",
+          label = "Show",
+          choices = c("subjects", "records"),
+          selected = c("subjects", "records"),
+          multiple = TRUE
+        )
+      ),
+      download = list(
+        label = "Download Diagram",
+        filters = list(
+          width = list(
+            button_type = "numericInput",
+            label = "Width (px)",
+            value = 2000
+          )
+        ),
+        render = "svg <- DiagrammeRsvg::export_svg(<rendered_data>)
+        rsvg::rsvg_png(charToRaw(svg), file, width = input$width)",
+        filename = "attrition_diagram.png"
+      )
+    )
+  )
+)
+## summarise cohort timing ----
+cohortTimingPanel <- list(
+  title = "Cohort Timing",
+  icon = "chart-simple",
+  data = list(result_type = "summarise_cohort_timing"),
+  automatic_filters = c("group", "strata"),
+  filters = list(cdm_name = cdmFilter),
+  content = list(
+    tidy = tidyContent,
+    table = list(
+      title = "Table Timing",
+      output_type = "gt",
+      render = "<filtered_data> |>
+      CohortCharacteristics::tableCohortTiming(
+      timeScale = input$time_scale,
+      header = input$header,
+      groupColumn = input$group_column,
+      hide = input$hide
+      )",
+      filters = c(
+        list(
+          time_scale = list(
+            button_type = "pickerInput",
+            label = "Time scale",
+            choices = c("days", "years"),
+            selected = c("days"),
+            multiple = FALSE
+          )
+        ),
+        rankTableButton(
+          none = c("<group>"),
+          groupColumn = c("cdm_name"),
+          header = "<strata>",
+          hide = c("variable_level", "<settings>")
+        )
+      ),
+      download = downloadGtTable("table_timing")
+    ),
+    plot = list(
+      title = "Plot Timing",
+      output_type = "plot",
+      render = "<filtered_data> |>
+      CohortCharacteristics::plotCohortTiming(
+      plotType = input$plot_type,
+      timeScale = input$time_scale,
+      uniqueCombinations = input$unique_combinations,
+      facet = input$facet,
+      colour = input$colour
+      )",
+      filters = list(
+        plot_type = list(
+          button_type = "pickerInput",
+          label = "Plot type",
+          choices = c("boxplot", "densityplot"),
+          selected = c("boxplot"),
+          multiple = FALSE
+        ),
+        time_scale = list(
+          button_type = "pickerInput",
+          label = "Time scale",
+          choices = c("days", "years"),
+          selected = c("days"),
+          multiple = FALSE
+        ),
+        unique_combinations = list(
+          button_type = "checkbox",
+          label = "Unique combinations",
+          value = TRUE
+        ),
+        facet = list(
+          button_type = "pickerInput",
+          label = "Facet",
+          choices = c("cdm_name", "<group>", "<strata>"),
+          selected = c("cdm_name", "cohort_name_reference"),
+          multiple = TRUE
+        ),
+        colour = list(
+          button_type = "pickerInput",
+          label = "Facet",
+          choices = c("cdm_name", "<group>", "<strata>"),
+          selected = c("cohort_name_comparator"),
+          multiple = TRUE
+        )
+      ),
+      download = downloadPlot("plot_timing.png")
+    )
+  )
+)
+## summarise characteristics ----
+characteristicsPanel <- list(
+  title = "Cohort Characteristics",
+  icon = "users-gear",
+  data = list(result_type = "summarise_characteristics"),
+  automatic_filters = c("cohort_name", "strata", "variable_name", "estimate_name"),
+  filters = list(cdm_name = cdmFilter),
+  content = list(
+    tidy = tidyContent,
+    table = list(
+      title = "Table Characteristics",
+      output_type = "gt",
+      render = "<filtered_data> |>
+      CohortCharacteristics::tableCohortTiming(
+      header = input$header,
+      groupColumn = input$group_column,
+      hide = input$hide
+      )",
+      filters = rankTableButton(
+        none = c("<strata>", "variable_name", "variable_level", "estimate_name"),
+        groupColumn = character(),
+        header = c("cdm_name", "cohort_name"),
+        hide = c("<additional>", "<settings>")
+      ),
+      download = downloadGtTable("table_characteristics")
+    ),
+    plot = list(
+      title = "Plot Timing",
+      output_type = "plot",
+      render = "<filtered_data> |>
+      CohortCharacteristics::plotCharacteristics(
+      plotType = input$plot_type,
+      facet = input$facet,
+      colour = input$colour
+      )",
+      filters = list(
+        plot_type = list(
+          button_type = "pickerInput",
+          label = "Plot type",
+          choices = c("boxplot", "barplot", "scatterplot"),
+          selected = c("boxplot"),
+          multiple = FALSE
+        ),
+        facet = list(
+          button_type = "pickerInput",
+          label = "Facet",
+          choices = c("cdm_name", "cohort_name", "<strata>"),
+          selected = c("cdm_name"),
+          multiple = TRUE
+        ),
+        colour = list(
+          button_type = "pickerInput",
+          label = "Facet",
+          choices = c("cdm_name", "cohort_name", "<strata>"),
+          selected = c("cohort_name"),
+          multiple = TRUE
+        )
+      ),
+      download = downloadPlot("plot_characteristics.png")
+    )
+  )
+)
+
+# all panels ----
 omopViewerPanels <- list(
   incidence = incidencePanel,
-  prevalence = prevalencePanel
+  incidence_attrition = incidenceAttritionPanel,
+  prevalence = prevalencePanel,
+  prevalence_attrition = prevalenceAttritionPanel,
+  summarise_cohort_overlap = cohortOverlapPanel,
+  summarise_cohort_count = cohortCountPanel,
+  summarise_cohort_attrition = cohortAttritionPanel,
+  summarise_cohort_timing = cohortTimingPanel,
+  summarise_characteristics = characteristicsPanel
 ) |>
   purrr::map(\(x) newOmopViewerPanel(x))
 

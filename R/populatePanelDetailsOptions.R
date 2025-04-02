@@ -210,11 +210,25 @@ populateAutomaticFilters <- function(panelDetails) {
       automaticFilters <- unique(pd$automatic_filters) |>
         purrr::map(\(x) {
           if (!x %in% c("group", "strata", "additional", "settings")) {
-            rlang::set_names("main", x)
+            if (x %in% colnames(res)) {
+              x <- rlang::set_names("main", x)
+            } else if (x %in% values$group) {
+              x <- rlang::set_names("group", x)
+            } else if (x %in% values$strata) {
+              x <- rlang::set_names("strata", x)
+            } else if (x %in% values$additional) {
+              x <- rlang::set_names("additional", x)
+            } else if (x %in% values$settings) {
+              x <- rlang::set_names("settings", x)
+            } else {
+              cli::cli_warn("column: {x} not found!")
+              x <- NULL
+            }
           } else {
             vals <- values[[x]]
-            rlang::set_names(rep(x, length(vals)), vals)
+            x <- rlang::set_names(rep(x, length(vals)), vals)
           }
+          x
         }) |>
         purrr::flatten_chr()
       # exclude filters

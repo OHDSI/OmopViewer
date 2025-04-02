@@ -87,13 +87,15 @@ outputFunction <- function(outputType) {
   switch(outputType,
          "DT" = "DT::DTOutput",
          "gt" = "gt::gt_output",
-         "plot" = "shiny::plotOutput")
+         "plot" = "shiny::plotOutput",
+         "grViz" = "DiagrammeR::grVizOutput")
 }
 renderFunction <- function(outputType) {
   switch(outputType,
          "DT" = "DT::renderDT",
          "gt" = "gt::render_gt",
-         "plot" = "shiny::renderPlot")
+         "plot" = "shiny::renderPlot",
+         "grViz" = "DiagrammeR::renderGrViz")
 }
 writeDownloadServer <- function(content) {
   download <- content$download
