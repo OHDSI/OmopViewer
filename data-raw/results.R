@@ -43,9 +43,14 @@ characteristics <- cdm$target |>
   )
 treatmentPersistence <- DrugUtilisation::summariseProportionOfPatientsCovered(cdm$target)
 cdm <- IncidencePrevalence::generateDenominatorCohortSet(
-  cdm = cdm, name = "denominator", ageGroup = list(
+  cdm = cdm,
+  name = "denominator",
+  ageGroup = list(
     c(0, 150), c(0, 19), c(20, 39), c(40, 59), c(60, 79), c(80, 150)
-  ), daysPriorObservation = 365, sex = c("Both", "Male", "Female")
+  ),
+  daysPriorObservation = 365,
+  sex = c("Both", "Male", "Female"),
+  cohortDateRange = as.Date(c("1990-01-01", "1999-12-31"))
 )
 incidence <- IncidencePrevalence::estimateIncidence(
   cdm = cdm, denominatorTable = "denominator", outcomeTable = "acetaminophen",

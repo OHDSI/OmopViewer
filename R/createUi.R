@@ -123,13 +123,7 @@ writeIcon <- function(icon) {
 writeSidebar <- function(filters, position) {
   paste0(
     "sidebar = bslib::sidebar(\n",
-    filters |>
-      purrr::map(\(x) {
-        x$inputId <- cast(x$inputId)
-        x$input_id <- cast(x$input_id)
-        createButton(x)
-      }) |>
-      paste0(collapse = ",\n"),
+    paste0(writeButtons(filters), collapse = ",\n"),
     ",\nposition = '",
     position,
     "'\n)"
@@ -162,16 +156,10 @@ writeOutput <- function(ot, id) {
 }
 writeDownload <- function(do) {
   if (length(do) == 0) return("")
-  buttons <- do$filters |>
-    purrr::map(\(x) {
-      x$inputId <- cast(x$inputId)
-      x$input_id <- cast(x$input_id)
-      createButton(x)
-    })
   paste0(
     'bslib::card_header(\nbslib::popover(\n',
     paste0(
-      c('shiny::icon("download")', buttons, paste0(
+      c('shiny::icon("download")', writeButtons(do$filters), paste0(
         'shiny::downloadButton(outputId = ', cast(do$output_id), ', label = ',
         cast(do$label), ')')),
       collapse = ",\n"

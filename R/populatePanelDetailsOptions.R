@@ -39,6 +39,7 @@ populateValues <- function(panelDetails, result) {
         purrr::map(\(filt) {
           filt$choices <- substituteValues(filt$choices, values)
           filt$selected <- substituteValues(filt$selected, values)
+          filt$labels <- substituteValues(filt$labels, values)
           filt
         })
       pd$content <- pd$content |>
@@ -47,6 +48,7 @@ populateValues <- function(panelDetails, result) {
             purrr::map(\(filt) {
               filt$choices <- substituteValues(filt$choices, values)
               filt$selected <- substituteValues(filt$selected, values)
+              filt$labels <- substituteValues(filt$labels, values)
               filt
             })
           cont
