@@ -1,4 +1,5 @@
 
+
 backgroundCard <- function(fileName) {
   # read file
   content <- readLines(fileName)
@@ -306,7 +307,7 @@ getValues <- function(result, resultList) {
         omopgenerics::addSettings() |>
         dplyr::select(!"result_id") |>
         as.list() |>
-        purrr::map(unique)
+        purrr::map(\(x) sort(unique(x)))
       names(values) <- paste0(nm, "_", names(values))
       values
     }) |>
