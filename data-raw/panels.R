@@ -558,7 +558,7 @@ cohortTimingPanel <- list(
         ),
         colour = list(
           button_type = "pickerInput",
-          label = "Facet",
+          label = "Colour",
           choices = c("cdm_name", "<group>", "<strata>"),
           selected = c("cohort_name_comparator"),
           multiple = TRUE
@@ -620,7 +620,7 @@ characteristicsPanel <- list(
         ),
         colour = list(
           button_type = "pickerInput",
-          label = "Facet",
+          label = "Colour",
           choices = c("cdm_name", "cohort_name", "<strata>"),
           selected = c("cohort_name"),
           multiple = TRUE
@@ -698,7 +698,7 @@ observationPeriodPanel <- list(
         ),
         colour = list(
           button_type = "pickerInput",
-          label = "Facet",
+          label = "Colour",
           choices = c("cdm_name", "observation_period_ordinal"),
           selected = c("observation_period_ordinal"),
           multiple = TRUE
@@ -736,6 +736,95 @@ orphanCodesPanel <- list(
     )
   )
 )
+## dose coverage ----
+doseCoverage <- list(
+  title = "Incidence",
+  icon = "pills",
+  data = list(result_type = "summarise_dose_coverage"),
+  automatic_filters = c("ingredient_name", "unit", "route", "pattern_id", "variable_name", "estimate_name"),
+  filters = list(cdm_name = cdmFilter),
+  content = list(
+    tidy = tidyContent,
+    table = list(
+      title = "Table Dose coverage",
+      output_type = "gt",
+      render = "<filtered_data> |>
+      DrugUtilisation::tableDoseCoverage(
+      header = input$header,
+      groupColumn = input$group_column,
+      hide = input$hide,
+      settingsColumn = omopgenerics::settingsColumns(res)
+      )",
+      filters = rankTableButton(
+        none = c("unit", "route", "pattern_id"),
+        header = c("variable_name", "estimate_name"),
+        groupColumn = c("cdm_name", "ingredient_name"),
+        hide = c("variable_level")
+      ),
+      download = downloadGtTable("table_dose_coverage")
+    )
+  )
+)
+## proportion of patients covered ----
+ppc <- list(
+  title = "Proportion of patients covered",
+  icon = "chart-gantt",
+  data = list(result_type = "summarise_proportion_of_patients_covered"),
+  automatic_filters = c("cohort_name", "strata", "estimate_name"),
+  filters = list(cdm_name = cdmFilter),
+  content = list(
+    tidy = tidyContent,
+    table = list(
+      title = "Table PPC",
+      output_type = "gt",
+      render = "<filtered_data> |>
+      DrugUtilisation::tableProportionOfPatientsCovered(
+      header = input$header,
+      groupColumn = input$group_column,
+      hide = input$hide
+      )",
+      filters = rankTableButton(
+        none = c("time", "estimate_name"),
+        header = c("cohort_name", "<strata>"),
+        groupColumn = c("cdm_name"),
+        hide = c("variable_name", "variable_level", "<settings>")
+      ),
+      download = downloadGtTable("table_ppc")
+    ),
+    plot = list(
+      title = "Plot PPC",
+      output_type = "plot",
+      render = "<filtered_data> |>
+      DrugUtilisation::plotProportionOfPatientsCovered(
+      ribbon = input$ribbon,
+      facet = input$facet,
+      colour = input$colour
+      )",
+      filters = list(
+        ribbon = list(
+          button_type = "checkbox",
+          label = "Ribbon",
+          value = FALSE
+        ),
+        facet = list(
+          button_type = "pickerInput",
+          label = "Facet",
+          choices = c("cdm_name", "cohort_name", "<strata>"),
+          selected = c("cohort_name"),
+          multiple = TRUE
+        ),
+        colour = list(
+          button_type = "pickerInput",
+          label = "Colour",
+          choices = c("cdm_name", "cohort_name", "<strata>"),
+          selected = c("<strata>"),
+          multiple = TRUE
+        )
+      ),
+      download = downloadPlot("plot_ppc.png")
+    )
+  )
+)
 
 # all panels ----
 omopViewerPanels <- list(
@@ -754,8 +843,10 @@ omopViewerPanels <- list(
   summarise_omop_snapshot = snapshotPanel,
   summarise_observation_period = observationPeriodPanel,
   # CodelistGenerator
-  orphan_code_use = orphanCodesPanel
+  orphan_code_use = orphanCodesPanel,
   # DrugUtilisation
+  summarise_dose_coverage = doseCoverage,
+  summarise_proportion_of_patients_covered = ppc
 ) |>
   purrr::map(\(x) newOmopViewerPanel(x))
 

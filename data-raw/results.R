@@ -67,9 +67,11 @@ pointPrevalence <- IncidencePrevalence::estimatePointPrevalence(
 
 op <- OmopSketch::summariseObservationPeriod(cdm$observation_period)
 
+doseCoverage <- DrugUtilisation::summariseDoseCoverage(cdm = cdm, ingredientConceptId = 1125315)
+
 omopViewerResults <- omopgenerics::bind(
   snapshot, op, overlap, counts, counts2, attrition, attrition2, characteristics,
-  timing, treatmentPersistence, incidence, pointPrevalence
+  timing, treatmentPersistence, incidence, pointPrevalence, doseCoverage
 ) |>
   omopgenerics::suppress()
 
