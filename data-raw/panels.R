@@ -737,7 +737,7 @@ orphanCodesPanel <- list(
   )
 )
 ## dose coverage ----
-doseCoverage <- list(
+doseCoveragePanel <- list(
   title = "Incidence",
   icon = "pills",
   data = list(result_type = "summarise_dose_coverage"),
@@ -766,7 +766,7 @@ doseCoverage <- list(
   )
 )
 ## proportion of patients covered ----
-ppc <- list(
+ppcPanel <- list(
   title = "Proportion of patients covered",
   icon = "chart-gantt",
   data = list(result_type = "summarise_proportion_of_patients_covered"),
@@ -825,6 +825,129 @@ ppc <- list(
     )
   )
 )
+## summarise drug restart ----
+drugRestartPanel <- list(
+  title = "Drug Restart",
+  icon = "chart-gantt",
+  data = list(result_type = "summarise_drug_restart"),
+  automatic_filters = c("cohort_name", "strata", "estimate_name"),
+  filters = list(cdm_name = cdmFilter),
+  content = list(
+    tidy = tidyContent,
+    table = list(
+      title = "Table Drug Restart",
+      output_type = "gt",
+      render = "<filtered_data> |>
+      DrugUtilisation::tableDrugRestart(
+      header = input$header,
+      groupColumn = input$group_column,
+      hide = input$hide
+      )",
+      filters = rankTableButton(
+        none = c("variable_level", "<strata>", "follow_up_days"),
+        header = c("cdm_name", "cohort_name"),
+        groupColumn = c("variable_name"),
+        hide = c("<settings>")
+      ),
+      download = downloadGtTable("table_drug_restart")
+    ),
+    plot = list(
+      title = "Plot Drug Restart",
+      output_type = "plot",
+      render = "<filtered_data> |>
+      DrugUtilisation::plotDrugRestart(
+      facet = input$facet,
+      colour = input$colour
+      )",
+      filters = list(
+        facet = list(
+          button_type = "pickerInput",
+          label = "Facet",
+          choices = c("cdm_name", "cohort_name", "<strata>", "variable_name", "variable_level", "follow_up_days", "<settings>"),
+          selected = c("cdm_name", "cohort_name", "follow_up_days", "<strata>"),
+          multiple = TRUE
+        ),
+        colour = list(
+          button_type = "pickerInput",
+          label = "Colour",
+          choices = c("cdm_name", "cohort_name", "<strata>", "variable_name", "variable_level", "follow_up_days", "<settings>"),
+          selected = c("variable_level"),
+          multiple = TRUE
+        )
+      ),
+      download = downloadPlot("plot_drug_restart.png")
+    )
+  )
+)
+## summarise drug utilisation ----
+dusPanel <- list(
+  title = "Drug Utilisation",
+  icon = "capsules",
+  data = list(result_type = "summarise_drug_utilisation"),
+  automatic_filters = c("cohort_name", "strata", "additional", "variable_name", "estimate_name", "settings"),
+  filters = list(cdm_name = cdmFilter),
+  content = list(
+    tidy = tidyContent,
+    table = list(
+      title = "Table Drug Utilisation",
+      output_type = "gt",
+      render = "<filtered_data> |>
+      DrugUtilisation::tableDrugUtilisation(
+      header = input$header,
+      groupColumn = input$group_column,
+      hide = input$hide
+      )",
+      filters = rankTableButton(
+        none = c("concept_set", "ingredient", "variable_name", "estimate_name"),
+        header = c("cdm_name"),
+        groupColumn = c("cohort_name", "<strata>"),
+        hide = c("variable_level")
+      ),
+      download = downloadGtTable("table_drug_utilisation")
+    ),
+    plot = list(
+      title = "Plot Drug Utilisation",
+      output_type = "plot",
+      render = "<filtered_data> |>
+      DrugUtilisation::plotDrugUtilisation(
+      variable = input$variable,
+      plotType = input$plot_type,
+      facet = input$facet,
+      colour = input$colour
+      )",
+      filters = list(
+        variable = list(
+          button_type = "pickerInput",
+          label = "Variable",
+          choices = "<variable_name>",
+          selected = character(),
+          multiple = FALSE
+        ),
+        plot_type = list(
+          button_type = "pickerInput",
+          label = "Plot type",
+          choices = c('scatterplot', 'barplot', 'densityplot', 'boxplot'),
+          selected = "barplot"
+        ),
+        facet = list(
+          button_type = "pickerInput",
+          label = "Facet",
+          choices = c("cdm_name", "cohort_name", "<strata>", "<additional>", "<settings>"),
+          selected = c("<strata>"),
+          multiple = TRUE
+        ),
+        colour = list(
+          button_type = "pickerInput",
+          label = "Colour",
+          choices = c("cdm_name", "cohort_name", "<strata>", "<additional>", "<settings>"),
+          selected = c("cohort_name"),
+          multiple = TRUE
+        )
+      ),
+      download = downloadPlot("plot_drug_utilisation.png")
+    )
+  )
+)
 
 # all panels ----
 omopViewerPanels <- list(
@@ -845,8 +968,10 @@ omopViewerPanels <- list(
   # CodelistGenerator
   orphan_code_use = orphanCodesPanel,
   # DrugUtilisation
-  summarise_dose_coverage = doseCoverage,
-  summarise_proportion_of_patients_covered = ppc
+  summarise_dose_coverage = doseCoveragePanel,
+  summarise_proportion_of_patients_covered = ppcPanel,
+  summarise_drug_restart = drugRestartPanel,
+  summarise_drug_utilisation = dusPanel
 ) |>
   purrr::map(\(x) newOmopViewerPanel(x))
 
