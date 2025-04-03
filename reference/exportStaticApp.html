@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">OmopViewer</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.1.900</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -19,7 +19,7 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/background.html">Edit the background panel of your shiny using `background.md`</a></li>
-    <li><a class="dropdown-item" href="../articles/supported_result_type.html">Plot and tables in OmopViewer</a></li>
+    <li><a class="dropdown-item" href="../articles/supported_result_type.html">Tabs definned in OmopViewer</a></li>
     <li><a class="dropdown-item" href="../articles/theming.html">Theming your shiny</a></li>
   </ul></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -50,11 +50,10 @@
 <span>  title <span class="op">=</span> <span class="st">""</span>,</span>
 <span>  background <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  summary <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  panelStructure <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  panelDetails <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  panelDetails <span class="op">=</span> <span class="fu"><a href="panelDetailsFromResult.html">panelDetailsFromResult</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span>,</span>
+<span>  panelStructure <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">as.list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">panelDetails</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  theme <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  open <span class="op">=</span> <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/is_interactive.html" class="external-link">is_interactive</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  panels <span class="op">=</span> <span class="fu">lifecycle</span><span class="fu">::</span><span class="fu"><a href="https://lifecycle.r-lib.org/reference/deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  open <span class="op">=</span> <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/is_interactive.html" class="external-link">is_interactive</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -89,15 +88,16 @@ content will be controlled from the generated background.md file.</p></dd>
 `result`.</p></dd>
 
 
-<dt id="arg-panelstructure">panelStructure<a class="anchor" aria-label="anchor" href="#arg-panelstructure"></a></dt>
-<dd><p>A named list of panel indetifiers to organise them in
-dropdown menus.</p></dd>
-
-
 <dt id="arg-paneldetails">panelDetails<a class="anchor" aria-label="anchor" href="#arg-paneldetails"></a></dt>
 <dd><p>A named list to provide details for each one of the
-panels, such as: result_id, result_type, title, icon, output_id, ... Name of
-each element must be the identifier name of `panelStructure`.</p></dd>
+panels, such as: result_id, result_type, title, icon, filters and content.
+By default it is created using the `panelDetailsFromResult()` function.</p></dd>
+
+
+<dt id="arg-panelstructure">panelStructure<a class="anchor" aria-label="anchor" href="#arg-panelstructure"></a></dt>
+<dd><p>A named list of panel identifiers to organise them in
+drop-down menus. Identifiers names are the ones used in `panelDetails`. By
+default one panel per each `panelDetails` element is created.</p></dd>
 
 
 <dt id="arg-theme">theme<a class="anchor" aria-label="anchor" href="#arg-theme"></a></dt>
@@ -110,10 +110,6 @@ must be provided as a character string (e.g.,
 
 <dt id="arg-open">open<a class="anchor" aria-label="anchor" href="#arg-open"></a></dt>
 <dd><p>Whether to open the shiny app project.</p></dd>
-
-
-<dt id="arg-panels">panels<a class="anchor" aria-label="anchor" href="#arg-panels"></a></dt>
-<dd><p>deprecated.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -130,7 +126,7 @@ must be provided as a character string (e.g.,
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Processing data</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> No panels identified, generated shiny will be empty.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Creating shiny from provided data</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Shiny created in: <span style="color: #0000BB;">/tmp/Rtmp4eGkxt/shiny</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Shiny created in: <span style="color: #0000BB;">/tmp/Rtmpz9x9dp/shiny</span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

@@ -8,8 +8,13 @@
 <url><loc>https://ohdsi.github.io/OmopViewer/authors.html</loc></url>
 <url><loc>https://ohdsi.github.io/OmopViewer/index.html</loc></url>
 <url><loc>https://ohdsi.github.io/OmopViewer/reference/OmopViewer-package.html</loc></url>
+<url><loc>https://ohdsi.github.io/OmopViewer/reference/defaultPanels.html</loc></url>
 <url><loc>https://ohdsi.github.io/OmopViewer/reference/exportStaticApp.html</loc></url>
+<url><loc>https://ohdsi.github.io/OmopViewer/reference/getPanel.html</loc></url>
 <url><loc>https://ohdsi.github.io/OmopViewer/reference/index.html</loc></url>
 <url><loc>https://ohdsi.github.io/OmopViewer/reference/launchDynamicApp.html</loc></url>
+<url><loc>https://ohdsi.github.io/OmopViewer/reference/omopViewerPanels.html</loc></url>
+<url><loc>https://ohdsi.github.io/OmopViewer/reference/omopViewerResults.html</loc></url>
+<url><loc>https://ohdsi.github.io/OmopViewer/reference/panelDetailsFromResult.html</loc></url>
 </urlset>
 

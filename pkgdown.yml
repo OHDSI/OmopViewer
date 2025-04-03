@@ -5,7 +5,7 @@ articles:
   articles/background: background.html
   supported_result_type: supported_result_type.html
   articles/theming: theming.html
-last_built: 2025-03-10T18:09Z
+last_built: 2025-04-03T17:11Z
 urls:
   reference: https://ohdsi.github.io/OmopViewer/reference
   article: https://ohdsi.github.io/OmopViewer/articles

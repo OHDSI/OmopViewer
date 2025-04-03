@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Plot and tables in OmopViewer • OmopViewer</title>
+<title>Tabs definned in OmopViewer • OmopViewer</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Plot and tables in OmopViewer">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Tabs definned in OmopViewer">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">OmopViewer</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.1.900</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,7 +34,7 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="../articles/background.html">Edit the background panel of your shiny using `background.md`</a></li>
-    <li><a class="dropdown-item" href="../articles/supported_result_type.html">Plot and tables in OmopViewer</a></li>
+    <li><a class="dropdown-item" href="../articles/supported_result_type.html">Tabs definned in OmopViewer</a></li>
     <li><a class="dropdown-item" href="../articles/theming.html">Theming your shiny</a></li>
   </ul>
 </li>
@@ -56,7 +56,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>Plot and tables in OmopViewer</h1>
+      <h1>Tabs definned in OmopViewer</h1>
             
       
 
@@ -65,662 +65,238 @@
 
     
     
-<p>The <strong>OmopViewer</strong> package will display by default the
-‘tidy’ tab that will allow the user to explore the data. With the tidy
-tab there will be displayed different output tabs. By default a table
-created with <code>OmopViewer::omopViewerTable()</code> will be
-displayed, but some packages have some extra output tabs configured. In
-the following table you can see the <code>result_type</code> that are
-configured and which are the visualisations.</p>
-<div id="mwlefoodfi" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#mwlefoodfi table {
-  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-#mwlefoodfi thead, #mwlefoodfi tbody, #mwlefoodfi tfoot, #mwlefoodfi tr, #mwlefoodfi td, #mwlefoodfi th {
-  border-style: none;
-}
-
-#mwlefoodfi p {
-  margin: 0;
-  padding: 0;
-}
-
-#mwlefoodfi .gt_table {
-  display: table;
-  border-collapse: collapse;
-  line-height: normal;
-  margin-left: auto;
-  margin-right: auto;
-  color: #333333;
-  font-size: 16px;
-  font-weight: normal;
-  font-style: normal;
-  background-color: #FFFFFF;
-  width: auto;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #A8A8A8;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #A8A8A8;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-}
-
-#mwlefoodfi .gt_caption {
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
-#mwlefoodfi .gt_title {
-  color: #333333;
-  font-size: 125%;
-  font-weight: initial;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-color: #FFFFFF;
-  border-bottom-width: 0;
-}
-
-#mwlefoodfi .gt_subtitle {
-  color: #333333;
-  font-size: 85%;
-  font-weight: initial;
-  padding-top: 3px;
-  padding-bottom: 5px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-color: #FFFFFF;
-  border-top-width: 0;
-}
-
-#mwlefoodfi .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#mwlefoodfi .gt_bottom_border {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#mwlefoodfi .gt_col_headings {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#mwlefoodfi .gt_col_heading {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 6px;
-  padding-left: 5px;
-  padding-right: 5px;
-  overflow-x: hidden;
-}
-
-#mwlefoodfi .gt_column_spanner_outer {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  padding-top: 0;
-  padding-bottom: 0;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-
-#mwlefoodfi .gt_column_spanner_outer:first-child {
-  padding-left: 0;
-}
-
-#mwlefoodfi .gt_column_spanner_outer:last-child {
-  padding-right: 0;
-}
-
-#mwlefoodfi .gt_column_spanner {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  overflow-x: hidden;
-  display: inline-block;
-  width: 100%;
-}
-
-#mwlefoodfi .gt_spanner_row {
-  border-bottom-style: hidden;
-}
-
-#mwlefoodfi .gt_group_heading {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  text-align: left;
-}
-
-#mwlefoodfi .gt_empty_group_heading {
-  padding: 0.5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: middle;
-}
-
-#mwlefoodfi .gt_from_md > :first-child {
-  margin-top: 0;
-}
-
-#mwlefoodfi .gt_from_md > :last-child {
-  margin-bottom: 0;
-}
-
-#mwlefoodfi .gt_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  margin: 10px;
-  border-top-style: solid;
-  border-top-width: 1px;
-  border-top-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  overflow-x: hidden;
-}
-
-#mwlefoodfi .gt_stub {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#mwlefoodfi .gt_stub_row_group {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-  vertical-align: top;
-}
-
-#mwlefoodfi .gt_row_group_first td {
-  border-top-width: 2px;
-}
-
-#mwlefoodfi .gt_row_group_first th {
-  border-top-width: 2px;
-}
-
-#mwlefoodfi .gt_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#mwlefoodfi .gt_first_summary_row {
-  border-top-style: solid;
-  border-top-color: #D3D3D3;
-}
-
-#mwlefoodfi .gt_first_summary_row.thick {
-  border-top-width: 2px;
-}
-
-#mwlefoodfi .gt_last_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#mwlefoodfi .gt_grand_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#mwlefoodfi .gt_first_grand_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-style: double;
-  border-top-width: 6px;
-  border-top-color: #D3D3D3;
-}
-
-#mwlefoodfi .gt_last_grand_summary_row_top {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: double;
-  border-bottom-width: 6px;
-  border-bottom-color: #D3D3D3;
-}
-
-#mwlefoodfi .gt_striped {
-  background-color: rgba(128, 128, 128, 0.05);
-}
-
-#mwlefoodfi .gt_table_body {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#mwlefoodfi .gt_footnotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#mwlefoodfi .gt_footnote {
-  margin: 0px;
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#mwlefoodfi .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#mwlefoodfi .gt_sourcenote {
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#mwlefoodfi .gt_left {
-  text-align: left;
-}
-
-#mwlefoodfi .gt_center {
-  text-align: center;
-}
-
-#mwlefoodfi .gt_right {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-
-#mwlefoodfi .gt_font_normal {
-  font-weight: normal;
-}
-
-#mwlefoodfi .gt_font_bold {
-  font-weight: bold;
-}
-
-#mwlefoodfi .gt_font_italic {
-  font-style: italic;
-}
-
-#mwlefoodfi .gt_super {
-  font-size: 65%;
-}
-
-#mwlefoodfi .gt_footnote_marks {
-  font-size: 75%;
-  vertical-align: 0.4em;
-  position: initial;
-}
-
-#mwlefoodfi .gt_asterisk {
-  font-size: 100%;
-  vertical-align: 0;
-}
-
-#mwlefoodfi .gt_indent_1 {
-  text-indent: 5px;
-}
-
-#mwlefoodfi .gt_indent_2 {
-  text-indent: 10px;
-}
-
-#mwlefoodfi .gt_indent_3 {
-  text-indent: 15px;
-}
-
-#mwlefoodfi .gt_indent_4 {
-  text-indent: 20px;
-}
-
-#mwlefoodfi .gt_indent_5 {
-  text-indent: 25px;
-}
-
-#mwlefoodfi .katex-display {
-  display: inline-flex !important;
-  margin-bottom: 0.75em !important;
-}
-
-#mwlefoodfi div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
-  height: 0px !important;
-}
-</style>
-<table class="table gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
-<thead><tr class="gt_col_headings">
-<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="text-align: center; font-weight: bold;" scope="col" id="Result-type">Result type</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="text-align: center; font-weight: bold;" scope="col" id="Function">Function</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="text-align: center; font-weight: bold;" scope="col" id="Output-type">Output type</th>
-    </tr></thead>
-<tbody class="gt_table_body">
-<tr class="gt_group_heading_row">
-<th colspan="3" class="gt_group_heading" style="background-color: #E9E9E9; font-weight: bold;" scope="colgroup" id="CohortCharacteristics">CohortCharacteristics</th>
-    </tr>
-<tr class="gt_row_group_first">
-<td headers="CohortCharacteristics  Result type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">summarise_cohort_overlap</td>
-<td headers="CohortCharacteristics  Function" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">tableCohortOverlap</td>
-<td headers="CohortCharacteristics  Output type" class="gt_row gt_left" style="text-align: left;">gt</td>
-</tr>
-<tr>
-<td headers="CohortCharacteristics  Result type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: hidden; border-top-color: #000000; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"></td>
-<td headers="CohortCharacteristics  Function" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">plotCohortOverlap</td>
-<td headers="CohortCharacteristics  Output type" class="gt_row gt_left" style="text-align: left;">ggplot2</td>
-</tr>
-<tr>
-<td headers="CohortCharacteristics  Result type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">summarise_cohort_attrition</td>
-<td headers="CohortCharacteristics  Function" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">tableCohortAttrition</td>
-<td headers="CohortCharacteristics  Output type" class="gt_row gt_left" style="text-align: left;">gt</td>
-</tr>
-<tr>
-<td headers="CohortCharacteristics  Result type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: hidden; border-top-color: #000000; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"></td>
-<td headers="CohortCharacteristics  Function" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">plotCohortAttrition</td>
-<td headers="CohortCharacteristics  Output type" class="gt_row gt_left" style="text-align: left;">grViz</td>
-</tr>
-<tr>
-<td headers="CohortCharacteristics  Result type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">summarise_cohort_timing</td>
-<td headers="CohortCharacteristics  Function" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">tableCohortTiming</td>
-<td headers="CohortCharacteristics  Output type" class="gt_row gt_left" style="text-align: left;">gt</td>
-</tr>
-<tr>
-<td headers="CohortCharacteristics  Result type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: hidden; border-top-color: #000000; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"></td>
-<td headers="CohortCharacteristics  Function" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">plotCohortTiming</td>
-<td headers="CohortCharacteristics  Output type" class="gt_row gt_left" style="text-align: left;">ggplot2</td>
-</tr>
-<tr>
-<td headers="CohortCharacteristics  Result type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">summarise_characteristics</td>
-<td headers="CohortCharacteristics  Function" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">tableCharacteristics</td>
-<td headers="CohortCharacteristics  Output type" class="gt_row gt_left" style="text-align: left;">gt</td>
-</tr>
-<tr>
-<td headers="CohortCharacteristics  Result type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: hidden; border-top-color: #000000; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"></td>
-<td headers="CohortCharacteristics  Function" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">plotCharacteristics</td>
-<td headers="CohortCharacteristics  Output type" class="gt_row gt_left" style="text-align: left;">ggplot2</td>
-</tr>
-<tr>
-<td headers="CohortCharacteristics  Result type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">summarise_cohort_count</td>
-<td headers="CohortCharacteristics  Function" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">tableCohortCount</td>
-<td headers="CohortCharacteristics  Output type" class="gt_row gt_left" style="text-align: left;">gt</td>
-</tr>
-<tr>
-<td headers="CohortCharacteristics  Result type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: hidden; border-top-color: #000000; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"></td>
-<td headers="CohortCharacteristics  Function" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">plotCohortCount</td>
-<td headers="CohortCharacteristics  Output type" class="gt_row gt_left" style="text-align: left;">ggplot2</td>
-</tr>
-<tr class="gt_group_heading_row">
-<th colspan="3" class="gt_group_heading" style="background-color: #E9E9E9; font-weight: bold;" scope="colgroup" id="CodelistGenerator">CodelistGenerator</th>
-    </tr>
-<tr class="gt_row_group_first">
-<td headers="CodelistGenerator  Result type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">orphan_code_use</td>
-<td headers="CodelistGenerator  Function" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">tableOrphanCodes</td>
-<td headers="CodelistGenerator  Output type" class="gt_row gt_left" style="text-align: left;">gt</td>
-</tr>
-<tr>
-<td headers="CodelistGenerator  Result type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">cohort_code_use</td>
-<td headers="CodelistGenerator  Function" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">tableCohortCodeUse</td>
-<td headers="CodelistGenerator  Output type" class="gt_row gt_left" style="text-align: left;">gt</td>
-</tr>
-<tr>
-<td headers="CodelistGenerator  Result type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">code_use</td>
-<td headers="CodelistGenerator  Function" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">tableCodeUse</td>
-<td headers="CodelistGenerator  Output type" class="gt_row gt_left" style="text-align: left;">gt</td>
-</tr>
-<tr>
-<td headers="CodelistGenerator  Result type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">achilles_code_use</td>
-<td headers="CodelistGenerator  Function" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">tableAchillesCodeUse</td>
-<td headers="CodelistGenerator  Output type" class="gt_row gt_left" style="text-align: left;">gt</td>
-</tr>
-<tr class="gt_group_heading_row">
-<th colspan="3" class="gt_group_heading" style="background-color: #E9E9E9; font-weight: bold;" scope="colgroup" id="OmopSketch">OmopSketch</th>
-    </tr>
-<tr class="gt_row_group_first">
-<td headers="OmopSketch  Result type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">summarise_observation_period</td>
-<td headers="OmopSketch  Function" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">tableObservationPeriod</td>
-<td headers="OmopSketch  Output type" class="gt_row gt_left" style="text-align: left;">gt</td>
-</tr>
-<tr>
-<td headers="OmopSketch  Result type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: hidden; border-top-color: #000000; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"></td>
-<td headers="OmopSketch  Function" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">plotObservationPeriod</td>
-<td headers="OmopSketch  Output type" class="gt_row gt_left" style="text-align: left;">ggplot2</td>
-</tr>
-<tr>
-<td headers="OmopSketch  Result type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">summarise_omop_snapshot</td>
-<td headers="OmopSketch  Function" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">tableOmopSnapshot</td>
-<td headers="OmopSketch  Output type" class="gt_row gt_left" style="text-align: left;">gt</td>
-</tr>
-<tr class="gt_group_heading_row">
-<th colspan="3" class="gt_group_heading" style="background-color: #E9E9E9; font-weight: bold;" scope="colgroup" id="IncidencePrevalence">IncidencePrevalence</th>
-    </tr>
-<tr class="gt_row_group_first">
-<td headers="IncidencePrevalence  Result type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">incidence</td>
-<td headers="IncidencePrevalence  Function" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">tableIncidence</td>
-<td headers="IncidencePrevalence  Output type" class="gt_row gt_left" style="text-align: left;">gt</td>
-</tr>
-<tr>
-<td headers="IncidencePrevalence  Result type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: hidden; border-top-color: #000000; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"></td>
-<td headers="IncidencePrevalence  Function" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">plotIncidence</td>
-<td headers="IncidencePrevalence  Output type" class="gt_row gt_left" style="text-align: left;">ggplot2</td>
-</tr>
-<tr>
-<td headers="IncidencePrevalence  Result type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">incidence_attrition</td>
-<td headers="IncidencePrevalence  Function" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">tableIncidenceAttrition</td>
-<td headers="IncidencePrevalence  Output type" class="gt_row gt_left" style="text-align: left;">gt</td>
-</tr>
-<tr>
-<td headers="IncidencePrevalence  Result type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">prevalence</td>
-<td headers="IncidencePrevalence  Function" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">tablePrevalence</td>
-<td headers="IncidencePrevalence  Output type" class="gt_row gt_left" style="text-align: left;">gt</td>
-</tr>
-<tr>
-<td headers="IncidencePrevalence  Result type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: hidden; border-top-color: #000000; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"></td>
-<td headers="IncidencePrevalence  Function" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">plotPrevalence</td>
-<td headers="IncidencePrevalence  Output type" class="gt_row gt_left" style="text-align: left;">ggplot2</td>
-</tr>
-<tr>
-<td headers="IncidencePrevalence  Result type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">prevalence_attrition</td>
-<td headers="IncidencePrevalence  Function" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">tablePrevalenceAttrition</td>
-<td headers="IncidencePrevalence  Output type" class="gt_row gt_left" style="text-align: left;">gt</td>
-</tr>
-<tr class="gt_group_heading_row">
-<th colspan="3" class="gt_group_heading" style="background-color: #E9E9E9; font-weight: bold;" scope="colgroup" id="DrugUtilisation">DrugUtilisation</th>
-    </tr>
-<tr class="gt_row_group_first">
-<td headers="DrugUtilisation  Result type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">summarise_dose_coverage</td>
-<td headers="DrugUtilisation  Function" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">tableDoseCoverage</td>
-<td headers="DrugUtilisation  Output type" class="gt_row gt_left" style="text-align: left;">gt</td>
-</tr>
-<tr>
-<td headers="DrugUtilisation  Result type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">summarise_drug_restart</td>
-<td headers="DrugUtilisation  Function" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">tableDrugRestart</td>
-<td headers="DrugUtilisation  Output type" class="gt_row gt_left" style="text-align: left;">gt</td>
-</tr>
-<tr>
-<td headers="DrugUtilisation  Result type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: hidden; border-top-color: #000000; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"></td>
-<td headers="DrugUtilisation  Function" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">plotDrugRestart</td>
-<td headers="DrugUtilisation  Output type" class="gt_row gt_left" style="text-align: left;">ggplot2</td>
-</tr>
-<tr>
-<td headers="DrugUtilisation  Result type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">summarise_drug_utilisation</td>
-<td headers="DrugUtilisation  Function" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">tableDrugUtilisation</td>
-<td headers="DrugUtilisation  Output type" class="gt_row gt_left" style="text-align: left;">gt</td>
-</tr>
-<tr>
-<td headers="DrugUtilisation  Result type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">summarise_indication</td>
-<td headers="DrugUtilisation  Function" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">tableIndication</td>
-<td headers="DrugUtilisation  Output type" class="gt_row gt_left" style="text-align: left;">gt</td>
-</tr>
-<tr>
-<td headers="DrugUtilisation  Result type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: hidden; border-top-color: #000000; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"></td>
-<td headers="DrugUtilisation  Function" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">plotIndication</td>
-<td headers="DrugUtilisation  Output type" class="gt_row gt_left" style="text-align: left;">ggplot2</td>
-</tr>
-<tr>
-<td headers="DrugUtilisation  Result type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">summarise_proportion_of_patients_covered</td>
-<td headers="DrugUtilisation  Function" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">tableProportionOfPatientsCovered</td>
-<td headers="DrugUtilisation  Output type" class="gt_row gt_left" style="text-align: left;">gt</td>
-</tr>
-<tr>
-<td headers="DrugUtilisation  Result type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: hidden; border-top-color: #000000; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"></td>
-<td headers="DrugUtilisation  Function" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">plotProportionOfPatientsCovered</td>
-<td headers="DrugUtilisation  Output type" class="gt_row gt_left" style="text-align: left;">ggplot2</td>
-</tr>
-<tr>
-<td headers="DrugUtilisation  Result type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">summarise_treatment</td>
-<td headers="DrugUtilisation  Function" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">tableTreatment</td>
-<td headers="DrugUtilisation  Output type" class="gt_row gt_left" style="text-align: left;">gt</td>
-</tr>
-<tr>
-<td headers="DrugUtilisation  Result type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: hidden; border-top-color: #000000; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"></td>
-<td headers="DrugUtilisation  Function" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">plotTreatment</td>
-<td headers="DrugUtilisation  Output type" class="gt_row gt_left" style="text-align: left;">ggplot2</td>
-</tr>
-</tbody>
-</table>
-</div>
+<p>The <strong>OmopViewer</strong> package generates shiny apps from
+predefined configurations, you can check the existent panels using the
+<code><a href="../reference/defaultPanels.html">defaultPanels()</a></code> function:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/defaultPanels.html">defaultPanels</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  [1] "incidence"                               </span></span>
+<span><span class="co">#&gt;  [2] "incidence_attrition"                     </span></span>
+<span><span class="co">#&gt;  [3] "prevalence"                              </span></span>
+<span><span class="co">#&gt;  [4] "prevalence_attrition"                    </span></span>
+<span><span class="co">#&gt;  [5] "summarise_cohort_overlap"                </span></span>
+<span><span class="co">#&gt;  [6] "summarise_cohort_count"                  </span></span>
+<span><span class="co">#&gt;  [7] "summarise_cohort_attrition"              </span></span>
+<span><span class="co">#&gt;  [8] "summarise_cohort_timing"                 </span></span>
+<span><span class="co">#&gt;  [9] "summarise_characteristics"               </span></span>
+<span><span class="co">#&gt; [10] "summarise_omop_snapshot"                 </span></span>
+<span><span class="co">#&gt; [11] "summarise_observation_period"            </span></span>
+<span><span class="co">#&gt; [12] "summarise_clinical_records"              </span></span>
+<span><span class="co">#&gt; [13] "summarise_record_count"                  </span></span>
+<span><span class="co">#&gt; [14] "summarise_missing_data"                  </span></span>
+<span><span class="co">#&gt; [15] "summarise_in_observation"                </span></span>
+<span><span class="co">#&gt; [16] "orphan_code_use"                         </span></span>
+<span><span class="co">#&gt; [17] "cohort_code_use"                         </span></span>
+<span><span class="co">#&gt; [18] "code_use"                                </span></span>
+<span><span class="co">#&gt; [19] "achilles_code_use"                       </span></span>
+<span><span class="co">#&gt; [20] "unmpaped_codes"                          </span></span>
+<span><span class="co">#&gt; [21] "summarise_dose_coverage"                 </span></span>
+<span><span class="co">#&gt; [22] "summarise_proportion_of_patients_covered"</span></span>
+<span><span class="co">#&gt; [23] "summarise_drug_restart"                  </span></span>
+<span><span class="co">#&gt; [24] "summarise_drug_utilisation"              </span></span>
+<span><span class="co">#&gt; [25] "summarise_indication"                    </span></span>
+<span><span class="co">#&gt; [26] "summarise_treatment"</span></span></code></pre></div>
+<p>You can check the details of a panel using <code><a href="../reference/getPanel.html">getPanel()</a></code>
+function:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/getPanel.html">getPanel</a></span><span class="op">(</span><span class="st">"incidence"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">Incidence</span> (OmopViewer panel)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">icon:</span> chart-line</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">data:</span> result_type: &lt;incidence&gt;</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">filters:</span> 1 filters + 6 automatic filters</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Incidence</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB;">Plot Incidence</span> (<span style="font-style: italic;">plot</span>)</span></span></code></pre></div>
+<p>The exported object <em>omopViewerPanels</em> contains all the
+defined panels in the package:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">omopViewerPanels</span></span>
+<span><span class="co">#&gt; $incidence</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">Incidence</span> (OmopViewer panel)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">icon:</span> chart-line</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">data:</span> result_type: &lt;incidence&gt;</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">filters:</span> 1 filters + 6 automatic filters</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Incidence</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB;">Plot Incidence</span> (<span style="font-style: italic;">plot</span>)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $incidence_attrition</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">Incidence Attrition</span> (OmopViewer panel)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">icon:</span> layer-group</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">data:</span> result_type: &lt;incidence_attrition&gt;</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">filters:</span> 1 filters + 3 automatic filters</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Incidence Attrition</span> (<span style="font-style: italic;">gt</span>)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $prevalence</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">Prevalence</span> (OmopViewer panel)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">icon:</span> chart-column</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">data:</span> result_type: &lt;prevalence&gt;</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">filters:</span> 1 filters + 6 automatic filters</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Prevalence</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB;">Plot Prevalence</span> (<span style="font-style: italic;">plot</span>)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $prevalence_attrition</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">Prevalence Attrition</span> (OmopViewer panel)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">icon:</span> layer-group</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">data:</span> result_type: &lt;prevalence_attrition&gt;</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">filters:</span> 1 filters + 3 automatic filters</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Prevalence Attrition</span> (<span style="font-style: italic;">gt</span>)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $summarise_cohort_overlap</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">Cohort Overlap</span> (OmopViewer panel)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">icon:</span> circle-half-stroke</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">data:</span> result_type: &lt;summarise_cohort_overlap&gt;</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">filters:</span> 1 filters + 5 automatic filters</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Overlap</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB;">Plot Overlap</span> (<span style="font-style: italic;">plot</span>)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $summarise_cohort_count</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">Cohort Count</span> (OmopViewer panel)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">icon:</span> users</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">data:</span> result_type: &lt;summarise_cohort_count&gt;</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">filters:</span> 1 filters + 4 automatic filters</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Counts</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB;">Plot Counts</span> (<span style="font-style: italic;">plot</span>)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $summarise_cohort_attrition</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">Cohort Attrition</span> (OmopViewer panel)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">icon:</span> layer-group</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">data:</span> result_type: &lt;summarise_cohort_attrition&gt;</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">filters:</span> 1 filters + 2 automatic filters</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Attrition</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB;">Diagram</span> (<span style="font-style: italic;">grViz</span>)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $summarise_cohort_timing</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">Cohort Timing</span> (OmopViewer panel)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">icon:</span> chart-simple</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">data:</span> result_type: &lt;summarise_cohort_timing&gt;</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">filters:</span> 1 filters + 2 automatic filters</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Timing</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB;">Plot Timing</span> (<span style="font-style: italic;">plot</span>)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $summarise_characteristics</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">Cohort Characteristics</span> (OmopViewer panel)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">icon:</span> users-gear</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">data:</span> result_type: &lt;summarise_characteristics&gt;</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">filters:</span> 1 filters + 4 automatic filters</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Characteristics</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB;">Plot Timing</span> (<span style="font-style: italic;">plot</span>)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $summarise_omop_snapshot</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">Snapshot</span> (OmopViewer panel)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">icon:</span> clipboard-list</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">data:</span> result_type: &lt;summarise_omop_snapshot&gt;</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">filters:</span> 1 filters + 1 automatic filters</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Characteristics</span> (<span style="font-style: italic;">gt</span>)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $summarise_observation_period</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">Observation period</span> (OmopViewer panel)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">icon:</span> eye</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">data:</span> result_type: &lt;summarise_observation_period&gt;</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">filters:</span> 1 filters + 4 automatic filters</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Observation period</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB;">Plot Observation period</span></span></span>
+<span><span class="co">#&gt;   (<span style="font-style: italic;">plot</span>)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $summarise_clinical_records</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">Clinical records</span> (OmopViewer panel)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">icon:</span> bars-staggered</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">data:</span> result_type: &lt;summarise_clinical_records&gt;</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">filters:</span> 1 filters + 6 automatic filters</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Clinical records</span> (<span style="font-style: italic;">gt</span>)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $summarise_record_count</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">Record count</span> (OmopViewer panel)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">icon:</span> signal</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">data:</span> result_type: &lt;summarise_record_count&gt;</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">filters:</span> 1 filters + 6 automatic filters</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Plot record count</span> (<span style="font-style: italic;">plot</span>)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $summarise_missing_data</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">Missing data</span> (OmopViewer panel)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">icon:</span> circle-exclamation</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">data:</span> result_type: &lt;summarise_missing_data&gt;</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">filters:</span> 1 filters + 6 automatic filters</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Missing data</span> (<span style="font-style: italic;">gt</span>)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $summarise_in_observation</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">Missing data</span> (OmopViewer panel)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">icon:</span> explosion</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">data:</span> result_type: &lt;summarise_in_observation&gt;</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">filters:</span> 1 filters + 6 automatic filters</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Plot in observation</span> (<span style="font-style: italic;">plot</span>)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $orphan_code_use</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">Orphan codes</span> (OmopViewer panel)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">icon:</span> magnifying-glass-arrow-right</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">data:</span> result_type: &lt;orphan_code_use&gt;</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">filters:</span> 1 filters + 4 automatic filters</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Orphan codes</span> (<span style="font-style: italic;">gt</span>)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $cohort_code_use</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">Cohort code use</span> (OmopViewer panel)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">icon:</span> chart-column</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">data:</span> result_type: &lt;cohort_code_use&gt;</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">filters:</span> 1 filters + 4 automatic filters</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Cohort code use</span> (<span style="font-style: italic;">gt</span>)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $code_use</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">Code use</span> (OmopViewer panel)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">icon:</span> chart-column</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">data:</span> result_type: &lt;code_use&gt;</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">filters:</span> 1 filters + 6 automatic filters</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Code use</span> (<span style="font-style: italic;">gt</span>)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $achilles_code_use</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">Achilles code use</span> (OmopViewer panel)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">icon:</span> chart-column</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">data:</span> result_type: &lt;achilles_code_use&gt;</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">filters:</span> 1 filters + 6 automatic filters</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Achilles code use</span> (<span style="font-style: italic;">gt</span>)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $unmpaped_codes</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">Unmapped codes</span> (OmopViewer panel)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">icon:</span> chart-column</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">data:</span> result_type: &lt;unmapped_codes&gt;</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">filters:</span> 1 filters + 6 automatic filters</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Unmapped codes</span> (<span style="font-style: italic;">gt</span>)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $summarise_dose_coverage</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">Dose coverage</span> (OmopViewer panel)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">icon:</span> pills</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">data:</span> result_type: &lt;summarise_dose_coverage&gt;</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">filters:</span> 1 filters + 6 automatic filters</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Dose coverage</span> (<span style="font-style: italic;">gt</span>)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $summarise_proportion_of_patients_covered</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">Proportion of patients covered</span> (OmopViewer panel)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">icon:</span> chart-gantt</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">data:</span> result_type: &lt;summarise_proportion_of_patients_covered&gt;</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">filters:</span> 1 filters + 3 automatic filters</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table PPC</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB;">Plot PPC</span> (<span style="font-style: italic;">plot</span>)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $summarise_drug_restart</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">Drug Restart</span> (OmopViewer panel)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">icon:</span> chart-gantt</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">data:</span> result_type: &lt;summarise_drug_restart&gt;</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">filters:</span> 1 filters + 3 automatic filters</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Drug Restart</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB;">Plot Drug Restart</span> (<span style="font-style: italic;">plot</span>)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $summarise_drug_utilisation</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">Drug Utilisation</span> (OmopViewer panel)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">icon:</span> capsules</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">data:</span> result_type: &lt;summarise_drug_utilisation&gt;</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">filters:</span> 1 filters + 6 automatic filters</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Drug Utilisation</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB;">Plot Drug Utilisation</span> (<span style="font-style: italic;">plot</span>)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $summarise_indication</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">Indication</span> (OmopViewer panel)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">icon:</span> disease</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">data:</span> result_type: &lt;summarise_indication&gt;</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">filters:</span> 1 filters + 6 automatic filters</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Indication</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB;">Plot Indication</span> (<span style="font-style: italic;">plot</span>)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $summarise_treatment</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">Treatments</span> (OmopViewer panel)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">icon:</span> disease</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">data:</span> result_type: &lt;summarise_treatment&gt;</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">filters:</span> 1 filters + 6 automatic filters</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Treatments</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB;">Plot Treatment</span> (<span style="font-style: italic;">plot</span>)</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="note-for-developers">Note for developers<a class="anchor" aria-label="anchor" href="#note-for-developers"></a>
 </h2>
-<p>If you wish to configure a new <code>result_type</code> this can be
-done editing the internal data: <em>omopViewerTabs</em>,
-<em>omopViewerOutput</em> and <em>omopViewerOutputArguments</em> in file
-<a href="https://github.com/OHDSI/omopViewer/blob/main/data-raw/internalData.R" class="external-link">internalData.R</a>.
+<p>If you wish to configure a new <strong>Tab</strong> this can be done
+editing the <em>omopViewerPanels</em> object defined in in file <a href="https://github.com/OHDSI/omopViewer/blob/main/data-raw/panels.R" class="external-link">panels.R</a>.
 Please feel free to submit your PR.</p>
-<!-- :::{callout} -->
-<!-- ::: -->
 </div>
   </main>
 </div>
