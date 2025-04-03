@@ -1263,7 +1263,17 @@ treatmentPanel <- list(
     )
   )
 )
-
+## deafult ----
+defaultPanel <- list(
+  title = "<result_type>",
+  icon = "folder",
+  data = list(),
+  automatic_filters = c("group", "strata", "additional", "variable_name", "estimate_name", "settings"),
+  filters = list(cdm_name = cdmFilter),
+  content = list(
+    tidy = tidyContent
+  )
+)
 
 # all panels ----
 omopViewerPanels <- list(
@@ -1297,7 +1307,9 @@ omopViewerPanels <- list(
   summarise_drug_restart = drugRestartPanel,
   summarise_drug_utilisation = dusPanel,
   summarise_indication = indicationPanel,
-  summarise_treatment = treatmentPanel
+  summarise_treatment = treatmentPanel,
+  # default
+  default = defaultPanel
 ) |>
   purrr::map(\(x) newOmopViewerPanel(x))
 

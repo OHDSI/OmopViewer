@@ -184,3 +184,29 @@ test_that("theme", {
   # not bslib call
   expect_error(validateTheme('bslib::accordion()'))
 })
+
+test_that("default panel", {
+  result <- dplyr::tibble(
+    cdm_name = "mock",
+    cohort_name = "cohort 1",
+    age_group = c(rep("overall", 2), rep("0 to 24", 2)),
+    variable_name = c("concept 1", "concept 2", "concept 1", "concept 2"),
+    variable_level = c("1", "2", "1", "2"),
+    smd = c(0.001, 0.6, NA, 0.05),
+    p = c(0.0001, 0.001, 0.01, 0.13),
+    time = "years",
+    result_type = "custom_result"
+  ) |>
+    omopgenerics::transformToSummarisedResult(
+      group = "cohort_name",
+      strata = "age_group",
+      estimates = c("smd", "p"),
+      settings = c("result_type", "time")
+    )
+
+  tdir <- tempdir()
+  expect_no_error(exportStaticApp(result = result, directory = tdir))
+  expect_true("shiny" %in% list.files(tdir))
+  unlink(file.path(tdir, "shiny"), recursive = TRUE)
+
+})
