@@ -708,6 +708,116 @@ observationPeriodPanel <- list(
     )
   )
 )
+## summarise clinical records ----
+clinicalRecordsPanel <- list(
+  title = "Clinical records",
+  icon = "bars-staggered",
+  data = list(result_type = "summarise_clinical_records"),
+  automatic_filters = c("group", "strata", "strata", "settings", "variable_name", "estimate_name"),
+  filters = list(cdm_name = cdmFilter),
+  content = list(
+    tidy = tidyContent,
+    table = list(
+      title = "Table Clinical records",
+      output_type = "gt",
+      render = "<filtered_data> |>
+      OmopSketch::tableClinicalRecords()",
+      download = downloadGtTable("table_clinical_records")
+    )
+  )
+)
+## summarise record count ----
+recordCountPanel <- list(
+  title = "Record count",
+  icon = "signal",
+  data = list(result_type = "summarise_record_count"),
+  automatic_filters = c("group", "strata", "strata", "settings", "variable_name", "estimate_name"),
+  filters = list(cdm_name = cdmFilter),
+  content = list(
+    tidy = tidyContent,
+    plot = list(
+      title = "Plot record count",
+      output_type = "plot",
+      render = "<filtered_data> |>
+      OmopSketch::plotRecordCount(
+      facet = input$facet,
+      colour = input$colour
+      )",
+      filters = list(
+        facet = list(
+          button_type = "pickerInput",
+          label = "Facet",
+          choices = c("cdm_name", "<group>", "<strata>", "<additional>", "<settings>"),
+          selected = c("cdm_name"),
+          multiple = TRUE
+        ),
+        colour = list(
+          button_type = "pickerInput",
+          label = "Colour",
+          choices = c("cdm_name", "<group>", "<strata>", "<additional>", "<settings>"),
+          selected = c("omop_table"),
+          multiple = TRUE
+        )
+      ),
+      download = downloadPlot("plot_record_count.png")
+    )
+  )
+)
+## summarise missing data ----
+missingPanel <- list(
+  title = "Missing data",
+  icon = "circle-exclamation",
+  data = list(result_type = "summarise_missing_data"),
+  automatic_filters = c("group", "strata", "strata", "settings", "variable_name", "estimate_name"),
+  filters = list(cdm_name = cdmFilter),
+  content = list(
+    tidy = tidyContent,
+    table = list(
+      title = "Table Missing data",
+      output_type = "gt",
+      render = "<filtered_data> |>
+      OmopSketch::tableMissingData()",
+      download = downloadGtTable("table_missing_data")
+    )
+  )
+)
+## summarise in observation ----
+inObservationPanel <- list(
+  title = "Missing data",
+  icon = "explosion",
+  data = list(result_type = "summarise_in_observation"),
+  automatic_filters = c("group", "strata", "strata", "settings", "variable_name", "estimate_name"),
+  filters = list(cdm_name = cdmFilter),
+  content = list(
+    tidy = tidyContent,
+    plot = list(
+      title = "Plot in observation",
+      output_type = "plot",
+      render = "<filtered_data> |>
+      OmopSketch::plotInObservation(
+      facet = input$facet,
+      colour = input$colour
+      )",
+      filters = list(
+        facet = list(
+          button_type = "pickerInput",
+          label = "Facet",
+          choices = c("cdm_name", "<group>", "<strata>", "<additional>", "<settings>"),
+          selected = c("cdm_name"),
+          multiple = TRUE
+        ),
+        colour = list(
+          button_type = "pickerInput",
+          label = "Colour",
+          choices = c("cdm_name", "<group>", "<strata>", "<additional>", "<settings>"),
+          selected = character(),
+          multiple = TRUE
+        )
+      ),
+      download = downloadPlot("plot_in_observation.png")
+    )
+  )
+)
 ## orphan code use ----
 orphanCodesPanel <- list(
   title = "Orphan codes",
@@ -739,7 +849,7 @@ orphanCodesPanel <- list(
 ## cohort code use ----
 cohortCodeUsePanel <- list(
   title = "Cohort code use",
-  icon = "hart-column",
+  icon = "chart-column",
   data = list(result_type = "cohort_code_use"),
   automatic_filters = c("group", "strata", "variable_name", "estimate_name"),
   filters = list(cdm_name = cdmFilter),
@@ -756,12 +866,96 @@ cohortCodeUsePanel <- list(
       hide = input$hide
       )",
       filters = rankTableButton(
-        none = c("cdm_name", "<group>", "<strata>", "<additional>", "variable_name", "variable_level"),
+        none = c("<group>", "<strata>", "<additional>", "variable_name", "variable_level"),
         groupColumn = character(),
         header = c("cdm_name", "estimate_name"),
         hide = character()
       ),
-      download = downloadGtTable("table_orphan_codes")
+      download = downloadGtTable("table_cohort_code_use")
+    )
+  )
+)
+## code use ----
+codeUsePanel <- list(
+  title = "Code use",
+  icon = "chart-column",
+  data = list(result_type = "code_use"),
+  automatic_filters = c("group", "strata", "additional", "settings", "variable_name", "estimate_name"),
+  filters = list(cdm_name = cdmFilter),
+  content = list(
+    tidy = tidyContent,
+    table = list(
+      title = "Table Code use",
+      output_type = "gt",
+      render = "<filtered_data> |>
+      CodelistGenerator::tableCodeUse(
+      header = input$header,
+      groupColumn = input$group_column,
+      hide = input$hide
+      )",
+      filters = rankTableButton(
+        none = c("<group>", "<strata>", "<additional>", "<settings>", "variable_name"),
+        groupColumn = character(),
+        header = c("cdm_name", "estimate_name"),
+        hide = character()
+      ),
+      download = downloadGtTable("table_code_use")
+    )
+  )
+)
+## achilles code use ----
+achillesCodeUsePanel <- list(
+  title = "Achilles code use",
+  icon = "chart-column",
+  data = list(result_type = "achilles_code_use"),
+  automatic_filters = c("group", "strata", "additional", "settings", "variable_name", "estimate_name"),
+  filters = list(cdm_name = cdmFilter),
+  content = list(
+    tidy = tidyContent,
+    table = list(
+      title = "Table Achilles code use",
+      output_type = "gt",
+      render = "<filtered_data> |>
+      CodelistGenerator::tableAchillesCodeUse(
+      header = input$header,
+      groupColumn = input$group_column,
+      hide = input$hide
+      )",
+      filters = rankTableButton(
+        none = c("<group>", "<strata>", "<additional>", "<settings>", "variable_name"),
+        groupColumn = character(),
+        header = c("cdm_name", "estimate_name"),
+        hide = character()
+      ),
+      download = downloadGtTable("table_achilles_code_use")
+    )
+  )
+)
+## unmapped codes ----
+unmappedPanel <- list(
+  title = "Unmapped codes",
+  icon = "chart-column",
+  data = list(result_type = "unmapped_codes"),
+  automatic_filters = c("group", "strata", "additional", "settings", "variable_name", "estimate_name"),
+  filters = list(cdm_name = cdmFilter),
+  content = list(
+    tidy = tidyContent,
+    table = list(
+      title = "Table Unmapped codes",
+      output_type = "gt",
+      render = "<filtered_data> |>
+      CodelistGenerator::tableUnmappedCodes(
+      header = input$header,
+      groupColumn = input$group_column,
+      hide = input$hide
+      )",
+      filters = rankTableButton(
+        none = c("<group>", "<strata>", "<additional>", "<settings>", "variable_name"),
+        groupColumn = character(),
+        header = c("cdm_name", "estimate_name"),
+        hide = character()
+      ),
+      download = downloadGtTable("table_unmapped_codes")
     )
   )
 )
@@ -1087,9 +1281,16 @@ omopViewerPanels <- list(
   # OmopSketch
   summarise_omop_snapshot = snapshotPanel,
   summarise_observation_period = observationPeriodPanel,
+  summarise_clinical_records = clinicalRecordsPanel,
+  summarise_record_count = recordCountPanel,
+  summarise_missing_data = missingPanel,
+  summarise_in_observation = inObservationPanel,
   # CodelistGenerator
   orphan_code_use = orphanCodesPanel,
   cohort_code_use = cohortCodeUsePanel,
+  code_use = codeUsePanel,
+  achilles_code_use = achillesCodeUsePanel,
+  unmpaped_codes = unmappedPanel,
   # DrugUtilisation
   summarise_dose_coverage = doseCoveragePanel,
   summarise_proportion_of_patients_covered = ppcPanel,
