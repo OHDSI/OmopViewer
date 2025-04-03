@@ -11,6 +11,8 @@ launchDynamicApp <- function() {
 
 serverDynamic <- function(input, output, session) {
 
+  local(options(shiny.maxRequestSize = 10 * 1024^3))
+
   # reactive data
   panels <- shiny::reactiveVal(list())
   workingData <- shiny::reactiveVal(list())
