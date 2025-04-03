@@ -11,3 +11,13 @@ reference:
   desc: This function allows to generate dynamic apps. This app will visualise any summarised_result that you upload on it.
 - contents:
   - launchDynamicApp
+- subtitle: Defined panels
+  desc: Functionalities to explore the default defined panels
+- contents:
+  - defaultPanels
+  - getPanel
+  - omopViewerPanels
+- subtitle: Utility functions
+- contents:
+  - panelDetailsFromResult
+  - omopViewerResults
