@@ -1,43 +1,30 @@
 test_that("test choices", {
   # empty result
   res <- omopgenerics::emptySummarisedResult()
-  panelList <- res |>
+  resultList <- res |>
     panelDetailsFromResult() |>
-    purrr::map(\(x) x$result_id)
-  expect_no_error(x <- defaultFilterValues(res, panelList))
+    resultListFromPanelDetails()
+  expect_no_error(x <- prepareResult(res, resultList))
   expected <- list()
-  expect_identical(x, expected)
+  expect_equal(unname(x), expected)
 
   # check only settings
-  resT <- c("custom_result_1", "custom_result_2")
   res <- omopgenerics::emptySummarisedResult(settings = dplyr::tibble(
     result_id = c(1L, 2L),
-    result_type = resT,
+    result_type = c("custom_result_1", "custom_result_2"),
     package_name = "OmopViewer",
     package_version = "1.0.0",
     param = c("TRUE", NA),
     x = c("0", "1")
   ))
-  panelDetails <- res |>
-    panelDetailsFromResult() |>
-    addFilterNames(result = res)
-  panelList <- panelDetails |>
-    purrr::map(\(x) x$result_id)
-  expect_no_error(x <- defaultFilterValues(res, panelList))
-  nm <- names(x)
-  expect_true(all(startsWith(nm, "custom_result_1") | startsWith(nm, "custom_result_2")))
-  # names
-  nm1 <- nm[startsWith(nm, "custom_result_1")]
-  nm1 <- substr(nm1, 17, nchar(nm1))
-  expect_identical(nm1, c(panelDetails$custom_result_1$filter_name, "tidy_columns"))
-  nm2 <- nm[startsWith(nm, "custom_result_2")]
-  nm2 <- substr(nm2, 17, nchar(nm2))
-  expect_identical(nm2, c(panelDetails$custom_result_2$filter_name, "tidy_columns"))
-  # settings
-  expect_identical(x$custom_result_1_settings_param, "TRUE")
-  expect_identical(x$custom_result_1_settings_x, "0")
-  expect_false("custom_result_2_settings_param" %in% names(x))
-  expect_identical(x$custom_result_2_settings_x, "1")
+  panelList <- list(my_result = list(result_id = c(1L, 2L)))
+  expect_no_error(x <- getValues(res, panelList))
+  expect_identical(x$my_result_cdm_name, character())
+  expect_identical(x$my_result_variable_name, character())
+  expect_identical(x$my_result_variable_level, character())
+  expect_identical(x$my_result_estimate_name, character())
+  expect_identical(x$my_result_param, "TRUE")
+  expect_identical(x$my_result_x, c("0", "1"))
 
   # a set of summarised_results
   res <- omopgenerics::newSummarisedResult(
@@ -58,54 +45,51 @@ test_that("test choices", {
     ),
     settings = dplyr::tibble(
       result_id = c(1L, 2L),
-      result_type = resT,
+      result_type = c("custom_result_1", "custom_result_2"),
       package_name = "OmopViewer",
       package_version = "1.0.0",
       param = c("TRUE", NA),
       x = c("0", "1")
     )
   )
-  panelDetails <- res |>
-    panelDetailsFromResult() |>
-    addFilterNames(result = res)
-  panelList <- panelDetails |>
-    purrr::map(\(x) x$result_id)
-  expect_no_error(x <- defaultFilterValues(res, panelList))
-  nm <- names(x)
-  expect_true(all(startsWith(nm, "custom_result_1") | startsWith(nm, "custom_result_2")))
-  # names
-  nm1 <- nm[startsWith(nm, "custom_result_1")]
-  nm1 <- substr(nm1, 17, nchar(nm1)) |> sort()
-  expect_identical(nm1, sort(c(panelDetails$custom_result_1$filter_name, "tidy_columns")))
-  nm2 <- nm[startsWith(nm, "custom_result_2")]
-  nm2 <- substr(nm2, 17, nchar(nm2)) |> sort()
-  expect_identical(nm2, sort(c(panelDetails$custom_result_2$filter_name, "tidy_columns")))
-  # settings
-  expect_identical(x$custom_result_1_settings_param, "TRUE")
-  expect_identical(x$custom_result_1_settings_x, "0")
-  expect_false("custom_result_2_settings_param" %in% names(x))
-  expect_identical(x$custom_result_2_settings_x, "1")
-  # exact names
-  expect_identical(
-    c("settings_param", "settings_x", "grouping_cdm_name",
-      "grouping_cohort_name", "grouping_age", "grouping_sex", "variable_name",
-      "estimate_name", "tidy_columns") |>
-      sort(),
-    sort(nm1)
+  resultList <- list(
+    custom_result_1 = list(result_id = 1L),
+    custom_result_2 = list(result_id = 2L)
   )
+  expect_no_error(x <- getValues(res, resultList))
+
+  # present names
   expect_identical(
-    c("estimate_name", "grouping_cdm_name", "grouping_cohort_name",
-      "grouping_time", "grouping_year", "settings_x", "tidy_columns",
-      "variable_name") |>
-      sort(),
-    sort(nm2)
+    sort(names(x)),
+    sort(c("custom_result_1_cdm_name", "custom_result_1_cohort_name",
+      "custom_result_1_age", "custom_result_1_sex",
+      "custom_result_1_variable_name", "custom_result_1_variable_level",
+      "custom_result_1_estimate_name", "custom_result_1_param",
+      "custom_result_1_x", "custom_result_2_cdm_name",
+      "custom_result_2_cohort_name", "custom_result_2_year",
+      "custom_result_2_variable_name", "custom_result_2_variable_level",
+      "custom_result_2_estimate_name", "custom_result_2_time",
+      "custom_result_2_x"))
   )
-  expect_identical(x$custom_result_1_grouping_cdm_name, "cdm1")
-  expect_identical(x$custom_result_1_grouping_cohort_name, "cohort_1")
-  expect_identical(x$custom_result_1_grouping_age, "<40")
-  expect_identical(x$custom_result_1_grouping_sex, "F")
-  expect_identical(x$custom_result_2_grouping_cdm_name, "cdm2")
-  expect_identical(x$custom_result_2_grouping_cohort_name, "cohort_1")
-  expect_identical(x$custom_result_2_grouping_year, "2010")
-  expect_identical(x$custom_result_2_grouping_time, "1")
+
+  # custom_result_1
+  expect_identical(x$custom_result_1_cdm_name, "cdm1")
+  expect_identical(x$custom_result_1_cohort_name, "cohort_1")
+  expect_identical(x$custom_result_1_age, "<40")
+  expect_identical(x$custom_result_1_sex, "F")
+  expect_identical(x$custom_result_1_variable_name, "number_subjects")
+  expect_identical(x$custom_result_1_variable_level, character())
+  expect_identical(x$custom_result_1_estimate_name, "count")
+  expect_identical(x$custom_result_1_param, "TRUE")
+  expect_identical(x$custom_result_1_x, "0")
+
+  # custom_result_2
+  expect_identical(x$custom_result_2_cdm_name, "cdm2")
+  expect_identical(x$custom_result_2_cohort_name, "cohort_1")
+  expect_identical(x$custom_result_2_year, "2010")
+  expect_identical(x$custom_result_2_variable_name, "number_subjects")
+  expect_identical(x$custom_result_2_variable_level, character())
+  expect_identical(x$custom_result_2_estimate_name, "count")
+  expect_identical(x$custom_result_2_time, "1")
+  expect_identical(x$custom_result_2_x, "1")
 })

@@ -581,7 +581,7 @@ characteristicsPanel <- list(
       title = "Table Characteristics",
       output_type = "gt",
       render = "<filtered_data> |>
-      CohortCharacteristics::tableCohortTiming(
+      CohortCharacteristics::tableCharacteristics(
       header = input$header,
       groupColumn = input$group_column,
       hide = input$hide
@@ -643,7 +643,7 @@ snapshotPanel <- list(
       title = "Table Characteristics",
       output_type = "gt",
       render = "<filtered_data> |>
-      OmopSkech::tableOmopSnapshot()",
+      OmopSketch::tableOmopSnapshot()",
       download = downloadGtTable("table_snapshot")
     )
   )
@@ -653,7 +653,7 @@ observationPeriodPanel <- list(
   title = "Observation period",
   icon = "eye",
   data = list(result_type = "summarise_observation_period"),
-  automatic_filters = c("cohort_name", "strata", "variable_name", "estimate_name"),
+  automatic_filters = c("observation_period_ordinal", "strata", "variable_name", "estimate_name"),
   filters = list(cdm_name = cdmFilter),
   content = list(
     tidy = tidyContent,
@@ -669,7 +669,7 @@ observationPeriodPanel <- list(
       output_type = "plot",
       render = "<filtered_data> |>
       OmopSketch::plotObservationPeriod(
-      variableName = input$variable
+      variableName = input$variable,
       plotType = input$plot_type,
       facet = input$facet,
       colour = input$colour
@@ -961,7 +961,7 @@ unmappedPanel <- list(
 )
 ## dose coverage ----
 doseCoveragePanel <- list(
-  title = "Incidence",
+  title = "Dose coverage",
   icon = "pills",
   data = list(result_type = "summarise_dose_coverage"),
   automatic_filters = c("ingredient_name", "unit", "route", "pattern_id", "variable_name", "estimate_name"),

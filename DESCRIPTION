@@ -40,7 +40,6 @@ Imports:
     DT,
     glue,
     gt,
-    lifecycle,
     markdown,
     omopgenerics (>= 0.4.0),
     purrr,

@@ -1,5 +1,3 @@
-
-
 backgroundCard <- function(fileName) {
   # read file
   content <- readLines(fileName)
@@ -243,9 +241,9 @@ tidyDT <- function(x,
 
   # order columns
   cols <- list(
-    'CDM name' = "cdm_name", 'Group' = groupColumns, 'Strata' = strataColumns,
-    'Additional' = additionalColumns, 'Settings' = settingsColumns,
-    'Variable' = c("variable_name", "variable_level")
+    "CDM name" = "cdm_name", "Group" = groupColumns, "Strata" = strataColumns,
+    "Additional" = additionalColumns, "Settings" = settingsColumns,
+    "Variable" = c("variable_name", "variable_level")
   ) |>
     purrr::map(\(x) x[x %in% columns]) |>
     purrr::compact()
@@ -289,7 +287,7 @@ filterResult <- function(result, resultId = NULL, resultType = NULL) {
     } else {
       res <- result |>
         omopgenerics::filterSettings(
-          .data$result_id %in% .env$resultId |
+          .data$result_id %in% .env$resultId &
             .data$result_type %in% .env$resultType
         )
     }
@@ -299,15 +297,24 @@ filterResult <- function(result, resultId = NULL, resultType = NULL) {
 getValues <- function(result, resultList) {
   resultList |>
     purrr::imap(\(x, nm) {
-      values <- result |>
-        filterResult(resultId = x$result_id, resultType = x$result_type) |>
+      res <- result |>
+        filterResult(resultId = x$result_id, resultType = x$result_type)
+      values <- res |>
         dplyr::select(!c("estimate_type", "estimate_value")) |>
         dplyr::distinct() |>
         omopgenerics::splitAll() |>
-        omopgenerics::addSettings() |>
         dplyr::select(!"result_id") |>
         as.list() |>
         purrr::map(\(x) sort(unique(x)))
+      valuesSettings <- omopgenerics::settings(res) |>
+        dplyr::select(!dplyr::any_of(c(
+          "result_id", "result_type", "package_name", "package_version",
+          "group", "strata", "additional", "min_cell_count"
+        ))) |>
+        as.list() |>
+        purrr::map(\(x) sort(unique(x[!is.na(x)]))) |>
+        purrr::compact()
+      values <- c(values, valuesSettings)
       names(values) <- paste0(nm, "_", names(values))
       values
     }) |>

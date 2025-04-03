@@ -17,7 +17,7 @@ uiStatic <- function(logo,
     "ui <- bslib::page_navbar(",
     c(
       writeTitle(title, logo),
-      writeTheme(theme),
+      paste0("theme = ", theme),
       createBackground(background),
       summaryTab(summary),
       panels,
