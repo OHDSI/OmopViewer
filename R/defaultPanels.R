@@ -50,6 +50,28 @@ panelDetailsFromResult <- function(result) {
   resultTypes <- unique(omopgenerics::settings(result)$result_type)
 
   # get the panels that are contained in the data
-  OmopViewer::omopViewerPanels |>
-    purrr::keep(\(x) x$data$result_type %in% resultTypes)
+  panels <- OmopViewer::omopViewerPanels |>
+    purrr::keep(\(x) {
+      if (is.null(x$data$result_type)) {
+        FALSE
+      } else {
+        x$data$result_type %in% resultTypes
+      }
+    })
+
+  # present default types
+  presentResultType <- panels |>
+    purrr::map_chr(\(x) x$data$result_type) |>
+    unname() |>
+    unique()
+  defaultPanels <- resultTypes[!resultTypes %in% presentResultType] |>
+    rlang::set_names() |>
+    purrr::map(\(x) {
+      panel <- OmopViewer::omopViewerPanels$default
+      panel$title <- formatTit(x)
+      panel$data$result_type <- x
+      panel
+    })
+
+  c(panels, defaultPanels)
 }

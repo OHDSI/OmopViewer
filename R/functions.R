@@ -187,7 +187,7 @@ simpleTable <- function(result,
     visOmopResults::formatEstimateValue(
       decimals = c(integer = 0, numeric = 1, percentage = 0)
     ) |>
-    visOmopResults::formatEstimateName(estimateNameFormat = formatEstimates) |>
+    visOmopResults::formatEstimateName(estimateName = formatEstimates) |>
     suppressMessages() |>
     visOmopResults::formatHeader(header = header) |>
     dplyr::select(!dplyr::any_of(c("estimate_type", hide)))
