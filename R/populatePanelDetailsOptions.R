@@ -270,3 +270,11 @@ populatecs <- function(filt, nm) {
   }
   filt
 }
+
+resultListFromPanelDetails <- function(panelDetails) {
+  panelDetails |>
+    purrr::map(\(x) {
+      list(result_id = x$data$result_id, result_type = x$data$result_type) |>
+        purrr::compact()
+    })
+}

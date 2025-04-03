@@ -31,8 +31,8 @@ validatePanelStructure <- function(panelStructure, panels, call = parent.frame()
   # inform missing
   missing <- panels[!panels %in% present]
   if (length(missing) > 0) {
-    cli::cli_inform("{.var {missing}} panels added to panelStucture.")
-    panelStructure <- c(panelStructure, as.list(panels))
+    cli::cli_warn(c( "!" = "{.var {missing}} panels added to panelStucture."))
+    panelStructure <- c(panelStructure, as.list(missing))
   }
 
   return(panelStructure)

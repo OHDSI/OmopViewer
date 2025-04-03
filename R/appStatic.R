@@ -271,11 +271,7 @@ createDirectory <- function(directory) {
 
 # preprocess file ----
 preprocessData <- function(panelDetails) {
-  resultList <- panelDetails |>
-    purrr::map(\(x) {
-      list(result_id = x$data$result_id, result_type = x$data$result_type) |>
-        purrr::compact()
-    })
+  resultList <- resultListFromPanelDetails(panelDetails)
   c(
     "# shiny is prepared to work with this resultList:",
     paste0("resultList <- ", writeResultList(resultList)),
