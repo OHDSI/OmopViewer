@@ -1271,7 +1271,24 @@ defaultPanel <- list(
   automatic_filters = c("group", "strata", "additional", "variable_name", "estimate_name", "settings"),
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent
+    tidy = tidyContent,
+    table = list(
+      title = "Table",
+      output_type = "gt",
+      render = "<filtered_data> |>
+      simpleTable(
+      header = input$header,
+      group = input$group_column,
+      hide = input$hide
+      )",
+      filters = rankTableButton(
+        none = c("cdm_name", "<group>", "<strata>", "<additional>", "<settings>", "variable_name", "variable_level", "estimate_name"),
+        header = character(),
+        groupColumn = character(),
+        hide = character()
+      ),
+      download = downloadGtTable("table")
+    )
   )
 )
 
