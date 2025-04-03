@@ -3,7 +3,7 @@
 \docType{data}
 \name{omopViewerResults}
 \alias{omopViewerResults}
-\title{Mock results obtained from `GiBleed` dataset. See}
+\title{Mock results obtained from `GiBleed` dataset.}
 \format{
 ## `omopViewerResults`
 A `summarised_result` object with 12,017 rows:
@@ -12,6 +12,6 @@ A `summarised_result` object with 12,017 rows:
 omopViewerResults
 }
 \description{
-Mock results obtained from `GiBleed` dataset. See
+Mock results obtained from `GiBleed` dataset.
 }
 \keyword{datasets}

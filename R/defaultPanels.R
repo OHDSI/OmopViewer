@@ -15,7 +15,7 @@ getPanel <- function(panelId) {
   # input check
   omopgenerics::assertChoice(panelId, choices = defaultPanels(), length = 1)
 
-  omopViewerPanels[[panelId]]
+  OmopViewer::omopViewerPanels[[panelId]]
 }
 
 #' Default panels defined in the package.
@@ -28,7 +28,7 @@ getPanel <- function(panelId) {
 #' defaultPanels()
 #'
 defaultPanels <- function() {
-  names(omopViewerPanels)
+  names(OmopViewer::omopViewerPanels)
 }
 
 #' Obtain default panel details from a `<summarised_result>` object.
@@ -50,6 +50,6 @@ panelDetailsFromResult <- function(result) {
   resultTypes <- unique(omopgenerics::settings(result)$result_type)
 
   # get the panels that are contained in the data
-  omopViewerPanels |>
+  OmopViewer::omopViewerPanels |>
     purrr::keep(\(x) x$data$result_type %in% resultTypes)
 }

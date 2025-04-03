@@ -1,5 +1,4 @@
 
-#' @export
 newOmopViewerPanel <- function(x) {
   omopgenerics::assertList(x)
   class(x) <- "omopviewer_panel"

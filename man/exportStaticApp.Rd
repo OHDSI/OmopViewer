@@ -12,7 +12,7 @@ exportStaticApp(
   background = TRUE,
   summary = TRUE,
   panelDetails = panelDetailsFromResult(result),
-  panelStructure = rlang::set_names(names(panelDetails)),
+  panelStructure = as.list(names(panelDetails)),
   theme = NULL,
   open = rlang::is_interactive()
 )

@@ -1,7 +1,7 @@
 populatePanelDetailsOptions <- function(panelDetails, result) {
   panelDetails |>
     # populate automatic filters
-    populateAutomaticFilters() |>
+    populateAutomaticFilters(result) |>
     # populate inputId and outputId names
     populateIds() |>
     # create filter and render function name
@@ -195,7 +195,7 @@ populateInputIds <- function(panelDetails) {
       pd
     })
 }
-populateAutomaticFilters <- function(panelDetails) {
+populateAutomaticFilters <- function(panelDetails, result) {
   panelDetails |>
     purrr::map(\(pd) {
       res <- result |>
