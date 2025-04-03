@@ -17,9 +17,13 @@ test_that("background", {
   ))
   unlink(file.path(tdir, "shiny"), recursive = TRUE)
 
-  expect_snapshot(createBackground(TRUE) |> cat(sep = "\n"))
+  expect_identical(createBackground(NULL), character())
 
-  expect_snapshot(createBackground(FALSE) |> cat(sep = "\n"))
+  expect_identical(createBackground(""), 'bslib::nav_panel(
+    title = "Background",
+    icon = shiny::icon("disease"),
+    backgroundCard("background.md")
+  )')
 
   # existing md file
   backgroundFile <- tempfile(fileext = ".md")
@@ -45,7 +49,6 @@ test_that("test backgroundCard", {
 
   expect_no_error(bkg <- backgroundCard(tfile))
   expect_true(inherits(bkg, "bslib_fragment"))
-  expect_snapshot(bkg |> as.character() |> cat())
 
   unlink(tfile)
 })

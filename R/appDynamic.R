@@ -11,6 +11,8 @@ launchDynamicApp <- function() {
 
 serverDynamic <- function(input, output, session) {
 
+  local(options(shiny.maxRequestSize = 10 * 1024^3))
+
   # reactive data
   panels <- shiny::reactiveVal(list())
   workingData <- shiny::reactiveVal(list())
@@ -62,8 +64,7 @@ serverDynamic <- function(input, output, session) {
     panelDetails <- panelDetailsFromResult(dataToUpload)
 
     # create the new workingData()
-    set <- omopgenerics::settings(dataToUpload)
-    resultList <- purrr::map(panelDetails, \(x) x$result_id)
+    resultList <- resultListFromPanelDetails(panelDetails)
     workingData(prepareResult(dataToUpload, resultList))
 
     # add server modules
@@ -166,14 +167,18 @@ createDynamicUi <- function(panels, summary, data, theme) {
 }
 panelsUi <- function(result) {
   # create panelDetails
-  panelDetails <- addFilterNames(panelDetailsFromResult(result), result)
+  panelDetails <- panelDetailsFromResult(result) |>
+    populatePanelDetailsOptions(result)
   # create panels
-  panels <- createUiPanels(panelDetails)
+  panels <- writeUiPanels(panelDetails)
 
   # resultList from panelDetails
-  resultList <- purrr::map(panelDetails, \(x) x$result_id)
+  resultList <- resultListFromPanelDetails(panelDetails)
+
   # filterValues from resultList
-  filterValues <- defaultFilterValues(result, resultList)
+  values <- getValues(result, resultList)
+  choices <- values
+  selected <- values
 
   # evaluate the panels
   purrr::map(panels, \(x) rlang::eval_tidy(rlang::parse_expr(x)))

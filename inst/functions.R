@@ -1,79 +1,3 @@
-filterData <- function(result,
-                       prefix,
-                       input) {
-  result <- result[[prefix]]
-
-  if (nrow(result) == 0) {
-    return(omopgenerics::emptySummarisedResult())
-  }
-
-  if (length(input) == 0) inputs <- character() else inputs <- names(input)
-
-  # subset to inputs of interest
-  inputs <- inputs[startsWith(inputs, prefix)]
-
-  # filter settings
-  set <- omopgenerics::settings(result)
-  setPrefix <- paste0(c(prefix, "settings_"), collapse = "_")
-  toFilter <- inputs[startsWith(inputs, setPrefix)]
-  nms <- substr(toFilter, nchar(setPrefix) + 1, nchar(toFilter))
-  for (nm in nms) {
-    if (nm %in% colnames(set)) {
-      set <- set |>
-        dplyr::filter(as.character(.data[[nm]]) %in% input[[paste0(setPrefix, nm)]])
-    }
-  }
-  result <- result |>
-    dplyr::filter(.data$result_id %in% set$result_id)
-
-  if (nrow(result) == 0) {
-    return(omopgenerics::emptySummarisedResult())
-  }
-
-  # filter grouping
-  cols <- c(
-    "cdm_name", "group_name", "group_level", "strata_name", "strata_level",
-    "additional_name", "additional_level"
-  )
-  groupCols <- visOmopResults::groupColumns(result)
-  strataCols <- visOmopResults::strataColumns(result)
-  additionalCols <- visOmopResults::additionalColumns(result)
-  group <- result |>
-    dplyr::select(dplyr::all_of(cols)) |>
-    dplyr::distinct() |>
-    visOmopResults::splitAll()
-  groupPrefix <- paste0(c(prefix, "grouping_"), collapse = "_")
-  toFilter <- inputs[startsWith(inputs, groupPrefix)]
-  nms <- substr(toFilter, nchar(groupPrefix) + 1, nchar(toFilter))
-  for (nm in nms) {
-    if (nm %in% colnames(group)) {
-      group <- group |>
-        dplyr::filter(.data[[nm]] %in% input[[paste0(groupPrefix, nm)]])
-    }
-  }
-  result <- result |>
-    dplyr::inner_join(
-      group |>
-        visOmopResults::uniteGroup(cols = groupCols) |>
-        visOmopResults::uniteStrata(cols = strataCols) |>
-        visOmopResults::uniteAdditional(cols = additionalCols),
-      by = cols
-    )
-
-  # filter variables and estimates
-  nms <- c("variable_name", "estimate_name")
-  nms <- nms[paste0(prefix, "_", nms) %in% inputs]
-  for (nm in nms) {
-    result <- result |>
-      dplyr::filter(.data[[nm]] %in% input[[paste0(prefix, "_", nm)]])
-  }
-
-  # return a summarised_result
-  result <- result |>
-    omopgenerics::newSummarisedResult(settings = set)
-
-  return(result)
-}
 backgroundCard <- function(fileName) {
   # read file
   content <- readLines(fileName)
@@ -280,71 +204,119 @@ simpleTable <- function(result,
 prepareResult <- function(result, resultList) {
   resultList |>
     purrr::map(\(x) {
-      set <- omopgenerics::settings(result) |>
-        dplyr::filter(.data$result_id %in% .env$x)
-      cols <- set |>
-        as.list() |>
-        purrr::keep(\(x) all(is.na(unique(x)))) |>
-        names()
-      set <- set |>
-        dplyr::mutate(dplyr::across(
-          !dplyr::all_of(c(cols, "result_id")), \(x) dplyr::coalesce(x, "NA")
-        ))
-      result |>
-        dplyr::filter(.data$result_id %in% .env$x) |>
-        omopgenerics::newSummarisedResult(settings = set)
+      if (is.numeric(x)) {
+        resultId <- x
+        resultType <- NULL
+      } else if (is.character(x)) {
+        resultId <- NULL
+        resultType <- x
+      } else {
+        resultId <- x$result_id
+        resultType <- x$result_type
+      }
+      filterResult(result, resultId = resultId, resultType = resultType)
     })
 }
-defaultFilterValues <- function(result, resultList) {
+tidyDT <- function(x,
+                   columns,
+                   pivotEstimates) {
+  groupColumns <- omopgenerics::groupColumns(x)
+  strataColumns <- omopgenerics::strataColumns(x)
+  additionalColumns <- omopgenerics::additionalColumns(x)
+  settingsColumns <- omopgenerics::settingsColumns(x)
+
+  # split and add settings
+  x <- x |>
+    omopgenerics::splitAll() |>
+    omopgenerics::addSettings()
+
+  # estimate columns
+  if (pivotEstimates) {
+    estCols <- unique(x$estimate_name)
+    x <- x |>
+      omopgenerics::pivotEstimates()
+  } else {
+    estCols <- c("estimate_name", "estimate_type", "estimate_value")
+  }
+
+  # order columns
+  cols <- list(
+    "CDM name" = "cdm_name", "Group" = groupColumns, "Strata" = strataColumns,
+    "Additional" = additionalColumns, "Settings" = settingsColumns,
+    "Variable" = c("variable_name", "variable_level")
+  ) |>
+    purrr::map(\(x) x[x %in% columns]) |>
+    purrr::compact()
+  cols[["Estimates"]] <- estCols
+  x <- x |>
+    dplyr::select(dplyr::all_of(unname(unlist(cols))))
+
+  # prepare the header
+  container <- shiny::tags$table(
+    class = "display",
+    shiny::tags$thead(
+      purrr::imap(cols, \(x, nm) shiny::tags$th(colspan = length(x), nm)) |>
+        shiny::tags$tr(),
+      shiny::tags$tr(purrr::map(unlist(cols), shiny::tags$th))
+    )
+  )
+
+  # create DT table
+  DT::datatable(
+    data = x,
+    filter = "top",
+    container = container,
+    rownames = FALSE,
+    options = list(searching = FALSE)
+  )
+}
+filterResult <- function(result, resultId = NULL, resultType = NULL) {
+  resultId <- unique(resultId)
+  resultType <- unique(resultType)
+  if (is.null(resultType)) {
+    if (is.null(resultId)) {
+      res <- omopgenerics::emptySummarisedResult()
+    } else {
+      res <- result |>
+        omopgenerics::filterSettings(.data$result_id %in% .env$resultId)
+    }
+  } else {
+    if (is.null(resultId)) {
+      res <- result |>
+        omopgenerics::filterSettings(.data$result_type %in% .env$resultType)
+    } else {
+      res <- result |>
+        omopgenerics::filterSettings(
+          .data$result_id %in% .env$resultId &
+            .data$result_type %in% .env$resultType
+        )
+    }
+  }
+  return(res)
+}
+getValues <- function(result, resultList) {
   resultList |>
     purrr::imap(\(x, nm) {
-      sOpts <- omopgenerics::settings(result) |>
-        dplyr::filter(.data$result_id %in% .env$x) |>
+      res <- result |>
+        filterResult(resultId = x$result_id, resultType = x$result_type)
+      values <- res |>
+        dplyr::select(!c("estimate_type", "estimate_value")) |>
+        dplyr::distinct() |>
+        omopgenerics::splitAll() |>
+        dplyr::select(!"result_id") |>
+        as.list() |>
+        purrr::map(\(x) sort(unique(x)))
+      valuesSettings <- omopgenerics::settings(res) |>
         dplyr::select(!dplyr::any_of(c(
           "result_id", "result_type", "package_name", "package_version",
-          "strata", "group", "additional", "min_cell_count"
+          "group", "strata", "additional", "min_cell_count"
         ))) |>
         as.list() |>
-        purrr::map(\(x) {
-          x <- unique(x)
-          if (all(is.na(x))) {
-            x <- character()
-          } else {
-            x[is.na(x)] <- "NA"
-          }
-          x
-        }) |>
+        purrr::map(\(x) sort(unique(x[!is.na(x)]))) |>
         purrr::compact()
-      names(sOpts) <- glue::glue("settings_{names(sOpts)}")
-      res <- result |>
-        dplyr::filter(.data$result_id %in% .env$x)
-
-      # omopgenerics 0.4.1 should fix this
-      attr(res, "settings") <- attr(res, "settings") |>
-        dplyr::filter(.data$result_id %in% .env$x)
-
-      gOpts <- res |>
-        dplyr::select(c(
-          "cdm_name", "group_name", "group_level", "strata_name",
-          "strata_level", "additional_name", "additional_level"
-        )) |>
-        dplyr::distinct() |>
-        visOmopResults::splitAll() |>
-        as.list() |>
-        purrr::map(unique)
-      names(gOpts) <- glue::glue("grouping_{names(gOpts)}")
-      veOpts <- res |>
-        dplyr::select("variable_name", "estimate_name") |>
-        as.list() |>
-        purrr::map(unique)
-      res <- c(sOpts, gOpts, veOpts) |>
-        purrr::compact()
-      tidyColumns <- names(res)
-      id <- startsWith(tidyColumns, "settings_") | startsWith(tidyColumns, "grouping_")
-      tidyColumns[id] <- substr(tidyColumns[id], 10, nchar(tidyColumns[id]))
-      res$tidy_columns <- tidyColumns
-      names(res) <- glue::glue("{nm}_{names(res)}")
-      return(res)
+      values <- c(values, valuesSettings)
+      names(values) <- paste0(nm, "_", names(values))
+      values
     }) |>
     purrr::flatten()
 }

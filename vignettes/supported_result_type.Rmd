@@ -1,5 +1,5 @@
 ---
-title: "Plot and tables in OmopViewer"
+title: "Tabs definned in OmopViewer"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{supported_result_type}
@@ -14,28 +14,28 @@ knitr::opts_chunk$set(
 )
 ```
 
-The **OmopViewer** package will display by default the 'tidy' tab that will allow the user to explore the data. With the tidy tab there will be displayed different output tabs. By default a table created with `OmopViewer::omopViewerTable()` will be displayed, but some packages have some extra output tabs configured. In the following table you can see the `result_type` that are configured and which are the visualisations.
+```{r, echo=FALSE}
+library(OmopViewer)
+```
 
-```{r, echo = FALSE}
-OmopViewer:::omopViewerOutput |>
-  dplyr::inner_join(
-    OmopViewer:::omopViewerTabs, by = "result_tab_id"
-  ) |>
-  tidyr::separate_wider_delim(
-    cols = "output_function", 
-    delim = "::", 
-    names = c("package", "output_function")
-  ) |>
-  dplyr::select(
-    "package", "Result type" = "result_type", "Function" = "output_function", 
-    "Output type" = "output_type") |>
-  visOmopResults::formatTable(
-    groupColumn = "package", merge = "Result type")
+The **OmopViewer** package generates shiny apps from predefined configurations, you can check the existent panels using the `defaultPanels()` function:
+
+```{r}
+defaultPanels()
+```
+
+You can check the details of a panel using `getPanel()` function:
+
+```{r}
+getPanel("incidence")
+```
+
+The exported object *omopViewerPanels* contains all the defined panels in the package:
+
+```{r}
+omopViewerPanels
 ```
 
 ## Note for developers
 
-If you wish to configure a new `result_type` this can be done editing the internal data: *omopViewerTabs*, *omopViewerOutput* and *omopViewerOutputArguments* in file [internalData.R](https://github.com/OHDSI/omopViewer/blob/main/data-raw/internalData.R). Please feel free to submit your PR.
-
-<!-- :::{callout} -->
-<!-- ::: -->
+If you wish to configure a new **Tab** this can be done editing the *omopViewerPanels* object defined in in file [panels.R](https://github.com/OHDSI/omopViewer/blob/main/data-raw/panels.R). Please feel free to submit your PR.

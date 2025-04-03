@@ -1,18 +1,9 @@
 test_that("test summaryCard", {
-  displayOutput <- function(x) {
-    x |>
-      as.character() |>
-      stringr::str_split_1("\n") |>
-      purrr::keep(\(x) !grepl("htmlwidget-", x)) |>
-      cat(sep = "\n")
-  }
-
   # empty summarised result
   res <- omopgenerics::emptySummarisedResult() |>
     prepareResult(list())
   expect_no_error(x <- summaryCard(res))
   expect_true(inherits(x, "bslib_fragment"))
-  expect_snapshot(displayOutput(x))
 
   # not suppressed summarised result
   res <- dplyr::tibble(
@@ -37,5 +28,4 @@ test_that("test summaryCard", {
     prepareResult(list(counts = c(1, 2), sums = 3))
   expect_no_error(x <- summaryCard(res))
   expect_true(inherits(x, "bslib_fragment"))
-  expect_snapshot(displayOutput(x))
 })

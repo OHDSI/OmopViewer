@@ -1,6 +1,6 @@
 
 validateTheme <- function(theme, call = parent.frame()) {
-  if (is.null(theme)) theme <- 'bslib::bs_theme()'
+  if (is.null(theme)) theme <- omopViewerThemes$default
   keys <- names(omopViewerThemes)
   msg <- paste0(
     "theme must be a 'bslib::bs_theme()' character or a choice between: ",
@@ -19,8 +19,4 @@ validateTheme <- function(theme, call = parent.frame()) {
     }
   }
   return(theme)
-}
-pageTheme <- function(theme) {
-  if (is.null(theme)) return(character())
-  return(paste0('theme = ', theme))
 }
