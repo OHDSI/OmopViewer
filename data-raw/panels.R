@@ -595,7 +595,7 @@ characteristicsPanel <- list(
       download = downloadGtTable("table_characteristics")
     ),
     plot = list(
-      title = "Plot Timing",
+      title = "Plot Characteristics",
       output_type = "plot",
       render = "<filtered_data> |>
       CohortCharacteristics::plotCharacteristics(
@@ -640,7 +640,7 @@ snapshotPanel <- list(
   content = list(
     tidy = tidyContent,
     table = list(
-      title = "Table Characteristics",
+      title = "Table Snapshot",
       output_type = "gt",
       render = "<filtered_data> |>
       OmopSketch::tableOmopSnapshot()",
@@ -783,7 +783,7 @@ missingPanel <- list(
 )
 ## summarise in observation ----
 inObservationPanel <- list(
-  title = "Missing data",
+  title = "In Observation",
   icon = "explosion",
   data = list(result_type = "summarise_in_observation"),
   automatic_filters = c("group", "strata", "strata", "settings", "variable_name", "estimate_name"),
@@ -1294,17 +1294,6 @@ defaultPanel <- list(
 
 # all panels ----
 omopViewerPanels <- list(
-  # IncidencePrevalence
-  incidence = incidencePanel,
-  incidence_attrition = incidenceAttritionPanel,
-  prevalence = prevalencePanel,
-  prevalence_attrition = prevalenceAttritionPanel,
-  # CohortCharacteristics
-  summarise_cohort_overlap = cohortOverlapPanel,
-  summarise_cohort_count = cohortCountPanel,
-  summarise_cohort_attrition = cohortAttritionPanel,
-  summarise_cohort_timing = cohortTimingPanel,
-  summarise_characteristics = characteristicsPanel,
   # OmopSketch
   summarise_omop_snapshot = snapshotPanel,
   summarise_observation_period = observationPeriodPanel,
@@ -1317,7 +1306,18 @@ omopViewerPanels <- list(
   cohort_code_use = cohortCodeUsePanel,
   code_use = codeUsePanel,
   achilles_code_use = achillesCodeUsePanel,
-  unmpaped_codes = unmappedPanel,
+  unmapped_codes = unmappedPanel,
+  # CohortCharacteristics
+  summarise_cohort_overlap = cohortOverlapPanel,
+  summarise_cohort_count = cohortCountPanel,
+  summarise_cohort_attrition = cohortAttritionPanel,
+  summarise_cohort_timing = cohortTimingPanel,
+  summarise_characteristics = characteristicsPanel,
+  # IncidencePrevalence
+  incidence = incidencePanel,
+  incidence_attrition = incidenceAttritionPanel,
+  prevalence = prevalencePanel,
+  prevalence_attrition = prevalenceAttritionPanel,
   # DrugUtilisation
   summarise_dose_coverage = doseCoveragePanel,
   summarise_proportion_of_patients_covered = ppcPanel,

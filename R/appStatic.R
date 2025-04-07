@@ -86,7 +86,7 @@ exportStaticApp <- function(result,
   )
 
   # create server
-  server <- serverStatic(panelDetails)
+  server <- serverStatic(panelDetails, summary)
 
   # functions to copy
   functions <- readLines(system.file("functions.R", package = "OmopViewer"))

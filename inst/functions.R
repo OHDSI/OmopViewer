@@ -57,103 +57,152 @@ backgroundCard <- function(fileName) {
 
   do.call(bslib::card, arguments)
 }
-summaryCard <- function(result) {
-  nPanels <- length(result)
-
-  # bind everything back
-  result <- result |>
-    purrr::compact() |>
-    omopgenerics::bind() |>
-    suppressMessages()
-  if (is.null(result)) {
-    result <- omopgenerics::emptySummarisedResult()
-  }
-  sets <- omopgenerics::settings(result)
-
-  # result overview
-  nResult <- format(nrow(result), big.mark = ",")
-  nSets <- format(nrow(sets), big.mark = ",")
-  nResultType <- format(length(unique(sets$result_type)), big.mark = ",")
-  cdmNames <- unique(result$cdm_name)
-  nCdm <- format(length(cdmNames), big.mark = ",")
-  cdms <- if (length(cdmNames) > 0) {
-    paste0(": ", paste0("*", cdmNames, "*", collapse = ", "))
-  } else {
-    ""
-  }
-  overview <- c(
-    "### Result overview",
-    "- Results contain **{nResult}** rows with **{nSets}** different result_id." |>
-      glue::glue(),
-    "- Results contain **{nPanels}** panels with **{nResultType}** diferent result_type." |>
-      glue::glue(),
-    "- Results contain data from **{nCdm}** different cdm objects{cdms}." |>
-      glue::glue()
-  )
-
-  # packages versions
-  packageVersions <- sets |>
+summaryCdmName <- function(data) {
+  x <- data |>
+    purrr::map(\(x) {
+      x |>
+        dplyr::group_by(.data$cdm_name) |>
+        dplyr::summarise(number_rows = dplyr::n(), .groups = "drop")
+    }) |>
+    dplyr::bind_rows() |>
+    dplyr::group_by(.data$cdm_name) |>
+    dplyr::summarise(
+      number_rows = as.integer(sum(.data$number_rows)),
+      .groups = "drop"
+    ) |>
+    dplyr::mutate(label = paste0(.data$cdm_name, " (", .data$number_rows, ")")) |>
+    dplyr::pull("label") |>
+    rlang::set_names() |>
+    as.list()
+  list("<b>CDM names</b>" = x)
+}
+summaryPackages <- function(data) {
+  x <- data |>
+    purrr::map(\(x) {
+      x |>
+        omopgenerics::addSettings(
+          settingsColumn = c("package_name", "package_version")
+        ) |>
+        dplyr::group_by(.data$package_name, .data$package_version) |>
+        dplyr::summarise(number_rows = dplyr::n(), .groups = "drop") |>
+        dplyr::right_join(
+          omopgenerics::settings(x) |>
+            dplyr::select(c("package_name", "package_version")) |>
+            dplyr::distinct(),
+          by = c("package_name", "package_version")
+        ) |>
+        dplyr::mutate(number_rows = dplyr::coalesce(.data$number_rows, 0))
+    }) |>
+    dplyr::bind_rows() |>
     dplyr::group_by(.data$package_name, .data$package_version) |>
-    dplyr::summarise(result_ids = dplyr::n(), .groups = "drop") |>
+    dplyr::summarise(
+      number_rows = as.integer(sum(.data$number_rows)),
+      .groups = "drop"
+    ) |>
     dplyr::group_by(.data$package_name) |>
-    dplyr::mutate(
-      n = dplyr::n_distinct(.data$package_version),
-      group = paste(
-        dplyr::if_else(.data$n > 1, "Inconsistent", "Consistent"),
-        "package versions"
-      )
-    ) |>
-    dplyr::ungroup() |>
-    dplyr::arrange(
-      dplyr::desc(.data$n), .data$package_name, .data$package_version
-    ) |>
-    dplyr::mutate(
-      message = paste0(
-        "**", .data$package_name, "** ", .data$package_version, " in ",
-        .data$result_ids, " result id(s)."
-      ),
-      message = dplyr::if_else(
-        .data$n > 1,
-        paste0('- <span style="color:red">', .data$message, "</span>"),
-        paste0('- <span style="color:green">', .data$message, "</span>"),
-      )
-    ) |>
-    dplyr::group_by(.data$group) |>
     dplyr::group_split() |>
-    purrr::map(\(x) c(unique(x$group), x$message)) |>
-    purrr::flatten_chr()
-
-  # result suppression
-  resultSuppression <- sets |>
-    dplyr::select("result_id", "min_cell_count") |>
-    dplyr::mutate(min_cell_count = dplyr::if_else(
-      as.integer(.data$min_cell_count) <= 1L, "0", .data$min_cell_count
-    )) |>
+    as.list()
+  lab <- "<b>"
+  names(x) <- x |>
+    purrr::map_chr(\(x) {
+      if (nrow(x) > 1) {
+        lab <<- "<b style='color:red'>"
+        paste0("<b style='color:red'>", unique(x$package_name), " (Multiple versions!) </b>")
+      } else {
+        paste0(
+          x$package_name, " (version = ", x$package_version,
+          "; number records = ", x$number_rows,")"
+        )
+      }
+    })
+  x <- x |>
+    purrr::map(\(x) {
+      if (nrow(x) > 1) {
+        paste0(
+          "version = ", x$package_version, "; number records = ",
+          x$number_rows
+        ) |>
+          rlang::set_names() |>
+          as.list()
+      } else {
+        x$package_name
+      }
+    })
+  list(x) |>
+    rlang::set_names(nm = paste0(lab, "Packages versions</b>"))
+}
+summaryMinCellCount <- function(data) {
+  x <- data |>
+    purrr::map(\(x) {
+      x |>
+        omopgenerics::addSettings(settingsColumn = "min_cell_count") |>
+        dplyr::group_by(.data$min_cell_count) |>
+        dplyr::summarise(number_rows = dplyr::n(), .groups = "drop") |>
+        dplyr::right_join(
+          omopgenerics::settings(x) |>
+            dplyr::select("min_cell_count") |>
+            dplyr::distinct(),
+          by = "min_cell_count"
+        ) |>
+        dplyr::mutate(number_rows = dplyr::coalesce(.data$number_rows, 0))
+    }) |>
+    dplyr::bind_rows() |>
     dplyr::group_by(.data$min_cell_count) |>
-    dplyr::tally() |>
+    dplyr::summarise(
+      number_rows = as.integer(sum(.data$number_rows)),
+      .groups = "drop"
+    ) |>
+    dplyr::mutate(min_cell_count = as.integer(.data$min_cell_count)) |>
     dplyr::arrange(.data$min_cell_count) |>
     dplyr::mutate(
-      message = paste0("**", .data$n, "** ", dplyr::if_else(
-        .data$min_cell_count == "0",
-        "not suppressed results",
-        paste0("results suppressed at minCellCount = `", .data$min_cell_count, "`.")
-      )),
-      message = dplyr::if_else(
-        .data$min_cell_count == "0",
-        paste0('- <span style="color:red">', .data$message, "</span>"),
-        paste0('- <span style="color:green">', .data$message, "</span>"),
-      )
+      label = dplyr::if_else(
+        .data$min_cell_count == 0L,
+        "<b style='color:red'>Not censored</b>",
+        paste0("Min cell count = ", .data$min_cell_count)
+      ),
+      label = paste0(.data$label, " (", .data$number_rows, ")")
     ) |>
-    dplyr::pull("message")
-
-  bslib::card(
-    bslib::card_header("Results summary"),
-    shiny::markdown(c(
-      overview, "", " ### Package versions", packageVersions, "",
-      "### Result suppression", resultSuppression, "", "### Explore settings"
-    )),
-    DT::datatable(sets, options = list(scrollX = TRUE), filter = "top", rownames = FALSE)
-  )
+    dplyr::pull("label") |>
+    rlang::set_names() |>
+    as.list()
+  lab <- ifelse(any(grepl("Not censored", unlist(x))), "<b style='color:red'>", "<b>")
+  list(x) |>
+    rlang::set_names(nm = paste0(lab, "Min Cell Count Suppression</b>"))
+}
+summaryPanels <- function(data) {
+  x <- data |>
+    purrr::map(\(x) {
+      if (nrow(x) == 0) {
+        res <- omopgenerics::settings(x) |>
+          dplyr::select(!c(
+            "result_id", "package_name", "package_version", "group", "strata",
+            "additional", "min_cell_count"
+          )) |>
+          dplyr::relocate("result_type") |>
+          as.list() |>
+          purrr::map(\(x) sort(unique(x)))
+      } else {
+        sets <- c("result_type", omopgenerics::settingsColumns(x))
+        res <- x |>
+          omopgenerics::addSettings(settingsColumn = sets) |>
+          dplyr::relocate(dplyr::all_of(sets)) |>
+          omopgenerics::splitAll() |>
+          dplyr::select(!c(
+            "variable_name", "variable_level", "estimate_name",
+            "estimate_type", "estimate_value", "result_id"
+          )) |>
+          as.list() |>
+          purrr::map(\(values) {
+            values <- as.list(table(values))
+            paste0(names(values), " (number rows = ", values, ")") |>
+              rlang::set_names() |>
+              as.list()
+          })
+      }
+      res
+    })
+  list(x) |>
+    rlang::set_names(nm = "<b>Panels</b>")
 }
 simpleTable <- function(result,
                         header = character(),
@@ -229,6 +278,10 @@ tidyDT <- function(x,
   x <- x |>
     omopgenerics::splitAll() |>
     omopgenerics::addSettings()
+
+  # remove density
+  x <- x |>
+    dplyr::filter(!.data$estimate_name %in% c("density_x", "density_y"))
 
   # estimate columns
   if (pivotEstimates) {

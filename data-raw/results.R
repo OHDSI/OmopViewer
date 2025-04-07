@@ -1,5 +1,5 @@
 # default set of results ----
-dbName <- "GiBleed"
+dbName <- "synthea-covid19-200k"
 con <- duckdb::dbConnect(
   duckdb::duckdb(), CDMConnector::eunomiaDir(datasetName = dbName)
 )
@@ -7,36 +7,73 @@ cdm <- CDMConnector::cdmFromCon(
   con = con, cdmSchema = "main", writeSchema = "main", cdmName = dbName
 )
 
+# correct cdm
+cdm <- OmopConstructor::buildAchillesTables(cdm)
+cdm$drug_exposure <- cdm$drug_exposure |>
+  dplyr::mutate(
+    quantity = random(),
+    quantity = dplyr::case_when(
+      .data$quantity >= 0   & .data$quantity < 0.2 ~ 1,
+      .data$quantity >= 0.2 & .data$quantity < 0.4 ~ 2,
+      .data$quantity >= 0.4 & .data$quantity < 0.6 ~ 7,
+      .data$quantity >= 0.6 & .data$quantity < 0.8 ~ 30,
+      .data$quantity >= 0.8 & .data$quantity < 1   ~ 50
+    )
+  ) |>
+  dplyr::compute(name = "drug_exposure")
+
+# create cohorts
+codelistConditions <- list(
+  coronary_arteriosclerosis = 381316L,
+  covid_19 = 37311061L,
+  fever = 437663L,
+  cough = 254761L,
+  fatigue = 4223659L,
+  respiratory_distress = 4158346L
+)
+cdm$conditions <- CohortConstructor::conceptCohort(
+  cdm = cdm, conceptSet = codelistConditions, name = "conditions"
+)
 codelist <- CodelistGenerator::getDrugIngredientCodes(
   cdm = cdm, name = "acetaminophen", nameStyle = "{concept_name}"
 )
-codelistConditions <- list(
-  viral_sinusitis = 40481087L,
-  acute_viral_pharyngitis = 4112343L,
-  acute_bronchitis = 260139L,
-  otitis_media = 372328L,
-  osteoarthritis = 80180L
-)
-
-snapshot <- OmopSketch::summariseOmopSnapshot(cdm = cdm)
-
 cdm <- DrugUtilisation::generateDrugUtilisationCohortSet(
   cdm = cdm, name = "acetaminophen", conceptSet = codelist
 )
 cdm$target <- cdm$acetaminophen |>
   DrugUtilisation::requirePriorDrugWashout(days = 365, name = "target") |>
   DrugUtilisation::requireObservationBeforeDrug(days = 365)
-
-cdm$conditions <- CohortConstructor::conceptCohort(
-  cdm = cdm, name = "conditions", conceptSet = codelistConditions
+cdm <- DrugUtilisation::generateIngredientCohortSet(
+  cdm = cdm,
+  name = "alternative",
+  ingredient = c("warfarin", "simvastatin", "enoxaparin", "verapamil")
 )
 
+# OmopSketch
+snapshot <- OmopSketch::summariseOmopSnapshot(cdm = cdm)
+obsPeriod <- OmopSketch::summariseObservationPeriod(cdm$observation_period)
+clinicalTables <- OmopSketch::summariseClinicalRecords(
+  cdm = cdm, omopTableName = c("drug_exposure", "condition_occurrence")
+)
+missingData <- OmopSketch::summariseMissingData(cdm = cdm, omopTableName = c("drug_exposure", "condition_occurrence"))
+recordCount <- OmopSketch::summariseRecordCount(
+  cdm = cdm, omopTableName = c("drug_exposure", "condition_occurrence"),
+  interval = "years"
+)
+inObservation <- OmopSketch::summariseInObservation(cdm$observation_period, interval = "years")
+
+# CodelistGenerator
+orphanCodes <- CodelistGenerator::summariseOrphanCodes(codelistConditions, cdm = cdm)
+cohortCodeUse <- CodelistGenerator::summariseCohortCodeUse(codelistConditions, cdm = cdm, "conditions")
+codeUse <- CodelistGenerator::summariseCodeUse(codelistConditions, cdm = cdm)
+achillesUse <- CodelistGenerator::summariseAchillesCodeUse(codelistConditions, cdm = cdm)
+unmapped <- CodelistGenerator::summariseUnmappedCodes(codelistConditions, cdm = cdm)
+
+# CohortCharacteristics
 overlap <- CohortCharacteristics::summariseCohortOverlap(cdm$conditions)
 timing <- CohortCharacteristics::summariseCohortTiming(cdm$conditions)
 counts <- CohortCharacteristics::summariseCohortCount(cdm$target)
-counts2 <- CohortCharacteristics::summariseCohortCount(cdm$conditions)
 attrition <- CohortCharacteristics::summariseCohortAttrition(cdm$target)
-attrition2 <- CohortCharacteristics::summariseCohortAttrition(cdm$conditions)
 characteristics <- cdm$target |>
   CohortCharacteristics::summariseCharacteristics(
     cohortIntersectFlag = list(
@@ -45,7 +82,8 @@ characteristics <- cdm$target |>
       )
     )
   )
-treatmentPersistence <- DrugUtilisation::summariseProportionOfPatientsCovered(cdm$target)
+
+# IncidencePrevalence
 cdm <- IncidencePrevalence::generateDenominatorCohortSet(
   cdm = cdm,
   name = "denominator",
@@ -65,13 +103,41 @@ pointPrevalence <- IncidencePrevalence::estimatePointPrevalence(
   interval = "years"
 )
 
-op <- OmopSketch::summariseObservationPeriod(cdm$observation_period)
-
+# DrugUtilisation
+treatmentPersistence <- DrugUtilisation::summariseProportionOfPatientsCovered(cdm$target)
 doseCoverage <- DrugUtilisation::summariseDoseCoverage(cdm = cdm, ingredientConceptId = 1125315)
+indication <- DrugUtilisation::summariseIndication(
+  cdm$acetaminophen,
+  indicationCohortName = "conditions",
+  indicationWindow = list(c(-30, 0), c(0, 0)),
+  unknownIndicationTable = "condition_occurrence",
+  mutuallyExclusive = FALSE
+)
+drugUtilisation <- DrugUtilisation::summariseDrugUtilisation(
+  cdm$acetaminophen, ingredientConceptId = 1125315
+)
+drugRestart <- cdm$acetaminophen |>
+  DrugUtilisation::summariseDrugRestart(
+    switchCohortTable = "alternative",
+    followUpDays = c(180, 365, Inf)
+  )
+treatments <- cdm$acetaminophen |>
+  DrugUtilisation::summariseTreatment(
+    window = list(c(-365, -181), c(-180, -1), c(0, 0), c(1, 180), c(181, 365)),
+    treatmentCohortName = "alternative"
+  )
 
 omopViewerResults <- omopgenerics::bind(
-  snapshot, op, overlap, counts, counts2, attrition, attrition2, characteristics,
-  timing, treatmentPersistence, incidence, pointPrevalence, doseCoverage
+  # OmopSketch
+  snapshot, obsPeriod, clinicalTables, missingData, recordCount, inObservation,
+  # CodelistGenerator
+  orphanCodes, cohortCodeUse, codeUse, achillesUse, unmapped,
+  # CohortCharacteristics
+  overlap, counts, attrition, characteristics, timing,
+  # IncidencePrevalence
+  incidence, pointPrevalence,
+  # DrugUtilisation
+  treatmentPersistence, doseCoverage, indication, drugUtilisation, drugRestart, treatments
 ) |>
   omopgenerics::suppress()
 
