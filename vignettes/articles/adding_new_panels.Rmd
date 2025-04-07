@@ -17,3 +17,7 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(OmopViewer)
 ```
+
+## Note for developers
+
+If you wish to configure a new **Tab** this can be done editing the *omopViewerPanels* object defined in in file [panels.R](https://github.com/OHDSI/omopViewer/blob/main/data-raw/panels.R). Please feel free to submit your PR.

@@ -1,5 +1,5 @@
 ---
-title: "Tabs definned in OmopViewer"
+title: "Panels definned in OmopViewer"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{configured_panels}
@@ -36,6 +36,17 @@ The exported object *omopViewerPanels* contains all the defined panels in the pa
 omopViewerPanels
 ```
 
-## Note for developers
+### Panel details stucture
 
-If you wish to configure a new **Tab** this can be done editing the *omopViewerPanels* object defined in in file [panels.R](https://github.com/OHDSI/omopViewer/blob/main/data-raw/panels.R). Please feel free to submit your PR.
+Panel details print shows:
+
+- Title: title of the panel.
+- Icon: the icon of the panel (see <https://fontawesome.com/search?ic=free>).
+- Data: how data is filtered: it contains the settings to filter for from the original result.
+- Filters: which buttons (`shinyWidgets::pickerInput`) will be created to filter the result.
+- Content: the different visualisations that are going to be displayed in that panel.
+
+More details on the internal structure and how to define new panels is explained in *adding_new_panels*. To see the internal structure you can use `unclass`:
+```{r}
+unclass(getPanel("incidence"))
+```
