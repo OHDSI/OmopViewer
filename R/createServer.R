@@ -1,10 +1,11 @@
 
 # static ----
-serverStatic <- function(panelDetails) {
+serverStatic <- function(panelDetails, summary) {
   paste0(
     c(
       messageShiny(),
       "server <- function(input, output, session) {",
+      createSummaryServer(summary, data = "data"),
       createServer(panelDetails, data = "data"),
       "}"
     ),
@@ -16,6 +17,17 @@ serverStatic <- function(panelDetails) {
 # dynamic ----
 
 # functions ----
+createSummaryServer <- function(summary, data) {
+  if (summary) {
+    c("output$summary_cdm_name <- shinyTree::renderTree(summaryCdmName({data}))",
+      "output$summary_packages <- shinyTree::renderTree(summaryPackages({data}))",
+      "output$summary_min_cell_count <- shinyTree::renderTree(summaryMinCellCount({data}))",
+      "output$summary_panels <- shinyTree::renderTree(summaryPanels({data}))") |>
+      purrr::map_chr(\(x) glue::glue(x, data = data))
+  } else {
+    character()
+  }
+}
 createServer <- function(panelDetails, data) {
   c(
     downloadRawDataServer(data),
