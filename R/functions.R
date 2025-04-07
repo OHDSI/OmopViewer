@@ -84,7 +84,14 @@ summaryPackages <- function(data) {
           settingsColumn = c("package_name", "package_version")
         ) |>
         dplyr::group_by(.data$package_name, .data$package_version) |>
-        dplyr::summarise(number_rows = dplyr::n(), .groups = "drop")
+        dplyr::summarise(number_rows = dplyr::n(), .groups = "drop") |>
+        dplyr::right_join(
+          omopgenerics::settings(x) |>
+            dplyr::select(c("package_name", "package_version")) |>
+            dplyr::distinct(),
+          by = c("package_name", "package_version")
+        ) |>
+        dplyr::mutate(number_rows = dplyr::coalesce(.data$number_rows, 0))
     }) |>
     dplyr::bind_rows() |>
     dplyr::group_by(.data$package_name, .data$package_version) |>
@@ -99,8 +106,8 @@ summaryPackages <- function(data) {
   names(x) <- x |>
     purrr::map_chr(\(x) {
       if (nrow(x) > 1) {
-        paste0("<b style='color:red'>", x$package_name, " (Multiple versions!) </b>")
         lab <<- "<b style='color:red'>"
+        paste0("<b style='color:red'>", unique(x$package_name), " (Multiple versions!) </b>")
       } else {
         paste0(
           x$package_name, " (version = ", x$package_version,
@@ -130,7 +137,14 @@ summaryMinCellCount <- function(data) {
       x |>
         omopgenerics::addSettings(settingsColumn = "min_cell_count") |>
         dplyr::group_by(.data$min_cell_count) |>
-        dplyr::summarise(number_rows = dplyr::n(), .groups = "drop")
+        dplyr::summarise(number_rows = dplyr::n(), .groups = "drop") |>
+        dplyr::right_join(
+          omopgenerics::settings(x) |>
+            dplyr::select("min_cell_count") |>
+            dplyr::distinct(),
+          by = "min_cell_count"
+        ) |>
+        dplyr::mutate(number_rows = dplyr::coalesce(.data$number_rows, 0))
     }) |>
     dplyr::bind_rows() |>
     dplyr::group_by(.data$min_cell_count) |>
@@ -138,8 +152,9 @@ summaryMinCellCount <- function(data) {
       number_rows = as.integer(sum(.data$number_rows)),
       .groups = "drop"
     ) |>
+    dplyr::mutate(min_cell_count = as.integer(.data$min_cell_count)) |>
+    dplyr::arrange(.data$min_cell_count) |>
     dplyr::mutate(
-      min_cell_count = as.integer(.data$min_cell_count),
       label = dplyr::if_else(
         .data$min_cell_count == 0L,
         "<b style='color:red'>Not censored</b>",
