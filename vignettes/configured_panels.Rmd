@@ -2,7 +2,7 @@
 title: "Tabs definned in OmopViewer"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{supported_result_type}
+  %\VignetteIndexEntry{configured_panels}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

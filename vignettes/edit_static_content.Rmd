@@ -1,0 +1,19 @@
+---
+title: "edit_static_content"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{edit_static_content}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(OmopViewer)
+```

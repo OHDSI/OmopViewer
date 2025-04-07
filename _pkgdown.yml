@@ -2,6 +2,24 @@ url: https://ohdsi.github.io/OmopViewer/
 template:
   bootstrap: 5
 
+articles:
+- title: Static App
+  navbar: "Static App"
+  contents:
+  - configured_panels
+  - export_static_app
+  - edit_static_content
+  - articles/background
+  - articles/theming
+- title: Dynamic App
+  navbar: "Dynamic App"
+  contents:
+  - articles/dynamic_app
+- title: New panles
+  navbar: "New panels"
+  contents:
+  - articles/adding_new_panels
+
 reference:
 - subtitle: Static app
   desc: This function allows to generate local apps that can be later customised.
