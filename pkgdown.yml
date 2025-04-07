@@ -2,10 +2,14 @@ pandoc: 3.1.11
 pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
+  articles/adding_new_panels: adding_new_panels.html
   articles/background: background.html
-  supported_result_type: supported_result_type.html
+  configured_panels: configured_panels.html
+  articles/dynamic_app: dynamic_app.html
+  edit_static_content: edit_static_content.html
+  export_static_app: export_static_app.html
   articles/theming: theming.html
-last_built: 2025-04-07T20:29Z
+last_built: 2025-04-07T21:02Z
 urls:
   reference: https://ohdsi.github.io/OmopViewer/reference
   article: https://ohdsi.github.io/OmopViewer/articles

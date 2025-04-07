@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Theming your shiny • OmopViewer</title>
+<title>dynamic_app • OmopViewer</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Theming your shiny">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="dynamic_app">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -66,37 +66,17 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>Theming your shiny</h1>
+      <h1>dynamic_app</h1>
             
       
 
-      <div class="d-none name"><code>theming.Rmd</code></div>
+      <div class="d-none name"><code>dynamic_app.Rmd</code></div>
     </div>
 
     
     
-<p>You can customise the shiny colours you can use the theme argument.
-The theme argument supports two types of inputs:</p>
-<ul>
-<li>Custom themes, see options below.</li>
-<li>A <code><a href="https://rstudio.github.io/bslib/reference/bs_theme.html" class="external-link">bslib::bs_theme()</a></code> call:
-<code>theme = 'bslib::bs_theme(primary = "orange", secondary = "blue")'</code>
-</li>
-</ul>
-<p>The first colour defines the primary theme colour, which is applied
-to key interactive components such as buttons, links, and labels,
-emphasizing important actions and elements. The second colour is used
-for the header bar at the top of the Shiny app. You can learn more about
-them in <a href="https://rstudio.github.io/bslib/" class="external-link">bslib
-documentation</a>.</p>
-<div class="section level2">
-<h2 id="predefined-themes">Predefined themes<a class="anchor" aria-label="anchor" href="#predefined-themes"></a>
-</h2>
-<p>See our predefined themes:</p>
-<div style="border: 1px solid #ccc; overflow: hidden;">
-<p><iframe src="https://dpa-pde-oxford.shinyapps.io/OmopViewerThemes/" style="border: none; width: 100%; height: 300px;"> </iframe></p>
-</div>
-</div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ohdsi.github.io/OmopViewer/">OmopViewer</a></span><span class="op">)</span></span></code></pre></div>
   </main>
 </div>
 
