@@ -68,14 +68,15 @@ serverDynamic <- function(input, output, session) {
     workingData(prepareResult(dataToUpload, resultList))
 
     # add server modules
-    serverModeule <- paste0(c(
+    serverModule <- paste0(c(
       "function(input, output, session) {",
+      createSummaryServer(summary = input$configuration_summary, data = "workingData()"),
       createServer(panelDetails, data = "workingData()"),
       "}"
     ), collapse = "\n") |>
       rlang::parse_expr() |>
       rlang::eval_tidy()
-    shiny::moduleServer(id = NULL, module = serverModeule)
+    shiny::moduleServer(id = NULL, module = serverModule)
   })
 
 }
@@ -84,9 +85,7 @@ createDynamicUi <- function(panels, summary, data, theme) {
 
   if (isTRUE(summary)) {
     panels <- c(
-      list(bslib::nav_panel(
-        title = "Summary", icon = shiny::icon("file-alt"), summaryCard(data)
-      )),
+      list(rlang::eval_tidy(rlang::parse_exprs(summaryTab(TRUE)))),
       panels
     )
     summary <- TRUE
