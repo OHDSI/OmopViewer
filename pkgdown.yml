@@ -9,7 +9,7 @@ articles:
   edit_static_content: edit_static_content.html
   export_static_app: export_static_app.html
   articles/theming: theming.html
-last_built: 2025-04-08T11:45Z
+last_built: 2025-04-08T11:54Z
 urls:
   reference: https://ohdsi.github.io/OmopViewer/reference
   article: https://ohdsi.github.io/OmopViewer/articles
