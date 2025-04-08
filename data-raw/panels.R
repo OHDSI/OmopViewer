@@ -128,7 +128,7 @@ incidencePanel <- list(
   icon = "chart-line",
   data = list(result_type = "incidence"),
   automatic_filters = c("group", "strata", "additional", "settings", "variable_name", "estimate_name"),
-  exclude_filters = "denominator_cohort_name",
+  exclude_filters = c("denominator_cohort_name", "incidence_end_date"),
   filters = list(cdm_name = cdmFilter),
   content = list(
     tidy = tidyContent,
@@ -1260,6 +1260,34 @@ treatmentPanel <- list(
         )
       ),
       download = downloadPlot("plot_treatment.png")
+    )
+  )
+)
+## summarise large scale characteristics ----
+lsc <- list(
+  title = "Large Scale Characteristics",
+  icon = "arrow-up-right-dots",
+  data = list(result_type = "summarise_large_scale_characteristics"),
+  automatic_filters = c("group", "strata", "variable_level", "estimate_name", "settings"),
+  filters = list(cdm_name = cdmFilter),
+  content = list(
+    tidy = tidyContent,
+    table = list(
+      title = "Table Treatments",
+      output_type = "gt",
+      render = "<filtered_data> |>
+      DrugUtilisation::tableTreatment(
+      header = input$header,
+      groupColumn = input$group_column,
+      hide = input$hide
+      )",
+      filters = rankTableButton(
+        none = c("variable_level", "estimate_name"),
+        header = c("cdm_name", "cohort_name", "<strata>"),
+        groupColumn = c("variable_name"),
+        hide = c("window_name", "<settings>")
+      ),
+      download = downloadGtTable("table_treatment")
     )
   )
 )
