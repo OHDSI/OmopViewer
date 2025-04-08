@@ -19,7 +19,8 @@ serverStatic <- function(panelDetails, summary) {
 # functions ----
 createSummaryServer <- function(summary, data) {
   if (summary) {
-    c("output$summary_cdm_name <- shinyTree::renderTree(summaryCdmName({data}))",
+    c("# summary ----",
+      "output$summary_cdm_name <- shinyTree::renderTree(summaryCdmName({data}))",
       "output$summary_packages <- shinyTree::renderTree(summaryPackages({data}))",
       "output$summary_min_cell_count <- shinyTree::renderTree(summaryMinCellCount({data}))",
       "output$summary_panels <- shinyTree::renderTree(summaryPanels({data}))") |>
@@ -45,7 +46,9 @@ downloadRawDataServer <- function(data) {
   output$download_raw <- shiny::downloadHandler(
     filename = "results.csv",
     content = function(file) {
-      omopgenerics::exportSummarisedResult([data], fileName = file)
+      [data] |>
+        omopgenerics::bind() |>
+        omopgenerics::exportSummarisedResult(fileName = file)
     }
   )' |>
     glue::glue(.open = "[", .close = "]") |>
