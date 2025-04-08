@@ -100,14 +100,18 @@ outputFunction <- function(outputType) {
          "DT" = "DT::DTOutput",
          "gt" = "gt::gt_output",
          "plot" = "shiny::plotOutput",
-         "grViz" = "DiagrammeR::grVizOutput")
+         "grViz" = "DiagrammeR::grVizOutput",
+         "plotly" = "plotly::plotlyOutput",
+         "ui" = "shiny::uiOutput")
 }
 renderFunction <- function(outputType) {
   switch(outputType,
          "DT" = "DT::renderDT",
          "gt" = "gt::render_gt",
          "plot" = "shiny::renderPlot",
-         "grViz" = "DiagrammeR::renderGrViz")
+         "grViz" = "DiagrammeR::renderGrViz",
+         "plotly" = "plotly::renderPlotly",
+         "ui" = "shiny::renderUI")
 }
 writeDownloadServer <- function(content) {
   download <- content$download
