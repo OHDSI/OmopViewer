@@ -12,6 +12,7 @@ A `summarised_result` object with 12,017 rows:
 omopViewerResults
 }
 \description{
-Mock results obtained from `GiBleed` dataset.
+The results are generated using the following file:
+<https://github.com/OHDSI/OmopViewer/blob/main/data-raw/results.R>.
 }
 \keyword{datasets}

@@ -1,5 +1,5 @@
 ---
-title: "export_static_app"
+title: "Create a static shiny app"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{export_static_app}
@@ -14,6 +14,34 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+In this vignette we show the basis to create shiny apps. To do so we will use the mock results provided by the package:
+
+```{r}
 library(OmopViewer)
+omopViewerResults
+summary(omopViewerResults)
 ```
+
+Let's use a subset of the default result data set:
+
+```{r}
+result <- omopViewerResults |>
+  omopgenerics::filterSettings(
+    result_type %in% c("summarise_omop_snapshot", "summarise_characteristics", "incidence")
+  )
+```
+
+
+Using the default parameters you only have to provide a directory and a <summarised_result> object.
+
+```{r}
+exportStaticApp(result = result, directory = tempdir())
+```
+
+The panels that will be created are defined by the `panelDetails` argument. By default, a tab is created by each `result_type` of the result object. The default tab `getPanel("default")` is used if no tab is defined for that `result_type` in **omopViewerPanels**. Let's see the default `panelDetails`:
+
+```{r}
+panelDetails <- panelDetailsFromResult(result)
+panelDetails
+```
+
