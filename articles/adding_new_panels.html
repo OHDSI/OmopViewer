@@ -35,8 +35,8 @@
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Static App</h6></li>
-    <li><a class="dropdown-item" href="../articles/configured_panels.html">Tabs definned in OmopViewer</a></li>
-    <li><a class="dropdown-item" href="../articles/export_static_app.html">export_static_app</a></li>
+    <li><a class="dropdown-item" href="../articles/configured_panels.html">Panels definned in OmopViewer</a></li>
+    <li><a class="dropdown-item" href="../articles/export_static_app.html">Create a static shiny app</a></li>
     <li><a class="dropdown-item" href="../articles/edit_static_content.html">edit_static_content</a></li>
     <li><a class="dropdown-item" href="../articles/background.html">Edit the background panel of your shiny using `background.md`</a></li>
     <li><a class="dropdown-item" href="../articles/theming.html">Theming your shiny</a></li>
@@ -77,6 +77,13 @@
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ohdsi.github.io/OmopViewer/">OmopViewer</a></span><span class="op">)</span></span></code></pre></div>
+<div class="section level2">
+<h2 id="note-for-developers">Note for developers<a class="anchor" aria-label="anchor" href="#note-for-developers"></a>
+</h2>
+<p>If you wish to configure a new <strong>Tab</strong> this can be done
+editing the <em>omopViewerPanels</em> object defined in in file <a href="https://github.com/OHDSI/omopViewer/blob/main/data-raw/panels.R" class="external-link">panels.R</a>.
+Please feel free to submit your PR.</p>
+</div>
   </main>
 </div>
 

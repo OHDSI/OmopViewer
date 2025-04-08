@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Tabs definned in OmopViewer • OmopViewer</title>
+<title>Panels definned in OmopViewer • OmopViewer</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Tabs definned in OmopViewer">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Panels definned in OmopViewer">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -35,8 +35,8 @@
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Static App</h6></li>
-    <li><a class="dropdown-item" href="../articles/configured_panels.html">Tabs definned in OmopViewer</a></li>
-    <li><a class="dropdown-item" href="../articles/export_static_app.html">export_static_app</a></li>
+    <li><a class="dropdown-item" href="../articles/configured_panels.html">Panels definned in OmopViewer</a></li>
+    <li><a class="dropdown-item" href="../articles/export_static_app.html">Create a static shiny app</a></li>
     <li><a class="dropdown-item" href="../articles/edit_static_content.html">edit_static_content</a></li>
     <li><a class="dropdown-item" href="../articles/background.html">Edit the background panel of your shiny using `background.md`</a></li>
     <li><a class="dropdown-item" href="../articles/theming.html">Theming your shiny</a></li>
@@ -66,7 +66,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>Tabs definned in OmopViewer</h1>
+      <h1>Panels definned in OmopViewer</h1>
             
       
 
@@ -309,12 +309,346 @@ defined panels in the package:</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">data:</span> -no data-</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">filters:</span> 1 filters + 6 automatic filters</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table</span> (<span style="font-style: italic;">gt</span>)</span></span></code></pre></div>
-<div class="section level2">
-<h2 id="note-for-developers">Note for developers<a class="anchor" aria-label="anchor" href="#note-for-developers"></a>
-</h2>
-<p>If you wish to configure a new <strong>Tab</strong> this can be done
-editing the <em>omopViewerPanels</em> object defined in in file <a href="https://github.com/OHDSI/omopViewer/blob/main/data-raw/panels.R" class="external-link">panels.R</a>.
-Please feel free to submit your PR.</p>
+<div class="section level3">
+<h3 id="panel-details-stucture">Panel details stucture<a class="anchor" aria-label="anchor" href="#panel-details-stucture"></a>
+</h3>
+<p>Panel details print shows:</p>
+<ul>
+<li>Title: title of the panel.</li>
+<li>Icon: the icon of the panel (see <a href="https://fontawesome.com/search?ic=free" class="external-link uri">https://fontawesome.com/search?ic=free</a>).</li>
+<li>Data: how data is filtered: it contains the settings to filter for
+from the original result.</li>
+<li>Filters: which buttons (<code><a href="https://dreamrs.github.io/shinyWidgets/reference/pickerInput.html" class="external-link">shinyWidgets::pickerInput</a></code>) will
+be created to filter the result.</li>
+<li>Content: the different visualisations that are going to be displayed
+in that panel.</li>
+</ul>
+<p>More details on the internal structure and how to define new panels
+is explained in <em>adding_new_panels</em>. To see the internal
+structure you can use <code>unclass</code>:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">unclass</a></span><span class="op">(</span><span class="fu"><a href="../reference/getPanel.html">getPanel</a></span><span class="op">(</span><span class="st">"incidence"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $title</span></span>
+<span><span class="co">#&gt; [1] "Incidence"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $icon</span></span>
+<span><span class="co">#&gt; [1] "chart-line"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $data</span></span>
+<span><span class="co">#&gt; $data$result_type</span></span>
+<span><span class="co">#&gt; [1] "incidence"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $automatic_filters</span></span>
+<span><span class="co">#&gt; [1] "group"         "strata"        "additional"    "settings"     </span></span>
+<span><span class="co">#&gt; [5] "variable_name" "estimate_name"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $exclude_filters</span></span>
+<span><span class="co">#&gt; [1] "denominator_cohort_name"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $filters</span></span>
+<span><span class="co">#&gt; $filters$cdm_name</span></span>
+<span><span class="co">#&gt; $filters$cdm_name$button_type</span></span>
+<span><span class="co">#&gt; [1] "pickerInput"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $filters$cdm_name$label</span></span>
+<span><span class="co">#&gt; [1] "CDM name"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $filters$cdm_name$column</span></span>
+<span><span class="co">#&gt; [1] "cdm_name"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $filters$cdm_name$column_type</span></span>
+<span><span class="co">#&gt; [1] "main"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $filters$cdm_name$choices</span></span>
+<span><span class="co">#&gt; [1] "choices$"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $filters$cdm_name$selected</span></span>
+<span><span class="co">#&gt; [1] "selected$"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $filters$cdm_name$multiple</span></span>
+<span><span class="co">#&gt; [1] TRUE</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content</span></span>
+<span><span class="co">#&gt; $content$tidy</span></span>
+<span><span class="co">#&gt; $content$tidy$title</span></span>
+<span><span class="co">#&gt; [1] "Tidy"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$tidy$output_type</span></span>
+<span><span class="co">#&gt; [1] "DT"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$tidy$render</span></span>
+<span><span class="co">#&gt; [1] "tidyDT(&lt;filtered_data&gt;, input$columns, input$pivot_estimates)"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$tidy$filters</span></span>
+<span><span class="co">#&gt; $content$tidy$filters$columns</span></span>
+<span><span class="co">#&gt; $content$tidy$filters$columns$button_type</span></span>
+<span><span class="co">#&gt; [1] "pickerInput"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$tidy$filters$columns$label</span></span>
+<span><span class="co">#&gt; [1] "Columns"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$tidy$filters$columns$choices</span></span>
+<span><span class="co">#&gt; [1] "cdm_name"       "&lt;group&gt;"        "&lt;strata&gt;"       "&lt;additional&gt;"  </span></span>
+<span><span class="co">#&gt; [5] "&lt;settings&gt;"     "variable_name"  "variable_level"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$tidy$filters$columns$selected</span></span>
+<span><span class="co">#&gt; [1] "cdm_name"       "&lt;group&gt;"        "&lt;strata&gt;"       "&lt;additional&gt;"  </span></span>
+<span><span class="co">#&gt; [5] "variable_name"  "variable_level"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$tidy$filters$columns$multiple</span></span>
+<span><span class="co">#&gt; [1] TRUE</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$tidy$filters$pivot_estimates</span></span>
+<span><span class="co">#&gt; $content$tidy$filters$pivot_estimates$button_type</span></span>
+<span><span class="co">#&gt; [1] "checkbox"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$tidy$filters$pivot_estimates$label</span></span>
+<span><span class="co">#&gt; [1] "Pivot estimates"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$tidy$filters$pivot_estimates$value</span></span>
+<span><span class="co">#&gt; [1] TRUE</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$tidy$download</span></span>
+<span><span class="co">#&gt; $content$tidy$download$label</span></span>
+<span><span class="co">#&gt; [1] "Download csv"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$tidy$download$render</span></span>
+<span><span class="co">#&gt; [1] "&lt;filtered_data&gt; |&gt;\n    omopgenerics::tidy() |&gt;\n    readr::write_csv(file = file)"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$tidy$download$filename</span></span>
+<span><span class="co">#&gt; [1] "tidy_results.csv"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$table</span></span>
+<span><span class="co">#&gt; $content$table$title</span></span>
+<span><span class="co">#&gt; [1] "Table Incidence"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$table$output_type</span></span>
+<span><span class="co">#&gt; [1] "gt"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$table$render</span></span>
+<span><span class="co">#&gt; [1] "res &lt;- &lt;filtered_data&gt;\n      res |&gt;\n      IncidencePrevalence::tableIncidence(\n      header = input$header,\n      groupColumn = input$group_column,\n      hide = input$hide,\n      settingsColumn = omopgenerics::settingsColumns(res)\n      )"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$table$filters</span></span>
+<span><span class="co">#&gt; $content$table$filters$none</span></span>
+<span><span class="co">#&gt; $content$table$filters$none$button_type</span></span>
+<span><span class="co">#&gt; [1] "rank_list"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$table$filters$none$text</span></span>
+<span><span class="co">#&gt; [1] "None"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$table$filters$none$labels</span></span>
+<span><span class="co">#&gt; [1] "&lt;strata&gt;"              "incidence_start_date"  "incidence_end_date"   </span></span>
+<span><span class="co">#&gt; [4] "denominator_age_group" "denominator_sex"      </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$table$filters$header</span></span>
+<span><span class="co">#&gt; $content$table$filters$header$button_type</span></span>
+<span><span class="co">#&gt; [1] "rank_list"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$table$filters$header$text</span></span>
+<span><span class="co">#&gt; [1] "Header"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$table$filters$header$labels</span></span>
+<span><span class="co">#&gt; [1] "estimate_name"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$table$filters$group_column</span></span>
+<span><span class="co">#&gt; $content$table$filters$group_column$button_type</span></span>
+<span><span class="co">#&gt; [1] "rank_list"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$table$filters$group_column$text</span></span>
+<span><span class="co">#&gt; [1] "Group columns"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$table$filters$group_column$labels</span></span>
+<span><span class="co">#&gt; [1] "cdm_name"            "outcome_cohort_name"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$table$filters$hide</span></span>
+<span><span class="co">#&gt; $content$table$filters$hide$button_type</span></span>
+<span><span class="co">#&gt; [1] "rank_list"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$table$filters$hide$text</span></span>
+<span><span class="co">#&gt; [1] "Hide"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$table$filters$hide$labels</span></span>
+<span><span class="co">#&gt;  [1] "denominator_cohort_name"             </span></span>
+<span><span class="co">#&gt;  [2] "analysis_interval"                   </span></span>
+<span><span class="co">#&gt;  [3] "analysis_censor_cohort_name"         </span></span>
+<span><span class="co">#&gt;  [4] "analysis_complete_database_intervals"</span></span>
+<span><span class="co">#&gt;  [5] "analysis_outcome_washout"            </span></span>
+<span><span class="co">#&gt;  [6] "analysis_repeated_events"            </span></span>
+<span><span class="co">#&gt;  [7] "denominator_days_prior_observation"  </span></span>
+<span><span class="co">#&gt;  [8] "denominator_end_date"                </span></span>
+<span><span class="co">#&gt;  [9] "denominator_requirements_at_entry"   </span></span>
+<span><span class="co">#&gt; [10] "denominator_start_date"              </span></span>
+<span><span class="co">#&gt; [11] "denominator_target_cohort_name"      </span></span>
+<span><span class="co">#&gt; [12] "denominator_time_at_risk"            </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$table$download</span></span>
+<span><span class="co">#&gt; $content$table$download$label</span></span>
+<span><span class="co">#&gt; [1] "Download table"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$table$download$filters</span></span>
+<span><span class="co">#&gt; $content$table$download$filters$format</span></span>
+<span><span class="co">#&gt; $content$table$download$filters$format$button_type</span></span>
+<span><span class="co">#&gt; [1] "pickerInput"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$table$download$filters$format$label</span></span>
+<span><span class="co">#&gt; [1] "Format"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$table$download$filters$format$choices</span></span>
+<span><span class="co">#&gt; [1] "docx" "png"  "pdf"  "html"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$table$download$filters$format$selected</span></span>
+<span><span class="co">#&gt; [1] "docx"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$table$download$filters$format$multiple</span></span>
+<span><span class="co">#&gt; [1] FALSE</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$table$download$render</span></span>
+<span><span class="co">#&gt; [1] "gt::gtsave(&lt;rendered_data&gt;, file)"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$table$download$filename</span></span>
+<span><span class="co">#&gt; [1] "paste0(\"table_incidence.\", input$format)"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot</span></span>
+<span><span class="co">#&gt; $content$plot$title</span></span>
+<span><span class="co">#&gt; [1] "Plot Incidence"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot$output_type</span></span>
+<span><span class="co">#&gt; [1] "plot"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot$render</span></span>
+<span><span class="co">#&gt; [1] "&lt;filtered_data&gt; |&gt;\n      IncidencePrevalence::plotIncidence(\n      x = input$x,\n      facet = input$facet,\n      colour = input$colour\n      )"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot$filters</span></span>
+<span><span class="co">#&gt; $content$plot$filters$x</span></span>
+<span><span class="co">#&gt; $content$plot$filters$x$button_type</span></span>
+<span><span class="co">#&gt; [1] "pickerInput"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot$filters$x$label</span></span>
+<span><span class="co">#&gt; [1] "x axis"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot$filters$x$choices</span></span>
+<span><span class="co">#&gt; [1] "cdm_name"     "&lt;group&gt;"      "&lt;strata&gt;"     "&lt;additional&gt;" "&lt;settings&gt;"  </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot$filters$x$selected</span></span>
+<span><span class="co">#&gt; [1] "incidence_start_date"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot$filters$x$multiple</span></span>
+<span><span class="co">#&gt; [1] FALSE</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot$filters$facet</span></span>
+<span><span class="co">#&gt; $content$plot$filters$facet$button_type</span></span>
+<span><span class="co">#&gt; [1] "pickerInput"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot$filters$facet$label</span></span>
+<span><span class="co">#&gt; [1] "Facet"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot$filters$facet$choices</span></span>
+<span><span class="co">#&gt; [1] "cdm_name"     "&lt;group&gt;"      "&lt;strata&gt;"     "&lt;additional&gt;" "&lt;settings&gt;"  </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot$filters$facet$selected</span></span>
+<span><span class="co">#&gt; [1] "cdm_name"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot$filters$facet$multiple</span></span>
+<span><span class="co">#&gt; [1] TRUE</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot$filters$colour</span></span>
+<span><span class="co">#&gt; $content$plot$filters$colour$button_type</span></span>
+<span><span class="co">#&gt; [1] "pickerInput"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot$filters$colour$label</span></span>
+<span><span class="co">#&gt; [1] "Colour"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot$filters$colour$choices</span></span>
+<span><span class="co">#&gt; [1] "cdm_name"     "&lt;group&gt;"      "&lt;strata&gt;"     "&lt;additional&gt;" "&lt;settings&gt;"  </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot$filters$colour$selected</span></span>
+<span><span class="co">#&gt; [1] "outcome_cohort_name"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot$filters$colour$multiple</span></span>
+<span><span class="co">#&gt; [1] TRUE</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot$download</span></span>
+<span><span class="co">#&gt; $content$plot$download$label</span></span>
+<span><span class="co">#&gt; [1] "Download plot"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot$download$filters</span></span>
+<span><span class="co">#&gt; $content$plot$download$filters$width</span></span>
+<span><span class="co">#&gt; $content$plot$download$filters$width$button_type</span></span>
+<span><span class="co">#&gt; [1] "numericInput"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot$download$filters$width$label</span></span>
+<span><span class="co">#&gt; [1] "Width"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot$download$filters$width$value</span></span>
+<span><span class="co">#&gt; [1] 15</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot$download$filters$height</span></span>
+<span><span class="co">#&gt; $content$plot$download$filters$height$button_type</span></span>
+<span><span class="co">#&gt; [1] "numericInput"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot$download$filters$height$label</span></span>
+<span><span class="co">#&gt; [1] "Height"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot$download$filters$height$value</span></span>
+<span><span class="co">#&gt; [1] 15</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot$download$filters$units</span></span>
+<span><span class="co">#&gt; $content$plot$download$filters$units$button_type</span></span>
+<span><span class="co">#&gt; [1] "pickerInput"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot$download$filters$units$label</span></span>
+<span><span class="co">#&gt; [1] "Units"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot$download$filters$units$selected</span></span>
+<span><span class="co">#&gt; [1] "cm"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot$download$filters$units$choices</span></span>
+<span><span class="co">#&gt; [1] "px"   "cm"   "inch"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot$download$filters$units$multiple</span></span>
+<span><span class="co">#&gt; [1] FALSE</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot$download$filters$dpi</span></span>
+<span><span class="co">#&gt; $content$plot$download$filters$dpi$button_type</span></span>
+<span><span class="co">#&gt; [1] "numericInput"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot$download$filters$dpi$label</span></span>
+<span><span class="co">#&gt; [1] "DPI"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot$download$filters$dpi$value</span></span>
+<span><span class="co">#&gt; [1] 300</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot$download$render</span></span>
+<span><span class="co">#&gt; [1] "plt &lt;- &lt;rendered_data&gt;\n        ggplot2::ggsave(\n          filename = file,\n          plot = plt,\n          width = as.numeric(input$width),\n          height = as.numeric(input$height),\n          units = input$units,\n          dpi = as.numeric(input$dpi)\n        )"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot$download$filename</span></span>
+<span><span class="co">#&gt; [1] "plot_incidence.png"</span></span></code></pre></div>
 </div>
   </main>
 </div>
