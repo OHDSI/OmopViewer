@@ -373,3 +373,67 @@ getValues <- function(result, resultList) {
     }) |>
     purrr::flatten()
 }
+tableComparedLargeScaleCharacteristics <- function(result,
+                                                   type = "reactable",
+                                                   compareBy = "variable_level",
+                                                   hide = c("type"),
+                                                   smdReference = NULL) {
+  # initial checks
+  result <- omopgenerics::validateResultArgument(result)
+  result <- result |>
+    omopgenerics::filterSettings(.data$result_type == "summarise_large_scale_characteristics")
+
+  strataCols <- omopgenerics::strataColumns(result)
+  choic <- c("cdm_name", "cohort_name", strataCols, "variable_level", "type")
+  omopgenerics::assertChoice(type, choices = c("DT", "reactable"))
+  omopgenerics::assertChoice(compareBy, choices = choic, length = 1)
+  omopgenerics::assertChoice(hide, choices = choic[!choic %in% compareBy])
+  opts <- unique(result[[compareBy]])
+  omopgenerics::assertChoice(smdReference, choices = opts, length = 1, null = TRUE)
+
+  result <- omopgenerics::tidy(result) |>
+    dplyr::select(!dplyr::all_of(hide))
+
+  # pivot
+  result <- result |>
+    tidyr::pivot_wider(
+      names_from = dplyr::all_of(compareBy),
+      values_fill = 0,
+      values_from = "percentage"
+    )
+  result <- result |>
+    dplyr::select(dplyr::any_of(c(
+      "cdm_name", "cohort_name", strataCols, "type",
+      "window" = "variable_level", "concept_name" = "variable_name",
+      "concept_id", opts
+    )))
+
+  if (length(smdReference) > 0) {
+    cols <- character()
+    for (col in opts) {
+      if (col == smdReference) {
+        ref <- rlang::set_names(smdReference, paste0(smdReference, " (ref)"))
+      } else {
+        result <- result |>
+          dplyr::mutate(!!paste0(col, " SMD") := qSmd(.data[[smdReference]], .data[[col]]))
+        cols <- c(cols, col, paste0(col, " SMD"))
+      }
+    }
+    result <- result |>
+      dplyr::relocate(dplyr::all_of(c(ref, cols)), .after = "concept_id")
+  }
+
+  if (type == "DT") {
+    out <- DT::datatable(result)
+  } else {
+    out <- reactable::reactable(result)
+  }
+  out
+}
+qSmd <- function(ref, comp) {
+  dplyr::if_else(
+    ref == 0 & comp == 0,
+    0,
+    suppressWarnings((ref - comp)/sqrt((ref * (100 - ref) + comp * (100 - comp)) / 2))
+  )
+}

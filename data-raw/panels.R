@@ -1273,21 +1273,46 @@ lsc <- list(
   content = list(
     tidy = tidyContent,
     table = list(
-      title = "Table Treatments",
+      title = "Table Compared",
       output_type = "gt",
       render = "<filtered_data> |>
-      DrugUtilisation::tableTreatment(
-      header = input$header,
-      groupColumn = input$group_column,
-      hide = input$hide
+      tableComparedLargeScaleCharacteristics(
+      compareBy = input$compare_by,
+      hide = input$hide,
+      smdReference = input$smd_reference
       )",
-      filters = rankTableButton(
-        none = c("variable_level", "estimate_name"),
-        header = c("cdm_name", "cohort_name", "<strata>"),
-        groupColumn = c("variable_name"),
-        hide = c("window_name", "<settings>")
-      ),
-      download = downloadGtTable("table_treatment")
+      observe = "shiny::observeEvent(input$compare_by,{
+        opts <- values[[paste0('<prefix>', input$compare_by)]]
+        opts <- c('no SMD', opts)
+        shinyWidthgets::updatePickerInput(
+          inputId = '<prefix>smd_reference',
+          choices = opts,
+          selected = 'no SMD'
+        )
+      })",
+      filters = list(
+        compare_by = list(
+          button_type = "pickerInput",
+          label = "Compare by",
+          choices = c("cdm_name", "cohort_name", "<strata>", "type", "variable_level"),
+          selected = c("variable_level"),
+          multiple = FALSE
+        ),
+        hide = list(
+          button_type = "pickerInput",
+          label = "Hide",
+          choices = c("cdm_name", "cohort_name", "<strata>", "type", "variable_level"),
+          selected = c("type"),
+          multiple = TRUE
+        ),
+        smd_reference = list(
+          button_type = "pickerInput",
+          label = "SMD reference",
+          choices = NULL,
+          selected = c("no SMD"),
+          multiple = FALSE
+        )
+      )
     )
   )
 )
