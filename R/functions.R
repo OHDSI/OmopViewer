@@ -389,6 +389,7 @@ tableComparedLargeScaleCharacteristics <- function(result,
   omopgenerics::assertChoice(compareBy, choices = choic, length = 1)
   omopgenerics::assertChoice(hide, choices = choic[!choic %in% compareBy])
   opts <- unique(result[[compareBy]])
+  if (identical(smdReference, "no SMD")) smdReference <- NULL
   omopgenerics::assertChoice(smdReference, choices = opts, length = 1, null = TRUE)
 
   result <- omopgenerics::tidy(result) |>
@@ -434,6 +435,6 @@ qSmd <- function(ref, comp) {
   dplyr::if_else(
     ref == 0 & comp == 0,
     0,
-    suppressWarnings((ref - comp)/sqrt((ref * (100 - ref) + comp * (100 - comp)) / 2))
+    round(suppressWarnings((ref - comp)/sqrt((ref * (100 - ref) + comp * (100 - comp)) / 2)), 4)
   )
 }

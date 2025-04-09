@@ -8,7 +8,12 @@ validatePanelDetails <- function(panelDetails, result, call = parent.frame()) {
   return(panelDetails)
 }
 validatePanelStructure <- function(panelStructure, panels, call = parent.frame()) {
-  panelStructure <- as.list(panelStructure)
+  if (is.null(panelStructure)) {
+    panelStructure <- defaultPanelStructure(panels)
+  }
+  if (!is.list(panelStructure)) {
+    panelStructure <- as.list(panelStructure)
+  }
   omopgenerics::assertList(panelStructure, call = call)
   panelStructure <- panelStructure |>
     purrr::map(\(x) {

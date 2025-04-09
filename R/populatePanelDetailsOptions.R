@@ -13,7 +13,9 @@ populatePanelDetailsOptions <- function(panelDetails, result) {
     # populate <values>
     populateValues(result) |>
     # populate choices$ and selected$
-    populateChoicesSelected()
+    populateChoicesSelected() |>
+    # populate <prefix> and <panel>
+    populatePrefixPanel()
 }
 populateValues <- function(panelDetails, result) {
   panelDetails |>
@@ -155,7 +157,8 @@ populateInputIds <- function(panelDetails) {
         purrr::map(\(cont) {
           # where to find the inputs
           inputsToSubstitute <- c(
-            cont$render, cont$download$render, cont$download$filename
+            cont$render, cont$download$render, cont$download$filename,
+            cont$observe
           ) |>
             # split in words
             stringr::str_split(pattern = "[[:punct:]&&[^_]]|\\s+") |>
@@ -188,6 +191,8 @@ populateInputIds <- function(panelDetails) {
             cont$download$render <- cont$download$render |>
               stringr::str_replace_all(pattern = original, replacement = new)
             cont$download$filename <- cont$download$filename |>
+              stringr::str_replace_all(pattern = original, replacement = new)
+            cont$observe <- cont$observe |>
               stringr::str_replace_all(pattern = original, replacement = new)
           }
           cont
@@ -269,6 +274,25 @@ populatecs <- function(filt, nm) {
     filt$choices <- paste0("choices$", nm, "_", filt$column)
   }
   filt
+}
+populatePrefixPanel <- function(panelDetails) {
+  panelDetails |>
+    purrr::imap(\(pd, nmp) {
+      pd$content <- pd$content |>
+        purrr::imap(\(cont, nmc) {
+          cont$observe <- cont$observe |>
+            substitutePrefix(prefix = paste0(nmp, "_", nmc)) |>
+            substitutePanel(panel = nmp)
+          cont
+        })
+      pd
+    })
+}
+substitutePrefix <- function(x, prefix) {
+  stringr::str_replace_all(x, pattern = "<prefix>", replacement = prefix)
+}
+substitutePanel <- function(x, panel) {
+  stringr::str_replace_all(x, pattern = "<panel>", replacement = panel)
 }
 
 resultListFromPanelDetails <- function(panelDetails) {

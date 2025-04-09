@@ -120,7 +120,6 @@ rankTableButton <- function(none = character(), header = character(), groupColum
   )
 }
 
-
 # predefined panels ----
 ## incidence ----
 incidencePanel <- list(
@@ -1264,7 +1263,7 @@ treatmentPanel <- list(
   )
 )
 ## summarise large scale characteristics ----
-lsc <- list(
+lscPanel <- list(
   title = "Large Scale Characteristics",
   icon = "arrow-up-right-dots",
   data = list(result_type = "summarise_large_scale_characteristics"),
@@ -1274,7 +1273,7 @@ lsc <- list(
     tidy = tidyContent,
     table = list(
       title = "Table Compared",
-      output_type = "gt",
+      output_type = "reactable",
       render = "<filtered_data> |>
       tableComparedLargeScaleCharacteristics(
       compareBy = input$compare_by,
@@ -1282,10 +1281,10 @@ lsc <- list(
       smdReference = input$smd_reference
       )",
       observe = "shiny::observeEvent(input$compare_by,{
-        opts <- values[[paste0('<prefix>', input$compare_by)]]
+        opts <- values[[paste0('<panel>_', input$compare_by)]]
         opts <- c('no SMD', opts)
-        shinyWidthgets::updatePickerInput(
-          inputId = '<prefix>smd_reference',
+        shinyWidgets::updatePickerInput(
+          inputId = '<prefix>_smd_reference',
           choices = opts,
           selected = 'no SMD'
         )
@@ -1366,6 +1365,7 @@ omopViewerPanels <- list(
   summarise_cohort_attrition = cohortAttritionPanel,
   summarise_cohort_timing = cohortTimingPanel,
   summarise_characteristics = characteristicsPanel,
+  summarise_large_scale_characteristics = lscPanel,
   # IncidencePrevalence
   incidence = incidencePanel,
   incidence_attrition = incidenceAttritionPanel,
