@@ -1312,6 +1312,47 @@ lscPanel <- list(
           multiple = FALSE
         )
       )
+    ),
+    plot = list(
+      title = "Plot Compared",
+      output_type = "plotly",
+      render = "<filtered_data> |>
+      plotComparedLargeScaleCharacteristics(
+      colour = input$colour,
+      reference = input$reference,
+      facet = input$facet
+      )",
+      observe = "shiny::observeEvent(input$colour,{
+        opts <- values[[paste0('<panel>_', input$colour)]]
+        shinyWidgets::updatePickerInput(
+          inputId = '<prefix>_reference',
+          choices = opts,
+          selected = opts[1]
+        )
+      })",
+      filters = list(
+        colour = list(
+          button_type = "pickerInput",
+          label = "Colour",
+          choices = c("cdm_name", "cohort_name", "<strata>", "type", "variable_level"),
+          selected = NULL,
+          multiple = FALSE
+        ),
+        reference = list(
+          button_type = "pickerInput",
+          label = "Reference",
+          choices = NULL,
+          selected = NULL,
+          multiple = FALSE
+        ),
+        facet = list(
+          button_type = "pickerInput",
+          label = "Facet",
+          choices = c("cdm_name", "cohort_name", "<strata>", "type", "variable_level"),
+          selected = c("cdm_name", "cohort_name", "<strata>"),
+          multiple = TRUE
+        )
+      )
     )
   )
 )

@@ -438,3 +438,53 @@ qSmd <- function(ref, comp) {
     round(suppressWarnings((ref - comp)/sqrt((ref * (100 - ref) + comp * (100 - comp)) / 2)), 4)
   )
 }
+plotComparedLargeScaleCharacteristics <- function(result,
+                                                  colour,
+                                                  reference,
+                                                  facet) {
+  # initial checks
+  result <- omopgenerics::validateResultArgument(result) |>
+    omopgenerics::filterSettings(.data$result_type == "summarise_large_scale_characteristics") |>
+    dplyr::filter(.data$estimate_name == "percentage")
+  strataCols <- omopgenerics::strataColumns(result)
+
+  choic <- c("cdm_name", "cohort_name", strataCols, "variable_level", "type")
+  omopgenerics::assertChoice(colour, choices = choic, length = 1)
+  result <- omopgenerics::tidy(result) |>
+    dplyr::rename(concept_name = "variable_name")
+  opts <- unique(result[[colour]])
+  if (length(opts) < 2) {
+    cli::cli_abort(c(x = "No multiple values for {.var {colour}} to compare."))
+  }
+  omopgenerics::assertChoice(reference, choices = opts, length = 1, null = TRUE)
+
+  # prepare reference
+  ref <- result |>
+    dplyr::filter(.data[[colour]] == .env$reference) |>
+    dplyr::rename(reference_percentage = "percentage") |>
+    dplyr::select(!dplyr::all_of(colour)) |>
+    dplyr::cross_join(dplyr::tibble(!!colour := opts[opts != reference]))
+  join <- colnames(ref)[colnames(ref) != "reference_percentage"]
+  result <- result |>
+    dplyr::filter(.data[[colour]] != .env$reference) |>
+    dplyr::full_join(ref, by = join) |>
+    dplyr::mutate(dplyr::across(
+      c("percentage", "reference_percentage"), \(x) dplyr::coalesce(x, 0)
+    ))
+
+  label <- c(choic[choic != colour], "concept_name", "concept_id")
+
+  p <- visOmopResults::scatterPlot(
+    result = result, x= "reference_percentage", y = "percentage",
+    point = TRUE, line = FALSE, ribbon = FALSE, ymin = NULL, ymax = NULL,
+    facet = facet, colour = colour, group = NULL, label = label
+  ) +
+    ggplot2::geom_line(
+      mapping = ggplot2::aes(x = x, y = y),
+      data = dplyr::tibble(x = c(0, 100), y = c(0, 100)),
+      color = "black",
+      linetype = "dashed",
+      inherit.aes = FALSE
+    )
+  plotly::ggplotly(p)
+}
