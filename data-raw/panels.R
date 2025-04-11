@@ -677,9 +677,9 @@ observationPeriodPanel <- list(
       filters = list(
         variable = list(
           button_type = "pickerInput",
-          label = "Plot type",
-          choices = c("number subjects", "records per person", "duration", "days to next observation period"),
-          selected = c("number subjects"),
+          label = "Variable",
+          choices = c("Number subjects", "Records per person", "Duration", "Days to next observation period"),
+          selected = c("Number subjects"),
           multiple = FALSE
         ),
         plot_type = list(
