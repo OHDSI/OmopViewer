@@ -2,7 +2,7 @@
 # predefined content ----
 ## tidy content ----
 tidyContent <- list(
-  title = "Test",
+  title = "Tidy",
   output_type = "DT",
   render = "tidyDT(<filtered_data>, input$columns, input$pivot_estimates)",
   filters = list(
