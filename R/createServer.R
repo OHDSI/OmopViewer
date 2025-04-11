@@ -86,7 +86,7 @@ writeFilterData <- function(x, nm, data) {
 }
 writeContentServer <- function(content, data) {
   purrr::map_chr(content, \(cont) {
-    c(writeOutputServer(cont), writeDownloadServer(cont)) |>
+    c(writeOutputServer(cont), cont$observe, writeDownloadServer(cont)) |>
       paste0(collapse = "\n")
   }) |>
     paste0(collapse = "\n")
@@ -105,7 +105,8 @@ outputFunction <- function(outputType) {
          "plot" = "shiny::plotOutput",
          "grViz" = "DiagrammeR::grVizOutput",
          "plotly" = "plotly::plotlyOutput",
-         "ui" = "shiny::uiOutput")
+         "ui" = "shiny::uiOutput",
+         "reactable" = "reactable::reactableOutput")
 }
 renderFunction <- function(outputType) {
   switch(outputType,
@@ -114,7 +115,8 @@ renderFunction <- function(outputType) {
          "plot" = "shiny::renderPlot",
          "grViz" = "DiagrammeR::renderGrViz",
          "plotly" = "plotly::renderPlotly",
-         "ui" = "shiny::renderUI")
+         "ui" = "shiny::renderUI",
+         "reactable" = "reactable::renderReactable")
 }
 writeDownloadServer <- function(content) {
   download <- content$download

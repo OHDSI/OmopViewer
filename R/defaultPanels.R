@@ -75,3 +75,12 @@ panelDetailsFromResult <- function(result) {
 
   c(panels, defaultPanels)
 }
+
+defaultPanelStructure <- function(panels) {
+  lp <- panelStructureDefaults |>
+    purrr::map(\(ps) ps[ps %in% panels]) |>
+    purrr::compact()
+  ln <- panels[!panels %in% unlist(lp)] |>
+    as.list()
+  c(lp, ln)
+}

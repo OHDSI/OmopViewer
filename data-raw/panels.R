@@ -2,7 +2,7 @@
 # predefined content ----
 ## tidy content ----
 tidyContent <- list(
-  title = "Test",
+  title = "Tidy",
   output_type = "DT",
   render = "tidyDT(<filtered_data>, input$columns, input$pivot_estimates)",
   filters = list(
@@ -120,7 +120,6 @@ rankTableButton <- function(none = character(), header = character(), groupColum
   )
 }
 
-
 # predefined panels ----
 ## incidence ----
 incidencePanel <- list(
@@ -128,7 +127,7 @@ incidencePanel <- list(
   icon = "chart-line",
   data = list(result_type = "incidence"),
   automatic_filters = c("group", "strata", "additional", "settings", "variable_name", "estimate_name"),
-  exclude_filters = "denominator_cohort_name",
+  exclude_filters = c("denominator_cohort_name", "incidence_end_date"),
   filters = list(cdm_name = cdmFilter),
   content = list(
     tidy = tidyContent,
@@ -1263,6 +1262,126 @@ treatmentPanel <- list(
     )
   )
 )
+## summarise large scale characteristics ----
+lscPanel <- list(
+  title = "Large Scale Characteristics",
+  icon = "arrow-up-right-dots",
+  data = list(result_type = "summarise_large_scale_characteristics"),
+  automatic_filters = c("group", "strata", "variable_level", "settings"),
+  filters = list(cdm_name = cdmFilter),
+  content = list(
+    table_lsc <- list(
+      title = "Table",
+      output_type = "reactable",
+      render = "if (identical(input$compare_by, 'no compare')) {
+      cb <- NULL
+      } else {
+      cb <- input$compare_by
+      }
+      if (identical(input$smd_reference, 'no SMD')) {
+      sr <- NULL
+      } else {
+      sr <- input$smd_reference
+      }
+      <filtered_data> |>
+      tableLargeScaleCharacteristics(
+      compareBy = cb,
+      hide = input$hide,
+      smdReference = sr
+      )",
+      observe = "shiny::observeEvent(input$compare_by,{
+        opts <- values[[paste0('<panel>_', input$compare_by)]]
+        opts <- c('no SMD', opts)
+        shinyWidgets::updatePickerInput(
+          inputId = '<prefix>_smd_reference',
+          choices = opts,
+          selected = 'no SMD'
+        )
+      })",
+      filters = list(
+        compare_by = list(
+          button_type = "pickerInput",
+          label = "Compare by",
+          choices = c("no compare", "cdm_name", "cohort_name", "<strata>", "type", "variable_level"),
+          selected = c("no compare"),
+          multiple = FALSE
+        ),
+        hide = list(
+          button_type = "pickerInput",
+          label = "Hide",
+          choices = c("cdm_name", "cohort_name", "<strata>", "type", "variable_level"),
+          selected = c("type"),
+          multiple = TRUE
+        ),
+        smd_reference = list(
+          button_type = "pickerInput",
+          label = "SMD reference",
+          choices = c("no SMD"),
+          selected = c("no SMD"),
+          multiple = FALSE
+        )
+      )
+    ),
+    table = list(
+      title = "Most common codes",
+      output_type = "gt",
+      render = "<filtered_data> |>
+      tableTopLargeScaleCharacteristics(
+      topConcepts = input$top_concepts
+      )",
+      filters = list(
+        top_concepts = list(
+          button_type = "pickerInput",
+          label = "Top concepts",
+          choices = c("10", "25", "100"),
+          selected = c("10"),
+          multiple = FALSE
+        )
+      )
+    ),
+    plot = list(
+      title = "Plot Compared",
+      output_type = "plotly",
+      render = "<filtered_data> |>
+      plotComparedLargeScaleCharacteristics(
+      colour = input$colour,
+      reference = input$reference,
+      facet = input$facet
+      )",
+      observe = "shiny::observeEvent(input$colour,{
+        opts <- values[[paste0('<panel>_', input$colour)]]
+        shinyWidgets::updatePickerInput(
+          inputId = '<prefix>_reference',
+          choices = opts,
+          selected = opts[1]
+        )
+      })",
+      filters = list(
+        colour = list(
+          button_type = "pickerInput",
+          label = "Colour",
+          choices = c("cdm_name", "cohort_name", "<strata>", "type", "variable_level"),
+          selected = NULL,
+          multiple = FALSE
+        ),
+        reference = list(
+          button_type = "pickerInput",
+          label = "Reference",
+          choices = NULL,
+          selected = NULL,
+          multiple = FALSE
+        ),
+        facet = list(
+          button_type = "pickerInput",
+          label = "Facet",
+          choices = c("cdm_name", "cohort_name", "<strata>", "type", "variable_level"),
+          selected = c("cdm_name", "cohort_name", "<strata>"),
+          multiple = TRUE
+        )
+      )
+    )
+  )
+)
 ## deafult ----
 defaultPanel <- list(
   title = "<result_type>",
@@ -1313,6 +1432,7 @@ omopViewerPanels <- list(
   summarise_cohort_attrition = cohortAttritionPanel,
   summarise_cohort_timing = cohortTimingPanel,
   summarise_characteristics = characteristicsPanel,
+  summarise_large_scale_characteristics = lscPanel,
   # IncidencePrevalence
   incidence = incidencePanel,
   incidence_attrition = incidenceAttritionPanel,

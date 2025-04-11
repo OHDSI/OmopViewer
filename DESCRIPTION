@@ -71,6 +71,7 @@ Suggests:
     PatientProfiles,
     plotly,
     progress,
+    reactable,
     rmarkdown,
     RPostgres,
     rsvg,
