@@ -34,12 +34,16 @@ jobs:
           extra-packages: any::rcmdcheck
           needs: check
 
-      - name: Run script to generate Shiny app
-        run: Rscript extras/createDefaultShiny.R
-
-      - name: Deploy to shinyapps.io
-        #if: github.event_name != 'pull_request'
+      - name: Deploy TEST to shinyapps.io
+        if: github.event_name == 'pull_request'
         env:
           SHINYAPPS_TOKEN: ${{ secrets.SHINYAPPS_TOKEN }}
           SHINYAPPS_SECRET: ${{ secrets.SHINYAPPS_SECRET }}
-        run: Rscript extras/deployDefaultShiny.R
+        run: Rscript extras/deployTestShiny.R
+
+      - name: Deploy EXAMPLE to shinyapps.io
+        if: github.event_name != 'pull_request'
+        env:
+          SHINYAPPS_TOKEN: ${{ secrets.SHINYAPPS_TOKEN }}
+          SHINYAPPS_SECRET: ${{ secrets.SHINYAPPS_SECRET }}
+        run: Rscript extras/deployExampleShiny.R
