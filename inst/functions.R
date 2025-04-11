@@ -373,35 +373,85 @@ getValues <- function(result, resultList) {
     }) |>
     purrr::flatten()
 }
-tableComparedLargeScaleCharacteristics <- function(result,
-                                                   type = "reactable",
-                                                   compareBy = "variable_level",
-                                                   hide = c("type"),
-                                                   smdReference = NULL) {
-  # initial checks
-  result <- omopgenerics::validateResultArgument(result)
-  result <- result |>
+tableTopLargeScaleCharacteristics <- function(result,
+                                              topConcepts = 10) {
+  # check input
+  result <- omopgenerics::validateResultArgument(result) |>
     omopgenerics::filterSettings(.data$result_type == "summarise_large_scale_characteristics")
+  topConcepts <- as.integer(topConcepts)
+  omopgenerics::assertNumeric(topConcepts, integerish = TRUE, length = 1)
+
+  # create table
+  x <- result |>
+    omopgenerics::tidy() |>
+    dplyr::group_by(dplyr::across(!c(
+      "variable_name", "concept_id", "count", "percentage"
+    ))) |>
+    dplyr::arrange(dplyr::desc(.data$percentage)) |>
+    dplyr::slice_head(n = topConcepts) |>
+    dplyr::mutate("top" = dplyr::row_number()) |>
+    dplyr::ungroup() |>
+    dplyr::mutate(estimate_value = sprintf(
+      "%s (%s) <br> %i (%.1f%%)", .data$variable_name, .data$concept_id,
+      .data$count, .data$percentage
+    )) |>
+    dplyr::select(!c("variable_name", "concept_id", "count", "percentage")) |>
+    dplyr::rename(window = "variable_level") |>
+    dplyr::mutate(estimate_name = "counts", estimate_type = "character")
+  header <- x |>
+    dplyr::select(!dplyr::starts_with(c("estimate", "top"))) |>
+    as.list() |>
+    purrr::map(unique) |>
+    purrr::keep(\(x) length(x) > 1) |>
+    names()
+  hide <- colnames(x)[!colnames(x) %in% c("top", "estimate_value", header)]
+
+  # final table
+  x |>
+    visOmopResults::visTable(header = header, type = "gt", hide = hide) |>
+    gt::fmt_markdown()
+}
+tableLargeScaleCharacteristics <- function(result,
+                                           compareBy = NULL,
+                                           hide = c("type"),
+                                           smdReference = NULL,
+                                           type = "reactable") {
+  # initial checks
+  result <- result |>
+    omopgenerics::validateResultArgument() |>
+    omopgenerics::filterSettings(.data$result_type == "summarise_large_scale_characteristics") |>
+    dplyr::filter(.data$estimate_name == "percentage")
 
   strataCols <- omopgenerics::strataColumns(result)
   choic <- c("cdm_name", "cohort_name", strataCols, "variable_level", "type")
-  omopgenerics::assertChoice(type, choices = c("DT", "reactable"))
-  omopgenerics::assertChoice(compareBy, choices = choic, length = 1)
-  omopgenerics::assertChoice(hide, choices = choic[!choic %in% compareBy])
-  opts <- unique(result[[compareBy]])
-  if (identical(smdReference, "no SMD")) smdReference <- NULL
-  omopgenerics::assertChoice(smdReference, choices = opts, length = 1, null = TRUE)
+  hide <- hide %||% character()
 
+  omopgenerics::assertChoice(type, choices = c("DT", "reactable"))
+  omopgenerics::assertChoice(compareBy, choices = choic, length = 1, null = TRUE)
+  omopgenerics::assertChoice(hide, choices = choic)
+
+  hide <- hide[!hide %in% compareBy]
   result <- omopgenerics::tidy(result) |>
     dplyr::select(!dplyr::all_of(hide))
 
+  if (length(compareBy) == 0) {
+    opts <- "percentage"
+    smdReference <- NULL
+  } else {
+    opts <- unique(result[[compareBy]])
+    omopgenerics::assertChoice(smdReference, choices = opts, length = 1, null = TRUE)
+  }
+
   # pivot
-  result <- result |>
-    tidyr::pivot_wider(
-      names_from = dplyr::all_of(compareBy),
-      values_fill = 0,
-      values_from = "percentage"
-    )
+  if (!is.null(compareBy)) {
+    result <- result |>
+      tidyr::pivot_wider(
+        names_from = dplyr::all_of(compareBy),
+        values_fill = 0,
+        values_from = "percentage"
+      )
+  }
+
   result <- result |>
     dplyr::select(dplyr::any_of(c(
       "cdm_name", "cohort_name", strataCols, "type",
@@ -453,38 +503,57 @@ plotComparedLargeScaleCharacteristics <- function(result,
   result <- omopgenerics::tidy(result) |>
     dplyr::rename(concept_name = "variable_name")
   opts <- unique(result[[colour]])
+
   if (length(opts) < 2) {
-    cli::cli_abort(c(x = "No multiple values for {.var {colour}} to compare."))
-  }
-  omopgenerics::assertChoice(reference, choices = opts, length = 1, null = TRUE)
+    cli::cli_inform(c(x = "No multiple values for {.var {colour}} to compare."))
+    p <- ggplot2::ggplot() +
+      ggplot2::annotate(
+        geom = "text", x = 0.5, y = 0.5, size = 6, hjust = 0.5,
+        label = paste0("No multiple values to compare for: ", colour),
+      ) +
+      ggplot2::theme_void() +
+      ggplot2::xlim(0, 1) + ylim(0, 1)
+  } else {
+    omopgenerics::assertChoice(reference, choices = opts, length = 1, null = TRUE)
 
-  # prepare reference
-  ref <- result |>
-    dplyr::filter(.data[[colour]] == .env$reference) |>
-    dplyr::rename(reference_percentage = "percentage") |>
-    dplyr::select(!dplyr::all_of(colour)) |>
-    dplyr::cross_join(dplyr::tibble(!!colour := opts[opts != reference]))
-  join <- colnames(ref)[colnames(ref) != "reference_percentage"]
-  result <- result |>
-    dplyr::filter(.data[[colour]] != .env$reference) |>
-    dplyr::full_join(ref, by = join) |>
-    dplyr::mutate(dplyr::across(
-      c("percentage", "reference_percentage"), \(x) dplyr::coalesce(x, 0)
-    ))
+    # prepare reference
+    ref <- result |>
+      dplyr::filter(.data[[colour]] == .env$reference) |>
+      dplyr::rename(reference_percentage = "percentage") |>
+      dplyr::select(!dplyr::all_of(colour)) |>
+      dplyr::cross_join(dplyr::tibble(!!colour := opts[opts != reference]))
+    join <- colnames(ref)[colnames(ref) != "reference_percentage"]
+    result <- result |>
+      dplyr::filter(.data[[colour]] != .env$reference) |>
+      dplyr::full_join(ref, by = join) |>
+      dplyr::mutate(dplyr::across(
+        c("percentage", "reference_percentage"), \(x) dplyr::coalesce(x, 0)
+      ))
 
-  label <- c(choic[choic != colour], "concept_name", "concept_id")
-
-  p <- visOmopResults::scatterPlot(
-    result = result, x= "reference_percentage", y = "percentage",
-    point = TRUE, line = FALSE, ribbon = FALSE, ymin = NULL, ymax = NULL,
-    facet = facet, colour = colour, group = NULL, label = label
-  ) +
-    ggplot2::geom_line(
-      mapping = ggplot2::aes(x = x, y = y),
-      data = dplyr::tibble(x = c(0, 100), y = c(0, 100)),
-      color = "black",
-      linetype = "dashed",
-      inherit.aes = FALSE
+    label <- c(choic[choic != colour], "concept_name", "concept_id")
+    colourLab <- paste0(
+      "Comparator (",
+      colour |>
+        stringr::str_replace_all(pattern = "_", replacement = " ") |>
+        stringr::str_to_sentence(),
+      ")"
     )
+
+    p <- visOmopResults::scatterPlot(
+      result = result, x= "reference_percentage", y = "percentage",
+      point = TRUE, line = FALSE, ribbon = FALSE, ymin = NULL, ymax = NULL,
+      facet = facet, colour = colour, group = NULL, label = label
+    ) +
+      ggplot2::geom_line(
+        mapping = ggplot2::aes(x = x, y = y),
+        data = dplyr::tibble(x = c(0, 100), y = c(0, 100)),
+        color = "black",
+        linetype = "dashed",
+        inherit.aes = FALSE
+      ) +
+      ggplot2::ylab("Comparator (%)") +
+      ggplot2::xlab("Reference (%)") +
+      ggplot2::labs(colour = colourLab, fill = colourLab)
+  }
   plotly::ggplotly(p)
 }

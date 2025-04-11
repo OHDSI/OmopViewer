@@ -1267,18 +1267,27 @@ lscPanel <- list(
   title = "Large Scale Characteristics",
   icon = "arrow-up-right-dots",
   data = list(result_type = "summarise_large_scale_characteristics"),
-  automatic_filters = c("group", "strata", "variable_level", "estimate_name", "settings"),
+  automatic_filters = c("group", "strata", "variable_level", "settings"),
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
-    table = list(
-      title = "Table Compared",
+    table_lsc <- list(
+      title = "Table",
       output_type = "reactable",
-      render = "<filtered_data> |>
-      tableComparedLargeScaleCharacteristics(
-      compareBy = input$compare_by,
+      render = "if (identical(input$compare_by, 'no compare')) {
+      cb <- NULL
+      } else {
+      cb <- input$compare_by
+      }
+      if (identical(input$smd_reference, 'no SMD')) {
+      sr <- NULL
+      } else {
+      sr <- input$smd_reference
+      }
+      <filtered_data> |>
+      tableLargeScaleCharacteristics(
+      compareBy = cb,
       hide = input$hide,
-      smdReference = input$smd_reference
+      smdReference = sr
       )",
       observe = "shiny::observeEvent(input$compare_by,{
         opts <- values[[paste0('<panel>_', input$compare_by)]]
@@ -1293,8 +1302,8 @@ lscPanel <- list(
         compare_by = list(
           button_type = "pickerInput",
           label = "Compare by",
-          choices = c("cdm_name", "cohort_name", "<strata>", "type", "variable_level"),
-          selected = c("variable_level"),
+          choices = c("no compare", "cdm_name", "cohort_name", "<strata>", "type", "variable_level"),
+          selected = c("no compare"),
           multiple = FALSE
         ),
         hide = list(
@@ -1307,8 +1316,25 @@ lscPanel <- list(
         smd_reference = list(
           button_type = "pickerInput",
           label = "SMD reference",
-          choices = NULL,
+          choices = c("no SMD"),
           selected = c("no SMD"),
+          multiple = FALSE
+        )
+      )
+    ),
+    table = list(
+      title = "Most common codes",
+      output_type = "gt",
+      render = "<filtered_data> |>
+      tableTopLargeScaleCharacteristics(
+      topConcepts = input$top_concepts
+      )",
+      filters = list(
+        top_concepts = list(
+          button_type = "pickerInput",
+          label = "Top concepts",
+          choices = c("10", "25", "100"),
+          selected = c("10"),
           multiple = FALSE
         )
       )
