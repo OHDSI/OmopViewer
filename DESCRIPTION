@@ -70,6 +70,7 @@ Suggests:
     OmopSketch,
     PatientProfiles,
     plotly,
+    progress,
     rmarkdown,
     RPostgres,
     rsvg,
