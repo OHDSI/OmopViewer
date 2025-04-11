@@ -2,6 +2,18 @@ url: https://ohdsi.github.io/OmopViewer/
 template:
   bootstrap: 5
 
+navbar:
+  structure:
+    left:
+    - home
+    - reference
+    - articles
+    - example-app
+  components:
+    example-app:
+      text: "Example App"
+      href: https://dpa-pde-oxford.shinyapps.io/OmopViewerExample/
+
 articles:
 - title: Static App
   navbar: "Static App"
