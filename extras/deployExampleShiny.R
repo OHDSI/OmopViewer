@@ -1,6 +1,8 @@
-if (!rlang::is_installed("rsconnect")) {
-  install.packages("rsconnect")
-}
+# DO NOT EDIT
+# THIS FILE IS FOR THE GITHUB action
+
+devtools::load_all()
+exportStaticApp(result = omopViewerResults, directory = here::here("extras"))
 rsconnect::setAccountInfo(name = "dpa-pde-oxford",
                           token = Sys.getenv("SHINYAPPS_TOKEN"),
                           secret = Sys.getenv("SHINYAPPS_SECRET"))
