@@ -42,9 +42,4 @@ jobs:
         env:
           SHINYAPPS_TOKEN: ${{ secrets.SHINYAPPS_TOKEN }}
           SHINYAPPS_SECRET: ${{ secrets.SHINYAPPS_SECRET }}
-        run: |
-          install.packages("rsconnect")
-          rsconnect::setAccountInfo(name = "dpa-pde-oxford",
-                                    token = Sys.getenv("SHINYAPPS_TOKEN"),
-                                    secret = Sys.getenv("SHINYAPPS_SECRET"))
-          rsconnect::deployApp(appDir = "extras/shiny", appName = "OmopViewerExample")
+        run: Rscript extras/deployDefaultShiny.R
