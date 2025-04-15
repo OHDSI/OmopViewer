@@ -34,6 +34,13 @@ jobs:
           extra-packages: any::rcmdcheck
           needs: check
 
+      - name: Create shiny app
+        run: Rscript extras/createShiny.R
+
+      - name: Create renv file
+        run: Rscript -e 'renv::init()'
+        working-directory: extras/shiny
+
       - name: Deploy TEST to shinyapps.io
         if: github.event_name == 'pull_request'
         env:
