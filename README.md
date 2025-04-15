@@ -53,28 +53,23 @@ results and can be modified later locally.
 ``` r
 # lets generate some results
 library(CohortCharacteristics)
-#> Registered S3 method overwritten by 'visOmopResults':
-#>   method                 from        
-#>   tidy.summarised_result omopgenerics
 cdm <- mockCohortCharacteristics()
-#> Note: method with signature 'DBIConnection#Id' chosen for function 'dbExistsTable',
-#>  target signature 'duckdb_connection#Id'.
-#>  "duckdb_connection#ANY" would also be valid
 result <- summariseCharacteristics(cdm$cohort1) |>
   bind(summariseCohortAttrition(cdm$cohort1))
 #> ℹ adding demographics columns
 #> ℹ summarising data
+#> ℹ summarising cohort cohort_1
+#> ℹ summarising cohort cohort_2
+#> ℹ summarising cohort cohort_3
 #> ✔ summariseCharacteristics finished!
-#> `cohort_definition_id` casted to character.
 
 exportStaticApp(result = result, directory = tempdir())
 #> ℹ Processing data
-#> ✔ Data processed: 2 panels idenfied: `summarise_characteristics` and
-#>   `summarise_cohort_attrition`.
+#> ✔ Data processed: 2 panels idenfied: `summarise_cohort_attrition` and
+#>   `summarise_characteristics`.
 #> ℹ Creating shiny from provided data
-#> `cohort_definition_id` eliminated from settings as all elements are NA.
 #> ✔ Shiny created in:
-#>   /var/folders/pl/k11lm9710hlgl02nvzx4z9wr0000gp/T//RtmpYP9P88/shiny
+#>   /var/folders/pl/k11lm9710hlgl02nvzx4z9wr0000gp/T//RtmpBLLZg0/shiny
 ```
 
 This function allow some customisation of the shiny with the arguments:
@@ -119,3 +114,11 @@ By default the shiny generated will have no data, you have to upload
 data from a csv or zip file that you have it locally. The
 summarised_results will be processed and you will be allowed to choose
 which results to visualise.
+
+## Example shiny
+
+An example shiny can be found in:
+<https://dpa-pde-oxford.shinyapps.io/OmopViewerExample/>. This
+`shinyApp` is automatically build from `main` using the latest versions
+of `omopViewerResults` dataset and `omopViewerPanels` panels
+definitions.
