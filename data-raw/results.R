@@ -21,6 +21,12 @@ cdm$drug_exposure <- cdm$drug_exposure |>
     )
   ) |>
   dplyr::compute(name = "drug_exposure")
+cdm$condition_occurrence <- cdm$condition_occurrence |>
+  dplyr::mutate(condition_concept_id = dplyr::if_else(
+    .data$condition_occurrence_id %% 10 & .data$condition_concept_id == 381316L,
+    0L, .data$condition_concept_id
+  )) |>
+  dplyr::compute(name = "condition_occurrence")
 
 # create cohorts
 codelistConditions <- list(
