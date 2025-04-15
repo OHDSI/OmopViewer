@@ -2,8 +2,18 @@
 # IT IS USED IN THE GITHUB ACTION
 
 devtools::load_all()
-exportStaticApp(result = omopViewerResults, directory = here::here("extras"))
-rsconnect::setAccountInfo(name = "dpa-pde-oxford",
-                          token = Sys.getenv("SHINYAPPS_TOKEN"),
-                          secret = Sys.getenv("SHINYAPPS_SECRET"))
-rsconnect::deployApp(appDir = "extras/shiny", appName = appName, forceUpdate = TRUE)
+exportStaticApp(
+  result = omopViewerResults,
+  directory = file.path(getwd(), "extras"),
+  background = file.path(getwd(), "extras", "backgroundExample.md")
+)
+rsconnect::setAccountInfo(
+  name = "dpa-pde-oxford",
+  token = Sys.getenv("SHINYAPPS_TOKEN"),
+  secret = Sys.getenv("SHINYAPPS_SECRET")
+)
+rsconnect::deployApp(
+  appDir = file.path(getwd(), "extras", "shiny"),
+  appName = appName,
+  forceUpdate = TRUE
+)
