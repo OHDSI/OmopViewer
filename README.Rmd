@@ -93,3 +93,7 @@ launchDynamicApp()
 ```
 
 By default the shiny generated will have no data, you have to upload data from a csv or zip file that you have it locally. The summarised_results will be processed and you will be allowed to choose which results to visualise.
+
+## Example shiny
+
+An example shiny can be found in: <https://dpa-pde-oxford.shinyapps.io/OmopViewerExample/>. This `shinyApp` is automatically build from `main` using the latest versions of `omopViewerResults` dataset and `omopViewerPanels` panels definitions.

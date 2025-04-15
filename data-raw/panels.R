@@ -1175,7 +1175,7 @@ indicationPanel <- list(
   title = "Indication",
   icon = "disease",
   data = list(result_type = "summarise_indication"),
-  automatic_filters = c("cohort_name", "strata", "additional", "variable_name", "estimate_name", "settings"),
+  automatic_filters = c("cohort_name", "strata", "additional", "variable_name", "estimate_name", "mutually_exclusive", "index_date"),
   filters = list(cdm_name = cdmFilter),
   content = list(
     tidy = tidyContent,
@@ -1221,7 +1221,7 @@ treatmentPanel <- list(
   title = "Treatments",
   icon = "disease",
   data = list(result_type = "summarise_treatment"),
-  automatic_filters = c("cohort_name", "strata", "additional", "variable_name", "estimate_name", "settings"),
+  automatic_filters = c("cohort_name", "strata", "additional", "variable_name", "estimate_name", "mutually_exclusive", "index_date"),
   filters = list(cdm_name = cdmFilter),
   content = list(
     tidy = tidyContent,

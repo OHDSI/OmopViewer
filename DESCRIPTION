@@ -1,7 +1,7 @@
 Package: OmopViewer
 Type: Package
 Title: Visualise OMOP Results using 'shiny' Applications
-Version: 0.2.1.900
+Version: 0.3.0
 Authors@R: c(
     person(
         "Martí", "Català", , "marti.catalasabate@ndorms.ox.ac.uk", 
@@ -32,7 +32,7 @@ LazyData: true
 RoxygenNote: 7.3.2
 URL: https://ohdsi.github.io/OmopViewer/
 Depends: 
-    R (>= 3.5)
+    R (>= 4.1)
 Imports: 
     bslib,
     cli,
@@ -74,6 +74,7 @@ Suggests:
     plotly,
     progress,
     reactable,
+    renv,
     rmarkdown,
     RPostgres,
     rsconnect,
