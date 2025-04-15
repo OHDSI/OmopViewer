@@ -974,8 +974,7 @@ doseCoveragePanel <- list(
       DrugUtilisation::tableDoseCoverage(
       header = input$header,
       groupColumn = input$group_column,
-      hide = input$hide,
-      settingsColumn = omopgenerics::settingsColumns(res)
+      hide = input$hide
       )",
       filters = rankTableButton(
         none = c("unit", "route", "pattern_id"),
