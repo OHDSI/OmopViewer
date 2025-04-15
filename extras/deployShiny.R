@@ -7,6 +7,7 @@ exportStaticApp(
   directory = file.path(getwd(), "extras"),
   background = file.path(getwd(), "extras", "backgroundExample.md")
 )
+renv::init()
 rsconnect::setAccountInfo(
   name = "dpa-pde-oxford",
   token = Sys.getenv("SHINYAPPS_TOKEN"),
