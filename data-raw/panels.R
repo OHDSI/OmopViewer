@@ -974,14 +974,13 @@ doseCoveragePanel <- list(
       DrugUtilisation::tableDoseCoverage(
       header = input$header,
       groupColumn = input$group_column,
-      hide = input$hide,
-      settingsColumn = omopgenerics::settingsColumns(res)
+      hide = input$hide
       )",
       filters = rankTableButton(
         none = c("unit", "route", "pattern_id"),
         header = c("variable_name", "estimate_name"),
         groupColumn = c("cdm_name", "ingredient_name"),
-        hide = c("variable_level")
+        hide = c("variable_level", "<settings>")
       ),
       download = downloadGtTable("table_dose_coverage")
     )
@@ -1066,7 +1065,7 @@ drugRestartPanel <- list(
       hide = input$hide
       )",
       filters = rankTableButton(
-        none = c("variable_level", "<strata>", "follow_up_days"),
+        none = c("variable_level", "<strata>", "follow_up_days", "estimate_name"),
         header = c("cdm_name", "cohort_name"),
         groupColumn = c("variable_name"),
         hide = c("<settings>")
@@ -1123,7 +1122,7 @@ dusPanel <- list(
         none = c("concept_set", "ingredient", "variable_name", "estimate_name"),
         header = c("cdm_name"),
         groupColumn = c("cohort_name", "<strata>"),
-        hide = c("variable_level")
+        hide = c("variable_level", "<settings>")
       ),
       download = downloadGtTable("table_drug_utilisation")
     ),
