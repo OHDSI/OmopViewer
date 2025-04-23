@@ -91,8 +91,6 @@ exportStaticApp <- function(result,
   # functions to copy
   functions <- readLines(system.file("functions.R", package = "OmopViewer"))
 
-  print(preprocess)
-
   # create global
   global <- createGlobal(c(ui, server, preprocess, functions))
 
