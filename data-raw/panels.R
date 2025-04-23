@@ -153,15 +153,20 @@ incidencePanel <- list(
     ),
     plot = list(
       title = "Plot Incidence",
-      output_type = "plot",
+      output_type = "ui",
       reactive = "<filtered_data> |>
       IncidencePrevalence::plotIncidence(
       x = input$x,
       facet = input$facet,
       colour = input$colour
       )",
-      render = "<reactive_data>",
+      render = "renderInteractivePlot(<reactive_data>, input$interactive)",
       filters = list(
+        interactive = list(
+          button_type = "materialSwitch",
+          label = "Interactive",
+          value = TRUE
+        ),
         x = list(
           button_type = "pickerInput",
           label = "x axis",
@@ -220,15 +225,20 @@ prevalencePanel <- list(
     ),
     plot = list(
       title = "Plot Prevalence",
-      output_type = "plot",
+      output_type = "ui",
       reactive = "<filtered_data> |>
       IncidencePrevalence::plotPrevalence(
       x = input$x,
       facet = input$facet,
       colour = input$colour
       )",
-      render = "<reactive_data>",
+      render = "renderInteractivePlot(<reactive_data>, input$interactive)",
       filters = list(
+        interactive = list(
+          button_type = "materialSwitch",
+          label = "Interactive",
+          value = TRUE
+        ),
         x = list(
           button_type = "pickerInput",
           label = "x axis",
@@ -356,13 +366,18 @@ cohortOverlapPanel <- list(
     ),
     plot = list(
       title = "Plot Overlap",
-      output_type = "plot",
+      output_type = "ui",
       reactive = "<filtered_data> |>
       CohortCharacteristics::plotCohortOverlap(
       facet = input$facet
       )",
-      render = "<reactive_data>",
+      render = "renderInteractivePlot(<reactive_data>, input$interactive)",
       filters = list(
+        interactive = list(
+          button_type = "materialSwitch",
+          label = "Interactive",
+          value = TRUE
+        ),
         facet = list(
           button_type = "pickerInput",
           label = "Facet",
@@ -404,14 +419,19 @@ cohortCountPanel <- list(
     ),
     plot = list(
       title = "Plot Counts",
-      output_type = "plot",
+      output_type = "ui",
       reactive = "<filtered_data> |>
       CohortCharacteristics::plotCohortCount(
       facet = input$facet,
       colour = input$colour
       )",
-      render = "<reactive_data>",
+      render = "renderInteractivePlot(<reactive_data>, input$interactive)",
       filters = list(
+        interactive = list(
+          button_type = "materialSwitch",
+          label = "Interactive",
+          value = TRUE
+        ),
         facet = list(
           button_type = "pickerInput",
           label = "Facet",
@@ -532,7 +552,7 @@ cohortTimingPanel <- list(
     ),
     plot = list(
       title = "Plot Timing",
-      output_type = "plot",
+      output_type = "ui",
       reactive = "<filtered_data> |>
       CohortCharacteristics::plotCohortTiming(
       plotType = input$plot_type,
@@ -541,8 +561,13 @@ cohortTimingPanel <- list(
       facet = input$facet,
       colour = input$colour
       )",
-      render = "<reactive_data>",
+      render = "renderInteractivePlot(<reactive_data>, input$interactive)",
       filters = list(
+        interactive = list(
+          button_type = "materialSwitch",
+          label = "Interactive",
+          value = TRUE
+        ),
         plot_type = list(
           button_type = "pickerInput",
           label = "Plot type",
@@ -610,15 +635,20 @@ characteristicsPanel <- list(
     ),
     plot = list(
       title = "Plot Characteristics",
-      output_type = "plot",
+      output_type = "ui",
       reactive = "<filtered_data> |>
       CohortCharacteristics::plotCharacteristics(
       plotType = input$plot_type,
       facet = input$facet,
       colour = input$colour
       )",
-      render = "<reactive_data>",
+      render = "renderInteractivePlot(<reactive_data>, input$interactive)",
       filters = list(
+        interactive = list(
+          button_type = "materialSwitch",
+          label = "Interactive",
+          value = TRUE
+        ),
         plot_type = list(
           button_type = "pickerInput",
           label = "Plot type",
@@ -683,7 +713,7 @@ observationPeriodPanel <- list(
     ),
     plot = list(
       title = "Plot Observation period",
-      output_type = "plot",
+      output_type = "ui",
       reactive = "<filtered_data> |>
       OmopSketch::plotObservationPeriod(
       variableName = input$variable,
@@ -691,8 +721,13 @@ observationPeriodPanel <- list(
       facet = input$facet,
       colour = input$colour
       )",
-      render = "<reactive_data>",
+      render = "renderInteractivePlot(<reactive_data>, input$interactive)",
       filters = list(
+        interactive = list(
+          button_type = "materialSwitch",
+          label = "Interactive",
+          value = TRUE
+        ),
         variable = list(
           button_type = "pickerInput",
           label = "Variable",
@@ -756,14 +791,19 @@ recordCountPanel <- list(
     tidy = tidyContent,
     plot = list(
       title = "Plot record count",
-      output_type = "plot",
+      output_type = "ui",
       reactive = "<filtered_data> |>
       OmopSketch::plotRecordCount(
       facet = input$facet,
       colour = input$colour
       )",
-      render = "<reactive_data>",
+      render = "renderInteractivePlot(<reactive_data>, input$interactive)",
       filters = list(
+        interactive = list(
+          button_type = "materialSwitch",
+          label = "Interactive",
+          value = TRUE
+        ),
         facet = list(
           button_type = "pickerInput",
           label = "Facet",
@@ -813,14 +853,19 @@ inObservationPanel <- list(
     tidy = tidyContent,
     plot = list(
       title = "Plot in observation",
-      output_type = "plot",
+      output_type = "ui",
       reactive = "<filtered_data> |>
       OmopSketch::plotInObservation(
       facet = input$facet,
       colour = input$colour
       )",
-      render = "<reactive_data>",
+      render = "renderInteractivePlot(<reactive_data>, input$interactive)",
       filters = list(
+        interactive = list(
+          button_type = "materialSwitch",
+          label = "Interactive",
+          value = TRUE
+        ),
         facet = list(
           button_type = "pickerInput",
           label = "Facet",
@@ -1044,15 +1089,20 @@ ppcPanel <- list(
     ),
     plot = list(
       title = "Plot PPC",
-      output_type = "plot",
+      output_type = "ui",
       reactive = "<filtered_data> |>
       DrugUtilisation::plotProportionOfPatientsCovered(
       ribbon = input$ribbon,
       facet = input$facet,
       colour = input$colour
       )",
-      render = "<reactive_data>",
+      render = "renderInteractivePlot(<reactive_data>, input$interactive)",
       filters = list(
+        interactive = list(
+          button_type = "materialSwitch",
+          label = "Interactive",
+          value = TRUE
+        ),
         ribbon = list(
           button_type = "checkbox",
           label = "Ribbon",
@@ -1106,14 +1156,19 @@ drugRestartPanel <- list(
     ),
     plot = list(
       title = "Plot Drug Restart",
-      output_type = "plot",
+      output_type = "ui",
       reactive = "<filtered_data> |>
       DrugUtilisation::plotDrugRestart(
       facet = input$facet,
       colour = input$colour
       )",
-      render = "<reactive_data>",
+      render = "renderInteractivePlot(<reactive_data>, input$interactive)",
       filters = list(
+        interactive = list(
+          button_type = "materialSwitch",
+          label = "Interactive",
+          value = TRUE
+        ),
         facet = list(
           button_type = "pickerInput",
           label = "Facet",
@@ -1162,7 +1217,7 @@ dusPanel <- list(
     ),
     plot = list(
       title = "Plot Drug Utilisation",
-      output_type = "plot",
+      output_type = "ui",
       reactive = "<filtered_data> |>
       DrugUtilisation::plotDrugUtilisation(
       variable = input$variable,
@@ -1170,8 +1225,13 @@ dusPanel <- list(
       facet = input$facet,
       colour = input$colour
       )",
-      render = "<reactive_data>",
+      render = "renderInteractivePlot(<reactive_data>, input$interactive)",
       filters = list(
+        interactive = list(
+          button_type = "materialSwitch",
+          label = "Interactive",
+          value = TRUE
+        ),
         variable = list(
           button_type = "pickerInput",
           label = "Variable",
@@ -1245,6 +1305,11 @@ indicationPanel <- list(
           label = "Interactive",
           value = TRUE
         ),
+        interactive = list(
+          button_type = "materialSwitch",
+          label = "Interactive",
+          value = TRUE
+        ),
         facet = list(
           button_type = "pickerInput",
           label = "Facet",
@@ -1286,13 +1351,18 @@ treatmentPanel <- list(
     ),
     plot = list(
       title = "Plot Treatment",
-      output_type = "plot",
+      output_type = "ui",
       reactive = "<filtered_data> |>
       DrugUtilisation::plotTreatment(
       facet = input$facet
       )",
-      render = "<reactive_data>",
+      render = "renderInteractivePlot(<reactive_data>, input$interactive)",
       filters = list(
+        interactive = list(
+          button_type = "materialSwitch",
+          label = "Interactive",
+          value = TRUE
+        ),
         facet = list(
           button_type = "pickerInput",
           label = "Facet",
@@ -1366,7 +1436,7 @@ lscPanel <- list(
         )
       )
     ),
-    table = list(
+    table_most_common = list(
       title = "Most common codes",
       output_type = "gt",
       reactive = "<filtered_data> |>
@@ -1384,7 +1454,7 @@ lscPanel <- list(
         )
       )
     ),
-    plot = list(
+    plot_compared = list(
       title = "Plot Compared",
       output_type = "plotly",
       reactive = "<filtered_data> |>
