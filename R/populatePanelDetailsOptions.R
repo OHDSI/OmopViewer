@@ -134,15 +134,15 @@ populateFunctionNames <- function(panelDetails) {
       filterFunctionName <- paste0(pd$filter_function, "()")
       pd$content <- pd$content |>
         purrr::map(\(cont) {
-          ractiveFunctionName <- paste0(cont$reactive_function, "()")
+          reactiveFunctionName <- paste0(cont$reactive_function, "()")
           cont$observer <- cont$observer |>
-            substituteFunctionNames(filterFunctionName, ractiveFunctionName)
+            substituteFunctionNames(filterFunctionName, reactiveFunctionName)
           cont$reactive <- cont$reactive |>
-            substituteFunctionNames(filterFunctionName, ractiveFunctionName)
+            substituteFunctionNames(filterFunctionName, reactiveFunctionName)
           cont$render <- cont$render |>
-            substituteFunctionNames(filterFunctionName, ractiveFunctionName)
+            substituteFunctionNames(filterFunctionName, reactiveFunctionName)
           cont$download$render <- cont$download$render |>
-            substituteFunctionNames(filterFunctionName, ractiveFunctionName)
+            substituteFunctionNames(filterFunctionName, reactiveFunctionName)
           cont
         })
       pd
