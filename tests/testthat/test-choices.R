@@ -1,9 +1,7 @@
 test_that("test choices", {
   # empty result
   res <- omopgenerics::emptySummarisedResult()
-  resultList <- res |>
-    panelDetailsFromResult() |>
-    resultListFromPanelDetails()
+  resultList <- purrr::map(panelDetailsFromResult(res), \(x) x$data)
   expect_no_error(x <- prepareResult(res, resultList))
   expected <- list()
   expect_equal(unname(x), expected)
@@ -92,4 +90,27 @@ test_that("test choices", {
   expect_identical(x$custom_result_2_estimate_name, "count")
   expect_identical(x$custom_result_2_time, "1")
   expect_identical(x$custom_result_2_x, "1")
+})
+
+test_that("test prepare result", {
+  x <- omopViewerResults
+  xl <- list(
+    "abc" = list(result_id = c(1, 2)),
+    "dsk2" = list(result_type = c("prevalence", "prevalence_attrition")),
+    "nxx" = list(result_type = "incidence", denominator_sex = "Female")
+  )
+
+  expect_no_error(res <- prepareResult(result = x, resultList = xl))
+  expect_identical(
+    res,
+    list(
+      "abc" = x |>
+        omopgenerics::filterSettings(result_id %in% c(1, 2)),
+      "dsk2" = x |>
+        omopgenerics::filterSettings(result_type %in% c("prevalence", "prevalence_attrition")),
+      "nxx" = x |>
+        omopgenerics::filterSettings(result_type %in% "incidence") |>
+        omopgenerics::filterSettings(denominator_sex %in% "Female")
+    )
+  )
 })
