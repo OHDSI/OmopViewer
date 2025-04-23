@@ -198,10 +198,8 @@ cast <- function(x) {
     }
   } else if (is.null(x)) {
     x <- "NULL"
-  } else if (is.call(x)) {
-    x <- deparse(x)
   } else {
-    x <- paste0("c(", paste0(x, collapse = ", "), ")")
+    x <- deparse(x)
   }
   return(x)
 }
@@ -285,22 +283,12 @@ writeResultList <- function(resultList) {
   paste0(
     "list(\n",
     purrr::imap_chr(resultList, \(x, nm) {
-      rt <- x$result_type
-      ri <- x$result_id
-      if (is.null(rt)) {
-        if (is.null(ri)) {
-          res <- "list()"
-        } else {
-          res <- paste0("list(result_id = c(", paste0(ri, collapse = "L, "), "L))")
-        }
-      } else {
-        if (is.null(ri)) {
-          res <- paste0("list(result_type = ", cast(rt), ")")
-        } else {
-          res <- paste0("list(\nresult_type = ", cast(rt), ",\nresult_id = c(", paste0(ri, collapse = "L, "), "L)\n)")
-        }
-      }
-      paste0(cast(nm), " = ", res)
+      paste0(
+        nm,
+        " = list(",
+        paste0(purrr::imap(x, \(xx, nx) paste0(nx, " = ", cast(xx))), collapse = ", "),
+        ")"
+      )
     }) |>
       paste0(collapse = ",\n"),
     "\n)"
