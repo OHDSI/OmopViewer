@@ -512,7 +512,8 @@ plotComparedLargeScaleCharacteristics <- function(result,
         label = paste0("No multiple values to compare for: ", colour),
       ) +
       ggplot2::theme_void() +
-      ggplot2::xlim(0, 1) + ylim(0, 1)
+      ggplot2::xlim(0, 1) +
+      ggplot2::ylim(0, 1)
   } else {
     omopgenerics::assertChoice(reference, choices = opts, length = 1, null = TRUE)
 
@@ -545,7 +546,7 @@ plotComparedLargeScaleCharacteristics <- function(result,
       facet = facet, colour = colour, group = NULL, label = label
     ) +
       ggplot2::geom_line(
-        mapping = ggplot2::aes(x = x, y = y),
+        mapping = ggplot2::aes(x = .data$x, y = .data$y),
         data = dplyr::tibble(x = c(0, 100), y = c(0, 100)),
         color = "black",
         linetype = "dashed",
@@ -556,4 +557,11 @@ plotComparedLargeScaleCharacteristics <- function(result,
       ggplot2::labs(colour = colourLab, fill = colourLab)
   }
   plotly::ggplotly(p)
+}
+renderInteractivePlot <- function(plt, interactive) {
+  if (interactive) {
+    plotly::renderPlotly(plt)
+  } else {
+    shiny::renderPlot(plt)
+  }
 }
