@@ -4,7 +4,8 @@
 tidyContent <- list(
   title = "Tidy",
   output_type = "DT",
-  render = "tidyDT(<filtered_data>, input$columns, input$pivot_estimates)",
+  reactive = "tidyDT(<filtered_data>, input$columns, input$pivot_estimates)",
+  render = "<reactive_data>",
   filters = list(
     columns = list(
       button_type = "pickerInput",
@@ -56,15 +57,14 @@ downloadPlot <- function(filename) {
         value = 300
       )
     ),
-    render = "plt <- <rendered_data>
-        ggplot2::ggsave(
-          filename = file,
-          plot = plt,
-          width = as.numeric(input$width),
-          height = as.numeric(input$height),
-          units = input$units,
-          dpi = as.numeric(input$dpi)
-        )",
+    render = "ggplot2::ggsave(
+      filename = file,
+      plot = <reactive_data>,
+      width = as.numeric(input$width),
+      height = as.numeric(input$height),
+      units = input$units,
+      dpi = as.numeric(input$dpi)
+    )",
     filename = filename
   )
 }
@@ -80,7 +80,7 @@ downloadGtTable <- function(filename) {
         multiple = FALSE
       )
     ),
-    render = "gt::gtsave(<rendered_data>, file)",
+    render = "gt::gtsave(<reactive_data>, file)",
     filename = paste0("paste0(\"", filename, ".\", input$format)")
   )
 }
@@ -134,7 +134,7 @@ incidencePanel <- list(
     table = list(
       title = "Table Incidence",
       output_type = "gt",
-      render = "res <- <filtered_data>
+      reactive = "res <- <filtered_data>
       res |>
       IncidencePrevalence::tableIncidence(
       header = input$header,
@@ -142,6 +142,7 @@ incidencePanel <- list(
       hide = input$hide,
       settingsColumn = omopgenerics::settingsColumns(res)
       )",
+      render = "<reactive_data>",
       filters = rankTableButton(
         none = c("<strata>", "incidence_start_date", "incidence_end_date", "denominator_age_group", "denominator_sex"),
         header = "estimate_name",
@@ -153,12 +154,13 @@ incidencePanel <- list(
     plot = list(
       title = "Plot Incidence",
       output_type = "plot",
-      render = "<filtered_data> |>
+      reactive = "<filtered_data> |>
       IncidencePrevalence::plotIncidence(
       x = input$x,
       facet = input$facet,
       colour = input$colour
       )",
+      render = "<reactive_data>",
       filters = list(
         x = list(
           button_type = "pickerInput",
@@ -199,7 +201,7 @@ prevalencePanel <- list(
     table = list(
       title = "Table Prevalence",
       output_type = "gt",
-      render = "res <- <filtered_data>
+      reactive = "res <- <filtered_data>
       res |>
       IncidencePrevalence::tablePrevalence(
       header = input$header,
@@ -207,6 +209,7 @@ prevalencePanel <- list(
       hide = input$hide,
       settingsColumn = omopgenerics::settingsColumns(res)
       )",
+      render = "<reactive_data>",
       filters = rankTableButton(
         none = c("<strata>", "prevalence_start_date", "prevalence_end_date", "denominator_age_group", "denominator_sex"),
         header = "estimate_name",
@@ -218,12 +221,13 @@ prevalencePanel <- list(
     plot = list(
       title = "Plot Prevalence",
       output_type = "plot",
-      render = "<filtered_data> |>
+      reactive = "<filtered_data> |>
       IncidencePrevalence::plotPrevalence(
       x = input$x,
       facet = input$facet,
       colour = input$colour
       )",
+      render = "<reactive_data>",
       filters = list(
         x = list(
           button_type = "pickerInput",
@@ -263,7 +267,7 @@ incidenceAttritionPanel <- list(
     table = list(
       title = "Table Incidence Attrition",
       output_type = "gt",
-      render = "res <- <filtered_data>
+      reactive = "res <- <filtered_data>
       res |>
       IncidencePrevalence::tableIncidenceAttrition(
       header = input$header,
@@ -271,6 +275,7 @@ incidenceAttritionPanel <- list(
       groupColumn = input$group_column,
       hide = input$hide
       )",
+      render = "<reactive_data>",
       filters = rankTableButton(
         none = c("reason"),
         header = "variable_name",
@@ -293,7 +298,7 @@ prevalenceAttritionPanel <- list(
     table = list(
       title = "Table Prevalence Attrition",
       output_type = "gt",
-      render = "res <- <filtered_data>
+      reactive = "res <- <filtered_data>
       res |>
       IncidencePrevalence::tablePrevalenceAttrition(
       header = input$header,
@@ -301,6 +306,7 @@ prevalenceAttritionPanel <- list(
       groupColumn = input$group_column,
       hide = input$hide
       )",
+      render = "<reactive_data>",
       filters = rankTableButton(
         none = c("<strata>"),
         header = "variable_name",
@@ -323,13 +329,14 @@ cohortOverlapPanel <- list(
     table = list(
       title = "Table Overlap",
       output_type = "gt",
-      render = "<filtered_data> |>
+      reactive = "<filtered_data> |>
       CohortCharacteristics::tableCohortOverlap(
       uniqueCombinations = input$unique_combinations,
       header = input$header,
       groupColumn = input$group_column,
       hide = input$hide
       )",
+      render = "<reactive_data>",
       filters = c(
         list(
           unique_combinations = list(
@@ -350,10 +357,11 @@ cohortOverlapPanel <- list(
     plot = list(
       title = "Plot Overlap",
       output_type = "plot",
-      render = "<filtered_data> |>
+      reactive = "<filtered_data> |>
       CohortCharacteristics::plotCohortOverlap(
       facet = input$facet
       )",
+      render = "<reactive_data>",
       filters = list(
         facet = list(
           button_type = "pickerInput",
@@ -379,12 +387,13 @@ cohortCountPanel <- list(
     table = list(
       title = "Table Counts",
       output_type = "gt",
-      render = "<filtered_data> |>
+      reactive = "<filtered_data> |>
       CohortCharacteristics::tableCohortCount(
       header = input$header,
       groupColumn = input$group_column,
       hide = input$hide
       )",
+      render = "<reactive_data>",
       filters = rankTableButton(
         none = c("<strata>", "variable_name", "estimate_name"),
         groupColumn = "cdm_name",
@@ -396,11 +405,12 @@ cohortCountPanel <- list(
     plot = list(
       title = "Plot Counts",
       output_type = "plot",
-      render = "<filtered_data> |>
+      reactive = "<filtered_data> |>
       CohortCharacteristics::plotCohortCount(
       facet = input$facet,
       colour = input$colour
       )",
+      render = "<reactive_data>",
       filters = list(
         facet = list(
           button_type = "pickerInput",
@@ -433,12 +443,13 @@ cohortAttritionPanel <- list(
     table = list(
       title = "Table Attrition",
       output_type = "gt",
-      render = "<filtered_data> |>
+      reactive = "<filtered_data> |>
       CohortCharacteristics::tableCohortAttrition(
       header = input$header,
       groupColumn = input$group_column,
       hide = input$hide
       )",
+      render = "<reactive_data>",
       filters = rankTableButton(
         none = c("reason"),
         groupColumn = c("cdm_name", "cohort_name"),
@@ -450,10 +461,11 @@ cohortAttritionPanel <- list(
     diagram = list(
       title = "Diagram",
       output_type = "grViz",
-      render = "<filtered_data> |>
+      reactive = "<filtered_data> |>
       CohortCharacteristics::plotCohortAttrition(
       show = input$show
       )",
+      render = "<reactive_data>",
       filters = list(
         show = list(
           button_type = "pickerInput",
@@ -472,7 +484,7 @@ cohortAttritionPanel <- list(
             value = 2000
           )
         ),
-        render = "svg <- DiagrammeRsvg::export_svg(<rendered_data>)
+        render = "svg <- DiagrammeRsvg::export_svg(<reactive_data>)
         rsvg::rsvg_png(charToRaw(svg), file, width = input$width)",
         filename = "attrition_diagram.png"
       )
@@ -491,13 +503,14 @@ cohortTimingPanel <- list(
     table = list(
       title = "Table Timing",
       output_type = "gt",
-      render = "<filtered_data> |>
+      reactive = "<filtered_data> |>
       CohortCharacteristics::tableCohortTiming(
       timeScale = input$time_scale,
       header = input$header,
       groupColumn = input$group_column,
       hide = input$hide
       )",
+      render = "<reactive_data>",
       filters = c(
         list(
           time_scale = list(
@@ -520,7 +533,7 @@ cohortTimingPanel <- list(
     plot = list(
       title = "Plot Timing",
       output_type = "plot",
-      render = "<filtered_data> |>
+      reactive = "<filtered_data> |>
       CohortCharacteristics::plotCohortTiming(
       plotType = input$plot_type,
       timeScale = input$time_scale,
@@ -528,6 +541,7 @@ cohortTimingPanel <- list(
       facet = input$facet,
       colour = input$colour
       )",
+      render = "<reactive_data>",
       filters = list(
         plot_type = list(
           button_type = "pickerInput",
@@ -579,12 +593,13 @@ characteristicsPanel <- list(
     table = list(
       title = "Table Characteristics",
       output_type = "gt",
-      render = "<filtered_data> |>
+      reactive = "<filtered_data> |>
       CohortCharacteristics::tableCharacteristics(
       header = input$header,
       groupColumn = input$group_column,
       hide = input$hide
       )",
+      render = "<reactive_data>",
       filters = rankTableButton(
         none = c("<strata>", "variable_name", "variable_level", "estimate_name"),
         groupColumn = character(),
@@ -596,12 +611,13 @@ characteristicsPanel <- list(
     plot = list(
       title = "Plot Characteristics",
       output_type = "plot",
-      render = "<filtered_data> |>
+      reactive = "<filtered_data> |>
       CohortCharacteristics::plotCharacteristics(
       plotType = input$plot_type,
       facet = input$facet,
       colour = input$colour
       )",
+      render = "<reactive_data>",
       filters = list(
         plot_type = list(
           button_type = "pickerInput",
@@ -641,8 +657,9 @@ snapshotPanel <- list(
     table = list(
       title = "Table Snapshot",
       output_type = "gt",
-      render = "<filtered_data> |>
+      reactive = "<filtered_data> |>
       OmopSketch::tableOmopSnapshot()",
+      render = "<reactive_data>",
       download = downloadGtTable("table_snapshot")
     )
   )
@@ -659,20 +676,22 @@ observationPeriodPanel <- list(
     table = list(
       title = "Table Observation period",
       output_type = "gt",
-      render = "<filtered_data> |>
+      reactive = "<filtered_data> |>
       OmopSketch::tableObservationPeriod()",
+      render = "<reactive_data>",
       download = downloadGtTable("table_obsevation_period")
     ),
     plot = list(
       title = "Plot Observation period",
       output_type = "plot",
-      render = "<filtered_data> |>
+      reactive = "<filtered_data> |>
       OmopSketch::plotObservationPeriod(
       variableName = input$variable,
       plotType = input$plot_type,
       facet = input$facet,
       colour = input$colour
       )",
+      render = "<reactive_data>",
       filters = list(
         variable = list(
           button_type = "pickerInput",
@@ -719,8 +738,9 @@ clinicalRecordsPanel <- list(
     table = list(
       title = "Table Clinical records",
       output_type = "gt",
-      render = "<filtered_data> |>
+      reactive = "<filtered_data> |>
       OmopSketch::tableClinicalRecords()",
+      render = "<reactive_data>",
       download = downloadGtTable("table_clinical_records")
     )
   )
@@ -737,11 +757,12 @@ recordCountPanel <- list(
     plot = list(
       title = "Plot record count",
       output_type = "plot",
-      render = "<filtered_data> |>
+      reactive = "<filtered_data> |>
       OmopSketch::plotRecordCount(
       facet = input$facet,
       colour = input$colour
       )",
+      render = "<reactive_data>",
       filters = list(
         facet = list(
           button_type = "pickerInput",
@@ -774,8 +795,9 @@ missingPanel <- list(
     table = list(
       title = "Table Missing data",
       output_type = "gt",
-      render = "<filtered_data> |>
+      reactive = "<filtered_data> |>
       OmopSketch::tableMissingData()",
+      render = "<reactive_data>",
       download = downloadGtTable("table_missing_data")
     )
   )
@@ -792,11 +814,12 @@ inObservationPanel <- list(
     plot = list(
       title = "Plot in observation",
       output_type = "plot",
-      render = "<filtered_data> |>
+      reactive = "<filtered_data> |>
       OmopSketch::plotInObservation(
       facet = input$facet,
       colour = input$colour
       )",
+      render = "<reactive_data>",
       filters = list(
         facet = list(
           button_type = "pickerInput",
@@ -829,12 +852,13 @@ orphanCodesPanel <- list(
     table = list(
       title = "Table Orphan codes",
       output_type = "gt",
-      render = "<filtered_data> |>
+      reactive = "<filtered_data> |>
       CodelistGenerator::tableOrphanCodes(
       header = input$header,
       groupColumn = input$group_column,
       hide = input$hide
       )",
+      render = "<reactive_data>",
       filters = rankTableButton(
         none = c("codelist_name", "domain_id", "variable_name", "variable_level", "standard_concept", "vocabulary_id"),
         groupColumn = character(),
@@ -857,13 +881,14 @@ cohortCodeUsePanel <- list(
     table = list(
       title = "Table Cohort code use",
       output_type = "gt",
-      render = "<filtered_data> |>
+      reactive = "<filtered_data> |>
       CodelistGenerator::tableCohortCodeUse(
       timing = TRUE,
       header = input$header,
       groupColumn = input$group_column,
       hide = input$hide
       )",
+      render = "<reactive_data>",
       filters = rankTableButton(
         none = c("<group>", "<strata>", "<additional>", "variable_name", "variable_level"),
         groupColumn = character(),
@@ -886,12 +911,13 @@ codeUsePanel <- list(
     table = list(
       title = "Table Code use",
       output_type = "gt",
-      render = "<filtered_data> |>
+      reactive = "<filtered_data> |>
       CodelistGenerator::tableCodeUse(
       header = input$header,
       groupColumn = input$group_column,
       hide = input$hide
       )",
+      render = "<reactive_data>",
       filters = rankTableButton(
         none = c("<group>", "<strata>", "<additional>", "<settings>", "variable_name"),
         groupColumn = character(),
@@ -914,12 +940,13 @@ achillesCodeUsePanel <- list(
     table = list(
       title = "Table Achilles code use",
       output_type = "gt",
-      render = "<filtered_data> |>
+      reactive = "<filtered_data> |>
       CodelistGenerator::tableAchillesCodeUse(
       header = input$header,
       groupColumn = input$group_column,
       hide = input$hide
       )",
+      render = "<reactive_data>",
       filters = rankTableButton(
         none = c("<group>", "<strata>", "<additional>", "<settings>", "variable_name"),
         groupColumn = character(),
@@ -942,12 +969,13 @@ unmappedPanel <- list(
     table = list(
       title = "Table Unmapped codes",
       output_type = "gt",
-      render = "<filtered_data> |>
+      reactive = "<filtered_data> |>
       CodelistGenerator::tableUnmappedCodes(
       header = input$header,
       groupColumn = input$group_column,
       hide = input$hide
       )",
+      render = "<reactive_data>",
       filters = rankTableButton(
         none = c("<group>", "<strata>", "<additional>", "<settings>", "variable_name"),
         groupColumn = character(),
@@ -970,12 +998,13 @@ doseCoveragePanel <- list(
     table = list(
       title = "Table Dose coverage",
       output_type = "gt",
-      render = "<filtered_data> |>
+      reactive = "<filtered_data> |>
       DrugUtilisation::tableDoseCoverage(
       header = input$header,
       groupColumn = input$group_column,
       hide = input$hide
       )",
+      render = "<reactive_data>",
       filters = rankTableButton(
         none = c("unit", "route", "pattern_id"),
         header = c("variable_name", "estimate_name"),
@@ -998,12 +1027,13 @@ ppcPanel <- list(
     table = list(
       title = "Table PPC",
       output_type = "gt",
-      render = "<filtered_data> |>
+      reactive = "<filtered_data> |>
       DrugUtilisation::tableProportionOfPatientsCovered(
       header = input$header,
       groupColumn = input$group_column,
       hide = input$hide
       )",
+      render = "<reactive_data>",
       filters = rankTableButton(
         none = c("time", "estimate_name"),
         header = c("cohort_name", "<strata>"),
@@ -1015,12 +1045,13 @@ ppcPanel <- list(
     plot = list(
       title = "Plot PPC",
       output_type = "plot",
-      render = "<filtered_data> |>
+      reactive = "<filtered_data> |>
       DrugUtilisation::plotProportionOfPatientsCovered(
       ribbon = input$ribbon,
       facet = input$facet,
       colour = input$colour
       )",
+      render = "<reactive_data>",
       filters = list(
         ribbon = list(
           button_type = "checkbox",
@@ -1058,12 +1089,13 @@ drugRestartPanel <- list(
     table = list(
       title = "Table Drug Restart",
       output_type = "gt",
-      render = "<filtered_data> |>
+      reactive = "<filtered_data> |>
       DrugUtilisation::tableDrugRestart(
       header = input$header,
       groupColumn = input$group_column,
       hide = input$hide
       )",
+      render = "<reactive_data>",
       filters = rankTableButton(
         none = c("variable_level", "<strata>", "follow_up_days", "estimate_name"),
         header = c("cdm_name", "cohort_name"),
@@ -1075,11 +1107,12 @@ drugRestartPanel <- list(
     plot = list(
       title = "Plot Drug Restart",
       output_type = "plot",
-      render = "<filtered_data> |>
+      reactive = "<filtered_data> |>
       DrugUtilisation::plotDrugRestart(
       facet = input$facet,
       colour = input$colour
       )",
+      render = "<reactive_data>",
       filters = list(
         facet = list(
           button_type = "pickerInput",
@@ -1112,12 +1145,13 @@ dusPanel <- list(
     table = list(
       title = "Table Drug Utilisation",
       output_type = "gt",
-      render = "<filtered_data> |>
+      reactive = "<filtered_data> |>
       DrugUtilisation::tableDrugUtilisation(
       header = input$header,
       groupColumn = input$group_column,
       hide = input$hide
       )",
+      render = "<reactive_data>",
       filters = rankTableButton(
         none = c("concept_set", "ingredient", "variable_name", "estimate_name"),
         header = c("cdm_name"),
@@ -1129,13 +1163,14 @@ dusPanel <- list(
     plot = list(
       title = "Plot Drug Utilisation",
       output_type = "plot",
-      render = "<filtered_data> |>
+      reactive = "<filtered_data> |>
       DrugUtilisation::plotDrugUtilisation(
       variable = input$variable,
       plotType = input$plot_type,
       facet = input$facet,
       colour = input$colour
       )",
+      render = "<reactive_data>",
       filters = list(
         variable = list(
           button_type = "pickerInput",
@@ -1181,12 +1216,13 @@ indicationPanel <- list(
     table = list(
       title = "Table Indication",
       output_type = "gt",
-      render = "<filtered_data> |>
+      reactive = "<filtered_data> |>
       DrugUtilisation::tableIndication(
       header = input$header,
       groupColumn = input$group_column,
       hide = input$hide
       )",
+      render = "<reactive_data>",
       filters = rankTableButton(
         none = c("variable_level", "estimate_name"),
         header = c("cdm_name", "cohort_name", "<strata>"),
@@ -1197,12 +1233,18 @@ indicationPanel <- list(
     ),
     plot = list(
       title = "Plot Indication",
-      output_type = "plot",
-      render = "<filtered_data> |>
+      output_type = "ui",
+      reactive = "<filtered_data> |>
       DrugUtilisation::plotIndication(
       facet = input$facet,
       )",
+      render = "renderInteractivePlot(<reactive_data>, input$interactive)",
       filters = list(
+        interactive = list(
+          button_type = "materialSwitch",
+          label = "Interactive",
+          value = TRUE
+        ),
         facet = list(
           button_type = "pickerInput",
           label = "Facet",
@@ -1227,12 +1269,13 @@ treatmentPanel <- list(
     table = list(
       title = "Table Treatments",
       output_type = "gt",
-      render = "<filtered_data> |>
+      reactive = "<filtered_data> |>
       DrugUtilisation::tableTreatment(
       header = input$header,
       groupColumn = input$group_column,
       hide = input$hide
       )",
+      render = "<reactive_data>",
       filters = rankTableButton(
         none = c("variable_level", "estimate_name"),
         header = c("cdm_name", "cohort_name", "<strata>"),
@@ -1244,10 +1287,11 @@ treatmentPanel <- list(
     plot = list(
       title = "Plot Treatment",
       output_type = "plot",
-      render = "<filtered_data> |>
+      reactive = "<filtered_data> |>
       DrugUtilisation::plotTreatment(
-      facet = input$facet,
+      facet = input$facet
       )",
+      render = "<reactive_data>",
       filters = list(
         facet = list(
           button_type = "pickerInput",
@@ -1272,7 +1316,7 @@ lscPanel <- list(
     table_lsc <- list(
       title = "Table",
       output_type = "reactable",
-      render = "if (identical(input$compare_by, 'no compare')) {
+      reactive = "if (identical(input$compare_by, 'no compare')) {
       cb <- NULL
       } else {
       cb <- input$compare_by
@@ -1288,6 +1332,7 @@ lscPanel <- list(
       hide = input$hide,
       smdReference = sr
       )",
+      render = "<reactive_data>",
       observe = "shiny::observeEvent(input$compare_by,{
         opts <- values[[paste0('<panel>_', input$compare_by)]]
         opts <- c('no SMD', opts)
@@ -1324,10 +1369,11 @@ lscPanel <- list(
     table = list(
       title = "Most common codes",
       output_type = "gt",
-      render = "<filtered_data> |>
+      reactive = "<filtered_data> |>
       tableTopLargeScaleCharacteristics(
       topConcepts = input$top_concepts
       )",
+      render = "<reactive_data>",
       filters = list(
         top_concepts = list(
           button_type = "pickerInput",
@@ -1341,12 +1387,13 @@ lscPanel <- list(
     plot = list(
       title = "Plot Compared",
       output_type = "plotly",
-      render = "<filtered_data> |>
+      reactive = "<filtered_data> |>
       plotComparedLargeScaleCharacteristics(
       colour = input$colour,
       reference = input$reference,
       facet = input$facet
       )",
+      render = "<reactive_data>",
       observe = "shiny::observeEvent(input$colour,{
         opts <- values[[paste0('<panel>_', input$colour)]]
         shinyWidgets::updatePickerInput(
@@ -1393,12 +1440,13 @@ defaultPanel <- list(
     table = list(
       title = "Table",
       output_type = "gt",
-      render = "<filtered_data> |>
+      reactive = "<filtered_data> |>
       simpleTable(
       header = input$header,
       group = input$group_column,
       hide = input$hide
       )",
+      render = "<reactive_data>",
       filters = rankTableButton(
         none = c("cdm_name", "<group>", "<strata>", "<additional>", "<settings>", "variable_name", "variable_level", "estimate_name"),
         header = character(),

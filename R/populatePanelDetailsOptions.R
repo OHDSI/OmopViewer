@@ -118,8 +118,8 @@ createFunctionNames <- function(panelDetails) {
     purrr::imap(\(x, nmp) {
       x$content <- x$content |>
         purrr::imap(\(cont, nmc) {
-          if (!"render_function" %in% names(cont)) {
-            cont$render_function <- paste0("get", formatCamel(paste0(
+          if (!"reactive_function" %in% names(cont)) {
+            cont$reactive_function <- paste0("get", formatCamel(paste0(
               nmp, "_", nmc
             )))
           }
@@ -134,11 +134,15 @@ populateFunctionNames <- function(panelDetails) {
       filterFunctionName <- paste0(pd$filter_function, "()")
       pd$content <- pd$content |>
         purrr::map(\(cont) {
-          renderFunctionName <- paste0(cont$render_function, "()")
+          ractiveFunctionName <- paste0(cont$reactive_function, "()")
+          cont$observer <- cont$observer |>
+            substituteFunctionNames(filterFunctionName, ractiveFunctionName)
+          cont$reactive <- cont$reactive |>
+            substituteFunctionNames(filterFunctionName, ractiveFunctionName)
           cont$render <- cont$render |>
-            substituteFunctionNames(filterFunctionName, renderFunctionName)
+            substituteFunctionNames(filterFunctionName, ractiveFunctionName)
           cont$download$render <- cont$download$render |>
-            substituteFunctionNames(filterFunctionName, renderFunctionName)
+            substituteFunctionNames(filterFunctionName, ractiveFunctionName)
           cont
         })
       pd
@@ -148,7 +152,7 @@ substituteFunctionNames <- function(x, ffn, rfn) {
   if (is.null(x)) return(x)
   x |>
     stringr::str_replace_all("<filtered_data>", ffn) |>
-    stringr::str_replace_all("<rendered_data>", rfn)
+    stringr::str_replace_all("<reactive_data>", rfn)
 }
 populateInputIds <- function(panelDetails) {
   panelDetails |>
@@ -158,7 +162,7 @@ populateInputIds <- function(panelDetails) {
           # where to find the inputs
           inputsToSubstitute <- c(
             cont$render, cont$download$render, cont$download$filename,
-            cont$observe
+            cont$observe, cont$reactive
           ) |>
             # split in words
             stringr::str_split(pattern = "[[:punct:]&&[^_]]|\\s+") |>
@@ -187,6 +191,8 @@ populateInputIds <- function(panelDetails) {
             original <- names(inputsToSubstitute)[k] |>
               stringr::str_replace_all(pattern = "\\$", replacement = "\\\\$")
             cont$render <- cont$render |>
+              stringr::str_replace_all(pattern = original, replacement = new)
+            cont$reactive <- cont$reactive |>
               stringr::str_replace_all(pattern = original, replacement = new)
             cont$download$render <- cont$download$render |>
               stringr::str_replace_all(pattern = original, replacement = new)
