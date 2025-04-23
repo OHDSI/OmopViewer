@@ -29,7 +29,7 @@ omopViewerPreprocess <- c(
   "",
   "# edit choices and values of interest",
   "choices <- values",
-  "selected <- values",
+  "selected <- getSelected(values)",
   "",
   "save(data, choices, selected, values, file = file.path(getwd(), \"data\", \"shinyData.RData\"))",
   "",
