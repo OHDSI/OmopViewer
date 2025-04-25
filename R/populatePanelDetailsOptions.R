@@ -21,8 +21,7 @@ populateValues <- function(panelDetails, result) {
   panelDetails |>
     purrr::map(\(pd) {
       # filter result
-      res <- result |>
-        filterResult(pd$data$result_id, pd$data$result_type)
+      res <- filterResult(result, pd$data)
       # get values
       values <- res |>
         dplyr::select(!c("estimate_type", "estimate_value")) |>
@@ -203,8 +202,7 @@ populateInputIds <- function(panelDetails) {
 populateAutomaticFilters <- function(panelDetails, result) {
   panelDetails |>
     purrr::map(\(pd) {
-      res <- result |>
-        filterResult(pd$data$result_id, pd$data$result_type)
+      res <- filterResult(result, pd$data)
       values <- list()
       values$group <- omopgenerics::groupColumns(res)
       values$strata <- omopgenerics::strataColumns(res)
@@ -293,12 +291,4 @@ substitutePrefix <- function(x, prefix) {
 }
 substitutePanel <- function(x, panel) {
   stringr::str_replace_all(x, pattern = "<panel>", replacement = panel)
-}
-
-resultListFromPanelDetails <- function(panelDetails) {
-  panelDetails |>
-    purrr::map(\(x) {
-      list(result_id = x$data$result_id, result_type = x$data$result_type) |>
-        purrr::compact()
-    })
 }

@@ -250,22 +250,6 @@ simpleTable <- function(result,
     visOmopResults::formatTable(groupColumn = group)
   return(result)
 }
-prepareResult <- function(result, resultList) {
-  resultList |>
-    purrr::map(\(x) {
-      if (is.numeric(x)) {
-        resultId <- x
-        resultType <- NULL
-      } else if (is.character(x)) {
-        resultId <- NULL
-        resultType <- x
-      } else {
-        resultId <- x$result_id
-        resultType <- x$result_type
-      }
-      filterResult(result, resultId = resultId, resultType = resultType)
-    })
-}
 tidyDT <- function(x,
                    columns,
                    pivotEstimates) {
@@ -323,35 +307,23 @@ tidyDT <- function(x,
     options = list(searching = FALSE)
   )
 }
-filterResult <- function(result, resultId = NULL, resultType = NULL) {
-  resultId <- unique(resultId)
-  resultType <- unique(resultType)
-  if (is.null(resultType)) {
-    if (is.null(resultId)) {
-      res <- omopgenerics::emptySummarisedResult()
-    } else {
-      res <- result |>
-        omopgenerics::filterSettings(.data$result_id %in% .env$resultId)
-    }
-  } else {
-    if (is.null(resultId)) {
-      res <- result |>
-        omopgenerics::filterSettings(.data$result_type %in% .env$resultType)
-    } else {
-      res <- result |>
-        omopgenerics::filterSettings(
-          .data$result_id %in% .env$resultId &
-            .data$result_type %in% .env$resultType
-        )
-    }
+prepareResult <- function(result, resultList) {
+  purrr::map(resultList, \(x) filterResult(result, x))
+}
+filterResult <- function(result, filt) {
+  nms <- names(filt)
+  for (nm in nms) {
+    q <- paste0(".data$", nm, " %in% filt[[\"", nm, "\"]]") |>
+      rlang::parse_exprs() |>
+      rlang::eval_tidy()
+    result <- omopgenerics::filterSettings(result, !!!q)
   }
-  return(res)
+  return(result)
 }
 getValues <- function(result, resultList) {
   resultList |>
     purrr::imap(\(x, nm) {
-      res <- result |>
-        filterResult(resultId = x$result_id, resultType = x$result_type)
+      res <- filterResult(result, x)
       values <- res |>
         dplyr::select(!c("estimate_type", "estimate_value")) |>
         dplyr::distinct() |>
