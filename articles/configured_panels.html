@@ -117,7 +117,7 @@ function:</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">icon:</span> chart-line</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">data:</span> result_type: &lt;incidence&gt;</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">filters:</span> 1 filters + 6 automatic filters</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Incidence</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB;">Plot Incidence</span> (<span style="font-style: italic;">plot</span>)</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Incidence</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB;">Plot Incidence</span> (<span style="font-style: italic;">ui</span>)</span></span></code></pre></div>
 <p>The exported object <em>omopViewerPanels</em> contains all the
 defined panels in the package:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -135,7 +135,7 @@ defined panels in the package:</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">data:</span> result_type: &lt;summarise_observation_period&gt;</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">filters:</span> 1 filters + 4 automatic filters</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Observation period</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB;">Plot Observation period</span></span></span>
-<span><span class="co">#&gt;   (<span style="font-style: italic;">plot</span>)</span></span>
+<span><span class="co">#&gt;   (<span style="font-style: italic;">ui</span>)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $summarise_clinical_records</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">Clinical records</span> (OmopViewer panel)</span></span>
@@ -149,7 +149,7 @@ defined panels in the package:</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">icon:</span> signal</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">data:</span> result_type: &lt;summarise_record_count&gt;</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">filters:</span> 1 filters + 6 automatic filters</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Plot record count</span> (<span style="font-style: italic;">plot</span>)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Plot record count</span> (<span style="font-style: italic;">ui</span>)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $summarise_missing_data</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">Missing data</span> (OmopViewer panel)</span></span>
@@ -163,7 +163,7 @@ defined panels in the package:</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">icon:</span> explosion</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">data:</span> result_type: &lt;summarise_in_observation&gt;</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">filters:</span> 1 filters + 6 automatic filters</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Plot in observation</span> (<span style="font-style: italic;">plot</span>)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Plot in observation</span> (<span style="font-style: italic;">ui</span>)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $orphan_code_use</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">Orphan codes</span> (OmopViewer panel)</span></span>
@@ -205,14 +205,14 @@ defined panels in the package:</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">icon:</span> circle-half-stroke</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">data:</span> result_type: &lt;summarise_cohort_overlap&gt;</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">filters:</span> 1 filters + 5 automatic filters</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Overlap</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB;">Plot Overlap</span> (<span style="font-style: italic;">plot</span>)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Overlap</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB;">Plot Overlap</span> (<span style="font-style: italic;">ui</span>)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $summarise_cohort_count</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">Cohort Count</span> (OmopViewer panel)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">icon:</span> users</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">data:</span> result_type: &lt;summarise_cohort_count&gt;</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">filters:</span> 1 filters + 4 automatic filters</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Counts</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB;">Plot Counts</span> (<span style="font-style: italic;">plot</span>)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Counts</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB;">Plot Counts</span> (<span style="font-style: italic;">ui</span>)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $summarise_cohort_attrition</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">Cohort Attrition</span> (OmopViewer panel)</span></span>
@@ -226,14 +226,14 @@ defined panels in the package:</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">icon:</span> chart-simple</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">data:</span> result_type: &lt;summarise_cohort_timing&gt;</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">filters:</span> 1 filters + 2 automatic filters</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Timing</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB;">Plot Timing</span> (<span style="font-style: italic;">plot</span>)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Timing</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB;">Plot Timing</span> (<span style="font-style: italic;">ui</span>)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $summarise_characteristics</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">Cohort Characteristics</span> (OmopViewer panel)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">icon:</span> users-gear</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">data:</span> result_type: &lt;summarise_characteristics&gt;</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">filters:</span> 1 filters + 4 automatic filters</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Characteristics</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB;">Plot Characteristics</span> (<span style="font-style: italic;">plot</span>)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Characteristics</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB;">Plot Characteristics</span> (<span style="font-style: italic;">ui</span>)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $summarise_large_scale_characteristics</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">Large Scale Characteristics</span> (OmopViewer panel)</span></span>
@@ -247,7 +247,7 @@ defined panels in the package:</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">icon:</span> chart-line</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">data:</span> result_type: &lt;incidence&gt;</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">filters:</span> 1 filters + 6 automatic filters</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Incidence</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB;">Plot Incidence</span> (<span style="font-style: italic;">plot</span>)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Incidence</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB;">Plot Incidence</span> (<span style="font-style: italic;">ui</span>)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $incidence_attrition</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">Incidence Attrition</span> (OmopViewer panel)</span></span>
@@ -261,7 +261,7 @@ defined panels in the package:</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">icon:</span> chart-column</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">data:</span> result_type: &lt;prevalence&gt;</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">filters:</span> 1 filters + 6 automatic filters</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Prevalence</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB;">Plot Prevalence</span> (<span style="font-style: italic;">plot</span>)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Prevalence</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB;">Plot Prevalence</span> (<span style="font-style: italic;">ui</span>)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $prevalence_attrition</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">Prevalence Attrition</span> (OmopViewer panel)</span></span>
@@ -282,35 +282,35 @@ defined panels in the package:</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">icon:</span> chart-gantt</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">data:</span> result_type: &lt;summarise_proportion_of_patients_covered&gt;</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">filters:</span> 1 filters + 3 automatic filters</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table PPC</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB;">Plot PPC</span> (<span style="font-style: italic;">plot</span>)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table PPC</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB;">Plot PPC</span> (<span style="font-style: italic;">ui</span>)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $summarise_drug_restart</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">Drug Restart</span> (OmopViewer panel)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">icon:</span> chart-gantt</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">data:</span> result_type: &lt;summarise_drug_restart&gt;</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">filters:</span> 1 filters + 3 automatic filters</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Drug Restart</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB;">Plot Drug Restart</span> (<span style="font-style: italic;">plot</span>)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Drug Restart</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB;">Plot Drug Restart</span> (<span style="font-style: italic;">ui</span>)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $summarise_drug_utilisation</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">Drug Utilisation</span> (OmopViewer panel)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">icon:</span> capsules</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">data:</span> result_type: &lt;summarise_drug_utilisation&gt;</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">filters:</span> 1 filters + 6 automatic filters</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Drug Utilisation</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB;">Plot Drug Utilisation</span> (<span style="font-style: italic;">plot</span>)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Drug Utilisation</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB;">Plot Drug Utilisation</span> (<span style="font-style: italic;">ui</span>)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $summarise_indication</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">Indication</span> (OmopViewer panel)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">icon:</span> disease</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">data:</span> result_type: &lt;summarise_indication&gt;</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">filters:</span> 1 filters + 7 automatic filters</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Indication</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB;">Plot Indication</span> (<span style="font-style: italic;">plot</span>)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Indication</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB;">Plot Indication</span> (<span style="font-style: italic;">ui</span>)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $summarise_treatment</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">Treatments</span> (OmopViewer panel)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">icon:</span> disease</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">data:</span> result_type: &lt;summarise_treatment&gt;</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">filters:</span> 1 filters + 7 automatic filters</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Treatments</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB;">Plot Treatment</span> (<span style="font-style: italic;">plot</span>)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Treatments</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB;">Plot Treatment</span> (<span style="font-style: italic;">ui</span>)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $default</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">&lt;result_type&gt;</span> (OmopViewer panel)</span></span>
@@ -388,8 +388,11 @@ structure you can use <code>unclass</code>:</p>
 <span><span class="co">#&gt; $content$tidy$output_type</span></span>
 <span><span class="co">#&gt; [1] "DT"</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $content$tidy$render</span></span>
+<span><span class="co">#&gt; $content$tidy$reactive</span></span>
 <span><span class="co">#&gt; [1] "tidyDT(&lt;filtered_data&gt;, input$columns, input$pivot_estimates)"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$tidy$render</span></span>
+<span><span class="co">#&gt; [1] "&lt;reactive_data&gt;"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $content$tidy$filters</span></span>
 <span><span class="co">#&gt; $content$tidy$filters$columns</span></span>
@@ -442,8 +445,11 @@ structure you can use <code>unclass</code>:</p>
 <span><span class="co">#&gt; $content$table$output_type</span></span>
 <span><span class="co">#&gt; [1] "gt"</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $content$table$render</span></span>
+<span><span class="co">#&gt; $content$table$reactive</span></span>
 <span><span class="co">#&gt; [1] "res &lt;- &lt;filtered_data&gt;\n      res |&gt;\n      IncidencePrevalence::tableIncidence(\n      header = input$header,\n      groupColumn = input$group_column,\n      hide = input$hide,\n      settingsColumn = omopgenerics::settingsColumns(res)\n      )"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$table$render</span></span>
+<span><span class="co">#&gt; [1] "&lt;reactive_data&gt;"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $content$table$filters</span></span>
 <span><span class="co">#&gt; $content$table$filters$none</span></span>
@@ -527,7 +533,7 @@ structure you can use <code>unclass</code>:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $content$table$download$render</span></span>
-<span><span class="co">#&gt; [1] "gt::gtsave(&lt;rendered_data&gt;, file)"</span></span>
+<span><span class="co">#&gt; [1] "gt::gtsave(&lt;reactive_data&gt;, file)"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $content$table$download$filename</span></span>
 <span><span class="co">#&gt; [1] "paste0(\"table_incidence.\", input$format)"</span></span>
@@ -539,12 +545,26 @@ structure you can use <code>unclass</code>:</p>
 <span><span class="co">#&gt; [1] "Plot Incidence"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $content$plot$output_type</span></span>
-<span><span class="co">#&gt; [1] "plot"</span></span>
+<span><span class="co">#&gt; [1] "ui"</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $content$plot$render</span></span>
+<span><span class="co">#&gt; $content$plot$reactive</span></span>
 <span><span class="co">#&gt; [1] "&lt;filtered_data&gt; |&gt;\n      IncidencePrevalence::plotIncidence(\n      x = input$x,\n      facet = input$facet,\n      colour = input$colour\n      )"</span></span>
 <span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot$render</span></span>
+<span><span class="co">#&gt; [1] "renderInteractivePlot(&lt;reactive_data&gt;, input$interactive)"</span></span>
+<span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $content$plot$filters</span></span>
+<span><span class="co">#&gt; $content$plot$filters$interactive</span></span>
+<span><span class="co">#&gt; $content$plot$filters$interactive$button_type</span></span>
+<span><span class="co">#&gt; [1] "materialSwitch"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot$filters$interactive$label</span></span>
+<span><span class="co">#&gt; [1] "Interactive"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot$filters$interactive$value</span></span>
+<span><span class="co">#&gt; [1] TRUE</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $content$plot$filters$x</span></span>
 <span><span class="co">#&gt; $content$plot$filters$x$button_type</span></span>
 <span><span class="co">#&gt; [1] "pickerInput"</span></span>
@@ -654,7 +674,7 @@ structure you can use <code>unclass</code>:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $content$plot$download$render</span></span>
-<span><span class="co">#&gt; [1] "plt &lt;- &lt;rendered_data&gt;\n        ggplot2::ggsave(\n          filename = file,\n          plot = plt,\n          width = as.numeric(input$width),\n          height = as.numeric(input$height),\n          units = input$units,\n          dpi = as.numeric(input$dpi)\n        )"</span></span>
+<span><span class="co">#&gt; [1] "ggplot2::ggsave(\n      filename = file,\n      plot = &lt;reactive_data&gt;,\n      width = as.numeric(input$width),\n      height = as.numeric(input$height),\n      units = input$units,\n      dpi = as.numeric(input$dpi)\n    )"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $content$plot$download$filename</span></span>
 <span><span class="co">#&gt; [1] "plot_incidence.png"</span></span></code></pre></div>
