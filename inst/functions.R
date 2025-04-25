@@ -531,3 +531,10 @@ plotComparedLargeScaleCharacteristics <- function(result,
   }
   plotly::ggplotly(p)
 }
+renderInteractivePlot <- function(plt, interactive) {
+  if (interactive) {
+    plotly::renderPlotly(plt)
+  } else {
+    shiny::renderPlot(plt)
+  }
+}
