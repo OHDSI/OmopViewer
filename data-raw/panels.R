@@ -190,6 +190,37 @@ incidencePanel <- list(
         )
       ),
       download = downloadPlot("plot_incidence.png")
+    ),
+    plot_population = list(
+      title = "Plot population",
+      output_type = "ui",
+      reactive = "<filtered_data> |>
+      IncidencePrevalence::plotIncidencePopulation(
+      facet = input$facet,
+      colour = input$colour
+      )",
+      render = "renderInteractivePlot(<reactive_data>, input$interactive)",
+      filters = list(
+        interactive = list(
+          button_type = "materialSwitch",
+          label = "Interactive",
+          value = TRUE
+        ),
+        facet = list(
+          button_type = "pickerInput",
+          label = "Facet",
+          choices = c("cdm_name", "<group>", "<strata>", "<additional>", "<settings>"),
+          selected = c("cdm_name"),
+          multiple = TRUE
+        ),
+        colour = list(
+          button_type = "pickerInput",
+          label = "Colour",
+          choices = c("cdm_name", "<group>", "<strata>", "<additional>", "<settings>"),
+          selected = c("outcome_cohort_name"),
+          multiple = TRUE
+        )
+      )
     )
   )
 )
@@ -262,6 +293,37 @@ prevalencePanel <- list(
         )
       ),
       download = downloadPlot("plot_prevalence.png")
+    ),
+    plot_population = list(
+      title = "Plot population",
+      output_type = "ui",
+      reactive = "<filtered_data> |>
+      IncidencePrevalence::plotPrevalencePopulation(
+      facet = input$facet,
+      colour = input$colour
+      )",
+      render = "renderInteractivePlot(<reactive_data>, input$interactive)",
+      filters = list(
+        interactive = list(
+          button_type = "materialSwitch",
+          label = "Interactive",
+          value = TRUE
+        ),
+        facet = list(
+          button_type = "pickerInput",
+          label = "Facet",
+          choices = c("cdm_name", "<group>", "<strata>", "<additional>", "<settings>"),
+          selected = c("cdm_name"),
+          multiple = TRUE
+        ),
+        colour = list(
+          button_type = "pickerInput",
+          label = "Colour",
+          choices = c("cdm_name", "<group>", "<strata>", "<additional>", "<settings>"),
+          selected = c("outcome_cohort_name"),
+          multiple = TRUE
+        )
+      )
     )
   )
 )
