@@ -78,6 +78,16 @@ writeButton <- function(x) {
         paste0(collapse = ",\n"),
       "\n)"
     )
+  } else if (x$button_type == "materialSwitch") {
+    x$label <- cast(x$label)
+    args <- names(formals(shinyWidgets::materialSwitch))
+    args <- args[args %in% names(x)]
+    button <- paste0(
+      "shinyWidgets::materialSwitch(\n",
+      purrr::imap(x[args], \(x, nm) paste(nm, "=", x)) |>
+        paste0(collapse = ",\n"),
+      "\n)"
+    )
   } else {
     cli::cli_abort("unexpected button_type")
   }

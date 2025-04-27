@@ -1,9 +1,7 @@
 test_that("test choices", {
   # empty result
   res <- omopgenerics::emptySummarisedResult()
-  resultList <- res |>
-    panelDetailsFromResult() |>
-    resultListFromPanelDetails()
+  resultList <- purrr::map(panelDetailsFromResult(res), \(x) x$data)
   expect_no_error(x <- prepareResult(res, resultList))
   expected <- list()
   expect_equal(unname(x), expected)

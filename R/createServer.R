@@ -93,9 +93,9 @@ writeContentServer <- function(content, data) {
 }
 writeOutputServer <- function(content) {
   paste0(
-    content$render_function, " <- shiny::reactive({\n", content$render,
-    "\n})\noutput$", content$output_id, " <- ", renderFunction(content$output_type),
-    "({\n", content$render_function, "()\n})"
+    content$reactive_function, " <- shiny::reactive({\n", content$reactive, "\n})\n",
+    "output$", content$output_id, " <- ", renderFunction(content$output_type),
+    "({\n", content$render, "\n})"
   )
 }
 outputFunction <- function(outputType) {

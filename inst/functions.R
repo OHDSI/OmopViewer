@@ -250,22 +250,6 @@ simpleTable <- function(result,
     visOmopResults::formatTable(groupColumn = group)
   return(result)
 }
-prepareResult <- function(result, resultList) {
-  resultList |>
-    purrr::map(\(x) {
-      if (is.numeric(x)) {
-        resultId <- x
-        resultType <- NULL
-      } else if (is.character(x)) {
-        resultId <- NULL
-        resultType <- x
-      } else {
-        resultId <- x$result_id
-        resultType <- x$result_type
-      }
-      filterResult(result, resultId = resultId, resultType = resultType)
-    })
-}
 tidyDT <- function(x,
                    columns,
                    pivotEstimates) {
@@ -323,29 +307,18 @@ tidyDT <- function(x,
     options = list(searching = FALSE)
   )
 }
-filterResult <- function(result, resultId = NULL, resultType = NULL) {
-  resultId <- unique(resultId)
-  resultType <- unique(resultType)
-  if (is.null(resultType)) {
-    if (is.null(resultId)) {
-      res <- omopgenerics::emptySummarisedResult()
-    } else {
-      res <- result |>
-        omopgenerics::filterSettings(.data$result_id %in% .env$resultId)
-    }
-  } else {
-    if (is.null(resultId)) {
-      res <- result |>
-        omopgenerics::filterSettings(.data$result_type %in% .env$resultType)
-    } else {
-      res <- result |>
-        omopgenerics::filterSettings(
-          .data$result_id %in% .env$resultId &
-            .data$result_type %in% .env$resultType
-        )
-    }
+prepareResult <- function(result, resultList) {
+  purrr::map(resultList, \(x) filterResult(result, x))
+}
+filterResult <- function(result, filt) {
+  nms <- names(filt)
+  for (nm in nms) {
+    q <- paste0(".data$", nm, " %in% filt[[\"", nm, "\"]]") |>
+      rlang::parse_exprs() |>
+      rlang::eval_tidy()
+    result <- omopgenerics::filterSettings(result, !!!q)
   }
-  return(res)
+  return(result)
 }
 getValues <- function(result, resultList) {
   resultList |>
@@ -539,7 +512,8 @@ plotComparedLargeScaleCharacteristics <- function(result,
         label = paste0("No multiple values to compare for: ", colour),
       ) +
       ggplot2::theme_void() +
-      ggplot2::xlim(0, 1) + ylim(0, 1)
+      ggplot2::xlim(0, 1) +
+      ggplot2::ylim(0, 1)
   } else {
     omopgenerics::assertChoice(reference, choices = opts, length = 1, null = TRUE)
 
@@ -572,7 +546,7 @@ plotComparedLargeScaleCharacteristics <- function(result,
       facet = facet, colour = colour, group = NULL, label = label
     ) +
       ggplot2::geom_line(
-        mapping = ggplot2::aes(x = x, y = y),
+        mapping = ggplot2::aes(x = .data$x, y = .data$y),
         data = dplyr::tibble(x = c(0, 100), y = c(0, 100)),
         color = "black",
         linetype = "dashed",
@@ -583,4 +557,11 @@ plotComparedLargeScaleCharacteristics <- function(result,
       ggplot2::labs(colour = colourLab, fill = colourLab)
   }
   plotly::ggplotly(p)
+}
+renderInteractivePlot <- function(plt, interactive) {
+  if (interactive) {
+    plotly::renderPlotly(plt)
+  } else {
+    shiny::renderPlot(plt)
+  }
 }
