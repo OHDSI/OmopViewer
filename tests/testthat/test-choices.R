@@ -144,5 +144,27 @@ test_that("test getSelected", {
   expect_true(all(
     x_selected$incidence_denominator_sex == "Both"
   ))
+})
 
+test_that("test prepare result", {
+  x <- omopViewerResults
+  xl <- list(
+    "abc" = list(result_id = c(1, 2)),
+    "dsk2" = list(result_type = c("prevalence", "prevalence_attrition")),
+    "nxx" = list(result_type = "incidence", denominator_sex = "Female")
+  )
+
+  expect_no_error(res <- prepareResult(result = x, resultList = xl))
+  expect_identical(
+    res,
+    list(
+      "abc" = x |>
+        omopgenerics::filterSettings(result_id %in% c(1, 2)),
+      "dsk2" = x |>
+        omopgenerics::filterSettings(result_type %in% c("prevalence", "prevalence_attrition")),
+      "nxx" = x |>
+        omopgenerics::filterSettings(result_type %in% "incidence") |>
+        omopgenerics::filterSettings(denominator_sex %in% "Female")
+    )
+  )
 })
