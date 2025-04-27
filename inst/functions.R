@@ -330,15 +330,30 @@ getValues <- function(result, resultList) {
         dplyr::distinct() |>
         omopgenerics::splitAll() |>
         dplyr::select(!"result_id") |>
-        as.list() |>
-        purrr::map(\(x) sort(unique(x)))
+        as.list()  |>
+        purrr::map(\(col) {
+          uniq <- sort(unique(col))
+          if (length(uniq) > 500) {
+            NULL
+          } else {
+            uniq
+          }
+        }) |>
+        purrr::compact()
       valuesSettings <- omopgenerics::settings(res) |>
         dplyr::select(!dplyr::any_of(c(
           "result_id", "result_type", "package_name", "package_version",
           "group", "strata", "additional", "min_cell_count"
         ))) |>
         as.list() |>
-        purrr::map(\(x) sort(unique(x[!is.na(x)]))) |>
+        purrr::map(\(col) {
+          uniq <- sort(unique(col[!is.na(col)]))
+          if (length(uniq) > 500) {
+            NULL
+          } else {
+            uniq
+          }
+        }) |>
         purrr::compact()
       values <- c(values, valuesSettings)
       names(values) <- paste0(nm, "_", names(values))
