@@ -210,4 +210,3 @@ test_that("default panel", {
   unlink(file.path(tdir, "shiny"), recursive = TRUE)
 
 })
-
