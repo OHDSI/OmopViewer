@@ -323,8 +323,7 @@ filterResult <- function(result, filt) {
 getValues <- function(result, resultList) {
   resultList |>
     purrr::imap(\(x, nm) {
-      res <- result |>
-        filterResult(resultId = x$result_id, resultType = x$result_type)
+      res <- filterResult(result, x)
       values <- res |>
         dplyr::select(!c("estimate_type", "estimate_value")) |>
         dplyr::distinct() |>
