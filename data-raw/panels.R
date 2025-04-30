@@ -10,8 +10,23 @@ tidyContent <- list(
     columns = list(
       button_type = "pickerInput",
       label = "Columns",
-      choices = c("cdm_name", "<group>", "<strata>", "<additional>", "<settings>", "variable_name", "variable_level"),
-      selected = c("cdm_name", "<group>", "<strata>", "<additional>", "variable_name", "variable_level"),
+      choices = c(
+        "cdm_name",
+        "<group>",
+        "<strata>",
+        "<additional>",
+        "<settings>",
+        "variable_name",
+        "variable_level"
+      ),
+      selected = c(
+        "cdm_name",
+        "<group>",
+        "<strata>",
+        "<additional>",
+        "variable_name",
+        "variable_level"
+      ),
       multiple = TRUE
     ),
     pivot_estimates = list(
@@ -95,7 +110,10 @@ cdmFilter <- list(
   selected = "selected$",
   multiple = TRUE
 )
-rankTableButton <- function(none = character(), header = character(), groupColumn = character(), hide = character()) {
+rankTableButton <- function(none = character(),
+                            header = character(),
+                            groupColumn = character(),
+                            hide = character()) {
   list(
     none = list(
       button_type = "rank_list",
@@ -126,7 +144,14 @@ incidencePanel <- list(
   title = "Incidence",
   icon = "chart-line",
   data = list(result_type = "incidence"),
-  automatic_filters = c("group", "strata", "additional", "settings", "variable_name", "estimate_name"),
+  automatic_filters = c(
+    "group",
+    "strata",
+    "additional",
+    "settings",
+    "variable_name",
+    "estimate_name"
+  ),
   exclude_filters = c("denominator_cohort_name", "incidence_end_date"),
   filters = list(cdm_name = cdmFilter),
   content = list(
@@ -144,21 +169,42 @@ incidencePanel <- list(
       )",
       render = "<reactive_data>",
       filters = rankTableButton(
-        none = c("<strata>", "incidence_start_date", "incidence_end_date", "denominator_age_group", "denominator_sex"),
+        none = c(
+          "<strata>",
+          "incidence_start_date",
+          "incidence_end_date",
+          "denominator_age_group",
+          "denominator_sex"
+        ),
         header = "estimate_name",
         groupColumn = c("cdm_name", "outcome_cohort_name"),
-        hide = c("denominator_cohort_name", "analysis_interval", "analysis_censor_cohort_name", "analysis_complete_database_intervals", "analysis_outcome_washout", "analysis_repeated_events", "denominator_days_prior_observation", "denominator_end_date", "denominator_requirements_at_entry", "denominator_start_date", "denominator_target_cohort_name", "denominator_time_at_risk")
+        hide = c(
+          "denominator_cohort_name",
+          "analysis_interval",
+          "analysis_censor_cohort_name",
+          "analysis_complete_database_intervals",
+          "analysis_outcome_washout",
+          "analysis_repeated_events",
+          "denominator_days_prior_observation",
+          "denominator_end_date",
+          "denominator_requirements_at_entry",
+          "denominator_start_date",
+          "denominator_target_cohort_name",
+          "denominator_time_at_risk"
+        )
       ),
       download = downloadGtTable("table_incidence")
     ),
-    plot = list(
+    plot <- list(
       title = "Plot Incidence",
       output_type = "ui",
       reactive = "<filtered_data> |>
       IncidencePrevalence::plotIncidence(
       x = input$x,
       facet = input$facet,
-      colour = input$colour
+      colour = input$colour,
+      ribbon = input$ribbon,
+      line = input$line
       )",
       render = "renderInteractivePlot(<reactive_data>, input$interactive)",
       filters = list(
@@ -170,23 +216,51 @@ incidencePanel <- list(
         x = list(
           button_type = "pickerInput",
           label = "x axis",
-          choices = c("cdm_name", "<group>", "<strata>", "<additional>", "<settings>"),
+          choices = c(
+            "cdm_name",
+            "<group>",
+            "<strata>",
+            "<additional>",
+            "<settings>"
+          ),
           selected = c("incidence_start_date"),
           multiple = FALSE
         ),
         facet = list(
           button_type = "pickerInput",
           label = "Facet",
-          choices = c("cdm_name", "<group>", "<strata>", "<additional>", "<settings>"),
+          choices = c(
+            "cdm_name",
+            "<group>",
+            "<strata>",
+            "<additional>",
+            "<settings>"
+          ),
           selected = c("cdm_name"),
           multiple = TRUE
         ),
         colour = list(
           button_type = "pickerInput",
           label = "Colour",
-          choices = c("cdm_name", "<group>", "<strata>", "<additional>", "<settings>"),
+          choices = c(
+            "cdm_name",
+            "<group>",
+            "<strata>",
+            "<additional>",
+            "<settings>"
+          ),
           selected = c("outcome_cohort_name"),
           multiple = TRUE
+        ),
+        ribbon = list(
+          button_type = "materialSwitch",
+          label = "Ribbon",
+          value = TRUE
+        ),
+        line = list(
+          button_type = "materialSwitch",
+          label = "Line",
+          value = TRUE
         )
       ),
       download = downloadPlot("plot_incidence.png")
@@ -229,7 +303,14 @@ prevalencePanel <- list(
   title = "Prevalence",
   icon = "chart-column",
   data = list(result_type = "prevalence"),
-  automatic_filters = c("group", "strata", "additional", "settings", "variable_name", "estimate_name"),
+  automatic_filters = c(
+    "group",
+    "strata",
+    "additional",
+    "settings",
+    "variable_name",
+    "estimate_name"
+  ),
   exclude_filters = "denominator_cohort_name",
   filters = list(cdm_name = cdmFilter),
   content = list(
@@ -247,10 +328,28 @@ prevalencePanel <- list(
       )",
       render = "<reactive_data>",
       filters = rankTableButton(
-        none = c("<strata>", "prevalence_start_date", "prevalence_end_date", "denominator_age_group", "denominator_sex"),
+        none = c(
+          "<strata>",
+          "prevalence_start_date",
+          "prevalence_end_date",
+          "denominator_age_group",
+          "denominator_sex"
+        ),
         header = "estimate_name",
         groupColumn = c("cdm_name", "outcome_cohort_name"),
-        hide = c("denominator_cohort_name", "analysis_interval", "analysis_complete_database_intervals", "analysis_full_contribution", "analysis_type", "denominator_days_prior_observation", "denominator_end_date", "denominator_requirements_at_entry", "denominator_start_date", "denominator_target_cohort_name", "denominator_time_at_risk")
+        hide = c(
+          "denominator_cohort_name",
+          "analysis_interval",
+          "analysis_complete_database_intervals",
+          "analysis_full_contribution",
+          "analysis_type",
+          "denominator_days_prior_observation",
+          "denominator_end_date",
+          "denominator_requirements_at_entry",
+          "denominator_start_date",
+          "denominator_target_cohort_name",
+          "denominator_time_at_risk"
+        )
       ),
       download = downloadGtTable("table_prevalence")
     ),
@@ -261,7 +360,9 @@ prevalencePanel <- list(
       IncidencePrevalence::plotPrevalence(
       x = input$x,
       facet = input$facet,
-      colour = input$colour
+      colour = input$colour,
+      ribbon = input$ribbon,
+      line = input$line
       )",
       render = "renderInteractivePlot(<reactive_data>, input$interactive)",
       filters = list(
@@ -273,23 +374,51 @@ prevalencePanel <- list(
         x = list(
           button_type = "pickerInput",
           label = "x axis",
-          choices = c("cdm_name", "<group>", "<strata>", "<additional>", "<settings>"),
+          choices = c(
+            "cdm_name",
+            "<group>",
+            "<strata>",
+            "<additional>",
+            "<settings>"
+          ),
           selected = c("prevalence_start_date"),
           multiple = FALSE
         ),
         facet = list(
           button_type = "pickerInput",
           label = "Facet",
-          choices = c("cdm_name", "<group>", "<strata>", "<additional>", "<settings>"),
+          choices = c(
+            "cdm_name",
+            "<group>",
+            "<strata>",
+            "<additional>",
+            "<settings>"
+          ),
           selected = c("cdm_name"),
           multiple = TRUE
         ),
         colour = list(
           button_type = "pickerInput",
           label = "Colour",
-          choices = c("cdm_name", "<group>", "<strata>", "<additional>", "<settings>"),
+          choices = c(
+            "cdm_name",
+            "<group>",
+            "<strata>",
+            "<additional>",
+            "<settings>"
+          ),
           selected = c("outcome_cohort_name"),
           multiple = TRUE
+        ),
+        ribbon = list(
+          button_type = "materialSwitch",
+          label = "Ribbon",
+          value = TRUE
+        ),
+        line = list(
+          button_type = "materialSwitch",
+          label = "Line",
+          value = TRUE
         )
       ),
       download = downloadPlot("plot_prevalence.png")
@@ -352,7 +481,24 @@ incidenceAttritionPanel <- list(
         none = c("reason"),
         header = "variable_name",
         groupColumn = c("cdm_name", "outcome_cohort_name"),
-        hide = c("denominator_cohort_name", "estimate_name", "reason_id", "variable_level", "analysis_censor_cohort_name", "analysis_complete_database_intervals", "analysis_outcome_washout", "analysis_repeated_events", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_end_date", "denominator_requirements_at_entry", "denominator_start_date", "denominator_target_cohort_name", "denominator_time_at_risk")
+        hide = c(
+          "denominator_cohort_name",
+          "estimate_name",
+          "reason_id",
+          "variable_level",
+          "analysis_censor_cohort_name",
+          "analysis_complete_database_intervals",
+          "analysis_outcome_washout",
+          "analysis_repeated_events",
+          "denominator_age_group",
+          "denominator_sex",
+          "denominator_days_prior_observation",
+          "denominator_end_date",
+          "denominator_requirements_at_entry",
+          "denominator_start_date",
+          "denominator_target_cohort_name",
+          "denominator_time_at_risk"
+        )
       ),
       download = downloadGtTable("table_incidence_attrition")
     )
@@ -383,7 +529,24 @@ prevalenceAttritionPanel <- list(
         none = c("<strata>"),
         header = "variable_name",
         groupColumn = c("cdm_name", "outcome_cohort_name"),
-        hide = c("denominator_cohort_name", "estimate_name", "reason_id", "variable_level", "analysis_interval", "analysis_complete_database_intervals", "analysis_full_contribution", "analysis_type", "denominator_age_group", "denominator_sex", "denominator_days_prior_observation", "denominator_end_date", "denominator_requirements_at_entry", "denominator_start_date", "denominator_target_cohort_name", "denominator_time_at_risk")
+        hide = c(
+          "denominator_cohort_name",
+          "estimate_name",
+          "reason_id",
+          "variable_level",
+          "analysis_interval",
+          "analysis_complete_database_intervals",
+          "analysis_full_contribution",
+          "analysis_type",
+          "denominator_age_group",
+          "denominator_sex",
+          "denominator_days_prior_observation",
+          "denominator_end_date",
+          "denominator_requirements_at_entry",
+          "denominator_start_date",
+          "denominator_target_cohort_name",
+          "denominator_time_at_risk"
+        )
       ),
       download = downloadGtTable("table_prevalence_attrition")
     )
@@ -394,7 +557,13 @@ cohortOverlapPanel <- list(
   title = "Cohort Overlap",
   icon = "circle-half-stroke",
   data = list(result_type = "summarise_cohort_overlap"),
-  automatic_filters = c("group", "strata", "variable_name", "estimate_name", "settings"),
+  automatic_filters = c(
+    "group",
+    "strata",
+    "variable_name",
+    "estimate_name",
+    "settings"
+  ),
   filters = list(cdm_name = cdmFilter),
   content = list(
     tidy = tidyContent,
@@ -418,7 +587,12 @@ cohortOverlapPanel <- list(
           )
         ),
         rankTableButton(
-          none = c("cohort_name_reference", "cohort_name_comparator", "<strata>", "estimate_name"),
+          none = c(
+            "cohort_name_reference",
+            "cohort_name_comparator",
+            "<strata>",
+            "estimate_name"
+          ),
           header = "variable_name",
           groupColumn = "cdm_name",
           hide = c("variable_level", "overlap_by")
@@ -443,7 +617,13 @@ cohortOverlapPanel <- list(
         facet = list(
           button_type = "pickerInput",
           label = "Facet",
-          choices = c("cdm_name", "cohort_name_reference", "cohort_name_comparator", "<strata>", "<settings>"),
+          choices = c(
+            "cdm_name",
+            "cohort_name_reference",
+            "cohort_name_comparator",
+            "<strata>",
+            "<settings>"
+          ),
           selected = c("cdm_name", "cohort_name_reference"),
           multiple = TRUE
         )
@@ -688,7 +868,12 @@ characteristicsPanel <- list(
       )",
       render = "<reactive_data>",
       filters = rankTableButton(
-        none = c("<strata>", "variable_name", "variable_level", "estimate_name"),
+        none = c(
+          "<strata>",
+          "variable_name",
+          "variable_level",
+          "estimate_name"
+        ),
         groupColumn = character(),
         header = c("cdm_name", "cohort_name"),
         hide = c("<additional>", "<settings>")
@@ -761,7 +946,12 @@ observationPeriodPanel <- list(
   title = "Observation period",
   icon = "eye",
   data = list(result_type = "summarise_observation_period"),
-  automatic_filters = c("observation_period_ordinal", "strata", "variable_name", "estimate_name"),
+  automatic_filters = c(
+    "observation_period_ordinal",
+    "strata",
+    "variable_name",
+    "estimate_name"
+  ),
   filters = list(cdm_name = cdmFilter),
   content = list(
     tidy = tidyContent,
@@ -793,7 +983,12 @@ observationPeriodPanel <- list(
         variable = list(
           button_type = "pickerInput",
           label = "Variable",
-          choices = c("Number subjects", "Records per person", "Duration", "Days to next observation period"),
+          choices = c(
+            "Number subjects",
+            "Records per person",
+            "Duration",
+            "Days to next observation period"
+          ),
           selected = c("Number subjects"),
           multiple = FALSE
         ),
@@ -828,7 +1023,14 @@ clinicalRecordsPanel <- list(
   title = "Clinical records",
   icon = "bars-staggered",
   data = list(result_type = "summarise_clinical_records"),
-  automatic_filters = c("group", "strata", "strata", "settings", "variable_name", "estimate_name"),
+  automatic_filters = c(
+    "group",
+    "strata",
+    "strata",
+    "settings",
+    "variable_name",
+    "estimate_name"
+  ),
   filters = list(cdm_name = cdmFilter),
   content = list(
     tidy = tidyContent,
@@ -847,7 +1049,14 @@ recordCountPanel <- list(
   title = "Record count",
   icon = "signal",
   data = list(result_type = "summarise_record_count"),
-  automatic_filters = c("group", "strata", "strata", "settings", "variable_name", "estimate_name"),
+  automatic_filters = c(
+    "group",
+    "strata",
+    "strata",
+    "settings",
+    "variable_name",
+    "estimate_name"
+  ),
   filters = list(cdm_name = cdmFilter),
   content = list(
     tidy = tidyContent,
@@ -869,14 +1078,26 @@ recordCountPanel <- list(
         facet = list(
           button_type = "pickerInput",
           label = "Facet",
-          choices = c("cdm_name", "<group>", "<strata>", "<additional>", "<settings>"),
+          choices = c(
+            "cdm_name",
+            "<group>",
+            "<strata>",
+            "<additional>",
+            "<settings>"
+          ),
           selected = c("cdm_name"),
           multiple = TRUE
         ),
         colour = list(
           button_type = "pickerInput",
           label = "Colour",
-          choices = c("cdm_name", "<group>", "<strata>", "<additional>", "<settings>"),
+          choices = c(
+            "cdm_name",
+            "<group>",
+            "<strata>",
+            "<additional>",
+            "<settings>"
+          ),
           selected = c("omop_table"),
           multiple = TRUE
         )
@@ -890,7 +1111,14 @@ missingPanel <- list(
   title = "Missing data",
   icon = "circle-exclamation",
   data = list(result_type = "summarise_missing_data"),
-  automatic_filters = c("group", "strata", "strata", "settings", "variable_name", "estimate_name"),
+  automatic_filters = c(
+    "group",
+    "strata",
+    "strata",
+    "settings",
+    "variable_name",
+    "estimate_name"
+  ),
   filters = list(cdm_name = cdmFilter),
   content = list(
     tidy = tidyContent,
@@ -909,7 +1137,14 @@ inObservationPanel <- list(
   title = "In Observation",
   icon = "explosion",
   data = list(result_type = "summarise_in_observation"),
-  automatic_filters = c("group", "strata", "strata", "settings", "variable_name", "estimate_name"),
+  automatic_filters = c(
+    "group",
+    "strata",
+    "strata",
+    "settings",
+    "variable_name",
+    "estimate_name"
+  ),
   filters = list(cdm_name = cdmFilter),
   content = list(
     tidy = tidyContent,
@@ -931,14 +1166,26 @@ inObservationPanel <- list(
         facet = list(
           button_type = "pickerInput",
           label = "Facet",
-          choices = c("cdm_name", "<group>", "<strata>", "<additional>", "<settings>"),
+          choices = c(
+            "cdm_name",
+            "<group>",
+            "<strata>",
+            "<additional>",
+            "<settings>"
+          ),
           selected = c("cdm_name"),
           multiple = TRUE
         ),
         colour = list(
           button_type = "pickerInput",
           label = "Colour",
-          choices = c("cdm_name", "<group>", "<strata>", "<additional>", "<settings>"),
+          choices = c(
+            "cdm_name",
+            "<group>",
+            "<strata>",
+            "<additional>",
+            "<settings>"
+          ),
           selected = character(),
           multiple = TRUE
         )
@@ -952,7 +1199,12 @@ orphanCodesPanel <- list(
   title = "Orphan codes",
   icon = "magnifying-glass-arrow-right",
   data = list(result_type = "orphan_code_use"),
-  automatic_filters = c("codelist_name", "domain_id", "standard_concept", "vocabulary_id"),
+  automatic_filters = c(
+    "codelist_name",
+    "domain_id",
+    "standard_concept",
+    "vocabulary_id"
+  ),
   filters = list(cdm_name = cdmFilter),
   content = list(
     tidy = tidyContent,
@@ -967,7 +1219,14 @@ orphanCodesPanel <- list(
       )",
       render = "<reactive_data>",
       filters = rankTableButton(
-        none = c("codelist_name", "domain_id", "variable_name", "variable_level", "standard_concept", "vocabulary_id"),
+        none = c(
+          "codelist_name",
+          "domain_id",
+          "variable_name",
+          "variable_level",
+          "standard_concept",
+          "vocabulary_id"
+        ),
         groupColumn = character(),
         header = c("cdm_name", "estimate_name"),
         hide = character()
@@ -997,7 +1256,13 @@ cohortCodeUsePanel <- list(
       )",
       render = "<reactive_data>",
       filters = rankTableButton(
-        none = c("<group>", "<strata>", "<additional>", "variable_name", "variable_level"),
+        none = c(
+          "<group>",
+          "<strata>",
+          "<additional>",
+          "variable_name",
+          "variable_level"
+        ),
         groupColumn = character(),
         header = c("cdm_name", "estimate_name"),
         hide = character()
@@ -1011,7 +1276,14 @@ codeUsePanel <- list(
   title = "Code use",
   icon = "chart-column",
   data = list(result_type = "code_use"),
-  automatic_filters = c("group", "strata", "additional", "settings", "variable_name", "estimate_name"),
+  automatic_filters = c(
+    "group",
+    "strata",
+    "additional",
+    "settings",
+    "variable_name",
+    "estimate_name"
+  ),
   filters = list(cdm_name = cdmFilter),
   content = list(
     tidy = tidyContent,
@@ -1026,7 +1298,13 @@ codeUsePanel <- list(
       )",
       render = "<reactive_data>",
       filters = rankTableButton(
-        none = c("<group>", "<strata>", "<additional>", "<settings>", "variable_name"),
+        none = c(
+          "<group>",
+          "<strata>",
+          "<additional>",
+          "<settings>",
+          "variable_name"
+        ),
         groupColumn = character(),
         header = c("cdm_name", "estimate_name"),
         hide = character()
@@ -1040,7 +1318,14 @@ achillesCodeUsePanel <- list(
   title = "Achilles code use",
   icon = "chart-column",
   data = list(result_type = "achilles_code_use"),
-  automatic_filters = c("group", "strata", "additional", "settings", "variable_name", "estimate_name"),
+  automatic_filters = c(
+    "group",
+    "strata",
+    "additional",
+    "settings",
+    "variable_name",
+    "estimate_name"
+  ),
   filters = list(cdm_name = cdmFilter),
   content = list(
     tidy = tidyContent,
@@ -1055,7 +1340,13 @@ achillesCodeUsePanel <- list(
       )",
       render = "<reactive_data>",
       filters = rankTableButton(
-        none = c("<group>", "<strata>", "<additional>", "<settings>", "variable_name"),
+        none = c(
+          "<group>",
+          "<strata>",
+          "<additional>",
+          "<settings>",
+          "variable_name"
+        ),
         groupColumn = character(),
         header = c("cdm_name", "estimate_name"),
         hide = character()
@@ -1069,7 +1360,14 @@ unmappedPanel <- list(
   title = "Unmapped codes",
   icon = "chart-column",
   data = list(result_type = "unmapped_codes"),
-  automatic_filters = c("group", "strata", "additional", "settings", "variable_name", "estimate_name"),
+  automatic_filters = c(
+    "group",
+    "strata",
+    "additional",
+    "settings",
+    "variable_name",
+    "estimate_name"
+  ),
   filters = list(cdm_name = cdmFilter),
   content = list(
     tidy = tidyContent,
@@ -1084,7 +1382,13 @@ unmappedPanel <- list(
       )",
       render = "<reactive_data>",
       filters = rankTableButton(
-        none = c("<group>", "<strata>", "<additional>", "<settings>", "variable_name"),
+        none = c(
+          "<group>",
+          "<strata>",
+          "<additional>",
+          "<settings>",
+          "variable_name"
+        ),
         groupColumn = character(),
         header = c("cdm_name", "estimate_name"),
         hide = character()
@@ -1098,7 +1402,14 @@ doseCoveragePanel <- list(
   title = "Dose coverage",
   icon = "pills",
   data = list(result_type = "summarise_dose_coverage"),
-  automatic_filters = c("ingredient_name", "unit", "route", "pattern_id", "variable_name", "estimate_name"),
+  automatic_filters = c(
+    "ingredient_name",
+    "unit",
+    "route",
+    "pattern_id",
+    "variable_name",
+    "estimate_name"
+  ),
   filters = list(cdm_name = cdmFilter),
   content = list(
     tidy = tidyContent,
@@ -1209,7 +1520,12 @@ drugRestartPanel <- list(
       )",
       render = "<reactive_data>",
       filters = rankTableButton(
-        none = c("variable_level", "<strata>", "follow_up_days", "estimate_name"),
+        none = c(
+          "variable_level",
+          "<strata>",
+          "follow_up_days",
+          "estimate_name"
+        ),
         header = c("cdm_name", "cohort_name"),
         groupColumn = c("variable_name"),
         hide = c("<settings>")
@@ -1234,14 +1550,30 @@ drugRestartPanel <- list(
         facet = list(
           button_type = "pickerInput",
           label = "Facet",
-          choices = c("cdm_name", "cohort_name", "<strata>", "variable_name", "variable_level", "follow_up_days", "<settings>"),
+          choices = c(
+            "cdm_name",
+            "cohort_name",
+            "<strata>",
+            "variable_name",
+            "variable_level",
+            "follow_up_days",
+            "<settings>"
+          ),
           selected = c("cdm_name", "cohort_name", "follow_up_days", "<strata>"),
           multiple = TRUE
         ),
         colour = list(
           button_type = "pickerInput",
           label = "Colour",
-          choices = c("cdm_name", "cohort_name", "<strata>", "variable_name", "variable_level", "follow_up_days", "<settings>"),
+          choices = c(
+            "cdm_name",
+            "cohort_name",
+            "<strata>",
+            "variable_name",
+            "variable_level",
+            "follow_up_days",
+            "<settings>"
+          ),
           selected = c("variable_level"),
           multiple = TRUE
         )
@@ -1255,7 +1587,14 @@ dusPanel <- list(
   title = "Drug Utilisation",
   icon = "capsules",
   data = list(result_type = "summarise_drug_utilisation"),
-  automatic_filters = c("cohort_name", "strata", "additional", "variable_name", "estimate_name", "settings"),
+  automatic_filters = c(
+    "cohort_name",
+    "strata",
+    "additional",
+    "variable_name",
+    "estimate_name",
+    "settings"
+  ),
   filters = list(cdm_name = cdmFilter),
   content = list(
     tidy = tidyContent,
@@ -1304,20 +1643,32 @@ dusPanel <- list(
         plot_type = list(
           button_type = "pickerInput",
           label = "Plot type",
-          choices = c('scatterplot', 'barplot', 'densityplot', 'boxplot'),
+          choices = c("scatterplot", "barplot", "densityplot", "boxplot"),
           selected = "barplot"
         ),
         facet = list(
           button_type = "pickerInput",
           label = "Facet",
-          choices = c("cdm_name", "cohort_name", "<strata>", "<additional>", "<settings>"),
+          choices = c(
+            "cdm_name",
+            "cohort_name",
+            "<strata>",
+            "<additional>",
+            "<settings>"
+          ),
           selected = c("<strata>"),
           multiple = TRUE
         ),
         colour = list(
           button_type = "pickerInput",
           label = "Colour",
-          choices = c("cdm_name", "cohort_name", "<strata>", "<additional>", "<settings>"),
+          choices = c(
+            "cdm_name",
+            "cohort_name",
+            "<strata>",
+            "<additional>",
+            "<settings>"
+          ),
           selected = c("cohort_name"),
           multiple = TRUE
         )
@@ -1331,7 +1682,15 @@ indicationPanel <- list(
   title = "Indication",
   icon = "disease",
   data = list(result_type = "summarise_indication"),
-  automatic_filters = c("cohort_name", "strata", "additional", "variable_name", "estimate_name", "mutually_exclusive", "index_date"),
+  automatic_filters = c(
+    "cohort_name",
+    "strata",
+    "additional",
+    "variable_name",
+    "estimate_name",
+    "mutually_exclusive",
+    "index_date"
+  ),
   filters = list(cdm_name = cdmFilter),
   content = list(
     tidy = tidyContent,
@@ -1375,7 +1734,13 @@ indicationPanel <- list(
         facet = list(
           button_type = "pickerInput",
           label = "Facet",
-          choices = c("cdm_name", "cohort_name", "<strata>", "window_name", "<settings>"),
+          choices = c(
+            "cdm_name",
+            "cohort_name",
+            "<strata>",
+            "window_name",
+            "<settings>"
+          ),
           selected = c("cdm_name", "cohort_name", "<strata>", "window_name"),
           multiple = TRUE
         )
@@ -1389,7 +1754,15 @@ treatmentPanel <- list(
   title = "Treatments",
   icon = "disease",
   data = list(result_type = "summarise_treatment"),
-  automatic_filters = c("cohort_name", "strata", "additional", "variable_name", "estimate_name", "mutually_exclusive", "index_date"),
+  automatic_filters = c(
+    "cohort_name",
+    "strata",
+    "additional",
+    "variable_name",
+    "estimate_name",
+    "mutually_exclusive",
+    "index_date"
+  ),
   filters = list(cdm_name = cdmFilter),
   content = list(
     tidy = tidyContent,
@@ -1428,7 +1801,13 @@ treatmentPanel <- list(
         facet = list(
           button_type = "pickerInput",
           label = "Facet",
-          choices = c("cdm_name", "cohort_name", "<strata>", "window_name", "<settings>"),
+          choices = c(
+            "cdm_name",
+            "cohort_name",
+            "<strata>",
+            "window_name",
+            "<settings>"
+          ),
           selected = c("cdm_name", "cohort_name", "<strata>", "window_name"),
           multiple = TRUE
         )
@@ -1478,14 +1857,27 @@ lscPanel <- list(
         compare_by = list(
           button_type = "pickerInput",
           label = "Compare by",
-          choices = c("no compare", "cdm_name", "cohort_name", "<strata>", "type", "variable_level"),
+          choices = c(
+            "no compare",
+            "cdm_name",
+            "cohort_name",
+            "<strata>",
+            "type",
+            "variable_level"
+          ),
           selected = c("no compare"),
           multiple = FALSE
         ),
         hide = list(
           button_type = "pickerInput",
           label = "Hide",
-          choices = c("cdm_name", "cohort_name", "<strata>", "type", "variable_level"),
+          choices = c(
+            "cdm_name",
+            "cohort_name",
+            "<strata>",
+            "type",
+            "variable_level"
+          ),
           selected = c("type"),
           multiple = TRUE
         ),
@@ -1538,7 +1930,13 @@ lscPanel <- list(
         colour = list(
           button_type = "pickerInput",
           label = "Colour",
-          choices = c("cdm_name", "cohort_name", "<strata>", "type", "variable_level"),
+          choices = c(
+            "cdm_name",
+            "cohort_name",
+            "<strata>",
+            "type",
+            "variable_level"
+          ),
           selected = NULL,
           multiple = FALSE
         ),
@@ -1552,7 +1950,13 @@ lscPanel <- list(
         facet = list(
           button_type = "pickerInput",
           label = "Facet",
-          choices = c("cdm_name", "cohort_name", "<strata>", "type", "variable_level"),
+          choices = c(
+            "cdm_name",
+            "cohort_name",
+            "<strata>",
+            "type",
+            "variable_level"
+          ),
           selected = c("cdm_name", "cohort_name", "<strata>"),
           multiple = TRUE
         )
@@ -1565,7 +1969,14 @@ defaultPanel <- list(
   title = "<result_type>",
   icon = "folder",
   data = list(),
-  automatic_filters = c("group", "strata", "additional", "variable_name", "estimate_name", "settings"),
+  automatic_filters = c(
+    "group",
+    "strata",
+    "additional",
+    "variable_name",
+    "estimate_name",
+    "settings"
+  ),
   filters = list(cdm_name = cdmFilter),
   content = list(
     tidy = tidyContent,
@@ -1580,7 +1991,16 @@ defaultPanel <- list(
       )",
       render = "<reactive_data>",
       filters = rankTableButton(
-        none = c("cdm_name", "<group>", "<strata>", "<additional>", "<settings>", "variable_name", "variable_level", "estimate_name"),
+        none = c(
+          "cdm_name",
+          "<group>",
+          "<strata>",
+          "<additional>",
+          "<settings>",
+          "variable_name",
+          "variable_level",
+          "estimate_name"
+        ),
         header = character(),
         groupColumn = character(),
         hide = character()
