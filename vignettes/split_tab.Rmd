@@ -1,0 +1,27 @@
+---
+title: "Split Result into Two Tabs in OmopViewer"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{configured_panels}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+```{r, echo=FALSE, warning=FALSE}
+library(OmopViewer)
+library(dplyr)
+library(omopgenerics)
+```
+We first define an IncidencePrevalence result in `res` from `omopViewerResults`:
+```{r, echo=TRUE, eval=TRUE}
+res <- omopViewerResults |> filterSettings(result_type == "incidence")
+```
+Now we can define the panel details ourselves to display two results in two separate tabs, using `panelDetailsFromResult`:
+```{r, echo=TRUE, eval=TRUE}
+res1 <- res |> filterSettings(result_id == 19)
+res2 <- res |> filterSettings(result_id == 20)
+exportStaticApp(res, panelDetails = list("incidence" = panelDetailsFromResult(res1)$incidence,
+                                         "incidence" = panelDetailsFromResult(res2)$incidence),
+                directory = tempdir())
+```
