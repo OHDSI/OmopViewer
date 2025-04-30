@@ -8,7 +8,7 @@ vignette: >
 ---
 
 
-```{r, echo=FALSE, warning=FALSE}
+```{r, echo=FALSE, warning=FALSE,message=FALSE}
 library(OmopViewer)
 library(dplyr)
 library(omopgenerics)
@@ -21,7 +21,17 @@ Now we can define the panel details ourselves to display two results in two sepa
 ```{r, echo=TRUE, eval=TRUE}
 res1 <- res |> filterSettings(result_id == 19)
 res2 <- res |> filterSettings(result_id == 20)
-exportStaticApp(res, panelDetails = list("incidence" = panelDetailsFromResult(res1)$incidence,
-                                         "incidence" = panelDetailsFromResult(res2)$incidence),
+exportStaticApp(res, panelDetails = list("incidence1" = panelDetailsFromResult(res1)$incidence,
+                                         "incidence2" = panelDetailsFromResult(res2)$incidence),
+                directory = tempdir())
+```
+Details in the tabs can also be modified, example of changing the tab titles:
+```{r}
+tab1 <- panelDetailsFromResult(res1)$incidence
+tab1$title <- "incidence title 1"
+tab2 <- panelDetailsFromResult(res2)$incidence
+tab2$title <- "incidence title 2"
+exportStaticApp(res, panelDetails = list("incidence1" = tab1,
+                                         "incidence2" = tab2),
                 directory = tempdir())
 ```
