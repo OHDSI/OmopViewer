@@ -31,7 +31,7 @@ omopViewerPreprocess <- c(
   "choices <- values",
   "selected <- values",
   "",
-  "save(data, choices, selected, file = file.path(getwd(), \"data\", \"shinyData.RData\"))",
+  "save(data, choices, selected, values, file = file.path(getwd(), \"data\", \"shinyData.RData\"))",
   "",
   "rm(result, values, choices, selected, resultList, data)"
 )
@@ -82,9 +82,35 @@ omopViewerThemes <- list(
   )"
 )
 
+# default structure
+panelStructureDefaults <- list(
+  OmopSketch = c(
+    "summarise_omop_snapshot", "summarise_observation_period",
+    "summarise_clinical_records", "summarise_record_count",
+    "summarise_missing_data", "summarise_in_observation"
+  ),
+  CodelistGenerator = c(
+    "orphan_code_use", "cohort_code_use", "code_use", "achilles_code_use",
+    "unmapped_codes"
+  ),
+  CohortCharacteristics = c(
+    "summarise_cohort_overlap", "summarise_cohort_count",
+    "summarise_cohort_attrition", "summarise_cohort_timing",
+    "summarise_characteristics", "summarise_large_scale_characteristics"
+  ),
+  IncidencePrevalence = c(
+    "incidence", "incidence_attrition", "prevalence", "prevalence_attrition"
+  ),
+  DrugUtilisation = c(
+    "summarise_dose_coverage", "summarise_proportion_of_patients_covered",
+    "summarise_drug_restart", "summarise_drug_utilisation",
+    "summarise_indication", "summarise_treatment"
+  )
+)
+
 # add internal data ----
 usethis::use_data(
   omopViewerProj, omopViewerGlobal, omopViewerPreprocess, logoKeywords,
-  backgroundKeywords, omopViewerThemes,
+  backgroundKeywords, omopViewerThemes, panelStructureDefaults,
   overwrite = TRUE, internal = TRUE
 )

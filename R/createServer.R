@@ -19,7 +19,8 @@ serverStatic <- function(panelDetails, summary) {
 # functions ----
 createSummaryServer <- function(summary, data) {
   if (summary) {
-    c("output$summary_cdm_name <- shinyTree::renderTree(summaryCdmName({data}))",
+    c("# summary ----",
+      "output$summary_cdm_name <- shinyTree::renderTree(summaryCdmName({data}))",
       "output$summary_packages <- shinyTree::renderTree(summaryPackages({data}))",
       "output$summary_min_cell_count <- shinyTree::renderTree(summaryMinCellCount({data}))",
       "output$summary_panels <- shinyTree::renderTree(summaryPanels({data}))") |>
@@ -45,7 +46,9 @@ downloadRawDataServer <- function(data) {
   output$download_raw <- shiny::downloadHandler(
     filename = "results.csv",
     content = function(file) {
-      omopgenerics::exportSummarisedResult([data], fileName = file)
+      [data] |>
+        omopgenerics::bind() |>
+        omopgenerics::exportSummarisedResult(fileName = file)
     }
   )' |>
     glue::glue(.open = "[", .close = "]") |>
@@ -83,16 +86,16 @@ writeFilterData <- function(x, nm, data) {
 }
 writeContentServer <- function(content, data) {
   purrr::map_chr(content, \(cont) {
-    c(writeOutputServer(cont), writeDownloadServer(cont)) |>
+    c(writeOutputServer(cont), cont$observe, writeDownloadServer(cont)) |>
       paste0(collapse = "\n")
   }) |>
     paste0(collapse = "\n")
 }
 writeOutputServer <- function(content) {
   paste0(
-    content$render_function, " <- shiny::reactive({\n", content$render,
-    "\n})\noutput$", content$output_id, " <- ", renderFunction(content$output_type),
-    "({\n", content$render_function, "()\n})"
+    content$reactive_function, " <- shiny::reactive({\n", content$reactive, "\n})\n",
+    "output$", content$output_id, " <- ", renderFunction(content$output_type),
+    "({\n", content$render, "\n})"
   )
 }
 outputFunction <- function(outputType) {
@@ -100,14 +103,20 @@ outputFunction <- function(outputType) {
          "DT" = "DT::DTOutput",
          "gt" = "gt::gt_output",
          "plot" = "shiny::plotOutput",
-         "grViz" = "DiagrammeR::grVizOutput")
+         "grViz" = "DiagrammeR::grVizOutput",
+         "plotly" = "plotly::plotlyOutput",
+         "ui" = "shiny::uiOutput",
+         "reactable" = "reactable::reactableOutput")
 }
 renderFunction <- function(outputType) {
   switch(outputType,
          "DT" = "DT::renderDT",
          "gt" = "gt::render_gt",
          "plot" = "shiny::renderPlot",
-         "grViz" = "DiagrammeR::renderGrViz")
+         "grViz" = "DiagrammeR::renderGrViz",
+         "plotly" = "plotly::renderPlotly",
+         "ui" = "shiny::renderUI",
+         "reactable" = "reactable::renderReactable")
 }
 writeDownloadServer <- function(content) {
   download <- content$download

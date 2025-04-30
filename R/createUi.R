@@ -152,7 +152,7 @@ writeContent <- function(content) {
     paste0(collapse = ",\n")
 }
 writeOutput <- function(ot, id) {
-  paste0(outputFunction(ot), '("', id, '")')
+  paste0(outputFunction(ot), '("', id, '") |>\nshinycssloaders::withSpinner()')
 }
 writeDownload <- function(do) {
   if (length(do) == 0) return("")

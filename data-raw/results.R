@@ -21,6 +21,12 @@ cdm$drug_exposure <- cdm$drug_exposure |>
     )
   ) |>
   dplyr::compute(name = "drug_exposure")
+cdm$condition_occurrence <- cdm$condition_occurrence |>
+  dplyr::mutate(condition_concept_id = dplyr::if_else(
+    .data$condition_occurrence_id %% 10 & .data$condition_concept_id == 381316L,
+    0L, .data$condition_concept_id
+  )) |>
+  dplyr::compute(name = "condition_occurrence")
 
 # create cohorts
 codelistConditions <- list(
@@ -82,6 +88,12 @@ characteristics <- cdm$target |>
       )
     )
   )
+lsc <- cdm$target |>
+  CohortCharacteristics::summariseLargeScaleCharacteristics(
+    window = list(c(-365, -31), c(-30, -1), c(0, 0), c(1, 30), c(31, 365)),
+    eventInWindow = c("observation", "condition_occurrence"),
+    episodeInWindow = "drug_exposure"
+  )
 
 # IncidencePrevalence
 cdm <- IncidencePrevalence::generateDenominatorCohortSet(
@@ -133,7 +145,7 @@ omopViewerResults <- omopgenerics::bind(
   # CodelistGenerator
   orphanCodes, cohortCodeUse, codeUse, achillesUse, unmapped,
   # CohortCharacteristics
-  overlap, counts, attrition, characteristics, timing,
+  overlap, counts, attrition, characteristics, timing, lsc,
   # IncidencePrevalence
   incidence, pointPrevalence,
   # DrugUtilisation

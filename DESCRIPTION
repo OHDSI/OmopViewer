@@ -1,7 +1,7 @@
 Package: OmopViewer
 Type: Package
 Title: Visualise OMOP Results using 'shiny' Applications
-Version: 0.2.1.900
+Version: 0.3.0
 Authors@R: c(
     person(
         "Martí", "Català", , "marti.catalasabate@ndorms.ox.ac.uk", 
@@ -32,7 +32,7 @@ LazyData: true
 RoxygenNote: 7.3.2
 URL: https://ohdsi.github.io/OmopViewer/
 Depends: 
-    R (>= 2.10)
+    R (>= 4.1)
 Imports: 
     bslib,
     cli,
@@ -57,7 +57,10 @@ Suggests:
     CodelistGenerator (>= 3.2.0),
     CohortCharacteristics (>= 0.3.0),
     CohortConstructor,
+    cpp11,
+    devtools,
     DiagrammeR,
+    DiagrammeRsvg,
     DrugUtilisation (>= 0.7.1),
     duckdb,
     ggplot2,
@@ -69,9 +72,15 @@ Suggests:
     OmopSketch,
     PatientProfiles,
     plotly,
+    progress,
+    reactable,
+    renv,
     rmarkdown,
     RPostgres,
+    rsconnect,
+    rsvg,
     shinycssloaders,
+    shinyTree,
     shinyWidgets,
     sortable,
     testthat (>= 3.1.5),

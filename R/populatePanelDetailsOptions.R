@@ -13,14 +13,15 @@ populatePanelDetailsOptions <- function(panelDetails, result) {
     # populate <values>
     populateValues(result) |>
     # populate choices$ and selected$
-    populateChoicesSelected()
+    populateChoicesSelected() |>
+    # populate <prefix> and <panel>
+    populatePrefixPanel()
 }
 populateValues <- function(panelDetails, result) {
   panelDetails |>
     purrr::map(\(pd) {
       # filter result
-      res <- result |>
-        filterResult(pd$data$result_id, pd$data$result_type)
+      res <- filterResult(result, pd$data)
       # get values
       values <- res |>
         dplyr::select(!c("estimate_type", "estimate_value")) |>
@@ -116,8 +117,8 @@ createFunctionNames <- function(panelDetails) {
     purrr::imap(\(x, nmp) {
       x$content <- x$content |>
         purrr::imap(\(cont, nmc) {
-          if (!"render_function" %in% names(cont)) {
-            cont$render_function <- paste0("get", formatCamel(paste0(
+          if (!"reactive_function" %in% names(cont)) {
+            cont$reactive_function <- paste0("get", formatCamel(paste0(
               nmp, "_", nmc
             )))
           }
@@ -132,11 +133,15 @@ populateFunctionNames <- function(panelDetails) {
       filterFunctionName <- paste0(pd$filter_function, "()")
       pd$content <- pd$content |>
         purrr::map(\(cont) {
-          renderFunctionName <- paste0(cont$render_function, "()")
+          reactiveFunctionName <- paste0(cont$reactive_function, "()")
+          cont$observer <- cont$observer |>
+            substituteFunctionNames(filterFunctionName, reactiveFunctionName)
+          cont$reactive <- cont$reactive |>
+            substituteFunctionNames(filterFunctionName, reactiveFunctionName)
           cont$render <- cont$render |>
-            substituteFunctionNames(filterFunctionName, renderFunctionName)
+            substituteFunctionNames(filterFunctionName, reactiveFunctionName)
           cont$download$render <- cont$download$render |>
-            substituteFunctionNames(filterFunctionName, renderFunctionName)
+            substituteFunctionNames(filterFunctionName, reactiveFunctionName)
           cont
         })
       pd
@@ -146,7 +151,7 @@ substituteFunctionNames <- function(x, ffn, rfn) {
   if (is.null(x)) return(x)
   x |>
     stringr::str_replace_all("<filtered_data>", ffn) |>
-    stringr::str_replace_all("<rendered_data>", rfn)
+    stringr::str_replace_all("<reactive_data>", rfn)
 }
 populateInputIds <- function(panelDetails) {
   panelDetails |>
@@ -155,7 +160,8 @@ populateInputIds <- function(panelDetails) {
         purrr::map(\(cont) {
           # where to find the inputs
           inputsToSubstitute <- c(
-            cont$render, cont$download$render, cont$download$filename
+            cont$render, cont$download$render, cont$download$filename,
+            cont$observe, cont$reactive
           ) |>
             # split in words
             stringr::str_split(pattern = "[[:punct:]&&[^_]]|\\s+") |>
@@ -185,9 +191,13 @@ populateInputIds <- function(panelDetails) {
               stringr::str_replace_all(pattern = "\\$", replacement = "\\\\$")
             cont$render <- cont$render |>
               stringr::str_replace_all(pattern = original, replacement = new)
+            cont$reactive <- cont$reactive |>
+              stringr::str_replace_all(pattern = original, replacement = new)
             cont$download$render <- cont$download$render |>
               stringr::str_replace_all(pattern = original, replacement = new)
             cont$download$filename <- cont$download$filename |>
+              stringr::str_replace_all(pattern = original, replacement = new)
+            cont$observe <- cont$observe |>
               stringr::str_replace_all(pattern = original, replacement = new)
           }
           cont
@@ -198,8 +208,7 @@ populateInputIds <- function(panelDetails) {
 populateAutomaticFilters <- function(panelDetails, result) {
   panelDetails |>
     purrr::map(\(pd) {
-      res <- result |>
-        filterResult(pd$data$result_id, pd$data$result_type)
+      res <- filterResult(result, pd$data)
       values <- list()
       values$group <- omopgenerics::groupColumns(res)
       values$strata <- omopgenerics::strataColumns(res)
@@ -270,11 +279,22 @@ populatecs <- function(filt, nm) {
   }
   filt
 }
-
-resultListFromPanelDetails <- function(panelDetails) {
+populatePrefixPanel <- function(panelDetails) {
   panelDetails |>
-    purrr::map(\(x) {
-      list(result_id = x$data$result_id, result_type = x$data$result_type) |>
-        purrr::compact()
+    purrr::imap(\(pd, nmp) {
+      pd$content <- pd$content |>
+        purrr::imap(\(cont, nmc) {
+          cont$observe <- cont$observe |>
+            substitutePrefix(prefix = paste0(nmp, "_", nmc)) |>
+            substitutePanel(panel = nmp)
+          cont
+        })
+      pd
     })
+}
+substitutePrefix <- function(x, prefix) {
+  stringr::str_replace_all(x, pattern = "<prefix>", replacement = prefix)
+}
+substitutePanel <- function(x, panel) {
+  stringr::str_replace_all(x, pattern = "<panel>", replacement = panel)
 }

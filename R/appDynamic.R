@@ -64,7 +64,7 @@ serverDynamic <- function(input, output, session) {
     panelDetails <- panelDetailsFromResult(dataToUpload)
 
     # create the new workingData()
-    resultList <- resultListFromPanelDetails(panelDetails)
+    resultList <- purrr::map(panelDetails, \(x) x$data)
     workingData(prepareResult(dataToUpload, resultList))
 
     # add server modules
@@ -172,7 +172,7 @@ panelsUi <- function(result) {
   panels <- writeUiPanels(panelDetails)
 
   # resultList from panelDetails
-  resultList <- resultListFromPanelDetails(panelDetails)
+  resultList <- purrr::map(panelDetails, \(x) x$data)
 
   # filterValues from resultList
   values <- getValues(result, resultList)
