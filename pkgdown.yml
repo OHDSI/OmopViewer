@@ -1,5 +1,5 @@
 pandoc: 3.1.11
-pkgdown: 2.1.1
+pkgdown: 2.1.2
 pkgdown_sha: ~
 articles:
   articles/adding_new_panels: adding_new_panels.html
@@ -9,7 +9,7 @@ articles:
   edit_static_content: edit_static_content.html
   export_static_app: export_static_app.html
   articles/theming: theming.html
-last_built: 2025-04-25T12:15Z
+last_built: 2025-04-30T10:21Z
 urls:
   reference: https://ohdsi.github.io/OmopViewer/reference
   article: https://ohdsi.github.io/OmopViewer/articles
