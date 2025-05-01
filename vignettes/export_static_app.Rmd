@@ -41,15 +41,6 @@ The exportStaticApp function generates a Shiny app from the prepared data. Using
 exportStaticApp(result = result, directory = tempdir())
 ```
 
-### Understanding Panel Details (panelDetails)
-
-The panels that will be created are defined by the `panelDetails` argument. By default, a tab is created by each `result_type` of the result object. The default tab `getPanel("default")` is used if no tab is defined for that `result_type` in **omopViewerPanels**. Let's see the default `panelDetails`:
-
-```{r}
-panelDetails <- panelDetailsFromResult(result)
-panelDetails
-```
-
 ### Panel Structure (omopViewerPanels)
 
 The arrangement of panels within the app is controlled by the `panelStructure` variable. This variable determines how panels are grouped into logical sections or tabs within the Shiny app. By default, `omopViewerPanels` is used to define the panel layout when no specific `panelStructure` is provided to `exportStaticApp.`
@@ -68,4 +59,13 @@ ps1 <- list(
 
 exportStaticApp(result = result, directory = tempdir(), panelStructure = ps1)
 ```
-This custom `panelStructure` groups the "summarise_omop_snapshot" and "incidence" result types together in grp_1, while placing the "summarise_characteristics" result type in grp_2. You can pass this custom structure to exportStaticApp to organize the panels according to your preference.
+This custom `panelStructure` groups the "summarise_omop_snapshot" and "incidence" result types together in grp_1, while placing the "summarise_characteristics" result type in grp_2. You can pass this custom structure to `exportStaticApp` to organize the panels according to your preference.
+
+### Understanding Panel Details (panelDetails)
+
+Now we have overall panel strucutre. Details in panels that will be created are defined by the `panelDetails` argument. By default, a tab is created by each `result_type` of the result object. The default tab `getPanel("default")` is used if no tab is defined for that `result_type` in **omopViewerPanels**. Let's see the default `panelDetails`:
+
+```{r}
+panelDetails <- panelDetailsFromResult(result)
+panelDetails
+```
