@@ -8,8 +8,9 @@ articles:
   articles/dynamic_app: dynamic_app.html
   edit_static_content: edit_static_content.html
   export_static_app: export_static_app.html
+  split_tab: split_tab.html
   articles/theming: theming.html
-last_built: 2025-05-01T09:57Z
+last_built: 2025-05-01T10:01Z
 urls:
   reference: https://ohdsi.github.io/OmopViewer/reference
   article: https://ohdsi.github.io/OmopViewer/articles
