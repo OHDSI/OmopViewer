@@ -117,7 +117,8 @@ function:</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">icon:</span> chart-line</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">data:</span> result_type: &lt;incidence&gt;</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">filters:</span> 1 filters + 6 automatic filters</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Incidence</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB;">Plot Incidence</span> (<span style="font-style: italic;">ui</span>)</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Incidence</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB;">Plot Incidence</span> (<span style="font-style: italic;">ui</span>); <span style="color: #0000BB;">Plot</span></span></span>
+<span><span class="co">#&gt;   <span style="color: #0000BB;">population</span> (<span style="font-style: italic;">ui</span>)</span></span></code></pre></div>
 <p>The exported object <em>omopViewerPanels</em> contains all the
 defined panels in the package:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -247,7 +248,8 @@ defined panels in the package:</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">icon:</span> chart-line</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">data:</span> result_type: &lt;incidence&gt;</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">filters:</span> 1 filters + 6 automatic filters</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Incidence</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB;">Plot Incidence</span> (<span style="font-style: italic;">ui</span>)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Incidence</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB;">Plot Incidence</span> (<span style="font-style: italic;">ui</span>); <span style="color: #0000BB;">Plot</span></span></span>
+<span><span class="co">#&gt;   <span style="color: #0000BB;">population</span> (<span style="font-style: italic;">ui</span>)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $incidence_attrition</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">Incidence Attrition</span> (OmopViewer panel)</span></span>
@@ -261,7 +263,8 @@ defined panels in the package:</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">icon:</span> chart-column</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">data:</span> result_type: &lt;prevalence&gt;</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">filters:</span> 1 filters + 6 automatic filters</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Prevalence</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB;">Plot Prevalence</span> (<span style="font-style: italic;">ui</span>)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> <span style="font-weight: bold;">content:</span> <span style="color: #0000BB;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB;">Table Prevalence</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB;">Plot Prevalence</span> (<span style="font-style: italic;">ui</span>); <span style="color: #0000BB;">Plot</span></span></span>
+<span><span class="co">#&gt;   <span style="color: #0000BB;">population</span> (<span style="font-style: italic;">ui</span>)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $prevalence_attrition</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">Prevalence Attrition</span> (OmopViewer panel)</span></span>
@@ -699,7 +702,67 @@ structure you can use <code>unclass</code>:</p>
 <span><span class="co">#&gt; [1] "ggplot2::ggsave(\n      filename = file,\n      plot = &lt;reactive_data&gt;,\n      width = as.numeric(input$width),\n      height = as.numeric(input$height),\n      units = input$units,\n      dpi = as.numeric(input$dpi)\n    )"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $content[[3]]$download$filename</span></span>
-<span><span class="co">#&gt; [1] "plot_incidence.png"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "plot_incidence.png"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot_population</span></span>
+<span><span class="co">#&gt; $content$plot_population$title</span></span>
+<span><span class="co">#&gt; [1] "Plot population"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot_population$output_type</span></span>
+<span><span class="co">#&gt; [1] "ui"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot_population$reactive</span></span>
+<span><span class="co">#&gt; [1] "&lt;filtered_data&gt; |&gt;\n      IncidencePrevalence::plotIncidencePopulation(\n      facet = input$facet,\n      colour = input$colour\n      )"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot_population$render</span></span>
+<span><span class="co">#&gt; [1] "renderInteractivePlot(&lt;reactive_data&gt;, input$interactive)"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot_population$filters</span></span>
+<span><span class="co">#&gt; $content$plot_population$filters$interactive</span></span>
+<span><span class="co">#&gt; $content$plot_population$filters$interactive$button_type</span></span>
+<span><span class="co">#&gt; [1] "materialSwitch"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot_population$filters$interactive$label</span></span>
+<span><span class="co">#&gt; [1] "Interactive"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot_population$filters$interactive$value</span></span>
+<span><span class="co">#&gt; [1] TRUE</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot_population$filters$facet</span></span>
+<span><span class="co">#&gt; $content$plot_population$filters$facet$button_type</span></span>
+<span><span class="co">#&gt; [1] "pickerInput"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot_population$filters$facet$label</span></span>
+<span><span class="co">#&gt; [1] "Facet"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot_population$filters$facet$choices</span></span>
+<span><span class="co">#&gt; [1] "cdm_name"     "&lt;group&gt;"      "&lt;strata&gt;"     "&lt;additional&gt;" "&lt;settings&gt;"  </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot_population$filters$facet$selected</span></span>
+<span><span class="co">#&gt; [1] "cdm_name"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot_population$filters$facet$multiple</span></span>
+<span><span class="co">#&gt; [1] TRUE</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot_population$filters$colour</span></span>
+<span><span class="co">#&gt; $content$plot_population$filters$colour$button_type</span></span>
+<span><span class="co">#&gt; [1] "pickerInput"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot_population$filters$colour$label</span></span>
+<span><span class="co">#&gt; [1] "Colour"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot_population$filters$colour$choices</span></span>
+<span><span class="co">#&gt; [1] "cdm_name"     "&lt;group&gt;"      "&lt;strata&gt;"     "&lt;additional&gt;" "&lt;settings&gt;"  </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot_population$filters$colour$selected</span></span>
+<span><span class="co">#&gt; [1] "outcome_cohort_name"</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $content$plot_population$filters$colour$multiple</span></span>
+<span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
 </div>
   </main>
 </div>
