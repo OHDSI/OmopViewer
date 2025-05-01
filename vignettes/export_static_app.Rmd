@@ -14,34 +14,70 @@ knitr::opts_chunk$set(
 )
 ```
 
-In this vignette we show the basis to create shiny apps. To do so we will use the mock results provided by the package:
-
+This vignette demonstrates the creation of Shiny apps using the `OmopViewer` package. We'll use the `omopViewerResults` mock data  from this pacakge for illustration. 
+### Loading Necessary Libraries and Data
+First, load the required library and see the structure of the sample data:
 ```{r}
 library(OmopViewer)
-omopViewerResults
+# Inspect the structure of the sample data
 summary(omopViewerResults)
 ```
 
-Let's use a subset of the default result data set:
-
+### Subsetting the Data
+For this example, we'll use a subset of the data containing specific result types:
 ```{r}
 result <- omopViewerResults |>
   omopgenerics::filterSettings(
     result_type %in% c("summarise_omop_snapshot", "summarise_characteristics", "incidence")
   )
 ```
+This filters the `omopViewerResults` data to include only entries where result_type is one of "summarise_omop_snapshot", "summarise_characteristics", or "incidence". 
 
+### Generating the Shiny App
 
-Using the default parameters you only have to provide a directory and a <summarised_result> object.
+The exportStaticApp function generates a Shiny app from the prepared data. Using the default parameters, it only requires a directory to save the app and the processed data (a <summarised_result> object):
 
 ```{r}
 exportStaticApp(result = result, directory = tempdir())
 ```
 
-The panels that will be created are defined by the `panelDetails` argument. By default, a tab is created by each `result_type` of the result object. The default tab `getPanel("default")` is used if no tab is defined for that `result_type` in **omopViewerPanels**. Let's see the default `panelDetails`:
+### Panel Structure (omopViewerPanels)
+
+The arrangement of panels within the app is controlled by the `panelStructure` variable. This variable determines how panels are grouped into logical sections or tabs within the Shiny app. By default, `omopViewerPanels` is used to define the panel layout when no specific `panelStructure` is provided to `exportStaticApp.`
+```{r}
+omopViewerPanels
+```
+The list shows predefined groups of result_type. Then this can be input into `exportStaticApp` function in `panelStructure` parameter to organise the generated tabs in the Shiny app. Panels whose result_type is found within one of these named groups in the list will be in the same tab.
+
+
+### Customise panelStructure
+```{r}
+ps1 <- list(
+  grp_1 = c("summarise_omop_snapshot", "incidence"),
+  grp_2 = c("summarise_characteristics")
+)
+
+exportStaticApp(result = result, directory = tempdir(), panelStructure = ps1)
+```
+This custom `panelStructure` groups the "summarise_omop_snapshot" and "incidence" result types together in grp_1, while placing the "summarise_characteristics" result type in grp_2. You can pass this custom structure to `exportStaticApp` to organize the panels according to your preference.
+
+### Understanding Panel Details (panelDetails)
+Now that we have an overall panel structure, the specific details of the panels to be created are defined by the `panelDetails` argument. By default, a tab is generated for each result_type in the result object. If no specific tab is defined for a given result_type in omopViewerPanels, the default tab (`getPanel("default")`) will be used. Let’s inspect the default `panelDetails`:
 
 ```{r}
 panelDetails <- panelDetailsFromResult(result)
 panelDetails
 ```
+### Breakdown of Panel Details
+Each panel’s entry contains key information:
 
+1. Icon: Defines the icon displayed next to the panel, helping to visually distinguish between the different types of panels (e.g., clipboard-list, chart-line ...).
+
+2. Data: The result_type reflects the type of result associated with the panel. This helps to understand which data to use for rendering the current panel.
+
+3. Filters: Filters (filters + automatic_filters) that allow users to refine the results within each panel. Each panel has its own defaults. For example, the default incidence panel includes automatic_filters: "settings", "variable_name" and filters: "cdm_name"
+
+
+4. Content: Defines the types of content displayed in the panel, such as tables (DT, gt) and plots (ui). For example, the `summarise_omop_snapshot` panel includes a table displaying the snapshot data and a gt table generated from that snapshot data.
+
+All of these elements - icon, data, filters, and content - can be customised by the user if needed.
