@@ -345,6 +345,33 @@ getValues <- function(result, resultList) {
     }) |>
     purrr::flatten()
 }
+
+getSelected <- function(choices) {
+  purrr::imap(choices, \(vals, nm) {
+    if (grepl("_denominator_sex$", nm)) {
+      if ("Both" %in% vals) return("Both")
+      return(vals[[1]])
+    }
+
+    if (grepl("_denominator_age_group$", nm)) {
+      bounds <- regmatches(vals, regexec("^(\\d+) to (\\d+)$", vals))
+      valid <- vapply(bounds, length, integer(1)) == 3
+      if (any(valid)) {
+        ranges <- vapply(bounds[valid], \(x) as.numeric(x[3]) - as.numeric(x[2]), numeric(1))
+        return(vals[valid][[which.max(ranges)]])
+      } else {
+        return(vals[[1]])
+      }
+    }
+
+    if (grepl("_outcome_cohort_name$", nm)) {
+      return(vals[[1]])
+    }
+
+    vals
+  })
+}
+
 tableTopLargeScaleCharacteristics <- function(result,
                                               topConcepts = 10) {
   # check input
