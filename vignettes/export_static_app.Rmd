@@ -62,10 +62,22 @@ exportStaticApp(result = result, directory = tempdir(), panelStructure = ps1)
 This custom `panelStructure` groups the "summarise_omop_snapshot" and "incidence" result types together in grp_1, while placing the "summarise_characteristics" result type in grp_2. You can pass this custom structure to `exportStaticApp` to organize the panels according to your preference.
 
 ### Understanding Panel Details (panelDetails)
-
-Now we have overall panel strucutre. Details in panels that will be created are defined by the `panelDetails` argument. By default, a tab is created by each `result_type` of the result object. The default tab `getPanel("default")` is used if no tab is defined for that `result_type` in **omopViewerPanels**. Let's see the default `panelDetails`:
+Now that we have an overall panel structure, the specific details of the panels to be created are defined by the `panelDetails` argument. By default, a tab is generated for each result_type in the result object. If no specific tab is defined for a given result_type in omopViewerPanels, the default tab (`getPanel("default")`) will be used. Let’s inspect the default `panelDetails`:
 
 ```{r}
 panelDetails <- panelDetailsFromResult(result)
 panelDetails
 ```
+### Breakdown of Panel Details
+Each panel’s entry contains key information:
+
+1. Icon: Defines the icon displayed next to the panel, helping to visually distinguish between the different types of panels (e.g., clipboard-list, chart-line ...).
+
+2. Data: The result_type reflects the type of result associated with the panel. This helps to understand which data to use for rendering the current panel.
+
+3. Filters: Filters (filters + automatic_filters) that allow users to refine the results within each panel. Each panel has its own defaults. For example, the default incidence panel includes automatic_filters: "settings", "variable_name" and filters: "cdm_name"
+
+
+4. Content: Defines the types of content displayed in the panel, such as tables (DT, gt) and plots (ui). For example, the `summarise_omop_snapshot` panel includes a table displaying the snapshot data and a gt table generated from that snapshot data.
+
+All of these elements - icon, data, filters, and content - can be customised by the user if needed.
