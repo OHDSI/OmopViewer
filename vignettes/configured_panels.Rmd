@@ -1,5 +1,5 @@
 ---
-title: "Panels definned in OmopViewer"
+title: "Panels defined in OmopViewer"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{configured_panels}

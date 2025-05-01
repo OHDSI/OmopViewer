@@ -31,6 +31,10 @@ articles:
   navbar: "New panels"
   contents:
   - articles/adding_new_panels
+- title: Split tab
+  navbar: "Split tab"
+  contents:
+  - split_tab
 
 reference:
 - subtitle: Static app
