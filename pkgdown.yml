@@ -10,7 +10,7 @@ articles:
   export_static_app: export_static_app.html
   split_tab: split_tab.html
   articles/theming: theming.html
-last_built: 2025-05-01T10:01Z
+last_built: 2025-05-14T16:59Z
 urls:
   reference: https://ohdsi.github.io/OmopViewer/reference
   article: https://ohdsi.github.io/OmopViewer/articles
