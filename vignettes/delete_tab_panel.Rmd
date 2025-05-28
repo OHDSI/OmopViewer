@@ -1,5 +1,5 @@
 ---
-title: "Workflow for editing an existing shiny app"
+title: "How to Delete Tabs/Panels Using `panelDetails`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{configured_panels}
@@ -18,35 +18,33 @@ knitr::opts_chunk$set(
 library(OmopViewer)
 ```
 
-### Starting with generating a shiny
-For this example, we'll use a subset of the data containing specific result types:
-```{r}
-result_old <- omopViewerResults |>
-  omopgenerics::filterSettings(
-    result_type %in% c("summarise_omop_snapshot", "summarise_characteristics")
-  )
-exportStaticApp(result = result_old, directory = file.path(getwd(), "extras", "shiny_vignette"))
-```
+### Generating a Static Shiny App
 
-### Changing result, first create new panelDetails, re-generate the preprocess.R file in the data folder
+In this example, we will first ll create a static Shiny app using a filtered subset of result types:
 ```{r}
-result_new <- omopViewerResults |>
+result <- omopViewerResults |>
   omopgenerics::filterSettings(
     result_type %in% c("summarise_omop_snapshot", "summarise_characteristics", "prevalence")
   )
-
-panelDetails = panelDetailsFromResult(result_new)
-
-preprocessData <- function(panelDetails) {
-    resultList <- purrr::map(panelDetails, \(x) x$data)
-    c(
-        "# shiny is prepared to work with this resultList:",
-        paste0("resultList <- ", writeResultList(resultList)),
-        omopViewerPreprocess
-    ) |>
-        styler::style_text()
-}
-preprocessData(panelDetails)
 ```
 
+### Removing a Specific Panel Within a Tab
 
+To remove the `tidy` panel under the `summarise_omop_snapshot` tab:
+```{r}
+panelDetails = panelDetailsFromResult(result)
+panelDetails$summarise_omop_snapshot$content$tidy <- NULL
+exportStaticApp(result = result, directory = tempdir(),
+                panelDetails = panelDetails)
+```
+
+### Removing an Entire Tab
+
+To remove the entire `summarise_omop_snapshot` tab:
+```{r}
+panelDetails = panelDetailsFromResult(result)
+panelDetails$summarise_omop_snapshot <- NULL
+exportStaticApp(result = result, directory = tempdir(),
+                panelDetails = panelDetails)
+```
+This approach allows you to customise which panels or entire tabs are included in the generated static app.
