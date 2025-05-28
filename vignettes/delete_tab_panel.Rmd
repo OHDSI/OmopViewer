@@ -1,0 +1,52 @@
+---
+title: "Workflow for editing an existing shiny app"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{configured_panels}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r, echo=FALSE}
+library(OmopViewer)
+```
+
+### Starting with generating a shiny
+For this example, we'll use a subset of the data containing specific result types:
+```{r}
+result_old <- omopViewerResults |>
+  omopgenerics::filterSettings(
+    result_type %in% c("summarise_omop_snapshot", "summarise_characteristics")
+  )
+exportStaticApp(result = result_old, directory = file.path(getwd(), "extras", "shiny_vignette"))
+```
+
+### Changing result, first create new panelDetails, re-generate the preprocess.R file in the data folder
+```{r}
+result_new <- omopViewerResults |>
+  omopgenerics::filterSettings(
+    result_type %in% c("summarise_omop_snapshot", "summarise_characteristics", "prevalence")
+  )
+
+panelDetails = panelDetailsFromResult(result_new)
+
+preprocessData <- function(panelDetails) {
+    resultList <- purrr::map(panelDetails, \(x) x$data)
+    c(
+        "# shiny is prepared to work with this resultList:",
+        paste0("resultList <- ", writeResultList(resultList)),
+        omopViewerPreprocess
+    ) |>
+        styler::style_text()
+}
+preprocessData(panelDetails)
+```
+
+
