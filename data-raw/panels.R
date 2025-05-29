@@ -1907,7 +1907,8 @@ lscPanel <- list(
           selected = c(10L),
           multiple = FALSE
         )
-      )
+      ),
+      download = downloadGtTable("top_concepts")
     ),
     plot_compared = list(
       title = "Plot Compared",
