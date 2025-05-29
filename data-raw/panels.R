@@ -1894,16 +1894,17 @@ lscPanel <- list(
       title = "Most common codes",
       output_type = "gt",
       reactive = "<filtered_data> |>
-      tableTopLargeScaleCharacteristics(
-      topConcepts = input$top_concepts
+      CohortCharacteristics::tableTopLargeScaleCharacteristics(
+      topConcepts = input$top_concepts,
+      type = 'gt'
       )",
       render = "<reactive_data>",
       filters = list(
         top_concepts = list(
           button_type = "pickerInput",
           label = "Top concepts",
-          choices = c("10", "25", "100"),
-          selected = c("10"),
+          choices = c(10L, 25L, 100L),
+          selected = c(10L),
           multiple = FALSE
         )
       )

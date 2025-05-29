@@ -55,7 +55,7 @@ Imports:
 Suggests: 
     CDMConnector,
     CodelistGenerator (>= 3.2.0),
-    CohortCharacteristics (>= 0.3.0),
+    CohortCharacteristics (>= 1.0.0),
     CohortConstructor,
     cpp11,
     devtools,
