@@ -79,6 +79,12 @@ serverDynamic <- function(input, output, session) {
     shiny::moduleServer(id = NULL, module = serverModule)
   })
 
+  shiny::observeEvent(input$remove_data_go, {
+    selected <- input$upload_data_uploaded_rows_selected
+    if (length(selected) == 0) return()
+    uploadedData(uploadedData()[-selected, ])
+  })
+
 }
 createDynamicUi <- function(panels, summary, data, theme) {
   logo <- "https://raw.githubusercontent.com/OHDSI/OmopViewer/12fbe3ad94529a91f46f3652e47b417e9a7f4bb6/inst/logos/hds_logo.svg"
@@ -129,6 +135,12 @@ createDynamicUi <- function(panels, summary, data, theme) {
           inputId = "load_data_go",
           label = "Bind data and load to shiny",
           icon = shiny::icon("gears")
+        ),
+        shiny::actionButton(
+          inputId = "remove_data_go",
+          label = "Remove selected data",
+          icon = shiny::icon("trash"),
+          class = "btn-danger"
         ),
         shiny::textOutput(outputId = "load_data_message")
       )
