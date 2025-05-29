@@ -7,18 +7,25 @@ newOmopViewerPanel <- function(x) {
 
 #' @export
 print.omopviewer_panel <- function(x, ...) {
+  # extract data
   tit <- getTitle(x)
   icon <- getIcon(x)
   data <- getData(x)
   filters <- getFilters(x)
   content <- getContent(x)
-  cli::cli_inform(c(
-    "{.pkg {tit}} (OmopViewer panel)",
-    "*" = "{.strong icon:} {icon}",
-    "*" = "{.strong data:} {data}",
-    "*" = "{.strong filters:} {filters}",
-    "*" = paste0("{.strong content:} ", content)
-  ))
+
+  # create message
+  mes <- c(
+    paste0("\033[34m", tit,"\033[0m (OmopViewer panel)\n"),
+    "\u2022 ", paste0("\033[1m icon:\033[0m ", icon, "\n"),
+    "\u2022 ", paste0("\033[1m data:\033[0m ", data, "\n"),
+    "\u2022 ", paste0("\033[1m filters:\033[0m ", filters, "\n"),
+    "\u2022 ", paste0("\033[1m content:\033[0m ", content, "\n")
+  )
+
+  # print
+  cat(mes, sep = "")
+
   invisible(x)
 }
 
@@ -71,7 +78,7 @@ getContent <- function(x) {
       purrr::map_chr(\(x) {
         tit <- getTitle(x)
         type <- getType(x)
-        paste0("{.pkg ", tit, "} ({.emph ", type, "})")
+        paste0("\033[1;34m", tit, "\033[0m (\033[3m", type, "\033[0m)")
       }) |>
       paste0(collapse = "; ")
   }
