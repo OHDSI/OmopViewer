@@ -345,6 +345,7 @@ getValues <- function(result, resultList) {
     }) |>
     purrr::flatten()
 }
+
 getSelected <- function(choices) {
   purrr::imap(choices, \(vals, nm) {
     if (grepl("_denominator_sex$", nm)) {
@@ -367,7 +368,6 @@ getSelected <- function(choices) {
       return(vals[[1]])
     }
 
-    # default fallback: same as choices
     vals
   })
 }
