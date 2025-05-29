@@ -21,6 +21,7 @@ articles:
   - configured_panels
   - export_static_app
   - edit_static_content
+  - delete_tab_panel
   - articles/background
   - articles/theming
 - title: Dynamic App
