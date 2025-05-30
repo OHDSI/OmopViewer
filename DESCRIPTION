@@ -79,6 +79,7 @@ Suggests:
     RPostgres,
     rsconnect,
     rsvg,
+    shiny.fluent,
     shinycssloaders,
     shinyTree,
     shinyWidgets (>= 0.9.0),

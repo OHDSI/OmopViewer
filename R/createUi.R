@@ -155,7 +155,9 @@ writeOutput <- function(ot, id) {
   paste0(outputFunction(ot), '("', id, '") |>\nshinycssloaders::withSpinner()')
 }
 writeDownload <- function(do) {
-  if (length(do) == 0) return("")
+  if (length(do$render) == 0)  {
+    return("")
+  }
   paste0(
     'bslib::card_header(\nbslib::popover(\n',
     paste0(
