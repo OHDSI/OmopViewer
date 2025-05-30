@@ -1954,7 +1954,8 @@ lscPanel <- list(
           button_type = "Toggle.shinyInput",
           label = "Missing data",
           onText = "Interpolate 0",
-          offText = "Eliminate"
+          offText = "Eliminate",
+          value = TRUE
         ),
         colour = list(
           button_type = "pickerInput",
