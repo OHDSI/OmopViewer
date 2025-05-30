@@ -120,7 +120,9 @@ renderFunction <- function(outputType) {
 }
 writeDownloadServer <- function(content) {
   download <- content$download
-  if (length(download) == 0) return(character())
+  if (length(download$render) == 0)  {
+    return(character())
+  }
   paste0(
     "output$", download$output_id, " <- shiny::downloadHandler(\nfilename = ",
     cast(download$filename), ",\ncontent = function(file) {\n", download$render,

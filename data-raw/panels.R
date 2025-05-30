@@ -45,7 +45,12 @@ tidyContent <- list(
 )
 
 ## download prebuilt ----
-downloadPlot <- function(filename) {
+downloadPlot <- function(filename, type = "ggplot2") {
+  if (type == "ggplot2") {
+    fun <- "ggplot2::ggsave"
+  } else if (type == "plotly") {
+    fun <- "plotly::save_image"
+  }
   list(
     label = "Download plot",
     filters = list(
@@ -72,14 +77,14 @@ downloadPlot <- function(filename) {
         value = 300
       )
     ),
-    render = "ggplot2::ggsave(
+    render = paste0(fun, "(
       filename = file,
       plot = <reactive_data>,
       width = as.numeric(input$width),
       height = as.numeric(input$height),
       units = input$units,
       dpi = as.numeric(input$dpi)
-    )",
+    )"),
     filename = filename
   )
 }
@@ -1838,7 +1843,7 @@ lscPanel <- list(
       sr <- input$smd_reference
       }
       <filtered_data> |>
-      tableLargeScaleCharacteristics(
+      CohortCharacteristics::tableLargeScaleCharacteristics(
       compareBy = cb,
       hide = input$hide,
       smdReference = sr
@@ -1888,34 +1893,52 @@ lscPanel <- list(
           selected = c("no SMD"),
           multiple = FALSE
         )
+      ),
+      download = list(
+        label = "Download table",
+        render = "rt <- <reactive_data>
+        rt$x$tag$attribs$data |>
+        unclass() |>
+        jsonlite::fromJSON() |>
+        dplyr::as_tibble() |>
+        readr::write_csv(file)",
+        filename = "smd_results.csv"
       )
     ),
     table_most_common = list(
       title = "Most common codes",
       output_type = "gt",
       reactive = "<filtered_data> |>
-      tableTopLargeScaleCharacteristics(
-      topConcepts = input$top_concepts
+      CohortCharacteristics::tableTopLargeScaleCharacteristics(
+      topConcepts = input$top_concepts,
+      type = 'gt'
       )",
       render = "<reactive_data>",
       filters = list(
         top_concepts = list(
           button_type = "pickerInput",
           label = "Top concepts",
-          choices = c("10", "25", "100"),
-          selected = c("10"),
+          choices = c(10L, 25L, 100L),
+          selected = c(10L),
           multiple = FALSE
         )
-      )
+      ),
+      download = downloadGtTable("top_concepts")
     ),
     plot_compared = list(
       title = "Plot Compared",
       output_type = "plotly",
-      reactive = "<filtered_data> |>
-      plotComparedLargeScaleCharacteristics(
+      reactive = "if (input$missings) {
+      mis <- 0
+      } else {
+      mis <- NULL
+      }
+      <filtered_data> |>
+      CohortCharacteristics::plotComparedLargeScaleCharacteristics(
       colour = input$colour,
       reference = input$reference,
-      facet = input$facet
+      facet = input$facet,
+      missings = mis
       )",
       render = "<reactive_data>",
       observe = "shiny::observeEvent(input$colour,{
@@ -1927,6 +1950,13 @@ lscPanel <- list(
         )
       })",
       filters = list(
+        missings = list(
+          button_type = "Toggle.shinyInput",
+          label = "Missing data",
+          onText = "Interpolate 0",
+          offText = "Eliminate",
+          value = TRUE
+        ),
         colour = list(
           button_type = "pickerInput",
           label = "Colour",
@@ -1960,7 +1990,8 @@ lscPanel <- list(
           selected = c("cdm_name", "cohort_name", "<strata>"),
           multiple = TRUE
         )
-      )
+      ),
+      download = NULL
     )
   )
 )

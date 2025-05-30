@@ -32,8 +32,12 @@ writeButton <- function(x) {
     x$choices <- cast(x$choices)
     x$selected <- cast(x$selected)
     x$options = 'list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")'
-    args <- names(formals(shinyWidgets::pickerInput))
-    args <- args[args %in% names(x)]
+    if (rlang::is_installed("shinyWidgets")) {
+      args <- names(formals(shinyWidgets::pickerInput))
+      args <- args[args %in% names(x)]
+    } else {
+      args <- names(x)
+    }
     button <- paste0(
       "shinyWidgets::pickerInput(\n",
       purrr::imap(x[args], \(x, nm) paste(nm, "=", x)) |>
@@ -42,8 +46,12 @@ writeButton <- function(x) {
     )
   } else if (x$button_type == "checkbox") {
     x$label <- cast(x$label)
-    args <- names(formals(shiny::checkboxInput))
-    args <- args[args %in% names(x)]
+    if (rlang::is_installed("shiny")) {
+      args <- names(formals(shiny::checkboxInput))
+      args <- args[args %in% names(x)]
+    } else {
+      args <- names(x)
+    }
     button <- paste0(
       "shiny::checkboxInput(\n",
       purrr::imap(x[args], \(x, nm) paste(nm, "=", x)) |>
@@ -52,8 +60,12 @@ writeButton <- function(x) {
     )
   } else if (x$button_type == "numericInput") {
     x$label <- cast(x$label)
-    args <- names(formals(shiny::numericInput))
-    args <- args[args %in% names(x)]
+    if (rlang::is_installed("shiny")) {
+      args <- names(formals(shiny::numericInput))
+      args <- args[args %in% names(x)]
+    } else {
+      args <- names(x)
+    }
     button <- paste0(
       "shiny::numericInput(\n",
       purrr::imap(x[args], \(x, nm) paste(nm, "=", x)) |>
@@ -62,8 +74,12 @@ writeButton <- function(x) {
     )
   } else if (x$button_type == "bucket_list") {
     x$header <- cast(x$header)
-    args <- names(formals(sortable::bucket_list))
-    args <- args[args %in% names(x)]
+    if (rlang::is_installed("sortable")) {
+      args <- names(formals(sortable::bucket_list))
+      args <- args[args %in% names(x)]
+    } else {
+      args <- names(x)
+    }
     dots <- x$rank |>
       purrr::map_chr(\(rnk) {
         paste0(
@@ -80,11 +96,25 @@ writeButton <- function(x) {
     )
   } else if (x$button_type == "materialSwitch") {
     x$label <- cast(x$label)
-    args <- names(formals(shinyWidgets::materialSwitch))
-    args <- args[args %in% names(x)]
+    if (rlang::is_installed("shinyWidgets")) {
+      args <- names(formals(shinyWidgets::materialSwitch))
+      args <- args[args %in% names(x)]
+    } else {
+      args <- names(x)
+    }
     button <- paste0(
       "shinyWidgets::materialSwitch(\n",
       purrr::imap(x[args], \(x, nm) paste(nm, "=", x)) |>
+        paste0(collapse = ",\n"),
+      "\n)"
+    )
+  } else if (x$button_type == "Toggle.shinyInput") {
+    x$label <- cast(x$label)
+    x$onText <- cast(x$onText)
+    x$offText <- cast(x$offText)
+    button <- paste0(
+      "shiny.fluent::Toggle.shinyInput(\n",
+      purrr::imap(x, \(x, nm) paste(nm, "=", x)) |>
         paste0(collapse = ",\n"),
       "\n)"
     )
