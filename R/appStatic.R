@@ -21,6 +21,7 @@
 #' define a custom theme using `bslib::bs_theme()`. If using a custom theme, it
 #' must be provided as a character string (e.g.,
 #' `"bslib::bs_theme(bg = 'white', fg = 'black')"`).
+#' @param updateButtons Whether to include update buttons for visualisations.
 #' @param open Whether to open the shiny app project.
 #'
 #' @return The shiny app will be created in directory.
@@ -42,6 +43,7 @@ exportStaticApp <- function(result,
                             panelDetails = panelDetailsFromResult(result),
                             panelStructure = NULL,
                             theme = NULL,
+                            updateButtons = TRUE,
                             open = rlang::is_interactive()) {
   # input check
   result <- omopgenerics::validateResultArgument(result)
