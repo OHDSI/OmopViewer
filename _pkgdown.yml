@@ -20,6 +20,7 @@ articles:
   contents:
   - configured_panels
   - export_static_app
+  - developer_vignette
   - edit_static_content
   - articles/background
   - articles/theming
