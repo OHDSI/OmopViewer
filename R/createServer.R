@@ -46,7 +46,7 @@ createServer <- function(panelDetails, data, updateButtons) {
     purrr::imap_chr(panelDetails, \(x, nm) {
       c(glue::glue("# {nm} -----"),
         writeUpdateDataMessage(nm = nm, filters = x$filters),
-        writeFilterData(x = x, nm = nm, data = data),
+        writeFilterData(x = x, nm = nm, data = data, updateButtons = updateButtons),
         writeContentServer(content = x$content, data = data)
       ) |>
         paste0(collapse = "\n")
@@ -71,23 +71,30 @@ writeUpdateDataMessage <- function(nm, filters) {
   buts <- paste0(nm, "_", names(filters)) |>
     purrr::map_chr(\(x) {
       paste0(
-        "shiny::observeEvent(input$", x, ", {\nupdateButtons$", nm,
-        " <- TRUE\n}, ignoreInit = TRUE)"
+        "shiny::observeEvent(input$", x, ", {updateButtons$", nm,
+        " <- TRUE}, ignoreInit = TRUE)"
       )
     }) |>
     paste0(collapse = "\n")
   update <- paste0(
   "shiny::observeEvent(updateButtons$", nm, ", {
   if (updateButtons$", nm, " == TRUE) {
-    output$update_message_", nm, " <- shiny::renderText(\"Filters have changed please click update to update content!\")
+    output$update_message_", nm, " <- shiny::renderText(\"Filters have changed please consider to user the 'update content' button!\")
   } else {
     output$update_message_", nm, " <- shiny::renderText(\"\")
   }
   })\n"
   )
-  paste0("## update message if filter is changed\n", buts, "\n",  update, "\n")
+  silence <- paste0(
+    "shiny::observeEvent(input$update_", nm, ", {updateButtons$", nm,
+    " <- FALSE})"
+  )
+  paste0(
+    "## update message if filter is changed\n", buts, "\n",  update, silence,
+    "\n"
+  )
 }
-writeFilterData <- function(x, nm, data) {
+writeFilterData <- function(x, nm, data, updateButtons) {
   # join by filter function
   filtersToApply <- list()
   filters <- x$filters
@@ -113,9 +120,18 @@ writeFilterData <- function(x, nm, data) {
       })
   ) |>
     paste0(collapse = " |>\n")
-  paste0(
-    "## get ", nm, " data\n", x$filter_function, " <- shiny::reactive({\n", filtersText, "\n})"
-  )
+  if (updateButtons) {
+    x <- paste0(
+      "## get ", nm, " data\n", x$filter_function,
+      " <- shiny::eventReactive(input$update_", nm, ", {\n", filtersText, "\n})"
+    )
+  } else {
+    x <- paste0(
+      "## get ", nm, " data\n", x$filter_function, " <- shiny::reactive({\n",
+      filtersText, "\n})"
+    )
+  }
+  x
 }
 writeContentServer <- function(content, data) {
   purrr::map_chr(content, \(cont) {

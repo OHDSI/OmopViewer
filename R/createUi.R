@@ -19,6 +19,7 @@ uiStatic <- function(logo,
     c(
       writeTitle(title, logo),
       paste0("theme = ", theme),
+      styleClasses(),
       createBackground(background),
       summaryTab(summary),
       panels,
@@ -44,6 +45,16 @@ downloadRawDataUi <- function() {
       )
     )
   )'
+}
+styleClasses <- function() {
+  "shiny::tags$head(
+    shiny::tags$style(shiny::HTML(\"
+      .ov_update_button {
+        color: red;
+        font-weight: bold;
+      }
+    \"))
+  )"
 }
 
 # dynamic ----
@@ -105,8 +116,8 @@ updateButtonUi <- function(updateButtons, id) {
   if (!updateButtons) return("")
   paste0(
     "\nshiny::actionButton(\ninputId = \"update_", id,
-    "\", \nlabel = \"Update content\",\nwidth = \"200px\"\n),\nshiny::textOutput(outputId = \"update_message_",
-    id, "\"),\n"
+    "\", \nlabel = \"Update content\",\nwidth = \"200px\"\n),\nshiny::div(shiny::textOutput(outputId = \"update_message_",
+    id, "\"), class = \"ov_update_button\"),\n"
   )
 }
 structurePanels <- function(panels, panelStructure) {
