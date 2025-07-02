@@ -23,7 +23,7 @@ serverDynamic <- function(input, output, session) {
 
   # render ui
   output$ui <- shiny::renderUI(
-    createDynamicUi(panels(), input$configuration_summary, workingData(), input$configuration_theme)
+    createDynamicUi(panels(), input$configuration_summary, workingData(), input$configuration_theme, TRUE)
   )
 
   # change the theme of the shiny
@@ -71,7 +71,7 @@ serverDynamic <- function(input, output, session) {
     serverModule <- paste0(c(
       "function(input, output, session) {",
       createSummaryServer(summary = input$configuration_summary, data = "workingData()"),
-      createServer(panelDetails, data = "workingData()"),
+      createServer(panelDetails, data = "workingData()", updateButtons = TRUE),
       "}"
     ), collapse = "\n") |>
       rlang::parse_expr() |>
