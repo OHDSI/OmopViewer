@@ -30,8 +30,7 @@ createSummaryServer <- function(summary, data) {
   }
 }
 createServer <- function(panelDetails, data, updateButtons) {
-  if (updateButtons) {
-    nms <- names(panelDetails)
+  if (updateButtons & length(panelDetails) > 0) {
     updateButtonsStart <- paste0(
       "# update buttons ----\nupdateButtons <- shiny::reactiveValues(\n",
       paste0(names(panelDetails), " = FALSE", collapse = ",\n"),
