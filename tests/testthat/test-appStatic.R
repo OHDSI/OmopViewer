@@ -98,7 +98,7 @@ test_that("panelStructure argument works", {
   # default panelDetails
   panelDetails <- panelDetailsFromResult(result) |>
     populatePanelDetailsOptions(result)
-  panels <- writeUiPanels(panelDetails)
+  panels <- writeUiPanels(panelDetails, updateButtons = TRUE)
 
   # default panelStructure
   panelStructure <- as.list(names(panelDetails))
