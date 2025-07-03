@@ -72,7 +72,12 @@ backgroundKeywords <- dplyr::tribble(
 
 # themes ----
 omopViewerThemes <- list(
-  default = "bslib::bs_theme()",
+  default = 'bslib::bs_theme(
+    fg = "#002147", primary = "#040188", secondary = "#040188",
+    success = "#E5920D", warning = "#F3BD12", font_scale = NULL,
+    `enable-gradients` = TRUE, `enable-shadows` = TRUE, preset = "flatly",
+    bg = "#fff"
+  )',
   theme1 = "bslib::bs_theme(
     bootswatch = 'sandstone',
     primary = '#605ca8',
@@ -81,6 +86,7 @@ omopViewerThemes <- list(
     success = '#3B9AB2',
   )"
 )
+
 
 # default structure
 panelStructureDefaults <- list(
