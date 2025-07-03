@@ -1,12 +1,12 @@
 
 # static ----
-serverStatic <- function(panelDetails, summary) {
+serverStatic <- function(panelDetails, summary, updateButtons) {
   paste0(
     c(
       messageShiny(),
       "server <- function(input, output, session) {",
       createSummaryServer(summary, data = "data"),
-      createServer(panelDetails, data = "data"),
+      createServer(panelDetails, data = "data", updateButtons = updateButtons),
       "}"
     ),
     collapse = "\n"
@@ -29,12 +29,23 @@ createSummaryServer <- function(summary, data) {
     character()
   }
 }
-createServer <- function(panelDetails, data) {
+createServer <- function(panelDetails, data, updateButtons) {
+  if (updateButtons & length(panelDetails) > 0) {
+    updateButtonsStart <- paste0(
+      "# update buttons ----\nupdateButtons <- shiny::reactiveValues(\n",
+      paste0(names(panelDetails), " = FALSE", collapse = ",\n"),
+      "\n)\n"
+    )
+  } else {
+    updateButtonsStart <- character()
+  }
   c(
     downloadRawDataServer(data),
+    updateButtonsStart,
     purrr::imap_chr(panelDetails, \(x, nm) {
       c(glue::glue("# {nm} -----"),
-        writeFilterData(x = x, nm = nm, data = data),
+        writeUpdateDataMessage(nm = nm, filters = x$filters),
+        writeFilterData(x = x, nm = nm, data = data, updateButtons = updateButtons),
         writeContentServer(content = x$content, data = data)
       ) |>
         paste0(collapse = "\n")
@@ -54,7 +65,35 @@ downloadRawDataServer <- function(data) {
     glue::glue(.open = "[", .close = "]") |>
     as.character()
 }
-writeFilterData <- function(x, nm, data) {
+writeUpdateDataMessage <- function(nm, filters) {
+  if (length(filters) == 0) return("")
+  buts <- paste0(nm, "_", names(filters)) |>
+    purrr::map_chr(\(x) {
+      paste0(
+        "shiny::observeEvent(input$", x, ", {updateButtons$", nm,
+        " <- TRUE}, ignoreInit = TRUE)"
+      )
+    }) |>
+    paste0(collapse = "\n")
+  update <- paste0(
+  "shiny::observeEvent(updateButtons$", nm, ", {
+  if (updateButtons$", nm, " == TRUE) {
+    output$update_message_", nm, " <- shiny::renderText(\"Filters have changed please consider to user the 'update content' button!\")
+  } else {
+    output$update_message_", nm, " <- shiny::renderText(\"\")
+  }
+  })\n"
+  )
+  silence <- paste0(
+    "shiny::observeEvent(input$update_", nm, ", {updateButtons$", nm,
+    " <- FALSE})"
+  )
+  paste0(
+    "## update message if filter is changed\n", buts, "\n",  update, silence,
+    "\n"
+  )
+}
+writeFilterData <- function(x, nm, data, updateButtons) {
   # join by filter function
   filtersToApply <- list()
   filters <- x$filters
@@ -80,9 +119,18 @@ writeFilterData <- function(x, nm, data) {
       })
   ) |>
     paste0(collapse = " |>\n")
-  paste0(
-    "## get ", nm, " data\n", x$filter_function, " <- shiny::reactive({\n", filtersText, "\n})"
-  )
+  if (updateButtons) {
+    x <- paste0(
+      "## get ", nm, " data\n", x$filter_function,
+      " <- shiny::eventReactive(input$update_", nm, ", {\n", filtersText, "\n})"
+    )
+  } else {
+    x <- paste0(
+      "## get ", nm, " data\n", x$filter_function, " <- shiny::reactive({\n",
+      filtersText, "\n})"
+    )
+  }
+  x
 }
 writeContentServer <- function(content, data) {
   purrr::map_chr(content, \(cont) {

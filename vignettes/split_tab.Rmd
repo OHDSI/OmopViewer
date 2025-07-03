@@ -2,7 +2,7 @@
 title: "Split Result into Two Tabs in OmopViewer"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{configured_panels}
+  %\VignetteIndexEntry{split_tab}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

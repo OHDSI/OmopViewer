@@ -71,7 +71,7 @@ serverDynamic <- function(input, output, session) {
     serverModule <- paste0(c(
       "function(input, output, session) {",
       createSummaryServer(summary = input$configuration_summary, data = "workingData()"),
-      createServer(panelDetails, data = "workingData()"),
+      createServer(panelDetails, data = "workingData()", updateButtons = TRUE),
       "}"
     ), collapse = "\n") |>
       rlang::parse_expr() |>
@@ -181,7 +181,7 @@ panelsUi <- function(result) {
   panelDetails <- panelDetailsFromResult(result) |>
     populatePanelDetailsOptions(result)
   # create panels
-  panels <- writeUiPanels(panelDetails)
+  panels <- writeUiPanels(panelDetails, updateButtons = TRUE)
 
   # resultList from panelDetails
   resultList <- purrr::map(panelDetails, \(x) x$data)

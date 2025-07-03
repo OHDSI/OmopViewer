@@ -21,6 +21,7 @@
 #' define a custom theme using `bslib::bs_theme()`. If using a custom theme, it
 #' must be provided as a character string (e.g.,
 #' `"bslib::bs_theme(bg = 'white', fg = 'black')"`).
+#' @param updateButtons Whether to include update buttons for visualisations.
 #' @param open Whether to open the shiny app project.
 #'
 #' @return The shiny app will be created in directory.
@@ -42,6 +43,7 @@ exportStaticApp <- function(result,
                             panelDetails = panelDetailsFromResult(result),
                             panelStructure = NULL,
                             theme = NULL,
+                            updateButtons = TRUE,
                             open = rlang::is_interactive()) {
   # input check
   result <- omopgenerics::validateResultArgument(result)
@@ -52,6 +54,7 @@ exportStaticApp <- function(result,
   omopgenerics::assertCharacter(title, length = 1)
   omopgenerics::assertLogical(summary, length = 1)
   omopgenerics::assertCharacter(theme, length = 1, null = TRUE)
+  omopgenerics::assertLogical(updateButtons, length = 1)
   theme <- validateTheme(theme)
   panelDetails <- validatePanelDetails(panelDetails, result)
   panelStructure <- validatePanelStructure(panelStructure, names(panelDetails))
@@ -82,11 +85,12 @@ exportStaticApp <- function(result,
 
   # create ui
   ui <- uiStatic(
-    logo, title, background, summary, theme, panelDetails, panelStructure
+    logo, title, background, summary, theme, panelDetails, panelStructure,
+    updateButtons
   )
 
   # create server
-  server <- serverStatic(panelDetails, summary)
+  server <- serverStatic(panelDetails, summary, updateButtons)
 
   # functions to copy
   functions <- readLines(system.file("functions.R", package = "OmopViewer"))

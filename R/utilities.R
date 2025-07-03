@@ -5,7 +5,6 @@ validatePanelDetails <- function(panelDetails, result, call = parent.frame()) {
   } else {
     omopgenerics::assertList(panelDetails, named = TRUE, call = call)
   }
-  return(panelDetails)
 }
 validatePanelStructure <- function(panelStructure, panels, call = parent.frame()) {
   if (is.null(panelStructure)) {

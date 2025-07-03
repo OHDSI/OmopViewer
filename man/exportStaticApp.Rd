@@ -14,6 +14,7 @@ exportStaticApp(
   panelDetails = panelDetailsFromResult(result),
   panelStructure = NULL,
   theme = NULL,
+  updateButtons = TRUE,
   open = rlang::is_interactive()
 )
 }
@@ -46,6 +47,8 @@ select a predefined theme provided by the package (e.g., `"theme1"`), or
 define a custom theme using `bslib::bs_theme()`. If using a custom theme, it
 must be provided as a character string (e.g.,
 `"bslib::bs_theme(bg = 'white', fg = 'black')"`).}
+
+\item{updateButtons}{Whether to include update buttons for visualisations.}
 
 \item{open}{Whether to open the shiny app project.}
 }
