@@ -73,7 +73,10 @@ panelDetailsFromResult <- function(result) {
       panel
     })
 
-  c(panels, defaultPanels)
+  panelDetails <- c(panels, defaultPanels)
+
+  # eliminate filters with more than omopviewer.max_length
+  trimFilters(panelDetails, result)
 }
 
 defaultPanelStructure <- function(panels) {
@@ -83,4 +86,29 @@ defaultPanelStructure <- function(panels) {
   ln <- panels[!panels %in% unlist(lp)] |>
     as.list()
   c(lp, ln)
+}
+trimFilters <- function(panelDetails, result) {
+  len <- getOption(x = "omopviewer.max_length", default = "100") |>
+    as.integer()
+  if (!is.infinite(len) & !is.na(len)) {
+    if (len >= 1) {
+      resultList <- purrr::map(panelDetails, \(x) x$data)
+      toExclude <- prepareResult(result = result, resultList = resultList) |>
+        purrr::map(\(x) {
+          x |>
+            omopgenerics::addSettings() |>
+            omopgenerics::splitAll() |>
+            dplyr::select(!c("result_id", "estimate_name", "estimate_type", "estimate_value")) |>
+            purrr::map(\(x) length(unique(x))) |>
+            purrr::keep(\(x) x > len) |>
+            names()
+        }) |>
+        purrr::compact()
+      for (nm in names(toExclude)) {
+        panelDetails[[nm]]$exclude_filters <- unique(c(panelDetails[[nm]]$exclude_filters, toExclude[[nm]]))
+      }
+    }
+  }
+
+  return(panelDetails)
 }
