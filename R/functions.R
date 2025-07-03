@@ -58,6 +58,9 @@ backgroundCard <- function(fileName) {
   do.call(bslib::card, arguments)
 }
 summaryCdmName <- function(data) {
+  if (length(data) == 0) {
+    return(list("<b>CDM names</b>" = ""))
+  }
   x <- data |>
     purrr::map(\(x) {
       x |>
@@ -77,6 +80,9 @@ summaryCdmName <- function(data) {
   list("<b>CDM names</b>" = x)
 }
 summaryPackages <- function(data) {
+  if (length(data) == 0) {
+    return(list("<b>Packages versions</b>" = ""))
+  }
   x <- data |>
     purrr::map(\(x) {
       x |>
@@ -132,6 +138,9 @@ summaryPackages <- function(data) {
     rlang::set_names(nm = paste0(lab, "Packages versions</b>"))
 }
 summaryMinCellCount <- function(data) {
+  if (length(data) == 0) {
+    return(list("<b>Min Cell Count Suppression</b>" = ""))
+  }
   x <- data |>
     purrr::map(\(x) {
       x |>
@@ -170,6 +179,9 @@ summaryMinCellCount <- function(data) {
     rlang::set_names(nm = paste0(lab, "Min Cell Count Suppression</b>"))
 }
 summaryPanels <- function(data) {
+  if (length(data) == 0) {
+    return(list("<b>Panels</b>" = ""))
+  }
   x <- data |>
     purrr::map(\(x) {
       if (nrow(x) == 0) {
