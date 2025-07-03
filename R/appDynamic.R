@@ -23,7 +23,7 @@ serverDynamic <- function(input, output, session) {
 
   # render ui
   output$ui <- shiny::renderUI(
-    createDynamicUi(panels(), input$configuration_summary, workingData(), input$configuration_theme, TRUE)
+    createDynamicUi(panels(), input$configuration_summary, workingData(), input$configuration_theme)
   )
 
   # change the theme of the shiny
@@ -169,7 +169,7 @@ panelsUi <- function(result) {
   panelDetails <- panelDetailsFromResult(result) |>
     populatePanelDetailsOptions(result)
   # create panels
-  panels <- writeUiPanels(panelDetails)
+  panels <- writeUiPanels(panelDetails, updateButtons = TRUE)
 
   # resultList from panelDetails
   resultList <- purrr::map(panelDetails, \(x) x$data)
