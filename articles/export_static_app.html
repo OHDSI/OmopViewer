@@ -91,28 +91,28 @@ required library and see the structure of the sample data:</p>
 <span><span class="co"># Inspect the structure of the sample data</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">omopViewerResults</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    result_id       cdm_name          group_name        group_level       </span></span>
-<span><span class="co">#&gt;  Min.   : 1.00   Length:39263       Length:39263       Length:39263      </span></span>
+<span><span class="co">#&gt;  Min.   : 1.00   Length:39307       Length:39307       Length:39307      </span></span>
 <span><span class="co">#&gt;  1st Qu.:16.00   Class :character   Class :character   Class :character  </span></span>
 <span><span class="co">#&gt;  Median :16.00   Mode  :character   Mode  :character   Mode  :character  </span></span>
-<span><span class="co">#&gt;  Mean   :18.73                                                           </span></span>
+<span><span class="co">#&gt;  Mean   :18.71                                                           </span></span>
 <span><span class="co">#&gt;  3rd Qu.:16.00                                                           </span></span>
 <span><span class="co">#&gt;  Max.   :96.00                                                           </span></span>
 <span><span class="co">#&gt;  strata_name        strata_level       variable_name      variable_level    </span></span>
-<span><span class="co">#&gt;  Length:39263       Length:39263       Length:39263       Length:39263      </span></span>
+<span><span class="co">#&gt;  Length:39307       Length:39307       Length:39307       Length:39307      </span></span>
 <span><span class="co">#&gt;  Class :character   Class :character   Class :character   Class :character  </span></span>
 <span><span class="co">#&gt;  Mode  :character   Mode  :character   Mode  :character   Mode  :character  </span></span>
 <span><span class="co">#&gt;                                                                             </span></span>
 <span><span class="co">#&gt;                                                                             </span></span>
 <span><span class="co">#&gt;                                                                             </span></span>
 <span><span class="co">#&gt;  estimate_name      estimate_type      estimate_value     additional_name   </span></span>
-<span><span class="co">#&gt;  Length:39263       Length:39263       Length:39263       Length:39263      </span></span>
+<span><span class="co">#&gt;  Length:39307       Length:39307       Length:39307       Length:39307      </span></span>
 <span><span class="co">#&gt;  Class :character   Class :character   Class :character   Class :character  </span></span>
 <span><span class="co">#&gt;  Mode  :character   Mode  :character   Mode  :character   Mode  :character  </span></span>
 <span><span class="co">#&gt;                                                                             </span></span>
 <span><span class="co">#&gt;                                                                             </span></span>
 <span><span class="co">#&gt;                                                                             </span></span>
 <span><span class="co">#&gt;  additional_level  </span></span>
-<span><span class="co">#&gt;  Length:39263      </span></span>
+<span><span class="co">#&gt;  Length:39307      </span></span>
 <span><span class="co">#&gt;  Class :character  </span></span>
 <span><span class="co">#&gt;  Mode  :character  </span></span>
 <span><span class="co">#&gt;                    </span></span>
@@ -144,7 +144,7 @@ the app and the processed data (a <summarised_result> object):</summarised_resul
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Data processed: 3 panels idenfied: `summarise_omop_snapshot`,</span></span>
 <span><span class="co">#&gt;   `summarise_characteristics`, and `incidence`.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Creating shiny from provided data</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Shiny created in: <span style="color: #0000BB;">/tmp/RtmpppLzPt/shiny</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Shiny created in: <span style="color: #0000BB;">/tmp/Rtmp1BhbxQ/shiny</span></span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="panel-structure-omopviewerpanels">Panel Structure (omopViewerPanels)<a class="anchor" aria-label="anchor" href="#panel-structure-omopviewerpanels"></a>
@@ -374,7 +374,7 @@ named groups in the list will be in the same tab.</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="font-weight: bold;">shiny</span> folder will be overwritten.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Prior <span style="font-weight: bold;">shiny</span> folder deleted.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Creating shiny from provided data</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Shiny created in: <span style="color: #0000BB;">/tmp/RtmpppLzPt/shiny</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Shiny created in: <span style="color: #0000BB;">/tmp/Rtmp1BhbxQ/shiny</span></span></span></code></pre></div>
 <p>This custom <code>panelStructure</code> groups the
 “summarise_omop_snapshot” and “incidence” result types together in
 grp_1, while placing the “summarise_characteristics” result type in
