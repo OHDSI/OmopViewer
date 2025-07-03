@@ -21,7 +21,7 @@ test_that("background", {
 
   expect_identical(createBackground(""), 'bslib::nav_panel(
     title = "Background",
-    icon = shiny::icon("disease"),
+    icon = shiny::icon("book-atlas"),
     backgroundCard("background.md")
   )')
 
