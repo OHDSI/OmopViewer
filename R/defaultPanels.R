@@ -76,9 +76,12 @@ panelDetailsFromResult <- function(result) {
   c(panels, defaultPanels)
 }
 
+# TO DO MAKE THE ORIGINAL LIST STILL WORK
 defaultPanelStructure <- function(panels) {
   lp <- panelStructureDefaults |>
-    purrr::map(\(ps) ps[ps %in% panels]) |>
+    purrr::map(\(ps) {
+      ps$
+    }) |>
     purrr::compact()
   ln <- panels[!panels %in% unlist(lp)] |>
     as.list()

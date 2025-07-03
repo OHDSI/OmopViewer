@@ -84,27 +84,42 @@ omopViewerThemes <- list(
 
 # default structure
 panelStructureDefaults <- list(
-  OmopSketch = c(
-    "summarise_omop_snapshot", "summarise_observation_period",
-    "summarise_clinical_records", "summarise_record_count",
-    "summarise_missing_data", "summarise_in_observation"
+  OmopSketch = list(
+    icon = "https://github.com/OHDSI/OmopSketch/blob/main/man/figures/logo.png?raw=true",
+    panel_name = c(
+      "summarise_omop_snapshot", "summarise_observation_period",
+      "summarise_clinical_records", "summarise_record_count",
+      "summarise_missing_data", "summarise_in_observation"
+    )
   ),
-  CodelistGenerator = c(
-    "orphan_code_use", "cohort_code_use", "code_use", "achilles_code_use",
-    "unmapped_codes"
+  CodelistGenerator = list(
+    icon = "https://github.com/darwin-eu/CodelistGenerator/blob/main/man/figures/logo.png?raw=true",
+    panel_name = c(
+      "orphan_code_use", "cohort_code_use", "code_use", "achilles_code_use",
+      "unmapped_codes"
+    )
   ),
-  CohortCharacteristics = c(
-    "summarise_cohort_overlap", "summarise_cohort_count",
-    "summarise_cohort_attrition", "summarise_cohort_timing",
-    "summarise_characteristics", "summarise_large_scale_characteristics"
+  CohortCharacteristics = list(
+    icon = "https://github.com/darwin-eu/CohortCharacteristics/blob/main/man/figures/logo.png?raw=true",
+    panel_name = c(
+      "summarise_cohort_overlap", "summarise_cohort_count",
+      "summarise_cohort_attrition", "summarise_cohort_timing",
+      "summarise_characteristics", "summarise_large_scale_characteristics"
+    )
   ),
-  IncidencePrevalence = c(
-    "incidence", "incidence_attrition", "prevalence", "prevalence_attrition"
+  IncidencePrevalence = list(
+    icon = "https://github.com/darwin-eu/IncidencePrevalence/blob/main/man/figures/logo.png?raw=true",
+    panel_name = c(
+      "incidence", "incidence_attrition", "prevalence", "prevalence_attrition"
+    )
   ),
-  DrugUtilisation = c(
-    "summarise_dose_coverage", "summarise_proportion_of_patients_covered",
-    "summarise_drug_restart", "summarise_drug_utilisation",
-    "summarise_indication", "summarise_treatment"
+  DrugUtilisation = list(
+    icon = "https://github.com/darwin-eu/DrugUtilisation/blob/main/man/figures/logo.png?raw=true",
+    panel_name = c(
+      "summarise_dose_coverage", "summarise_proportion_of_patients_covered",
+      "summarise_drug_restart", "summarise_drug_utilisation",
+      "summarise_indication", "summarise_treatment"
+    )
   )
 )
 
