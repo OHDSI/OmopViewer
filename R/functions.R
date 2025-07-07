@@ -45,9 +45,9 @@ backgroundCard <- function(fileName) {
     # content
     list(
       keys$header,
-      bslib::card_body(shiny::HTML(markdown::markdownToHTML(
+      bslib::card_body(shiny::HTML(suppressWarnings(markdown::markdownToHTML(
         file = tmpFile, fragment.only = TRUE
-      ))),
+      )))),
       keys$footer
     ) |>
       purrr::compact()

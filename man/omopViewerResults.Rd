@@ -3,16 +3,18 @@
 \docType{data}
 \name{omopViewerResults}
 \alias{omopViewerResults}
-\title{Mock results obtained from `GiBleed` dataset.}
+\title{Mock results obtained from \code{GiBleed} dataset.}
 \format{
-## `omopViewerResults`
-A `summarised_result` object with 12,017 rows:
+\subsection{\code{omopViewerResults}}{
+
+A \code{summarised_result} object with 12,017 rows:
+}
 }
 \usage{
 omopViewerResults
 }
 \description{
 The results are generated using the following file:
-<https://github.com/OHDSI/OmopViewer/blob/main/data-raw/results.R>.
+\url{https://github.com/OHDSI/OmopViewer/blob/main/data-raw/results.R}.
 }
 \keyword{datasets}

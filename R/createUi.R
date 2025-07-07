@@ -19,7 +19,6 @@ uiStatic <- function(logo,
     c(
       writeTitle(title, logo),
       paste0("theme = ", theme),
-      styleClasses(),
       createBackground(background),
       summaryTab(summary),
       panels,
@@ -45,16 +44,6 @@ downloadRawDataUi <- function() {
       )
     )
   )'
-}
-styleClasses <- function() {
-  "shiny::tags$head(
-    shiny::tags$style(shiny::HTML(\"
-      .ov_update_button {
-        color: red;
-        font-weight: bold;
-      }
-    \"))
-  )"
 }
 
 # dynamic ----

@@ -32,21 +32,21 @@ Only svg format allowed for the moment.}
 content will be controlled from the generated background.md file.}
 
 \item{summary}{Whether to include a panel with a summary of content in the
-`result`.}
+\code{result}.}
 
 \item{panelDetails}{A named list to provide details for each one of the
 panels, such as: result_id, result_type, title, icon, filters and content.
-By default it is created using the `panelDetailsFromResult()` function.}
+By default it is created using the \code{panelDetailsFromResult()} function.}
 
 \item{panelStructure}{A named list of panel identifiers to organise them in
-drop-down menus. Identifiers names are the ones used in `panelDetails`. By
-default one panel per each `panelDetails` element is created.}
+drop-down menus. Identifiers names are the ones used in \code{panelDetails}. By
+default one panel per each \code{panelDetails} element is created.}
 
 \item{theme}{Specify the theme for the Shiny application. You can either
-select a predefined theme provided by the package (e.g., `"theme1"`), or
-define a custom theme using `bslib::bs_theme()`. If using a custom theme, it
+select a predefined theme provided by the package (e.g., \code{"theme1"}), or
+define a custom theme using \code{bslib::bs_theme()}. If using a custom theme, it
 must be provided as a character string (e.g.,
-`"bslib::bs_theme(bg = 'white', fg = 'black')"`).}
+\code{"bslib::bs_theme(bg = 'white', fg = 'black')"}).}
 
 \item{updateButtons}{Whether to include update buttons for visualisations.}
 

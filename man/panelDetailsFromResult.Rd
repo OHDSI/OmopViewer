@@ -2,18 +2,18 @@
 % Please edit documentation in R/defaultPanels.R
 \name{panelDetailsFromResult}
 \alias{panelDetailsFromResult}
-\title{Obtain default panel details from a `<summarised_result>` object.}
+\title{Obtain default panel details from a \verb{<summarised_result>} object.}
 \usage{
 panelDetailsFromResult(result)
 }
 \arguments{
-\item{result}{A `summarised_result` object.}
+\item{result}{A \code{summarised_result} object.}
 }
 \value{
-A list of `omop_viewer_panel` objects.
+A list of \code{omop_viewer_panel} objects.
 }
 \description{
-Obtain default panel details from a `<summarised_result>` object.
+Obtain default panel details from a \verb{<summarised_result>} object.
 }
 \examples{
 

@@ -36,6 +36,8 @@ writeButton <- function(x) {
       args <- names(formals(shinyWidgets::pickerInput))
       args <- args[args %in% names(x)]
     } else {
+      x$button_type <- NULL
+      x$input_id <- NULL
       args <- names(x)
     }
     button <- paste0(
@@ -50,6 +52,8 @@ writeButton <- function(x) {
       args <- names(formals(shiny::checkboxInput))
       args <- args[args %in% names(x)]
     } else {
+      x$button_type <- NULL
+      x$input_id <- NULL
       args <- names(x)
     }
     button <- paste0(
@@ -64,6 +68,8 @@ writeButton <- function(x) {
       args <- names(formals(shiny::numericInput))
       args <- args[args %in% names(x)]
     } else {
+      x$button_type <- NULL
+      x$input_id <- NULL
       args <- names(x)
     }
     button <- paste0(
@@ -78,6 +84,8 @@ writeButton <- function(x) {
       args <- names(formals(sortable::bucket_list))
       args <- args[args %in% names(x)]
     } else {
+      x$button_type <- NULL
+      x$inputId <- NULL
       args <- names(x)
     }
     dots <- x$rank |>
@@ -100,6 +108,8 @@ writeButton <- function(x) {
       args <- names(formals(shinyWidgets::materialSwitch))
       args <- args[args %in% names(x)]
     } else {
+      x$button_type <- NULL
+      x$input_id <- NULL
       args <- names(x)
     }
     button <- paste0(
@@ -109,6 +119,8 @@ writeButton <- function(x) {
       "\n)"
     )
   } else if (x$button_type == "Toggle.shinyInput") {
+    x$input_id <- NULL
+    x$button_type <- NULL
     x$label <- cast(x$label)
     x$onText <- cast(x$onText)
     x$offText <- cast(x$offText)

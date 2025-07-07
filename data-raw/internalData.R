@@ -72,19 +72,21 @@ backgroundKeywords <- dplyr::tribble(
 
 # themes ----
 omopViewerThemes <- list(
-  default = 'bslib::bs_theme(
-    fg = "#002147", primary = "#040188", secondary = "#040188",
-    success = "#E5920D", warning = "#F3BD12", font_scale = NULL,
-    `enable-gradients` = TRUE, `enable-shadows` = TRUE, preset = "flatly",
-    bg = "#fff"
-  )',
-  theme1 = "bslib::bs_theme(
+  default = 'bslib::bs_theme(bootswatch = "flatly")',
+  sad_robot = "bslib::bs_theme(
     bootswatch = 'sandstone',
     primary = '#605ca8',
     bg = 'white',
     fg = 'black',
     success = '#3B9AB2',
-  )"
+  )",
+  empty = 'bslib::bs_theme()',
+  ohdsi = 'bslib::bs_theme(
+    fg = "#002147", primary = "#040188", secondary = "#040188",
+    success = "#E5920D", warning = "#F3BD12", font_scale = NULL,
+    `enable-gradients` = TRUE, `enable-shadows` = TRUE, bootswatch = "flatly",
+    bg = "#fff"
+  )'
 )
 
 
