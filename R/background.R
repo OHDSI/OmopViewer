@@ -31,7 +31,7 @@ createBackground <- function(background) {
   if (is.null(background)) return(character())
   'bslib::nav_panel(
     title = "Background",
-    icon = shiny::icon("stack-exchange"),
+    icon = shiny::icon("book-atlas"),
     backgroundCard("background.md")
   )'
 }
