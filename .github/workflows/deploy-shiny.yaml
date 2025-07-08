@@ -52,11 +52,6 @@ jobs:
           SHINYAPPS_SECRET: ${{ secrets.SHINYAPPS_SECRET }}
         run: Rscript extras/deployTestShiny.R
 
-      - name: Create renv file Themes
-        if: github.event_name != 'pull_request'
-        run: Rscript -e 'renv::init()'
-        working-directory: extras/ShinyThemes
-
       - name: Deploy EXAMPLE to shinyapps.io
         if: github.event_name != 'pull_request'
         env:

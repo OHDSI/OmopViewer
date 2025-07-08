@@ -1,0 +1,48 @@
+name: Generate and Deploy Themes Shiny App
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ${{ matrix.config.os }}
+
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+
+    concurrency:
+      group: pr-${{ github.event.pull_request.number || github.run_id }}
+      cancel-in-progress: true
+
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - {os: ubuntu-latest, r: '4.3.3'}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up R
+        uses: rstudio/shiny-workflows/setup-r-package@v1
+        with:
+          packages: |
+            renv
+            pak
+
+      - name: Install OmopViewer
+        shell: Rscript {0}
+        run: pak::pkg_install("ohdsi/OmopViewer")
+
+      - name: Create renv file Themes
+        run: Rscript -e 'renv::init()'
+        working-directory: extras/ShinyThemes
+
+      - name: Deploy Themes to shinyapps.io
+        if: github.event_name != 'pull_request'
+        env:
+          SHINYAPPS_TOKEN: ${{ secrets.SHINYAPPS_TOKEN }}
+          SHINYAPPS_SECRET: ${{ secrets.SHINYAPPS_SECRET }}
+        run: Rscript extras/deployThemesShiny.R

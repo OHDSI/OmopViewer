@@ -7,8 +7,8 @@ rsconnect::setAccountInfo(
   secret = Sys.getenv("SHINYAPPS_SECRET")
 )
 rsconnect::deployApp(
-  appDir = file.path(getwd(), "extras", "shiny"),
-  appName = appName,
+  appDir = file.path(getwd(), "extras", "ShinyThemes"),
+  appName = "OmopViewerThemes",
   forceUpdate = TRUE,
   logLevel = "verbose"
 )
