@@ -211,7 +211,8 @@ incidencePanel <- list(
       ribbon = input$ribbon,
       line = input$line
       )",
-      render = "renderInteractivePlot(<reactive_data>, input$interactive)",
+      render = "x <- <reactive_data>
+      renderInteractivePlot(x, input$interactive)",
       filters = list(
         interactive = list(
           button_type = "materialSwitch",
@@ -278,7 +279,8 @@ incidencePanel <- list(
       facet = input$facet,
       colour = input$colour
       )",
-      render = "renderInteractivePlot(<reactive_data>, input$interactive)",
+      render = "x <- <reactive_data>
+      renderInteractivePlot(x, input$interactive)",
       filters = list(
         interactive = list(
           button_type = "materialSwitch",
@@ -369,7 +371,8 @@ prevalencePanel <- list(
       ribbon = input$ribbon,
       line = input$line
       )",
-      render = "renderInteractivePlot(<reactive_data>, input$interactive)",
+      render = "x <- <reactive_data>
+      renderInteractivePlot(x, input$interactive)",
       filters = list(
         interactive = list(
           button_type = "materialSwitch",
@@ -436,7 +439,8 @@ prevalencePanel <- list(
       facet = input$facet,
       colour = input$colour
       )",
-      render = "renderInteractivePlot(<reactive_data>, input$interactive)",
+      render = "x <- <reactive_data>
+      renderInteractivePlot(x, input$interactive)",
       filters = list(
         interactive = list(
           button_type = "materialSwitch",
@@ -612,7 +616,8 @@ cohortOverlapPanel <- list(
       CohortCharacteristics::plotCohortOverlap(
       facet = input$facet
       )",
-      render = "renderInteractivePlot(<reactive_data>, input$interactive)",
+      render = "x <- <reactive_data>
+      renderInteractivePlot(x, input$interactive)",
       filters = list(
         interactive = list(
           button_type = "materialSwitch",
@@ -672,7 +677,8 @@ cohortCountPanel <- list(
       facet = input$facet,
       colour = input$colour
       )",
-      render = "renderInteractivePlot(<reactive_data>, input$interactive)",
+      render = "x <- <reactive_data>
+      renderInteractivePlot(x, input$interactive)",
       filters = list(
         interactive = list(
           button_type = "materialSwitch",
@@ -808,7 +814,8 @@ cohortTimingPanel <- list(
       facet = input$facet,
       colour = input$colour
       )",
-      render = "renderInteractivePlot(<reactive_data>, input$interactive)",
+      render = "x <- <reactive_data>
+      renderInteractivePlot(x, input$interactive)",
       filters = list(
         interactive = list(
           button_type = "materialSwitch",
@@ -894,7 +901,8 @@ characteristicsPanel <- list(
       facet = input$facet,
       colour = input$colour
       )",
-      render = "renderInteractivePlot(<reactive_data>, input$interactive)",
+      render = "x <- <reactive_data>
+      renderInteractivePlot(x, input$interactive)",
       filters = list(
         interactive = list(
           button_type = "materialSwitch",
@@ -978,7 +986,8 @@ observationPeriodPanel <- list(
       facet = input$facet,
       colour = input$colour
       )",
-      render = "renderInteractivePlot(<reactive_data>, input$interactive)",
+      render = "x <- <reactive_data>
+      renderInteractivePlot(x, input$interactive)",
       filters = list(
         interactive = list(
           button_type = "materialSwitch",
@@ -1073,7 +1082,8 @@ recordCountPanel <- list(
       facet = input$facet,
       colour = input$colour
       )",
-      render = "renderInteractivePlot(<reactive_data>, input$interactive)",
+      render = "x <- <reactive_data>
+      renderInteractivePlot(x, input$interactive)",
       filters = list(
         interactive = list(
           button_type = "materialSwitch",
@@ -1161,7 +1171,8 @@ inObservationPanel <- list(
       facet = input$facet,
       colour = input$colour
       )",
-      render = "renderInteractivePlot(<reactive_data>, input$interactive)",
+      render = "x <- <reactive_data>
+      renderInteractivePlot(x, input$interactive)",
       filters = list(
         interactive = list(
           button_type = "materialSwitch",
@@ -1474,7 +1485,8 @@ ppcPanel <- list(
       facet = input$facet,
       colour = input$colour
       )",
-      render = "renderInteractivePlot(<reactive_data>, input$interactive)",
+      render = "x <- <reactive_data>
+      renderInteractivePlot(x, input$interactive)",
       filters = list(
         interactive = list(
           button_type = "materialSwitch",
@@ -1545,7 +1557,8 @@ drugRestartPanel <- list(
       facet = input$facet,
       colour = input$colour
       )",
-      render = "renderInteractivePlot(<reactive_data>, input$interactive)",
+      render = "x <- <reactive_data>
+      renderInteractivePlot(x, input$interactive)",
       filters = list(
         interactive = list(
           button_type = "materialSwitch",
@@ -1631,7 +1644,8 @@ dusPanel <- list(
       facet = input$facet,
       colour = input$colour
       )",
-      render = "renderInteractivePlot(<reactive_data>, input$interactive)",
+      render = "x <- <reactive_data>
+      renderInteractivePlot(x, input$interactive)",
       filters = list(
         interactive = list(
           button_type = "materialSwitch",
@@ -1724,7 +1738,8 @@ indicationPanel <- list(
       DrugUtilisation::plotIndication(
       facet = input$facet,
       )",
-      render = "renderInteractivePlot(<reactive_data>, input$interactive)",
+      render = "x <- <reactive_data>
+      renderInteractivePlot(x, input$interactive)",
       filters = list(
         interactive = list(
           button_type = "materialSwitch",
@@ -1796,7 +1811,8 @@ treatmentPanel <- list(
       DrugUtilisation::plotTreatment(
       facet = input$facet
       )",
-      render = "renderInteractivePlot(<reactive_data>, input$interactive)",
+      render = "x <- <reactive_data>
+      renderInteractivePlot(x, input$interactive)",
       filters = list(
         interactive = list(
           button_type = "materialSwitch",
