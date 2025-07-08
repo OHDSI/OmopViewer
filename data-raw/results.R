@@ -6,10 +6,13 @@ install.packages("here")
 # install needed packages
 deps <- sort(unique(renv::dependencies(here::here("data-raw", "results.R"))$Package))
 message("Installing dependencies: ", paste(deps, collapse = ", "))
-pak::pak(deps, upgrade = FALSE)
+pak::pak(deps)
 
 # cdm reference
 dbName <- "synthea-covid19-200k"
+path <- here::here("extras", "omock")
+dir.create(path = path)
+Sys.setenv("MOCK_DATASETS_FOLDER" = path)
 cdm <- omock::mockCdmFromDataset(datasetName = dbName)
 
 # modify cdm
@@ -32,10 +35,14 @@ cdm$condition_occurrence <- cdm$condition_occurrence |>
   ))
 
 # copy cdm
-src <- CDMConnector::dbSource(con = duckdb::dbConnect(drv = duckdb::duckdb()), writeSchema = "main")
+dbdir <- here::here("extras", "test.duckdb")
+con <- duckdb::dbConnect(drv = duckdb::duckdb(dbdir = dbdir))
+src <- CDMConnector::dbSource(con = con, writeSchema = "main")
 
 # copy cdm to
 cdm <- omopgenerics::insertCdmTo(cdm = cdm, to = src)
+unlink(x = path, recursive = TRUE)
+DBI::dbExecute(conn = con, statement = "PRAGMA memory_limit='2GB';")
 
 # achilles tables
 cdm <- CodelistGenerator::buildAchillesTables(cdm)
