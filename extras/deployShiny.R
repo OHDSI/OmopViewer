@@ -12,3 +12,12 @@ rsconnect::deployApp(
   forceUpdate = TRUE,
   logLevel = "verbose"
 )
+
+if (appName == "OmopViewerExample") {
+  rsconnect::deployApp(
+    appDir = file.path(getwd(), "extras", "shinyThemes"),
+    appName = "OmopViewerThemes",
+    forceUpdate = TRUE,
+    logLevel = "verbose"
+  )
+}

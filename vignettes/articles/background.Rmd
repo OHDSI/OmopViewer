@@ -1,5 +1,5 @@
 ---
-title: "Edit the background panel of your shiny using `background.md`"
+title: "Edit the landing page of your shiny"
 output: 
   html_document:
     theme: 
@@ -13,7 +13,9 @@ knitr::opts_chunk$set(
 )
 ```
 
-The background panel is triggered when `background = TRUE` argument is used in the `exportStaticApp()` function. If background is set to TRUE a 'background' panel is added and a default 'background.md' file is created. The content of this 'background' panel will be always a card generated with the `backgroundCard()` function using the content of 'background.md'. In this vignette we are going to show different options how to populate the 'background.md' file.
+## Introduction
+
+The landing page (background) is triggered when `background = TRUE` argument is used in the `exportStaticApp()` function. If background is set to TRUE a 'background' panel is added and a default 'background.md' file is created. The content of this 'background' panel will be always a card generated with the `backgroundCard()` function using the content of 'background.md'. In this vignette we are going to show different options how to populate the 'background.md' file.
 
 ```{r}
 library(OmopViewer)

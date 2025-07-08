@@ -15,28 +15,21 @@ navbar:
       href: https://dpa-pde-oxford.shinyapps.io/OmopViewerExample/
 
 articles:
-- title: Static App
-  navbar: "Static App"
+- title: Basic functionality
+  navbar: "Basic functionality"
   contents:
-  - configured_panels
   - export_static_app
-  - developer_vignette
+  - dynamic_app
+- title: Customisation
+  navbar: "Customisation"
+  contents:
   - edit_static_content
-  - delete_tab_panel
   - articles/background
   - articles/theming
-- title: Dynamic App
-  navbar: "Dynamic App"
+- title: Development
+  navbar: "Development"
   contents:
-  - articles/dynamic_app
-- title: New panles
-  navbar: "New panels"
-  contents:
-  - articles/adding_new_panels
-- title: Split tab
-  navbar: "Split tab"
-  contents:
-  - split_tab
+  - articles/extending_omopviewer
 
 reference:
 - subtitle: Static app

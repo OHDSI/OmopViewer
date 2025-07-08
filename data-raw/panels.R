@@ -200,7 +200,7 @@ incidencePanel <- list(
       ),
       download = downloadGtTable("table_incidence")
     ),
-    plot <- list(
+    plot = list(
       title = "Plot Incidence",
       output_type = "ui",
       reactive = "<filtered_data> |>
@@ -1845,7 +1845,7 @@ lscPanel <- list(
   automatic_filters = c("group", "strata", "variable_level", "settings"),
   filters = list(cdm_name = cdmFilter),
   content = list(
-    table_lsc <- list(
+    table_lsc = list(
       title = "Table",
       output_type = "reactable",
       reactive = "if (identical(input$compare_by, 'no compare')) {

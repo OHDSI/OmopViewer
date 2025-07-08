@@ -1,10 +1,9 @@
 ---
-title: "How to change the static app for developer"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{configured_panels}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+title: "Extending OmopViewer"
+output: 
+  html_document:
+    theme: 
+      version: 5
 ---
 
 ```{r, include = FALSE}
@@ -14,10 +13,13 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r, echo=FALSE}
+```{r setup}
 library(OmopViewer)
 ```
 
+## Introduction
+
+Do yo want **OmopViewer** to support more packages? This is a developer focused vignette explaining the process to add new default panels to the package.
 
 ## 1  What lives in *panels.R*
 
@@ -115,9 +117,6 @@ omopViewerPanels <- list(
 Run `devtools::load_all()`; the static viewer will now include **My Custom**.
 
 ---
-
   
 Commit, tag, release.
 Done.
-
-
