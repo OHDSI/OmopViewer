@@ -5,14 +5,16 @@
 \alias{omopViewerPanels}
 \title{Panels defined in the package.}
 \format{
-## `omopViewerPanels`
-A list of 26 `omopviewer_panel` obejcts:
+\subsection{\code{omopViewerPanels}}{
+
+A list of 26 \code{omopviewer_panel} obejcts:
+}
 }
 \usage{
 omopViewerPanels
 }
 \description{
 The panels are generated using the following file:
-<https://github.com/OHDSI/OmopViewer/blob/main/data-raw/panels.R>.
+\url{https://github.com/OHDSI/OmopViewer/blob/main/data-raw/panels.R}.
 }
 \keyword{datasets}

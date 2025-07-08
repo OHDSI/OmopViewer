@@ -1,6 +1,8 @@
 
 #' Launch a dynamic shiny app where you can upload results.
 #'
+#' `r lifecycle::badge('experimental')`
+#'
 #' @return Launches the shiny app.
 #' @export
 #'
@@ -61,11 +63,15 @@ serverDynamic <- function(input, output, session) {
     panels(panelsUi(dataToUpload))
 
     # panelDetails
-    panelDetails <- panelDetailsFromResult(dataToUpload)
+    panelDetails <- panelDetailsFromResult(result = dataToUpload) |>
+      populatePanelDetailsOptions(result = dataToUpload)
 
     # create the new workingData()
     resultList <- purrr::map(panelDetails, \(x) x$data)
     workingData(prepareResult(dataToUpload, resultList))
+
+    # get values
+    values <- getValues(result = dataToUpload, resultList = resultList)
 
     # add server modules
     serverModule <- paste0(c(

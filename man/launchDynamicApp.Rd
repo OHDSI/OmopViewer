@@ -10,5 +10,5 @@ launchDynamicApp()
 Launches the shiny app.
 }
 \description{
-Launch a dynamic shiny app where you can upload results.
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }

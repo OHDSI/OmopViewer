@@ -7,7 +7,7 @@
 getPanel(panelId)
 }
 \arguments{
-\item{panelId}{Name of the one of the default panels. Use `defaultPanels()`
+\item{panelId}{Name of the one of the default panels. Use \code{defaultPanels()}
 to see the available default panels.}
 }
 \value{
