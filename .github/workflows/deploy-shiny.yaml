@@ -13,7 +13,7 @@ jobs:
     name: ${{ matrix.config.os }} (${{ matrix.config.r }})
 
     concurrency:
-      group: pr-${{ github.event.pull_request.number }}
+      group: pr-${{ github.event.pull_request.number || github.run_id }}
       cancel-in-progress: true
 
     strategy:
