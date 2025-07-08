@@ -55,7 +55,7 @@ jobs:
       - name: Create renv file Themes
         if: github.event_name != 'pull_request'
         run: Rscript -e 'renv::init()'
-        working-directory: extras/shinyThemes
+        working-directory: extras/ShinyThemes
 
       - name: Deploy EXAMPLE to shinyapps.io
         if: github.event_name != 'pull_request'
