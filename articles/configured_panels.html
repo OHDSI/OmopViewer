@@ -555,7 +555,7 @@ structure you can use <code>unclass</code>:</p>
 <span><span class="co">#&gt; [1] "&lt;filtered_data&gt; |&gt;\n      IncidencePrevalence::plotIncidence(\n      x = input$x,\n      facet = input$facet,\n      colour = input$colour,\n      ribbon = input$ribbon,\n      line = input$line\n      )"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $content[[3]]$render</span></span>
-<span><span class="co">#&gt; [1] "renderInteractivePlot(&lt;reactive_data&gt;, input$interactive)"</span></span>
+<span><span class="co">#&gt; [1] "x &lt;- &lt;reactive_data&gt;\n      renderInteractivePlot(x, input$interactive)"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $content[[3]]$filters</span></span>
 <span><span class="co">#&gt; $content[[3]]$filters$interactive</span></span>
@@ -718,7 +718,7 @@ structure you can use <code>unclass</code>:</p>
 <span><span class="co">#&gt; [1] "&lt;filtered_data&gt; |&gt;\n      IncidencePrevalence::plotIncidencePopulation(\n      facet = input$facet,\n      colour = input$colour\n      )"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $content$plot_population$render</span></span>
-<span><span class="co">#&gt; [1] "renderInteractivePlot(&lt;reactive_data&gt;, input$interactive)"</span></span>
+<span><span class="co">#&gt; [1] "x &lt;- &lt;reactive_data&gt;\n      renderInteractivePlot(x, input$interactive)"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $content$plot_population$filters</span></span>
 <span><span class="co">#&gt; $content$plot_population$filters$interactive</span></span>
