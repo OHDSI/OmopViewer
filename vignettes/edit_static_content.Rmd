@@ -1,5 +1,5 @@
 ---
-title: "edit_static_content"
+title: "Customise your static shiny"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{edit_static_content}

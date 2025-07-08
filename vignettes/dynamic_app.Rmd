@@ -1,5 +1,5 @@
 ---
-title: "dynamic_app"
+title: "Dynamic app"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{dynamic_app}

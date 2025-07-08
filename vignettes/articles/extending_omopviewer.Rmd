@@ -1,10 +1,9 @@
 ---
-title: "adding_new_panels"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{adding_new_panels}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+title: "Extending OmopViewer"
+output: 
+  html_document:
+    theme: 
+      version: 5
 ---
 
 ```{r, include = FALSE}
@@ -18,26 +17,9 @@ knitr::opts_chunk$set(
 library(OmopViewer)
 ```
 
----
-title: "How to change the static app for developer"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{developer_vignette}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
----
+## Introduction
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-```
-
-```{r, echo=FALSE}
-library(OmopViewer)
-```
-
+Do yo want **OmopViewer** to support more packages? This is a developer focused vignette explaining the process to add new default panels to the package.
 
 ## 1  What lives in *panels.R*
 
@@ -135,14 +117,6 @@ omopViewerPanels <- list(
 Run `devtools::load_all()`; the static viewer will now include **My Custom**.
 
 ---
-
   
 Commit, tag, release.
 Done.
-
-
-
-
-## Note for developers
-
-If you wish to configure a new **Tab** this can be done editing the *omopViewerPanels* object defined in in file [panels.R](https://github.com/OHDSI/omopViewer/blob/main/data-raw/panels.R). Please feel free to submit your PR.
