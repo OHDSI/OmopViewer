@@ -1,6 +1,7 @@
 # default set of results ----
 install.packages("pak")
 install.packages("renv")
+install.packages("here")
 
 # install needed packages
 deps <- sort(unique(renv::dependencies(here::here("data-raw", "results.R"))$Package))
