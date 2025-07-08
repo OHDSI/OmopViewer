@@ -6,10 +6,14 @@ on:
   workflow_dispatch:
 
 jobs:
-  deploy:
+  update_results:
     runs-on: ${{ matrix.config.os }}
 
     name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+
+    concurrency:
+      group: pr-${{ github.event.pull_request.number }}
+      cancel-in-progress: true
 
     strategy:
       fail-fast: false
