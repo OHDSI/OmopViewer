@@ -2,17 +2,13 @@ pandoc: 3.1.11
 pkgdown: 2.1.3
 pkgdown_sha: ~
 articles:
-  articles/adding_new_panels: adding_new_panels.html
   articles/background: background.html
-  configured_panels: configured_panels.html
-  delete_tab_panel: delete_tab_panel.html
-  developer_vignette: developer_vignette.html
-  articles/dynamic_app: dynamic_app.html
+  dynamic_app: dynamic_app.html
   edit_static_content: edit_static_content.html
   export_static_app: export_static_app.html
-  split_tab: split_tab.html
+  articles/extending_omopviewer: extending_omopviewer.html
   articles/theming: theming.html
-last_built: 2025-07-08T19:21Z
+last_built: 2025-07-08T23:03Z
 urls:
   reference: https://ohdsi.github.io/OmopViewer/reference
   article: https://ohdsi.github.io/OmopViewer/articles

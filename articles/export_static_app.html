@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">OmopViewer</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,23 +34,17 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><hr class="dropdown-divider"></li>
-    <li><h6 class="dropdown-header" data-toc-skip>Static App</h6></li>
-    <li><a class="dropdown-item" href="../articles/configured_panels.html">Panels defined in OmopViewer</a></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Basic functionality</h6></li>
     <li><a class="dropdown-item" href="../articles/export_static_app.html">Create a static shiny app</a></li>
-    <li><a class="dropdown-item" href="../articles/developer_vignette.html">How to change the static app for developer</a></li>
-    <li><a class="dropdown-item" href="../articles/edit_static_content.html">edit_static_content</a></li>
-    <li><a class="dropdown-item" href="../articles/delete_tab_panel.html">How to Delete Tabs/Panels Using `panelDetails`</a></li>
-    <li><a class="dropdown-item" href="../articles/background.html">Edit the background panel of your shiny using `background.md`</a></li>
+    <li><a class="dropdown-item" href="../articles/dynamic_app.html">Dynamic app</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Customisation</h6></li>
+    <li><a class="dropdown-item" href="../articles/edit_static_content.html">Customise your static shiny</a></li>
+    <li><a class="dropdown-item" href="../articles/background.html">Edit the landing page of your shiny</a></li>
     <li><a class="dropdown-item" href="../articles/theming.html">Theming your shiny</a></li>
     <li><hr class="dropdown-divider"></li>
-    <li><h6 class="dropdown-header" data-toc-skip>Dynamic App</h6></li>
-    <li><a class="dropdown-item" href="../articles/dynamic_app.html">dynamic_app</a></li>
-    <li><hr class="dropdown-divider"></li>
-    <li><h6 class="dropdown-header" data-toc-skip>New panels</h6></li>
-    <li><a class="dropdown-item" href="../articles/adding_new_panels.html">adding_new_panels</a></li>
-    <li><hr class="dropdown-divider"></li>
-    <li><h6 class="dropdown-header" data-toc-skip>Split tab</h6></li>
-    <li><a class="dropdown-item" href="../articles/split_tab.html">Split Result into Two Tabs in OmopViewer</a></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Development</h6></li>
+    <li><a class="dropdown-item" href="../articles/extending_omopviewer.html">Extending OmopViewer</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="external-link nav-link" href="https://dpa-pde-oxford.shinyapps.io/OmopViewerExample/">Example App</a></li>
@@ -81,81 +75,129 @@
 
     
     
-<p>This vignette demonstrates the creation of Shiny apps using the
-<code>OmopViewer</code> package. We’ll use the
-<code>omopViewerResults</code> mock data from this pacakge for
-illustration. ### Loading Necessary Libraries and Data First, load the
-required library and see the structure of the sample data:</p>
+<div class="section level2">
+<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h2>
+<p>This vignette shows how to create static <em>Shiny apps</em> using
+the <code>OmopViewer</code> package. These static shiny apps are
+separated projects with their own <code>ui</code>, <code>server</code>,
+<code>global</code> and files to pre-process the results that later can
+easily later be customised and deployed. This functionality is adequate
+if what you are willing is to deploy a shiny, customise it later and/or
+be able to access this shiny app in the future. If what you want is to
+visualise the data briefly and you do not need to access to the shiny in
+the future, edit it or deploy it maybe the <a href="dynamic_app.Rmd">Dynamic app</a> functionality is what are you
+searching for.</p>
+</div>
+<div class="section level2">
+<h2 id="loading-necessary-libraries-and-data">Loading Necessary Libraries and Data<a class="anchor" aria-label="anchor" href="#loading-necessary-libraries-and-data"></a>
+</h2>
+<p>In this vignette we will use simply to packages:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ohdsi.github.io/OmopViewer/">OmopViewer</a></span><span class="op">)</span></span>
-<span><span class="co"># Inspect the structure of the sample data</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://darwin-eu.github.io/omopgenerics/" class="external-link">omopgenerics</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.posit.co/" class="external-link">shiny</a></span><span class="op">)</span></span></code></pre></div>
+<p>We’ll use the <code>omopViewerResults</code> mock data from this
+package for illustration:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Inspect the structure of the sample data</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">omopViewerResults</span><span class="op">)</span></span>
-<span><span class="co">#&gt;    result_id       cdm_name          group_name        group_level       </span></span>
-<span><span class="co">#&gt;  Min.   : 1.00   Length:39307       Length:39307       Length:39307      </span></span>
-<span><span class="co">#&gt;  1st Qu.:16.00   Class :character   Class :character   Class :character  </span></span>
-<span><span class="co">#&gt;  Median :16.00   Mode  :character   Mode  :character   Mode  :character  </span></span>
-<span><span class="co">#&gt;  Mean   :18.71                                                           </span></span>
-<span><span class="co">#&gt;  3rd Qu.:16.00                                                           </span></span>
-<span><span class="co">#&gt;  Max.   :96.00                                                           </span></span>
-<span><span class="co">#&gt;  strata_name        strata_level       variable_name      variable_level    </span></span>
-<span><span class="co">#&gt;  Length:39307       Length:39307       Length:39307       Length:39307      </span></span>
-<span><span class="co">#&gt;  Class :character   Class :character   Class :character   Class :character  </span></span>
-<span><span class="co">#&gt;  Mode  :character   Mode  :character   Mode  :character   Mode  :character  </span></span>
-<span><span class="co">#&gt;                                                                             </span></span>
-<span><span class="co">#&gt;                                                                             </span></span>
-<span><span class="co">#&gt;                                                                             </span></span>
-<span><span class="co">#&gt;  estimate_name      estimate_type      estimate_value     additional_name   </span></span>
-<span><span class="co">#&gt;  Length:39307       Length:39307       Length:39307       Length:39307      </span></span>
-<span><span class="co">#&gt;  Class :character   Class :character   Class :character   Class :character  </span></span>
-<span><span class="co">#&gt;  Mode  :character   Mode  :character   Mode  :character   Mode  :character  </span></span>
-<span><span class="co">#&gt;                                                                             </span></span>
-<span><span class="co">#&gt;                                                                             </span></span>
-<span><span class="co">#&gt;                                                                             </span></span>
-<span><span class="co">#&gt;  additional_level  </span></span>
-<span><span class="co">#&gt;  Length:39307      </span></span>
-<span><span class="co">#&gt;  Class :character  </span></span>
-<span><span class="co">#&gt;  Mode  :character  </span></span>
-<span><span class="co">#&gt;                    </span></span>
-<span><span class="co">#&gt;                    </span></span>
-<span><span class="co">#&gt; </span></span></code></pre></div>
-<div class="section level3">
-<h3 id="subsetting-the-data">Subsetting the Data<a class="anchor" aria-label="anchor" href="#subsetting-the-data"></a>
-</h3>
+<span><span class="co">#&gt; A summarised_result object with 39307 rows, 96 different result_id, 1 different</span></span>
+<span><span class="co">#&gt; cdm names, and 44 settings.</span></span>
+<span><span class="co">#&gt; CDM names: synthea-covid19-200k.</span></span>
+<span><span class="co">#&gt; Settings: result_type, package_name, package_version, group, strata,</span></span>
+<span><span class="co">#&gt; additional, min_cell_count, analysis, analysis_censor_cohort_name,</span></span>
+<span><span class="co">#&gt; analysis_complete_database_intervals, analysis_full_contribution,</span></span>
+<span><span class="co">#&gt; analysis_outcome_washout, analysis_repeated_events, analysis_type, censor_date,</span></span>
+<span><span class="co">#&gt; cohort_definition_id, cohort_table_name, denominator_age_group, …, type, and</span></span>
+<span><span class="co">#&gt; unknown_indication_table.</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="subsetting-the-data">Subsetting the Data<a class="anchor" aria-label="anchor" href="#subsetting-the-data"></a>
+</h2>
 <p>For this example, we’ll use a subset of the data containing specific
 result types:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="va">omopViewerResults</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">omopgenerics</span><span class="fu">::</span><span class="fu"><a href="https://darwin-eu.github.io/omopgenerics/reference/filterSettings.html" class="external-link">filterSettings</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://darwin-eu.github.io/omopgenerics/reference/filterSettings.html" class="external-link">filterSettings</a></span><span class="op">(</span></span>
 <span>    <span class="va">result_type</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"summarise_omop_snapshot"</span>, <span class="st">"summarise_characteristics"</span>, <span class="st">"incidence"</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <p>This filters the <code>omopViewerResults</code> data to include only
 entries where result_type is one of “summarise_omop_snapshot”,
 “summarise_characteristics”, or “incidence”.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span>
+<span><span class="co">#&gt; A summarised_result object with 1245 rows, 20 different result_id, 1 different</span></span>
+<span><span class="co">#&gt; cdm names, and 20 settings.</span></span>
+<span><span class="co">#&gt; CDM names: synthea-covid19-200k.</span></span>
+<span><span class="co">#&gt; Settings: result_type, package_name, package_version, group, strata,</span></span>
+<span><span class="co">#&gt; additional, min_cell_count, analysis_censor_cohort_name,</span></span>
+<span><span class="co">#&gt; analysis_complete_database_intervals, analysis_outcome_washout,</span></span>
+<span><span class="co">#&gt; analysis_repeated_events, denominator_age_group,</span></span>
+<span><span class="co">#&gt; denominator_days_prior_observation, denominator_end_date,</span></span>
+<span><span class="co">#&gt; denominator_requirements_at_entry, denominator_sex, denominator_start_date,</span></span>
+<span><span class="co">#&gt; denominator_target_cohort_name, denominator_time_at_risk, and table_name.</span></span></code></pre></div>
 </div>
-<div class="section level3">
-<h3 id="generating-the-shiny-app">Generating the Shiny App<a class="anchor" aria-label="anchor" href="#generating-the-shiny-app"></a>
-</h3>
+<div class="section level2">
+<h2 id="generating-the-shiny-app">Generating the Shiny App<a class="anchor" aria-label="anchor" href="#generating-the-shiny-app"></a>
+</h2>
 <p>The exportStaticApp function generates a Shiny app from the prepared
 data. Using the default parameters, it only requires a directory to save
 the app and the processed data (a <summarised_result> object):</summarised_result></p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/exportStaticApp.html">exportStaticApp</a></span><span class="op">(</span>result <span class="op">=</span> <span class="va">result</span>, directory <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/exportStaticApp.html">exportStaticApp</a></span><span class="op">(</span>result <span class="op">=</span> <span class="va">result</span>, directory <span class="op">=</span> <span class="va">dir</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Processing data</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Data processed: 3 panels idenfied: `summarise_omop_snapshot`,</span></span>
 <span><span class="co">#&gt;   `summarise_characteristics`, and `incidence`.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Creating shiny from provided data</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Shiny created in: <span style="color: #0000BB;">/tmp/RtmpyF0Bx9/shiny</span></span></span></code></pre></div>
-</div>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Shiny created in: <span style="color: #0000BB;">/tmp/RtmpiLDgMg/shiny</span></span></span></code></pre></div>
+<p>Note that by default if executed in an interactive environment like
+<em>R Studio</em> the project will be opened in a separated window. Use
+<code>open = FALSE</code> if you do not wish to open the shiny app after
+generating it.</p>
 <div class="section level3">
-<h3 id="panel-structure-omopviewerpanels">Panel Structure (omopViewerPanels)<a class="anchor" aria-label="anchor" href="#panel-structure-omopviewerpanels"></a>
+<h3 id="generated-shiny-app">Generated shiny app<a class="anchor" aria-label="anchor" href="#generated-shiny-app"></a>
 </h3>
-<p>The arrangement of panels within the app is controlled by the
-<code>panelStructure</code> variable. This variable determines how
-panels are grouped into logical sections or tabs within the Shiny app.
-By default, <code>omopViewerPanels</code> is used to define the panel
-layout when no specific <code>panelStructure</code> is provided to
-<code>exportStaticApp.</code></p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<p>See that this created a new project <strong>shiny</strong> in the
+specified directory along with some files:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span>path <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org/reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="va">dir</span>, <span class="st">"shiny"</span><span class="op">)</span>, recursive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; background.md</span></span>
+<span><span class="co">#&gt; data/preprocess.R</span></span>
+<span><span class="co">#&gt; data/results.csv</span></span>
+<span><span class="co">#&gt; functions.R</span></span>
+<span><span class="co">#&gt; global.R</span></span>
+<span><span class="co">#&gt; server.R</span></span>
+<span><span class="co">#&gt; shiny.Rproj</span></span>
+<span><span class="co">#&gt; ui.R</span></span>
+<span><span class="co">#&gt; www/hds_logo.svg</span></span>
+<span><span class="co">#&gt; www/ohdsi_logo.svg</span></span></code></pre></div>
+<ul>
+<li><p><code>background.R</code> is only generated if background
+argument is set to <code>TRUE</code> and is used to customise the
+landing page of the shiny app.</p></li>
+<li><p><code>data</code> folder contains the raw result object
+<code>results.csv</code> and the script to process the data
+<code>preprocess.R</code>.</p></li>
+<li><p><code>funcitons.R</code> contains several functions that are used
+internally in the shiny app.</p></li>
+<li><p><code>global.R</code>, <code>ui.R</code>, and
+<code>server.R</code> define the shiny app itself.</p></li>
+<li><p><code>www</code> contains images and logos used in the shiny app,
+by default <code>hds_logo.svg</code> and
+<code>ohdsi_logo.svg</code>.</p></li>
+</ul>
+</div>
+</div>
+<div class="section level2">
+<h2 id="panels-generated-paneldetails">Panels generated (panelDetails)<a class="anchor" aria-label="anchor" href="#panels-generated-paneldetails"></a>
+</h2>
+<p>The shiny generated contained a total of 3 panels, this was
+determined by the argument <code>panelDetails</code>. Each element in
+<code>panelDetails</code> will be used to create a different panel in
+the shiny app. The package contains in total 28 predefined panels:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">omopViewerPanels</span></span>
 <span><span class="co">#&gt; $summarise_omop_snapshot</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">Snapshot</span> (OmopViewer panel)</span></span>
@@ -352,48 +394,15 @@ layout when no specific <code>panelStructure</code> is provided to
 <span><span class="co">#&gt; • <span style="font-weight: bold;"> data:</span> -no data-</span></span>
 <span><span class="co">#&gt; • <span style="font-weight: bold;"> filters:</span> 1 filters + 6 automatic filters</span></span>
 <span><span class="co">#&gt; • <span style="font-weight: bold;"> content:</span> <span style="color: #0000BB; font-weight: bold;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB; font-weight: bold;">Table</span> (<span style="font-style: italic;">gt</span>)</span></span></code></pre></div>
-<p>The list shows predefined groups of result_type. Then this can be
-input into <code>exportStaticApp</code> function in
-<code>panelStructure</code> parameter to organise the generated tabs in
-the Shiny app. Panels whose result_type is found within one of these
-named groups in the list will be in the same tab.</p>
-</div>
-<div class="section level3">
-<h3 id="customise-panelstructure">Customise panelStructure<a class="anchor" aria-label="anchor" href="#customise-panelstructure"></a>
-</h3>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ps1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>  grp_1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"summarise_omop_snapshot"</span>, <span class="st">"incidence"</span><span class="op">)</span>,</span>
-<span>  grp_2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"summarise_characteristics"</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="../reference/exportStaticApp.html">exportStaticApp</a></span><span class="op">(</span>result <span class="op">=</span> <span class="va">result</span>, directory <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, panelStructure <span class="op">=</span> <span class="va">ps1</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Processing data</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Data processed: 3 panels idenfied: `summarise_omop_snapshot`,</span></span>
-<span><span class="co">#&gt;   `summarise_characteristics`, and `incidence`.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="font-weight: bold;">shiny</span> folder will be overwritten.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Prior <span style="font-weight: bold;">shiny</span> folder deleted.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Creating shiny from provided data</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Shiny created in: <span style="color: #0000BB;">/tmp/RtmpyF0Bx9/shiny</span></span></span></code></pre></div>
-<p>This custom <code>panelStructure</code> groups the
-“summarise_omop_snapshot” and “incidence” result types together in
-grp_1, while placing the “summarise_characteristics” result type in
-grp_2. You can pass this custom structure to
-<code>exportStaticApp</code> to organize the panels according to your
-preference.</p>
-</div>
-<div class="section level3">
-<h3 id="understanding-panel-details-paneldetails">Understanding Panel Details (panelDetails)<a class="anchor" aria-label="anchor" href="#understanding-panel-details-paneldetails"></a>
-</h3>
-<p>Now that we have an overall panel structure, the specific details of
-the panels to be created are defined by the <code>panelDetails</code>
-argument. By default, a tab is generated for each result_type in the
-result object. If no specific tab is defined for a given result_type in
-omopViewerPanels, the default tab (<code>getPanel("default")</code>)
-will be used. Let’s inspect the default <code>panelDetails</code>:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">panelDetails</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/panelDetailsFromResult.html">panelDetailsFromResult</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span>
-<span><span class="va">panelDetails</span></span>
+<p>Each panel is associated with a determined <code>result_type</code>
+as showed in the print. By default, the function
+<code><a href="../reference/panelDetailsFromResult.html">panelDetailsFromResult()</a></code> groups the results by
+<code>result_type</code> and displays each <code>result_type</code> in a
+separate panel, if a pre-build panel does not exist for that
+<code>result_type</code> then the <em>default</em> panel is used. In our
+case we have pre-build panels that are:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/panelDetailsFromResult.html">panelDetailsFromResult</a></span><span class="op">(</span>result <span class="op">=</span> <span class="va">result</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $summarise_omop_snapshot</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">Snapshot</span> (OmopViewer panel)</span></span>
 <span><span class="co">#&gt; • <span style="font-weight: bold;"> icon:</span> clipboard-list</span></span>
@@ -414,31 +423,74 @@ will be used. Let’s inspect the default <code>panelDetails</code>:</p>
 <span><span class="co">#&gt; • <span style="font-weight: bold;"> data:</span> result_type: &lt;incidence&gt;</span></span>
 <span><span class="co">#&gt; • <span style="font-weight: bold;"> filters:</span> 1 filters + 6 automatic filters</span></span>
 <span><span class="co">#&gt; • <span style="font-weight: bold;"> content:</span> <span style="color: #0000BB; font-weight: bold;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB; font-weight: bold;">Table Incidence</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB; font-weight: bold;">Plot Incidence</span> (<span style="font-style: italic;">ui</span>); <span style="color: #0000BB; font-weight: bold;">Plot population</span> (<span style="font-style: italic;">ui</span>)</span></span></code></pre></div>
-</div>
 <div class="section level3">
-<h3 id="breakdown-of-panel-details">Breakdown of Panel Details<a class="anchor" aria-label="anchor" href="#breakdown-of-panel-details"></a>
+<h3 id="understanding-panel-details-paneldetails">Understanding Panel Details (panelDetails)<a class="anchor" aria-label="anchor" href="#understanding-panel-details-paneldetails"></a>
 </h3>
 <p>Each panel’s entry contains key information:</p>
 <ol style="list-style-type: decimal">
 <li><p>Icon: Defines the icon displayed next to the panel, helping to
 visually distinguish between the different types of panels (e.g.,
 clipboard-list, chart-line …).</p></li>
-<li><p>Data: The result_type reflects the type of result associated with
-the panel. This helps to understand which data to use for rendering the
-current panel.</p></li>
+<li><p>Data: the fields used in data will be passed to
+<code><a href="https://darwin-eu.github.io/omopgenerics/reference/filterSettings.html" class="external-link">filterSettings()</a></code> function to determine the data that will
+be included in that panel. Usually <code>result_type</code> is the most
+common way
+(e.g. <code>panelDetails$data &lt;- list(result_type = "incidence")</code>),
+but other fields can be used for example:
+<code>panelDetails$data &lt;- list(result_type = "incidence", denominator_age_group = c("0 to 19", "20 to 39"))</code>
+would only include the results obtained by the following code:</p></li>
+</ol>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">result</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://darwin-eu.github.io/omopgenerics/reference/filterSettings.html" class="external-link">filterSettings</a></span><span class="op">(</span></span>
+<span>    <span class="va">result_type</span> <span class="op">==</span> <span class="st">"incidence"</span> <span class="op">&amp;</span> </span>
+<span>      <span class="va">denominator_age_group</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0 to 19"</span>, <span class="st">"20 to 39"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> </span></code></pre></div>
+<ol start="3" style="list-style-type: decimal">
 <li><p>Filters: Filters (filters + automatic_filters) that allow users
 to refine the results within each panel. Each panel has its own
 defaults. For example, the default incidence panel includes
-automatic_filters: “settings”, “variable_name” and filters:
-“cdm_name”</p></li>
+automatic_filters: “settings”, “variable_name” and filters: “cdm_name”.
+This means that there will be a field for any column in settings, and
+variable_name and cdm_name columns.</p></li>
 <li><p>Content: Defines the types of content displayed in the panel,
-such as tables (DT, gt) and plots (ui). For example, the
-<code>summarise_omop_snapshot</code> panel includes a table displaying
-the snapshot data and a gt table generated from that snapshot
-data.</p></li>
+such as tables (DT, gt, reactable, …) and plots (ui, ggplot2, plotly,
+…). For example, the <code>summarise_omop_snapshot</code> panel includes
+a table displaying the snapshot data and a gt table generated from that
+snapshot data.</p></li>
 </ol>
 <p>All of these elements - icon, data, filters, and content - can be
-customised by the user if needed.</p>
+customised by the user if needed. See more details in the
+<strong>customised_panels</strong> vignette.</p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="panel-structure-omopviewerpanels">Panel Structure (omopViewerPanels)<a class="anchor" aria-label="anchor" href="#panel-structure-omopviewerpanels"></a>
+</h2>
+<p>The arrangement of panels within the app is controlled by the
+<code>panelStructure</code> variable. This variable determines how
+panels are grouped into logical sections or tabs within the Shiny app.
+By default, the different panels are grouped by the package the produced
+the result object. In this case <em>OmopSketch</em>,
+<em>CohortCharacteristics</em> and <em>IncidencePrevalence</em>
+respectively.</p>
+<div class="section level3">
+<h3 id="customise-panelstructure">Customise panelStructure<a class="anchor" aria-label="anchor" href="#customise-panelstructure"></a>
+</h3>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ps1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  grp_1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"summarise_omop_snapshot"</span>, <span class="st">"incidence"</span><span class="op">)</span>,</span>
+<span>  grp_2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"summarise_characteristics"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/exportStaticApp.html">exportStaticApp</a></span><span class="op">(</span>result <span class="op">=</span> <span class="va">result</span>, directory <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, panelStructure <span class="op">=</span> <span class="va">ps1</span><span class="op">)</span></span></code></pre></div>
+<p>This custom <code>panelStructure</code> groups the
+“summarise_omop_snapshot” and “incidence” result types together in
+grp_1, while placing the “summarise_characteristics” result type in
+grp_2. You can pass this custom structure to
+<code>exportStaticApp</code> to organize the panels according to your
+preference.</p>
+</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

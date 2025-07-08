@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>edit_static_content • OmopViewer</title>
+<title>Customise your static shiny • OmopViewer</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="edit_static_content">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Customise your static shiny">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">OmopViewer</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,23 +34,17 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><hr class="dropdown-divider"></li>
-    <li><h6 class="dropdown-header" data-toc-skip>Static App</h6></li>
-    <li><a class="dropdown-item" href="../articles/configured_panels.html">Panels defined in OmopViewer</a></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Basic functionality</h6></li>
     <li><a class="dropdown-item" href="../articles/export_static_app.html">Create a static shiny app</a></li>
-    <li><a class="dropdown-item" href="../articles/developer_vignette.html">How to change the static app for developer</a></li>
-    <li><a class="dropdown-item" href="../articles/edit_static_content.html">edit_static_content</a></li>
-    <li><a class="dropdown-item" href="../articles/delete_tab_panel.html">How to Delete Tabs/Panels Using `panelDetails`</a></li>
-    <li><a class="dropdown-item" href="../articles/background.html">Edit the background panel of your shiny using `background.md`</a></li>
+    <li><a class="dropdown-item" href="../articles/dynamic_app.html">Dynamic app</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Customisation</h6></li>
+    <li><a class="dropdown-item" href="../articles/edit_static_content.html">Customise your static shiny</a></li>
+    <li><a class="dropdown-item" href="../articles/background.html">Edit the landing page of your shiny</a></li>
     <li><a class="dropdown-item" href="../articles/theming.html">Theming your shiny</a></li>
     <li><hr class="dropdown-divider"></li>
-    <li><h6 class="dropdown-header" data-toc-skip>Dynamic App</h6></li>
-    <li><a class="dropdown-item" href="../articles/dynamic_app.html">dynamic_app</a></li>
-    <li><hr class="dropdown-divider"></li>
-    <li><h6 class="dropdown-header" data-toc-skip>New panels</h6></li>
-    <li><a class="dropdown-item" href="../articles/adding_new_panels.html">adding_new_panels</a></li>
-    <li><hr class="dropdown-divider"></li>
-    <li><h6 class="dropdown-header" data-toc-skip>Split tab</h6></li>
-    <li><a class="dropdown-item" href="../articles/split_tab.html">Split Result into Two Tabs in OmopViewer</a></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Development</h6></li>
+    <li><a class="dropdown-item" href="../articles/extending_omopviewer.html">Extending OmopViewer</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="external-link nav-link" href="https://dpa-pde-oxford.shinyapps.io/OmopViewerExample/">Example App</a></li>
@@ -72,7 +66,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>edit_static_content</h1>
+      <h1>Customise your static shiny</h1>
             
       
 
@@ -81,9 +75,116 @@
 
     
     
+<div class="section level2">
+<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h2>
+<p>In this vignette we will see how to edit the panelDetails object to
+have one more level of customisation.</p>
+<div class="section level3">
+<h3 id="load-packages">Load packages<a class="anchor" aria-label="anchor" href="#load-packages"></a>
+</h3>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ohdsi.github.io/OmopViewer/">OmopViewer</a></span><span class="op">)</span></span></code></pre></div>
-  </main>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ohdsi.github.io/OmopViewer/">OmopViewer</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://darwin-eu.github.io/omopgenerics/" class="external-link">omopgenerics</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="mock-data">Mock data<a class="anchor" aria-label="anchor" href="#mock-data"></a>
+</h3>
+<p>We will use the incidence results obtained by the package, we can
+subset our reuslts using the following command:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="va">omopViewerResults</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://darwin-eu.github.io/omopgenerics/reference/filterSettings.html" class="external-link">filterSettings</a></span><span class="op">(</span><span class="va">result_type</span> <span class="op">==</span> <span class="st">"incidence"</span><span class="op">)</span></span></code></pre></div>
+<p>As we can see it contains data from different settings:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">result</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://darwin-eu.github.io/omopgenerics/reference/settings.html" class="external-link">settings</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Rows: 18</span></span>
+<span><span class="co">#&gt; Columns: 20</span></span>
+<span><span class="co">#&gt; $ result_id                            <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 19<span style="color: #949494;">, </span>20<span style="color: #949494;">, </span>21<span style="color: #949494;">, </span>22<span style="color: #949494;">, </span>23<span style="color: #949494;">, </span>24<span style="color: #949494;">, </span>25<span style="color: #949494;">, </span>26<span style="color: #949494;">, </span>2…</span></span>
+<span><span class="co">#&gt; $ result_type                          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "incidence"<span style="color: #949494;">, </span>"incidence"<span style="color: #949494;">, </span>"incide…</span></span>
+<span><span class="co">#&gt; $ package_name                         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "IncidencePrevalence"<span style="color: #949494;">, </span>"Incidence…</span></span>
+<span><span class="co">#&gt; $ package_version                      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "1.2.0"<span style="color: #949494;">, </span>"1.2.0"<span style="color: #949494;">, </span>"1.2.0"<span style="color: #949494;">, </span>"1.2.0…</span></span>
+<span><span class="co">#&gt; $ group                                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "denominator_cohort_name &amp;&amp;&amp; outc…</span></span>
+<span><span class="co">#&gt; $ strata                               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> ""<span style="color: #949494;">, </span>""<span style="color: #949494;">, </span>""<span style="color: #949494;">, </span>""<span style="color: #949494;">, </span>""<span style="color: #949494;">, </span>""<span style="color: #949494;">, </span>""<span style="color: #949494;">, </span>""<span style="color: #949494;">, </span>"…</span></span>
+<span><span class="co">#&gt; $ additional                           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "incidence_start_date &amp;&amp;&amp; inciden…</span></span>
+<span><span class="co">#&gt; $ min_cell_count                       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "5"<span style="color: #949494;">, </span>"5"<span style="color: #949494;">, </span>"5"<span style="color: #949494;">, </span>"5"<span style="color: #949494;">, </span>"5"<span style="color: #949494;">, </span>"5"<span style="color: #949494;">, </span>"5"…</span></span>
+<span><span class="co">#&gt; $ analysis_censor_cohort_name          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "None"<span style="color: #949494;">, </span>"None"<span style="color: #949494;">, </span>"None"<span style="color: #949494;">, </span>"None"<span style="color: #949494;">, </span>"…</span></span>
+<span><span class="co">#&gt; $ analysis_complete_database_intervals <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "TRUE"<span style="color: #949494;">, </span>"TRUE"<span style="color: #949494;">, </span>"TRUE"<span style="color: #949494;">, </span>"TRUE"<span style="color: #949494;">, </span>"…</span></span>
+<span><span class="co">#&gt; $ analysis_outcome_washout             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "365"<span style="color: #949494;">, </span>"365"<span style="color: #949494;">, </span>"365"<span style="color: #949494;">, </span>"365"<span style="color: #949494;">, </span>"365"…</span></span>
+<span><span class="co">#&gt; $ analysis_repeated_events             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "FALSE"<span style="color: #949494;">, </span>"FALSE"<span style="color: #949494;">, </span>"FALSE"<span style="color: #949494;">, </span>"FALSE…</span></span>
+<span><span class="co">#&gt; $ denominator_age_group                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "0 to 150"<span style="color: #949494;">, </span>"0 to 150"<span style="color: #949494;">, </span>"0 to 150…</span></span>
+<span><span class="co">#&gt; $ denominator_days_prior_observation   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "365"<span style="color: #949494;">, </span>"365"<span style="color: #949494;">, </span>"365"<span style="color: #949494;">, </span>"365"<span style="color: #949494;">, </span>"365"…</span></span>
+<span><span class="co">#&gt; $ denominator_end_date                 <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "2009-12-31"<span style="color: #949494;">, </span>"2009-12-31"<span style="color: #949494;">, </span>"2009…</span></span>
+<span><span class="co">#&gt; $ denominator_requirements_at_entry    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "FALSE"<span style="color: #949494;">, </span>"FALSE"<span style="color: #949494;">, </span>"FALSE"<span style="color: #949494;">, </span>"FALSE…</span></span>
+<span><span class="co">#&gt; $ denominator_sex                      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Both"<span style="color: #949494;">, </span>"Female"<span style="color: #949494;">, </span>"Male"<span style="color: #949494;">, </span>"Both"<span style="color: #949494;">,</span>…</span></span>
+<span><span class="co">#&gt; $ denominator_start_date               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "2000-01-01"<span style="color: #949494;">, </span>"2000-01-01"<span style="color: #949494;">, </span>"2000…</span></span>
+<span><span class="co">#&gt; $ denominator_target_cohort_name       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "None"<span style="color: #949494;">, </span>"None"<span style="color: #949494;">, </span>"None"<span style="color: #949494;">, </span>"None"<span style="color: #949494;">, </span>"…</span></span>
+<span><span class="co">#&gt; $ denominator_time_at_risk             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "0 to Inf"<span style="color: #949494;">, </span>"0 to Inf"<span style="color: #949494;">, </span>"0 to Inf…</span></span></code></pre></div>
+<p>In this case we will create two incidence tabs one for the
+<code>Male</code> data and another one for the <code>Female</code> data,
+the starting point will be the default incidence tab, we can ibtain it
+using:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/getPanel.html">getPanel</a></span><span class="op">(</span><span class="st">"incidence"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">Incidence</span> (OmopViewer panel)</span></span>
+<span><span class="co">#&gt; • <span style="font-weight: bold;"> icon:</span> chart-line</span></span>
+<span><span class="co">#&gt; • <span style="font-weight: bold;"> data:</span> result_type: &lt;incidence&gt;</span></span>
+<span><span class="co">#&gt; • <span style="font-weight: bold;"> filters:</span> 1 filters + 6 automatic filters</span></span>
+<span><span class="co">#&gt; • <span style="font-weight: bold;"> content:</span> <span style="color: #0000BB; font-weight: bold;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB; font-weight: bold;">Table Incidence</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB; font-weight: bold;">Plot Incidence</span> (<span style="font-style: italic;">ui</span>); <span style="color: #0000BB; font-weight: bold;">Plot population</span> (<span style="font-style: italic;">ui</span>)</span></span></code></pre></div>
+<p>Or just producing it from the results:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/panelDetailsFromResult.html">panelDetailsFromResult</a></span><span class="op">(</span>result <span class="op">=</span> <span class="va">result</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $incidence</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">Incidence</span> (OmopViewer panel)</span></span>
+<span><span class="co">#&gt; • <span style="font-weight: bold;"> icon:</span> chart-line</span></span>
+<span><span class="co">#&gt; • <span style="font-weight: bold;"> data:</span> result_type: &lt;incidence&gt;</span></span>
+<span><span class="co">#&gt; • <span style="font-weight: bold;"> filters:</span> 1 filters + 6 automatic filters</span></span>
+<span><span class="co">#&gt; • <span style="font-weight: bold;"> content:</span> <span style="color: #0000BB; font-weight: bold;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB; font-weight: bold;">Table Incidence</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB; font-weight: bold;">Plot Incidence</span> (<span style="font-style: italic;">ui</span>); <span style="color: #0000BB; font-weight: bold;">Plot population</span> (<span style="font-style: italic;">ui</span>)</span></span></code></pre></div>
+<p>We can then define our <code>panelDetails</code> object using:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">panelDetails</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  incidence_female <span class="op">=</span> <span class="fu"><a href="../reference/getPanel.html">getPanel</a></span><span class="op">(</span><span class="st">"incidence"</span><span class="op">)</span>,</span>
+<span>  incidence_male <span class="op">=</span> <span class="fu"><a href="../reference/getPanel.html">getPanel</a></span><span class="op">(</span><span class="st">"incidence"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>For the moment this the only thing that will create is two panels of
+incidence, but with the same information, the first thing that we will
+do is to restrict to the corresponding data in each one of the
+panels:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">panelDetails</span><span class="op">$</span><span class="va">incidence_female</span><span class="op">$</span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>denominator_sex <span class="op">=</span> <span class="st">"Female"</span><span class="op">)</span></span>
+<span><span class="va">panelDetails</span><span class="op">$</span><span class="va">incidence_male</span><span class="op">$</span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>denominator_sex <span class="op">=</span> <span class="st">"Male"</span><span class="op">)</span></span></code></pre></div>
+<p>We can now for example edit the title:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">panelDetails</span><span class="op">$</span><span class="va">incidence_female</span><span class="op">$</span><span class="va">title</span> <span class="op">&lt;-</span> <span class="st">"Incidence in Female"</span></span>
+<span><span class="va">panelDetails</span><span class="op">$</span><span class="va">incidence_male</span><span class="op">$</span><span class="va">title</span> <span class="op">&lt;-</span> <span class="st">"Incidence in Male"</span></span></code></pre></div>
+<p>And the icons:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">panelDetails</span><span class="op">$</span><span class="va">incidence_female</span><span class="op">$</span><span class="va">icon</span> <span class="op">&lt;-</span> <span class="st">"venus"</span></span>
+<span><span class="va">panelDetails</span><span class="op">$</span><span class="va">incidence_male</span><span class="op">$</span><span class="va">icon</span> <span class="op">&lt;-</span> <span class="st">"mars"</span></span></code></pre></div>
+<p>Let’s create the shiny and see how it looks like:</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/exportStaticApp.html">exportStaticApp</a></span><span class="op">(</span>result <span class="op">=</span> <span class="va">result</span>, panelDetails <span class="op">=</span> <span class="va">panelDetails</span>, directory <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>We can for example remove the <em>tidy</em> panel for the female tab
+and the plot panel for the male tab like this:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">panelDetails</span><span class="op">$</span><span class="va">incidence_female</span><span class="op">$</span><span class="va">content</span><span class="op">$</span><span class="va">tidy</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
+<span><span class="va">panelDetails</span><span class="op">$</span><span class="va">incidence_male</span><span class="op">$</span><span class="va">content</span><span class="op">$</span><span class="va">plot</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span></code></pre></div>
+<p>Finally we will remove the filter for <code>denominator_sex</code>
+for both panels:</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">panelDetails</span><span class="op">$</span><span class="va">incidence_female</span><span class="op">$</span><span class="va">exclude_filters</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">panelDetails</span><span class="op">$</span><span class="va">incidence_female</span><span class="op">$</span><span class="va">exclude_filters</span>, <span class="st">"denominator_sex"</span><span class="op">)</span></span>
+<span><span class="va">panelDetails</span><span class="op">$</span><span class="va">incidence_male</span><span class="op">$</span><span class="va">exclude_filters</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">panelDetails</span><span class="op">$</span><span class="va">incidence_male</span><span class="op">$</span><span class="va">exclude_filters</span>, <span class="st">"denominator_sex"</span><span class="op">)</span></span></code></pre></div>
+<p>We can now regenerate the shiny and see how our changes were
+effective:</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/exportStaticApp.html">exportStaticApp</a></span><span class="op">(</span>result <span class="op">=</span> <span class="va">result</span>, panelDetails <span class="op">=</span> <span class="va">panelDetails</span>, directory <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+</div>
+</div>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 

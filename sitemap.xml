@@ -1,16 +1,12 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://ohdsi.github.io/OmopViewer/404.html</loc></url>
 <url><loc>https://ohdsi.github.io/OmopViewer/LICENSE.html</loc></url>
-<url><loc>https://ohdsi.github.io/OmopViewer/articles/adding_new_panels.html</loc></url>
 <url><loc>https://ohdsi.github.io/OmopViewer/articles/background.html</loc></url>
-<url><loc>https://ohdsi.github.io/OmopViewer/articles/configured_panels.html</loc></url>
-<url><loc>https://ohdsi.github.io/OmopViewer/articles/delete_tab_panel.html</loc></url>
-<url><loc>https://ohdsi.github.io/OmopViewer/articles/developer_vignette.html</loc></url>
 <url><loc>https://ohdsi.github.io/OmopViewer/articles/dynamic_app.html</loc></url>
 <url><loc>https://ohdsi.github.io/OmopViewer/articles/edit_static_content.html</loc></url>
 <url><loc>https://ohdsi.github.io/OmopViewer/articles/export_static_app.html</loc></url>
+<url><loc>https://ohdsi.github.io/OmopViewer/articles/extending_omopviewer.html</loc></url>
 <url><loc>https://ohdsi.github.io/OmopViewer/articles/index.html</loc></url>
-<url><loc>https://ohdsi.github.io/OmopViewer/articles/split_tab.html</loc></url>
 <url><loc>https://ohdsi.github.io/OmopViewer/articles/theming.html</loc></url>
 <url><loc>https://ohdsi.github.io/OmopViewer/authors.html</loc></url>
 <url><loc>https://ohdsi.github.io/OmopViewer/index.html</loc></url>
