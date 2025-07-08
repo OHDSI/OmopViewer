@@ -1,17 +1,21 @@
 # default set of results ----
-dbName <- "synthea-covid19-200k"
-con <- duckdb::dbConnect(
-  duckdb::duckdb(), CDMConnector::eunomiaDir(datasetName = dbName)
-)
-cdm <- CDMConnector::cdmFromCon(
-  con = con, cdmSchema = "main", writeSchema = "main", cdmName = dbName
-)
+install.packages("pak")
+install.packages("renv")
 
-# correct cdm
-cdm <- OmopConstructor::buildAchillesTables(cdm)
+# install needed packages
+deps <- sort(unique(renv::dependencies(here::here("data-raw", "results.R"))$Package))
+message("Installing dependencies: ", paste(deps, collapse = ", "))
+pak::pak(deps, upgrade = FALSE)
+
+# cdm reference
+dbName <- "synthea-covid19-200k"
+cdm <- omock::mockCdmFromDataset(datasetName = dbName)
+
+# modify cdm
+set.seed(12345)
 cdm$drug_exposure <- cdm$drug_exposure |>
   dplyr::mutate(
-    quantity = random(),
+    quantity = runif(n = dplyr::n()),
     quantity = dplyr::case_when(
       .data$quantity >= 0   & .data$quantity < 0.2 ~ 1,
       .data$quantity >= 0.2 & .data$quantity < 0.4 ~ 2,
@@ -19,14 +23,21 @@ cdm$drug_exposure <- cdm$drug_exposure |>
       .data$quantity >= 0.6 & .data$quantity < 0.8 ~ 30,
       .data$quantity >= 0.8 & .data$quantity < 1   ~ 50
     )
-  ) |>
-  dplyr::compute(name = "drug_exposure")
+  )
 cdm$condition_occurrence <- cdm$condition_occurrence |>
   dplyr::mutate(condition_concept_id = dplyr::if_else(
     .data$condition_occurrence_id %% 10 & .data$condition_concept_id == 381316L,
     0L, .data$condition_concept_id
-  )) |>
-  dplyr::compute(name = "condition_occurrence")
+  ))
+
+# copy cdm
+src <- CDMConnector::dbSource(con = duckdb::dbConnect(drv = duckdb::duckdb()), writeSchema = "main")
+
+# copy cdm to
+cdm <- omopgenerics::insertCdmTo(cdm = cdm, to = src)
+
+# achilles tables
+cdm <- CodelistGenerator::buildAchillesTables(cdm)
 
 # create cohorts
 codelistConditions <- list(
