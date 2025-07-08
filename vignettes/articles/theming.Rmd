@@ -17,8 +17,6 @@ You can customise the shiny colours you can use the theme argument. The theme ar
 - Custom themes, see options below.
 - A `bslib::bs_theme()` call: `theme = 'bslib::bs_theme(primary = "orange", secondary = "blue")'`
 
-The first colour defines the primary theme colour, which is applied to key interactive components such as buttons, links, and labels, emphasizing important actions and elements. The second colour is used for the header bar at the top of the Shiny app. You can learn more about them in [bslib documentation](https://rstudio.github.io/bslib/).
-
 ## Predefined themes
 
 See our predefined themes:

@@ -34,7 +34,7 @@ serverDynamic <- function(input, output, session) {
       rlang::parse_expr() |>
       rlang::eval_tidy()
     session$setCurrentTheme(theme)
-  })
+  }, ignoreInit = TRUE)
 
   # upload data to shiny
   shiny::observeEvent(input$upload_data_content, {
@@ -76,14 +76,14 @@ serverDynamic <- function(input, output, session) {
     # add server modules
     serverModule <- paste0(c(
       "function(input, output, session) {",
-      createSummaryServer(summary = input$configuration_summary, data = "workingData()"),
+      createSummaryServer(summary = TRUE, data = "workingData()"),
       createServer(panelDetails, data = "workingData()", updateButtons = TRUE),
       "}"
     ), collapse = "\n") |>
       rlang::parse_expr() |>
       rlang::eval_tidy()
     shiny::moduleServer(id = NULL, module = serverModule)
-  })
+  }, ignoreInit = TRUE)
 
   shiny::observeEvent(input$remove_data_go, {
     selected <- input$upload_data_uploaded_rows_selected
@@ -96,10 +96,7 @@ createDynamicUi <- function(panels, summary, data, theme) {
   logo <- "https://raw.githubusercontent.com/OHDSI/OmopViewer/12fbe3ad94529a91f46f3652e47b417e9a7f4bb6/inst/logos/hds_logo.svg"
 
   if (isTRUE(summary)) {
-    panels <- c(
-      list(rlang::eval_tidy(rlang::parse_exprs(summaryTab(TRUE)))),
-      panels
-    )
+    panels$summary <- rlang::eval_tidy(rlang::parse_expr(summaryTab(TRUE)))
     summary <- TRUE
   } else {
     summary <- FALSE
