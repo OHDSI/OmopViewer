@@ -38,7 +38,7 @@ jobs:
             install.packages("renv")
             deps <- unique(renv::dependencies()$Package)
             pak::pkg_install(deps)
-            pak::pkg_install("ohdsi/OmopViewer")
+            pak::pkg_install(c("ohdsi/OmopViewer", "rsconnect"))
         working-directory: extras/ShinyThemes
 
       - name: Create renv file Themes
