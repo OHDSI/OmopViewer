@@ -31,6 +31,7 @@ jobs:
           packages: |
             renv
             pak
+            rsconnect
 
       - name: Install OmopViewer
         shell: Rscript {0}
