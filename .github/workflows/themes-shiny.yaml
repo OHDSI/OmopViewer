@@ -32,6 +32,7 @@ jobs:
             renv
             pak
             rsconnect
+            shinyWidgets
 
       - name: Install OmopViewer
         shell: Rscript {0}
