@@ -35,7 +35,11 @@ jobs:
         shell: Rscript {0}
         run: |
             install.packages("pak")
-            pak::pkg_install(c("renv", "rsconnect", "shinyWidgets", "ohdsi/OmopViewer"))
+            install.packages("renv")
+            deps <- unique(renv::dependencies()$Package)
+            pak::pkg_install(deps)
+            pak::pkg_install("ohdsi/OmopViewer")
+        working-directory: extras/ShinyThemes
 
       - name: Create renv file Themes
         run: Rscript -e 'renv::init()'
