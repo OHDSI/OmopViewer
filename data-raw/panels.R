@@ -1210,6 +1210,153 @@ inObservationPanel <- list(
     )
   )
 )
+## summarise trend ----
+trendPanel <- list(
+  title = "Trends",
+  icon = "arrow-trend-up",
+  data = list(result_type = "summarise_trend"),
+  automatic_filters = c(
+    "group",
+    "strata",
+    "strata",
+    "settings",
+    "variable_name",
+    "estimate_name"
+  ),
+  filters = list(cdm_name = cdmFilter),
+  content = list(
+    tidy = tidyContent,
+    table = list(
+      title = "Table Trends",
+      output_type = "gt",
+      reactive = "<filtered_data> |>
+      OmopSketch::tableTrend()",
+      render = "<reactive_data>",
+      download = downloadGtTable("table_trend")
+    ),
+    plot = list(
+      title = "Plot Trends",
+      output_type = "ui",
+      reactive = "<filtered_data> |>
+      OmopSketch::plotTrend(
+      facet = input$facet,
+      colour = input$colour
+      )",
+      render = "x <- <reactive_data>
+      renderInteractivePlot(x, input$interactive)",
+      filters = list(
+        interactive = list(
+          button_type = "materialSwitch",
+          label = "Interactive",
+          value = TRUE
+        ),
+        facet = list(
+          button_type = "pickerInput",
+          label = "Facet",
+          choices = c(
+            "cdm_name",
+            "<group>",
+            "<strata>",
+            "<additional>",
+            "<settings>"
+          ),
+          selected = c("cdm_name"),
+          multiple = TRUE
+        ),
+        colour = list(
+          button_type = "pickerInput",
+          label = "Colour",
+          choices = c(
+            "cdm_name",
+            "<group>",
+            "<strata>",
+            "<additional>",
+            "<settings>"
+          ),
+          selected = character(),
+          multiple = TRUE
+        )
+      ),
+      download = downloadPlot("plot_trend.png")
+    )
+  )
+)
+conceptCountsPanel <- list(
+  title = "Concept Counts",
+  icon = "database",
+  data = list(result_type = "summarise_concept_id_counts"),
+  automatic_filters = c(
+    "group",
+    "strata",
+    "strata",
+    "settings",
+    "variable_name",
+    "estimate_name"
+  ),
+  filters = list(cdm_name = cdmFilter),
+  content = list(
+    tidy = list(
+      title = "Table Concept Counts",
+      output_type = "reactable",
+      reactive = "<filtered_data> |>
+      OmopSketch::tableConceptIdCounts(display = input$display)",
+      render = "<reactive_data>",
+      filters = list(
+        interactive = list(
+          button_type = "materialSwitch",
+          label = "Interactive",
+          value = TRUE
+        ),
+        display = list(
+          button_type = "pickerInput",
+          label = "Display",
+          choices = c(
+            "overall",
+            "standard",
+            "source",
+            "missing standard",
+            "missing source"
+          ),
+          selected = "overall",
+          multiple = FALSE
+        )
+      ),
+      download = list(
+        label = "Download csv",
+        render = "<reactive_data> |>
+    readr::write_csv(file = file)",
+        filename = "concept_id_counts.csv"
+      )
+    ),
+    table = list(
+      title = "Top Concept Counts",
+      output_type = "ui",
+      reactive = "<filtered_data> |>
+      OmopSketch::tableTopConceptCounts(top = as.numeric(input$top))",
+      render = "<reactive_data>",
+      filters = list(
+        interactive = list(
+          button_type = "materialSwitch",
+          label = "Interactive",
+          value = TRUE
+        ),
+        top = list(
+          button_type = "pickerInput",
+          label = "Top",
+          choices = c(
+            5L,
+            10L,
+            50L,
+            100L
+          ),
+          selected = 10L,
+          multiple = FALSE
+        )
+      ),
+      download = downloadGtTable("table_top_concept_counts")
+    )
+  )
+)
 ## orphan code use ----
 orphanCodesPanel <- list(
   title = "Orphan codes",
@@ -2066,6 +2213,8 @@ omopViewerPanels <- list(
   summarise_record_count = recordCountPanel,
   summarise_missing_data = missingPanel,
   summarise_in_observation = inObservationPanel,
+  summarise_trend = trendPanel,
+  summarise_concept_id_counts = conceptCountsPanel,
   # CodelistGenerator
   orphan_code_use = orphanCodesPanel,
   cohort_code_use = cohortCodeUsePanel,
