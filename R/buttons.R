@@ -34,12 +34,13 @@ writeButton <- function(x) {
     x$options = 'list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")'
     if (rlang::is_installed("shinyWidgets")) {
       args <- names(formals(shinyWidgets::pickerInput))
-      args <- args[args %in% names(x)]
     } else {
-      x$button_type <- NULL
-      x$input_id <- NULL
-      args <- names(x)
+      args <- c(
+        "inputId", "label", "choices", "selected", "multiple", "options",
+        "choicesOpt", "width", "inline", "stateInput", "autocomplete"
+      )
     }
+    args <- args[args %in% names(x)]
     button <- paste0(
       "shinyWidgets::pickerInput(\n",
       purrr::imap(x[args], \(x, nm) paste(nm, "=", x)) |>
@@ -48,14 +49,8 @@ writeButton <- function(x) {
     )
   } else if (x$button_type == "checkbox") {
     x$label <- cast(x$label)
-    if (rlang::is_installed("shiny")) {
-      args <- names(formals(shiny::checkboxInput))
-      args <- args[args %in% names(x)]
-    } else {
-      x$button_type <- NULL
-      x$input_id <- NULL
-      args <- names(x)
-    }
+    args <- names(formals(shiny::checkboxInput))
+    args <- args[args %in% names(x)]
     button <- paste0(
       "shiny::checkboxInput(\n",
       purrr::imap(x[args], \(x, nm) paste(nm, "=", x)) |>
@@ -64,14 +59,8 @@ writeButton <- function(x) {
     )
   } else if (x$button_type == "numericInput") {
     x$label <- cast(x$label)
-    if (rlang::is_installed("shiny")) {
-      args <- names(formals(shiny::numericInput))
-      args <- args[args %in% names(x)]
-    } else {
-      x$button_type <- NULL
-      x$input_id <- NULL
-      args <- names(x)
-    }
+    args <- names(formals(shiny::numericInput))
+    args <- args[args %in% names(x)]
     button <- paste0(
       "shiny::numericInput(\n",
       purrr::imap(x[args], \(x, nm) paste(nm, "=", x)) |>
@@ -82,12 +71,13 @@ writeButton <- function(x) {
     x$header <- cast(x$header)
     if (rlang::is_installed("sortable")) {
       args <- names(formals(sortable::bucket_list))
-      args <- args[args %in% names(x)]
     } else {
-      x$button_type <- NULL
-      x$inputId <- NULL
-      args <- names(x)
+      args <- c(
+        "header", "group_name", "css_id", "group_put_max", "options", "class",
+        "orientation"
+      )
     }
+    args <- args[args %in% names(x)]
     dots <- x$rank |>
       purrr::map_chr(\(rnk) {
         paste0(
@@ -106,12 +96,10 @@ writeButton <- function(x) {
     x$label <- cast(x$label)
     if (rlang::is_installed("shinyWidgets")) {
       args <- names(formals(shinyWidgets::materialSwitch))
-      args <- args[args %in% names(x)]
     } else {
-      x$button_type <- NULL
-      x$input_id <- NULL
-      args <- names(x)
+      args <- c("inputId", "label", "value", "status", "right", "inline", "width")
     }
+    args <- args[args %in% names(x)]
     button <- paste0(
       "shinyWidgets::materialSwitch(\n",
       purrr::imap(x[args], \(x, nm) paste(nm, "=", x)) |>
