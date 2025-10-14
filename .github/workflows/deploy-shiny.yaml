@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  deploy-shiny:
+  deploy_shiny:
     runs-on: ${{ matrix.config.os }}
 
     name: ${{ matrix.config.os }} (${{ matrix.config.r }})
