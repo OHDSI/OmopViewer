@@ -7,13 +7,13 @@ on:
     branches: [main]
 
 jobs:
-  deploy:
+  themes_shiny:
     runs-on: ${{ matrix.config.os }}
 
     name: ${{ matrix.config.os }} (${{ matrix.config.r }})
 
     concurrency:
-      group: pr-${{ github.event.pull_request.number || github.run_id }}
+      group: pr-${{ github.event.pull_request.number || github.run_id }}-themes-shiny
       cancel-in-progress: true
 
     strategy:
