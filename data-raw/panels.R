@@ -2158,6 +2158,21 @@ lscPanel <- list(
     )
   )
 )
+
+## survival_probability ----
+survivalProbPanel <- list(
+  title = "Single event survival",
+  icon = "stairs",
+  data = list(result_type = c(
+    "survival_probability", "survival_events", "survival_summary",
+    "survival_attrition"
+  )),
+  automatic_filters = c("group", "strata", "variable_level", "settings"),
+  filters = list(cdm_name = cdmFilter)
+)
+
+## cumulative_failure_probability ----
+
 ## deafult ----
 defaultPanel <- list(
   title = "<result_type>",
@@ -2240,6 +2255,8 @@ omopViewerPanels <- list(
   summarise_drug_utilisation = dusPanel,
   summarise_indication = indicationPanel,
   summarise_treatment = treatmentPanel,
+  # CohortSurvival
+  survival_probability = survivalProbPanel,
   # default
   default = defaultPanel
 ) |>

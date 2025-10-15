@@ -158,6 +158,24 @@ treatments <- cdm$acetaminophen |>
     treatmentCohortName = "alternative"
   )
 
+# cohort survival
+cdm$death_cohort <- CohortConstructor::deathCohort(cdm = cdm, name = "death_cohort")
+survivalSingle <- CohortSurvival::estimateSingleEventSurvival(
+  cdm = cdm,
+  targetCohortTable = "acetaminophen",
+  outcomeCohortTable = "death_cohort",
+  censorOnCohortExit = FALSE,
+  followUpDays = 365
+)
+survivalCompetting <- CohortSurvival::estimateCompetingRiskSurvival(
+  cdm = cdm,
+  targetCohortTable = "acetaminophen",
+  outcomeCohortTable = "alternative",
+  outcomeCohortId = 2,
+  competingOutcomeCohortTable = "death_cohort",
+  followUpDays = 365
+)
+
 omopViewerResults <- omopgenerics::bind(
   # OmopSketch
   snapshot, obsPeriod, clinicalTables, missingData, recordCount, inObservation,
@@ -168,7 +186,9 @@ omopViewerResults <- omopgenerics::bind(
   # IncidencePrevalence
   incidence, pointPrevalence,
   # DrugUtilisation
-  treatmentPersistence, doseCoverage, indication, drugUtilisation, drugRestart, treatments
+  treatmentPersistence, doseCoverage, indication, drugUtilisation, drugRestart, treatments,
+  # CohortSurvival
+  survivalSingle, survivalCompetting
 ) |>
   omopgenerics::suppress()
 
