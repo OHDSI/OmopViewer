@@ -4,10 +4,13 @@
 \alias{panelDetailsFromResult}
 \title{Obtain default panel details from a \verb{<summarised_result>} object.}
 \usage{
-panelDetailsFromResult(result)
+panelDetailsFromResult(result, includeOneChoiceFilters = TRUE)
 }
 \arguments{
 \item{result}{A \code{summarised_result} object.}
+
+\item{includeOneChoiceFilters}{Whether to include filters that contain only
+one choice.}
 }
 \value{
 A list of \code{omop_viewer_panel} objects.
