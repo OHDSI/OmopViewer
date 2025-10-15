@@ -100,6 +100,20 @@ test_that("panelStructure argument works", {
     populatePanelDetailsOptions(result)
   panels <- writeUiPanels(panelDetails, updateButtons = TRUE)
 
+  # check includeOneChoiceFilters
+  pd1 <- panelDetailsFromResult(result)
+  pd2 <- panelDetailsFromResult(result, includeOneChoiceFilters = TRUE)
+  # check default
+  expect_identical(pd1, pd2)
+  # no filter is excluded
+  expect_identical(pd2$summarise_cohort_overlap$exclude_filters, NULL)
+  pd3 <- panelDetailsFromResult(result, includeOneChoiceFilters = FALSE)
+  # one option length are trimmed
+  expect_identical(
+    pd3$summarise_cohort_overlap$exclude_filters,
+    c("cdm_name", "variable_level", "overlap_by")
+  )
+
   # default panelStructure
   panelStructure <- as.list(names(panelDetails))
   uiPanels <- structurePanels(panels, panelStructure)

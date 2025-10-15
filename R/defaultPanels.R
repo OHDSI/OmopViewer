@@ -34,6 +34,8 @@ defaultPanels <- function() {
 #' Obtain default panel details from a `<summarised_result>` object.
 #'
 #' @param result A `summarised_result` object.
+#' @param includeOneChoiceFilters Whether to include filters that contain only
+#' one choice.
 #'
 #' @return A list of `omop_viewer_panel` objects.
 #' @export
@@ -42,9 +44,11 @@ defaultPanels <- function() {
 #'
 #' panelDetailsFromResult(omopViewerResults)
 #'
-panelDetailsFromResult <- function(result) {
+panelDetailsFromResult <- function(result,
+                                   includeOneChoiceFilters = TRUE) {
   # initial check
   result <- omopgenerics::validateResultArgument(result)
+  omopgenerics::assertLogical(includeOneChoiceFilters, length = 1)
 
   # get result types
   resultTypes <- unique(omopgenerics::settings(result)$result_type)
@@ -76,7 +80,7 @@ panelDetailsFromResult <- function(result) {
   panelDetails <- c(panels, defaultPanels)
 
   # eliminate filters with more than omopviewer.max_length
-  trimFilters(panelDetails, result)
+  trimFilters(panelDetails, result, includeOneChoiceFilters)
 }
 
 defaultPanelStructure <- function(panels) {
@@ -87,21 +91,25 @@ defaultPanelStructure <- function(panels) {
     as.list()
   c(lp, ln)
 }
-trimFilters <- function(panelDetails, result) {
+trimFilters <- function(panelDetails, result, includeOneChoiceFilters) {
   len <- getOption(x = "omopviewer.max_length", default = "100") |>
     as.integer()
   if (!is.infinite(len) & !is.na(len)) {
-    if (len >= 1) {
+    if (len >= 1 || !includeOneChoiceFilters) {
       resultList <- purrr::map(panelDetails, \(x) x$data)
       toExclude <- prepareResult(result = result, resultList = resultList) |>
         purrr::map(\(x) {
-          x |>
+          x <- x |>
             omopgenerics::addSettings() |>
             omopgenerics::splitAll() |>
             dplyr::select(!c("result_id", "estimate_name", "estimate_type", "estimate_value")) |>
-            purrr::map(\(x) length(unique(x))) |>
-            purrr::keep(\(x) x > len) |>
-            names()
+            purrr::map(\(x) length(unique(x)))
+          if (!includeOneChoiceFilters) {
+            x <- purrr::keep(x, \(x) x == 1 | x > len)
+          } else {
+            x <- purrr::keep(x, \(x) x > len)
+          }
+          names(x)
         }) |>
         purrr::compact()
       for (nm in names(toExclude)) {
