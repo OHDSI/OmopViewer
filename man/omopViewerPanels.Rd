@@ -7,7 +7,7 @@
 \format{
 \subsection{\code{omopViewerPanels}}{
 
-A list of 26 \code{omopviewer_panel} obejcts:
+A list of 26 \code{omopviewer_panel} obejcts
 }
 }
 \usage{

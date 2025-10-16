@@ -7,7 +7,7 @@
 \format{
 \subsection{\code{omopViewerResults}}{
 
-A \code{summarised_result} object with 12,017 rows:
+A \code{summarised_result} object with 12,017 rows
 }
 }
 \usage{

@@ -2159,19 +2159,73 @@ lscPanel <- list(
   )
 )
 
-## survival_probability ----
+## survival_probability & cumulative_failure_probability ----
 survivalProbPanel <- list(
   title = "Single event survival",
   icon = "stairs",
   data = list(result_type = c(
     "survival_probability", "survival_events", "survival_summary",
-    "survival_attrition"
+    "survival_attrition", "cumulative_failure_probability"
   )),
-  automatic_filters = c("group", "strata", "variable_level", "settings"),
-  filters = list(cdm_name = cdmFilter)
+  automatic_filters = c("group", "strata", "variable_level", "competing_outcome"),
+  filters = list(cdm_name = cdmFilter),
+  exclude_filters = c("reason", "analyses_type"),
+  content = list(
+    table_survival = list(
+      title = "Table",
+      output_type = "gt",
+      reactive = "<filtered_data> |>
+      CohortSurvival::tableSurvival(
+      timeScale = input$time_scale,
+      type = 'gt'
+      )",
+      render = "<reactive_data>",
+      filters = list(
+        time_scale = list(
+          button_type = "pickerInput",
+          label = "Time Scale",
+          choices = c("days", "months", "years"),
+          selected = "days",
+          multiple = FALSE
+        )
+      ),
+      download = downloadGtTable("table_survival")
+    ),
+    plot_survival = list(
+      title = "Plot",
+      output_type = "ui",
+      reactive = "<filtered_data> |>
+      CohortSurvival::plotSurvival(
+      facet = input$facet,
+      colour = input$colour
+      )",
+      render = "x <- <reactive_data>
+      renderInteractivePlot(x, input$interactive)",
+      filters = list(
+        interactive = list(
+          button_type = "materialSwitch",
+          label = "Interactive",
+          value = TRUE
+        ),
+        facet = list(
+          button_type = "pickerInput",
+          label = "Facet",
+          choices = c("cdm_name", "<group>", "<strata>", "<additional>", "<settings>"),
+          selected = c("cdm_name"),
+          multiple = TRUE
+        ),
+        colour = list(
+          button_type = "pickerInput",
+          label = "Colour",
+          choices = c("cdm_name", "<group>", "<strata>", "<additional>", "<settings>"),
+          selected = c("<group>"),
+          multiple = TRUE
+        )
+      ),
+      download = downloadPlot("plot_survival.png")
+    )
+  )
 )
-
-## cumulative_failure_probability ----
 
 ## deafult ----
 defaultPanel <- list(
@@ -2256,7 +2310,7 @@ omopViewerPanels <- list(
   summarise_indication = indicationPanel,
   summarise_treatment = treatmentPanel,
   # CohortSurvival
-  survival_probability = survivalProbPanel,
+  survival = survivalProbPanel,
   # default
   default = defaultPanel
 ) |>
