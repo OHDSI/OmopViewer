@@ -12,6 +12,13 @@ uiStatic <- function(logo,
   panels <- writeUiPanels(panelDetails, updateButtons) |>
     structurePanels(panelStructure)
 
+  # updateButtons = TRUE add the desiredStyle
+  if (updateButtons == TRUE) {
+    style <- stickyStyle()
+  } else {
+    style <- NULL
+  }
+
   # ui
   c(
     messageShiny(),
@@ -19,6 +26,7 @@ uiStatic <- function(logo,
     c(
       writeTitle(title, logo),
       paste0("theme = ", theme),
+      style,
       createBackground(background),
       summaryTab(summary),
       panels,
@@ -103,9 +111,15 @@ writeUiPanels <- function(panelDetails, updateButtons) {
 updateButtonUi <- function(updateButtons, id) {
   if (!updateButtons) return("")
   paste0(
-    "\nshiny::actionButton(\ninputId = \"update_", id,
-    "\", \nlabel = \"Update content\",\nwidth = \"200px\"\n),\nshiny::div(shiny::textOutput(outputId = \"update_message_",
-    id, "\"), class = \"ov_update_button\"),\n"
+    "
+    div(
+      class = \"sticky-top-btn\",
+      shiny::actionButton(
+        inputId = \"update_", id, "\",
+        label = \"Update content\",
+        width = \"200px\"
+      )
+    ),\n"
   )
 }
 structurePanels <- function(panels, panelStructure) {
@@ -179,4 +193,17 @@ writeDownload <- function(do) {
     ),
     '\n),\nclass = "text-end"\n),\n'
   )
+}
+stickyStyle <- function() {
+  "shiny::tags$style(HTML(
+    \"#main_sidebar .sticky-top-btn {
+      position: -webkit-sticky;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background-color: transparent;
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+    }\"
+  ))"
 }
