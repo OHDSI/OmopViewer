@@ -112,12 +112,15 @@ updateButtonUi <- function(updateButtons, id) {
   if (!updateButtons) return("")
   paste0(
     "
-    div(
+    bslib::card(
       class = \"sticky-top-btn\",
-      shiny::actionButton(
-        inputId = \"update_", id, "\",
-        label = \"Update content\",
-        width = \"200px\"
+      bslib::card_body(
+        shiny::actionButton(
+          inputId = \"update_", id, "\",
+          label = \"Update content\",
+          width = \"100%\"
+        ),
+
       )
     ),\n"
   )
