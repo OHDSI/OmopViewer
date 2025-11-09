@@ -84,7 +84,7 @@ exportStaticApp(result = result, directory = dir)
 #> ✔ Data processed: 3 panels idenfied: `summarise_omop_snapshot`,
 #>   `summarise_characteristics`, and `incidence`.
 #> ℹ Creating shiny from provided data
-#> ✔ Shiny created in: /tmp/RtmpU9ldnm/shiny
+#> ✔ Shiny created in: /tmp/RtmpLt2M7N/shiny
 ```
 
 Note that by default if executed in an interactive environment like *R
@@ -279,7 +279,7 @@ omopViewerPanels
 #> Incidence Attrition (OmopViewer panel)
 #> •  icon: layer-group
 #> •  data: result_type: <incidence_attrition>
-#> •  filters: 1 filters + 2 automatic filters
+#> •  filters: 1 filters + 4 automatic filters
 #> •  content: Tidy (DT); Table Incidence Attrition (gt)
 #> 
 #> $prevalence
@@ -293,7 +293,7 @@ omopViewerPanels
 #> Prevalence Attrition (OmopViewer panel)
 #> •  icon: layer-group
 #> •  data: result_type: <prevalence_attrition>
-#> •  filters: 1 filters + 2 automatic filters
+#> •  filters: 1 filters + 4 automatic filters
 #> •  content: Tidy (DT); Table Prevalence Attrition (gt)
 #> 
 #> $summarise_dose_coverage

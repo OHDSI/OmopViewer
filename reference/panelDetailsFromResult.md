@@ -156,7 +156,7 @@ panelDetailsFromResult(omopViewerResults)
 #> Incidence Attrition (OmopViewer panel)
 #> •  icon: layer-group
 #> •  data: result_type: <incidence_attrition>
-#> •  filters: 1 filters + 2 automatic filters
+#> •  filters: 1 filters + 4 automatic filters
 #> •  content: Tidy (DT); Table Incidence Attrition (gt)
 #> 
 #> $prevalence
@@ -170,7 +170,7 @@ panelDetailsFromResult(omopViewerResults)
 #> Prevalence Attrition (OmopViewer panel)
 #> •  icon: layer-group
 #> •  data: result_type: <prevalence_attrition>
-#> •  filters: 1 filters + 2 automatic filters
+#> •  filters: 1 filters + 4 automatic filters
 #> •  content: Tidy (DT); Table Prevalence Attrition (gt)
 #> 
 #> $summarise_dose_coverage
