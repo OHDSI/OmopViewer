@@ -30,14 +30,14 @@ validateTheme <- function(theme, call = parent.frame()) {
       cli::cli_abort(c(x = "File {.path {theme}} does not exist."))
     }
     file <- theme
-    pkg <- NULL
+    pkg <- "none"
   }
 
   # read theme
   content <- yaml::read_yaml(file = file)
 
   # correct visOmopResults themes
-  if (identical(pkg, "visOmopResults")) {
+  if (pkg == "visOmopResults") {
     content <- correctTheme(content = content, name = theme)
   }
 
