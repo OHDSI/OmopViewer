@@ -1370,9 +1370,18 @@ orphanCodesPanel <- list(
   ),
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
-    table = list(
-      title = "Table Orphan codes",
+    table_react = list(
+      title = "Table Orphan codes (reactable)",
+      output_type = "reactable",
+      reactive = "<filtered_data> |>
+      CodelistGenerator::tableOrphanCodes(
+        type = \"reactable\",
+        header = \"cdm_name\"
+      )",
+      render = "<reactive_data>"
+    ),
+    table_gt = list(
+      title = "Table Orphan codes (gt)",
       output_type = "gt",
       reactive = "<filtered_data> |>
       CodelistGenerator::tableOrphanCodes(
@@ -1406,9 +1415,18 @@ cohortCodeUsePanel <- list(
   automatic_filters = c("group", "strata", "variable_name", "estimate_name"),
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
-    table = list(
-      title = "Table Cohort code use",
+    table_react = list(
+      title = "Table Cohort code use (reactable)",
+      output_type = "reactable",
+      reactive = "<filtered_data> |>
+      CodelistGenerator::tableCohortCodeUse(
+        type = \"reactable\",
+        header = \"cdm_name\"
+      )",
+      render = "<reactive_data>"
+    ),
+    table_gt = list(
+      title = "Table Cohort code use (gt)",
       output_type = "gt",
       reactive = "<filtered_data> |>
       CodelistGenerator::tableCohortCodeUse(
@@ -1449,9 +1467,18 @@ codeUsePanel <- list(
   ),
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
-    table = list(
-      title = "Table Code use",
+    table_react = list(
+      title = "Table Code use (reactable)",
+      output_type = "reactable",
+      reactive = "<filtered_data> |>
+      CodelistGenerator::tableCodeUse(
+        type = \"reactable\",
+        header = \"cdm_name\"
+      )",
+      render = "<reactive_data>"
+    ),
+    table_gt = list(
+      title = "Table Code use (gt)",
       output_type = "gt",
       reactive = "<filtered_data> |>
       CodelistGenerator::tableCodeUse(
@@ -1491,9 +1518,18 @@ achillesCodeUsePanel <- list(
   ),
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
-    table = list(
-      title = "Table Achilles code use",
+    table_react = list(
+      title = "Table Achilles code use (reactable)",
+      output_type = "reactable",
+      reactive = "<filtered_data> |>
+      CodelistGenerator::tableAchillesCodeUse(
+        type = \"reactable\",
+        header = \"cdm_name\"
+      )",
+      render = "<reactive_data>"
+    ),
+    table_gt = list(
+      title = "Table Achilles code use (gt)",
       output_type = "gt",
       reactive = "<filtered_data> |>
       CodelistGenerator::tableAchillesCodeUse(
@@ -1533,9 +1569,18 @@ unmappedPanel <- list(
   ),
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
-    table = list(
-      title = "Table Unmapped codes",
+    table_react = list(
+      title = "Table Unmapped codes (reactable)",
+      output_type = "reactable",
+      reactive = "<filtered_data> |>
+      CodelistGenerator::tableUnmappedCodes(
+        type = \"reactable\",
+        header = \"cdm_name\"
+      )",
+      render = "<reactive_data>"
+    ),
+    table_gt = list(
+      title = "Table Unmapped codes (gt)",
       output_type = "gt",
       reactive = "<filtered_data> |>
       CodelistGenerator::tableUnmappedCodes(
