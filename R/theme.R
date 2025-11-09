@@ -13,13 +13,12 @@ availableThemes <- function() {
       stringr::str_replace_all(pattern = "\\.yml$", replacement = "")
   )
 }
-
 validateTheme <- function(theme, call = parent.frame()) {
   if (is.null(theme)) theme <-  "default"
 
   omopgenerics::assertCharacter(x = theme, length = 1, call = call)
 
-  if (endsWith(x = theme, suffix = ".yml")) {
+  if (!endsWith(x = theme, suffix = ".yml")) {
     at <- availableThemes()
     choices <- unlist(at, use.names = FALSE)
     omopgenerics::assertChoice(x = theme, choices = choices, length = 1, call = call)
@@ -34,15 +33,32 @@ validateTheme <- function(theme, call = parent.frame()) {
   }
 
   # read theme
-  content <- yaml::read_yaml(file = file)
+  content <- readBrand(file = file)
 
   # correct visOmopResults themes
   if (pkg == "visOmopResults") {
-    content <- correctTheme(content = content, name = theme)
+    content <- correctTheme(content = content, theme = theme)
   }
 
   return(content)
 }
-correctTheme <- function(content, name) {
-
+correctTheme <- function(content, theme) {
+  file <- system.file("brand", "complement", paste0(theme, ".yml"), package = "OmopViewer")
+  if (file.exists(file)) {
+    content <- modifyList(content, readBrand(file = file))
+  }
+  content
+}
+readBrand <- function(file = "_brand.yml") {
+  content <- yaml::read_yaml(file = file)
+  if ("brand" %in% names(content)) {
+    content <- content$brand
+  }
+  return(content)
+}
+getThemes <- function() {
+  availableThemes() |>
+    unlist(use.names = FALSE) |>
+    rlang::set_names() |>
+    purrr::map(\(x) bslib::bs_theme(brand = validateTheme(x)))
 }

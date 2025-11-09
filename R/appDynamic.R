@@ -25,16 +25,17 @@ serverDynamic <- function(input, output, session) {
 
   # render ui
   output$ui <- shiny::renderUI(
-    createDynamicUi(panels(), input$configuration_summary, workingData(), input$configuration_theme)
+    createDynamicUi(panels(), input$configuration_summary, workingData(), "theme")
   )
+  # input$configuration_theme
 
   # change the theme of the shiny
-  shiny::observeEvent(input$configuration_theme, {
-    theme <- omopViewerThemes[[input$configuration_theme]] |>
-      rlang::parse_expr() |>
-      rlang::eval_tidy()
-    session$setCurrentTheme(theme)
-  }, ignoreInit = TRUE)
+  # shiny::observeEvent(input$configuration_theme, {
+  #   theme <- omopViewerThemes[[input$configuration_theme]] |>
+  #     rlang::parse_expr() |>
+  #     rlang::eval_tidy()
+  #   session$setCurrentTheme(theme)
+  # }, ignoreInit = TRUE)
 
   # upload data to shiny
   shiny::observeEvent(input$upload_data_content, {
@@ -102,9 +103,9 @@ createDynamicUi <- function(panels, summary, data, theme) {
     summary <- FALSE
   }
 
-  if (!isTRUE(theme %in% names(omopViewerThemes))) {
-    theme <- "default"
-  }
+  # if (!isTRUE(theme %in% names(omopViewerThemes))) {
+  #   theme <- "default"
+  # }
 
   panels <- unname(panels)
   bslib::page_navbar(
@@ -161,13 +162,13 @@ createDynamicUi <- function(panels, summary, data, theme) {
       bslib::popover(
         trigger = shiny::icon("gear"),
         title = "Configuration",
-        shinyWidgets::pickerInput(
-          inputId = "configuration_theme",
-          label = "Choose theme",
-          choices = names(omopViewerThemes),
-          selected = theme,
-          multiple = FALSE
-        ),
+        # shinyWidgets::pickerInput(
+        #   inputId = "configuration_theme",
+        #   label = "Choose theme",
+        #   choices = names(omopViewerThemes),
+        #   selected = theme,
+        #   multiple = FALSE
+        # ),
         shiny::checkboxInput(
           inputId = "configuration_summary",
           label = "Summary",
