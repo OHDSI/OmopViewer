@@ -39,3 +39,8 @@ Functionalities to explore the default defined panels
   :
 
   Mock results obtained from `GiBleed` dataset.
+
+- [`omopViewerThemes()`](https://ohdsi.github.io/OmopViewer/reference/omopViewerThemes.md)
+  :
+
+  List the available configured `OmopViewer` themes
