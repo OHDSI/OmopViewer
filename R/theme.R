@@ -71,7 +71,7 @@ readBrand <- function(file = "_brand.yml") {
   return(content)
 }
 getThemes <- function() {
-  OmopViewerThemes() |>
+  omopViewerThemes() |>
     rlang::set_names() |>
     purrr::map(\(x) bslib::bs_theme(brand = validateTheme(x)))
 }

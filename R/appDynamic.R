@@ -161,7 +161,7 @@ createDynamicUi <- function(panels, summary, data, theme) {
         shinyWidgets::pickerInput(
           inputId = "configuration_theme",
           label = "Choose theme",
-          choices = OmopViewerThemes(),
+          choices = omopViewerThemes(),
           selected = theme,
           multiple = FALSE
         ),
