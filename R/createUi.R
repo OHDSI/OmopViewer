@@ -71,13 +71,13 @@ writeUiPanels <- function(panelDetails, updateButtons) {
   # create a list with all the panel content
   panelDetails |>
     purrr::imap(\(x, nm) {
+      ub <- updateButtonUi(updateButtons, nm)
       if (length(x$filters) > 0) {
-        sidebar <- writeSidebar(filters = x$filters, position = "left") |>
+        sidebar <- writeSidebar(filters = x$filters, position = "left", code = ub) |>
           paste0(",")
       } else {
-        sidebar <- ""
+        sidebar <- ub
       }
-      ub <- updateButtonUi(updateButtons, nm)
       outputPanels <- writeContent(content = x$content) |>
         paste0(collapse = ",\n")
       c(
@@ -87,7 +87,6 @@ writeUiPanels <- function(panelDetails, updateButtons) {
           writeIcon(x$icon),
           "bslib::layout_sidebar(
           {sidebar}
-          {ub}
             bslib::navset_card_tab(
               {outputPanels}
             )
@@ -131,9 +130,10 @@ writeIcon <- function(icon) {
   if (is.null(icon)) return(character())
   paste0('icon = shiny::icon("', icon, '")')
 }
-writeSidebar <- function(filters, position) {
+writeSidebar <- function(filters, position, code = "") {
   paste0(
     "sidebar = bslib::sidebar(\n",
+    code,
     paste0(writeButtons(filters), collapse = ",\n"),
     ",\nposition = '",
     position,
