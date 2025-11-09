@@ -120,7 +120,7 @@ updateButtonUi <- function(updateButtons, id) {
           label = \"Update content\",
           width = \"100%\"
         ),
-
+        uiOutput(outputId = \"update_message_", id, "\")
       )
     ),\n"
   )
@@ -199,14 +199,11 @@ writeDownload <- function(do) {
 }
 stickyStyle <- function() {
   "shiny::tags$style(HTML(
-    \"#main_sidebar .sticky-top-btn {
-      position: -webkit-sticky;
+    \".sticky-top-btn {
       position: sticky;
       top: 0;
       z-index: 20;
-      background-color: transparent;
-      padding-top: 0.5rem;
-      padding-bottom: 0.5rem;
+      background: var(--bs-body-bg);
     }\"
   ))"
 }

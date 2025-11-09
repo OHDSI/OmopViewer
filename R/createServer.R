@@ -78,9 +78,9 @@ writeUpdateDataMessage <- function(nm, filters) {
   update <- paste0(
   "shiny::observeEvent(updateButtons$", nm, ", {
   if (updateButtons$", nm, " == TRUE) {
-    output$update_message_", nm, " <- shiny::renderText(\"Filters have changed please consider to use the update content button!\")
+    output$update_message_", nm, " <- shiny::renderUI(updateMessage) # defined in functions.R
   } else {
-    output$update_message_", nm, " <- shiny::renderText(\"\")
+    output$update_message_", nm, " <- shiny::renderUI(NULL)
   }
   })\n"
   )

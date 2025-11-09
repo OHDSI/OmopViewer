@@ -389,3 +389,8 @@ renderInteractivePlot <- function(plt, interactive) {
     shiny::renderPlot(plt)
   }
 }
+updateMessage <- shiny::div(
+  style = "font-size: 8pt; color: var(--bs-danger);",
+  shiny::icon("circle-exclamation"),
+  "Filters have changed please consider to use the update content button!"
+)
