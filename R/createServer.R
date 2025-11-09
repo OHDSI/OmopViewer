@@ -44,7 +44,7 @@ createServer <- function(panelDetails, data, updateButtons) {
     updateButtonsStart,
     purrr::imap_chr(panelDetails, \(x, nm) {
       c(glue::glue("# {nm} -----"),
-        writeUpdateDataMessage(nm = nm, filters = x$filters),
+        writeUpdateDataMessage(nm = nm, filters = x$filters, updateButtons = updateButtons),
         writeFilterData(x = x, nm = nm, data = data, updateButtons = updateButtons),
         writeContentServer(content = x$content, data = data)
       ) |>
@@ -65,8 +65,8 @@ downloadRawDataServer <- function(data) {
     glue::glue(.open = "[", .close = "]") |>
     as.character()
 }
-writeUpdateDataMessage <- function(nm, filters) {
-  if (length(filters) == 0) return("")
+writeUpdateDataMessage <- function(nm, filters, updateButtons) {
+  if (length(filters) == 0 || !updateButtons) return("")
   buts <- paste0(nm, "_", names(filters)) |>
     purrr::map_chr(\(x) {
       paste0(
