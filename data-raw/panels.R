@@ -470,7 +470,8 @@ incidenceAttritionPanel <- list(
   title = "Incidence Attrition",
   icon = "layer-group",
   data = list(result_type = "incidence_attrition"),
-  automatic_filters = c("settings", "variable_name"),
+  automatic_filters = c("outcome_cohort_name", "strata", "settings", "variable_name"),
+  exclude_filters = "reason",
   filters = list(cdm_name = cdmFilter),
   content = list(
     tidy = tidyContent,
@@ -518,7 +519,8 @@ prevalenceAttritionPanel <- list(
   title = "Prevalence Attrition",
   icon = "layer-group",
   data = list(result_type = "prevalence_attrition"),
-  automatic_filters = c("settings", "variable_name"),
+  automatic_filters = c("outcome_cohort_name", "strata", "settings", "variable_name"),
+  exclude_filters = "reason",
   filters = list(cdm_name = cdmFilter),
   content = list(
     tidy = tidyContent,
