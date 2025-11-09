@@ -89,8 +89,13 @@ exportStaticApp <- function(result,
 
   # create ui
   ui <- uiStatic(
-    logo, title, background, summary, theme, panelDetails, panelStructure,
-    updateButtons
+    logo = logo,
+    title = title,
+    background = background,
+    summary = summary,
+    panelDetails = panelDetails,
+    panelStructure = panelStructure,
+    updateButtons = updateButtons
   )
 
   # create server
@@ -106,6 +111,7 @@ exportStaticApp <- function(result,
   if (!is.null(background)) {
     writeLines(background, con = file.path(directory, "background.md"))
   }
+  yaml::write_yaml(x = theme, file = file.path(directory, "_brand.yml"))
   writeLines(ui, con = file.path(directory, "ui.R"))
   writeLines(server, con = file.path(directory, "server.R"))
   writeLines(global, con = file.path(directory, "global.R"))

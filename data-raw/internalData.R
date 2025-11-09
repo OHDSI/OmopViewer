@@ -56,11 +56,13 @@ omopViewerGlobal <- c(
   styleCode()
 
 # logos ----
-# TO ADD NEW LOGOS YOU HAVE TO ADD THEM IN THIS LIST AND IN `inst/logos/`
+# TO ADD NEW LOGOS YOU HAVE TO ADD THEM IN `inst/logos/`
 # FOLLOW THIS NAMING: '{keyword}_logo.svg'
 # NOTE IT IS NOT CASE SENSITIVE
-logoKeywords <- c("hds", "ohdsi") |>
-  stringr::str_to_lower()
+logoKeywords <- list.files(path = system.file("logos", package = "OmopViewer")) |>
+  stringr::str_to_lower() |>
+  purrr::keep(\(x) stringr::str_ends(string = x, pattern = "_logo.svg")) |>
+  stringr::str_replace_all(pattern = "_logo.svg$", replacement = "")
 
 # background keywords ----
 # IT HAS TO BE EDITED HERE AND IN `functions.R`!!
@@ -69,26 +71,6 @@ backgroundKeywords <- dplyr::tribble(
   "header", "bslib::card_header", "https://rstudio.github.io/bslib//reference/card_body.html",
   "footer", "bslib::card_footer", "https://rstudio.github.io/bslib//reference/card_body.html"
 )
-
-# themes ----
-omopViewerThemes <- list(
-  default = 'bslib::bs_theme(bootswatch = "flatly")',
-  sad_robot = "bslib::bs_theme(
-    bootswatch = 'sandstone',
-    primary = '#605ca8',
-    bg = 'white',
-    fg = 'black',
-    success = '#3B9AB2',
-  )",
-  empty = 'bslib::bs_theme()',
-  ohdsi = 'bslib::bs_theme(
-    fg = "#002147", primary = "#040188", secondary = "#040188",
-    success = "#E5920D", warning = "#F3BD12", font_scale = NULL,
-    `enable-gradients` = TRUE, `enable-shadows` = TRUE, bootswatch = "flatly",
-    bg = "#fff"
-  )'
-)
-
 
 # default structure
 panelStructureDefaults <- list(
@@ -120,6 +102,6 @@ panelStructureDefaults <- list(
 # add internal data ----
 usethis::use_data(
   omopViewerProj, omopViewerGlobal, omopViewerPreprocess, logoKeywords,
-  backgroundKeywords, omopViewerThemes, panelStructureDefaults,
+  backgroundKeywords, panelStructureDefaults,
   overwrite = TRUE, internal = TRUE
 )

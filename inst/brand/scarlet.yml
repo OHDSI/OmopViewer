@@ -1,0 +1,37 @@
+color:
+  palette:
+    black: "#1A1A1A"
+    white: "#F9F9F9"
+    orange: "#FF6F20"
+    purple: "#A500B5"
+    pink: "#FF3D7F"
+    green: "#28A745"
+    blue: "#007BFF"
+    yellow: "#e5d547"
+    red: "#af2f3e"
+    dark-red: "#701d29"
+    gray-light: "#f0f0f0"
+    gray: "#454955"
+    gray-dark: "#343A40"
+  foreground: black
+  background: white
+  primary: green
+  secondary: red
+  light: red
+  dark: pink
+
+typography:
+  fonts:
+    - family: Open Sans
+      source: google
+  base: Open Sans
+
+defaults:
+  bootstrap:
+    defaults:
+      enable-rounded: true
+      navbar-bg: $brand-red
+      card-cap-color: $brand-white
+      card-cap-bg: $brand-red !important
+      #bslib-sidebar-bg: "#343A40"
+      #https://rstudio.github.io/bslib/articles/bs5-variables/index.html

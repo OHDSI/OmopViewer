@@ -1,0 +1,6 @@
+theme:
+  bootswatch: sandstone
+  primary: "#605ca8"
+  success: "#3B9AB2"
+  background: "#ffffff"
+  foreground: "#000000"

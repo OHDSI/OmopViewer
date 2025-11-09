@@ -1,0 +1,8 @@
+color:
+  foreground: #212529
+  background: white
+  primary: #2c3e50
+defaults:
+  shiny:
+    theme:
+      preset: flatly

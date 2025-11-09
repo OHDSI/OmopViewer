@@ -1,0 +1,11 @@
+theme:
+  bootswatch: flatly
+  foreground: "#002147"
+  background: "#ffffff"
+  primary: "#040188"
+  secondary: "#040188"
+  success: "#E5920D"
+  warning: "#F3BD12"
+  enable-gradients: true
+  enable-shadows: true
+  font-scale: null
