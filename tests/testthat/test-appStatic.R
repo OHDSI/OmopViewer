@@ -180,20 +180,16 @@ test_that("panelStructure argument works", {
 
 test_that("theme", {
   # no theme
-  expect_identical(validateTheme(NULL), omopViewerThemes$default)
+  expect_identical(
+    bslib::bs_theme(brand = validateTheme(NULL)),
+    getThemes()[["default"]]
+  )
 
   # us a pre build theme
-  expect_identical(validateTheme("sad_robot"), omopViewerThemes$sad_robot)
-
-  # custom theme
-  theme <- "bslib::bs_theme(bootswatch = 'sandstone',
-    primary = '#605ca8',
-    bg = 'white',
-    fg = 'black',
-    success = '#3B9AB2',
-    base_font = bslib::font_google('Space Mono'),
-    code_font = bslib::font_google('Space Mono'))"
-  expect_identical(validateTheme(theme), theme)
+  expect_identical(
+    bslib::bs_theme(brand = validateTheme("sad_robot")),
+    getThemes()[["sad_robot"]]
+  )
 
   # not bslib call
   expect_error(validateTheme('bslib::accordion()'))

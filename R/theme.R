@@ -1,4 +1,18 @@
 
+#' List the available configured `OmopViewer` themes
+#'
+#' @return A character vector with the available `OmopViewer` themes.
+#' @export
+#'
+#' @examples
+#' library(OmopViewer)
+#'
+#' OmopViewerThemes()
+#'
+OmopViewerThemes <- function() {
+  unlist(availableThemes(), use.names = FALSE)
+}
+
 availableThemes <- function() {
   list(
     # visOmopResults themes
@@ -45,7 +59,7 @@ validateTheme <- function(theme, call = parent.frame()) {
 correctTheme <- function(content, theme) {
   file <- system.file("brand", "complement", paste0(theme, ".yml"), package = "OmopViewer")
   if (file.exists(file)) {
-    content <- modifyList(content, readBrand(file = file))
+    content <- utils::modifyList(content, readBrand(file = file))
   }
   content
 }
@@ -57,8 +71,7 @@ readBrand <- function(file = "_brand.yml") {
   return(content)
 }
 getThemes <- function() {
-  availableThemes() |>
-    unlist(use.names = FALSE) |>
+  OmopViewerThemes() |>
     rlang::set_names() |>
     purrr::map(\(x) bslib::bs_theme(brand = validateTheme(x)))
 }

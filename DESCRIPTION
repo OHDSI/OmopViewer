@@ -29,7 +29,7 @@ Description: Visualise results obtained from analysing data mapped to the
 License: Apache License (>= 2)
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 URL: https://ohdsi.github.io/OmopViewer/
 Depends: 
     R (>= 4.1)

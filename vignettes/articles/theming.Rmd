@@ -12,10 +12,23 @@ knitr::opts_chunk$set(
 )
 ```
 
-You can customise the shiny colours you can use the theme argument. The theme argument supports two types of inputs:
+Theming in `OmopViewer` shiny apps is done using [brand.yml](https://posit-dev.github.io/brand-yml/), that will rely on a `_brand.yml` file written in the root of your shiny project. That `_brand.yml` file customises your shiny app colour and also the tables and plots created using [visOmopresults](https://darwin-eu.github.io/visOmopResults/). The package has some predefined themes, some come from the `visOmopResults` package and some others defined here in `OmopViewer`.
 
-- Custom themes, see options below.
-- A `bslib::bs_theme()` call: `theme = 'bslib::bs_theme(primary = "orange", secondary = "blue")'`
+```{r, echo=FALSE}
+OmopViewer:::availableThemes() |>
+  purrr::map(dplyr::as_tibble) |>
+  dplyr::bind_rows(.id = "package") |>
+  dplyr::rename("Theme" = "value") |>
+  gt::gt(groupname_col = "package") |>
+  gt::tab_style(
+    style = list(
+      gt::cell_text(color = "white", weight = "bold"),
+      gt::cell_fill(color = "gray")
+    ), 
+    locations = gt::cells_row_groups()
+  ) |>
+  gt::tab_options(column_labels.hidden = TRUE)
+```
 
 ## Predefined themes
 
