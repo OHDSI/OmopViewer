@@ -84,7 +84,7 @@ exportStaticApp(result = result, directory = dir)
 #> ✔ Data processed: 3 panels idenfied: `summarise_omop_snapshot`,
 #>   `summarise_characteristics`, and `incidence`.
 #> ℹ Creating shiny from provided data
-#> ✔ Shiny created in: /tmp/RtmpzJxsUN/shiny
+#> ✔ Shiny created in: /tmp/RtmpU9ldnm/shiny
 ```
 
 Note that by default if executed in an interactive environment like *R
@@ -196,35 +196,35 @@ omopViewerPanels
 #> •  icon: magnifying-glass-arrow-right
 #> •  data: result_type: <orphan_code_use>
 #> •  filters: 1 filters + 4 automatic filters
-#> •  content: Tidy (DT); Table Orphan codes (gt)
+#> •  content: Table Orphan codes (reactable) (reactable); Table Orphan codes (gt) (gt)
 #> 
 #> $cohort_code_use
 #> Cohort code use (OmopViewer panel)
 #> •  icon: chart-column
 #> •  data: result_type: <cohort_code_use>
 #> •  filters: 1 filters + 4 automatic filters
-#> •  content: Tidy (DT); Table Cohort code use (gt)
+#> •  content: Table Cohort code use (reactable) (reactable); Table Cohort code use (gt) (gt)
 #> 
 #> $code_use
 #> Code use (OmopViewer panel)
 #> •  icon: chart-column
 #> •  data: result_type: <code_use>
 #> •  filters: 1 filters + 6 automatic filters
-#> •  content: Tidy (DT); Table Code use (gt)
+#> •  content: Table Code use (reactable) (reactable); Table Code use (gt) (gt)
 #> 
 #> $achilles_code_use
 #> Achilles code use (OmopViewer panel)
 #> •  icon: chart-column
 #> •  data: result_type: <achilles_code_use>
 #> •  filters: 1 filters + 6 automatic filters
-#> •  content: Tidy (DT); Table Achilles code use (gt)
+#> •  content: Table Achilles code use (reactable) (reactable); Table Achilles code use (gt) (gt)
 #> 
 #> $unmapped_codes
 #> Unmapped codes (OmopViewer panel)
 #> •  icon: chart-column
 #> •  data: result_type: <unmapped_codes>
 #> •  filters: 1 filters + 6 automatic filters
-#> •  content: Tidy (DT); Table Unmapped codes (gt)
+#> •  content: Table Unmapped codes (reactable) (reactable); Table Unmapped codes (gt) (gt)
 #> 
 #> $summarise_cohort_overlap
 #> Cohort Overlap (OmopViewer panel)
