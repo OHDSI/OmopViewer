@@ -7,9 +7,9 @@
 #' @examples
 #' library(OmopViewer)
 #'
-#' OmopViewerThemes()
+#' omopViewerThemes()
 #'
-OmopViewerThemes <- function() {
+omopViewerThemes <- function() {
   unlist(availableThemes(), use.names = FALSE)
 }
 
