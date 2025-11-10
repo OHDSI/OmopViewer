@@ -67,13 +67,13 @@ downloadRawDataServer <- function(data) {
 }
 writeUpdateDataMessage <- function(nm, filters, updateButtons) {
   if (length(filters) == 0 || !updateButtons) return("")
-  buts <- paste0(nm, "_", names(filters)) |>
-    purrr::map_chr(\(x) {
-      paste0(
-        "shiny::observeEvent(input$", x, ", {updateButtons$", nm,
-        " <- TRUE}, ignoreInit = TRUE)"
-      )
-    }) |>
+  inputs <- paste0(
+    "shiny::observe({updateButtons$", nm, " <- TRUE}) |>",
+    "shiny::bindEvent(",
+    c(paste0("input$", nm, "_", names(filters)), "ignoreInit = TRUE") |>
+      paste0(collapse = ",\n"),
+    ")"
+  ) |>
     paste0(collapse = "\n")
   update <- paste0(
   "shiny::observeEvent(updateButtons$", nm, ", {
@@ -89,7 +89,7 @@ writeUpdateDataMessage <- function(nm, filters, updateButtons) {
     " <- FALSE})"
   )
   paste0(
-    "## update message if filter is changed\n", buts, "\n",  update, silence,
+    "## update message if filter is changed\n", inputs, "\n",  update, silence,
     "\n"
   )
 }
