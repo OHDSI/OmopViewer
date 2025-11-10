@@ -1002,7 +1002,7 @@ observationPeriodPanel <- list(
           choices = c(
             "Number subjects",
             "Records per person",
-            "Duration",
+            "Duration in days",
             "Days to next observation period"
           ),
           selected = c("Number subjects"),
