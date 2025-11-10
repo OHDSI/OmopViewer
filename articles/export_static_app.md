@@ -84,7 +84,7 @@ exportStaticApp(result = result, directory = dir)
 #> ✔ Data processed: 3 panels idenfied: `summarise_omop_snapshot`,
 #>   `summarise_characteristics`, and `incidence`.
 #> ℹ Creating shiny from provided data
-#> ✔ Shiny created in: /tmp/RtmpLt2M7N/shiny
+#> ✔ Shiny created in: /tmp/RtmpPhRzc5/shiny
 ```
 
 Note that by default if executed in an interactive environment like *R
@@ -140,21 +140,21 @@ omopViewerPanels
 #> •  icon: clipboard-list
 #> •  data: result_type: <summarise_omop_snapshot>
 #> •  filters: 1 filters + 1 automatic filters
-#> •  content: Tidy (DT); Table Snapshot (gt)
+#> •  content: Table Snapshot (gt)
 #> 
 #> $summarise_observation_period
 #> Observation period (OmopViewer panel)
 #> •  icon: eye
 #> •  data: result_type: <summarise_observation_period>
 #> •  filters: 1 filters + 4 automatic filters
-#> •  content: Tidy (DT); Table Observation period (gt); Plot Observation period (ui)
+#> •  content: Table Observation period (gt); Plot Observation period (ui)
 #> 
 #> $summarise_clinical_records
 #> Clinical records (OmopViewer panel)
 #> •  icon: bars-staggered
 #> •  data: result_type: <summarise_clinical_records>
 #> •  filters: 1 filters + 6 automatic filters
-#> •  content: Tidy (DT); Table Clinical records (gt)
+#> •  content: Table Clinical records (gt)
 #> 
 #> $summarise_record_count
 #> Record count (OmopViewer panel)
@@ -168,7 +168,7 @@ omopViewerPanels
 #> •  icon: circle-exclamation
 #> •  data: result_type: <summarise_missing_data>
 #> •  filters: 1 filters + 6 automatic filters
-#> •  content: Tidy (DT); Table Missing data (gt)
+#> •  content: Table Missing data (gt)
 #> 
 #> $summarise_in_observation
 #> In Observation (OmopViewer panel)
@@ -231,35 +231,35 @@ omopViewerPanels
 #> •  icon: circle-half-stroke
 #> •  data: result_type: <summarise_cohort_overlap>
 #> •  filters: 1 filters + 5 automatic filters
-#> •  content: Tidy (DT); Table Overlap (gt); Plot Overlap (ui)
+#> •  content: Table Overlap (gt); Plot Overlap (ui)
 #> 
 #> $summarise_cohort_count
 #> Cohort Count (OmopViewer panel)
 #> •  icon: users
 #> •  data: result_type: <summarise_cohort_count>
 #> •  filters: 1 filters + 4 automatic filters
-#> •  content: Tidy (DT); Table Counts (gt); Plot Counts (ui)
+#> •  content: Table Counts (gt); Plot Counts (ui)
 #> 
 #> $summarise_cohort_attrition
 #> Cohort Attrition (OmopViewer panel)
 #> •  icon: layer-group
 #> •  data: result_type: <summarise_cohort_attrition>
 #> •  filters: 1 filters + 2 automatic filters
-#> •  content: Tidy (DT); Table Attrition (gt); Diagram (grViz)
+#> •  content: Table Attrition (gt); Diagram (grViz)
 #> 
 #> $summarise_cohort_timing
 #> Cohort Timing (OmopViewer panel)
 #> •  icon: chart-simple
 #> •  data: result_type: <summarise_cohort_timing>
 #> •  filters: 1 filters + 2 automatic filters
-#> •  content: Tidy (DT); Table Timing (gt); Plot Timing (ui)
+#> •  content: Table Timing (gt); Plot Timing (ui)
 #> 
 #> $summarise_characteristics
 #> Cohort Characteristics (OmopViewer panel)
 #> •  icon: users-gear
 #> •  data: result_type: <summarise_characteristics>
 #> •  filters: 1 filters + 4 automatic filters
-#> •  content: Tidy (DT); Table Characteristics (gt); Plot Characteristics (ui)
+#> •  content: Table Characteristics (gt); Plot Characteristics (ui)
 #> 
 #> $summarise_large_scale_characteristics
 #> Large Scale Characteristics (OmopViewer panel)
@@ -273,70 +273,70 @@ omopViewerPanels
 #> •  icon: chart-line
 #> •  data: result_type: <incidence>
 #> •  filters: 1 filters + 6 automatic filters
-#> •  content: Tidy (DT); Table Incidence (gt); Plot Incidence (ui); Plot population (ui)
+#> •  content: Table Incidence (gt); Plot Incidence (ui); Plot population (ui)
 #> 
 #> $incidence_attrition
 #> Incidence Attrition (OmopViewer panel)
 #> •  icon: layer-group
 #> •  data: result_type: <incidence_attrition>
 #> •  filters: 1 filters + 4 automatic filters
-#> •  content: Tidy (DT); Table Incidence Attrition (gt)
+#> •  content: Table Incidence Attrition (gt)
 #> 
 #> $prevalence
 #> Prevalence (OmopViewer panel)
 #> •  icon: chart-column
 #> •  data: result_type: <prevalence>
 #> •  filters: 1 filters + 6 automatic filters
-#> •  content: Tidy (DT); Table Prevalence (gt); Plot Prevalence (ui); Plot population (ui)
+#> •  content: Table Prevalence (gt); Plot Prevalence (ui); Plot population (ui)
 #> 
 #> $prevalence_attrition
 #> Prevalence Attrition (OmopViewer panel)
 #> •  icon: layer-group
 #> •  data: result_type: <prevalence_attrition>
 #> •  filters: 1 filters + 4 automatic filters
-#> •  content: Tidy (DT); Table Prevalence Attrition (gt)
+#> •  content: Table Prevalence Attrition (gt)
 #> 
 #> $summarise_dose_coverage
 #> Dose coverage (OmopViewer panel)
 #> •  icon: pills
 #> •  data: result_type: <summarise_dose_coverage>
 #> •  filters: 1 filters + 6 automatic filters
-#> •  content: Tidy (DT); Table Dose coverage (gt)
+#> •  content: Table Dose coverage (gt)
 #> 
 #> $summarise_proportion_of_patients_covered
 #> Proportion of patients covered (OmopViewer panel)
 #> •  icon: chart-gantt
 #> •  data: result_type: <summarise_proportion_of_patients_covered>
 #> •  filters: 1 filters + 3 automatic filters
-#> •  content: Tidy (DT); Table PPC (gt); Plot PPC (ui)
+#> •  content: Table PPC (gt); Plot PPC (ui)
 #> 
 #> $summarise_drug_restart
 #> Drug Restart (OmopViewer panel)
 #> •  icon: chart-gantt
 #> •  data: result_type: <summarise_drug_restart>
 #> •  filters: 1 filters + 3 automatic filters
-#> •  content: Tidy (DT); Table Drug Restart (gt); Plot Drug Restart (ui)
+#> •  content: Table Drug Restart (gt); Plot Drug Restart (ui)
 #> 
 #> $summarise_drug_utilisation
 #> Drug Utilisation (OmopViewer panel)
 #> •  icon: capsules
 #> •  data: result_type: <summarise_drug_utilisation>
 #> •  filters: 1 filters + 6 automatic filters
-#> •  content: Tidy (DT); Table Drug Utilisation (gt); Plot Drug Utilisation (ui)
+#> •  content: Table Drug Utilisation (gt); Plot Drug Utilisation (ui)
 #> 
 #> $summarise_indication
 #> Indication (OmopViewer panel)
 #> •  icon: disease
 #> •  data: result_type: <summarise_indication>
 #> •  filters: 1 filters + 7 automatic filters
-#> •  content: Tidy (DT); Table Indication (gt); Plot Indication (ui)
+#> •  content: Table Indication (gt); Plot Indication (ui)
 #> 
 #> $summarise_treatment
 #> Treatments (OmopViewer panel)
 #> •  icon: disease
 #> •  data: result_type: <summarise_treatment>
 #> •  filters: 1 filters + 7 automatic filters
-#> •  content: Tidy (DT); Table Treatments (gt); Plot Treatment (ui)
+#> •  content: Table Treatments (gt); Plot Treatment (ui)
 #> 
 #> $default
 #> <result_type> (OmopViewer panel)
@@ -361,21 +361,21 @@ panelDetailsFromResult(result = result)
 #> •  icon: clipboard-list
 #> •  data: result_type: <summarise_omop_snapshot>
 #> •  filters: 1 filters + 1 automatic filters
-#> •  content: Tidy (DT); Table Snapshot (gt)
+#> •  content: Table Snapshot (gt)
 #> 
 #> $summarise_characteristics
 #> Cohort Characteristics (OmopViewer panel)
 #> •  icon: users-gear
 #> •  data: result_type: <summarise_characteristics>
 #> •  filters: 1 filters + 4 automatic filters
-#> •  content: Tidy (DT); Table Characteristics (gt); Plot Characteristics (ui)
+#> •  content: Table Characteristics (gt); Plot Characteristics (ui)
 #> 
 #> $incidence
 #> Incidence (OmopViewer panel)
 #> •  icon: chart-line
 #> •  data: result_type: <incidence>
 #> •  filters: 1 filters + 6 automatic filters
-#> •  content: Tidy (DT); Table Incidence (gt); Plot Incidence (ui); Plot population (ui)
+#> •  content: Table Incidence (gt); Plot Incidence (ui); Plot population (ui)
 ```
 
 ### Understanding Panel Details (panelDetails)

@@ -28,5 +28,5 @@ getPanel("incidence")
 #> •  icon: chart-line
 #> •  data: result_type: <incidence>
 #> •  filters: 1 filters + 6 automatic filters
-#> •  content: Tidy (DT); Table Incidence (gt); Plot Incidence (ui); Plot population (ui)
+#> •  content: Table Incidence (gt); Plot Incidence (ui); Plot population (ui)
 ```

@@ -36,8 +36,7 @@ str(omopViewerPanels$summarise_omop_snapshot, max.level = 2)
 #>  $ automatic_filters: chr "variable_name"
 #>  $ filters          :List of 1
 #>   ..$ cdm_name:List of 7
-#>  $ content          :List of 2
-#>   ..$ tidy :List of 6
+#>  $ content          :List of 1
 #>   ..$ table:List of 5
 #>  - attr(*, "class")= chr "omopviewer_panel"
 ```
