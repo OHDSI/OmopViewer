@@ -160,7 +160,6 @@ incidencePanel <- list(
   exclude_filters = c("denominator_cohort_name", "incidence_end_date"),
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
     table = list(
       title = "Table Incidence",
       output_type = "gt",
@@ -321,7 +320,6 @@ prevalencePanel <- list(
   exclude_filters = "denominator_cohort_name",
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
     table = list(
       title = "Table Prevalence",
       output_type = "gt",
@@ -474,7 +472,6 @@ incidenceAttritionPanel <- list(
   exclude_filters = "reason",
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
     table = list(
       title = "Table Incidence Attrition",
       output_type = "gt",
@@ -523,7 +520,6 @@ prevalenceAttritionPanel <- list(
   exclude_filters = "reason",
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
     table = list(
       title = "Table Prevalence Attrition",
       output_type = "gt",
@@ -577,7 +573,6 @@ cohortOverlapPanel <- list(
   ),
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
     table = list(
       title = "Table Overlap",
       output_type = "gt",
@@ -652,7 +647,6 @@ cohortCountPanel <- list(
   automatic_filters = c("group", "strata", "variable_name", "settings"),
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
     table = list(
       title = "Table Counts",
       output_type = "gt",
@@ -714,7 +708,6 @@ cohortAttritionPanel <- list(
   automatic_filters = c("cohort_name", "variable_name"),
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
     table = list(
       title = "Table Attrition",
       output_type = "gt",
@@ -774,7 +767,6 @@ cohortTimingPanel <- list(
   automatic_filters = c("group", "strata"),
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
     table = list(
       title = "Table Timing",
       output_type = "gt",
@@ -870,7 +862,6 @@ characteristicsPanel <- list(
   automatic_filters = c("cohort_name", "strata", "variable_name", "estimate_name"),
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
     table = list(
       title = "Table Characteristics",
       output_type = "gt",
@@ -945,7 +936,6 @@ snapshotPanel <- list(
   automatic_filters = c("variable_name"),
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
     table = list(
       title = "Table Snapshot",
       output_type = "gt",
@@ -969,7 +959,6 @@ observationPeriodPanel <- list(
   ),
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
     table = list(
       title = "Table Observation period",
       output_type = "gt",
@@ -1049,7 +1038,6 @@ clinicalRecordsPanel <- list(
   ),
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
     table = list(
       title = "Table Clinical records",
       output_type = "gt",
@@ -1138,7 +1126,6 @@ missingPanel <- list(
   ),
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
     table = list(
       title = "Table Missing data",
       output_type = "gt",
@@ -1622,7 +1609,6 @@ doseCoveragePanel <- list(
   ),
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
     table = list(
       title = "Table Dose coverage",
       output_type = "gt",
@@ -1651,7 +1637,6 @@ ppcPanel <- list(
   automatic_filters = c("cohort_name", "strata", "estimate_name"),
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
     table = list(
       title = "Table PPC",
       output_type = "gt",
@@ -1719,7 +1704,6 @@ drugRestartPanel <- list(
   automatic_filters = c("cohort_name", "strata", "estimate_name"),
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
     table = list(
       title = "Table Drug Restart",
       output_type = "gt",
@@ -1809,7 +1793,6 @@ dusPanel <- list(
   ),
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
     table = list(
       title = "Table Drug Utilisation",
       output_type = "gt",
@@ -1906,7 +1889,6 @@ indicationPanel <- list(
   ),
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
     table = list(
       title = "Table Indication",
       output_type = "gt",
@@ -1979,7 +1961,6 @@ treatmentPanel <- list(
   ),
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
     table = list(
       title = "Table Treatments",
       output_type = "gt",
