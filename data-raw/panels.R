@@ -1237,14 +1237,18 @@ trendPanel <- list(
   ),
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
     table = list(
       title = "Table Trends",
-      output_type = "gt",
+      output_type = "reactable",
       reactive = "<filtered_data> |>
-      OmopSketch::tableTrend()",
+      OmopSketch::tableTrend(type = 'reactable')",
       render = "<reactive_data>",
-      download = downloadGtTable("table_trend")
+      download = list(
+        label = "Download csv",
+        render = "<reactive_data> |>
+    readr::write_csv(file = file)",
+        filename = "trends.csv"
+      )
     ),
     plot = list(
       title = "Plot Trends",
