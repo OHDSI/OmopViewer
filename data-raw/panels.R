@@ -931,7 +931,7 @@ characteristicsPanel <- list(
 ## summarise omop snapshot ----
 snapshotPanel <- list(
   title = "Snapshot",
-  icon = "clipboard-list",
+  icon = "camera",
   data = list(result_type = "summarise_omop_snapshot"),
   automatic_filters = c("variable_name"),
   filters = list(cdm_name = cdmFilter),
@@ -948,7 +948,7 @@ snapshotPanel <- list(
 )
 ## summarise observation period ----
 observationPeriodPanel <- list(
-  title = "Observation period",
+  title = "Observation period Summary",
   icon = "eye",
   data = list(result_type = "summarise_observation_period"),
   automatic_filters = c(
@@ -1025,7 +1025,7 @@ observationPeriodPanel <- list(
 )
 ## summarise clinical records ----
 clinicalRecordsPanel <- list(
-  title = "Clinical records",
+  title = "Clinical Tables Summary",
   icon = "bars-staggered",
   data = list(result_type = "summarise_clinical_records"),
   automatic_filters = c(
@@ -1045,6 +1045,30 @@ clinicalRecordsPanel <- list(
       OmopSketch::tableClinicalRecords()",
       render = "<reactive_data>",
       download = downloadGtTable("table_clinical_records")
+    )
+  )
+)
+## summarise person ----
+personPanel <- list(
+  title = "Person Table Summary",
+  icon = "person",
+  data = list(result_type = "summarise_table"),
+  automatic_filters = c(
+    "group",
+    "strata",
+    "settings",
+    "variable_name",
+    "estimate_name"
+  ),
+  filters = list(cdm_name = cdmFilter),
+  content = list(
+    table = list(
+      title = "Table Person",
+      output_type = "gt",
+      reactive = "<filtered_data> |>
+      OmopSketch::tablePerson()",
+      render = "<reactive_data>",
+      download = downloadGtTable("table_person")
     )
   )
 )
@@ -1206,7 +1230,6 @@ trendPanel <- list(
   data = list(result_type = "summarise_trend"),
   automatic_filters = c(
     "group",
-    "strata",
     "strata",
     "settings",
     "variable_name",
@@ -2243,6 +2266,7 @@ omopViewerPanels <- list(
   summarise_in_observation = inObservationPanel,
   summarise_trend = trendPanel,
   summarise_concept_id_counts = conceptCountsPanel,
+  summarise_person = personPanel,
   # CodelistGenerator
   orphan_code_use = orphanCodesPanel,
   cohort_code_use = cohortCodeUsePanel,
