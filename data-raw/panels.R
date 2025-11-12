@@ -1052,7 +1052,7 @@ clinicalRecordsPanel <- list(
 personPanel <- list(
   title = "Person Table Summary",
   icon = "person",
-  data = list(result_type = "summarise_table"),
+  data = list(result_type = "summarise_person"),
   automatic_filters = c(
     "group",
     "strata",
