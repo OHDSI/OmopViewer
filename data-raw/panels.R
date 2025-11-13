@@ -1087,9 +1087,7 @@ personPanel <- list(
       output_type = "ui",
       reactive = "<filtered_data> |>
       OmopSketch::plotPerson(
-      variableName = input$variable,
-      facet = input$facet,
-      colour = input$colour
+      variableName = input$variable
       )",
       render = "x <- <reactive_data>
       renderInteractivePlot(x, input$interactive)",
@@ -1120,32 +1118,6 @@ personPanel <- list(
           ),
           selected = c("Number subjects"),
           multiple = FALSE
-        ),
-        facet = list(
-          button_type = "pickerInput",
-          label = "Facet",
-          choices = c(
-            "cdm_name",
-            "<group>",
-            "<strata>",
-            "<additional>",
-            "<settings>"
-          ),
-          selected = c("cdm_name"),
-          multiple = TRUE
-        ),
-        colour = list(
-          button_type = "pickerInput",
-          label = "Colour",
-          choices = c(
-            "cdm_name",
-            "<group>",
-            "<strata>",
-            "<additional>",
-            "<settings>"
-          ),
-          selected = c("cdm_name"),
-          multiple = TRUE
         )
       ),
       download = downloadPlot("plot_person.png")
