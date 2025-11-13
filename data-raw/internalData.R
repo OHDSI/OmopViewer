@@ -78,7 +78,7 @@ panelStructureDefaults <- list(
     "summarise_omop_snapshot", "summarise_observation_period",
     "summarise_clinical_records", "summarise_record_count",
     "summarise_missing_data", "summarise_in_observation",
-    "summarise_trend", "summarise_concept_id_counts"
+    "summarise_trend", "summarise_concept_id_counts", "summarise_person"
   ),
   CodelistGenerator = c(
     "orphan_code_use", "cohort_code_use", "code_use", "achilles_code_use",
