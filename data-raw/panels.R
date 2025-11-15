@@ -931,7 +931,7 @@ characteristicsPanel <- list(
 ## summarise omop snapshot ----
 snapshotPanel <- list(
   title = "Snapshot",
-  icon = "clipboard-list",
+  icon = "camera",
   data = list(result_type = "summarise_omop_snapshot"),
   automatic_filters = c("variable_name"),
   filters = list(cdm_name = cdmFilter),
@@ -948,7 +948,7 @@ snapshotPanel <- list(
 )
 ## summarise observation period ----
 observationPeriodPanel <- list(
-  title = "Observation period",
+  title = "Observation period Summary",
   icon = "eye",
   data = list(result_type = "summarise_observation_period"),
   automatic_filters = c(
@@ -1007,14 +1007,26 @@ observationPeriodPanel <- list(
         facet = list(
           button_type = "pickerInput",
           label = "Facet",
-          choices = c("cdm_name", "observation_period_ordinal"),
+          choices = c(
+            "cdm_name",
+            "<group>",
+            "<strata>",
+            "<additional>",
+            "<settings>"
+          ),
           selected = c("cdm_name"),
           multiple = TRUE
         ),
         colour = list(
           button_type = "pickerInput",
           label = "Colour",
-          choices = c("cdm_name", "observation_period_ordinal"),
+          choices =  c(
+            "cdm_name",
+            "<group>",
+            "<strata>",
+            "<additional>",
+            "<settings>"
+          ),
           selected = c("observation_period_ordinal"),
           multiple = TRUE
         )
@@ -1025,7 +1037,7 @@ observationPeriodPanel <- list(
 )
 ## summarise clinical records ----
 clinicalRecordsPanel <- list(
-  title = "Clinical records",
+  title = "Clinical Tables Summary",
   icon = "bars-staggered",
   data = list(result_type = "summarise_clinical_records"),
   automatic_filters = c(
@@ -1045,6 +1057,70 @@ clinicalRecordsPanel <- list(
       OmopSketch::tableClinicalRecords()",
       render = "<reactive_data>",
       download = downloadGtTable("table_clinical_records")
+    )
+  )
+)
+## summarise person ----
+personPanel <- list(
+  title = "Person Table Summary",
+  icon = "person",
+  data = list(result_type = "summarise_person"),
+  automatic_filters = c(
+    "group",
+    "strata",
+    "settings",
+    "variable_name",
+    "estimate_name"
+  ),
+  filters = list(cdm_name = cdmFilter),
+  content = list(
+    table = list(
+      title = "Table Person",
+      output_type = "gt",
+      reactive = "<filtered_data> |>
+      OmopSketch::tablePerson()",
+      render = "<reactive_data>",
+      download = downloadGtTable("table_person")
+    ),
+    plot = list(
+      title = "Plot Person",
+      output_type = "ui",
+      reactive = "<filtered_data> |>
+      OmopSketch::plotPerson(
+      variableName = input$variable
+      )",
+      render = "x <- <reactive_data>
+      renderInteractivePlot(x, input$interactive)",
+      filters = list(
+        interactive = list(
+          button_type = "materialSwitch",
+          label = "Interactive",
+          value = TRUE
+        ),
+        variable = list(
+          button_type = "pickerInput",
+          label = "Variable",
+          choices =  c(
+            "Number subjects",
+            "Number subjects not in observation",
+            "Sex",
+            "Sex source",
+            "Race",
+            "Race source",
+            "Ethnicity",
+            "Ethnicity source",
+            "Year of birth",
+            "Month of birth",
+            "Day of birth",
+            "Location",
+            "Provider",
+            "Care site"
+          ),
+          selected = c("Number subjects"),
+          multiple = FALSE
+        )
+      ),
+      download = downloadPlot("plot_person.png")
     )
   )
 )
@@ -1207,21 +1283,24 @@ trendPanel <- list(
   automatic_filters = c(
     "group",
     "strata",
-    "strata",
     "settings",
     "variable_name",
     "estimate_name"
   ),
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
     table = list(
       title = "Table Trends",
-      output_type = "gt",
+      output_type = "reactable",
       reactive = "<filtered_data> |>
-      OmopSketch::tableTrend()",
+      OmopSketch::tableTrend(type = 'reactable')",
       render = "<reactive_data>",
-      download = downloadGtTable("table_trend")
+      download = list(
+        label = "Download csv",
+        render = "<reactive_data> |>
+    readr::write_csv(file = file)",
+        filename = "trends.csv"
+      )
     ),
     plot = list(
       title = "Plot Trends",
@@ -2243,6 +2322,7 @@ omopViewerPanels <- list(
   summarise_in_observation = inObservationPanel,
   summarise_trend = trendPanel,
   summarise_concept_id_counts = conceptCountsPanel,
+  summarise_person = personPanel,
   # CodelistGenerator
   orphan_code_use = orphanCodesPanel,
   cohort_code_use = cohortCodeUsePanel,
