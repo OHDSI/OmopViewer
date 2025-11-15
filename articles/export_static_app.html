@@ -151,7 +151,7 @@ the app and the processed data (a <summarised_result> object):</summarised_resul
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Data processed: 3 panels idenfied: `summarise_omop_snapshot`,</span></span>
 <span><span class="co">#&gt;   `summarise_characteristics`, and `incidence`.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Creating shiny from provided data</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Shiny created in: <span style="color: #0000BB;">/tmp/RtmpbChNbO/shiny</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Shiny created in: <span style="color: #0000BB;">/tmp/RtmpX3iCdv/shiny</span></span></span></code></pre></div>
 <p>Note that by default if executed in an interactive environment like
 <em>R Studio</em> the project will be opened in a separated window. Use
 <code>open = FALSE</code> if you do not wish to open the shiny app after
@@ -197,25 +197,25 @@ by default <code>hds_logo.svg</code> and
 <p>The shiny generated contained a total of 3 panels, this was
 determined by the argument <code>panelDetails</code>. Each element in
 <code>panelDetails</code> will be used to create a different panel in
-the shiny app. The package contains in total 30 predefined panels:</p>
+the shiny app. The package contains in total 31 predefined panels:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">omopViewerPanels</span></span>
 <span><span class="co">#&gt; $summarise_omop_snapshot</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">Snapshot</span> (OmopViewer panel)</span></span>
-<span><span class="co">#&gt; • <span style="font-weight: bold;"> icon:</span> clipboard-list</span></span>
+<span><span class="co">#&gt; • <span style="font-weight: bold;"> icon:</span> camera</span></span>
 <span><span class="co">#&gt; • <span style="font-weight: bold;"> data:</span> result_type: &lt;summarise_omop_snapshot&gt;</span></span>
 <span><span class="co">#&gt; • <span style="font-weight: bold;"> filters:</span> 1 filters + 1 automatic filters</span></span>
 <span><span class="co">#&gt; • <span style="font-weight: bold;"> content:</span> <span style="color: #0000BB; font-weight: bold;">Table Snapshot</span> (<span style="font-style: italic;">gt</span>)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $summarise_observation_period</span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">Observation period</span> (OmopViewer panel)</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">Observation period Summary</span> (OmopViewer panel)</span></span>
 <span><span class="co">#&gt; • <span style="font-weight: bold;"> icon:</span> eye</span></span>
 <span><span class="co">#&gt; • <span style="font-weight: bold;"> data:</span> result_type: &lt;summarise_observation_period&gt;</span></span>
 <span><span class="co">#&gt; • <span style="font-weight: bold;"> filters:</span> 1 filters + 4 automatic filters</span></span>
 <span><span class="co">#&gt; • <span style="font-weight: bold;"> content:</span> <span style="color: #0000BB; font-weight: bold;">Table Observation period</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB; font-weight: bold;">Plot Observation period</span> (<span style="font-style: italic;">ui</span>)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $summarise_clinical_records</span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">Clinical records</span> (OmopViewer panel)</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">Clinical Tables Summary</span> (OmopViewer panel)</span></span>
 <span><span class="co">#&gt; • <span style="font-weight: bold;"> icon:</span> bars-staggered</span></span>
 <span><span class="co">#&gt; • <span style="font-weight: bold;"> data:</span> result_type: &lt;summarise_clinical_records&gt;</span></span>
 <span><span class="co">#&gt; • <span style="font-weight: bold;"> filters:</span> 1 filters + 6 automatic filters</span></span>
@@ -246,8 +246,8 @@ the shiny app. The package contains in total 30 predefined panels:</p>
 <span><span class="co">#&gt; <span style="color: #0000BB;">Trends</span> (OmopViewer panel)</span></span>
 <span><span class="co">#&gt; • <span style="font-weight: bold;"> icon:</span> arrow-trend-up</span></span>
 <span><span class="co">#&gt; • <span style="font-weight: bold;"> data:</span> result_type: &lt;summarise_trend&gt;</span></span>
-<span><span class="co">#&gt; • <span style="font-weight: bold;"> filters:</span> 1 filters + 6 automatic filters</span></span>
-<span><span class="co">#&gt; • <span style="font-weight: bold;"> content:</span> <span style="color: #0000BB; font-weight: bold;">Tidy</span> (<span style="font-style: italic;">DT</span>); <span style="color: #0000BB; font-weight: bold;">Table Trends</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB; font-weight: bold;">Plot Trends</span> (<span style="font-style: italic;">ui</span>)</span></span>
+<span><span class="co">#&gt; • <span style="font-weight: bold;"> filters:</span> 1 filters + 5 automatic filters</span></span>
+<span><span class="co">#&gt; • <span style="font-weight: bold;"> content:</span> <span style="color: #0000BB; font-weight: bold;">Table Trends</span> (<span style="font-style: italic;">reactable</span>); <span style="color: #0000BB; font-weight: bold;">Plot Trends</span> (<span style="font-style: italic;">ui</span>)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $summarise_concept_id_counts</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">Concept Counts</span> (OmopViewer panel)</span></span>
@@ -255,6 +255,13 @@ the shiny app. The package contains in total 30 predefined panels:</p>
 <span><span class="co">#&gt; • <span style="font-weight: bold;"> data:</span> result_type: &lt;summarise_concept_id_counts&gt;</span></span>
 <span><span class="co">#&gt; • <span style="font-weight: bold;"> filters:</span> 1 filters + 6 automatic filters</span></span>
 <span><span class="co">#&gt; • <span style="font-weight: bold;"> content:</span> <span style="color: #0000BB; font-weight: bold;">Table Concept Counts</span> (<span style="font-style: italic;">reactable</span>); <span style="color: #0000BB; font-weight: bold;">Top Concept Counts</span> (<span style="font-style: italic;">ui</span>)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $summarise_person</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">Person Table Summary</span> (OmopViewer panel)</span></span>
+<span><span class="co">#&gt; • <span style="font-weight: bold;"> icon:</span> person</span></span>
+<span><span class="co">#&gt; • <span style="font-weight: bold;"> data:</span> result_type: &lt;summarise_person&gt;</span></span>
+<span><span class="co">#&gt; • <span style="font-weight: bold;"> filters:</span> 1 filters + 5 automatic filters</span></span>
+<span><span class="co">#&gt; • <span style="font-weight: bold;"> content:</span> <span style="color: #0000BB; font-weight: bold;">Table Person</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB; font-weight: bold;">Plot Person</span> (<span style="font-style: italic;">ui</span>)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $orphan_code_use</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">Orphan codes</span> (OmopViewer panel)</span></span>
@@ -420,7 +427,7 @@ case we have pre-build panels that are:</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/panelDetailsFromResult.html">panelDetailsFromResult</a></span><span class="op">(</span>result <span class="op">=</span> <span class="va">result</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $summarise_omop_snapshot</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">Snapshot</span> (OmopViewer panel)</span></span>
-<span><span class="co">#&gt; • <span style="font-weight: bold;"> icon:</span> clipboard-list</span></span>
+<span><span class="co">#&gt; • <span style="font-weight: bold;"> icon:</span> camera</span></span>
 <span><span class="co">#&gt; • <span style="font-weight: bold;"> data:</span> result_type: &lt;summarise_omop_snapshot&gt;</span></span>
 <span><span class="co">#&gt; • <span style="font-weight: bold;"> filters:</span> 1 filters + 1 automatic filters</span></span>
 <span><span class="co">#&gt; • <span style="font-weight: bold;"> content:</span> <span style="color: #0000BB; font-weight: bold;">Table Snapshot</span> (<span style="font-style: italic;">gt</span>)</span></span>

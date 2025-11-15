@@ -84,7 +84,7 @@ exportStaticApp(result = result, directory = dir)
 #> ✔ Data processed: 3 panels idenfied: `summarise_omop_snapshot`,
 #>   `summarise_characteristics`, and `incidence`.
 #> ℹ Creating shiny from provided data
-#> ✔ Shiny created in: /tmp/RtmpbChNbO/shiny
+#> ✔ Shiny created in: /tmp/RtmpX3iCdv/shiny
 ```
 
 Note that by default if executed in an interactive environment like *R
@@ -131,26 +131,26 @@ cat(list.files(path = here::here(dir, "shiny"), recursive = TRUE), sep = "\n")
 The shiny generated contained a total of 3 panels, this was determined
 by the argument `panelDetails`. Each element in `panelDetails` will be
 used to create a different panel in the shiny app. The package contains
-in total 30 predefined panels:
+in total 31 predefined panels:
 
 ``` r
 omopViewerPanels
 #> $summarise_omop_snapshot
 #> Snapshot (OmopViewer panel)
-#> •  icon: clipboard-list
+#> •  icon: camera
 #> •  data: result_type: <summarise_omop_snapshot>
 #> •  filters: 1 filters + 1 automatic filters
 #> •  content: Table Snapshot (gt)
 #> 
 #> $summarise_observation_period
-#> Observation period (OmopViewer panel)
+#> Observation period Summary (OmopViewer panel)
 #> •  icon: eye
 #> •  data: result_type: <summarise_observation_period>
 #> •  filters: 1 filters + 4 automatic filters
 #> •  content: Table Observation period (gt); Plot Observation period (ui)
 #> 
 #> $summarise_clinical_records
-#> Clinical records (OmopViewer panel)
+#> Clinical Tables Summary (OmopViewer panel)
 #> •  icon: bars-staggered
 #> •  data: result_type: <summarise_clinical_records>
 #> •  filters: 1 filters + 6 automatic filters
@@ -181,8 +181,8 @@ omopViewerPanels
 #> Trends (OmopViewer panel)
 #> •  icon: arrow-trend-up
 #> •  data: result_type: <summarise_trend>
-#> •  filters: 1 filters + 6 automatic filters
-#> •  content: Tidy (DT); Table Trends (gt); Plot Trends (ui)
+#> •  filters: 1 filters + 5 automatic filters
+#> •  content: Table Trends (reactable); Plot Trends (ui)
 #> 
 #> $summarise_concept_id_counts
 #> Concept Counts (OmopViewer panel)
@@ -190,6 +190,13 @@ omopViewerPanels
 #> •  data: result_type: <summarise_concept_id_counts>
 #> •  filters: 1 filters + 6 automatic filters
 #> •  content: Table Concept Counts (reactable); Top Concept Counts (ui)
+#> 
+#> $summarise_person
+#> Person Table Summary (OmopViewer panel)
+#> •  icon: person
+#> •  data: result_type: <summarise_person>
+#> •  filters: 1 filters + 5 automatic filters
+#> •  content: Table Person (gt); Plot Person (ui)
 #> 
 #> $orphan_code_use
 #> Orphan codes (OmopViewer panel)
@@ -358,7 +365,7 @@ pre-build panels that are:
 panelDetailsFromResult(result = result)
 #> $summarise_omop_snapshot
 #> Snapshot (OmopViewer panel)
-#> •  icon: clipboard-list
+#> •  icon: camera
 #> •  data: result_type: <summarise_omop_snapshot>
 #> •  filters: 1 filters + 1 automatic filters
 #> •  content: Table Snapshot (gt)

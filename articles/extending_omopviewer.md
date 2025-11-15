@@ -30,7 +30,7 @@ already seen this structure in action. Here’s a quick recap:
 str(omopViewerPanels$summarise_omop_snapshot, max.level = 2)
 #> List of 6
 #>  $ title            : chr "Snapshot"
-#>  $ icon             : chr "clipboard-list"
+#>  $ icon             : chr "camera"
 #>  $ data             :List of 1
 #>   ..$ result_type: chr "summarise_omop_snapshot"
 #>  $ automatic_filters: chr "variable_name"

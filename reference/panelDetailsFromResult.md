@@ -28,20 +28,20 @@ A list of `omop_viewer_panel` objects.
 panelDetailsFromResult(omopViewerResults)
 #> $summarise_omop_snapshot
 #> Snapshot (OmopViewer panel)
-#> •  icon: clipboard-list
+#> •  icon: camera
 #> •  data: result_type: <summarise_omop_snapshot>
 #> •  filters: 1 filters + 1 automatic filters
 #> •  content: Table Snapshot (gt)
 #> 
 #> $summarise_observation_period
-#> Observation period (OmopViewer panel)
+#> Observation period Summary (OmopViewer panel)
 #> •  icon: eye
 #> •  data: result_type: <summarise_observation_period>
 #> •  filters: 1 filters + 4 automatic filters
 #> •  content: Table Observation period (gt); Plot Observation period (ui)
 #> 
 #> $summarise_clinical_records
-#> Clinical records (OmopViewer panel)
+#> Clinical Tables Summary (OmopViewer panel)
 #> •  icon: bars-staggered
 #> •  data: result_type: <summarise_clinical_records>
 #> •  filters: 1 filters + 6 automatic filters
