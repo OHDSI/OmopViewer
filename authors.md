@@ -22,13 +22,13 @@
 ## Citation
 
 Català M, Guo Y (2025). *OmopViewer: Visualise OMOP Results using
-'shiny' Applications*. R package version 0.4.0,
+'shiny' Applications*. R package version 0.5.0,
 <https://ohdsi.github.io/OmopViewer/>.
 
     @Manual{,
       title = {OmopViewer: Visualise OMOP Results using 'shiny' Applications},
       author = {Martí Català and Yuchen Guo},
       year = {2025},
-      note = {R package version 0.4.0},
+      note = {R package version 0.5.0},
       url = {https://ohdsi.github.io/OmopViewer/},
     }
