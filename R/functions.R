@@ -349,16 +349,16 @@ filterResult <- function(result, filt) {
 }
 getValues <- function(result, resultList) {
   resultList |>
+    prepareResult(resultList = resultList) |>
     purrr::imap(\(x, nm) {
-      res <- filterResult(result, x)
-      values <- res |>
+      values <- x |>
         dplyr::select(!c("estimate_type", "estimate_value")) |>
         dplyr::distinct() |>
         omopgenerics::splitAll() |>
         dplyr::select(!"result_id") |>
         as.list() |>
         purrr::map(\(x) sort(unique(x)))
-      valuesSettings <- omopgenerics::settings(res) |>
+      valuesSettings <- omopgenerics::settings(x) |>
         dplyr::select(!dplyr::any_of(c(
           "result_id", "result_type", "package_name", "package_version",
           "group", "strata", "additional", "min_cell_count"
