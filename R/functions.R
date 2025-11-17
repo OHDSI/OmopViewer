@@ -320,7 +320,22 @@ tidyDT <- function(x,
   )
 }
 prepareResult <- function(result, resultList) {
-  purrr::map(resultList, \(x) filterResult(result, x))
+  resultList |>
+    purrr::map(\(x) {
+      subresult <- filterResult(result = result, x = x)
+      # correct NAs in settings
+      set <- omopgenerics::settings(x = subresult)
+      cols <- omopgenerics::settingsColumns(result = subresult)
+      for (col in cols) {
+        nas <- all(is.na(unique(set[[col]])))
+        if (nas) {
+          set[[col]] <- NULL
+        } else {
+          set[[col]] <- dplyr::coalesce(set[[col]], "-NA-")
+        }
+      }
+      omopgenerics::newSummarisedResult(x = subresult, settings = set)
+    })
 }
 filterResult <- function(result, filt) {
   nms <- names(filt)
