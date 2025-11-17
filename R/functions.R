@@ -322,7 +322,7 @@ tidyDT <- function(x,
 prepareResult <- function(result, resultList) {
   resultList |>
     purrr::map(\(x) {
-      subresult <- filterResult(result = result, x = x)
+      subresult <- filterResult(result = result, filt = x)
       # correct NAs in settings
       set <- omopgenerics::settings(x = subresult)
       cols <- omopgenerics::settingsColumns(result = subresult)
