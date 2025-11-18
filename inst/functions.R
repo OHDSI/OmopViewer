@@ -348,8 +348,7 @@ filterResult <- function(result, filt) {
   return(result)
 }
 getValues <- function(result, resultList) {
-  resultList |>
-    prepareResult(resultList = resultList) |>
+  prepareResult(result = result, resultList = resultList) |>
     purrr::imap(\(x, nm) {
       values <- x |>
         dplyr::select(!c("estimate_type", "estimate_value")) |>
