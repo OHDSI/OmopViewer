@@ -30,7 +30,7 @@ illustration:
 ``` r
 # Inspect the structure of the sample data
 summary(omopViewerResults)
-#> A summarised_result object with 39307 rows, 96 different result_id, 1 different
+#> A summarised_result object with 39680 rows, 95 different result_id, 1 different
 #> cdm names, and 45 settings.
 #> CDM names: synthea-covid19-200k.
 #> Settings: result_type, package_name, package_version, group, strata,
@@ -59,7 +59,7 @@ result_type is one of “summarise_omop_snapshot”,
 
 ``` r
 summary(result)
-#> A summarised_result object with 1245 rows, 20 different result_id, 1 different
+#> A summarised_result object with 1254 rows, 20 different result_id, 1 different
 #> cdm names, and 20 settings.
 #> CDM names: synthea-covid19-200k.
 #> Settings: result_type, package_name, package_version, group, strata,
@@ -84,7 +84,7 @@ exportStaticApp(result = result, directory = dir)
 #> ✔ Data processed: 3 panels idenfied: `summarise_omop_snapshot`,
 #>   `summarise_characteristics`, and `incidence`.
 #> ℹ Creating shiny from provided data
-#> ✔ Shiny created in: /tmp/RtmpRVJDo2/shiny
+#> ✔ Shiny created in: /tmp/RtmpkRY9yR/shiny
 ```
 
 Note that by default if executed in an interactive environment like *R

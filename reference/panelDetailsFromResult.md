@@ -47,13 +47,6 @@ panelDetailsFromResult(omopViewerResults)
 #> •  filters: 1 filters + 6 automatic filters
 #> •  content: Table Clinical records (gt)
 #> 
-#> $summarise_record_count
-#> Record count (OmopViewer panel)
-#> •  icon: signal
-#> •  data: result_type: <summarise_record_count>
-#> •  filters: 1 filters + 6 automatic filters
-#> •  content: Tidy (DT); Plot record count (ui)
-#> 
 #> $summarise_missing_data
 #> Missing data (OmopViewer panel)
 #> •  icon: circle-exclamation
@@ -61,12 +54,12 @@ panelDetailsFromResult(omopViewerResults)
 #> •  filters: 1 filters + 6 automatic filters
 #> •  content: Table Missing data (gt)
 #> 
-#> $summarise_in_observation
-#> In Observation (OmopViewer panel)
-#> •  icon: explosion
-#> •  data: result_type: <summarise_in_observation>
-#> •  filters: 1 filters + 6 automatic filters
-#> •  content: Tidy (DT); Plot in observation (ui)
+#> $summarise_trend
+#> Trends (OmopViewer panel)
+#> •  icon: arrow-trend-up
+#> •  data: result_type: <summarise_trend>
+#> •  filters: 1 filters + 5 automatic filters
+#> •  content: Table Trends (reactable); Plot Trends (ui)
 #> 
 #> $orphan_code_use
 #> Orphan codes (OmopViewer panel)
