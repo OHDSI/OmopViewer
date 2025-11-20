@@ -2,6 +2,8 @@
 
 ## OmopViewer 0.5.0
 
+CRAN release: 2025-11-16
+
 - update default panels with latest OmopSketch functions by
   @cecicampanile in <https://github.com/OHDSI/OmopViewer/pull/312>
 - use args if packages are not installed by @catalamarti in
