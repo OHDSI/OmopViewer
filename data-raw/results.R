@@ -158,6 +158,18 @@ treatments <- cdm$acetaminophen |>
     treatmentCohortName = "alternative"
   )
 
+# MeasurementDiagnostics
+cdm <- MeasurementDiagnostics::mockMeasurementDiagnostics(nPerson = 1000)
+measurementUse <- MeasurementDiagnostics::summariseMeasurementUse(
+  cdm = cdm,
+  codes = list("test_codelist" = c(3001467L, 45875977L))
+)
+measurementCohortUse <- MeasurementDiagnostics::summariseCohortMeasurementUse(
+  codes = list("test_codelist" = c(3001467L, 45875977L)),
+  cohort = cdm$my_cohort,
+  timing = "cohort_start_date"
+)
+
 omopViewerResults <- omopgenerics::bind(
   # OmopSketch
   snapshot, obsPeriod, clinicalTables, missingData, recordCount, inObservation,
@@ -168,7 +180,9 @@ omopViewerResults <- omopgenerics::bind(
   # IncidencePrevalence
   incidence, pointPrevalence,
   # DrugUtilisation
-  treatmentPersistence, doseCoverage, indication, drugUtilisation, drugRestart, treatments
+  treatmentPersistence, doseCoverage, indication, drugUtilisation, drugRestart, treatments,
+  # MeasurementDiagnostics
+  measurementUse, measurementCohortUse
 ) |>
   omopgenerics::suppress()
 

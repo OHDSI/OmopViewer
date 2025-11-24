@@ -96,6 +96,10 @@ panelStructureDefaults <- list(
     "summarise_dose_coverage", "summarise_proportion_of_patients_covered",
     "summarise_drug_restart", "summarise_drug_utilisation",
     "summarise_indication", "summarise_treatment"
+  ),
+  MeasurementDiagnostics =c(
+    "measurement_timings", "measurement_value_as_numeric",
+    "measurement_value_as_concept"
   )
 )
 
