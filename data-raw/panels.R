@@ -2265,6 +2265,47 @@ lscPanel <- list(
     )
   )
 )
+## logs ----
+logsPanel <- list(
+  title = "Logs",
+  icon = "clipboard-list",
+  data = list(result_type = "summarise_log_file"),
+  filters = list(cdm_name = cdmFilter),
+  content = list(
+    table = list(
+      title = "Table Logs",
+      output_type = "gt",
+      reactive = "<filtered_data> |>
+      ",
+      render = "<reactive_data>",
+      download = downloadGtTable("table_log")
+    ),
+    plot = list(
+      title = "Plot Timing",
+      output_type = "ui",
+      reactive = "<filtered_data> |>
+      ",
+      render = "<reactive_data>",
+      filters = list(
+        facet = list(
+          button_type = "pickerInput",
+          label = "Facet",
+          choices = c("cdm_name", "<group>", "<strata>", "<additional>", "variable_name", "variable_level", "<settings>"),
+          selected = c("codelist_name", "concept_name"),
+          multiple = TRUE
+        ),
+        colour = list(
+          button_type = "pickerInput",
+          label = "Colour",
+          choices = c("cdm_name", "<group>", "<strata>", "<additional>", "variable_name", "variable_level", "<settings>"),
+          selected = c("concept_name", "variable_level", "<strata>"),
+          multiple = TRUE
+        )
+      ),
+      download = downloadPlot("plot_logs.png")
+    )
+  )
+)
 ## deafult ----
 defaultPanel <- list(
   title = "<result_type>",
