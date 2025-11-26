@@ -2266,20 +2266,19 @@ lscPanel <- list(
   )
 )
 
-## survival_probability & cumulative_failure_probability ----
-survivalProbPanel <- list(
+## Survival panel ----
+survivalPanel <- list(
   title = "Single event survival",
   icon = "stairs",
   data = list(result_type = c(
-    "survival_probability", "survival_events", "survival_summary",
-    "survival_attrition", "cumulative_failure_probability"
+    "survival_summary", "survival_estimates", "survival_events"
   )),
-  automatic_filters = c("group", "strata", "variable_level", "competing_outcome"),
+  automatic_filters = c("group", "strata", "variable_level", "settings"),
   filters = list(cdm_name = cdmFilter),
-  exclude_filters = c("reason", "analyses_type"),
+  exclude_filters = c("analyses_type", "eventgap"),
   content = list(
     table_survival = list(
-      title = "Table",
+      title = "Table Summary",
       output_type = "gt",
       reactive = "<filtered_data> |>
       CohortSurvival::tableSurvival(
@@ -2296,15 +2295,28 @@ survivalProbPanel <- list(
           multiple = FALSE
         )
       ),
-      download = downloadGtTable("table_survival")
+      download = downloadGtTable("table_summary")
+    ),
+    table_events = list(
+      title = "Table Events",
+      output_type = "gt",
+      reactive = "<filtered_data> |>
+      CohortSurvival::tableSurvivalEvents(
+      type = 'gt'
+      )",
+      render = "<reactive_data>",
+      download = downloadGtTable("table_summary")
     ),
     plot_survival = list(
-      title = "Plot",
+      title = "Plot Survival",
       output_type = "ui",
       reactive = "<filtered_data> |>
       CohortSurvival::plotSurvival(
       facet = input$facet,
-      colour = input$colour
+      colour = input$colour,
+      cumulativeFailure = input$cumulative_failure,
+      logLog = input$log_log,
+      timeScale = input$time_scale
       )",
       render = "x <- <reactive_data>
       renderInteractivePlot(x, input$interactive)",
@@ -2313,6 +2325,23 @@ survivalProbPanel <- list(
           button_type = "materialSwitch",
           label = "Interactive",
           value = TRUE
+        ),
+        cumulative_failure = list(
+          button_type = "materialSwitch",
+          label = "Cumulative failure",
+          value = FALSE
+        ),
+        log_log = list(
+          button_type = "materialSwitch",
+          label = "Log-Log plot",
+          value = FALSE
+        ),
+        time_scale = list(
+          button_type = "pickerInput",
+          label = "Time Scale",
+          choices = c("days", "months", "years"),
+          selected = "days",
+          multiple = FALSE
         ),
         facet = list(
           button_type = "pickerInput",
@@ -2418,7 +2447,7 @@ omopViewerPanels <- list(
   summarise_indication = indicationPanel,
   summarise_treatment = treatmentPanel,
   # CohortSurvival
-  survival = survivalProbPanel,
+  survival = survivalPanel,
   # default
   default = defaultPanel
 ) |>

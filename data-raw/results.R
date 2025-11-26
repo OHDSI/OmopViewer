@@ -163,7 +163,7 @@ cdm$death_cohort <- CohortConstructor::deathCohort(cdm = cdm, name = "death_coho
 survivalSingle <- CohortSurvival::estimateSingleEventSurvival(
   cdm = cdm,
   targetCohortTable = "acetaminophen",
-  outcomeCohortTable = "death_cohort",
+  outcomeCohortTable = "alternative",
   censorOnCohortExit = FALSE,
   followUpDays = 365
 )
