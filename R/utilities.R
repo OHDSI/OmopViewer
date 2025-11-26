@@ -1,10 +1,14 @@
 
-validatePanelDetails <- function(panelDetails, result, call = parent.frame()) {
+validatePanelDetails <- function(panelDetails, result, includeOneChoiceFilters, call = parent.frame()) {
   if (length(panelDetails) == 0) {
     panelDetails <- panelDetailsFromResult(result)
   } else {
     omopgenerics::assertList(panelDetails, named = TRUE, call = call)
-    panelDetails <- trimFilters(panelDetails = panelDetails, result = result)
+    panelDetails <- trimFilters(
+      panelDetails = panelDetails,
+      result = result,
+      includeOneChoiceFilters = includeOneChoiceFilters
+    )
   }
   panelDetails
 }

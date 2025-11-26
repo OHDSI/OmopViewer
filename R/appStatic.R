@@ -22,6 +22,8 @@
 #' must be provided as a character string (e.g.,
 #' `"bslib::bs_theme(bg = 'white', fg = 'black')"`).
 #' @param updateButtons Whether to include update buttons for visualisations.
+#' @param includeOneChoiceFilters Whether to include filter buttons for filters
+#' with just one choice.
 #' @param open Whether to open the shiny app project.
 #'
 #' @return The shiny app will be created in directory.
@@ -44,6 +46,7 @@ exportStaticApp <- function(result,
                             panelStructure = NULL,
                             theme = NULL,
                             updateButtons = TRUE,
+                            includeOneChoiceFilters = TRUE,
                             open = rlang::is_interactive()) {
   # input check
   result <- omopgenerics::validateResultArgument(result)
@@ -55,8 +58,9 @@ exportStaticApp <- function(result,
   omopgenerics::assertLogical(summary, length = 1)
   omopgenerics::assertCharacter(theme, length = 1, null = TRUE)
   omopgenerics::assertLogical(updateButtons, length = 1)
+  omopgenerics::assertLogical(includeOneChoiceFilters, length = 1)
   theme <- validateTheme(theme)
-  panelDetails <- validatePanelDetails(panelDetails, result)
+  panelDetails <- validatePanelDetails(panelDetails, result, includeOneChoiceFilters)
   panelStructure <- validatePanelStructure(panelStructure, names(panelDetails))
 
   # processing data
@@ -85,8 +89,13 @@ exportStaticApp <- function(result,
 
   # create ui
   ui <- uiStatic(
-    logo, title, background, summary, theme, panelDetails, panelStructure,
-    updateButtons
+    logo = logo,
+    title = title,
+    background = background,
+    summary = summary,
+    panelDetails = panelDetails,
+    panelStructure = panelStructure,
+    updateButtons = updateButtons
   )
 
   # create server
@@ -102,6 +111,7 @@ exportStaticApp <- function(result,
   if (!is.null(background)) {
     writeLines(background, con = file.path(directory, "background.md"))
   }
+  yaml::write_yaml(x = theme, file = file.path(directory, "_brand.yml"))
   writeLines(ui, con = file.path(directory, "ui.R"))
   writeLines(server, con = file.path(directory, "server.R"))
   writeLines(global, con = file.path(directory, "global.R"))

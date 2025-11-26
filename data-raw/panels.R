@@ -160,7 +160,6 @@ incidencePanel <- list(
   exclude_filters = c("denominator_cohort_name", "incidence_end_date"),
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
     table = list(
       title = "Table Incidence",
       output_type = "gt",
@@ -321,7 +320,6 @@ prevalencePanel <- list(
   exclude_filters = "denominator_cohort_name",
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
     table = list(
       title = "Table Prevalence",
       output_type = "gt",
@@ -470,10 +468,10 @@ incidenceAttritionPanel <- list(
   title = "Incidence Attrition",
   icon = "layer-group",
   data = list(result_type = "incidence_attrition"),
-  automatic_filters = c("settings", "variable_name"),
+  automatic_filters = c("outcome_cohort_name", "strata", "settings", "variable_name"),
+  exclude_filters = "reason",
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
     table = list(
       title = "Table Incidence Attrition",
       output_type = "gt",
@@ -518,10 +516,10 @@ prevalenceAttritionPanel <- list(
   title = "Prevalence Attrition",
   icon = "layer-group",
   data = list(result_type = "prevalence_attrition"),
-  automatic_filters = c("settings", "variable_name"),
+  automatic_filters = c("outcome_cohort_name", "strata", "settings", "variable_name"),
+  exclude_filters = "reason",
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
     table = list(
       title = "Table Prevalence Attrition",
       output_type = "gt",
@@ -575,7 +573,6 @@ cohortOverlapPanel <- list(
   ),
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
     table = list(
       title = "Table Overlap",
       output_type = "gt",
@@ -650,7 +647,6 @@ cohortCountPanel <- list(
   automatic_filters = c("group", "strata", "variable_name", "settings"),
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
     table = list(
       title = "Table Counts",
       output_type = "gt",
@@ -712,7 +708,6 @@ cohortAttritionPanel <- list(
   automatic_filters = c("cohort_name", "variable_name"),
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
     table = list(
       title = "Table Attrition",
       output_type = "gt",
@@ -772,7 +767,6 @@ cohortTimingPanel <- list(
   automatic_filters = c("group", "strata"),
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
     table = list(
       title = "Table Timing",
       output_type = "gt",
@@ -868,7 +862,6 @@ characteristicsPanel <- list(
   automatic_filters = c("cohort_name", "strata", "variable_name", "estimate_name"),
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
     table = list(
       title = "Table Characteristics",
       output_type = "gt",
@@ -938,12 +931,11 @@ characteristicsPanel <- list(
 ## summarise omop snapshot ----
 snapshotPanel <- list(
   title = "Snapshot",
-  icon = "clipboard-list",
+  icon = "camera",
   data = list(result_type = "summarise_omop_snapshot"),
   automatic_filters = c("variable_name"),
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
     table = list(
       title = "Table Snapshot",
       output_type = "gt",
@@ -956,7 +948,7 @@ snapshotPanel <- list(
 )
 ## summarise observation period ----
 observationPeriodPanel <- list(
-  title = "Observation period",
+  title = "Observation period Summary",
   icon = "eye",
   data = list(result_type = "summarise_observation_period"),
   automatic_filters = c(
@@ -967,7 +959,6 @@ observationPeriodPanel <- list(
   ),
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
     table = list(
       title = "Table Observation period",
       output_type = "gt",
@@ -1000,7 +991,7 @@ observationPeriodPanel <- list(
           choices = c(
             "Number subjects",
             "Records per person",
-            "Duration",
+            "Duration in days",
             "Days to next observation period"
           ),
           selected = c("Number subjects"),
@@ -1016,14 +1007,26 @@ observationPeriodPanel <- list(
         facet = list(
           button_type = "pickerInput",
           label = "Facet",
-          choices = c("cdm_name", "observation_period_ordinal"),
+          choices = c(
+            "cdm_name",
+            "<group>",
+            "<strata>",
+            "<additional>",
+            "<settings>"
+          ),
           selected = c("cdm_name"),
           multiple = TRUE
         ),
         colour = list(
           button_type = "pickerInput",
           label = "Colour",
-          choices = c("cdm_name", "observation_period_ordinal"),
+          choices =  c(
+            "cdm_name",
+            "<group>",
+            "<strata>",
+            "<additional>",
+            "<settings>"
+          ),
           selected = c("observation_period_ordinal"),
           multiple = TRUE
         )
@@ -1034,7 +1037,7 @@ observationPeriodPanel <- list(
 )
 ## summarise clinical records ----
 clinicalRecordsPanel <- list(
-  title = "Clinical records",
+  title = "Clinical Tables Summary",
   icon = "bars-staggered",
   data = list(result_type = "summarise_clinical_records"),
   automatic_filters = c(
@@ -1047,7 +1050,6 @@ clinicalRecordsPanel <- list(
   ),
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
     table = list(
       title = "Table Clinical records",
       output_type = "gt",
@@ -1055,6 +1057,70 @@ clinicalRecordsPanel <- list(
       OmopSketch::tableClinicalRecords()",
       render = "<reactive_data>",
       download = downloadGtTable("table_clinical_records")
+    )
+  )
+)
+## summarise person ----
+personPanel <- list(
+  title = "Person Table Summary",
+  icon = "person",
+  data = list(result_type = "summarise_person"),
+  automatic_filters = c(
+    "group",
+    "strata",
+    "settings",
+    "variable_name",
+    "estimate_name"
+  ),
+  filters = list(cdm_name = cdmFilter),
+  content = list(
+    table = list(
+      title = "Table Person",
+      output_type = "gt",
+      reactive = "<filtered_data> |>
+      OmopSketch::tablePerson()",
+      render = "<reactive_data>",
+      download = downloadGtTable("table_person")
+    ),
+    plot = list(
+      title = "Plot Person",
+      output_type = "ui",
+      reactive = "<filtered_data> |>
+      OmopSketch::plotPerson(
+      variableName = input$variable
+      )",
+      render = "x <- <reactive_data>
+      renderInteractivePlot(x, input$interactive)",
+      filters = list(
+        interactive = list(
+          button_type = "materialSwitch",
+          label = "Interactive",
+          value = TRUE
+        ),
+        variable = list(
+          button_type = "pickerInput",
+          label = "Variable",
+          choices =  c(
+            "Number subjects",
+            "Number subjects not in observation",
+            "Sex",
+            "Sex source",
+            "Race",
+            "Race source",
+            "Ethnicity",
+            "Ethnicity source",
+            "Year of birth",
+            "Month of birth",
+            "Day of birth",
+            "Location",
+            "Provider",
+            "Care site"
+          ),
+          selected = c("Number subjects"),
+          multiple = FALSE
+        )
+      ),
+      download = downloadPlot("plot_person.png")
     )
   )
 )
@@ -1136,7 +1202,6 @@ missingPanel <- list(
   ),
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
     table = list(
       title = "Table Missing data",
       output_type = "gt",
@@ -1218,21 +1283,24 @@ trendPanel <- list(
   automatic_filters = c(
     "group",
     "strata",
-    "strata",
     "settings",
     "variable_name",
     "estimate_name"
   ),
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
     table = list(
       title = "Table Trends",
-      output_type = "gt",
+      output_type = "reactable",
       reactive = "<filtered_data> |>
-      OmopSketch::tableTrend()",
+      OmopSketch::tableTrend(type = 'reactable')",
       render = "<reactive_data>",
-      download = downloadGtTable("table_trend")
+      download = list(
+        label = "Download csv",
+        render = "<reactive_data> |>
+    readr::write_csv(file = file)",
+        filename = "trends.csv"
+      )
     ),
     plot = list(
       title = "Plot Trends",
@@ -1370,9 +1438,18 @@ orphanCodesPanel <- list(
   ),
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
-    table = list(
-      title = "Table Orphan codes",
+    table_react = list(
+      title = "Table Orphan codes (reactable)",
+      output_type = "reactable",
+      reactive = "<filtered_data> |>
+      CodelistGenerator::tableOrphanCodes(
+        type = \"reactable\",
+        header = \"cdm_name\"
+      )",
+      render = "<reactive_data>"
+    ),
+    table_gt = list(
+      title = "Table Orphan codes (gt)",
       output_type = "gt",
       reactive = "<filtered_data> |>
       CodelistGenerator::tableOrphanCodes(
@@ -1406,9 +1483,18 @@ cohortCodeUsePanel <- list(
   automatic_filters = c("group", "strata", "variable_name", "estimate_name"),
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
-    table = list(
-      title = "Table Cohort code use",
+    table_react = list(
+      title = "Table Cohort code use (reactable)",
+      output_type = "reactable",
+      reactive = "<filtered_data> |>
+      CodelistGenerator::tableCohortCodeUse(
+        type = \"reactable\",
+        header = \"cdm_name\"
+      )",
+      render = "<reactive_data>"
+    ),
+    table_gt = list(
+      title = "Table Cohort code use (gt)",
       output_type = "gt",
       reactive = "<filtered_data> |>
       CodelistGenerator::tableCohortCodeUse(
@@ -1449,9 +1535,18 @@ codeUsePanel <- list(
   ),
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
-    table = list(
-      title = "Table Code use",
+    table_react = list(
+      title = "Table Code use (reactable)",
+      output_type = "reactable",
+      reactive = "<filtered_data> |>
+      CodelistGenerator::tableCodeUse(
+        type = \"reactable\",
+        header = \"cdm_name\"
+      )",
+      render = "<reactive_data>"
+    ),
+    table_gt = list(
+      title = "Table Code use (gt)",
       output_type = "gt",
       reactive = "<filtered_data> |>
       CodelistGenerator::tableCodeUse(
@@ -1491,9 +1586,18 @@ achillesCodeUsePanel <- list(
   ),
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
-    table = list(
-      title = "Table Achilles code use",
+    table_react = list(
+      title = "Table Achilles code use (reactable)",
+      output_type = "reactable",
+      reactive = "<filtered_data> |>
+      CodelistGenerator::tableAchillesCodeUse(
+        type = \"reactable\",
+        header = \"cdm_name\"
+      )",
+      render = "<reactive_data>"
+    ),
+    table_gt = list(
+      title = "Table Achilles code use (gt)",
       output_type = "gt",
       reactive = "<filtered_data> |>
       CodelistGenerator::tableAchillesCodeUse(
@@ -1533,9 +1637,18 @@ unmappedPanel <- list(
   ),
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
-    table = list(
-      title = "Table Unmapped codes",
+    table_react = list(
+      title = "Table Unmapped codes (reactable)",
+      output_type = "reactable",
+      reactive = "<filtered_data> |>
+      CodelistGenerator::tableUnmappedCodes(
+        type = \"reactable\",
+        header = \"cdm_name\"
+      )",
+      render = "<reactive_data>"
+    ),
+    table_gt = list(
+      title = "Table Unmapped codes (gt)",
       output_type = "gt",
       reactive = "<filtered_data> |>
       CodelistGenerator::tableUnmappedCodes(
@@ -1575,7 +1688,6 @@ doseCoveragePanel <- list(
   ),
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
     table = list(
       title = "Table Dose coverage",
       output_type = "gt",
@@ -1604,7 +1716,6 @@ ppcPanel <- list(
   automatic_filters = c("cohort_name", "strata", "estimate_name"),
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
     table = list(
       title = "Table PPC",
       output_type = "gt",
@@ -1672,7 +1783,6 @@ drugRestartPanel <- list(
   automatic_filters = c("cohort_name", "strata", "estimate_name"),
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
     table = list(
       title = "Table Drug Restart",
       output_type = "gt",
@@ -1762,7 +1872,6 @@ dusPanel <- list(
   ),
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
     table = list(
       title = "Table Drug Utilisation",
       output_type = "gt",
@@ -1859,7 +1968,6 @@ indicationPanel <- list(
   ),
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
     table = list(
       title = "Table Indication",
       output_type = "gt",
@@ -1932,7 +2040,6 @@ treatmentPanel <- list(
   ),
   filters = list(cdm_name = cdmFilter),
   content = list(
-    tidy = tidyContent,
     table = list(
       title = "Table Treatments",
       output_type = "gt",
@@ -2284,6 +2391,7 @@ omopViewerPanels <- list(
   summarise_in_observation = inObservationPanel,
   summarise_trend = trendPanel,
   summarise_concept_id_counts = conceptCountsPanel,
+  summarise_person = personPanel,
   # CodelistGenerator
   orphan_code_use = orphanCodesPanel,
   cohort_code_use = cohortCodeUsePanel,

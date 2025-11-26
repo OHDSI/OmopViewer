@@ -1,0 +1,8 @@
+color:
+  foreground: black
+  background: white
+  primary: darwin-blue
+defaults:
+  shiny:
+    theme:
+      preset: flatly

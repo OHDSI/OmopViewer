@@ -100,6 +100,20 @@ test_that("panelStructure argument works", {
     populatePanelDetailsOptions(result)
   panels <- writeUiPanels(panelDetails, updateButtons = TRUE)
 
+  # check includeOneChoiceFilters
+  pd1 <- panelDetailsFromResult(result)
+  pd2 <- panelDetailsFromResult(result, includeOneChoiceFilters = TRUE)
+  # check default
+  expect_identical(pd1, pd2)
+  # no filter is excluded
+  expect_identical(pd2$summarise_cohort_overlap$exclude_filters, NULL)
+  pd3 <- panelDetailsFromResult(result, includeOneChoiceFilters = FALSE)
+  # one option length are trimmed
+  expect_identical(
+    pd3$summarise_cohort_overlap$exclude_filters,
+    c("cdm_name", "variable_level", "overlap_by")
+  )
+
   # default panelStructure
   panelStructure <- as.list(names(panelDetails))
   uiPanels <- structurePanels(panels, panelStructure)
@@ -166,20 +180,16 @@ test_that("panelStructure argument works", {
 
 test_that("theme", {
   # no theme
-  expect_identical(validateTheme(NULL), omopViewerThemes$default)
+  expect_identical(
+    bslib::bs_theme(brand = validateTheme(NULL)),
+    getThemes()[["default"]]
+  )
 
   # us a pre build theme
-  expect_identical(validateTheme("sad_robot"), omopViewerThemes$sad_robot)
-
-  # custom theme
-  theme <- "bslib::bs_theme(bootswatch = 'sandstone',
-    primary = '#605ca8',
-    bg = 'white',
-    fg = 'black',
-    success = '#3B9AB2',
-    base_font = bslib::font_google('Space Mono'),
-    code_font = bslib::font_google('Space Mono'))"
-  expect_identical(validateTheme(theme), theme)
+  expect_identical(
+    bslib::bs_theme(brand = validateTheme("sad_robot")),
+    getThemes()[["sad_robot"]]
+  )
 
   # not bslib call
   expect_error(validateTheme('bslib::accordion()'))

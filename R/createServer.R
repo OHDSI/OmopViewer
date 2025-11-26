@@ -44,7 +44,7 @@ createServer <- function(panelDetails, data, updateButtons) {
     updateButtonsStart,
     purrr::imap_chr(panelDetails, \(x, nm) {
       c(glue::glue("# {nm} -----"),
-        writeUpdateDataMessage(nm = nm, filters = x$filters),
+        writeUpdateDataMessage(nm = nm, filters = x$filters, updateButtons = updateButtons),
         writeFilterData(x = x, nm = nm, data = data, updateButtons = updateButtons),
         writeContentServer(content = x$content, data = data)
       ) |>
@@ -65,22 +65,22 @@ downloadRawDataServer <- function(data) {
     glue::glue(.open = "[", .close = "]") |>
     as.character()
 }
-writeUpdateDataMessage <- function(nm, filters) {
-  if (length(filters) == 0) return("")
-  buts <- paste0(nm, "_", names(filters)) |>
-    purrr::map_chr(\(x) {
-      paste0(
-        "shiny::observeEvent(input$", x, ", {updateButtons$", nm,
-        " <- TRUE}, ignoreInit = TRUE)"
-      )
-    }) |>
+writeUpdateDataMessage <- function(nm, filters, updateButtons) {
+  if (length(filters) == 0 || !updateButtons) return("")
+  inputs <- paste0(
+    "shiny::observe({updateButtons$", nm, " <- TRUE}) |>",
+    "shiny::bindEvent(",
+    c(paste0("input$", nm, "_", names(filters)), "ignoreInit = TRUE") |>
+      paste0(collapse = ",\n"),
+    ")"
+  ) |>
     paste0(collapse = "\n")
   update <- paste0(
   "shiny::observeEvent(updateButtons$", nm, ", {
   if (updateButtons$", nm, " == TRUE) {
-    output$update_message_", nm, " <- shiny::renderText(\"Filters have changed please consider to use the update content button!\")
+    output$update_message_", nm, " <- shiny::renderUI(updateMessage) # defined in functions.R
   } else {
-    output$update_message_", nm, " <- shiny::renderText(\"\")
+    output$update_message_", nm, " <- shiny::renderUI(NULL)
   }
   })\n"
   )
@@ -89,7 +89,7 @@ writeUpdateDataMessage <- function(nm, filters) {
     " <- FALSE})"
   )
   paste0(
-    "## update message if filter is changed\n", buts, "\n",  update, silence,
+    "## update message if filter is changed\n", inputs, "\n",  update, silence,
     "\n"
   )
 }

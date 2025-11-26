@@ -30,9 +30,8 @@ serverDynamic <- function(input, output, session) {
 
   # change the theme of the shiny
   shiny::observeEvent(input$configuration_theme, {
-    theme <- omopViewerThemes[[input$configuration_theme]] |>
-      rlang::parse_expr() |>
-      rlang::eval_tidy()
+    brand <- validateTheme(theme = input$configuration_theme)
+    theme <- bslib::bs_theme(brand = brand)
     session$setCurrentTheme(theme)
   }, ignoreInit = TRUE)
 
@@ -102,9 +101,7 @@ createDynamicUi <- function(panels, summary, data, theme) {
     summary <- FALSE
   }
 
-  if (!isTRUE(theme %in% names(omopViewerThemes))) {
-    theme <- "default"
-  }
+  theme <- ifelse(is.null(theme), "default", theme)
 
   panels <- unname(panels)
   bslib::page_navbar(
@@ -164,7 +161,7 @@ createDynamicUi <- function(panels, summary, data, theme) {
         shinyWidgets::pickerInput(
           inputId = "configuration_theme",
           label = "Choose theme",
-          choices = names(omopViewerThemes),
+          choices = omopViewerThemes(),
           selected = theme,
           multiple = FALSE
         ),

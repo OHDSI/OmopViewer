@@ -15,6 +15,7 @@ exportStaticApp(
   panelStructure = NULL,
   theme = NULL,
   updateButtons = TRUE,
+  includeOneChoiceFilters = TRUE,
   open = rlang::is_interactive()
 )
 }
@@ -49,6 +50,9 @@ must be provided as a character string (e.g.,
 \code{"bslib::bs_theme(bg = 'white', fg = 'black')"}).}
 
 \item{updateButtons}{Whether to include update buttons for visualisations.}
+
+\item{includeOneChoiceFilters}{Whether to include filter buttons for filters
+with just one choice.}
 
 \item{open}{Whether to open the shiny app project.}
 }

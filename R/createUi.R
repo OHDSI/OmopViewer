@@ -4,7 +4,6 @@ uiStatic <- function(logo,
                      title,
                      background,
                      summary,
-                     theme,
                      panelDetails,
                      panelStructure,
                      updateButtons) {
@@ -12,13 +11,21 @@ uiStatic <- function(logo,
   panels <- writeUiPanels(panelDetails, updateButtons) |>
     structurePanels(panelStructure)
 
+  # updateButtons = TRUE add the desiredStyle
+  if (updateButtons == TRUE) {
+    style <- stickyStyle()
+  } else {
+    style <- NULL
+  }
+
   # ui
   c(
     messageShiny(),
     "ui <- bslib::page_navbar(",
     c(
       writeTitle(title, logo),
-      paste0("theme = ", theme),
+      "theme = bslib::bs_theme(brand = TRUE)",
+      style,
       createBackground(background),
       summaryTab(summary),
       panels,
@@ -71,13 +78,13 @@ writeUiPanels <- function(panelDetails, updateButtons) {
   # create a list with all the panel content
   panelDetails |>
     purrr::imap(\(x, nm) {
+      ub <- updateButtonUi(updateButtons, nm)
       if (length(x$filters) > 0) {
-        sidebar <- writeSidebar(filters = x$filters, position = "left") |>
+        sidebar <- writeSidebar(filters = x$filters, position = "left", code = ub) |>
           paste0(",")
       } else {
-        sidebar <- ""
+        sidebar <- ub
       }
-      ub <- updateButtonUi(updateButtons, nm)
       outputPanels <- writeContent(content = x$content) |>
         paste0(collapse = ",\n")
       c(
@@ -87,7 +94,6 @@ writeUiPanels <- function(panelDetails, updateButtons) {
           writeIcon(x$icon),
           "bslib::layout_sidebar(
           {sidebar}
-          {ub}
             bslib::navset_card_tab(
               {outputPanels}
             )
@@ -104,9 +110,18 @@ writeUiPanels <- function(panelDetails, updateButtons) {
 updateButtonUi <- function(updateButtons, id) {
   if (!updateButtons) return("")
   paste0(
-    "\nshiny::actionButton(\ninputId = \"update_", id,
-    "\", \nlabel = \"Update content\",\nwidth = \"200px\"\n),\nshiny::div(shiny::textOutput(outputId = \"update_message_",
-    id, "\"), class = \"ov_update_button\"),\n"
+    "
+    bslib::card(
+      class = \"sticky-top-btn\",
+      bslib::card_body(
+        shiny::actionButton(
+          inputId = \"update_", id, "\",
+          label = \"Update content\",
+          width = \"100%\"
+        ),
+        uiOutput(outputId = \"update_message_", id, "\")
+      )
+    ),\n"
   )
 }
 structurePanels <- function(panels, panelStructure) {
@@ -131,9 +146,10 @@ writeIcon <- function(icon) {
   if (is.null(icon)) return(character())
   paste0('icon = shiny::icon("', icon, '")')
 }
-writeSidebar <- function(filters, position) {
+writeSidebar <- function(filters, position, code = "") {
   paste0(
     "sidebar = bslib::sidebar(\n",
+    code,
     paste0(writeButtons(filters), collapse = ",\n"),
     ",\nposition = '",
     position,
@@ -179,4 +195,14 @@ writeDownload <- function(do) {
     ),
     '\n),\nclass = "text-end"\n),\n'
   )
+}
+stickyStyle <- function() {
+  "shiny::tags$style(HTML(
+    \".sticky-top-btn {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: var(--bs-body-bg);
+    }\"
+  ))"
 }
