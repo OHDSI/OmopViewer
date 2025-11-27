@@ -2271,7 +2271,8 @@ survivalPanel <- list(
   title = "Single event survival",
   icon = "stairs",
   data = list(result_type = c(
-    "survival_summary", "survival_estimates", "survival_events"
+    "survival_summary", "survival_estimates", "survival_events",
+    "survival_attrition"
   )),
   automatic_filters = c("group", "strata", "variable_level", "settings"),
   filters = list(cdm_name = cdmFilter),
@@ -2295,7 +2296,7 @@ survivalPanel <- list(
           multiple = FALSE
         )
       ),
-      download = downloadGtTable("table_summary")
+      download = downloadGtTable("table_survival_summary")
     ),
     table_events = list(
       title = "Table Events",
@@ -2305,7 +2306,17 @@ survivalPanel <- list(
       type = 'gt'
       )",
       render = "<reactive_data>",
-      download = downloadGtTable("table_summary")
+      download = downloadGtTable("table_survival_events")
+    ),
+    table_attrition = list(
+      title = "Table Attrition",
+      output_type = "gt",
+      reactive = "<filtered_data> |>
+      CohortSurvival::tableSurvivalAttrition(
+      type = 'gt'
+      )",
+      render = "<reactive_data>",
+      download = downloadGtTable("table_survival_attrition")
     ),
     plot_survival = list(
       title = "Plot Survival",
