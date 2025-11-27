@@ -122,7 +122,8 @@ exportStaticApp <- function(result,
   dataPath <- file.path(directory, "data")
   dir.create(dataPath, showWarnings = FALSE)
   omopgenerics::exportSummarisedResult(
-    result, minCellCount = 0, fileName = "results.csv", path = dataPath
+    result, minCellCount = 0, fileName = "results.csv", path = dataPath,
+    logFile = NULL, logSqlPath = NULL
   )
   writeLines(preprocess, con = file.path(dataPath, "preprocess.R"))
 
