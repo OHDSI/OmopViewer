@@ -2268,7 +2268,7 @@ lscPanel <- list(
 
 ## Survival panel ----
 survivalPanel <- list(
-  title = "Single event survival",
+  title = "Survival Analyses",
   icon = "stairs",
   data = list(result_type = c(
     "survival_summary", "survival_estimates", "survival_events",
