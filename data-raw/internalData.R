@@ -23,7 +23,7 @@ omopViewerPreprocess <- c(
   "",
   "source(file.path(getwd(), \"functions.R\"))",
   "",
-  "result <- omopgenerics::importSummarisedResult(file.path(getwd(), \"data\"))",
+  "result <- omopgenerics::importSummarisedResult(file.path(getwd(), \"rawData\"))",
   "data <- prepareResult(result, resultList)",
   "values <- getValues(result, resultList)",
   "",
@@ -41,11 +41,11 @@ omopViewerGlobal <- c(
   "# preprocess data if it has not been done",
   "fileData <- file.path(getwd(), \"data\", \"shinyData.RData\")",
   "if (!file.exists(fileData)) {",
-  "source(file.path(getwd(), \"data\", \"preprocess.R\"))",
+  "source(file.path(getwd(), \"rawData\", \"preprocess.R\"))",
   "}",
   "",
   "# uncomment to load the raw data",
-  "# rawData <- omopgenerics::importSummarisedResult(file.path(getwd(), \"data\"))",
+  "# rawData <- omopgenerics::importSummarisedResult(file.path(getwd(), \"rawData\"))",
   "",
   "# load shiny data",
   "load(fileData)",
@@ -54,6 +54,12 @@ omopViewerGlobal <- c(
   "source(file.path(getwd(), \"functions.R\"))"
 ) |>
   styleCode()
+
+# rscignore ----
+rscignore <- c(
+  "rawData"
+) |>
+  paste0(collapse = "\n")
 
 # logos ----
 # TO ADD NEW LOGOS YOU HAVE TO ADD THEM IN `inst/logos/`
@@ -72,7 +78,7 @@ backgroundKeywords <- dplyr::tribble(
   "footer", "bslib::card_footer", "https://rstudio.github.io/bslib//reference/card_body.html"
 )
 
-# default structure
+# default structure ----
 panelStructureDefaults <- list(
   OmopSketch = c(
     "summarise_omop_snapshot", "summarise_observation_period",
@@ -102,6 +108,6 @@ panelStructureDefaults <- list(
 # add internal data ----
 usethis::use_data(
   omopViewerProj, omopViewerGlobal, omopViewerPreprocess, logoKeywords,
-  backgroundKeywords, panelStructureDefaults,
+  backgroundKeywords, panelStructureDefaults, rscignore,
   overwrite = TRUE, internal = TRUE
 )

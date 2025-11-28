@@ -117,14 +117,27 @@ exportStaticApp <- function(result,
   writeLines(global, con = file.path(directory, "global.R"))
   writeLines(functions, con = file.path(directory, "functions.R"))
   writeLines(omopViewerProj, con = file.path(directory, "shiny.Rproj"))
+  writeLines(rscignore, con = file.path(directory, ".rscignore"))
 
-  # export data
-  dataPath <- file.path(directory, "data")
+  # export rawData
+  dataPath <- file.path(directory, "rawData")
   dir.create(dataPath, showWarnings = FALSE)
   omopgenerics::exportSummarisedResult(
     result, minCellCount = 0, fileName = "results.csv", path = dataPath
   )
   writeLines(preprocess, con = file.path(dataPath, "preprocess.R"))
+  cont <- c(
+    "# raw data", "",
+    "This folder contains the raw `.csv` files that feed the shiny App.",
+    "This folder is ignored when deploying the shiny"
+  )
+  writeLines(cont, con = file.path(dataPath, "README.md"))
+
+  # export data
+  dataPath <- file.path(directory, "data")
+  dir.create(dataPath, showWarnings = FALSE)
+  cont <- c("# data", "", "This folder contains the `.RData` file that feeds the shiny App.")
+  writeLines(cont, con = file.path(dataPath, "README.md"))
 
   cli::cli_inform(c("v" = "Shiny created in: {.pkg {directory}}"))
 
