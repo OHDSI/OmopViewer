@@ -31,7 +31,7 @@ omopViewerPreprocess <- c(
   "choices <- values",
   "selected <- getSelected(values)",
   "",
-  "save(data, choices, selected, values, file = file.path(getwd(), \"data\", \"shinyData.RData\"))",
+  "save(data, choices, selected, values, file = file.path(getwd(), \"data\", \"studyData.RData\"))",
   "",
   "rm(result, values, choices, selected, resultList, data)"
 )
@@ -39,7 +39,7 @@ omopViewerPreprocess <- c(
 # global -----
 omopViewerGlobal <- c(
   "# preprocess data if it has not been done",
-  "fileData <- file.path(getwd(), \"data\", \"shinyData.RData\")",
+  "fileData <- file.path(getwd(), \"data\", \"studyData.RData\")",
   "if (!file.exists(fileData)) {",
   "source(file.path(getwd(), \"rawData\", \"preprocess.R\"))",
   "}",
@@ -105,9 +105,62 @@ panelStructureDefaults <- list(
   )
 )
 
+# report ----
+reportTemplate <- '---
+title: "<title>"
+format:
+  docx:
+    reference-doc: template.docx
+    fig-cap-location: top
+execute:
+  echo: false
+  message: false
+  warning: false
+lof: true
+---
+
+```{r}
+# Load necessary packages ----
+<packages>
+
+# Load results stored in the package ----
+fileData <- file.path(getwd(), "data", "studyData.RData")
+if (!file.exists(fileData)) {
+  source(file.path(getwd(), "rawData", "preprocess.R"))
+}
+
+# uncomment to load the raw data
+# rawData <- omopgenerics::importSummarisedResult(file.path(getwd(), \"rawData\"))
+
+# load data
+load(fileData)
+
+# source functions
+source(file.path(getwd(), \"functions.R\"))
+
+# Global options ----
+knitr::opts_chunk$set(
+  out.width  = "95%",  # figures occupy ~95% of document width
+  out.height = "auto",
+  dpi        = 320,    # ensure figure quality
+  fig.width  = 6,      # default aspect ratio (can be overridden per-figure)
+  fig.height = 3,
+  results    = "asis"  # enable Markdown produced via cat() inside chunks
+)
+
+setGlobalPlotOptions(type = "ggplot")
+setGlobalTableOptions(type = "flextable")
+
+# Calibri font in ggplot figures (requires the extrafont package to be available)
+# Read vignette on styles to learn more
+requireExtrafont()
+```
+
+<code>'
+
 # add internal data ----
 usethis::use_data(
   omopViewerProj, omopViewerGlobal, omopViewerPreprocess, logoKeywords,
-  backgroundKeywords, panelStructureDefaults, rscignore,
+  backgroundKeywords, panelStructureDefaults, rscignore, reportTemplate,
   overwrite = TRUE, internal = TRUE
 )
