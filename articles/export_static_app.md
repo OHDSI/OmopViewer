@@ -84,7 +84,7 @@ exportStaticApp(result = result, directory = dir)
 #> ✔ Data processed: 3 panels idenfied: `summarise_omop_snapshot`,
 #>   `summarise_characteristics`, and `incidence`.
 #> ℹ Creating shiny from provided data
-#> ✔ Shiny created in: /tmp/RtmpkRY9yR/shiny
+#> ✔ Shiny created in: /tmp/Rtmps6Epw5/shiny
 ```
 
 Note that by default if executed in an interactive environment like *R

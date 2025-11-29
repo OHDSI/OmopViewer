@@ -21,6 +21,9 @@
 
 ## Citation
 
+Source:
+[`DESCRIPTION`](https://github.com/ohdsi/OmopViewer/blob/main/DESCRIPTION)
+
 Català M, Guo Y (2025). *OmopViewer: Visualise OMOP Results using
 'shiny' Applications*. R package version 0.5.0,
 <https://ohdsi.github.io/OmopViewer/>.
