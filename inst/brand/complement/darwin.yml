@@ -6,3 +6,5 @@ defaults:
   shiny:
     theme:
       preset: flatly
+  visOmopResults:
+    template: system.file("darwinReportRef.docx", package = "visOmopResults")

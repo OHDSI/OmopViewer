@@ -110,8 +110,7 @@ reportTemplate <- '---
 title: "<title>"
 format:
   docx:
-    reference-doc: template.docx
-    fig-cap-location: top
+    <template>
 execute:
   echo: false
   message: false

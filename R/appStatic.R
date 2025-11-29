@@ -133,10 +133,11 @@ exportStaticApp <- function(result,
   # export report
   if (report) {
     # create report
-    report <- createReport(panelDetails = panelDetails, title = title)
+    report <- createReport(panelDetails, title, !is.null(template))
 
     # export files
     exportReport(report = report, directory = directory)
+    exportTemplate(template = template, directory = directory)
   }
 
   cli::cli_inform(c("v" = "Shiny created in: {.pkg {directory}}"))

@@ -24,7 +24,7 @@ exportReport <- function(result,
   preprocess <- preprocessData(panelDetails)
 
   # create report
-  report <- createReport(panelDetails = panelDetails, title = title)
+  report <- createReport(panelDetails, title, !is.null(template))
 
   # export files
   exportReport(report = report, directory = directory)
@@ -50,6 +50,9 @@ validateTemplate <- function(template, theme, call = parent.frame()) {
   }
   omopgenerics::assertCharacter(template, length = 1, call = call, null = TRUE)
   if (!is.null(template)) {
+    if (startsWith(x = template, prefix = "system.file")) {
+      template <- rlang::eval_tidy(rlang::parse_expr(template))
+    }
     if (!file.exists(template)) {
       cli::cli_warn(c("!" = "`template` ignored as file does not exist."))
       template <- NULL
@@ -57,7 +60,7 @@ validateTemplate <- function(template, theme, call = parent.frame()) {
   }
   return(template)
 }
-createReport <- function(panelDetails, title) {
+createReport <- function(panelDetails, title, useTemplate) {
   # get code
   code <- panelDetails |>
     purrr::imap(\(x, nm) {
@@ -97,17 +100,26 @@ createReport <- function(panelDetails, title) {
   packages <- sort(unique(c("visOmopResults", detectPackages(code = code))))
   packages <- paste0("library(", packages, ")", collapse = "\n")
 
+  if (useTemplate) {
+    template <- "reference-doc: template.docx\n    fig-cap-location: top"
+  } else {
+    template <- "fig-cap-location: top"
+  }
+
   # create report
   reportTemplate |>
     stringr::str_replace_all(pattern = "<title>", replacement = title) |>
     stringr::str_replace_all(pattern = "<packages>", replacement = packages) |>
-    stringr::str_replace_all(pattern = "<code>", replacement = code)
+    stringr::str_replace_all(pattern = "<code>", replacement = code) |>
+    stringr::str_replace_all(pattern = "<template>", replacement = template)
 }
 exportReport <- function(report, directory) {
   writeLines(text = report, con = file.path(directory, "report.qmd"))
 }
 exportTemplate <- function(template, directory) {
-  file.copy(from = template, to = file.path(directory, "template.docx"))
+  if (!is.null(template)) {
+    file.copy(from = template, to = file.path(directory, "template.docx"))
+  }
 }
 exportTheme <- function(theme, directory) {
   yaml::write_yaml(x = theme, file = file.path(directory, "_brand.yml"))
