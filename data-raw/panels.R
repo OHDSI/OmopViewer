@@ -1307,6 +1307,7 @@ trendPanel <- list(
       output_type = "ui",
       reactive = "<filtered_data> |>
       OmopSketch::plotTrend(
+      output = input$output,
       facet = input$facet,
       colour = input$colour
       )",
@@ -1317,6 +1318,19 @@ trendPanel <- list(
           button_type = "materialSwitch",
           label = "Interactive",
           value = TRUE
+        ),
+        output = list(
+          button_type = "pickerInput",
+          label = "Output",
+          choices = c(
+            "record",
+            "person",
+            "person-days",
+            "age",
+            "sex"
+          ),
+          selected = c("record"),
+          multiple = FALSE
         ),
         facet = list(
           button_type = "pickerInput",
