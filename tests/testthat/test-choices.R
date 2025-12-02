@@ -21,7 +21,7 @@ test_that("test choices", {
   expect_identical(x$my_result_variable_name, character())
   expect_identical(x$my_result_variable_level, character())
   expect_identical(x$my_result_estimate_name, character())
-  expect_identical(x$my_result_param, "TRUE")
+  expect_identical(x$my_result_param, c("-NA-", "TRUE"))
   expect_identical(x$my_result_x, c("0", "1"))
 
   # a set of summarised_results
