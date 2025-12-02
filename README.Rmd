@@ -81,8 +81,8 @@ The shiny generated will have the following structure:
 - `server.R` server logic, you can edit that file to change some of the displays.
 - `functions.R` some utility functions that are used in the shiny app.
 - `data/result.csv` the original summarised_result provided.
-- `data/ShinyData.RData` the .RData file that contains the data used in the shiny.
-- `data/preprocess.R` the file to generate ShinyData.RData from results.csv
+- `data/studyData.RData` the .RData file that contains the data used in the shiny.
+- `data/preprocess.R` the file to generate `studyData.RData` from results.csv
 
 ## Dynamic shiny app
 

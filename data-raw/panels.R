@@ -944,6 +944,14 @@ snapshotPanel <- list(
       render = "<reactive_data>",
       download = downloadGtTable("table_snapshot")
     )
+  ),
+  report = list(
+    title = "Database metadata",
+    list(
+      caption = "Database metadata.",
+      type = "table",
+      content = "OmopSketch::tableOmopSnapshot(<data>)"
+    )
   )
 )
 ## summarise observation period ----
