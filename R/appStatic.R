@@ -10,6 +10,7 @@
 #' content will be controlled from the generated background.md file.
 #' @param summary Whether to include a panel with a summary of content in the
 #' `result`.
+#' @param report Whether to include a quarto report.
 #' @param panelDetails A named list to provide details for each one of the
 #' panels, such as: result_id, result_type, title, icon, filters and content.
 #' By default it is created using the `panelDetailsFromResult()` function.
@@ -21,6 +22,8 @@
 #' define a custom theme using `bslib::bs_theme()`. If using a custom theme, it
 #' must be provided as a character string (e.g.,
 #' `"bslib::bs_theme(bg = 'white', fg = 'black')"`).
+#' @param template Path to a template `.docx` document to be used for the
+#' report.
 #' @param updateButtons Whether to include update buttons for visualisations.
 #' @param includeOneChoiceFilters Whether to include filter buttons for filters
 #' with just one choice.
@@ -42,9 +45,11 @@ exportStaticApp <- function(result,
                             title = "",
                             background = TRUE,
                             summary = TRUE,
+                            report = FALSE,
                             panelDetails = panelDetailsFromResult(result),
                             panelStructure = NULL,
                             theme = NULL,
+                            template = NULL,
                             updateButtons = TRUE,
                             includeOneChoiceFilters = TRUE,
                             open = rlang::is_interactive()) {
@@ -56,10 +61,12 @@ exportStaticApp <- function(result,
   omopgenerics::assertCharacter(logo, length = 1, null = TRUE)
   omopgenerics::assertCharacter(title, length = 1)
   omopgenerics::assertLogical(summary, length = 1)
+  omopgenerics::assertLogical(report, length = 1)
   omopgenerics::assertCharacter(theme, length = 1, null = TRUE)
   omopgenerics::assertLogical(updateButtons, length = 1)
   omopgenerics::assertLogical(includeOneChoiceFilters, length = 1)
-  theme <- validateTheme(theme)
+  theme <- validateTheme(theme = theme)
+  template <- validateTemplate(template = template, theme = theme)
   panelDetails <- validatePanelDetails(panelDetails, result, includeOneChoiceFilters)
   panelStructure <- validatePanelStructure(panelStructure, names(panelDetails))
 
@@ -67,7 +74,7 @@ exportStaticApp <- function(result,
   processingData(panelDetails)
 
   # create shiny
-  directory <- createDirectory(directory)
+  directory <- createDirectory(directory, "shiny")
   if (isTRUE(directory)) {
     "{.strong shiny} folder will not be overwritten. Stopping process." |>
       rlang::set_names("i") |>
@@ -111,20 +118,27 @@ exportStaticApp <- function(result,
   if (!is.null(background)) {
     writeLines(background, con = file.path(directory, "background.md"))
   }
-  yaml::write_yaml(x = theme, file = file.path(directory, "_brand.yml"))
   writeLines(ui, con = file.path(directory, "ui.R"))
   writeLines(server, con = file.path(directory, "server.R"))
   writeLines(global, con = file.path(directory, "global.R"))
   writeLines(functions, con = file.path(directory, "functions.R"))
   writeLines(omopViewerProj, con = file.path(directory, "shiny.Rproj"))
 
+  # export theme
+  exportTheme(theme = theme, directory = directory)
+
   # export data
-  dataPath <- file.path(directory, "data")
-  dir.create(dataPath, showWarnings = FALSE)
-  omopgenerics::exportSummarisedResult(
-    result, minCellCount = 0, fileName = "results.csv", path = dataPath
-  )
-  writeLines(preprocess, con = file.path(dataPath, "preprocess.R"))
+  exportData(result = result, preprocess = preprocess, directory = directory)
+
+  # export report
+  if (report) {
+    # create report
+    report <- createReport(panelDetails, title, !is.null(template))
+
+    # export files
+    exportReport(report = report, directory = directory)
+    exportTemplate(template = template, directory = directory)
+  }
 
   cli::cli_inform(c("v" = "Shiny created in: {.pkg {directory}}"))
 
@@ -246,19 +260,19 @@ processingData <- function(panelDetails) {
 }
 
 # create directory ----
-createDirectory <- function(directory) {
-  directoryShiny <- file.path(directory, "shiny")
+createDirectory <- function(directory, project) {
+  directoryProject <- file.path(directory, project)
   # create directory if it does not exit
   if (!dir.exists(directory)) {
     cli::cli_inform(c("i" = "Provided directory does not exist, it will be created."))
     dir.create(path = directory, recursive = TRUE)
     cli::cli_inform(c("v" = "directory created: {.pkg {directory}}"))
-  } else if (file.exists(file.path(directory, "shiny"))) {
+  } else if (file.exists(directoryProject)) {
     # ask overwrite shiny
     overwrite <- "1"  # overwrite if non-interactive
     if (rlang::is_interactive()) {
       cli::cli_inform(c(
-        "!" = "A {.strong shiny} folder already exists in the provided directory. Enter choice 1 or 2:",
+        "!" = "A {.strong {project}} folder already exists in the provided directory. Enter choice 1 or 2:",
         " " = "1) Overwrite",
         " " = "2) Cancel"
       ))
@@ -271,14 +285,14 @@ createDirectory <- function(directory) {
     if (overwrite == "2") {
       return(TRUE)
     } else {
-      cli::cli_inform(c("i" = "{.strong shiny} folder will be overwritten."))
-      unlink(directoryShiny, recursive = TRUE)
-      cli::cli_inform(c("v" = "Prior {.strong shiny} folder deleted."))
+      cli::cli_inform(c("i" = "{.strong {project}} folder will be overwritten."))
+      unlink(directoryProject, recursive = TRUE)
+      cli::cli_inform(c("v" = "Prior {.strong {project}} folder deleted."))
     }
   }
-  dir.create(path = directoryShiny, showWarnings = FALSE)
-  cli::cli_inform(c("i" = "Creating shiny from provided data"))
-  directoryShiny
+  dir.create(path = directoryProject, showWarnings = FALSE)
+  cli::cli_inform(c("i" = "Creating `{project}` from provided data"))
+  directoryProject
 }
 
 # preprocess file ----

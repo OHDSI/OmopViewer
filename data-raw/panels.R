@@ -944,6 +944,14 @@ snapshotPanel <- list(
       render = "<reactive_data>",
       download = downloadGtTable("table_snapshot")
     )
+  ),
+  report = list(
+    title = "Database metadata",
+    list(
+      caption = "Database metadata.",
+      type = "table",
+      content = "OmopSketch::tableOmopSnapshot(<data>)"
+    )
   )
 )
 ## summarise observation period ----
@@ -2265,7 +2273,224 @@ lscPanel <- list(
     )
   )
 )
-
+## measurement timing ----
+measurementTimingPanel <- list(
+  title = "Measurement timing",
+  icon = "timeline",
+  data = list(result_type = "measurement_timings"),
+  automatic_filters = c("group", "strata", "timing", "variable_name"),
+  filters = list(cdm_name = cdmFilter),
+  content = list(
+    table = list(
+      title = "Table Measurement Timing",
+      output_type = "gt",
+      reactive = "<filtered_data> |>
+      MeasurementDiagnostics::tableMeasurementTimings(
+      header = input$header,
+      groupColumn = input$group_column,
+      hide = input$hide,
+      settingsColumn = 'timing'
+      )",
+      render = "<reactive_data>",
+      filters = rankTableButton(
+        none = c("variable_name", "estimate_name", "<settings>"),
+        header = "<strata>",
+        groupColumn = c("codelist_name", "cdm_name"),
+        hide = c("variable_level")
+      ),
+      download = downloadGtTable("table_measurement_timing")
+    ),
+    plot = list(
+      title = "Plot Measurement Timing",
+      output_type = "ui",
+      reactive = "<filtered_data> |>
+      MeasurementDiagnostics::plotMeasurementTimings(
+      plotType = input$plot_type,
+      timeScale = input$time_scale,
+      facet = input$facet,
+      colour = input$colour
+      )",
+      render = "x <- <reactive_data>
+      renderInteractivePlot(x, input$interactive)",
+      filters = list(
+        interactive = list(
+          button_type = "materialSwitch",
+          label = "Interactive",
+          value = TRUE
+        ),
+        plot_type = list(
+          button_type = "pickerInput",
+          label = "Plot type",
+          choices = c("boxplot", "densityplot"),
+          selected = c("boxplot"),
+          multiple = FALSE
+        ),
+        time_scale = list(
+          button_type = "pickerInput",
+          label = "Time scale",
+          choices = c("days", "years"),
+          selected = c("days"),
+          multiple = FALSE
+        ),
+        facet = list(
+          button_type = "pickerInput",
+          label = "Facet",
+          choices = c("cdm_name", "codelist_name", "<strata>", "<settings>"),
+          selected = c("<strata>"),
+          multiple = TRUE
+        ),
+        colour = list(
+          button_type = "pickerInput",
+          label = "Colour",
+          choices = c("cdm_name", "codelist_name", "<strata>", "<settings>"),
+          selected = c("cdm_name", "codelist_name"),
+          multiple = TRUE
+        )
+      ),
+      download = downloadPlot("plot_measurement_timing.png")
+    )
+  )
+)
+## measurement value as numeric ----
+measurementNumericPanel <- list(
+  title = "Measurement as numeric",
+  icon = "gauge-high",
+  data = list(result_type = "measurement_value_as_numeric"),
+  automatic_filters = c("group", "strata", "timing", "variable_name"),
+  filters = list(cdm_name = cdmFilter),
+  content = list(
+    table = list(
+      title = "Table Measurement Numeric",
+      output_type = "gt",
+      reactive = "<filtered_data> |>
+      MeasurementDiagnostics::tableMeasurementValueAsNumeric(
+      header = input$header,
+      groupColumn = input$group_column,
+      hide = input$hide,
+      settingsColumn = 'timing'
+      )",
+      render = "<reactive_data>",
+      filters = rankTableButton(
+        none = c("<group>", "<settings>", "estimate_name"),
+        header = "<strata>",
+        groupColumn = c( "cdm_name"),
+        hide = c("variable_name", "variable_level")
+      ),
+      download = downloadGtTable("table_measurement_numeric")
+    ),
+    plot = list(
+      title = "Plot Measurement Numeric",
+      output_type = "ui",
+      reactive = "<filtered_data> |>
+      MeasurementDiagnostics::plotMeasurementValueAsNumeric(
+      x = input$x,
+      plotType = input$plot_type,
+      facet = input$facet,
+      colour = input$colour
+      )",
+      render = "x <- <reactive_data>
+      renderInteractivePlot(x, input$interactive)",
+      filters = list(
+        interactive = list(
+          button_type = "materialSwitch",
+          label = "Interactive",
+          value = TRUE
+        ),
+        x = list(
+          button_type = "pickerInput",
+          label = "X coordinate",
+          choices = c("cdm_name", "<group>", "<strata>", "<additional>", "<settings>"),
+          selected = c("unit_concept_name"),
+          multiple = TRUE
+        ),
+        plot_type = list(
+          button_type = "pickerInput",
+          label = "Plot type",
+          choices = c("boxplot", "densityplot"),
+          selected = c("boxplot"),
+          multiple = FALSE
+        ),
+        facet = list(
+          button_type = "pickerInput",
+          label = "Facet",
+          choices = c("cdm_name", "<group>", "<strata>", "<additional>", "<settings>"),
+          selected = c("codelist_name", "concept_name"),
+          multiple = TRUE
+        ),
+        colour = list(
+          button_type = "pickerInput",
+          label = "Colour",
+          choices = c("cdm_name", "<group>", "<strata>", "<additional>", "<settings>"),
+          selected = c("cdm_name", "unit_concept_name", "<strata>"),
+          multiple = TRUE
+        )
+      ),
+      download = downloadPlot("plot_measurement_as_numeric.png")
+    )
+  )
+)
+## measurement value as concept ----
+measurementConceptPanel <- list(
+  title = "Measurement as concept",
+  icon = "cubes",
+  data = list(result_type = "measurement_value_as_concept"),
+  automatic_filters = c("group", "strata", "timing", "variable_name"),
+  filters = list(cdm_name = cdmFilter),
+  content = list(
+    table = list(
+      title = "Table Measurement Concept",
+      output_type = "gt",
+      reactive = "<filtered_data> |>
+      MeasurementDiagnostics::tableMeasurementValueAsConcept(
+      header = input$header,
+      groupColumn = input$group_column,
+      hide = input$hide,
+      settingsColumn = 'timing'
+      )",
+      render = "<reactive_data>",
+      filters = rankTableButton(
+        none = c("<group>", "<settings>", "estimate_name"),
+        header = "<strata>",
+        groupColumn = c( "cdm_name"),
+        hide = c("variable_name", "variable_level")
+      ),
+      download = downloadGtTable("table_measurement_concept")
+    ),
+    plot = list(
+      title = "Plot Measurement Concept",
+      output_type = "ui",
+      reactive = "<filtered_data> |>
+      MeasurementDiagnostics::plotMeasurementValueAsConcept(
+      facet = input$facet,
+      colour = input$colour
+      )",
+      render = "x <- <reactive_data>
+      renderInteractivePlot(x, input$interactive)",
+      filters = list(
+        interactive = list(
+          button_type = "materialSwitch",
+          label = "Interactive",
+          value = TRUE
+        ),
+        facet = list(
+          button_type = "pickerInput",
+          label = "Facet",
+          choices = c("cdm_name", "<group>", "<strata>", "<additional>", "variable_name", "variable_level", "<settings>"),
+          selected = c("codelist_name", "concept_name"),
+          multiple = TRUE
+        ),
+        colour = list(
+          button_type = "pickerInput",
+          label = "Colour",
+          choices = c("cdm_name", "<group>", "<strata>", "<additional>", "variable_name", "variable_level", "<settings>"),
+          selected = c("concept_name", "variable_level", "<strata>"),
+          multiple = TRUE
+        )
+      ),
+      download = downloadPlot("plot_measurement_as_numeric.png")
+    )
+  )
+)
 ## Survival panel ----
 survivalPanel <- list(
   title = "Survival Analyses",
@@ -2373,7 +2598,59 @@ survivalPanel <- list(
     )
   )
 )
-
+## logs ----
+logsPanel <- list(
+  title = "Logs",
+  icon = "clipboard-list",
+  data = list(result_type = "summarise_log_file"),
+  automatic_filters = c("variable_name"),
+  filters = list(cdm_name = cdmFilter),
+  content = list(
+    table = list(
+      title = "Table Logs",
+      output_type = "gt",
+      reactive = "<filtered_data> |>
+        dplyr::filter(.data$estimate_name == 'date_time') |>
+        visOmopResults::visOmopTable(
+          header = 'cdm_name',
+          hide = c('variable_level', 'estimate_name')
+        )
+      ",
+      render = "<reactive_data>",
+      download = downloadGtTable("table_log")
+    ),
+    plot = list(
+      title = "Plot Timing",
+      output_type = "ui",
+      reactive = "<filtered_data> |>
+        dplyr::filter(.data$estimate_name == 'elapsed_time') |>
+        visOmopResults::barPlot(
+          x = c('log_id', 'variable_name'),
+          y = 'elapsed_time',
+          colour = 'cdm_name',
+          position = input$position
+        )
+      ",
+      render = "x <- <reactive_data>
+      renderInteractivePlot(x, input$interactive)",
+      filters = list(
+        interactive = list(
+          button_type = "materialSwitch",
+          label = "Interactive",
+          value = TRUE
+        ),
+        position = list(
+          button_type = "pickerInput",
+          label = "Columns",
+          choices = c("dodge", "stack"),
+          selected = "stack",
+          multiple = FALSE
+        )
+      ),
+      download = downloadPlot("plot_logs.png")
+    )
+  )
+)
 ## deafult ----
 defaultPanel <- list(
   title = "<result_type>",
@@ -2457,8 +2734,14 @@ omopViewerPanels <- list(
   summarise_drug_utilisation = dusPanel,
   summarise_indication = indicationPanel,
   summarise_treatment = treatmentPanel,
+  # MeasurementDiagnostics
+  measurement_timings = measurementTimingPanel,
+  measurement_value_as_numeric = measurementNumericPanel,
+  measurement_value_as_concept = measurementConceptPanel,
   # CohortSurvival
   survival = survivalPanel,
+  # omopgenerics
+  summarise_log_file = logsPanel,
   # default
   default = defaultPanel
 ) |>

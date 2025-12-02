@@ -23,7 +23,7 @@ omopViewerPreprocess <- c(
   "",
   "source(file.path(getwd(), \"functions.R\"))",
   "",
-  "result <- omopgenerics::importSummarisedResult(file.path(getwd(), \"data\"))",
+  "result <- omopgenerics::importSummarisedResult(file.path(getwd(), \"rawData\"))",
   "data <- prepareResult(result, resultList)",
   "values <- getValues(result, resultList)",
   "",
@@ -31,7 +31,7 @@ omopViewerPreprocess <- c(
   "choices <- values",
   "selected <- getSelected(values)",
   "",
-  "save(data, choices, selected, values, file = file.path(getwd(), \"data\", \"shinyData.RData\"))",
+  "save(data, choices, selected, values, file = file.path(getwd(), \"data\", \"studyData.RData\"))",
   "",
   "rm(result, values, choices, selected, resultList, data)"
 )
@@ -39,13 +39,13 @@ omopViewerPreprocess <- c(
 # global -----
 omopViewerGlobal <- c(
   "# preprocess data if it has not been done",
-  "fileData <- file.path(getwd(), \"data\", \"shinyData.RData\")",
+  "fileData <- file.path(getwd(), \"data\", \"studyData.RData\")",
   "if (!file.exists(fileData)) {",
-  "source(file.path(getwd(), \"data\", \"preprocess.R\"))",
+  "source(file.path(getwd(), \"rawData\", \"preprocess.R\"))",
   "}",
   "",
   "# uncomment to load the raw data",
-  "# rawData <- omopgenerics::importSummarisedResult(file.path(getwd(), \"data\"))",
+  "# rawData <- omopgenerics::importSummarisedResult(file.path(getwd(), \"rawData\"))",
   "",
   "# load shiny data",
   "load(fileData)",
@@ -54,6 +54,12 @@ omopViewerGlobal <- c(
   "source(file.path(getwd(), \"functions.R\"))"
 ) |>
   styleCode()
+
+# rscignore ----
+rscignore <- c(
+  "rawData"
+) |>
+  paste0(collapse = "\n")
 
 # logos ----
 # TO ADD NEW LOGOS YOU HAVE TO ADD THEM IN `inst/logos/`
@@ -72,7 +78,7 @@ backgroundKeywords <- dplyr::tribble(
   "footer", "bslib::card_footer", "https://rstudio.github.io/bslib//reference/card_body.html"
 )
 
-# default structure
+# default structure ----
 panelStructureDefaults <- list(
   OmopSketch = c(
     "summarise_omop_snapshot", "summarise_observation_period",
@@ -96,12 +102,68 @@ panelStructureDefaults <- list(
     "summarise_dose_coverage", "summarise_proportion_of_patients_covered",
     "summarise_drug_restart", "summarise_drug_utilisation",
     "summarise_indication", "summarise_treatment"
+  ),
+  MeasurementDiagnostics =c(
+    "measurement_timings", "measurement_value_as_numeric",
+    "measurement_value_as_concept"
   )
 )
+
+# report ----
+reportTemplate <- '---
+title: "<title>"
+format:
+  docx:
+    <template>
+execute:
+  echo: false
+  message: false
+  warning: false
+lof: true
+---
+
+```{r}
+# Load necessary packages ----
+<packages>
+
+# Load results stored in the package ----
+fileData <- file.path(getwd(), "data", "studyData.RData")
+if (!file.exists(fileData)) {
+  source(file.path(getwd(), "rawData", "preprocess.R"))
+}
+
+# uncomment to load the raw data
+# rawData <- omopgenerics::importSummarisedResult(file.path(getwd(), \"rawData\"))
+
+# load data
+load(fileData)
+
+# source functions
+source(file.path(getwd(), \"functions.R\"))
+
+# Global options ----
+knitr::opts_chunk$set(
+  out.width  = "95%",  # figures occupy ~95% of document width
+  out.height = "auto",
+  dpi        = 320,    # ensure figure quality
+  fig.width  = 6,      # default aspect ratio (can be overridden per-figure)
+  fig.height = 3,
+  results    = "asis"  # enable Markdown produced via cat() inside chunks
+)
+
+setGlobalPlotOptions(type = "ggplot")
+setGlobalTableOptions(type = "flextable")
+
+# Calibri font in ggplot figures (requires the extrafont package to be available)
+# Read vignette on styles to learn more
+requireExtrafont()
+```
+
+<code>'
 
 # add internal data ----
 usethis::use_data(
   omopViewerProj, omopViewerGlobal, omopViewerPreprocess, logoKeywords,
-  backgroundKeywords, panelStructureDefaults,
+  backgroundKeywords, panelStructureDefaults, rscignore, reportTemplate,
   overwrite = TRUE, internal = TRUE
 )

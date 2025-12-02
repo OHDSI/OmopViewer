@@ -59,7 +59,9 @@ downloadRawDataServer <- function(data) {
     content = function(file) {
       [data] |>
         omopgenerics::bind() |>
-        omopgenerics::exportSummarisedResult(fileName = file)
+        omopgenerics::exportSummarisedResult(
+          fileName = file, logFile = NULL, logSqlPath = NULL
+        )
     }
   )' |>
     glue::glue(.open = "[", .close = "]") |>
