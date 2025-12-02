@@ -4,7 +4,7 @@
 #' <https://github.com/OHDSI/OmopViewer/blob/main/data-raw/results.R>.
 #'
 #' @format ## `omopViewerResults`
-#' A `summarised_result` object with 12,017 rows:
+#' A `summarised_result` object with 12,017 rows
 "omopViewerResults"
 
 #' Panels defined in the package.
@@ -13,5 +13,5 @@
 #' <https://github.com/OHDSI/OmopViewer/blob/main/data-raw/panels.R>.
 #'
 #' @format ## `omopViewerPanels`
-#' A list of 26 `omopviewer_panel` obejcts:
+#' A list of 26 `omopviewer_panel` obejcts
 "omopViewerPanels"

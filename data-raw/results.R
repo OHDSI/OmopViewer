@@ -213,6 +213,29 @@ treatments <- cdm$acetaminophen |>
     treatmentCohortName = "alternative"
   )
 
+# cohort survival
+omopgenerics::logMessage("Instantiate death cohort")
+cdm$death_cohort <- CohortConstructor::deathCohort(cdm = cdm, name = "death_cohort")
+
+omopgenerics::logMessage("Single event survival")
+survivalSingle <- CohortSurvival::estimateSingleEventSurvival(
+  cdm = cdm,
+  targetCohortTable = "acetaminophen",
+  outcomeCohortTable = "alternative",
+  censorOnCohortExit = FALSE,
+  followUpDays = 365
+)
+
+omopgenerics::logMessage("Competing risk survival")
+survivalCompetting <- CohortSurvival::estimateCompetingRiskSurvival(
+  cdm = cdm,
+  targetCohortTable = "acetaminophen",
+  outcomeCohortTable = "alternative",
+  outcomeCohortId = 2,
+  competingOutcomeCohortTable = "death_cohort",
+  followUpDays = 365
+)
+
 # MeasurementDiagnostics
 omopgenerics::logMessage("Run measurement diagnostics for concept")
 cdm <- MeasurementDiagnostics::mockMeasurementDiagnostics(nPerson = 1000)
@@ -244,6 +267,8 @@ omopViewerResults <- omopgenerics::bind(
   incidence, pointPrevalence,
   # DrugUtilisation
   treatmentPersistence, doseCoverage, indication, drugUtilisation, drugRestart, treatments,
+  # CohortSurvival
+  survivalSingle, survivalCompetting,
   # MeasurementDiagnostics
   measurementUse, measurementCohortUse,
   # log

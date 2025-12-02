@@ -2491,6 +2491,113 @@ measurementConceptPanel <- list(
     )
   )
 )
+## Survival panel ----
+survivalPanel <- list(
+  title = "Survival Analyses",
+  icon = "stairs",
+  data = list(result_type = c(
+    "survival_summary", "survival_estimates", "survival_events",
+    "survival_attrition"
+  )),
+  automatic_filters = c("group", "strata", "variable_level", "settings"),
+  filters = list(cdm_name = cdmFilter),
+  exclude_filters = c("analyses_type", "eventgap"),
+  content = list(
+    table_survival = list(
+      title = "Table Summary",
+      output_type = "gt",
+      reactive = "<filtered_data> |>
+      CohortSurvival::tableSurvival(
+      timeScale = input$time_scale,
+      type = 'gt'
+      )",
+      render = "<reactive_data>",
+      filters = list(
+        time_scale = list(
+          button_type = "pickerInput",
+          label = "Time Scale",
+          choices = c("days", "months", "years"),
+          selected = "days",
+          multiple = FALSE
+        )
+      ),
+      download = downloadGtTable("table_survival_summary")
+    ),
+    table_events = list(
+      title = "Table Events",
+      output_type = "gt",
+      reactive = "<filtered_data> |>
+      CohortSurvival::tableSurvivalEvents(
+      type = 'gt'
+      )",
+      render = "<reactive_data>",
+      download = downloadGtTable("table_survival_events")
+    ),
+    table_attrition = list(
+      title = "Table Attrition",
+      output_type = "gt",
+      reactive = "<filtered_data> |>
+      CohortSurvival::tableSurvivalAttrition(
+      type = 'gt'
+      )",
+      render = "<reactive_data>",
+      download = downloadGtTable("table_survival_attrition")
+    ),
+    plot_survival = list(
+      title = "Plot Survival",
+      output_type = "ui",
+      reactive = "<filtered_data> |>
+      CohortSurvival::plotSurvival(
+      facet = input$facet,
+      colour = input$colour,
+      cumulativeFailure = input$cumulative_failure,
+      logLog = input$log_log,
+      timeScale = input$time_scale
+      )",
+      render = "x <- <reactive_data>
+      renderInteractivePlot(x, input$interactive)",
+      filters = list(
+        interactive = list(
+          button_type = "materialSwitch",
+          label = "Interactive",
+          value = TRUE
+        ),
+        cumulative_failure = list(
+          button_type = "materialSwitch",
+          label = "Cumulative failure",
+          value = FALSE
+        ),
+        log_log = list(
+          button_type = "materialSwitch",
+          label = "Log-Log plot",
+          value = FALSE
+        ),
+        time_scale = list(
+          button_type = "pickerInput",
+          label = "Time Scale",
+          choices = c("days", "months", "years"),
+          selected = "days",
+          multiple = FALSE
+        ),
+        facet = list(
+          button_type = "pickerInput",
+          label = "Facet",
+          choices = c("cdm_name", "<group>", "<strata>", "<additional>", "<settings>"),
+          selected = c("cdm_name"),
+          multiple = TRUE
+        ),
+        colour = list(
+          button_type = "pickerInput",
+          label = "Colour",
+          choices = c("cdm_name", "<group>", "<strata>", "<additional>", "<settings>"),
+          selected = c("<group>"),
+          multiple = TRUE
+        )
+      ),
+      download = downloadPlot("plot_survival.png")
+    )
+  )
+)
 ## logs ----
 logsPanel <- list(
   title = "Logs",
@@ -2631,6 +2738,8 @@ omopViewerPanels <- list(
   measurement_timings = measurementTimingPanel,
   measurement_value_as_numeric = measurementNumericPanel,
   measurement_value_as_concept = measurementConceptPanel,
+  # CohortSurvival
+  survival = survivalPanel,
   # omopgenerics
   summarise_log_file = logsPanel,
   # default
