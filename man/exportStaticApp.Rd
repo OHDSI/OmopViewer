@@ -11,9 +11,11 @@ exportStaticApp(
   title = "",
   background = TRUE,
   summary = TRUE,
+  report = FALSE,
   panelDetails = panelDetailsFromResult(result),
   panelStructure = NULL,
   theme = NULL,
+  template = NULL,
   updateButtons = TRUE,
   includeOneChoiceFilters = TRUE,
   open = rlang::is_interactive()
@@ -35,6 +37,8 @@ content will be controlled from the generated background.md file.}
 \item{summary}{Whether to include a panel with a summary of content in the
 \code{result}.}
 
+\item{report}{Whether to include a quarto report.}
+
 \item{panelDetails}{A named list to provide details for each one of the
 panels, such as: result_id, result_type, title, icon, filters and content.
 By default it is created using the \code{panelDetailsFromResult()} function.}
@@ -48,6 +52,9 @@ select a predefined theme provided by the package (e.g., \code{"theme1"}), or
 define a custom theme using \code{bslib::bs_theme()}. If using a custom theme, it
 must be provided as a character string (e.g.,
 \code{"bslib::bs_theme(bg = 'white', fg = 'black')"}).}
+
+\item{template}{Path to a template \code{.docx} document to be used for the
+report.}
 
 \item{updateButtons}{Whether to include update buttons for visualisations.}
 
