@@ -330,7 +330,19 @@ filterResult <- function(result, filt) {
       rlang::eval_tidy()
     result <- omopgenerics::filterSettings(result, !!!q)
   }
-  return(result)
+  set <- omopgenerics::settings(result)
+  # remove columns that all are NA
+  cols <- colnames(set) |>
+    purrr::keep(\(x) any(!is.na(x)))
+  set <- set |>
+    dplyr::select(dplyr::all_of(cols))
+  # replace NA for '-NA-'
+  set <- set |>
+    dplyr::mutate(dplyr::across(
+      .cols = dplyr::where(is.character),
+      .fns = \(x) dplyr::coalesce(x, "-NA-")
+    ))
+  omopgenerics::newSummarisedResult(x = result, settings = set)
 }
 getValues <- function(result, resultList) {
   resultList |>
@@ -389,3 +401,8 @@ renderInteractivePlot <- function(plt, interactive) {
     shiny::renderPlot(plt)
   }
 }
+updateMessage <- shiny::div(
+  style = "font-size: 8pt; color: var(--bs-danger);",
+  shiny::icon("circle-exclamation"),
+  "Filters have changed please consider to use the update content button!"
+)

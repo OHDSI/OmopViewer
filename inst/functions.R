@@ -45,9 +45,9 @@ backgroundCard <- function(fileName) {
     # content
     list(
       keys$header,
-      bslib::card_body(shiny::HTML(markdown::markdownToHTML(
+      bslib::card_body(shiny::HTML(suppressWarnings(markdown::markdownToHTML(
         file = tmpFile, fragment.only = TRUE
-      ))),
+      )))),
       keys$footer
     ) |>
       purrr::compact()
@@ -330,7 +330,19 @@ filterResult <- function(result, filt) {
       rlang::eval_tidy()
     result <- omopgenerics::filterSettings(result, !!!q)
   }
-  return(result)
+  set <- omopgenerics::settings(result)
+  # remove columns that all are NA
+  cols <- colnames(set) |>
+    purrr::keep(\(x) any(!is.na(x)))
+  set <- set |>
+    dplyr::select(dplyr::all_of(cols))
+  # replace NA for '-NA-'
+  set <- set |>
+    dplyr::mutate(dplyr::across(
+      .cols = dplyr::where(is.character),
+      .fns = \(x) dplyr::coalesce(x, "-NA-")
+    ))
+  omopgenerics::newSummarisedResult(x = result, settings = set)
 }
 getValues <- function(result, resultList) {
   resultList |>

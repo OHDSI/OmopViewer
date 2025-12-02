@@ -41,6 +41,10 @@ jobs:
       - name: Create shiny app
         run: Rscript extras/createShiny.R
 
+      - name: Create RData file
+        run: Rscript -e 'source(file.path(getwd(), "rawData", "preprocess.R"))'
+        working-directory: extras/shiny
+
       - name: Create renv file
         run: Rscript -e 'renv::init()'
         working-directory: extras/shiny
