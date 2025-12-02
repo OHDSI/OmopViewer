@@ -129,7 +129,12 @@ exportData <- function(result, preprocess, directory) {
   dataPath <- file.path(directory, "rawData")
   dir.create(dataPath, showWarnings = FALSE)
   omopgenerics::exportSummarisedResult(
-    result = result, minCellCount = 0, fileName = "results.csv", path = dataPath
+    result = result,
+    minCellCount = 0,
+    fileName = "results.csv",
+    path = dataPath,
+    logFile = NULL,
+    logSqlPath = NULL
   )
   writeLines(preprocess, con = file.path(dataPath, "preprocess.R"))
   cont <- c(
@@ -142,7 +147,7 @@ exportData <- function(result, preprocess, directory) {
   # export data
   dataPath <- file.path(directory, "data")
   dir.create(dataPath, showWarnings = FALSE)
-  cont <- c("# data", "", "This folder contains the `.RData` file that feeds the shiny App.")
+  cont <- c("# data", "", "This folder contains the `.RData` file that feeds the shiny App and report.")
   writeLines(cont, con = file.path(dataPath, "README.md"))
 
   # rscignore
