@@ -49,6 +49,7 @@ defaultPanels()
 #> [31] "measurement_timings"                     
 #> [32] "measurement_value_as_numeric"            
 #> [33] "measurement_value_as_concept"            
-#> [34] "summarise_log_file"                      
-#> [35] "default"                                 
+#> [34] "survival"                                
+#> [35] "summarise_log_file"                      
+#> [36] "default"                                 
 ```

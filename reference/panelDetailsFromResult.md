@@ -229,6 +229,13 @@ panelDetailsFromResult(omopViewerResults)
 #> •  filters: 1 filters + 4 automatic filters
 #> •  content: Table Measurement Concept (gt); Plot Measurement Concept (ui)
 #> 
+#> $survival
+#> Survival Analyses (OmopViewer panel)
+#> •  icon: stairs
+#> •  data: result_type: <survival_summary>, <survival_estimates>, <survival_events>, <survival_attrition>
+#> •  filters: 1 filters + 4 automatic filters
+#> •  content: Table Summary (gt); Table Events (gt); Table Attrition (gt); Plot Survival (ui)
+#> 
 #> $summarise_log_file
 #> Logs (OmopViewer panel)
 #> •  icon: clipboard-list

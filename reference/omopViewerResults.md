@@ -13,4 +13,4 @@ omopViewerResults
 
 ### `omopViewerResults`
 
-A `summarised_result` object with 12,017 rows:
+A `summarised_result` object with 12,017 rows

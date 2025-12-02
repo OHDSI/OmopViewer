@@ -13,4 +13,4 @@ omopViewerPanels
 
 ### `omopViewerPanels`
 
-A list of 26 `omopviewer_panel` obejcts:
+A list of 26 `omopviewer_panel` obejcts

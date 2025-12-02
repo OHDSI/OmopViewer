@@ -30,15 +30,15 @@ illustration:
 ``` r
 # Inspect the structure of the sample data
 summary(omopViewerResults)
-#> A summarised_result object with 46023 rows, 102 different result_id, 1 and 1
-#> different cdm names, and 45 settings.
+#> A summarised_result object with 53065 rows, 122 different result_id, 1 and 1
+#> different cdm names, and 53 settings.
 #> CDM names: synthea-covid19-200k and mock database.
 #> Settings: result_type, package_name, package_version, group, strata,
 #> additional, min_cell_count, analysis, analysis_censor_cohort_name,
 #> analysis_complete_database_intervals, analysis_full_contribution,
 #> analysis_level, analysis_outcome_washout, analysis_repeated_events,
-#> analysis_type, censor_date, cohort_definition_id, cohort_table_name, …, type,
-#> and unknown_indication_table.
+#> analysis_type, censor_date, censor_on_cohort_exit, cohort_definition_id, …,
+#> type, and unknown_indication_table.
 ```
 
 ## Subsetting the Data
@@ -84,7 +84,7 @@ exportStaticApp(result = result, directory = dir)
 #> ✔ Data processed: 3 panels idenfied: `summarise_omop_snapshot`,
 #>   `summarise_characteristics`, and `incidence`.
 #> ℹ Creating `shiny` from provided data
-#> ✔ Shiny created in: /tmp/RtmprPi41v/shiny
+#> ✔ Shiny created in: /tmp/RtmpPl4dm1/shiny
 ```
 
 Note that by default if executed in an interactive environment like *R
@@ -133,7 +133,7 @@ cat(list.files(path = here::here(dir, "shiny"), recursive = TRUE), sep = "\n")
 The shiny generated contained a total of 3 panels, this was determined
 by the argument `panelDetails`. Each element in `panelDetails` will be
 used to create a different panel in the shiny app. The package contains
-in total 35 predefined panels:
+in total 36 predefined panels:
 
 ``` r
 omopViewerPanels
@@ -367,6 +367,13 @@ omopViewerPanels
 #> •  data: result_type: <measurement_value_as_concept>
 #> •  filters: 1 filters + 4 automatic filters
 #> •  content: Table Measurement Concept (gt); Plot Measurement Concept (ui)
+#> 
+#> $survival
+#> Survival Analyses (OmopViewer panel)
+#> •  icon: stairs
+#> •  data: result_type: <survival_summary>, <survival_estimates>, <survival_events>, <survival_attrition>
+#> •  filters: 1 filters + 4 automatic filters
+#> •  content: Table Summary (gt); Table Events (gt); Table Attrition (gt); Plot Survival (ui)
 #> 
 #> $summarise_log_file
 #> Logs (OmopViewer panel)
