@@ -28,7 +28,7 @@ already seen this structure in action. Here’s a quick recap:
 
 ``` r
 str(omopViewerPanels$summarise_omop_snapshot, max.level = 2)
-#> List of 6
+#> List of 7
 #>  $ title            : chr "Snapshot"
 #>  $ icon             : chr "camera"
 #>  $ data             :List of 1
@@ -38,6 +38,9 @@ str(omopViewerPanels$summarise_omop_snapshot, max.level = 2)
 #>   ..$ cdm_name:List of 7
 #>  $ content          :List of 1
 #>   ..$ table:List of 5
+#>  $ report           :List of 2
+#>   ..$ title: chr "Database metadata"
+#>   ..$      :List of 3
 #>  - attr(*, "class")= chr "omopviewer_panel"
 ```
 

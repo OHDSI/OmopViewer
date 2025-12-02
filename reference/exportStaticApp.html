@@ -62,9 +62,11 @@
 <span>  title <span class="op">=</span> <span class="st">""</span>,</span>
 <span>  background <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  summary <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  report <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  panelDetails <span class="op">=</span> <span class="fu"><a href="panelDetailsFromResult.html">panelDetailsFromResult</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span>,</span>
 <span>  panelStructure <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  theme <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  template <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  updateButtons <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  includeOneChoiceFilters <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  open <span class="op">=</span> <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/is_interactive.html" class="external-link">is_interactive</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -102,6 +104,10 @@ content will be controlled from the generated background.md file.</p></dd>
 <code>result</code>.</p></dd>
 
 
+<dt id="arg-report">report<a class="anchor" aria-label="anchor" href="#arg-report"></a></dt>
+<dd><p>Whether to include a quarto report.</p></dd>
+
+
 <dt id="arg-paneldetails">panelDetails<a class="anchor" aria-label="anchor" href="#arg-paneldetails"></a></dt>
 <dd><p>A named list to provide details for each one of the
 panels, such as: result_id, result_type, title, icon, filters and content.
@@ -120,6 +126,11 @@ select a predefined theme provided by the package (e.g., <code>"theme1"</code>),
 define a custom theme using <code><a href="https://rstudio.github.io/bslib/reference/bs_theme.html" class="external-link">bslib::bs_theme()</a></code>. If using a custom theme, it
 must be provided as a character string (e.g.,
 <code>"bslib::bs_theme(bg = 'white', fg = 'black')"</code>).</p></dd>
+
+
+<dt id="arg-template">template<a class="anchor" aria-label="anchor" href="#arg-template"></a></dt>
+<dd><p>Path to a template <code>.docx</code> document to be used for the
+report.</p></dd>
 
 
 <dt id="arg-updatebuttons">updateButtons<a class="anchor" aria-label="anchor" href="#arg-updatebuttons"></a></dt>
@@ -148,8 +159,8 @@ with just one choice.</p></dd>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Processing data</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> No panels identified, generated shiny will be empty.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Creating shiny from provided data</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Shiny created in: <span style="color: #0000BB;">/tmp/RtmpAKxRwl/shiny</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Creating `shiny` from provided data</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Shiny created in: <span style="color: #0000BB;">/tmp/RtmplndVNW/shiny</span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

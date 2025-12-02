@@ -152,8 +152,8 @@ the app and the processed data (a <summarised_result> object):</summarised_resul
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Processing data</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Data processed: 3 panels idenfied: `summarise_omop_snapshot`,</span></span>
 <span><span class="co">#&gt;   `summarise_characteristics`, and `incidence`.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Creating shiny from provided data</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Shiny created in: <span style="color: #0000BB;">/tmp/RtmpD73HKg/shiny</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Creating `shiny` from provided data</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Shiny created in: <span style="color: #0000BB;">/tmp/RtmpcLVa39/shiny</span></span></span></code></pre></div>
 <p>Note that by default if executed in an interactive environment like
 <em>R Studio</em> the project will be opened in a separated window. Use
 <code>open = FALSE</code> if you do not wish to open the shiny app after
@@ -167,10 +167,12 @@ specified directory along with some files:</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span>path <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org/reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="va">dir</span>, <span class="st">"shiny"</span><span class="op">)</span>, recursive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; _brand.yml</span></span>
 <span><span class="co">#&gt; background.md</span></span>
-<span><span class="co">#&gt; data/preprocess.R</span></span>
-<span><span class="co">#&gt; data/results.csv</span></span>
+<span><span class="co">#&gt; data/README.md</span></span>
 <span><span class="co">#&gt; functions.R</span></span>
 <span><span class="co">#&gt; global.R</span></span>
+<span><span class="co">#&gt; rawData/preprocess.R</span></span>
+<span><span class="co">#&gt; rawData/README.md</span></span>
+<span><span class="co">#&gt; rawData/results.csv</span></span>
 <span><span class="co">#&gt; server.R</span></span>
 <span><span class="co">#&gt; shiny.Rproj</span></span>
 <span><span class="co">#&gt; ui.R</span></span>

@@ -12,9 +12,11 @@ exportStaticApp(
   title = "",
   background = TRUE,
   summary = TRUE,
+  report = FALSE,
   panelDetails = panelDetailsFromResult(result),
   panelStructure = NULL,
   theme = NULL,
+  template = NULL,
   updateButtons = TRUE,
   includeOneChoiceFilters = TRUE,
   open = rlang::is_interactive()
@@ -49,6 +51,10 @@ exportStaticApp(
 
   Whether to include a panel with a summary of content in the `result`.
 
+- report:
+
+  Whether to include a quarto report.
+
 - panelDetails:
 
   A named list to provide details for each one of the panels, such as:
@@ -71,6 +77,10 @@ exportStaticApp(
   [`bslib::bs_theme()`](https://rstudio.github.io/bslib/reference/bs_theme.html).
   If using a custom theme, it must be provided as a character string
   (e.g., `"bslib::bs_theme(bg = 'white', fg = 'black')"`).
+
+- template:
+
+  Path to a template `.docx` document to be used for the report.
 
 - updateButtons:
 
@@ -97,6 +107,6 @@ exportStaticApp(
 )
 #> ℹ Processing data
 #> ! No panels identified, generated shiny will be empty.
-#> ℹ Creating shiny from provided data
-#> ✔ Shiny created in: /tmp/RtmpAKxRwl/shiny
+#> ℹ Creating `shiny` from provided data
+#> ✔ Shiny created in: /tmp/RtmplndVNW/shiny
 ```
