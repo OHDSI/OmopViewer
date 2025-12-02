@@ -214,11 +214,13 @@ treatments <- cdm$acetaminophen |>
   )
 
 # MeasurementDiagnostics
+omopgenerics::logMessage("Run measurement diagnostics for concept")
 cdm <- MeasurementDiagnostics::mockMeasurementDiagnostics(nPerson = 1000)
 measurementUse <- MeasurementDiagnostics::summariseMeasurementUse(
   cdm = cdm,
   codes = list("test_codelist" = c(3001467L, 45875977L))
 )
+omopgenerics::logMessage("Run measurement diagnostics for cohort")
 measurementCohortUse <- MeasurementDiagnostics::summariseCohortMeasurementUse(
   codes = list("test_codelist" = c(3001467L, 45875977L)),
   cohort = cdm$my_cohort,
