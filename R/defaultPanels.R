@@ -59,14 +59,15 @@ panelDetailsFromResult <- function(result,
       if (is.null(x$data$result_type)) {
         FALSE
       } else {
-        x$data$result_type %in% resultTypes
+        all(x$data$result_type %in% resultTypes)
       }
     })
 
   # present default types
   presentResultType <- panels |>
-    purrr::map_chr(\(x) x$data$result_type) |>
+    purrr::map(\(x) x$data$result_type) |>
     unname() |>
+    unlist() |>
     unique()
   defaultPanels <- resultTypes[!resultTypes %in% presentResultType] |>
     rlang::set_names() |>
