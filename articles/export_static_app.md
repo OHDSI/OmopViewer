@@ -30,7 +30,7 @@ illustration:
 ``` r
 # Inspect the structure of the sample data
 summary(omopViewerResults)
-#> A summarised_result object with 39680 rows, 95 different result_id, 1 different
+#> A summarised_result object with 39743 rows, 96 different result_id, 1 different
 #> cdm names, and 45 settings.
 #> CDM names: synthea-covid19-200k.
 #> Settings: result_type, package_name, package_version, group, strata,
@@ -84,7 +84,7 @@ exportStaticApp(result = result, directory = dir)
 #> ✔ Data processed: 3 panels idenfied: `summarise_omop_snapshot`,
 #>   `summarise_characteristics`, and `incidence`.
 #> ℹ Creating shiny from provided data
-#> ✔ Shiny created in: /tmp/Rtmps6Epw5/shiny
+#> ✔ Shiny created in: /tmp/RtmpD73HKg/shiny
 ```
 
 Note that by default if executed in an interactive environment like *R
@@ -131,7 +131,7 @@ cat(list.files(path = here::here(dir, "shiny"), recursive = TRUE), sep = "\n")
 The shiny generated contained a total of 3 panels, this was determined
 by the argument `panelDetails`. Each element in `panelDetails` will be
 used to create a different panel in the shiny app. The package contains
-in total 31 predefined panels:
+in total 32 predefined panels:
 
 ``` r
 omopViewerPanels
@@ -344,6 +344,13 @@ omopViewerPanels
 #> •  data: result_type: <summarise_treatment>
 #> •  filters: 1 filters + 7 automatic filters
 #> •  content: Table Treatments (gt); Plot Treatment (ui)
+#> 
+#> $summarise_log_file
+#> Logs (OmopViewer panel)
+#> •  icon: clipboard-list
+#> •  data: result_type: <summarise_log_file>
+#> •  filters: 1 filters + 1 automatic filters
+#> •  content: Table Logs (gt); Plot Timing (ui)
 #> 
 #> $default
 #> <result_type> (OmopViewer panel)

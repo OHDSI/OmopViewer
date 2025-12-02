@@ -46,5 +46,6 @@ defaultPanels()
 #> [28] "summarise_drug_utilisation"              
 #> [29] "summarise_indication"                    
 #> [30] "summarise_treatment"                     
-#> [31] "default"                                 
+#> [31] "summarise_log_file"                      
+#> [32] "default"                                 
 ```

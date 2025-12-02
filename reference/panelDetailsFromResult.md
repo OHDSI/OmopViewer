@@ -208,4 +208,11 @@ panelDetailsFromResult(omopViewerResults)
 #> •  filters: 1 filters + 7 automatic filters
 #> •  content: Table Treatments (gt); Plot Treatment (ui)
 #> 
+#> $summarise_log_file
+#> Logs (OmopViewer panel)
+#> •  icon: clipboard-list
+#> •  data: result_type: <summarise_log_file>
+#> •  filters: 1 filters + 1 automatic filters
+#> •  content: Table Logs (gt); Plot Timing (ui)
+#> 
 ```
