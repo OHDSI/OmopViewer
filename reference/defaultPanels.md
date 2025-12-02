@@ -46,6 +46,9 @@ defaultPanels()
 #> [28] "summarise_drug_utilisation"              
 #> [29] "summarise_indication"                    
 #> [30] "summarise_treatment"                     
-#> [31] "summarise_log_file"                      
-#> [32] "default"                                 
+#> [31] "measurement_timings"                     
+#> [32] "measurement_value_as_numeric"            
+#> [33] "measurement_value_as_concept"            
+#> [34] "summarise_log_file"                      
+#> [35] "default"                                 
 ```

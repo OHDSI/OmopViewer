@@ -30,9 +30,9 @@ illustration:
 ``` r
 # Inspect the structure of the sample data
 summary(omopViewerResults)
-#> A summarised_result object with 39743 rows, 96 different result_id, 1 different
-#> cdm names, and 45 settings.
-#> CDM names: synthea-covid19-200k.
+#> A summarised_result object with 46023 rows, 102 different result_id, 1 and 1
+#> different cdm names, and 45 settings.
+#> CDM names: synthea-covid19-200k and mock database.
 #> Settings: result_type, package_name, package_version, group, strata,
 #> additional, min_cell_count, analysis, analysis_censor_cohort_name,
 #> analysis_complete_database_intervals, analysis_full_contribution,
@@ -84,7 +84,7 @@ exportStaticApp(result = result, directory = dir)
 #> ✔ Data processed: 3 panels idenfied: `summarise_omop_snapshot`,
 #>   `summarise_characteristics`, and `incidence`.
 #> ℹ Creating `shiny` from provided data
-#> ✔ Shiny created in: /tmp/RtmpcLVa39/shiny
+#> ✔ Shiny created in: /tmp/RtmprPi41v/shiny
 ```
 
 Note that by default if executed in an interactive environment like *R
@@ -133,7 +133,7 @@ cat(list.files(path = here::here(dir, "shiny"), recursive = TRUE), sep = "\n")
 The shiny generated contained a total of 3 panels, this was determined
 by the argument `panelDetails`. Each element in `panelDetails` will be
 used to create a different panel in the shiny app. The package contains
-in total 32 predefined panels:
+in total 35 predefined panels:
 
 ``` r
 omopViewerPanels
@@ -346,6 +346,27 @@ omopViewerPanels
 #> •  data: result_type: <summarise_treatment>
 #> •  filters: 1 filters + 7 automatic filters
 #> •  content: Table Treatments (gt); Plot Treatment (ui)
+#> 
+#> $measurement_timings
+#> Measurement timing (OmopViewer panel)
+#> •  icon: timeline
+#> •  data: result_type: <measurement_timings>
+#> •  filters: 1 filters + 4 automatic filters
+#> •  content: Table Measurement Timing (gt); Plot Measurement Timing (ui)
+#> 
+#> $measurement_value_as_numeric
+#> Measurement as numeric (OmopViewer panel)
+#> •  icon: gauge-high
+#> •  data: result_type: <measurement_value_as_numeric>
+#> •  filters: 1 filters + 4 automatic filters
+#> •  content: Table Measurement Numeric (gt); Plot Measurement Numeric (ui)
+#> 
+#> $measurement_value_as_concept
+#> Measurement as concept (OmopViewer panel)
+#> •  icon: cubes
+#> •  data: result_type: <measurement_value_as_concept>
+#> •  filters: 1 filters + 4 automatic filters
+#> •  content: Table Measurement Concept (gt); Plot Measurement Concept (ui)
 #> 
 #> $summarise_log_file
 #> Logs (OmopViewer panel)

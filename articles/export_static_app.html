@@ -104,9 +104,9 @@ package for illustration:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Inspect the structure of the sample data</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">omopViewerResults</span><span class="op">)</span></span>
-<span><span class="co">#&gt; A summarised_result object with 39743 rows, 96 different result_id, 1 different</span></span>
-<span><span class="co">#&gt; cdm names, and 45 settings.</span></span>
-<span><span class="co">#&gt; CDM names: synthea-covid19-200k.</span></span>
+<span><span class="co">#&gt; A summarised_result object with 46023 rows, 102 different result_id, 1 and 1</span></span>
+<span><span class="co">#&gt; different cdm names, and 45 settings.</span></span>
+<span><span class="co">#&gt; CDM names: synthea-covid19-200k and mock database.</span></span>
 <span><span class="co">#&gt; Settings: result_type, package_name, package_version, group, strata,</span></span>
 <span><span class="co">#&gt; additional, min_cell_count, analysis, analysis_censor_cohort_name,</span></span>
 <span><span class="co">#&gt; analysis_complete_database_intervals, analysis_full_contribution,</span></span>
@@ -153,7 +153,7 @@ the app and the processed data (a <summarised_result> object):</summarised_resul
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Data processed: 3 panels idenfied: `summarise_omop_snapshot`,</span></span>
 <span><span class="co">#&gt;   `summarise_characteristics`, and `incidence`.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Creating `shiny` from provided data</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Shiny created in: <span style="color: #0000BB;">/tmp/RtmpcLVa39/shiny</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Shiny created in: <span style="color: #0000BB;">/tmp/RtmprPi41v/shiny</span></span></span></code></pre></div>
 <p>Note that by default if executed in an interactive environment like
 <em>R Studio</em> the project will be opened in a separated window. Use
 <code>open = FALSE</code> if you do not wish to open the shiny app after
@@ -201,7 +201,7 @@ by default <code>hds_logo.svg</code> and
 <p>The shiny generated contained a total of 3 panels, this was
 determined by the argument <code>panelDetails</code>. Each element in
 <code>panelDetails</code> will be used to create a different panel in
-the shiny app. The package contains in total 32 predefined panels:</p>
+the shiny app. The package contains in total 35 predefined panels:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">omopViewerPanels</span></span>
 <span><span class="co">#&gt; $summarise_omop_snapshot</span></span>
@@ -413,6 +413,27 @@ the shiny app. The package contains in total 32 predefined panels:</p>
 <span><span class="co">#&gt; • <span style="font-weight: bold;"> data:</span> result_type: &lt;summarise_treatment&gt;</span></span>
 <span><span class="co">#&gt; • <span style="font-weight: bold;"> filters:</span> 1 filters + 7 automatic filters</span></span>
 <span><span class="co">#&gt; • <span style="font-weight: bold;"> content:</span> <span style="color: #0000BB; font-weight: bold;">Table Treatments</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB; font-weight: bold;">Plot Treatment</span> (<span style="font-style: italic;">ui</span>)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $measurement_timings</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">Measurement timing</span> (OmopViewer panel)</span></span>
+<span><span class="co">#&gt; • <span style="font-weight: bold;"> icon:</span> timeline</span></span>
+<span><span class="co">#&gt; • <span style="font-weight: bold;"> data:</span> result_type: &lt;measurement_timings&gt;</span></span>
+<span><span class="co">#&gt; • <span style="font-weight: bold;"> filters:</span> 1 filters + 4 automatic filters</span></span>
+<span><span class="co">#&gt; • <span style="font-weight: bold;"> content:</span> <span style="color: #0000BB; font-weight: bold;">Table Measurement Timing</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB; font-weight: bold;">Plot Measurement Timing</span> (<span style="font-style: italic;">ui</span>)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $measurement_value_as_numeric</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">Measurement as numeric</span> (OmopViewer panel)</span></span>
+<span><span class="co">#&gt; • <span style="font-weight: bold;"> icon:</span> gauge-high</span></span>
+<span><span class="co">#&gt; • <span style="font-weight: bold;"> data:</span> result_type: &lt;measurement_value_as_numeric&gt;</span></span>
+<span><span class="co">#&gt; • <span style="font-weight: bold;"> filters:</span> 1 filters + 4 automatic filters</span></span>
+<span><span class="co">#&gt; • <span style="font-weight: bold;"> content:</span> <span style="color: #0000BB; font-weight: bold;">Table Measurement Numeric</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB; font-weight: bold;">Plot Measurement Numeric</span> (<span style="font-style: italic;">ui</span>)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $measurement_value_as_concept</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">Measurement as concept</span> (OmopViewer panel)</span></span>
+<span><span class="co">#&gt; • <span style="font-weight: bold;"> icon:</span> cubes</span></span>
+<span><span class="co">#&gt; • <span style="font-weight: bold;"> data:</span> result_type: &lt;measurement_value_as_concept&gt;</span></span>
+<span><span class="co">#&gt; • <span style="font-weight: bold;"> filters:</span> 1 filters + 4 automatic filters</span></span>
+<span><span class="co">#&gt; • <span style="font-weight: bold;"> content:</span> <span style="color: #0000BB; font-weight: bold;">Table Measurement Concept</span> (<span style="font-style: italic;">gt</span>); <span style="color: #0000BB; font-weight: bold;">Plot Measurement Concept</span> (<span style="font-style: italic;">ui</span>)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $summarise_log_file</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">Logs</span> (OmopViewer panel)</span></span>
