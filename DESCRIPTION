@@ -69,6 +69,7 @@ Suggests:
     htmlwidgets,
     IncidencePrevalence (>= 0.8.0),
     knitr,
+    MeasurementDiagnostics,
     omock (>= 0.3.0),
     OmopSketch,
     PatientProfiles,
