@@ -2273,6 +2273,59 @@ lscPanel <- list(
     )
   )
 )
+## logs ----
+logsPanel <- list(
+  title = "Logs",
+  icon = "clipboard-list",
+  data = list(result_type = "summarise_log_file"),
+  automatic_filters = c("variable_name"),
+  filters = list(cdm_name = cdmFilter),
+  content = list(
+    table = list(
+      title = "Table Logs",
+      output_type = "gt",
+      reactive = "<filtered_data> |>
+        dplyr::filter(.data$estimate_name == 'date_time') |>
+        visOmopResults::visOmopTable(
+          header = 'cdm_name',
+          hide = c('variable_level', 'estimate_name')
+        )
+      ",
+      render = "<reactive_data>",
+      download = downloadGtTable("table_log")
+    ),
+    plot = list(
+      title = "Plot Timing",
+      output_type = "ui",
+      reactive = "<filtered_data> |>
+        dplyr::filter(.data$estimate_name == 'elapsed_time') |>
+        visOmopResults::barPlot(
+          x = c('log_id', 'variable_name'),
+          y = 'elapsed_time',
+          colour = 'cdm_name',
+          position = input$position
+        )
+      ",
+      render = "x <- <reactive_data>
+      renderInteractivePlot(x, input$interactive)",
+      filters = list(
+        interactive = list(
+          button_type = "materialSwitch",
+          label = "Interactive",
+          value = TRUE
+        ),
+        position = list(
+          button_type = "pickerInput",
+          label = "Columns",
+          choices = c("dodge", "stack"),
+          selected = "stack",
+          multiple = FALSE
+        )
+      ),
+      download = downloadPlot("plot_logs.png")
+    )
+  )
+)
 ## deafult ----
 defaultPanel <- list(
   title = "<result_type>",
@@ -2356,6 +2409,8 @@ omopViewerPanels <- list(
   summarise_drug_utilisation = dusPanel,
   summarise_indication = indicationPanel,
   summarise_treatment = treatmentPanel,
+  # omopgenerics
+  summarise_log_file = logsPanel,
   # default
   default = defaultPanel
 ) |>
