@@ -58,6 +58,7 @@ Suggests:
     CodelistGenerator (>= 3.2.0),
     CohortCharacteristics (>= 1.0.0),
     CohortConstructor,
+    CohortSurvival,
     cpp11,
     devtools,
     DiagrammeR,
