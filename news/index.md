@@ -1,5 +1,31 @@
 # Changelog
 
+## OmopViewer 0.6.0
+
+### New functionality
+
+- Add omopgenerics log panel and results by
+  [@catalamarti](https://github.com/catalamarti) in
+  <https://github.com/OHDSI/OmopViewer/pull/338>
+- Add CohortSurvival panel and results by
+  [@catalamarti](https://github.com/catalamarti) in
+  <https://github.com/OHDSI/OmopViewer/pull/325>
+- Add MeasurementDiagnostics panels and results by
+  [@catalamarti](https://github.com/catalamarti) in
+  <https://github.com/OHDSI/OmopViewer/pull/336>
+- Add report argument to start quarto report by
+  [@catalamarti](https://github.com/catalamarti) in
+  <https://github.com/OHDSI/OmopViewer/pull/341>
+
+### Minor changes
+
+- Add github link to description by
+  [@catalamarti](https://github.com/catalamarti) in
+  <https://github.com/OHDSI/OmopViewer/pull/343>
+- output filter in plotTrend in OmopSketch by
+  [@cecicampanile](https://github.com/cecicampanile) in
+  <https://github.com/OHDSI/OmopViewer/pull/344>
+
 ## OmopViewer 0.5.0
 
 CRAN release: 2025-11-16
