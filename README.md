@@ -53,6 +53,7 @@ results and can be modified later locally.
 ``` r
 # lets generate some results
 library(CohortCharacteristics)
+#> Warning: package 'CohortCharacteristics' was built under R version 4.4.3
 cdm <- mockCohortCharacteristics()
 result <- summariseCharacteristics(cdm$cohort1) |>
   bind(summariseCohortAttrition(cdm$cohort1))
@@ -67,9 +68,9 @@ exportStaticApp(result = result, directory = tempdir())
 #> ℹ Processing data
 #> ✔ Data processed: 2 panels idenfied: `summarise_cohort_attrition` and
 #>   `summarise_characteristics`.
-#> ℹ Creating shiny from provided data
+#> ℹ Creating `shiny` from provided data
 #> ✔ Shiny created in:
-#>   /var/folders/pl/k11lm9710hlgl02nvzx4z9wr0000gp/T//RtmpBLLZg0/shiny
+#>   /var/folders/pl/k11lm9710hlgl02nvzx4z9wr0000gp/T//RtmpI3l244/shiny
 ```
 
 This function allow some customisation of the shiny with the arguments:
@@ -95,9 +96,9 @@ The shiny generated will have the following structure:
   displays.
 - `functions.R` some utility functions that are used in the shiny app.
 - `data/result.csv` the original summarised_result provided.
-- `data/ShinyData.RData` the .RData file that contains the data used in
+- `data/studyData.RData` the .RData file that contains the data used in
   the shiny.
-- `data/preprocess.R` the file to generate ShinyData.RData from
+- `data/preprocess.R` the file to generate `studyData.RData` from
   results.csv
 
 ## Dynamic shiny app

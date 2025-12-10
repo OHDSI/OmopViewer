@@ -12,6 +12,7 @@ Visualise results obtained from analysing data mapped to the Observational Medic
 Useful links:
 \itemize{
   \item \url{https://ohdsi.github.io/OmopViewer/}
+  \item Report bugs at \url{https://github.com/ohdsi/OmopViewer/issues}
 }
 
 }

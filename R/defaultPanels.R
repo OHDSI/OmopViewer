@@ -41,8 +41,9 @@ defaultPanels <- function() {
 #' @export
 #'
 #' @examples
-#'
+#' \donttest{
 #' panelDetailsFromResult(omopViewerResults)
+#' }
 #'
 panelDetailsFromResult <- function(result,
                                    includeOneChoiceFilters = TRUE) {

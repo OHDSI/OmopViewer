@@ -19,7 +19,8 @@ A list of \code{omop_viewer_panel} objects.
 Obtain default panel details from a \verb{<summarised_result>} object.
 }
 \examples{
-
+\donttest{
 panelDetailsFromResult(omopViewerResults)
+}
 
 }
