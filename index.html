@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="index.html">OmopViewer</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -99,6 +99,7 @@
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># lets generate some results</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://darwin-eu.github.io/CohortCharacteristics/" class="external-link">CohortCharacteristics</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: package 'CohortCharacteristics' was built under R version 4.4.3</span></span>
 <span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://darwin-eu.github.io/CohortCharacteristics/reference/mockCohortCharacteristics.html" class="external-link">mockCohortCharacteristics</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://darwin-eu.github.io/CohortCharacteristics/reference/summariseCharacteristics.html" class="external-link">summariseCharacteristics</a></span><span class="op">(</span><span class="va">cdm</span><span class="op">$</span><span class="va">cohort1</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://darwin-eu.github.io/omopgenerics/reference/bind.html" class="external-link">bind</a></span><span class="op">(</span><span class="fu"><a href="https://darwin-eu.github.io/CohortCharacteristics/reference/summariseCohortAttrition.html" class="external-link">summariseCohortAttrition</a></span><span class="op">(</span><span class="va">cdm</span><span class="op">$</span><span class="va">cohort1</span><span class="op">)</span><span class="op">)</span></span>
@@ -113,9 +114,9 @@
 <span><span class="co">#&gt; ℹ Processing data</span></span>
 <span><span class="co">#&gt; ✔ Data processed: 2 panels idenfied: `summarise_cohort_attrition` and</span></span>
 <span><span class="co">#&gt;   `summarise_characteristics`.</span></span>
-<span><span class="co">#&gt; ℹ Creating shiny from provided data</span></span>
+<span><span class="co">#&gt; ℹ Creating `shiny` from provided data</span></span>
 <span><span class="co">#&gt; ✔ Shiny created in:</span></span>
-<span><span class="co">#&gt;   /var/folders/pl/k11lm9710hlgl02nvzx4z9wr0000gp/T//RtmpBLLZg0/shiny</span></span></code></pre></div>
+<span><span class="co">#&gt;   /var/folders/pl/k11lm9710hlgl02nvzx4z9wr0000gp/T//RtmpI3l244/shiny</span></span></code></pre></div>
 <p>This function allow some customisation of the shiny with the arguments:</p>
 <ul>
 <li>
@@ -145,9 +146,9 @@
 <li>
 <code>data/result.csv</code> the original summarised_result provided.</li>
 <li>
-<code>data/ShinyData.RData</code> the .RData file that contains the data used in the shiny.</li>
+<code>data/studyData.RData</code> the .RData file that contains the data used in the shiny.</li>
 <li>
-<code>data/preprocess.R</code> the file to generate ShinyData.RData from results.csv</li>
+<code>data/preprocess.R</code> the file to generate <code>studyData.RData</code> from results.csv</li>
 </ul>
 </div>
 <div class="section level2">

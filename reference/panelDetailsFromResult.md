@@ -25,6 +25,7 @@ A list of `omop_viewer_panel` objects.
 ## Examples
 
 ``` r
+# \donttest{
 panelDetailsFromResult(omopViewerResults)
 #> $summarise_omop_snapshot
 #> Snapshot (OmopViewer panel)
@@ -229,6 +230,13 @@ panelDetailsFromResult(omopViewerResults)
 #> •  filters: 1 filters + 4 automatic filters
 #> •  content: Table Measurement Concept (gt); Plot Measurement Concept (ui)
 #> 
+#> $survival
+#> Survival Analyses (OmopViewer panel)
+#> •  icon: stairs
+#> •  data: result_type: <survival_summary>, <survival_estimates>, <survival_events>, <survival_attrition>
+#> •  filters: 1 filters + 4 automatic filters
+#> •  content: Table Summary (gt); Table Events (gt); Table Attrition (gt); Plot Survival (ui)
+#> 
 #> $summarise_log_file
 #> Logs (OmopViewer panel)
 #> •  icon: clipboard-list
@@ -236,39 +244,5 @@ panelDetailsFromResult(omopViewerResults)
 #> •  filters: 1 filters + 1 automatic filters
 #> •  content: Table Logs (gt); Plot Timing (ui)
 #> 
-#> $survival_probability
-#> Survival probability (OmopViewer panel)
-#> •  icon: folder
-#> •  data: result_type: <survival_probability>
-#> •  filters: 1 filters + 6 automatic filters
-#> •  content: Tidy (DT); Table (gt)
-#> 
-#> $survival_events
-#> Survival events (OmopViewer panel)
-#> •  icon: folder
-#> •  data: result_type: <survival_events>
-#> •  filters: 1 filters + 6 automatic filters
-#> •  content: Tidy (DT); Table (gt)
-#> 
-#> $survival_summary
-#> Survival summary (OmopViewer panel)
-#> •  icon: folder
-#> •  data: result_type: <survival_summary>
-#> •  filters: 1 filters + 6 automatic filters
-#> •  content: Tidy (DT); Table (gt)
-#> 
-#> $survival_attrition
-#> Survival attrition (OmopViewer panel)
-#> •  icon: folder
-#> •  data: result_type: <survival_attrition>
-#> •  filters: 1 filters + 6 automatic filters
-#> •  content: Tidy (DT); Table (gt)
-#> 
-#> $cumulative_failure_probability
-#> Cumulative failure probability (OmopViewer panel)
-#> •  icon: folder
-#> •  data: result_type: <cumulative_failure_probability>
-#> •  filters: 1 filters + 6 automatic filters
-#> •  content: Tidy (DT); Table (gt)
-#> 
+# }
 ```

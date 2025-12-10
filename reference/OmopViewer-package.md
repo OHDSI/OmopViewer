@@ -10,6 +10,8 @@ Useful links:
 
 - <https://ohdsi.github.io/OmopViewer/>
 
+- Report bugs at <https://github.com/ohdsi/OmopViewer/issues>
+
 ## Author
 
 **Maintainer**: Martí Català <marti.catalasabate@ndorms.ox.ac.uk>
