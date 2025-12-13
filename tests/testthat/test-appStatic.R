@@ -32,6 +32,15 @@ test_that("logo", {
   ui <- readLines(file.path(tdir, "shiny", "ui.R"))
   expect_snapshot(cat(ui, sep = "\n"))
   unlink(file.path(tdir, "shiny"), recursive = TRUE)
+
+  # url logo
+  tdir <- file.path(tempdir(), "ov_test")
+  dir.create(tdir, showWarnings = FALSE)
+  expect_no_error(theme <- validateTheme("darwin"))
+  expect_no_error(logo <- validateLogo(logo = NULL, theme = theme))
+  expect_identical(copyLogos(logo = logo, directory = tdir), "logo.png")
+  expect_true("www/logo.png" %in% list.files(tdir, recursive = TRUE))
+  unlink(tdir, recursive = TRUE)
 })
 
 test_that("empty shiny", {
