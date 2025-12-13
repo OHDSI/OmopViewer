@@ -8,7 +8,7 @@ Export and launch a static shiny specific to the provided results.
 exportStaticApp(
   result,
   directory,
-  logo = "ohdsi",
+  logo = NULL,
   title = "",
   background = TRUE,
   summary = TRUE,
@@ -35,8 +35,8 @@ exportStaticApp(
 
 - logo:
 
-  Name of a logo or path to a logo. If NULL no logo is included. Only
-  svg format allowed for the moment.
+  Name of a logo or path to a logo. If NULL no logo is obtained from
+  theme.
 
 - title:
 
@@ -108,5 +108,5 @@ exportStaticApp(
 #> ℹ Processing data
 #> ! No panels identified, generated shiny will be empty.
 #> ℹ Creating `shiny` from provided data
-#> ✔ Shiny created in: /tmp/Rtmpe4RHks/shiny
+#> ✔ Shiny created in: /tmp/RtmpnVPFhx/shiny
 ```

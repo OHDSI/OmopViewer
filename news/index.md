@@ -2,6 +2,8 @@
 
 ## OmopViewer 0.6.0
 
+CRAN release: 2025-12-10
+
 ### New functionality
 
 - Add omopgenerics log panel and results by
