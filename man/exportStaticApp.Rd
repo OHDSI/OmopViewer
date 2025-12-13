@@ -7,7 +7,7 @@
 exportStaticApp(
   result,
   directory,
-  logo = "ohdsi",
+  logo = NULL,
   title = "",
   background = TRUE,
   summary = TRUE,
@@ -26,8 +26,8 @@ exportStaticApp(
 
 \item{directory}{Directory to create the shiny.}
 
-\item{logo}{Name of a logo or path to a logo. If NULL no logo is included.
-Only svg format allowed for the moment.}
+\item{logo}{Name of a logo or path to a logo. If NULL no logo is obtained
+from theme.}
 
 \item{title}{title of the shiny}
 

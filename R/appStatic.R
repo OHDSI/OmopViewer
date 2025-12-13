@@ -3,8 +3,8 @@
 #'
 #' @param result A summarised_result object.
 #' @param directory Directory to create the shiny.
-#' @param logo Name of a logo or path to a logo. If NULL no logo is included.
-#' Only svg format allowed for the moment.
+#' @param logo Name of a logo or path to a logo. If NULL no logo is obtained
+#' from theme.
 #' @param title title of the shiny
 #' @param background Whether to include a background panel. Background panel
 #' content will be controlled from the generated background.md file.
@@ -41,7 +41,7 @@
 #'
 exportStaticApp <- function(result,
                             directory,
-                            logo = "ohdsi",
+                            logo = NULL,
                             title = "",
                             background = TRUE,
                             summary = TRUE,
