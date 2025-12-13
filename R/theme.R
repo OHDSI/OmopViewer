@@ -75,3 +75,11 @@ getThemes <- function() {
     rlang::set_names() |>
     purrr::map(\(x) bslib::bs_theme(brand = validateTheme(x)))
 }
+
+validateLogo <- function(logo, theme, call = parent.frame()) {
+  if (is.null(logo) & "logo" %in% names(theme)) {
+    logo <- theme$logo$path
+  }
+  omopgenerics::assertCharacter(logo, length = 1, null = TRUE, call = call)
+  return(logo)
+}

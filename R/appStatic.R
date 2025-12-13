@@ -66,6 +66,7 @@ exportStaticApp <- function(result,
   omopgenerics::assertLogical(updateButtons, length = 1)
   omopgenerics::assertLogical(includeOneChoiceFilters, length = 1)
   theme <- validateTheme(theme = theme)
+  logo <- validateLogo(logo = logo, theme = theme)
   template <- validateTemplate(template = template, theme = theme)
   panelDetails <- validatePanelDetails(panelDetails, result, includeOneChoiceFilters)
   panelStructure <- validatePanelStructure(panelStructure, names(panelDetails))
@@ -186,10 +187,37 @@ copyLogos <- function(logo, directory) {
       file.copy(from = logo, to = to, overwrite = TRUE)
     }
     return(nm)
+  } else if (grepl("https://", logo, fixed = TRUE)) {
+    return(downloadLogo(url = logo, directory = directory))
   } else {
     cli::cli_warn(c("!" = "Logo couldn't be found."))
     return(NULL)
   }
+}
+downloadLogo <- function(url, directory) {
+  tf <- tempfile()
+  download.file(url = url, destfile = tf, mode = "wb")
+
+  # detect extension
+  x <- readBin(con = tf, what = "raw", n = 10)
+  if (identical(x[1:8], charToRaw("\x89PNG\r\n\x1a\n"))) {
+    nm <- "logo.png"
+  } else if (identical(x[1:3], charToRaw("\xFF\xD8\xFF"))) {
+    nm <- "logo.jpg"
+  } else if (grepl("<svg", rawToChar(x))) {
+    nm <- "logo.svg"
+  } else {
+    nm <- "logo"
+  }
+
+  # copy document
+  to <- file.path(directory, "www", nm)
+  file.copy(from = tf, to = to, overwrite = TRUE)
+
+  # eliminate temp file
+  file.remove(tf)
+
+  return(nm)
 }
 logoPath <- function(logo) {
   lowLogo <- stringr::str_to_lower(logo)
