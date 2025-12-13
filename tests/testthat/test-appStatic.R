@@ -39,7 +39,7 @@ test_that("logo", {
   expect_no_error(theme <- validateTheme("darwin"))
   expect_no_error(logo <- validateLogo(logo = NULL, theme = theme))
   expect_identical(copyLogos(logo = logo, directory = tdir), "logo.png")
-  exepct_true("www/logo.png" %in% list.files(tdir, recursive = TRUE))
+  expect_true("www/logo.png" %in% list.files(tdir, recursive = TRUE))
   unlink(tdir, recursive = TRUE)
 })
 
