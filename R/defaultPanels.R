@@ -95,29 +95,27 @@ defaultPanelStructure <- function(panels) {
 }
 trimFilters <- function(panelDetails, result, includeOneChoiceFilters) {
   len <- getOption(x = "omopviewer.max_length", default = "100") |>
-    as.integer()
-  if (!is.infinite(len) & !is.na(len)) {
-    if (len >= 1 || !includeOneChoiceFilters) {
-      resultList <- purrr::map(panelDetails, \(x) x$data)
-      toExclude <- prepareResult(result = result, resultList = resultList) |>
-        purrr::map(\(x) {
-          x <- x |>
-            omopgenerics::addSettings() |>
-            omopgenerics::splitAll() |>
-            dplyr::select(!c("result_id", "estimate_name", "estimate_type", "estimate_value")) |>
-            purrr::map(\(x) length(unique(x)))
-          if (!includeOneChoiceFilters) {
-            x <- purrr::keep(x, \(x) x == 1 | x > len)
-          } else {
-            x <- purrr::keep(x, \(x) x > len)
-          }
-          names(x)
-        }) |>
-        purrr::compact()
-      for (nm in names(toExclude)) {
-        panelDetails[[nm]]$exclude_filters <- unique(c(panelDetails[[nm]]$exclude_filters, toExclude[[nm]]))
+    as.integer() |>
+    dplyr::coalesce(Inf)
+
+  resultList <- purrr::map(panelDetails, \(x) x$data)
+  toExclude <- prepareResult(result = result, resultList = resultList) |>
+    purrr::map(\(x) {
+      x <- x |>
+        omopgenerics::addSettings() |>
+        omopgenerics::splitAll() |>
+        dplyr::select(!c("result_id", "estimate_name", "estimate_type", "estimate_value")) |>
+        purrr::map(\(x) length(unique(x)))
+      if (!includeOneChoiceFilters) {
+        x <- purrr::keep(x, \(x) x == 1 | x > len)
+      } else {
+        x <- purrr::keep(x, \(x) x > len)
       }
-    }
+      names(x)
+    }) |>
+    purrr::compact()
+  for (nm in names(toExclude)) {
+    panelDetails[[nm]]$exclude_filters <- unique(c(panelDetails[[nm]]$exclude_filters, toExclude[[nm]]))
   }
 
   return(panelDetails)

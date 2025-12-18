@@ -323,13 +323,52 @@ prepareResult <- function(result, resultList) {
   purrr::map(resultList, \(x) filterResult(result, x))
 }
 filterResult <- function(result, filt) {
-  nms <- names(filt)
-  for (nm in nms) {
-    q <- paste0(".data$", nm, " %in% filt[[\"", nm, "\"]]") |>
+
+  q <- function(nm) {
+    paste0(".data$", nm, " %in% filt[[\"", nm, "\"]]") |>
       rlang::parse_exprs() |>
       rlang::eval_tidy()
-    result <- omopgenerics::filterSettings(result, !!!q)
   }
+
+  # filter columns
+  cols <- c("cdm_name", "variable_name", "variable_level", "estimate_name")
+  cols <- cols[cols %in% names(filt)]
+  for (nm in cols) {
+    result <- dplyr::filter(result, !!!q(nm))
+  }
+
+  # filter settings
+  cols <- c(
+    "result_id", "result_type", "package_name", "package_version",
+    "min_cell_count", omopgenerics::settingsColumns(result = result)
+  )
+  cols <- cols[cols %in% names(filt)]
+  for (nm in cols) {
+    result <- omopgenerics::filterSettings(result, !!!q(nm))
+  }
+
+  # filter group
+  cols <- omopgenerics::groupColumns(result = result)
+  cols <- cols[cols %in% names(filt)]
+  for (nm in cols) {
+    result <- omopgenerics::filterGroup(result, !!!q(nm))
+  }
+
+  # filter strata
+  cols <- omopgenerics::strataColumns(result = result)
+  cols <- cols[cols %in% names(filt)]
+  for (nm in cols) {
+    result <- omopgenerics::filterStrata(result, !!!q(nm))
+  }
+
+  # filter additional
+  cols <- omopgenerics::additionalColumns(result = result)
+  cols <- cols[cols %in% names(filt)]
+  for (nm in cols) {
+    result <- omopgenerics::filterAdditional(result, !!!q(nm))
+  }
+
+  # correct settings
   set <- omopgenerics::settings(result)
   # remove columns that all are NA
   cols <- colnames(set) |>
@@ -342,6 +381,8 @@ filterResult <- function(result, filt) {
       .cols = dplyr::where(is.character),
       .fns = \(x) dplyr::coalesce(x, "-NA-")
     ))
+
+  # final result
   omopgenerics::newSummarisedResult(x = result, settings = set)
 }
 getValues <- function(result, resultList) {
