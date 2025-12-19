@@ -18,6 +18,22 @@ omopViewerProj <- c(
   "LaTeX: pdfLaTeX"
 )
 
+# readme ----
+omopViewerReadme <- c(
+  "# Report {title}",
+  "",
+  "This project contains the code for the {content} and it is organised as follows:",
+  "{ifReport}- The `report.qmd` file contains the source code for the Report.",
+  "{ifReport}- The `template.docx` file contains the template for the Report where classes such as 'Caption' are defined.",
+  "{ifShiny}- The files `global.R`, `ui.R` and `server.R` contain the source code for the Shiny App.",
+  "{ifShiny}- The `background.md` contains the background tab source text of the Shiny App.",
+  "- The `functions.R` file contains useful functions used in the data processing and visualisation.",
+  "- The `_brand.yml` document is used to control the default appearance of plots and tables.",
+  "- The `rawData` folder contains the raw data in csv files and the `preprocess.R` script that preprocess the data adding the output to the `data` folder.",
+  "- The `data` folder contains the preprocesed data that is used in {content}.",
+  "- The `.rscignore` is used to tell `rsconnect` to ignore the `rawData` folder to be ignored when deployed."
+)
+
 # preprocess ----
 omopViewerPreprocess <- c(
   "",
@@ -165,5 +181,6 @@ requireExtrafont()
 usethis::use_data(
   omopViewerProj, omopViewerGlobal, omopViewerPreprocess, logoKeywords,
   backgroundKeywords, panelStructureDefaults, rscignore, reportTemplate,
+  omopViewerReadme,
   overwrite = TRUE, internal = TRUE
 )

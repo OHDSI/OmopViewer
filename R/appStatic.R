@@ -141,6 +141,9 @@ exportStaticApp <- function(result,
     exportTemplate(template = template, directory = directory)
   }
 
+  # add readme
+  copyReadme(shiny = TRUE, report = report, title = title, directory = directory)
+
   cli::cli_inform(c("v" = "Shiny created in: {.pkg {directory}}"))
 
   # open shiny
@@ -196,7 +199,7 @@ copyLogos <- function(logo, directory) {
 }
 downloadLogo <- function(url, directory) {
   tf <- tempfile()
-  download.file(url = url, destfile = tf, mode = "wb")
+  utils::download.file(url = url, destfile = tf, mode = "wb")
 
   # detect extension
   x <- readBin(con = tf, what = "raw", n = 10)

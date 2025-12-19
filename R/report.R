@@ -33,6 +33,9 @@ exportReport <- function(result,
   exportTemplate(template = template, directory = directory)
   writeLines(text = "", con = file.path(directory, "functions.R"))
 
+  # add readme
+  copyReadme(shiny = FALSE, report = TRUE, title = title, directory = directory)
+
   cli::cli_inform(c("v" = "Report created in: {.pkg {directory}}"))
 
   # open report
