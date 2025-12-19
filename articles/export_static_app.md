@@ -84,7 +84,7 @@ exportStaticApp(result = result, directory = dir)
 #> ✔ Data processed: 3 panels idenfied: `summarise_omop_snapshot`,
 #>   `summarise_characteristics`, and `incidence`.
 #> ℹ Creating `shiny` from provided data
-#> ✔ Shiny created in: /tmp/Rtmpo5UgQw/shiny
+#> ✔ Shiny created in: /tmp/Rtmp7phFY0/shiny
 ```
 
 Note that by default if executed in an interactive environment like *R
@@ -107,6 +107,7 @@ cat(list.files(path = here::here(dir, "shiny"), recursive = TRUE), sep = "\n")
 #> rawData/preprocess.R
 #> rawData/README.md
 #> rawData/results.csv
+#> README.md
 #> server.R
 #> shiny.Rproj
 #> ui.R
