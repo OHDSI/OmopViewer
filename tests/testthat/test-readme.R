@@ -1,0 +1,27 @@
+test_that("readme works", {
+  tdir <- tempdir()
+  expect_no_error(copyReadme(shiny = FALSE, report = TRUE, title = "Hola", directory = tdir))
+  expect_true("README.md" %in% list.files(path = tdir))
+  cont1 <- readLines(file.path(tdir, "README.md"))
+  expect_true(cont1[1] == "# Report Hola")
+  expect_true(length(cont1) == 10)
+  unlink(file.path(tdir, "README.md"))
+
+  tdir <- tempdir()
+  expect_no_error(copyReadme(shiny = TRUE, report = FALSE, title = "Hola", directory = tdir))
+  expect_true("README.md" %in% list.files(path = tdir))
+  cont2 <- readLines(file.path(tdir, "README.md"))
+  expect_true(cont2[1] == "# Report Hola")
+  expect_true(length(cont2) == 10)
+  unlink(file.path(tdir, "README.md"))
+
+  tdir <- tempdir()
+  expect_no_error(copyReadme(shiny = TRUE, report = TRUE, title = "Hola", directory = tdir))
+  expect_true("README.md" %in% list.files(path = tdir))
+  cont3 <- readLines(file.path(tdir, "README.md"))
+  expect_true(cont3[1] == "# Report Hola")
+  expect_true(length(cont3) == 12)
+  unlink(file.path(tdir, "README.md"))
+
+  expect_true(!identical(cont1, cont2))
+})

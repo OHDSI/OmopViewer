@@ -14,6 +14,8 @@ copyReadme <- function(shiny, report, title, directory) {
     ifReport <- ""
     content <- "Report"
   }
-  text <- as.character(purrr::map(omopViewerReadme, \(x) glue::glue(x, title = title)))
+  text <- purrr::map(omopViewerReadme, \(x) glue::glue(x, title = title)) |>
+    purrr::compact() |>
+    as.character()
   writeLines(text = text, con = file.path(directory, "README.md"))
 }
