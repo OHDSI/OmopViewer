@@ -43,7 +43,8 @@ createServer <- function(panelDetails, data, updateButtons) {
     downloadRawDataServer(data),
     updateButtonsStart,
     purrr::imap_chr(panelDetails, \(x, nm) {
-      c(glue::glue("# {nm} -----"),
+      c("",
+        paste0("# ", nm, " -----"),
         writeUpdateDataMessage(nm = nm, filters = x$filters, updateButtons = updateButtons),
         writeFilterData(x = x, nm = nm, data = data, updateButtons = updateButtons),
         writeContentServer(content = x$content, data = data)
@@ -68,7 +69,7 @@ downloadRawDataServer <- function(data) {
     as.character()
 }
 writeUpdateDataMessage <- function(nm, filters, updateButtons) {
-  if (length(filters) == 0 || !updateButtons) return("")
+  if (length(filters) == 0 || !updateButtons) return(character())
   inputs <- c(
     paste0("shiny::observe({updateButtons$", nm, " <- TRUE}) |>"),
     "shiny::bindEvent(",
