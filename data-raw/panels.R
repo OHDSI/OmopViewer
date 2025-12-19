@@ -2287,19 +2287,19 @@ lscPanel <- list(
     )
   )
 )
-## measurement timing ----
-measurementTimingPanel <- list(
-  title = "Measurement timing",
+## measurement summary ----
+measurementSummaryPanel <- list(
+  title = "Measurement summary",
   icon = "timeline",
-  data = list(result_type = "measurement_timings"),
+  data = list(result_type = "measurement_summary"),
   automatic_filters = c("group", "strata", "timing", "variable_name"),
   filters = list(cdm_name = cdmFilter),
   content = list(
     table = list(
-      title = "Table Measurement Timing",
+      title = "Table Measurement Summary",
       output_type = "gt",
       reactive = "<filtered_data> |>
-      MeasurementDiagnostics::tableMeasurementTimings(
+      MeasurementDiagnostics::tableMeasurementSummary(
       header = input$header,
       groupColumn = input$group_column,
       hide = input$hide,
@@ -2312,13 +2312,13 @@ measurementTimingPanel <- list(
         groupColumn = c("codelist_name", "cdm_name"),
         hide = c("variable_level")
       ),
-      download = downloadGtTable("table_measurement_timing")
+      download = downloadGtTable("table_measurement_summary")
     ),
     plot = list(
-      title = "Plot Measurement Timing",
+      title = "Plot Measurement Summary",
       output_type = "ui",
       reactive = "<filtered_data> |>
-      MeasurementDiagnostics::plotMeasurementTimings(
+      MeasurementDiagnostics::plotMeasurementSummary(
       plotType = input$plot_type,
       timeScale = input$time_scale,
       facet = input$facet,
@@ -2335,7 +2335,7 @@ measurementTimingPanel <- list(
         plot_type = list(
           button_type = "pickerInput",
           label = "Plot type",
-          choices = c("boxplot", "densityplot"),
+          choices = c("boxplot", "densityplot", "barplot"),
           selected = c("boxplot"),
           multiple = FALSE
         ),
@@ -2361,23 +2361,23 @@ measurementTimingPanel <- list(
           multiple = TRUE
         )
       ),
-      download = downloadPlot("plot_measurement_timing.png")
+      download = downloadPlot("plot_measurement_summary.png")
     )
   )
 )
 ## measurement value as numeric ----
-measurementNumericPanel <- list(
-  title = "Measurement as numeric",
+measurementNumberPanel <- list(
+  title = "Measurement value as number",
   icon = "gauge-high",
-  data = list(result_type = "measurement_value_as_numeric"),
+  data = list(result_type = "measurement_value_as_number"),
   automatic_filters = c("group", "strata", "timing", "variable_name"),
   filters = list(cdm_name = cdmFilter),
   content = list(
     table = list(
-      title = "Table Measurement Numeric",
+      title = "Table Measurement Number",
       output_type = "gt",
       reactive = "<filtered_data> |>
-      MeasurementDiagnostics::tableMeasurementValueAsNumeric(
+      MeasurementDiagnostics::tableMeasurementValueAsNumber(
       header = input$header,
       groupColumn = input$group_column,
       hide = input$hide,
@@ -2390,13 +2390,13 @@ measurementNumericPanel <- list(
         groupColumn = c( "cdm_name"),
         hide = c("variable_name", "variable_level")
       ),
-      download = downloadGtTable("table_measurement_numeric")
+      download = downloadGtTable("table_measurement_number")
     ),
     plot = list(
-      title = "Plot Measurement Numeric",
+      title = "Plot Measurement Number",
       output_type = "ui",
       reactive = "<filtered_data> |>
-      MeasurementDiagnostics::plotMeasurementValueAsNumeric(
+      MeasurementDiagnostics::plotMeasurementValueAsNumber(
       x = input$x,
       plotType = input$plot_type,
       facet = input$facet,
@@ -2420,7 +2420,7 @@ measurementNumericPanel <- list(
         plot_type = list(
           button_type = "pickerInput",
           label = "Plot type",
-          choices = c("boxplot", "densityplot"),
+          choices = c("boxplot", "densityplot", "barplot"),
           selected = c("boxplot"),
           multiple = FALSE
         ),
@@ -2439,13 +2439,13 @@ measurementNumericPanel <- list(
           multiple = TRUE
         )
       ),
-      download = downloadPlot("plot_measurement_as_numeric.png")
+      download = downloadPlot("plot_measurement_as_number.png")
     )
   )
 )
 ## measurement value as concept ----
 measurementConceptPanel <- list(
-  title = "Measurement as concept",
+  title = "Measurement value as concept",
   icon = "cubes",
   data = list(result_type = "measurement_value_as_concept"),
   automatic_filters = c("group", "strata", "timing", "variable_name"),
@@ -2501,7 +2501,7 @@ measurementConceptPanel <- list(
           multiple = TRUE
         )
       ),
-      download = downloadPlot("plot_measurement_as_numeric.png")
+      download = downloadPlot("plot_measurement_as_concept.png")
     )
   )
 )
@@ -2749,8 +2749,8 @@ omopViewerPanels <- list(
   summarise_indication = indicationPanel,
   summarise_treatment = treatmentPanel,
   # MeasurementDiagnostics
-  measurement_timings = measurementTimingPanel,
-  measurement_value_as_numeric = measurementNumericPanel,
+  measurement_summary = measurementSummaryPanel,
+  measurement_value_as_number = measurementNumberPanel,
   measurement_value_as_concept = measurementConceptPanel,
   # CohortSurvival
   survival = survivalPanel,
