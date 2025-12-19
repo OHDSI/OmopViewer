@@ -134,10 +134,10 @@ exportStaticApp <- function(result,
   # export report
   if (report) {
     # create report
-    report <- createReport(panelDetails, title, !is.null(template))
+    reportCont <- createReport(panelDetails, title, !is.null(template))
 
     # export files
-    exportReport(report = report, directory = directory)
+    exportReport(report = reportCont, directory = directory)
     exportTemplate(template = template, directory = directory)
   }
 
