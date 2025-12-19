@@ -209,22 +209,22 @@ panelDetailsFromResult(omopViewerResults)
 #> •  filters: 1 filters + 7 automatic filters
 #> •  content: Table Treatments (gt); Plot Treatment (ui)
 #> 
-#> $measurement_timings
-#> Measurement timing (OmopViewer panel)
+#> $measurement_summary
+#> Measurement summary (OmopViewer panel)
 #> •  icon: timeline
-#> •  data: result_type: <measurement_timings>
+#> •  data: result_type: <measurement_summary>
 #> •  filters: 1 filters + 4 automatic filters
-#> •  content: Table Measurement Timing (gt); Plot Measurement Timing (ui)
+#> •  content: Table Measurement Summary (gt); Plot Measurement Summary (ui)
 #> 
-#> $measurement_value_as_numeric
-#> Measurement as numeric (OmopViewer panel)
+#> $measurement_value_as_number
+#> Measurement value as number (OmopViewer panel)
 #> •  icon: gauge-high
-#> •  data: result_type: <measurement_value_as_numeric>
+#> •  data: result_type: <measurement_value_as_number>
 #> •  filters: 1 filters + 4 automatic filters
-#> •  content: Table Measurement Numeric (gt); Plot Measurement Numeric (ui)
+#> •  content: Table Measurement Number (gt); Plot Measurement Number (ui)
 #> 
 #> $measurement_value_as_concept
-#> Measurement as concept (OmopViewer panel)
+#> Measurement value as concept (OmopViewer panel)
 #> •  icon: cubes
 #> •  data: result_type: <measurement_value_as_concept>
 #> •  filters: 1 filters + 4 automatic filters

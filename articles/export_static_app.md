@@ -30,9 +30,9 @@ illustration:
 ``` r
 # Inspect the structure of the sample data
 summary(omopViewerResults)
-#> A summarised_result object with 53067 rows, 122 different result_id, 1 and 1
-#> different cdm names, and 53 settings.
-#> CDM names: synthea-covid19-200k and mock database.
+#> A summarised_result object with 55103 rows, 122 different result_id, 1, 1, and
+#> 1 different cdm names, and 53 settings.
+#> CDM names: synthea-covid19-200k, mock database, and unknown.
 #> Settings: result_type, package_name, package_version, group, strata,
 #> additional, min_cell_count, analysis, analysis_censor_cohort_name,
 #> analysis_complete_database_intervals, analysis_full_contribution,
@@ -84,7 +84,7 @@ exportStaticApp(result = result, directory = dir)
 #> ✔ Data processed: 3 panels idenfied: `summarise_omop_snapshot`,
 #>   `summarise_characteristics`, and `incidence`.
 #> ℹ Creating `shiny` from provided data
-#> ✔ Shiny created in: /tmp/RtmpOui9zX/shiny
+#> ✔ Shiny created in: /tmp/Rtmpo5UgQw/shiny
 ```
 
 Note that by default if executed in an interactive environment like *R
@@ -347,22 +347,22 @@ omopViewerPanels
 #> •  filters: 1 filters + 7 automatic filters
 #> •  content: Table Treatments (gt); Plot Treatment (ui)
 #> 
-#> $measurement_timings
-#> Measurement timing (OmopViewer panel)
+#> $measurement_summary
+#> Measurement summary (OmopViewer panel)
 #> •  icon: timeline
-#> •  data: result_type: <measurement_timings>
+#> •  data: result_type: <measurement_summary>
 #> •  filters: 1 filters + 4 automatic filters
-#> •  content: Table Measurement Timing (gt); Plot Measurement Timing (ui)
+#> •  content: Table Measurement Summary (gt); Plot Measurement Summary (ui)
 #> 
-#> $measurement_value_as_numeric
-#> Measurement as numeric (OmopViewer panel)
+#> $measurement_value_as_number
+#> Measurement value as number (OmopViewer panel)
 #> •  icon: gauge-high
-#> •  data: result_type: <measurement_value_as_numeric>
+#> •  data: result_type: <measurement_value_as_number>
 #> •  filters: 1 filters + 4 automatic filters
-#> •  content: Table Measurement Numeric (gt); Plot Measurement Numeric (ui)
+#> •  content: Table Measurement Number (gt); Plot Measurement Number (ui)
 #> 
 #> $measurement_value_as_concept
-#> Measurement as concept (OmopViewer panel)
+#> Measurement value as concept (OmopViewer panel)
 #> •  icon: cubes
 #> •  data: result_type: <measurement_value_as_concept>
 #> •  filters: 1 filters + 4 automatic filters
