@@ -947,7 +947,7 @@ snapshotPanel <- list(
       )",
       render = "<reactive_data>",
       filters = rankTableButton(
-        none = c("estimate_name", "<group>","<strata>"),
+        none = c("estimate_name", "<group>","<strata>","<additional>"),
         header = "cdm_name",
         group = "variable_name",
         hide = c("<settings>", "variable_level")
@@ -988,7 +988,7 @@ observationPeriodPanel <- list(
       )",
       render = "<reactive_data>",
       filters = rankTableButton(
-        none = c("<group>", "variable_name", "variable_level", "estimate_name"),
+        none = c("<group>", "variable_name", "variable_level", "estimate_name", "<additional>"),
         header = "cdm_name",
         group = "<strata>",
         hide = "<settings>"
@@ -1071,7 +1071,6 @@ clinicalRecordsPanel <- list(
   automatic_filters = c(
     "group",
     "strata",
-    "strata",
     "settings",
     "variable_name",
     "estimate_name"
@@ -1089,7 +1088,7 @@ clinicalRecordsPanel <- list(
       )",
       render = "<reactive_data>",
       filters = rankTableButton(
-        none = c("variable_name", "variable_level", "estimate_name"),
+        none = c("variable_name", "variable_level", "estimate_name","<additional>"),
         header = "cdm_name",
         group = c("<group>","<strata>"),
         hide = "<settings>"
@@ -1123,7 +1122,7 @@ personPanel <- list(
       )",
       render = "<reactive_data>",
       filters = rankTableButton(
-        none = c("<group>","<strata>", "variable_name", "variable_level", "estimate_name"),
+        none = c("<group>","<strata>", "variable_name", "variable_level", "estimate_name","<additional>"),
         header = "cdm_name",
         group = character(),
         hide = "<settings>"
@@ -1180,7 +1179,7 @@ recordCountPanel <- list(
   automatic_filters = c(
     "group",
     "strata",
-    "strata",
+    "additional",
     "settings",
     "variable_name",
     "estimate_name"
@@ -1243,7 +1242,7 @@ missingPanel <- list(
   automatic_filters = c(
     "group",
     "strata",
-    "strata",
+    "additional",
     "settings",
     "variable_name",
     "estimate_name"
@@ -1261,7 +1260,7 @@ missingPanel <- list(
       )",
       render = "<reactive_data>",
       filters = rankTableButton(
-        none = c("variable_level", "estimate_name"),
+        none = c("variable_level", "estimate_name", "<additional>"),
         header = "cdm_name",
         group = c("<group>","<strata>"),
         hide = c("variable_name", "<settings>")
@@ -1278,7 +1277,7 @@ inObservationPanel <- list(
   automatic_filters = c(
     "group",
     "strata",
-    "strata",
+    "additional",
     "settings",
     "variable_name",
     "estimate_name"
@@ -1341,6 +1340,7 @@ trendPanel <- list(
   automatic_filters = c(
     "group",
     "strata",
+    "additional",
     "settings",
     "variable_name",
     "estimate_name"
@@ -1359,7 +1359,7 @@ trendPanel <- list(
       )",
       render = "<reactive_data>",
       filters = rankTableButton(
-        none = c("variable_name", "<strata>", "estimate_name"),
+        none = c("variable_name", "<strata>", "estimate_name", "<additional>"),
         header = "cdm_name",
         group = c("<settings>","<group>"),
         hide = c("variable_level")
@@ -1439,7 +1439,7 @@ conceptCountsPanel <- list(
   automatic_filters = c(
     "group",
     "strata",
-    "strata",
+    "additional",
     "settings",
     "variable_name",
     "estimate_name"
