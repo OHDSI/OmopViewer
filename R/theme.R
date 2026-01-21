@@ -61,6 +61,13 @@ correctTheme <- function(content, theme) {
   if (file.exists(file)) {
     content <- utils::modifyList(content, readBrand(file = file))
   }
+
+  # Remove custom typography fields not supported by brand.yml spec
+  if (!is.null(content$typography)) {
+    custom_fields <- c("base-font-size", "table", "table-font-size", "plot", "plot-font-size")
+    content$typography <- content$typography[!names(content$typography) %in% custom_fields]
+  }
+
   content
 }
 readBrand <- function(file = "_brand.yml") {
