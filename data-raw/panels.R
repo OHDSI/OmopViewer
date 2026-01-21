@@ -942,14 +942,14 @@ snapshotPanel <- list(
       reactive = "<filtered_data> |>
        OmopSketch::tableOmopSnapshot(
        header = input$header,
-       group = input$group_column,
+       groupColumn = input$group_column,
        hide = input$hide
       )",
       render = "<reactive_data>",
       filters = rankTableButton(
         none = c("estimate_name", "<group>","<strata>","<additional>"),
         header = "cdm_name",
-        group = "variable_name",
+        groupColumn = "variable_name",
         hide = c("<settings>", "variable_level")
       ),
       download = downloadGtTable("table_snapshot")
@@ -983,14 +983,14 @@ observationPeriodPanel <- list(
       reactive = "<filtered_data> |>
        OmopSketch::tableObservationPeriod(
        header = input$header,
-       group = input$group_column,
+       groupColumn = input$group_column,
        hide = input$hide
       )",
       render = "<reactive_data>",
       filters = rankTableButton(
         none = c("<group>", "variable_name", "variable_level", "estimate_name", "<additional>"),
         header = "cdm_name",
-        group = "<strata>",
+        groupColumn = "<strata>",
         hide = "<settings>"
       ),
       download = downloadGtTable("table_obsevation_period")
@@ -1083,14 +1083,14 @@ clinicalRecordsPanel <- list(
       reactive = "<filtered_data> |>
        OmopSketch::tableClinicalRecords(
        header = input$header,
-       group = input$group_column,
+       groupColumn = input$group_column,
        hide = input$hide
       )",
       render = "<reactive_data>",
       filters = rankTableButton(
         none = c("variable_name", "variable_level", "estimate_name","<additional>"),
         header = "cdm_name",
-        group = c("<group>","<strata>"),
+        groupColumn = c("<group>","<strata>"),
         hide = "<settings>"
       ),
       download = downloadGtTable("table_clinical_records")
@@ -1117,14 +1117,14 @@ personPanel <- list(
       reactive = "<filtered_data> |>
        OmopSketch::tablePerson(
        header = input$header,
-       group = input$group_column,
+       groupColumn = input$group_column,
        hide = input$hide
       )",
       render = "<reactive_data>",
       filters = rankTableButton(
         none = c("<group>","<strata>", "variable_name", "variable_level", "estimate_name","<additional>"),
         header = "cdm_name",
-        group = character(),
+        groupColumn = character(),
         hide = "<settings>"
       ),
       download = downloadGtTable("table_person")
@@ -1255,14 +1255,14 @@ missingPanel <- list(
       reactive = "<filtered_data> |>
        OmopSketch::tableMissingData(
        header = input$header,
-       group = input$group_column,
+       groupColumn = input$group_column,
        hide = input$hide
       )",
       render = "<reactive_data>",
       filters = rankTableButton(
         none = c("variable_level", "estimate_name", "<additional>"),
         header = "cdm_name",
-        group = c("<group>","<strata>"),
+        groupColumn = c("<group>","<strata>"),
         hide = c("variable_name", "<settings>")
       ),
       download = downloadGtTable("table_missing_data")
@@ -1354,14 +1354,14 @@ trendPanel <- list(
        OmopSketch::tableTrend(
        type = 'reactable',
        header = input$header,
-       group = input$group_column,
+       groupColumn = input$group_column,
        hide = input$hide
       )",
       render = "<reactive_data>",
       filters = rankTableButton(
         none = c("variable_name", "<strata>", "estimate_name", "<additional>"),
         header = "cdm_name",
-        group = c("<settings>","<group>"),
+        groupColumn = c("<settings>","<group>"),
         hide = c("variable_level")
       ),
       download = list(
