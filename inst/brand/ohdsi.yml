@@ -1,11 +1,24 @@
-theme:
-  bootswatch: flatly
+color:
   foreground: "#002147"
   background: "#ffffff"
   primary: "#040188"
   secondary: "#040188"
   success: "#E5920D"
   warning: "#F3BD12"
-  enable-gradients: true
-  enable-shadows: true
-  font-scale: null
+
+#logo:
+#  path: https://yt3.googleusercontent.com/4aPqTFZAyiDo7hWNiut9kFRXtkfnehPDhXjO2G6EOCIcD0czMDjV6ckW-O7ebu_0LdiPqQU_=s900-c-k-c0x00ffffff-no-rj
+
+defaults:
+  shiny:
+    theme:
+      bootswatch: flatly
+      foreground: "#002147"
+      background: "#ffffff"
+      primary: "#040188"
+      secondary: "#040188"
+      success: "#E5920D"
+      warning: "#F3BD12"
+      enable-gradients: true
+      enable-shadows: true
+      font-scale: null

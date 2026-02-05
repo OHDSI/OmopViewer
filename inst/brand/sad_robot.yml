@@ -1,6 +1,19 @@
-theme:
-  bootswatch: sandstone
-  primary: "#605ca8"
-  success: "#3B9AB2"
+color:
+  foreground: "#002147"
   background: "#ffffff"
-  foreground: "#000000"
+  primary: "#040188"
+  secondary: "#040188"
+  success: "#E5920D"
+  warning: "#F3BD12"
+
+logo:
+  path: https://www.ema.europa.eu/sites/default/files/styles/oe_bootstrap_theme_medium_no_crop/public/2024-07/DARWINEU_logo_LARGE.png?itok=NtwlLhSX
+
+defaults:
+  shiny:
+    theme:
+      bootswatch: sandstone
+      primary: "#605ca8"
+      success: "#3B9AB2"
+      background: "#ffffff"
+      foreground: "#000000"
