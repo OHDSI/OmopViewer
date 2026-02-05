@@ -24,14 +24,14 @@
 Source:
 [`DESCRIPTION`](https://github.com/ohdsi/OmopViewer/blob/main/DESCRIPTION)
 
-Català M, Guo Y (2025). *OmopViewer: Visualise OMOP Results using
+Català M, Guo Y (2026). *OmopViewer: Visualise OMOP Results using
 'shiny' Applications*. R package version 0.6.0.900,
 <https://ohdsi.github.io/OmopViewer/>.
 
     @Manual{,
       title = {OmopViewer: Visualise OMOP Results using 'shiny' Applications},
       author = {Martí Català and Yuchen Guo},
-      year = {2025},
+      year = {2026},
       note = {R package version 0.6.0.900},
       url = {https://ohdsi.github.io/OmopViewer/},
     }

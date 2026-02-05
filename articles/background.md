@@ -169,7 +169,7 @@ This shiny *contains information* on:
 Let’s see the html so we can see that id and class are populated:
 
     #> <div class="card bslib-card bslib-mb-spacing bslib-card-input html-fill-item html-fill-container my_custom_class" data-bslib-card-init data-require-bs-caller="card()" data-require-bs-version="5" id="my_custom_id" style="height:200px;">
-    #>   <div class="card-header">My custom card</div>
+    #>   <div class="card-header bslib-gap-spacing">My custom card</div>
     #>   <div class="card-body bslib-gap-spacing html-fill-item html-fill-container" style="margin-top:auto;margin-bottom:auto;flex:1 1 auto;"><h1 id="introduction">Introduction</h1>
     #> <p>This shiny <em>contains information</em> on:</p>
     #> <ul>
