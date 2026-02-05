@@ -51,7 +51,7 @@ test_that("empty shiny", {
   ))
   expect_true("shiny" %in% list.files(tdir))
   ui <- readLines(file.path(tdir, "shiny", "ui.R"))
-  expect_snapshot(cat(ui, sep = "\n"))
+   expect_snapshot(cat(ui, sep = "\n"))
   server <- readLines(file.path(tdir, "shiny", "server.R"))
   expect_snapshot(cat(server, sep = "\n"))
   unlink(file.path(tdir, "shiny"), recursive = TRUE)
@@ -188,8 +188,6 @@ test_that("panelStructure argument works", {
 })
 
 test_that("theme", {
-  skip_if_not_installed("brand.yml")
-
   # no theme
   expect_identical(
     bslib::bs_theme(brand = validateTheme(NULL)),

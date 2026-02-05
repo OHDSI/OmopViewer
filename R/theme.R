@@ -47,34 +47,13 @@ validateTheme <- function(theme, call = parent.frame()) {
   }
 
   # read theme
-  content <- readBrand(file = file)
+  content <- brand.yml::read_brand_yml(path = file)
 
-  # correct visOmopResults themes
-  if (pkg == "visOmopResults") {
-    content <- correctTheme(content = content, theme = theme)
+  # correct font units
+  if (isTRUE(!is.na(as.numeric(content$typography$base$size)))) {
+    content$typography$base$size <- paste0(content$typography$base$size, "pt")
   }
 
-  return(content)
-}
-correctTheme <- function(content, theme) {
-  file <- system.file("brand", "complement", paste0(theme, ".yml"), package = "OmopViewer")
-  if (file.exists(file)) {
-    content <- utils::modifyList(content, readBrand(file = file))
-  }
-
-  # Remove custom typography fields not supported by brand.yml spec
-  if (!is.null(content$typography)) {
-    custom_fields <- c("base-font-size", "table", "table-font-size", "plot", "plot-font-size")
-    content$typography <- content$typography[!names(content$typography) %in% custom_fields]
-  }
-
-  content
-}
-readBrand <- function(file = "_brand.yml") {
-  content <- yaml::read_yaml(file = file)
-  if ("brand" %in% names(content)) {
-    content <- content$brand
-  }
   return(content)
 }
 getThemes <- function() {
