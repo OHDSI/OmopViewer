@@ -37,7 +37,7 @@ str(omopViewerPanels$summarise_omop_snapshot, max.level = 2)
 #>  $ filters          :List of 1
 #>   ..$ cdm_name:List of 7
 #>  $ content          :List of 1
-#>   ..$ table:List of 5
+#>   ..$ table:List of 6
 #>  $ report           :List of 2
 #>   ..$ title: chr "Database metadata"
 #>   ..$      :List of 3

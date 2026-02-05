@@ -45,7 +45,7 @@ panelDetailsFromResult(omopViewerResults)
 #> Clinical Tables Summary (OmopViewer panel)
 #> •  icon: bars-staggered
 #> •  data: result_type: <summarise_clinical_records>
-#> •  filters: 1 filters + 6 automatic filters
+#> •  filters: 1 filters + 5 automatic filters
 #> •  content: Table Clinical records (gt)
 #> 
 #> $summarise_missing_data
@@ -59,7 +59,7 @@ panelDetailsFromResult(omopViewerResults)
 #> Trends (OmopViewer panel)
 #> •  icon: arrow-trend-up
 #> •  data: result_type: <summarise_trend>
-#> •  filters: 1 filters + 5 automatic filters
+#> •  filters: 1 filters + 6 automatic filters
 #> •  content: Table Trends (reactable); Plot Trends (ui)
 #> 
 #> $orphan_code_use

@@ -84,7 +84,7 @@ exportStaticApp(result = result, directory = dir)
 #> ✔ Data processed: 3 panels idenfied: `summarise_omop_snapshot`,
 #>   `summarise_characteristics`, and `incidence`.
 #> ℹ Creating `shiny` from provided data
-#> ✔ Shiny created in: /tmp/RtmpKqeUjb/shiny
+#> ✔ Shiny created in: /tmp/RtmpQAdJRl/shiny
 ```
 
 Note that by default if executed in an interactive environment like *R
@@ -156,7 +156,7 @@ omopViewerPanels
 #> Clinical Tables Summary (OmopViewer panel)
 #> •  icon: bars-staggered
 #> •  data: result_type: <summarise_clinical_records>
-#> •  filters: 1 filters + 6 automatic filters
+#> •  filters: 1 filters + 5 automatic filters
 #> •  content: Table Clinical records (gt)
 #> 
 #> $summarise_record_count
@@ -184,7 +184,7 @@ omopViewerPanels
 #> Trends (OmopViewer panel)
 #> •  icon: arrow-trend-up
 #> •  data: result_type: <summarise_trend>
-#> •  filters: 1 filters + 5 automatic filters
+#> •  filters: 1 filters + 6 automatic filters
 #> •  content: Table Trends (reactable); Plot Trends (ui)
 #> 
 #> $summarise_concept_id_counts
