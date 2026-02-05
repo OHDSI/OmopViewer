@@ -30,6 +30,14 @@ serverDynamic <- function(input, output, session) {
 
   # change the theme of the shiny
   shiny::observeEvent(input$configuration_theme, {
+    if (!requireNamespace("brand.yml", quietly = TRUE)) {
+      shiny::showNotification(
+        "The 'brand.yml' package is required for theme support. Please install it with: install.packages('brand.yml')",
+        type = "error",
+        duration = 10
+      )
+      return(invisible(NULL))
+    }
     brand <- validateTheme(theme = input$configuration_theme)
     theme <- bslib::bs_theme(brand = brand)
     session$setCurrentTheme(theme)

@@ -188,6 +188,8 @@ test_that("panelStructure argument works", {
 })
 
 test_that("theme", {
+  skip_if_not_installed("brand.yml")
+
   # no theme
   expect_identical(
     bslib::bs_theme(brand = validateTheme(NULL)),
