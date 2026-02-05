@@ -18,7 +18,6 @@ package and some others defined here in `OmopViewer`.
 | empty          |
 | ohdsi          |
 | sad_robot      |
-| scarlet        |
 
 ## Predefined themes
 

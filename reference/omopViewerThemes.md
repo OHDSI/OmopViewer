@@ -18,5 +18,5 @@ A character vector with the available `OmopViewer` themes.
 library(OmopViewer)
 
 omopViewerThemes()
-#> [1] "darwin"    "default"   "empty"     "ohdsi"     "sad_robot" "scarlet"  
+#> [1] "darwin"    "default"   "empty"     "ohdsi"     "sad_robot"
 ```
