@@ -7,6 +7,7 @@ install.packages("here")
 deps <- sort(unique(renv::dependencies(here::here("data-raw", "results.R"))$Package))
 message("Installing dependencies: ", paste(deps, collapse = ", "))
 pak::pak(deps)
+pak::pkg_install("ohdsi/OmopConstructor@build_achilles")
 
 logFile <- tempfile(fileext = ".txt")
 omopgenerics::createLogFile(logFile = logFile)
@@ -52,7 +53,7 @@ DBI::dbExecute(conn = con, statement = "PRAGMA memory_limit='2GB';")
 
 # achilles tables
 omopgenerics::logMessage("Create Achilles tables")
-cdm <- CodelistGenerator::buildAchillesTables(cdm)
+cdm <- OmopConstructor::buildAchilles(cdm, "minimal")
 
 # create cohorts
 omopgenerics::logMessage("Create cohorts of interest")
