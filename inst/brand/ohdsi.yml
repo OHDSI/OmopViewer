@@ -6,8 +6,8 @@ color:
   success: "#E5920D"
   warning: "#F3BD12"
 
-logo:
-  path: https://yt3.googleusercontent.com/4aPqTFZAyiDo7hWNiut9kFRXtkfnehPDhXjO2G6EOCIcD0czMDjV6ckW-O7ebu_0LdiPqQU_=s900-c-k-c0x00ffffff-no-rj
+#logo:
+#  path: https://yt3.googleusercontent.com/4aPqTFZAyiDo7hWNiut9kFRXtkfnehPDhXjO2G6EOCIcD0czMDjV6ckW-O7ebu_0LdiPqQU_=s900-c-k-c0x00ffffff-no-rj
 
 defaults:
   shiny:
