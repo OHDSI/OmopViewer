@@ -64,7 +64,8 @@ codelistConditions <- list(
   cough = 254761L,
   fatigue = 4223659L,
   respiratory_distress = 4158346L
-)
+) |>
+  omopgenerics::newCodelist()
 cdm$conditions <- CohortConstructor::conceptCohort(
   cdm = cdm, conceptSet = codelistConditions, name = "conditions"
 )
