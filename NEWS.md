@@ -1,3 +1,14 @@
+# OmopViewer 0.7.0
+
+* logo can be specified in brand.yml by @catalamarti in https://github.com/OHDSI/OmopViewer/pull/348
+* Allow to filter data by group, strata and additional by @catalamarti in https://github.com/OHDSI/OmopViewer/pull/350
+* Update for MeasurementDiagnostics v0.2.0 by @nmercadeb in https://github.com/OHDSI/OmopViewer/pull/351
+* Add `README.md` file by @catalamarti in https://github.com/OHDSI/OmopViewer/pull/352
+* Prepare OmopViewer for compatibility with bslib v0.10.0 release by @gadenbuie in https://github.com/OHDSI/OmopViewer/pull/355
+* Adopt brand yml by @catalamarti in https://github.com/OHDSI/OmopViewer/pull/356
+* Update omopsketch by @cecicampanile in https://github.com/OHDSI/OmopViewer/pull/354
+* fix build achilles by @catalamarti in https://github.com/OHDSI/OmopViewer/pull/357
+
 # OmopViewer 0.6.0
 
 ## New functionality
