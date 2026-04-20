@@ -2,6 +2,8 @@
 
 ## OmopViewer 0.7.0
 
+CRAN release: 2026-02-09
+
 - logo can be specified in brand.yml by
   [@catalamarti](https://github.com/catalamarti) in
   <https://github.com/OHDSI/OmopViewer/pull/348>

@@ -22,7 +22,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/ohdsi/OmopViewer/blob/v0.7.0/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/ohdsi/OmopViewer/blob/main/DESCRIPTION)
 
 Català M, Guo Y (2026). *OmopViewer: Visualise OMOP Results using
 'shiny' Applications*. R package version 0.7.0,
