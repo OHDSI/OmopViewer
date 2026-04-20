@@ -10,10 +10,14 @@ navbar:
     - articles
     - news
     - example-app
+    - tutorial
   components:
     example-app:
       text: "Example App"
       href: https://dpa-pde-oxford.shinyapps.io/OmopViewerExample/
+    tutorial:
+      text: "Tutorial"
+      href: tutorial/
 
 articles:
 - title: Basic functionality
