@@ -1,0 +1,384 @@
+---
+title: "OmopViewer"
+subtitle: "Visualise OMOP Results using Shiny Applications"
+format:
+  revealjs: 
+    theme: [simple]
+    incremental: true   
+    slide-number: true
+    chalkboard: true
+    preview-links: auto
+    margin: 0.07
+    code-link: true
+    code-line-numbers: false
+    height: 900
+    width: 1600
+execute:
+  echo: true
+  eval: false
+editor: visual
+---
+
+## Motivation: Standardised Results
+
+Studies using OMOP CDM produce a wide variety of results:
+
+-   Cohort counts and attrition
+-   Characteristics and large-scale characterisation
+-   Incidence and prevalence estimates
+-   Drug utilisation, survival analyses, ...
+
+. . .
+
+Each study used to produce results in **different formats** → hard to reuse, visualise, or share 🤔
+
+## Motivation: `<summarised_result>`
+
+The `omopgenerics` package defines a **common format** for all analytical results: the `<summarised_result>` class.
+
+. . .
+
+```{r}
+library(omopgenerics)
+# A summarised_result is a tibble with standardised columns:
+# cdm_name | result_id | group_name | group_level |
+# strata_name | strata_level | variable_name | variable_level |
+# estimate_name | estimate_type | estimate_value | additional_name | additional_level
+```
+
+. . .
+
+All OHDSI analytical packages — `CohortCharacteristics`, `IncidencePrevalence`, `DrugUtilisation`, `PhenotypeR`, ... — **return results in this format**.
+
+## Motivation: The Problem
+
+Even with a standardised format... visualising results is still hard:
+
+-   Need to write custom Shiny code for every study
+-   Difficult to share results across sites
+-   No easy way to explore results interactively
+
+. . .
+
+**OmopViewer** solves this by automatically generating Shiny apps from any `<summarised_result>` object 🎉
+
+## Introduction
+
+-   **OmopViewer** allows users to easily create Shiny apps to visualise study results in `<summarised_result>` format.
+
+::: {style="margin-bottom: 10px;"}
+:::
+
+-   The code is publicly available in OHDSI's GitHub repository [OmopViewer](https://github.com/OHDSI/OmopViewer).
+
+::: {style="margin-bottom: 10px;"}
+:::
+
+-   OmopViewer 0.7.0 is available in [CRAN](https://CRAN.R-project.org/package=OmopViewer){.link}.
+
+::: {style="margin-bottom: 10px;"}
+:::
+
+-   Vignettes with further information can be found in the package [website](https://ohdsi.github.io/OmopViewer/){.link}.
+
+## Two Core Functionalities
+
+::: {style="margin-bottom: 20px;"}
+:::
+
+::::: columns
+::: {.column width="48%"}
+### 🚀 Dynamic App
+
+-   Launch immediately with `launchDynamicApp()`
+-   Upload any `<summarised_result>` CSV/zip
+-   Explore data interactively on the fly
+-   **No setup required** — perfect for quick exploration
+:::
+
+::: {.column width="48%"}
+### 📦 Static App
+
+-   Generate a full Shiny project with `exportStaticApp()`
+-   Self-contained R project you can **edit**, customise, and deploy
+-   Code is yours — transparent and reproducible
+-   Ideal for sharing results with collaborators
+:::
+:::::
+
+## Installation
+
+```{r}
+# Install from CRAN:
+install.packages("OmopViewer")
+
+# Or the development version from GitHub:
+install.packages("pak")
+pak::pkg_install("OHDSI/OmopViewer")
+```
+
+. . .
+
+```{r}
+library(OmopViewer)
+```
+
+# Dynamic App
+
+## Dynamic App: Quick Exploration
+
+The dynamic app is the fastest way to explore any `<summarised_result>`:
+
+. . .
+
+```{r}
+launchDynamicApp()
+```
+
+. . .
+
+A Shiny app opens in your browser. From there:
+
+1.  Click **Upload data** to load a CSV exported with `exportSummarisedResult()`
+2.  Click **Bind data and load shiny**
+3.  One panel is created per result type — navigate between tabs to explore
+
+. . .
+
+::: callout-note
+The dynamic app is great for **quick interactive exploration**, but it cannot be saved, customised, or deployed. For that, use the static app.
+:::
+
+## Dynamic App: When to Use It
+
+✅ You want to **quickly inspect** a result set
+
+✅ You are **exploring data** before deciding how to present it
+
+✅ You need a **fast sanity check** of your results
+
+. . .
+
+❌ You want to **deploy** the app online
+
+❌ You need to **customise** the visualisations
+
+❌ You want a **reproducible** and shareable app
+
+→ In those cases, use `exportStaticApp()` instead
+
+# Static App
+
+## Static App: Generate a Full Shiny Project
+
+The static app generates a complete, self-contained Shiny project from your results:
+
+. . .
+
+```{r}
+library(OmopViewer)
+library(CohortCharacteristics)
+library(omopgenerics)
+
+# Generate some results
+cdm <- mockCohortCharacteristics()
+result <- summariseCharacteristics(cdm$cohort1) |>
+  bind(summariseCohortAttrition(cdm$cohort1))
+
+# Export the static shiny app
+exportStaticApp(result = result, directory = here::here("myShiny"))
+```
+
+. . .
+
+OmopViewer will **automatically detect** which result types are present and create the appropriate panels.
+
+## Static App: What Gets Generated
+
+```{r}
+list.files("myShiny/shiny", recursive = TRUE)
+```
+
+. . .
+
+A full R project is created:
+
+-   `global.R` — loads data and packages
+-   `ui.R` — all UI code (tabs, buttons, filters) ✏️ **editable**
+-   `server.R` — server logic ✏️ **editable**
+-   `functions.R` — utility functions used internally
+-   `rawData/results.csv` — your original `<summarised_result>`
+-   `rawData/preprocess.R` — script to regenerate the processed data
+-   `data/studyData.RData` — pre-processed data used by the app
+
+## Static App: Panels
+
+OmopViewer includes **36 pre-built panels**, one for each result type:
+
+. . .
+
+```{r}
+# See all available panels
+names(omopViewerPanels)
+```
+
+. . .
+
+Examples include:
+
+-   `summarise_omop_snapshot` → Database Snapshot
+-   `summarise_characteristics` → Cohort Characteristics (table + plot)
+-   `summarise_cohort_attrition` → Attrition diagram
+-   `incidence` → Incidence table + plot
+-   `prevalence` → Prevalence table + plot
+-   `survival` → Kaplan-Meier survival plot
+-   `summarise_drug_utilisation` → Drug utilisation
+
+## Static App: Customisation Options
+
+`exportStaticApp()` accepts several arguments for customisation:
+
+. . .
+
+```{r}
+exportStaticApp(
+  result = result,
+  directory = here::here("myShiny"),
+  theme = "cerulean",           # pre-built bslib theme or a custom one
+  logo = "ohdsi",               # built-in logo or path to a local image
+  title = "My Study Results",   # title shown in the app
+  background = TRUE,            # include a background/landing page panel
+  summary = TRUE,               # include a summary panel
+  panelStructure = NULL,        # group panels into dropdown menus
+  panelDetails = NULL           # fine-grained control over each panel
+)
+```
+
+## Static App: Organise Panels with `panelStructure`
+
+Group results into logical dropdown menus:
+
+. . .
+
+```{r}
+my_structure <- list(
+  "Database" = c("summarise_omop_snapshot", "summarise_observation_period"),
+  "Cohorts"  = c("summarise_cohort_count", "summarise_cohort_attrition",
+                 "summarise_characteristics"),
+  "Epidemiology" = c("incidence", "prevalence")
+)
+
+exportStaticApp(
+  result = result,
+  directory = here::here("myShiny"),
+  panelStructure = my_structure
+)
+```
+
+## Static App: Fine-tune with `panelDetails`
+
+Control exactly what each panel shows:
+
+. . .
+
+```{r}
+# Start from the default panel for incidence
+panelDetails <- list(
+  incidence_female = getPanel("incidence"),
+  incidence_male   = getPanel("incidence")
+)
+
+# Restrict data to the relevant sex strata
+panelDetails$incidence_female$data <- list(result_type = "incidence", denominator_sex = "Female")
+panelDetails$incidence_male$data   <- list(result_type = "incidence", denominator_sex = "Male")
+
+# Update titles and icons
+panelDetails$incidence_female$title <- "Incidence — Female"
+panelDetails$incidence_female$icon  <- "venus"
+panelDetails$incidence_male$title   <- "Incidence — Male"
+panelDetails$incidence_male$icon    <- "mars"
+
+exportStaticApp(result = result, panelDetails = panelDetails,
+                directory = here::here("myShiny"))
+```
+
+## Static App: Edit the Generated Code
+
+Because the static app is a **standard R/Shiny project**, you can:
+
+. . .
+
+-   Open it in RStudio as a regular project
+-   Edit `ui.R` to change default filter values, rearrange buttons
+-   Edit `server.R` to change plot types, add custom logic
+-   Add new tabs or remove existing ones
+-   Deploy it to [shinyapps.io](https://www.shinyapps.io) or any Shiny server
+
+. . .
+
+The static app is **transparent** — no magic, just code you own.
+
+## Example App
+
+An example Shiny app built with OmopViewer is available online:
+
+. . .
+
+👉 <https://dpa-pde-oxford.shinyapps.io/OmopViewerExample/>
+
+. . .
+
+This app is **automatically built from `main`** using the latest `omopViewerResults` dataset and `omopViewerPanels` panel definitions.
+
+# Summary
+
+## Summary
+
+::::: columns
+::: {.column width="48%"}
+**Dynamic App**
+
+```{r}
+launchDynamicApp()
+```
+
+-   Upload and explore instantly
+-   No setup required
+-   Not deployable or editable
+:::
+
+::: {.column width="48%"}
+**Static App**
+
+```{r}
+exportStaticApp(
+  result = result,
+  directory = here::here()
+)
+```
+
+-   Full Shiny project generated
+-   Editable R files (ui.R, server.R)
+-   Deployable and shareable
+:::
+:::::
+
+. . .
+
+Both work with **any** `<summarised_result>` from the OHDSI ecosystem 🌍
+
+## OmopViewer
+
+::::: {style="display: flex; align-items: center; justify-content: space-between;"}
+::: {style="flex: 1;"}
+👉 [**Package website**](https://ohdsi.github.io/OmopViewer/)\
+👉 [**CRAN link**](https://CRAN.R-project.org/package=OmopViewer)\
+👉 [**GitHub link**](https://github.com/OHDSI/OmopViewer)\
+👉 [**Example app**](https://dpa-pde-oxford.shinyapps.io/OmopViewerExample/)\
+📧 <a href="mailto:marti.catalasabate@ndorms.ox.ac.uk">marti.catalasabate\@ndorms.ox.ac.uk</a>
+:::
+
+::: {style="flex: 1; text-align: center;"}
+<img src="https://github.com/OHDSI/OmopViewer/blob/main/man/figures/logo.png?raw=true" width="400"/>
+:::
+:::::

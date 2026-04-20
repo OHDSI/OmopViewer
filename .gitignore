@@ -46,3 +46,5 @@ inst/doc
 /doc/
 /Meta/
 /revdep/
+/tutorial/index_files/
+/tutorial/*.html

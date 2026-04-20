@@ -258,7 +258,7 @@ omopViewerResults <- omopgenerics::bind(
   # OmopSketch
   snapshot, obsPeriod, clinicalTables, missingData, recordCount, inObservation,
   # CodelistGenerator
-  orphanCodes, cohortCodeUse, codeUse, achillesUse, unmapped,
+  orphanCodes, cohortCodeUse, codeUse, achillesUse,
   # CohortCharacteristics
   overlap, counts, attrition, characteristics, timing, lsc,
   # IncidencePrevalence

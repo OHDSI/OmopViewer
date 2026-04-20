@@ -41,6 +41,26 @@ jobs:
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
         shell: Rscript {0}
 
+      - name: Install Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Render Tutorial
+        run: |
+          quarto render tutorial/index.qmd
+
+          mkdir -p docs/tutorial
+
+          OUT_BASE=$(basename tutorial/index.qmd .qmd)
+          mkdir -p docs/tutorial
+
+          cp "tutorial/${OUT_BASE}.html" "docs/tutorial/index.html"
+
+          for d in tutorial/${OUT_BASE}_files tutorial/*_files; do
+            if [ -d "$d" ]; then
+              cp -r "$d" "docs/tutorial/"
+            fi
+          done
+
       - name: Deploy to GitHub pages 🚀
         if: github.event_name != 'pull_request'
         uses: JamesIves/github-pages-deploy-action@v4.5.0
