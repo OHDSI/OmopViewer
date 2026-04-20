@@ -7,7 +7,6 @@ install.packages("here")
 deps <- sort(unique(renv::dependencies(here::here("data-raw", "results.R"))$Package))
 message("Installing dependencies: ", paste(deps, collapse = ", "))
 pak::pak(deps)
-pak::pkg_install("ohdsi/OmopConstructor@build_achilles")
 
 logFile <- tempfile(fileext = ".txt")
 omopgenerics::createLogFile(logFile = logFile)
@@ -53,7 +52,7 @@ DBI::dbExecute(conn = con, statement = "PRAGMA memory_limit='2GB';")
 
 # achilles tables
 omopgenerics::logMessage("Create Achilles tables")
-cdm <- OmopConstructor::buildAchilles(cdm, "minimal")
+cdm <- OmopConstructor::buildAchillesTables(cdm, "minimal")
 
 # create cohorts
 omopgenerics::logMessage("Create cohorts of interest")
@@ -113,16 +112,13 @@ omopgenerics::logMessage("Summarise orphan codes")
 orphanCodes <- CodelistGenerator::summariseOrphanCodes(codelistConditions, cdm = cdm)
 
 omopgenerics::logMessage("Summarise cohort code use")
-cohortCodeUse <- CodelistGenerator::summariseCohortCodeUse(codelistConditions, cdm = cdm, "conditions")
+cohortCodeUse <- CodelistGenerator::summariseCohortCodeUse(cdm = cdm, cohortTable = "conditions")
 
 omopgenerics::logMessage("Summarise code use")
 codeUse <- CodelistGenerator::summariseCodeUse(codelistConditions, cdm = cdm)
 
 omopgenerics::logMessage("Summarise achilles code use")
 achillesUse <- CodelistGenerator::summariseAchillesCodeUse(codelistConditions, cdm = cdm)
-
-omopgenerics::logMessage("Summarise unmapped codes")
-unmapped <- CodelistGenerator::summariseUnmappedCodes(codelistConditions, cdm = cdm)
 
 # CohortCharacteristics
 omopgenerics::logMessage("Summarise overlap")
