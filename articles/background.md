@@ -13,6 +13,7 @@ this vignette we are going to show different options how to populate the
 ‘background.md’ file.
 
 ``` r
+
 library(OmopViewer)
 
 # this functions will be copied in your shiny folder
@@ -92,10 +93,10 @@ The following keywords can be used to edit the
 [`bslib::card()`](https://rstudio.github.io/bslib/reference/card.html)
 content:
 
-| keyword | function                                                                        |
-|---------|---------------------------------------------------------------------------------|
-| header  | [bslib::card_header](https://rstudio.github.io/bslib//reference/card_body.html) |
-| footer  | [bslib::card_footer](https://rstudio.github.io/bslib//reference/card_body.html) |
+| keyword | function |
+|----|----|
+| header | [bslib::card_header](https://rstudio.github.io/bslib//reference/card_body.html) |
+| footer | [bslib::card_footer](https://rstudio.github.io/bslib//reference/card_body.html) |
 
 Function column states which is the function that is triggered. Let’s
 see how to add header and footer to our card:

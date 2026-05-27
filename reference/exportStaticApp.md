@@ -105,8 +105,9 @@ exportStaticApp(
   result = omopgenerics::emptySummarisedResult(),
   directory = tempdir()
 )
+#> Warning: NAs introduced by coercion
 #> ℹ Processing data
 #> ! No panels identified, generated shiny will be empty.
 #> ℹ Creating `shiny` from provided data
-#> ✔ Shiny created in: /tmp/RtmpBeUyUY/shiny
+#> ✔ Shiny created in: /tmp/RtmpZFtOpE/shiny
 ```

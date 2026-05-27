@@ -12,12 +12,14 @@ vignette.
 ## Dynamic app
 
 ``` r
+
 library(OmopViewer)
 ```
 
 To launch the dynamic app please use the following command:
 
 ``` r
+
 launchDynamicApp()
 ```
 

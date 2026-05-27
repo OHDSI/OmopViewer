@@ -1,6 +1,7 @@
 # Extending OmopViewer
 
 ``` r
+
 library(OmopViewer)
 ```
 
@@ -27,6 +28,7 @@ already seen this structure in action. Here’s a quick recap:
 | `content`           | tabs such as `tidy`, `table`, `plot`, …   |
 
 ``` r
+
 str(omopViewerPanels$summarise_omop_snapshot, max.level = 2)
 #> List of 7
 #>  $ title            : chr "Snapshot"
@@ -51,6 +53,7 @@ SamplePkg::tablefunction and SamplePkg::plotfunction as a placeholder
 for the plot and table functions developer should add.
 
 ``` r
+
 ## my custom summary ----
 myCustomPanel <- list(
   # --- metadata -----------------------------------------------------------
@@ -115,6 +118,7 @@ myCustomPanel <- list(
   then register it:
 
 ``` r
+
 omopViewerPanels <- list(
   # existing entries …
   summarise_my_custom = myCustomPanel,

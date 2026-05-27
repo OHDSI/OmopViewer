@@ -8,6 +8,7 @@ to visualise study results in `<summarised_result>` format.
 Install it from cran:
 
 ``` r
+
 install.packages("OmopViewer")
 ```
 
@@ -15,6 +16,7 @@ Or you can install the development version of OmopViewer from
 [GitHub](https://github.com/OHDSI/OmopViewer) with:
 
 ``` r
+
 install.packages("pak")
 pak::pkg_install("OHDSI/OmopViewer")
 ```
@@ -22,6 +24,7 @@ pak::pkg_install("OHDSI/OmopViewer")
 ## Main functionalities
 
 ``` r
+
 library(OmopViewer)
 ```
 
@@ -37,6 +40,7 @@ The static shiny app functionality creates a static shiny from a list of
 results and can be modified later locally.
 
 ``` r
+
 # lets generate some results
 library(CohortCharacteristics)
 #> Warning: package 'CohortCharacteristics' was built under R version 4.4.3
@@ -95,6 +99,7 @@ function. This function creates a shinyApp where you can upload multiple
 results sets and visualise them.
 
 ``` r
+
 launchDynamicApp()
 ```
 

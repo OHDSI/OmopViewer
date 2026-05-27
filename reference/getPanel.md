@@ -23,6 +23,7 @@ A panel definition.
 ## Examples
 
 ``` r
+
 getPanel("incidence")
 #> Incidence (OmopViewer panel)
 #> •  icon: chart-line

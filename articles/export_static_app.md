@@ -19,6 +19,7 @@ functionality is what are you searching for.
 In this vignette we will use simply to packages:
 
 ``` r
+
 library(OmopViewer)
 library(omopgenerics, warn.conflicts = FALSE)
 library(shiny)
@@ -28,11 +29,12 @@ We’ll use the `omopViewerResults` mock data from this package for
 illustration:
 
 ``` r
+
 # Inspect the structure of the sample data
 summary(omopViewerResults)
-#> A summarised_result object with 55103 rows, 122 different result_id, 1, 1, and
-#> 1 different cdm names, and 53 settings.
-#> CDM names: synthea-covid19-200k, mock database, and unknown.
+#> A summarised_result object with 58080 rows, 121 different result_id, 1 and 1
+#> different cdm names, and 56 settings.
+#> CDM names: synthea-covid19-200k and mock database.
 #> Settings: result_type, package_name, package_version, group, strata,
 #> additional, min_cell_count, analysis, analysis_censor_cohort_name,
 #> analysis_complete_database_intervals, analysis_full_contribution,
@@ -47,6 +49,7 @@ For this example, we’ll use a subset of the data containing specific
 result types:
 
 ``` r
+
 result <- omopViewerResults |>
   filterSettings(
     result_type %in% c("summarise_omop_snapshot", "summarise_characteristics", "incidence")
@@ -58,6 +61,7 @@ result_type is one of “summarise_omop_snapshot”,
 “summarise_characteristics”, or “incidence”.
 
 ``` r
+
 summary(result)
 #> A summarised_result object with 1254 rows, 20 different result_id, 1 different
 #> cdm names, and 20 settings.
@@ -78,13 +82,16 @@ data. Using the default parameters, it only requires a directory to save
 the app and the processed data (a object):
 
 ``` r
+
 dir <- tempdir()
 exportStaticApp(result = result, directory = dir)
+#> Warning in isTRUE(!is.na(as.numeric(content$typography$base$size))): NAs
+#> introduced by coercion
 #> ℹ Processing data
 #> ✔ Data processed: 3 panels idenfied: `summarise_omop_snapshot`,
 #>   `summarise_characteristics`, and `incidence`.
 #> ℹ Creating `shiny` from provided data
-#> ✔ Shiny created in: /tmp/Rtmp9Uwbpi/shiny
+#> ✔ Shiny created in: /tmp/RtmpaFKeMw/shiny
 ```
 
 Note that by default if executed in an interactive environment like *R
@@ -98,6 +105,7 @@ See that this created a new project **shiny** in the specified directory
 along with some files:
 
 ``` r
+
 cat(list.files(path = here::here(dir, "shiny"), recursive = TRUE), sep = "\n")
 #> _brand.yml
 #> background.md
@@ -137,6 +145,7 @@ used to create a different panel in the shiny app. The package contains
 in total 36 predefined panels:
 
 ``` r
+
 omopViewerPanels
 #> $summarise_omop_snapshot
 #> Snapshot (OmopViewer panel)
@@ -400,6 +409,7 @@ separate panel, if a pre-build panel does not exist for that
 pre-build panels that are:
 
 ``` r
+
 panelDetailsFromResult(result = result)
 #> $summarise_omop_snapshot
 #> Snapshot (OmopViewer panel)
@@ -441,6 +451,7 @@ Each panel’s entry contains key information:
     would only include the results obtained by the following code:
 
 ``` r
+
 result |>
   filterSettings(
     result_type == "incidence" & 
@@ -477,6 +488,7 @@ object. In this case *OmopSketch*, *CohortCharacteristics* and
 ### Customise panelStructure
 
 ``` r
+
 ps1 <- list(
   grp_1 = c("summarise_omop_snapshot", "incidence"),
   grp_2 = c("summarise_characteristics")

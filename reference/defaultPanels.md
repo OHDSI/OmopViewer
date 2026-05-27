@@ -15,6 +15,7 @@ Names of the default panels defined in the package.
 ## Examples
 
 ``` r
+
 defaultPanels()
 #>  [1] "summarise_omop_snapshot"                 
 #>  [2] "summarise_observation_period"            

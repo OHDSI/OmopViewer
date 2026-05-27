@@ -90,13 +90,6 @@ panelDetailsFromResult(omopViewerResults)
 #> •  filters: 1 filters + 6 automatic filters
 #> •  content: Table Achilles code use (reactable) (reactable); Table Achilles code use (gt) (gt)
 #> 
-#> $unmapped_codes
-#> Unmapped codes (OmopViewer panel)
-#> •  icon: chart-column
-#> •  data: result_type: <unmapped_codes>
-#> •  filters: 1 filters + 6 automatic filters
-#> •  content: Table Unmapped codes (reactable) (reactable); Table Unmapped codes (gt) (gt)
-#> 
 #> $summarise_cohort_overlap
 #> Cohort Overlap (OmopViewer panel)
 #> •  icon: circle-half-stroke
