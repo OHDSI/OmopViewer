@@ -48,7 +48,13 @@ library(omopgenerics)
 
 . . .
 
-All OHDSI analytical packages — `CohortCharacteristics`, `IncidencePrevalence`, `DrugUtilisation`, `PhenotypeR`, ... — **return results in this format**.
+OHDSI and DARWIN-EU analytical packages have addopted this result format:
+
+- [CohortCharacteristics](https://darwin-eu.github.io/CohortCharacteristics/)
+- [IncidencePrevalence](https://darwin-eu.github.io/IncidencePrevalence/)
+- [DrugUtilisation](https://darwin-eu.github.io/DrugUtilisation/)
+- [PhenotypeR](https://ohdsi.github.io/PhenotypeR/)
+- [OmopSketch](https://ohdsi.github.io/OmopSketch/)
 
 ## Motivation: The Problem
 
