@@ -20,7 +20,8 @@ test_that("readme works", {
   expect_true("README.md" %in% list.files(path = tdir))
   cont3 <- readLines(file.path(tdir, "README.md"))
   expect_true(cont3[1] == "# Report Hola")
-  expect_true(length(cont3) == 12)
+  expect_true(length(cont3) == 13)
+  expect_true(any(grepl("renderReport.R", cont3, fixed = TRUE)))
   unlink(file.path(tdir, "README.md"))
 
   expect_true(!identical(cont1, cont2))

@@ -1,12 +1,13 @@
 
 # static ----
-serverStatic <- function(panelDetails, summary, updateButtons) {
+serverStatic <- function(panelDetails, summary, updateButtons, report) {
   paste0(
     c(
       messageShiny(),
       "server <- function(input, output, session) {",
       createSummaryServer(summary, data = "data"),
       createServer(panelDetails, data = "data", updateButtons = updateButtons),
+      createReportServer(report),
       "}"
     ),
     collapse = "\n"
@@ -67,6 +68,119 @@ downloadRawDataServer <- function(data) {
   )' |>
     glue::glue(.open = "[", .close = "]") |>
     as.character()
+}
+createReportServer <- function(report) {
+  if (!report) return(character())
+  '# report ----
+  report_path <- function(extension) {
+    file.path("www", "reports", paste0("report.", extension))
+  }
+  report_url <- function(extension) {
+    paste0("reports/report.", extension)
+  }
+  report_metadata <- function() {
+    metadata_file <- file.path("www", "reports", "report_metadata.rds")
+    if (!file.exists(metadata_file)) {
+      return(NULL)
+    }
+    tryCatch(readRDS(metadata_file), error = function(e) NULL)
+  }
+  report_is_stale <- function(metadata) {
+    if (is.null(metadata)) {
+      return(FALSE)
+    }
+    stale <- FALSE
+    if (!is.null(metadata$report_qmd_md5) && file.exists("report.qmd")) {
+      stale <- stale || !identical(
+        unname(tools::md5sum("report.qmd")),
+        metadata$report_qmd_md5
+      )
+    }
+    data_file <- file.path("data", "studyData.RData")
+    if (!is.null(metadata$data_md5) && file.exists(data_file)) {
+      stale <- stale || !identical(
+        unname(tools::md5sum(data_file)),
+        metadata$data_md5
+      )
+    }
+    stale
+  }
+
+  output$report_status <- shiny::renderUI({
+    has_html <- file.exists(report_path("html"))
+    has_docx <- file.exists(report_path("docx"))
+    if (!has_html && !has_docx) {
+      return(shiny::div(
+        class = "alert alert-warning mb-3",
+        "Report files have not been rendered. Run renderReport.R locally before publishing."
+      ))
+    }
+    if (!has_html || !has_docx) {
+      return(shiny::div(
+        class = "alert alert-warning mb-3",
+        "One or more report files are missing. Run renderReport.R locally before publishing."
+      ))
+    }
+
+    metadata <- report_metadata()
+    if (is.null(metadata)) {
+      return(shiny::div(
+        class = "alert alert-warning mb-3",
+        "Report files are available, but metadata is missing. Run renderReport.R to refresh them before publishing."
+      ))
+    }
+
+    rendered_at <- metadata$rendered_at
+    rendered_at <- if (is.null(rendered_at)) {
+      "unknown"
+    } else {
+      format(rendered_at, "%Y-%m-%d %H:%M")
+    }
+    status <- paste("Report generated:", rendered_at)
+    if (report_is_stale(metadata)) {
+      shiny::div(
+        class = "alert alert-warning mb-3",
+        status,
+        shiny::br(),
+        "report.qmd or the processed data has changed. Run renderReport.R locally to refresh the report files."
+      )
+    } else {
+      shiny::div(class = "alert alert-success mb-3", status)
+    }
+  })
+
+  output$report_preview <- shiny::renderUI({
+    if (!file.exists(report_path("html"))) {
+      return(shiny::div(class = "text-muted", "HTML preview is not available."))
+    }
+    shiny::tags$iframe(
+      src = report_url("html"),
+      width = "100%",
+      height = "800px",
+      style = "border: 1px solid #ddd; border-radius: 4px; background: white;"
+    )
+  })
+
+  output$download_report_docx <- shiny::downloadHandler(
+    filename = "report.docx",
+    content = function(file) {
+      path <- report_path("docx")
+      if (!file.exists(path)) {
+        stop("report.docx has not been rendered. Run renderReport.R locally before publishing.")
+      }
+      file.copy(path, file, overwrite = TRUE)
+    }
+  )
+  output$download_report_html <- shiny::downloadHandler(
+    filename = "report.html",
+    content = function(file) {
+      path <- report_path("html")
+      if (!file.exists(path)) {
+        stop("report.html has not been rendered. Run renderReport.R locally before publishing.")
+      }
+      file.copy(path, file, overwrite = TRUE)
+    }
+  )'
 }
 writeUpdateDataMessage <- function(nm, filters, updateButtons) {
   if (length(filters) == 0 || !updateButtons) return(character())

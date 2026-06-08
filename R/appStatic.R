@@ -101,13 +101,14 @@ exportStaticApp <- function(result,
     title = title,
     background = background,
     summary = summary,
+    report = report,
     panelDetails = panelDetails,
     panelStructure = panelStructure,
     updateButtons = updateButtons
   )
 
   # create server
-  server <- serverStatic(panelDetails, summary, updateButtons)
+  server <- serverStatic(panelDetails, summary, updateButtons, report)
 
   # functions to copy
   functions <- readLines(system.file("functions.R", package = "OmopViewer"))
@@ -139,6 +140,17 @@ exportStaticApp <- function(result,
     # export files
     exportReport(report = reportCont, directory = directory)
     exportTemplate(template = template, directory = directory)
+    exportRenderReportScript(directory = directory)
+    tryCatch(
+      renderReport(directory = directory, formats = c("html", "docx"), quiet = TRUE),
+      error = function(e) {
+        cli::cli_warn(c(
+          "!" = "Report files were not rendered during app export.",
+          "i" = conditionMessage(e),
+          "i" = "Run {.file renderReport.R} from the generated Shiny app directory before publishing."
+        ))
+      }
+    )
   }
 
   # add readme

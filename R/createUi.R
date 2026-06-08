@@ -4,6 +4,7 @@ uiStatic <- function(logo,
                      title,
                      background,
                      summary,
+                     report,
                      panelDetails,
                      panelStructure,
                      updateButtons) {
@@ -17,6 +18,7 @@ uiStatic <- function(logo,
   } else {
     style <- NULL
   }
+  header <- if (is.null(style)) NULL else paste0("header = ", style)
 
   # ui
   c(
@@ -25,10 +27,11 @@ uiStatic <- function(logo,
     c(
       writeTitle(title, logo),
       "theme = bslib::bs_theme(brand = TRUE)",
-      style,
+      header,
       createBackground(background),
       summaryTab(summary),
       panels,
+      reportUi(report),
       "bslib::nav_spacer()",
       downloadRawDataUi(),
       createAbout("hds_logo.svg"),
@@ -49,6 +52,38 @@ downloadRawDataUi <- function() {
         label = "Download raw data",
         icon = shiny::icon("download")
       )
+    )
+  )'
+}
+
+reportUi <- function(report) {
+  if (!report) return(character())
+
+  'bslib::nav_panel(
+    title = "Report",
+    icon = shiny::icon("file-lines"),
+    bslib::card(
+      bslib::card_header(
+        shiny::div(
+          class = "d-flex align-items-center justify-content-between gap-2 flex-wrap",
+          shiny::span("Report"),
+          shiny::div(
+            class = "d-flex gap-2 flex-wrap",
+            shiny::downloadButton(
+              outputId = "download_report_docx",
+              label = "Download Word",
+              icon = shiny::icon("file-word")
+            ),
+            shiny::downloadButton(
+              outputId = "download_report_html",
+              label = "Download HTML",
+              icon = shiny::icon("file-code")
+            )
+          )
+        )
+      ),
+      shiny::uiOutput("report_status"),
+      shiny::uiOutput("report_preview")
     )
   )'
 }

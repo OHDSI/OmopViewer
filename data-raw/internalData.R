@@ -135,6 +135,7 @@ execute:
   echo: false
   message: false
   warning: false
+format-links: false
 lof: true
 ---
 
