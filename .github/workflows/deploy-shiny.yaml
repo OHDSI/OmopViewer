@@ -50,6 +50,9 @@ jobs:
         run: Rscript -e 'renv::init()'
         working-directory: extras/shiny
 
+      - name: Install fixed rsconnect
+        run: Rscript -e 'install.packages("rsconnect", repos = c("https://rstudio.r-universe.dev", "https://cloud.r-project.org"))'
+
       - name: Deploy TEST to shinyapps.io
         if: github.event_name == 'pull_request'
         env:
