@@ -107,17 +107,10 @@ writeButton <- function(x) {
       "\n)"
     )
   } else if (x$button_type == "Toggle.shinyInput") {
-    x$input_id <- NULL
-    x$button_type <- NULL
-    x$label <- cast(x$label)
-    x$onText <- cast(x$onText)
-    x$offText <- cast(x$offText)
-    button <- paste0(
-      "shiny.fluent::Toggle.shinyInput(\n",
-      purrr::imap(x, \(x, nm) paste(nm, "=", x)) |>
-        paste0(collapse = ",\n"),
-      "\n)"
-    )
+    x$button_type <- "materialSwitch"
+    x$onText <- NULL
+    x$offText <- NULL
+    button <- writeButton(x)
   } else {
     cli::cli_abort("unexpected button_type")
   }

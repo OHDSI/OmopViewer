@@ -2304,10 +2304,8 @@ lscPanel <- list(
       })",
       filters = list(
         missings = list(
-          button_type = "Toggle.shinyInput",
+          button_type = "materialSwitch",
           label = "Missing data",
-          onText = "Interpolate 0",
-          offText = "Eliminate",
           value = TRUE
         ),
         colour = list(
