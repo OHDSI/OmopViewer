@@ -18,7 +18,7 @@
           ""
         ),
         theme = bslib::bs_theme(brand = TRUE),
-        shiny::tags$style(HTML(
+        header = shiny::tags$style(HTML(
           ".sticky-top-btn {
             position: sticky;
             top: 0;
@@ -100,7 +100,7 @@
           ""
         ),
         theme = bslib::bs_theme(brand = TRUE),
-        shiny::tags$style(HTML(
+        header = shiny::tags$style(HTML(
           ".sticky-top-btn {
             position: sticky;
             top: 0;
@@ -209,7 +209,7 @@
           "example"
         ),
         theme = bslib::bs_theme(brand = TRUE),
-        shiny::tags$style(HTML(
+        header = shiny::tags$style(HTML(
           ".sticky-top-btn {
             position: sticky;
             top: 0;
@@ -270,4 +270,3 @@
         ),
         bslib::nav_item(bslib::input_dark_mode(id = "dark_mode", mode = "light"))
       )
-

@@ -32,6 +32,7 @@ jobs:
           r-version: ${{ matrix.config.r }}
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
+          extra-repositories: https://appsilon.r-universe.dev
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
@@ -48,6 +49,9 @@ jobs:
       - name: Create renv file
         run: Rscript -e 'renv::init()'
         working-directory: extras/shiny
+
+      - name: Install fixed rsconnect
+        run: Rscript -e 'install.packages("rsconnect", repos = c("https://rstudio.r-universe.dev", "https://cloud.r-project.org"))'
 
       - name: Deploy TEST to shinyapps.io
         if: github.event_name == 'pull_request'

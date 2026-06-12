@@ -78,6 +78,7 @@ Suggests:
     PatientProfiles,
     plotly,
     progress,
+    quarto,
     reactable,
     renv,
     rmarkdown,

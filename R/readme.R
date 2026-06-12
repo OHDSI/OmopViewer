@@ -17,5 +17,11 @@ copyReadme <- function(shiny, report, title, directory) {
   text <- purrr::map(omopViewerReadme, \(x) glue::glue(x, title = title)) |>
     purrr::compact() |>
     as.character()
+  if (shiny && report) {
+    text <- c(
+      text,
+      "- The `renderReport.R` file regenerates the `www/reports/report.html` and `www/reports/report.docx` files after editing `report.qmd`."
+    )
+  }
   writeLines(text = text, con = file.path(directory, "README.md"))
 }

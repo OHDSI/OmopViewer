@@ -104,9 +104,20 @@ createReport <- function(panelDetails, title, useTemplate) {
   packages <- paste0("library(", packages, ")", collapse = "\n")
 
   if (useTemplate) {
-    template <- "reference-doc: template.docx\n    fig-cap-location: top"
+    template <- paste0(
+      "reference-doc: template.docx\n",
+      "    fig-cap-location: top\n",
+      "  html:\n",
+      "    toc: true\n",
+      "    embed-resources: true"
+    )
   } else {
-    template <- "fig-cap-location: top"
+    template <- paste0(
+      "fig-cap-location: top\n",
+      "  html:\n",
+      "    toc: true\n",
+      "    embed-resources: true"
+    )
   }
 
   # create report
@@ -118,6 +129,244 @@ createReport <- function(panelDetails, title, useTemplate) {
 }
 exportReport <- function(report, directory) {
   writeLines(text = report, con = file.path(directory, "report.qmd"))
+}
+
+#' Render a generated OmopViewer report
+#'
+#' Render the `report.qmd` file in a generated OmopViewer app or report
+#' directory and copy the outputs to `www/reports`.
+#'
+#' @param directory Directory containing `report.qmd`.
+#' @param formats Character vector of formats to render. Supported values are
+#'   `"html"` and `"docx"`.
+#' @param quiet Whether to suppress Quarto output.
+#'
+#' @return Invisibly returns report metadata.
+#'
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' renderReport("shiny")
+#' }
+renderReport <- function(directory = getwd(), formats = c("html", "docx"), quiet = FALSE) {
+  omopgenerics::assertCharacter(directory, length = 1)
+  omopgenerics::assertCharacter(formats)
+  formats <- unique(formats)
+  unsupported <- setdiff(formats, c("html", "docx"))
+  if (length(unsupported) > 0) {
+    cli::cli_abort("Unsupported report format{?s}: {.val {unsupported}}.")
+  }
+  directory <- normalizePath(directory, mustWork = TRUE)
+  renderReportFiles(directory = directory, formats = formats, quiet = quiet)
+}
+renderReportFiles <- function(directory, formats, quiet) {
+  reportFile <- file.path(directory, "report.qmd")
+  if (!file.exists(reportFile)) {
+    cli::cli_abort("No {.file report.qmd} file was found in {.path {directory}}.")
+  }
+
+  if (!requireNamespace("quarto", quietly = TRUE)) {
+    cli::cli_abort("The {.pkg quarto} R package is required to render reports.")
+  }
+  if (!quarto::quarto_available()) {
+    cli::cli_abort(c(
+      "The Quarto CLI is required to render reports.",
+      "i" = "Install Quarto locally, then run {.file renderReport.R} again."
+    ))
+  }
+
+  reportsDirectory <- file.path(directory, "www", "reports")
+  dir.create(reportsDirectory, recursive = TRUE, showWarnings = FALSE)
+
+  old <- setwd(directory)
+  on.exit(setwd(old), add = TRUE)
+
+  dataFile <- file.path("data", "studyData.RData")
+  preprocessFile <- file.path("rawData", "preprocess.R")
+  if (!file.exists(dataFile)) {
+    if (!file.exists(preprocessFile)) {
+      cli::cli_abort("No processed data or preprocessing script was found.")
+    }
+    source(preprocessFile, local = TRUE)
+  }
+
+  outputNames <- stats::setNames(paste0("report.", formats), formats)
+  outputFiles <- stats::setNames(file.path("www", "reports", outputNames), formats)
+  rootArtifacts <- unique(c(outputNames, paste0(tools::file_path_sans_ext(outputNames), "_files")))
+  reportArtifacts <- unique(c(
+    outputFiles,
+    file.path("www", "reports", paste0(tools::file_path_sans_ext(outputNames), "_files")),
+    file.path("www", "reports", "report_metadata.rds")
+  ))
+  unlink(c(rootArtifacts, reportArtifacts), recursive = TRUE, force = TRUE)
+
+  for (fmt in formats) {
+    rendered <- quarto::quarto_render(
+      input = "report.qmd",
+      output_format = fmt,
+      output_file = outputNames[[fmt]],
+      quiet = quiet
+    )
+    renderedFile <- outputNames[[fmt]]
+    if (length(rendered) > 0 && file.exists(rendered)) {
+      renderedFile <- rendered
+    }
+    if (!file.exists(renderedFile)) {
+      cli::cli_abort("Quarto did not create {.file {outputNames[[fmt]]}}.")
+    }
+    file.copy(renderedFile, outputFiles[[fmt]], overwrite = TRUE)
+    if (!file.exists(outputFiles[[fmt]])) {
+      cli::cli_abort("Quarto did not create {.file {outputFiles[[fmt]]}}.")
+    }
+    if (!identical(normalizePath(renderedFile), normalizePath(outputFiles[[fmt]]))) {
+      unlink(renderedFile, recursive = TRUE)
+    }
+  }
+
+  metadata <- createReportMetadata(formats, outputFiles)
+  saveRDS(metadata, file = file.path("www", "reports", "report_metadata.rds"))
+  invisible(metadata)
+}
+createReportMetadata <- function(formats, outputFiles) {
+  md5File <- function(path) {
+    if (file.exists(path)) {
+      unname(tools::md5sum(path))
+    } else {
+      NA_character_
+    }
+  }
+
+  list(
+    rendered_at = Sys.time(),
+    formats = formats,
+    files = outputFiles,
+    report_qmd_md5 = md5File("report.qmd"),
+    data_md5 = md5File(file.path("data", "studyData.RData")),
+    output_md5 = stats::setNames(
+      vapply(outputFiles, md5File, character(1)),
+      names(outputFiles)
+    ),
+    quarto_version = tryCatch(
+      as.character(quarto::quarto_version()),
+      error = function(e) NA_character_
+    )
+  )
+}
+exportRenderReportScript <- function(directory) {
+  writeLines(
+    text = renderReportScript(),
+    con = file.path(directory, "renderReport.R")
+  )
+}
+renderReportScript <- function() {
+  c(
+    "# Regenerate the pre-rendered report files for this Shiny app.",
+    "# Run from the generated Shiny app directory before publishing.",
+    "",
+    "reportDirectory <- function() {",
+    "  if (requireNamespace(\"here\", quietly = TRUE)) {",
+    "    here::here()",
+    "  } else {",
+    "    getwd()",
+    "  }",
+    "}",
+    "",
+    "renderReport <- function(directory = reportDirectory(), formats = c(\"html\", \"docx\"), quiet = FALSE) {",
+    "  formats <- unique(formats)",
+    "  unsupported <- setdiff(formats, c(\"html\", \"docx\"))",
+    "  if (length(unsupported) > 0) {",
+    "    stop(\"Unsupported report format: \", paste(unsupported, collapse = \", \"), call. = FALSE)",
+    "  }",
+    "  directory <- normalizePath(directory, mustWork = TRUE)",
+    "  reportFile <- file.path(directory, \"report.qmd\")",
+    "  if (!file.exists(reportFile)) {",
+    "    stop(\"No report.qmd file was found in \", directory, call. = FALSE)",
+    "  }",
+    "  if (!requireNamespace(\"quarto\", quietly = TRUE)) {",
+    "    stop(\"The quarto R package is required to render reports.\", call. = FALSE)",
+    "  }",
+    "  if (!quarto::quarto_available()) {",
+    "    stop(\"The Quarto CLI is required to render reports.\", call. = FALSE)",
+    "  }",
+    "",
+    "  reportsDirectory <- file.path(directory, \"www\", \"reports\")",
+    "  dir.create(reportsDirectory, recursive = TRUE, showWarnings = FALSE)",
+    "",
+    "  old <- setwd(directory)",
+    "  on.exit(setwd(old), add = TRUE)",
+    "",
+    "  dataFile <- file.path(\"data\", \"studyData.RData\")",
+    "  preprocessFile <- file.path(\"rawData\", \"preprocess.R\")",
+    "  if (!file.exists(dataFile)) {",
+    "    if (!file.exists(preprocessFile)) {",
+    "      stop(\"No processed data or preprocessing script was found.\", call. = FALSE)",
+    "    }",
+    "    source(preprocessFile, local = TRUE)",
+    "  }",
+    "",
+    "  outputNames <- stats::setNames(paste0(\"report.\", formats), formats)",
+    "  outputFiles <- stats::setNames(file.path(\"www\", \"reports\", outputNames), formats)",
+    "  rootArtifacts <- unique(c(outputNames, paste0(tools::file_path_sans_ext(outputNames), \"_files\")))",
+    "  reportArtifacts <- unique(c(",
+    "    outputFiles,",
+    "    file.path(\"www\", \"reports\", paste0(tools::file_path_sans_ext(outputNames), \"_files\")),",
+    "    file.path(\"www\", \"reports\", \"report_metadata.rds\")",
+    "  ))",
+    "  unlink(c(rootArtifacts, reportArtifacts), recursive = TRUE, force = TRUE)",
+    "",
+    "  for (fmt in formats) {",
+    "    rendered <- quarto::quarto_render(",
+    "      input = \"report.qmd\",",
+    "      output_format = fmt,",
+    "      output_file = outputNames[[fmt]],",
+    "      quiet = quiet",
+    "    )",
+    "    renderedFile <- outputNames[[fmt]]",
+    "    if (length(rendered) > 0 && file.exists(rendered)) {",
+    "      renderedFile <- rendered",
+    "    }",
+    "    if (!file.exists(renderedFile)) {",
+    "      stop(\"Quarto did not create \", outputNames[[fmt]], call. = FALSE)",
+    "    }",
+    "    file.copy(renderedFile, outputFiles[[fmt]], overwrite = TRUE)",
+    "    if (!file.exists(outputFiles[[fmt]])) {",
+    "      stop(\"Quarto did not create \", outputFiles[[fmt]], call. = FALSE)",
+    "    }",
+    "    if (!identical(normalizePath(renderedFile), normalizePath(outputFiles[[fmt]]))) {",
+    "      unlink(renderedFile, recursive = TRUE)",
+    "    }",
+    "  }",
+    "",
+    "  md5File <- function(path) {",
+    "    if (file.exists(path)) {",
+    "      unname(tools::md5sum(path))",
+    "    } else {",
+    "      NA_character_",
+    "    }",
+    "  }",
+    "  metadata <- list(",
+    "    rendered_at = Sys.time(),",
+    "    formats = formats,",
+    "    files = outputFiles,",
+    "    report_qmd_md5 = md5File(\"report.qmd\"),",
+    "    data_md5 = md5File(file.path(\"data\", \"studyData.RData\")),",
+    "    output_md5 = stats::setNames(",
+    "      vapply(outputFiles, md5File, character(1)),",
+    "      names(outputFiles)",
+    "    ),",
+    "    quarto_version = tryCatch(",
+    "      as.character(quarto::quarto_version()),",
+    "      error = function(e) NA_character_",
+    "    )",
+    "  )",
+    "  saveRDS(metadata, file = file.path(\"www\", \"reports\", \"report_metadata.rds\"))",
+    "  message(\"Report files written to \", normalizePath(\"www/reports\", mustWork = FALSE))",
+    "  invisible(metadata)",
+    "}",
+    "",
+    "renderReport()"
+  )
 }
 exportTemplate <- function(template, directory) {
   if (!is.null(template)) {
