@@ -2568,16 +2568,20 @@ measurementConceptPanel <- list(
 survivalPanel <- list(
   title = "Survival Analyses",
   icon = "stairs",
+  ui = "survival",
+  server = "survival",
+  data_any = TRUE,
   data = list(result_type = c(
     "survival_summary", "survival_estimates", "survival_events",
     "survival_attrition"
   )),
   automatic_filters = c("group", "strata", "variable_level", "settings"),
   filters = list(cdm_name = cdmFilter),
-  exclude_filters = c("analyses_type", "eventgap"),
+  exclude_filters = "eventgap",
   content = list(
     table_survival = list(
       title = "Table Summary",
+      result_type = "survival_summary",
       output_type = "gt",
       reactive = "<filtered_data> |>
       CohortSurvival::tableSurvival(
@@ -2598,6 +2602,7 @@ survivalPanel <- list(
     ),
     table_events = list(
       title = "Table Events",
+      result_type = "survival_events",
       output_type = "gt",
       reactive = "<filtered_data> |>
       CohortSurvival::tableSurvivalEvents(
@@ -2608,6 +2613,7 @@ survivalPanel <- list(
     ),
     table_attrition = list(
       title = "Table Attrition",
+      result_type = "survival_attrition",
       output_type = "gt",
       reactive = "<filtered_data> |>
       CohortSurvival::tableSurvivalAttrition(
@@ -2618,6 +2624,7 @@ survivalPanel <- list(
     ),
     plot_survival = list(
       title = "Plot Survival",
+      result_type = "survival_estimates",
       output_type = "ui",
       reactive = "<filtered_data> |>
       CohortSurvival::plotSurvival(
