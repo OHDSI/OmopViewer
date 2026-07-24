@@ -13,9 +13,11 @@ knitr::opts_chunk$set(
 )
 ```
 
-# OmopViewer
+# OmopViewer <img src="man/figures/hexsticker.png" align="right" height="180"/>
+
 
 <!-- badges: start -->
+
 [![R-CMD-check](https://github.com/OHDSI/OmopViewer/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/OHDSI/OmopViewer/actions/workflows/R-CMD-check.yaml)
 [![CRAN status](https://www.r-pkg.org/badges/version/OmopViewer)](https://CRAN.R-project.org/package=OmopViewer)
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
