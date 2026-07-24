@@ -43,6 +43,9 @@ createServer <- function(panelDetails, data, updateButtons) {
     downloadRawDataServer(data),
     updateButtonsStart,
     purrr::imap_chr(panelDetails, \(x, nm) {
+      if (identical(x$server, "survival")) {
+        return(writeSurvivalServer(x = x, nm = nm, data = data, updateButtons = updateButtons))
+      }
       c("",
         paste0("# ", nm, " -----"),
         writeUpdateDataMessage(nm = nm, filters = x$filters, updateButtons = updateButtons),

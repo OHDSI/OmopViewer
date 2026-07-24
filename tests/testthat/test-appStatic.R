@@ -227,5 +227,83 @@ test_that("default panel", {
   expect_no_error(exportStaticApp(result = result, directory = tdir))
   expect_true("shiny" %in% list.files(tdir))
   unlink(file.path(tdir, "shiny"), recursive = TRUE)
+})
 
+test_that("survival panel creates custom static app", {
+  result <- dplyr::tibble(
+    cdm_name = "mock",
+    target_cohort = "target",
+    sex = "overall",
+    age_group = "overall",
+    reason = "Initial",
+    variable_name = "survival",
+    variable_level = "death_cohort",
+    estimate = 1,
+    result_type = c(
+      "survival_summary",
+      "survival_estimates",
+      "survival_events",
+      "survival_attrition"
+    ),
+    analysis_type = "single_event",
+    censor_on_cohort_exit = "TRUE",
+    competing_outcome = "none",
+    eventgap = "0",
+    follow_up_days = "365",
+    minimum_survival_days = "0",
+    outcome = "death_cohort",
+    outcome_date_variable = "cohort_start_date",
+    outcome_washout = "0",
+    restricted_mean_follow_up = "365"
+  ) |>
+    omopgenerics::transformToSummarisedResult(
+      group = "target_cohort",
+      strata = c("sex", "age_group", "reason"),
+      settings = c(
+        "result_type",
+        "analysis_type",
+        "censor_on_cohort_exit",
+        "competing_outcome",
+        "eventgap",
+        "follow_up_days",
+        "minimum_survival_days",
+        "outcome",
+        "outcome_date_variable",
+        "outcome_washout",
+        "restricted_mean_follow_up"
+      ),
+      estimates = "estimate"
+    )
+
+  panelDetails <- panelDetailsFromResult(result)
+  expect_identical(names(panelDetails), "survival")
+  expect_identical(
+    names(panelDetails$survival$content),
+    c("table_survival", "table_events", "table_attrition", "plot_survival")
+  )
+
+  tdir <- tempdir()
+  expect_no_error(exportStaticApp(result = result, directory = tdir, open = FALSE))
+  ui <- readLines(file.path(tdir, "shiny", "ui.R"))
+  server <- readLines(file.path(tdir, "shiny", "server.R"))
+
+  expect_no_error(parse(file.path(tdir, "shiny", "ui.R")))
+  expect_no_error(parse(file.path(tdir, "shiny", "server.R")))
+  expect_true(any(grepl("survival_active_tab", ui, fixed = TRUE)))
+  expect_true(any(grepl("Table Attrition", ui, fixed = TRUE)))
+  expect_true(any(grepl("survival_plot_survival_colour", ui, fixed = TRUE)))
+  expect_true(any(grepl("appliedSurvivalInputs", server, fixed = TRUE)))
+  expect_true(any(grepl("cumulativeFailure = isCompetingRisk", server, fixed = TRUE)))
+
+  partial <- result |>
+    omopgenerics::filterSettings(
+      .data$result_type %in% c("survival_summary", "survival_estimates")
+    )
+  partialDetails <- panelDetailsFromResult(partial)
+  expect_identical(
+    names(partialDetails$survival$content),
+    c("table_survival", "plot_survival")
+  )
+
+  unlink(file.path(tdir, "shiny"), recursive = TRUE)
 })

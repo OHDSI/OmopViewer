@@ -59,9 +59,21 @@ panelDetailsFromResult <- function(result,
     purrr::keep(\(x) {
       if (is.null(x$data$result_type)) {
         FALSE
+      } else if (isTRUE(x$data_any)) {
+        any(x$data$result_type %in% resultTypes)
       } else {
         all(x$data$result_type %in% resultTypes)
       }
+    }) |>
+    purrr::map(\(x) {
+      if (isTRUE(x$data_any)) {
+        x$data$result_type <- intersect(x$data$result_type, resultTypes)
+        x$content <- x$content |>
+          purrr::keep(\(content) {
+            is.null(content$result_type) || any(content$result_type %in% resultTypes)
+          })
+      }
+      x
     })
 
   # present default types

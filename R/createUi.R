@@ -78,6 +78,9 @@ writeUiPanels <- function(panelDetails, updateButtons) {
   # create a list with all the panel content
   panelDetails |>
     purrr::imap(\(x, nm) {
+      if (identical(x$ui, "survival")) {
+        return(writeSurvivalUiPanel(x, nm, updateButtons))
+      }
       ub <- updateButtonUi(updateButtons, nm)
       if (length(x$filters) > 0) {
         sidebar <- writeSidebar(filters = x$filters, position = "left", code = ub) |>
