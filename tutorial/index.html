@@ -6,23 +6,26 @@
 <script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="index_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.38">
-
-  <title>OmopViewer</title>
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="index_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="index_files/libs/revealjs/dist/reveal.css">
-  <style>
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+<title>OmopViewer</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+<link rel="stylesheet" href="index_files/libs/revealjs/dist/reset.css">
+<link rel="stylesheet" href="index_files/libs/revealjs/dist/reveal.css">
+<style>
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
     */
-    code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -97,14 +100,14 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-0427d8d92a431aa6a6430e53ec02a470.css">
-  <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="index_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
-  <link href="index_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
-  <link href="index_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
-  <style type="text/css">
+<link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-0427d8d92a431aa6a6430e53ec02a470.css">
+<link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+<link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+<link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+<link href="index_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+<link href="index_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+<link href="index_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+<style type="text/css">
     .reveal div.sourceCode {
       margin: 0;
       overflow: auto;
@@ -196,16 +199,13 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">OmopViewer</h1>
+<section id="title-slide" class="quarto-title-block center"><h1 class="title">OmopViewer</h1>
   <p class="subtitle">Visualise OMOP Results using Shiny Applications</p>
 
 <div class="quarto-title-authors">
 </div>
 
-</section>
-<section id="motivation-standardised-results" class="slide level2">
-<h2>Motivation: Standardised Results</h2>
+</section><section id="motivation-standardised-results" class="slide level2"><h2>Motivation: Standardised Results</h2>
 <p>Studies using OMOP CDM produce a wide variety of results:</p>
 <ul>
 <li class="fragment">Cohort counts and attrition</li>
@@ -216,17 +216,16 @@
 <div class="fragment">
 <p>Each study used to produce results in <strong>different formats</strong> → hard to reuse, visualise, or share 🤔</p>
 </div>
-</section>
-<section id="motivation-summarised_result" class="slide level2">
-<h2>Motivation: <code>&lt;summarised_result&gt;</code></h2>
+</section><section id="motivation-summarised_result" class="slide level2"><h2>Motivation: <code>&lt;summarised_result&gt;</code>
+</h2>
 <p>The <code>omopgenerics</code> package defines a <strong>common format</strong> for all analytical results: the <code>&lt;summarised_result&gt;</code> class.</p>
 <div class="fragment">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(omopgenerics)</span>
-<span id="cb1-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># A summarised_result is a tibble with standardised columns:</span></span>
-<span id="cb1-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># cdm_name | result_id | group_name | group_level |</span></span>
-<span id="cb1-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># strata_name | strata_level | variable_name | variable_level |</span></span>
-<span id="cb1-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># estimate_name | estimate_type | estimate_value | additional_name | additional_level</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://darwin-eu.github.io/omopgenerics/">omopgenerics</a></span><span class="op">)</span></span>
+<span><span class="co"># A summarised_result is a tibble with standardised columns:</span></span>
+<span><span class="co"># cdm_name | result_id | group_name | group_level |</span></span>
+<span><span class="co"># strata_name | strata_level | variable_name | variable_level |</span></span>
+<span><span class="co"># estimate_name | estimate_type | estimate_value | additional_name | additional_level</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 <div class="fragment">
@@ -239,9 +238,7 @@
 <li class="fragment"><a href="https://ohdsi.github.io/OmopSketch/">OmopSketch</a></li>
 </ul>
 </div>
-</section>
-<section id="motivation-the-problem" class="slide level2">
-<h2>Motivation: The Problem</h2>
+</section><section id="motivation-the-problem" class="slide level2"><h2>Motivation: The Problem</h2>
 <p>Even with a standardised format… visualising results is still hard:</p>
 <ul>
 <li class="fragment">Need to write custom Shiny code for every study</li>
@@ -251,11 +248,10 @@
 <div class="fragment">
 <p><strong>OmopViewer</strong> solves this by automatically generating Shiny apps from any <code>&lt;summarised_result&gt;</code> object 🎉</p>
 </div>
-</section>
-<section id="introduction" class="slide level2">
-<h2>Introduction</h2>
+</section><section id="introduction" class="slide level2"><h2>Introduction</h2>
 <ul>
-<li class="fragment"><strong>OmopViewer</strong> allows users to easily create Shiny apps to visualise study results in <code>&lt;summarised_result&gt;</code> format.</li>
+<li class="fragment">
+<strong>OmopViewer</strong> allows users to easily create Shiny apps to visualise study results in <code>&lt;summarised_result&gt;</code> format.</li>
 </ul>
 <div style="margin-bottom: 10px;">
 
@@ -274,10 +270,7 @@
 </div>
 <ul>
 <li class="fragment">Vignettes with further information can be found in the package <a href="https://ohdsi.github.io/OmopViewer/" class="link">website</a>.</li>
-</ul>
-</section>
-<section id="two-core-functionalities" class="slide level2">
-<h2>Two Core Functionalities</h2>
+</ul></section><section id="two-core-functionalities" class="slide level2"><h2>Two Core Functionalities</h2>
 <div style="margin-bottom: 20px;">
 
 </div>
@@ -285,55 +278,53 @@
 <div class="column" style="width:48%;">
 <h3 id="dynamic-app">🚀 Dynamic App</h3>
 <ul>
-<li class="fragment">Launch immediately with <code>launchDynamicApp()</code></li>
+<li class="fragment">Launch immediately with <code><a href="https://ohdsi.github.io/OmopViewer/reference/launchDynamicApp.html">launchDynamicApp()</a></code>
+</li>
 <li class="fragment">Upload any <code>&lt;summarised_result&gt;</code> CSV/zip</li>
 <li class="fragment">Explore data interactively on the fly</li>
-<li class="fragment"><strong>No setup required</strong> — perfect for quick exploration</li>
+<li class="fragment">
+<strong>No setup required</strong> — perfect for quick exploration</li>
 </ul>
 </div><div class="column" style="width:48%;">
 <h3 id="static-app">📦 Static App</h3>
 <ul>
-<li class="fragment">Generate a full Shiny project with <code>exportStaticApp()</code></li>
+<li class="fragment">Generate a full Shiny project with <code><a href="https://ohdsi.github.io/OmopViewer/reference/exportStaticApp.html">exportStaticApp()</a></code>
+</li>
 <li class="fragment">Self-contained R project you can <strong>edit</strong>, customise, and deploy</li>
 <li class="fragment">Code is yours — transparent and reproducible</li>
 <li class="fragment">Ideal for sharing results with collaborators</li>
 </ul>
 </div></div>
-</section>
-<section id="installation" class="slide level2">
-<h2>Installation</h2>
+</section><section id="installation" class="slide level2"><h2>Installation</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Install from CRAN:</span></span>
-<span id="cb2-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"OmopViewer"</span>)</span>
-<span id="cb2-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Or the development version from GitHub:</span></span>
-<span id="cb2-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"pak"</span>)</span>
-<span id="cb2-6"><a href="" aria-hidden="true" tabindex="-1"></a>pak<span class="sc">::</span><span class="fu">pkg_install</span>(<span class="st">"OHDSI/OmopViewer"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Install from CRAN:</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"OmopViewer"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Or the development version from GitHub:</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"pak"</span><span class="op">)</span></span>
+<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pkg_install.html">pkg_install</a></span><span class="op">(</span><span class="st">"OHDSI/OmopViewer"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(OmopViewer)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ohdsi.github.io/OmopViewer/">OmopViewer</a></span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
-</section>
-<section>
-<section id="dynamic-app-1" class="title-slide slide level1 center">
-<h1>Dynamic App</h1>
+</section><section><section id="dynamic-app-1" class="title-slide slide level1 center"><h1>Dynamic App</h1>
 
-</section>
-<section id="dynamic-app-quick-exploration" class="slide level2">
-<h2>Dynamic App: Quick Exploration</h2>
+</section><section id="dynamic-app-quick-exploration" class="slide level2"><h2>Dynamic App: Quick Exploration</h2>
 <p>The dynamic app is the fastest way to explore any <code>&lt;summarised_result&gt;</code>:</p>
 <div class="fragment">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">launchDynamicApp</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ohdsi.github.io/OmopViewer/reference/launchDynamicApp.html">launchDynamicApp</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 <div class="fragment">
 <p>A Shiny app opens in your browser. From there:</p>
 <ol type="1">
-<li class="fragment">Click <strong>Upload data</strong> to load a CSV exported with <code>exportSummarisedResult()</code></li>
-<li class="fragment">Click <strong>Bind data and load shiny</strong></li>
+<li class="fragment">Click <strong>Upload data</strong> to load a CSV exported with <code><a href="https://darwin-eu.github.io/omopgenerics/reference/exportSummarisedResult.html">exportSummarisedResult()</a></code>
+</li>
+<li class="fragment">Click <strong>Bind data and load shiny</strong>
+</li>
 <li class="fragment">One panel is created per result type — navigate between tabs to explore</li>
 </ol>
 </div>
@@ -352,9 +343,7 @@
 </div>
 </div>
 </div>
-</section>
-<section id="dynamic-app-when-to-use-it" class="slide level2">
-<h2>Dynamic App: When to Use It</h2>
+</section><section id="dynamic-app-when-to-use-it" class="slide level2"><h2>Dynamic App: When to Use It</h2>
 <p>✅ You want to <strong>quickly inspect</strong> a result set</p>
 <p>✅ You are <strong>exploring data</strong> before deciding how to present it</p>
 <p>✅ You need a <strong>fast sanity check</strong> of your results</p>
@@ -362,143 +351,145 @@
 <p>❌ You want to <strong>deploy</strong> the app online</p>
 <p>❌ You need to <strong>customise</strong> the visualisations</p>
 <p>❌ You want a <strong>reproducible</strong> and shareable app</p>
-<p>→ In those cases, use <code>exportStaticApp()</code> instead</p>
+<p>→ In those cases, use <code><a href="https://ohdsi.github.io/OmopViewer/reference/exportStaticApp.html">exportStaticApp()</a></code> instead</p>
 </div>
-</section></section>
-<section>
-<section id="static-app-1" class="title-slide slide level1 center">
-<h1>Static App</h1>
+</section></section><section><section id="static-app-1" class="title-slide slide level1 center"><h1>Static App</h1>
 
-</section>
-<section id="static-app-generate-a-full-shiny-project" class="slide level2">
-<h2>Static App: Generate a Full Shiny Project</h2>
+</section><section id="static-app-generate-a-full-shiny-project" class="slide level2"><h2>Static App: Generate a Full Shiny Project</h2>
 <p>The static app generates a complete, self-contained Shiny project from your results:</p>
 <div class="fragment">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(OmopViewer)</span>
-<span id="cb5-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(CohortCharacteristics)</span>
-<span id="cb5-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(omopgenerics)</span>
-<span id="cb5-4"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate some results</span></span>
-<span id="cb5-6"><a href="" aria-hidden="true" tabindex="-1"></a>cdm <span class="ot">&lt;-</span> <span class="fu">mockCohortCharacteristics</span>()</span>
-<span id="cb5-7"><a href="" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">summariseCharacteristics</span>(cdm<span class="sc">$</span>cohort1) <span class="sc">|&gt;</span></span>
-<span id="cb5-8"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind</span>(<span class="fu">summariseCohortAttrition</span>(cdm<span class="sc">$</span>cohort1))</span>
-<span id="cb5-9"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-10"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Export the static shiny app</span></span>
-<span id="cb5-11"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">exportStaticApp</span>(<span class="at">result =</span> result, <span class="at">directory =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"myShiny"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ohdsi.github.io/OmopViewer/">OmopViewer</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://darwin-eu.github.io/CohortCharacteristics/">CohortCharacteristics</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://darwin-eu.github.io/omopgenerics/">omopgenerics</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Generate some results</span></span>
+<span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://darwin-eu.github.io/CohortCharacteristics/reference/mockCohortCharacteristics.html">mockCohortCharacteristics</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://darwin-eu.github.io/CohortCharacteristics/reference/summariseCharacteristics.html">summariseCharacteristics</a></span><span class="op">(</span><span class="va">cdm</span><span class="op">$</span><span class="va">cohort1</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://darwin-eu.github.io/omopgenerics/reference/bind.html">bind</a></span><span class="op">(</span><span class="fu"><a href="https://darwin-eu.github.io/CohortCharacteristics/reference/summariseCohortAttrition.html">summariseCohortAttrition</a></span><span class="op">(</span><span class="va">cdm</span><span class="op">$</span><span class="va">cohort1</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Export the static shiny app</span></span>
+<span><span class="fu"><a href="https://ohdsi.github.io/OmopViewer/reference/exportStaticApp.html">exportStaticApp</a></span><span class="op">(</span>result <span class="op">=</span> <span class="va">result</span>, directory <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org/reference/here.html">here</a></span><span class="op">(</span><span class="st">"myShiny"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 <div class="fragment">
 <p>OmopViewer will <strong>automatically detect</strong> which result types are present and create the appropriate panels.</p>
 </div>
-</section>
-<section id="static-app-what-gets-generated" class="slide level2">
-<h2>Static App: What Gets Generated</h2>
+</section><section id="static-app-what-gets-generated" class="slide level2"><h2>Static App: What Gets Generated</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">list.files</span>(<span class="st">"myShiny/shiny"</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="st">"myShiny/shiny"</span>, recursive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="fragment">
 <p>A full R project is created:</p>
 <ul>
-<li class="fragment"><code>global.R</code> — loads data and packages</li>
-<li class="fragment"><code>ui.R</code> — all UI code (tabs, buttons, filters) ✏️ <strong>editable</strong></li>
-<li class="fragment"><code>server.R</code> — server logic ✏️ <strong>editable</strong></li>
-<li class="fragment"><code>functions.R</code> — utility functions used internally</li>
-<li class="fragment"><code>rawData/results.csv</code> — your original <code>&lt;summarised_result&gt;</code></li>
-<li class="fragment"><code>rawData/preprocess.R</code> — script to regenerate the processed data</li>
-<li class="fragment"><code>data/studyData.RData</code> — pre-processed data used by the app</li>
+<li class="fragment">
+<code>global.R</code> — loads data and packages</li>
+<li class="fragment">
+<code>ui.R</code> — all UI code (tabs, buttons, filters) ✏️ <strong>editable</strong>
+</li>
+<li class="fragment">
+<code>server.R</code> — server logic ✏️ <strong>editable</strong>
+</li>
+<li class="fragment">
+<code>functions.R</code> — utility functions used internally</li>
+<li class="fragment">
+<code>rawData/results.csv</code> — your original <code>&lt;summarised_result&gt;</code>
+</li>
+<li class="fragment">
+<code>rawData/preprocess.R</code> — script to regenerate the processed data</li>
+<li class="fragment">
+<code>data/studyData.RData</code> — pre-processed data used by the app</li>
 </ul>
 </div>
-</section>
-<section id="static-app-panels" class="slide level2">
-<h2>Static App: Panels</h2>
+</section><section id="static-app-panels" class="slide level2"><h2>Static App: Panels</h2>
 <p>OmopViewer includes <strong>36 pre-built panels</strong>, one for each result type:</p>
 <div class="fragment">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># See all available panels</span></span>
-<span id="cb7-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(omopViewerPanels)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># See all available panels</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">omopViewerPanels</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 <div class="fragment">
 <p>Examples include:</p>
 <ul>
-<li class="fragment"><code>summarise_omop_snapshot</code> → Database Snapshot</li>
-<li class="fragment"><code>summarise_characteristics</code> → Cohort Characteristics (table + plot)</li>
-<li class="fragment"><code>summarise_cohort_attrition</code> → Attrition diagram</li>
-<li class="fragment"><code>incidence</code> → Incidence table + plot</li>
-<li class="fragment"><code>prevalence</code> → Prevalence table + plot</li>
-<li class="fragment"><code>survival</code> → Kaplan-Meier survival plot</li>
-<li class="fragment"><code>summarise_drug_utilisation</code> → Drug utilisation</li>
+<li class="fragment">
+<code>summarise_omop_snapshot</code> → Database Snapshot</li>
+<li class="fragment">
+<code>summarise_characteristics</code> → Cohort Characteristics (table + plot)</li>
+<li class="fragment">
+<code>summarise_cohort_attrition</code> → Attrition diagram</li>
+<li class="fragment">
+<code>incidence</code> → Incidence table + plot</li>
+<li class="fragment">
+<code>prevalence</code> → Prevalence table + plot</li>
+<li class="fragment">
+<code>survival</code> → Kaplan-Meier survival plot</li>
+<li class="fragment">
+<code>summarise_drug_utilisation</code> → Drug utilisation</li>
 </ul>
 </div>
-</section>
-<section id="static-app-customisation-options" class="slide level2">
-<h2>Static App: Customisation Options</h2>
-<p><code>exportStaticApp()</code> accepts several arguments for customisation:</p>
+</section><section id="static-app-customisation-options" class="slide level2"><h2>Static App: Customisation Options</h2>
+<p><code><a href="https://ohdsi.github.io/OmopViewer/reference/exportStaticApp.html">exportStaticApp()</a></code> accepts several arguments for customisation:</p>
 <div class="fragment">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">exportStaticApp</span>(</span>
-<span id="cb8-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">result =</span> result,</span>
-<span id="cb8-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">directory =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"myShiny"</span>),</span>
-<span id="cb8-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">theme =</span> <span class="st">"cerulean"</span>,           <span class="co"># pre-built bslib theme or a custom one</span></span>
-<span id="cb8-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">logo =</span> <span class="st">"ohdsi"</span>,               <span class="co"># built-in logo or path to a local image</span></span>
-<span id="cb8-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">title =</span> <span class="st">"My Study Results"</span>,   <span class="co"># title shown in the app</span></span>
-<span id="cb8-7"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">background =</span> <span class="cn">TRUE</span>,            <span class="co"># include a background/landing page panel</span></span>
-<span id="cb8-8"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">summary =</span> <span class="cn">TRUE</span>,               <span class="co"># include a summary panel</span></span>
-<span id="cb8-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">panelStructure =</span> <span class="cn">NULL</span>,        <span class="co"># group panels into dropdown menus</span></span>
-<span id="cb8-10"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">panelDetails =</span> <span class="cn">NULL</span>           <span class="co"># fine-grained control over each panel</span></span>
-<span id="cb8-11"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ohdsi.github.io/OmopViewer/reference/exportStaticApp.html">exportStaticApp</a></span><span class="op">(</span></span>
+<span>  result <span class="op">=</span> <span class="va">result</span>,</span>
+<span>  directory <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org/reference/here.html">here</a></span><span class="op">(</span><span class="st">"myShiny"</span><span class="op">)</span>,</span>
+<span>  theme <span class="op">=</span> <span class="st">"cerulean"</span>,           <span class="co"># pre-built bslib theme or a custom one</span></span>
+<span>  logo <span class="op">=</span> <span class="st">"ohdsi"</span>,               <span class="co"># built-in logo or path to a local image</span></span>
+<span>  title <span class="op">=</span> <span class="st">"My Study Results"</span>,   <span class="co"># title shown in the app</span></span>
+<span>  background <span class="op">=</span> <span class="cn">TRUE</span>,            <span class="co"># include a background/landing page panel</span></span>
+<span>  summary <span class="op">=</span> <span class="cn">TRUE</span>,               <span class="co"># include a summary panel</span></span>
+<span>  panelStructure <span class="op">=</span> <span class="cn">NULL</span>,        <span class="co"># group panels into dropdown menus</span></span>
+<span>  panelDetails <span class="op">=</span> <span class="cn">NULL</span>           <span class="co"># fine-grained control over each panel</span></span>
+<span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
-</section>
-<section id="static-app-organise-panels-with-panelstructure" class="slide level2">
-<h2>Static App: Organise Panels with <code>panelStructure</code></h2>
+</section><section id="static-app-organise-panels-with-panelstructure" class="slide level2"><h2>Static App: Organise Panels with <code>panelStructure</code>
+</h2>
 <p>Group results into logical dropdown menus:</p>
 <div class="fragment">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="" aria-hidden="true" tabindex="-1"></a>my_structure <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb9-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Database"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"summarise_omop_snapshot"</span>, <span class="st">"summarise_observation_period"</span>),</span>
-<span id="cb9-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Cohorts"</span>  <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"summarise_cohort_count"</span>, <span class="st">"summarise_cohort_attrition"</span>,</span>
-<span id="cb9-4"><a href="" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"summarise_characteristics"</span>),</span>
-<span id="cb9-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Epidemiology"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"incidence"</span>, <span class="st">"prevalence"</span>)</span>
-<span id="cb9-6"><a href="" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb9-7"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">exportStaticApp</span>(</span>
-<span id="cb9-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">result =</span> result,</span>
-<span id="cb9-10"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">directory =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"myShiny"</span>),</span>
-<span id="cb9-11"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">panelStructure =</span> my_structure</span>
-<span id="cb9-12"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">my_structure</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>  <span class="st">"Database"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"summarise_omop_snapshot"</span>, <span class="st">"summarise_observation_period"</span><span class="op">)</span>,</span>
+<span>  <span class="st">"Cohorts"</span>  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"summarise_cohort_count"</span>, <span class="st">"summarise_cohort_attrition"</span>,</span>
+<span>                 <span class="st">"summarise_characteristics"</span><span class="op">)</span>,</span>
+<span>  <span class="st">"Epidemiology"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"incidence"</span>, <span class="st">"prevalence"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ohdsi.github.io/OmopViewer/reference/exportStaticApp.html">exportStaticApp</a></span><span class="op">(</span></span>
+<span>  result <span class="op">=</span> <span class="va">result</span>,</span>
+<span>  directory <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org/reference/here.html">here</a></span><span class="op">(</span><span class="st">"myShiny"</span><span class="op">)</span>,</span>
+<span>  panelStructure <span class="op">=</span> <span class="va">my_structure</span></span>
+<span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
-</section>
-<section id="static-app-fine-tune-with-paneldetails" class="slide level2">
-<h2>Static App: Fine-tune with <code>panelDetails</code></h2>
+</section><section id="static-app-fine-tune-with-paneldetails" class="slide level2"><h2>Static App: Fine-tune with <code>panelDetails</code>
+</h2>
 <p>Control exactly what each panel shows:</p>
 <div class="fragment">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Start from the default panel for incidence</span></span>
-<span id="cb10-2"><a href="" aria-hidden="true" tabindex="-1"></a>panelDetails <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb10-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">incidence_female =</span> <span class="fu">getPanel</span>(<span class="st">"incidence"</span>),</span>
-<span id="cb10-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">incidence_male   =</span> <span class="fu">getPanel</span>(<span class="st">"incidence"</span>)</span>
-<span id="cb10-5"><a href="" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb10-6"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Restrict data to the relevant sex strata</span></span>
-<span id="cb10-8"><a href="" aria-hidden="true" tabindex="-1"></a>panelDetails<span class="sc">$</span>incidence_female<span class="sc">$</span>data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">result_type =</span> <span class="st">"incidence"</span>, <span class="at">denominator_sex =</span> <span class="st">"Female"</span>)</span>
-<span id="cb10-9"><a href="" aria-hidden="true" tabindex="-1"></a>panelDetails<span class="sc">$</span>incidence_male<span class="sc">$</span>data   <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">result_type =</span> <span class="st">"incidence"</span>, <span class="at">denominator_sex =</span> <span class="st">"Male"</span>)</span>
-<span id="cb10-10"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-11"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Update titles and icons</span></span>
-<span id="cb10-12"><a href="" aria-hidden="true" tabindex="-1"></a>panelDetails<span class="sc">$</span>incidence_female<span class="sc">$</span>title <span class="ot">&lt;-</span> <span class="st">"Incidence — Female"</span></span>
-<span id="cb10-13"><a href="" aria-hidden="true" tabindex="-1"></a>panelDetails<span class="sc">$</span>incidence_female<span class="sc">$</span>icon  <span class="ot">&lt;-</span> <span class="st">"venus"</span></span>
-<span id="cb10-14"><a href="" aria-hidden="true" tabindex="-1"></a>panelDetails<span class="sc">$</span>incidence_male<span class="sc">$</span>title   <span class="ot">&lt;-</span> <span class="st">"Incidence — Male"</span></span>
-<span id="cb10-15"><a href="" aria-hidden="true" tabindex="-1"></a>panelDetails<span class="sc">$</span>incidence_male<span class="sc">$</span>icon    <span class="ot">&lt;-</span> <span class="st">"mars"</span></span>
-<span id="cb10-16"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-17"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">exportStaticApp</span>(<span class="at">result =</span> result, <span class="at">panelDetails =</span> panelDetails,</span>
-<span id="cb10-18"><a href="" aria-hidden="true" tabindex="-1"></a>                <span class="at">directory =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"myShiny"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Start from the default panel for incidence</span></span>
+<span><span class="va">panelDetails</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>  incidence_female <span class="op">=</span> <span class="fu"><a href="https://ohdsi.github.io/OmopViewer/reference/getPanel.html">getPanel</a></span><span class="op">(</span><span class="st">"incidence"</span><span class="op">)</span>,</span>
+<span>  incidence_male   <span class="op">=</span> <span class="fu"><a href="https://ohdsi.github.io/OmopViewer/reference/getPanel.html">getPanel</a></span><span class="op">(</span><span class="st">"incidence"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Restrict data to the relevant sex strata</span></span>
+<span><span class="va">panelDetails</span><span class="op">$</span><span class="va">incidence_female</span><span class="op">$</span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>result_type <span class="op">=</span> <span class="st">"incidence"</span>, denominator_sex <span class="op">=</span> <span class="st">"Female"</span><span class="op">)</span></span>
+<span><span class="va">panelDetails</span><span class="op">$</span><span class="va">incidence_male</span><span class="op">$</span><span class="va">data</span>   <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>result_type <span class="op">=</span> <span class="st">"incidence"</span>, denominator_sex <span class="op">=</span> <span class="st">"Male"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Update titles and icons</span></span>
+<span><span class="va">panelDetails</span><span class="op">$</span><span class="va">incidence_female</span><span class="op">$</span><span class="va">title</span> <span class="op">&lt;-</span> <span class="st">"Incidence — Female"</span></span>
+<span><span class="va">panelDetails</span><span class="op">$</span><span class="va">incidence_female</span><span class="op">$</span><span class="va">icon</span>  <span class="op">&lt;-</span> <span class="st">"venus"</span></span>
+<span><span class="va">panelDetails</span><span class="op">$</span><span class="va">incidence_male</span><span class="op">$</span><span class="va">title</span>   <span class="op">&lt;-</span> <span class="st">"Incidence — Male"</span></span>
+<span><span class="va">panelDetails</span><span class="op">$</span><span class="va">incidence_male</span><span class="op">$</span><span class="va">icon</span>    <span class="op">&lt;-</span> <span class="st">"mars"</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ohdsi.github.io/OmopViewer/reference/exportStaticApp.html">exportStaticApp</a></span><span class="op">(</span>result <span class="op">=</span> <span class="va">result</span>, panelDetails <span class="op">=</span> <span class="va">panelDetails</span>,</span>
+<span>                directory <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org/reference/here.html">here</a></span><span class="op">(</span><span class="st">"myShiny"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
-</section>
-<section id="static-app-edit-the-generated-code" class="slide level2">
-<h2>Static App: Edit the Generated Code</h2>
+</section><section id="static-app-edit-the-generated-code" class="slide level2"><h2>Static App: Edit the Generated Code</h2>
 <p>Because the static app is a <strong>standard R/Shiny project</strong>, you can:</p>
 <div class="fragment">
 <ul>
@@ -512,9 +503,7 @@
 <div class="fragment">
 <p>The static app is <strong>transparent</strong> — no magic, just code you own.</p>
 </div>
-</section>
-<section id="example-app" class="slide level2">
-<h2>Example App</h2>
+</section><section id="example-app" class="slide level2"><h2>Example App</h2>
 <p>An example Shiny app built with OmopViewer is available online:</p>
 <div class="fragment">
 <p>👉 <a href="https://dpa-pde-oxford.shinyapps.io/OmopViewerExample/" class="uri">https://dpa-pde-oxford.shinyapps.io/OmopViewerExample/</a></p>
@@ -522,19 +511,14 @@
 <div class="fragment">
 <p>This app is <strong>automatically built from <code>main</code></strong> using the latest <code>omopViewerResults</code> dataset and <code>omopViewerPanels</code> panel definitions.</p>
 </div>
-</section></section>
-<section>
-<section id="summary" class="title-slide slide level1 center">
-<h1>Summary</h1>
+</section></section><section><section id="summary" class="title-slide slide level1 center"><h1>Summary</h1>
 
-</section>
-<section id="summary-1" class="slide level2">
-<h2>Summary</h2>
+</section><section id="summary-1" class="slide level2"><h2>Summary</h2>
 <div class="columns">
 <div class="column" style="width:48%;">
 <p><strong>Dynamic App</strong></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">launchDynamicApp</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ohdsi.github.io/OmopViewer/reference/launchDynamicApp.html">launchDynamicApp</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ul>
 <li class="fragment">Upload and explore instantly</li>
@@ -544,10 +528,10 @@
 </div><div class="column" style="width:48%;">
 <p><strong>Static App</strong></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">exportStaticApp</span>(</span>
-<span id="cb12-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">result =</span> result,</span>
-<span id="cb12-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">directory =</span> here<span class="sc">::</span><span class="fu">here</span>()</span>
-<span id="cb12-4"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ohdsi.github.io/OmopViewer/reference/exportStaticApp.html">exportStaticApp</a></span><span class="op">(</span></span>
+<span>  result <span class="op">=</span> <span class="va">result</span>,</span>
+<span>  directory <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org/reference/here.html">here</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ul>
 <li class="fragment">Full Shiny project generated</li>
@@ -558,9 +542,7 @@
 <div class="fragment">
 <p>Both work with <strong>any</strong> <code>&lt;summarised_result&gt;</code> from the OHDSI ecosystem 🌍</p>
 </div>
-</section>
-<section id="omopviewer" class="slide level2">
-<h2>OmopViewer</h2>
+</section><section id="omopviewer" class="slide level2"><h2>OmopViewer</h2>
 <div style="display: flex; align-items: center; justify-content: space-between;">
 <div style="flex: 1;">
 <p>👉 <a href="https://ohdsi.github.io/OmopViewer/"><strong>Package website</strong></a><br>
@@ -575,31 +557,14 @@
 </div>
 
 </section></section>
-    </div>
+</div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
 
 </div>
 </div></div>
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="index_files/libs/revealjs/dist/reveal.js"></script>
-  <!-- reveal.js plugins -->
-  <script src="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="index_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="index_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="index_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
-  <script src="index_files/libs/revealjs/plugin/quarto-support/support.js"></script>
-  
-
-  <script src="index_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="index_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="index_files/libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="index_files/libs/revealjs/plugin/math/math.js"></script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
-
-  <script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="index_files/libs/revealjs/dist/reveal.js"></script><!-- reveal.js plugins --><script src="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script><script src="index_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script><script src="index_files/libs/revealjs/plugin/reveal-menu/menu.js"></script><script src="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script><script src="index_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script><script src="index_files/libs/revealjs/plugin/quarto-support/support.js"></script><script src="index_files/libs/revealjs/plugin/notes/notes.js"></script><script src="index_files/libs/revealjs/plugin/search/search.js"></script><script src="index_files/libs/revealjs/plugin/zoom/zoom.js"></script><script src="index_files/libs/revealjs/plugin/math/math.js"></script><script>window.define = window.backupDefine; window.backupDefine = undefined;</script><script>
 
       // Full list of configuration options available at:
       // https://revealjs.com/config/
@@ -791,9 +756,7 @@
           RevealZoom
         ]
       });
-    </script>
-    
-    <script>
+    </script><script>
       // htmlwidgets need to know to resize themselves when slides are shown/hidden.
       // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
       // slide changes (different for each slide format).
@@ -828,9 +791,7 @@
         }
 
       })();
-    </script>
-
-    <script id="quarto-html-after-body" type="application/javascript">
+    </script><script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
         tabsets.forEach(function(tabset) {
@@ -998,6 +959,6 @@
         }
       });
       </script>
-    
+
 
 </body></html>

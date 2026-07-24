@@ -66,7 +66,7 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="omopviewer">OmopViewer<a class="anchor" aria-label="anchor" href="#omopviewer"></a>
+<div class="page-header"><h1 id="omopviewer-">OmopViewer <img src="reference/figures/hexsticker.png" align="right" height="180"><a class="anchor" aria-label="anchor" href="#omopviewer-"></a>
 </h1></div>
 <!-- badges: start -->
 
@@ -86,7 +86,8 @@
 <h2 id="main-functionalities">Main functionalities<a class="anchor" aria-label="anchor" href="#main-functionalities"></a>
 </h2>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ohdsi.github.io/OmopViewer/">OmopViewer</a></span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ohdsi.github.io/OmopViewer/">OmopViewer</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: package 'OmopViewer' was built under R version 4.4.3</span></span></code></pre></div>
 <p>The package has two functionalities:</p>
 <ul>
 <li>Static app</li>
@@ -100,7 +101,6 @@
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># lets generate some results</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://darwin-eu.github.io/CohortCharacteristics/" class="external-link">CohortCharacteristics</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: package 'CohortCharacteristics' was built under R version 4.4.3</span></span>
 <span><span class="va">cdm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://darwin-eu.github.io/CohortCharacteristics/reference/mockCohortCharacteristics.html" class="external-link">mockCohortCharacteristics</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://darwin-eu.github.io/CohortCharacteristics/reference/summariseCharacteristics.html" class="external-link">summariseCharacteristics</a></span><span class="op">(</span><span class="va">cdm</span><span class="op">$</span><span class="va">cohort1</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://darwin-eu.github.io/omopgenerics/reference/bind.html" class="external-link">bind</a></span><span class="op">(</span><span class="fu"><a href="https://darwin-eu.github.io/CohortCharacteristics/reference/summariseCohortAttrition.html" class="external-link">summariseCohortAttrition</a></span><span class="op">(</span><span class="va">cdm</span><span class="op">$</span><span class="va">cohort1</span><span class="op">)</span><span class="op">)</span></span>
@@ -112,12 +112,13 @@
 <span><span class="co">#&gt; ✔ summariseCharacteristics finished!</span></span>
 <span></span>
 <span><span class="fu"><a href="reference/exportStaticApp.html">exportStaticApp</a></span><span class="op">(</span>result <span class="op">=</span> <span class="va">result</span>, directory <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in isTRUE(!is.na(as.numeric(content$typography$base$size))): NAs</span></span>
+<span><span class="co">#&gt; introduced by coercion</span></span>
 <span><span class="co">#&gt; ℹ Processing data</span></span>
 <span><span class="co">#&gt; ✔ Data processed: 2 panels idenfied: `summarise_cohort_attrition` and</span></span>
 <span><span class="co">#&gt;   `summarise_characteristics`.</span></span>
 <span><span class="co">#&gt; ℹ Creating `shiny` from provided data</span></span>
-<span><span class="co">#&gt; ✔ Shiny created in:</span></span>
-<span><span class="co">#&gt;   /var/folders/pl/k11lm9710hlgl02nvzx4z9wr0000gp/T//RtmpI3l244/shiny</span></span></code></pre></div>
+<span><span class="co">#&gt; ✔ Shiny created in: C:\Users\martaa\AppData\Local\Temp\RtmpwjpMTX/shiny</span></span></code></pre></div>
 <p>This function allow some customisation of the shiny with the arguments:</p>
 <ul>
 <li>
@@ -219,7 +220,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

@@ -1,4 +1,4 @@
-# OmopViewer
+# OmopViewer ![](reference/figures/hexsticker.png)
 
 The goal of OmopViewer is to allow the user to easily create Shiny Apps
 to visualise study results in `<summarised_result>` format.
@@ -26,6 +26,7 @@ pak::pkg_install("OHDSI/OmopViewer")
 ``` r
 
 library(OmopViewer)
+#> Warning: package 'OmopViewer' was built under R version 4.4.3
 ```
 
 The package has two functionalities:
@@ -43,7 +44,6 @@ results and can be modified later locally.
 
 # lets generate some results
 library(CohortCharacteristics)
-#> Warning: package 'CohortCharacteristics' was built under R version 4.4.3
 cdm <- mockCohortCharacteristics()
 result <- summariseCharacteristics(cdm$cohort1) |>
   bind(summariseCohortAttrition(cdm$cohort1))
@@ -55,12 +55,13 @@ result <- summariseCharacteristics(cdm$cohort1) |>
 #> ✔ summariseCharacteristics finished!
 
 exportStaticApp(result = result, directory = tempdir())
+#> Warning in isTRUE(!is.na(as.numeric(content$typography$base$size))): NAs
+#> introduced by coercion
 #> ℹ Processing data
 #> ✔ Data processed: 2 panels idenfied: `summarise_cohort_attrition` and
 #>   `summarise_characteristics`.
 #> ℹ Creating `shiny` from provided data
-#> ✔ Shiny created in:
-#>   /var/folders/pl/k11lm9710hlgl02nvzx4z9wr0000gp/T//RtmpI3l244/shiny
+#> ✔ Shiny created in: C:\Users\martaa\AppData\Local\Temp\RtmpwjpMTX/shiny
 ```
 
 This function allow some customisation of the shiny with the arguments:
