@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# OmopViewer <img src="man/figures/hexsticker.png" align="right" height="180"/>
+# OmopViewer <img src="man/figures/hexsticker.png" align="right" style="height: 180px; width: auto;"/>
 
 <!-- badges: start -->
 
