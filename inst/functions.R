@@ -447,3 +447,35 @@ updateMessage <- shiny::div(
   shiny::icon("circle-exclamation"),
   "Filters have changed please consider to use the update content button!"
 )
+emptyTableGt <- function(message = "Click 'Update content' to load data.") {
+  gt::gt(dplyr::tibble(Notice = message)) |>
+    gt::tab_options(column_labels.hidden = TRUE)
+}
+emptyTableReactable <- function(message = "Click 'Update content' to load data.") {
+  reactable::reactable(
+    dplyr::tibble(Notice = message),
+    columns = list(Notice = reactable::colDef(name = ""))
+  )
+}
+emptyTableDT <- function(message = "Click 'Update content' to load data.") {
+  DT::datatable(
+    dplyr::tibble(Notice = message),
+    colnames = "",
+    options = list(dom = "t")
+  )
+}
+emptyPlot <- function(message = "Click 'Update content' to load data.") {
+  ggplot2::ggplot() +
+    ggplot2::theme_void() +
+    ggplot2::geom_text(
+      mapping = ggplot2::aes(x = 0, y = 0, label = message), size = 6, colour = "grey50"
+    )
+}
+emptyPlotly <- function(message = "Click 'Update content' to load data.") {
+  plotly::ggplotly(emptyPlot(message))
+}
+emptyDiagram <- function(message = "Click <Update content> to load data.") {
+  DiagrammeR::grViz(paste0(
+    "digraph { A [label='", message, "', shape=box, color=white, fontcolor=gray50] }"
+  ))
+}

@@ -267,7 +267,7 @@ writeSurvivalServer <- function(x, nm, data, updateButtons) {
     paste0("# ", nm, " -----"),
     writeUpdateDataMessage(nm = nm, filters = x$filters, updateButtons = updateButtons),
     survivalServerCore(nm, data, updateButtons),
-    survivalContentServer(x$content)
+    survivalContentServer(x$content, nm, updateButtons)
   ) |>
     paste0(collapse = "\n")
 }
@@ -465,19 +465,19 @@ survivalApplyInputsObserver <- function(nm, updateButtons) {
   }
 }
 
-survivalContentServer <- function(content) {
+survivalContentServer <- function(content, nm, updateButtons) {
   purrr::imap_chr(content, \(cont, id) {
     switch(id,
-      table_survival = survivalTableSummaryServer(cont$output_id, cont$reactive_function),
-      table_events = survivalTableEventsServer(cont$output_id, cont$reactive_function),
-      table_attrition = survivalTableAttritionServer(cont$output_id, cont$reactive_function),
-      plot_survival = survivalPlotServer(cont$output_id, cont$reactive_function)
+      table_survival = survivalTableSummaryServer(cont$output_id, cont$reactive_function, nm, updateButtons),
+      table_events = survivalTableEventsServer(cont$output_id, cont$reactive_function, nm, updateButtons),
+      table_attrition = survivalTableAttritionServer(cont$output_id, cont$reactive_function, nm, updateButtons),
+      plot_survival = survivalPlotServer(cont$output_id, cont$reactive_function, nm, updateButtons)
     )
   }) |>
     paste0(collapse = "\n")
 }
 
-survivalTableSummaryServer <- function(outputId, reactiveFunction) {
+survivalTableSummaryServer <- function(outputId, reactiveFunction, nm, updateButtons) {
   survivalTemplate(
     '<reactiveFunction> <- shiny::reactive({
       result <- getSurvivalData("survival_summary", useStrata = TRUE)
@@ -490,6 +490,7 @@ survivalTableSummaryServer <- function(outputId, reactiveFunction) {
       })
     })
     output$<outputId> <- gt::render_gt({
+      <guard>
       <reactiveFunction>()
     })
     output$<outputId>_download <- shiny::downloadHandler(
@@ -499,11 +500,12 @@ survivalTableSummaryServer <- function(outputId, reactiveFunction) {
       }
     )',
     outputId = outputId,
-    reactiveFunction = reactiveFunction
+    reactiveFunction = reactiveFunction,
+    guard = writeEmptyContentGuard(nm, updateButtons, "gt")
   )
 }
 
-survivalTableEventsServer <- function(outputId, reactiveFunction) {
+survivalTableEventsServer <- function(outputId, reactiveFunction, nm, updateButtons) {
   survivalTemplate(
     '<reactiveFunction> <- shiny::reactive({
       result <- getSurvivalData("survival_events", useStrata = TRUE)
@@ -515,6 +517,7 @@ survivalTableEventsServer <- function(outputId, reactiveFunction) {
       })
     })
     output$<outputId> <- gt::render_gt({
+      <guard>
       <reactiveFunction>()
     })
     output$<outputId>_download <- shiny::downloadHandler(
@@ -524,11 +527,12 @@ survivalTableEventsServer <- function(outputId, reactiveFunction) {
       }
     )',
     outputId = outputId,
-    reactiveFunction = reactiveFunction
+    reactiveFunction = reactiveFunction,
+    guard = writeEmptyContentGuard(nm, updateButtons, "gt")
   )
 }
 
-survivalTableAttritionServer <- function(outputId, reactiveFunction) {
+survivalTableAttritionServer <- function(outputId, reactiveFunction, nm, updateButtons) {
   survivalTemplate(
     '<reactiveFunction> <- shiny::reactive({
       result <- getSurvivalData("survival_attrition", useReason = TRUE, useFollowUpSettings = FALSE)
@@ -540,6 +544,7 @@ survivalTableAttritionServer <- function(outputId, reactiveFunction) {
       })
     })
     output$<outputId> <- gt::render_gt({
+      <guard>
       <reactiveFunction>()
     })
     output$<outputId>_download <- shiny::downloadHandler(
@@ -549,11 +554,12 @@ survivalTableAttritionServer <- function(outputId, reactiveFunction) {
       }
     )',
     outputId = outputId,
-    reactiveFunction = reactiveFunction
+    reactiveFunction = reactiveFunction,
+    guard = writeEmptyContentGuard(nm, updateButtons, "gt")
   )
 }
 
-survivalPlotServer <- function(outputId, reactiveFunction) {
+survivalPlotServer <- function(outputId, reactiveFunction, nm, updateButtons) {
   survivalTemplate(
     '<reactiveFunction> <- shiny::reactive({
       applied <- appliedSurvivalInputs()
@@ -578,6 +584,7 @@ survivalPlotServer <- function(outputId, reactiveFunction) {
         )
     })
     output$<outputId> <- shiny::renderUI({
+      <guard>
       x <- <reactiveFunction>()
       renderInteractivePlot(x, input$<outputId>_interactive)
     })
@@ -595,6 +602,7 @@ survivalPlotServer <- function(outputId, reactiveFunction) {
       }
     )',
     outputId = outputId,
-    reactiveFunction = reactiveFunction
+    reactiveFunction = reactiveFunction,
+    guard = writeEmptyContentGuard(nm, updateButtons, "ui")
   )
 }

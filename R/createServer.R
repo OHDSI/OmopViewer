@@ -50,7 +50,7 @@ createServer <- function(panelDetails, data, updateButtons) {
         paste0("# ", nm, " -----"),
         writeUpdateDataMessage(nm = nm, filters = x$filters, updateButtons = updateButtons),
         writeFilterData(x = x, nm = nm, data = data, updateButtons = updateButtons),
-        writeContentServer(content = x$content, data = data)
+        writeContentServer(content = x$content, nm = nm, data = data, updateButtons = updateButtons)
       ) |>
         paste0(collapse = "\n")
     })
@@ -138,19 +138,42 @@ writeFilterData <- function(x, nm, data, updateButtons) {
   }
   x
 }
-writeContentServer <- function(content, data) {
+writeContentServer <- function(content, nm, data, updateButtons) {
   purrr::map_chr(content, \(cont) {
-    c(writeOutputServer(cont), cont$observe, writeDownloadServer(cont)) |>
+    c(
+      writeOutputServer(cont, nm = nm, updateButtons = updateButtons),
+      cont$observe,
+      writeDownloadServer(cont)
+    ) |>
       paste0(collapse = "\n")
   }) |>
     paste0(collapse = "\n")
 }
-writeOutputServer <- function(content) {
+writeOutputServer <- function(content, nm, updateButtons) {
+  guard <- writeEmptyContentGuard(nm, updateButtons, content$output_type)
   paste0(
     content$reactive_function, " <- shiny::reactive({\n", content$reactive, "\n})\n",
     "output$", content$output_id, " <- ", renderFunction(content$output_type),
-    "({\n", content$render, "\n})"
+    "({\n", guard, content$render, "\n})"
   )
+}
+writeEmptyContentGuard <- function(nm, updateButtons, outputType) {
+  if (!updateButtons) return("")
+  paste0(
+    "if (is.null(input$update_", nm, ") || input$update_", nm, " == 0) {\n",
+    "  return(", emptyContentCall(outputType), ")\n",
+    "}\n"
+  )
+}
+emptyContentCall <- function(outputType) {
+  switch(outputType,
+         "DT" = "emptyTableDT()",
+         "gt" = "emptyTableGt()",
+         "plot" = "emptyPlot()",
+         "grViz" = "emptyDiagram()",
+         "plotly" = "emptyPlotly()",
+         "ui" = "renderInteractivePlot(emptyPlot(), FALSE)",
+         "reactable" = "emptyTableReactable()")
 }
 outputFunction <- function(outputType) {
   switch(outputType,
