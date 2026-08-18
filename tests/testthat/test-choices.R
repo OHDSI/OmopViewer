@@ -144,6 +144,42 @@ test_that("test getSelected", {
   ))
 })
 
+test_that("test getSelected defaults to overall when present", {
+  res <- omopgenerics::newSummarisedResult(
+    x = dplyr::tibble(
+      result_id = 1L,
+      cdm_name = "cdm1",
+      group_name = "cohort_name",
+      group_level = "cohort_1",
+      strata_name = c("overall", "sex", "sex"),
+      strata_level = c("overall", "Male", "Female"),
+      variable_name = "Number subjects",
+      variable_level = NA_character_,
+      estimate_name = "count",
+      estimate_type = "integer",
+      estimate_value = c("100", "40", "60"),
+      additional_name = "overall",
+      additional_level = "overall"
+    ),
+    settings = dplyr::tibble(
+      result_id = 1L,
+      result_type = "summarise_cohort_count",
+      package_name = "CohortCharacteristics",
+      package_version = "1.0.0"
+    )
+  )
+  panelList <- list("summarise_cohort_count" = list(result_type = "summarise_cohort_count"))
+
+  x_values <- getValues(res, panelList)
+  x_selected <- getSelected(x_values)
+
+  expect_identical(
+    sort(x_values$summarise_cohort_count_sex),
+    c("Female", "Male", "overall")
+  )
+  expect_identical(x_selected$summarise_cohort_count_sex, "overall")
+})
+
 test_that("test prepare result", {
   x <- omopViewerResults
   xl <- list(
