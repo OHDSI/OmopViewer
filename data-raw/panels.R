@@ -614,7 +614,7 @@ cohortOverlapPanel <- list(
       facet = input$facet
       )",
       render = "x <- <reactive_data>
-      renderInteractivePlot(x, input$interactive)",
+      renderInteractivePlot(x, input$interactive, height = 700)",
       filters = list(
         interactive = list(
           button_type = "materialSwitch",
