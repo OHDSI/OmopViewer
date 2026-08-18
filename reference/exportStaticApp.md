@@ -109,5 +109,5 @@ exportStaticApp(
 #> ℹ Processing data
 #> ! No panels identified, generated shiny will be empty.
 #> ℹ Creating `shiny` from provided data
-#> ✔ Shiny created in: /tmp/Rtmpw4pegG/shiny
+#> ✔ Shiny created in: /tmp/RtmpYvKV0X/shiny
 ```
