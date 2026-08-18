@@ -1,3 +1,21 @@
+test_that("panel data does not render on startup", {
+  panelDetails <- list(test = list(
+    filters = list(main = list(
+      column_type = "main",
+      column = "cdm_name",
+      inputId = "test_cdm_name"
+    )),
+    filter_function = "getTestData",
+    content = list()
+  ))
+
+  server <- createServer(panelDetails, data = "data", updateButtons = TRUE)
+
+  server <- paste(server, collapse = "\n")
+  expect_true(grepl("eventReactive(input$update_test", server, fixed = TRUE))
+  expect_true(grepl("ignoreInit = TRUE", server, fixed = TRUE))
+})
+
 test_that("logo", {
   tdir <- tempdir()
 

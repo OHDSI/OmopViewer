@@ -442,6 +442,11 @@ renderInteractivePlot <- function(plt, interactive, height = 400) {
     shiny::renderPlot(plt, height = height)
   }
 }
+updateInitialMessage <- shiny::div(
+  style = "font-size: 8pt; color: var(--bs-info);",
+  shiny::icon("circle-info"),
+  "Click the update content button to display this figure!"
+)
 updateMessage <- shiny::div(
   style = "font-size: 8pt; color: var(--bs-danger);",
   shiny::icon("circle-exclamation"),
