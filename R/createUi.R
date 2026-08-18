@@ -115,12 +115,15 @@ updateButtonUi <- function(updateButtons, id) {
   paste0(
     "
     bslib::card(
-      class = \"sticky-top-btn\",
+      class = \"sticky-top-btn update-card\",
       bslib::card_body(
+        class = \"p-3\",
         shiny::actionButton(
           inputId = \"update_", id, "\",
           label = \"Update content\",
-          width = \"100%\"
+          icon = shiny::icon(\"rotate\"),
+          width = \"100%\",
+          class = \"btn-primary\"
         ),
         uiOutput(outputId = \"update_message_", id, "\")
       )
@@ -206,6 +209,23 @@ stickyStyle <- function() {
       top: 0;
       z-index: 20;
       background: var(--bs-body-bg);
+    }
+    .update-card {
+      border-color: var(--bs-border-color);
+    }
+    .update-status {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+      font-size: 0.875rem;
+      line-height: 1.35;
+    }
+    .update-status-info {
+      color: var(--bs-info-text-emphasis, var(--bs-info));
+    }
+    .update-status-warning {
+      color: var(--bs-warning-text-emphasis, var(--bs-warning));
     }\"
   ))"
 }
