@@ -24,6 +24,23 @@
             top: 0;
             z-index: 20;
             background: var(--bs-body-bg);
+          }
+          .update-card {
+            border-color: var(--bs-border-color);
+          }
+          .update-status {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+            font-size: 0.875rem;
+            line-height: 1.35;
+          }
+          .update-status-info {
+            color: var(--bs-info-text-emphasis, var(--bs-info));
+          }
+          .update-status-warning {
+            color: var(--bs-warning-text-emphasis, var(--bs-warning));
           }"
         )),
         bslib::nav_panel(
@@ -106,6 +123,23 @@
             top: 0;
             z-index: 20;
             background: var(--bs-body-bg);
+          }
+          .update-card {
+            border-color: var(--bs-border-color);
+          }
+          .update-status {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+            font-size: 0.875rem;
+            line-height: 1.35;
+          }
+          .update-status-info {
+            color: var(--bs-info-text-emphasis, var(--bs-info));
+          }
+          .update-status-warning {
+            color: var(--bs-warning-text-emphasis, var(--bs-warning));
           }"
         )),
         bslib::nav_panel(
@@ -215,6 +249,23 @@
             top: 0;
             z-index: 20;
             background: var(--bs-body-bg);
+          }
+          .update-card {
+            border-color: var(--bs-border-color);
+          }
+          .update-status {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+            font-size: 0.875rem;
+            line-height: 1.35;
+          }
+          .update-status-info {
+            color: var(--bs-info-text-emphasis, var(--bs-info));
+          }
+          .update-status-warning {
+            color: var(--bs-warning-text-emphasis, var(--bs-warning));
           }"
         )),
         bslib::nav_panel(

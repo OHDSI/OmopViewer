@@ -454,8 +454,7 @@ survivalApplyInputsObserver <- function(nm, updateButtons) {
     survivalTemplate(
       "shiny::observeEvent(input$update_<nm>, {
         applySurvivalInputs()
-        updateButtons$<nm> <- FALSE
-      }, ignoreInit = FALSE)",
+      }, ignoreInit = TRUE)",
       nm = nm
     )
   } else {

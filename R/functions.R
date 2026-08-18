@@ -442,8 +442,13 @@ renderInteractivePlot <- function(plt, interactive, height = 400) {
     shiny::renderPlot(plt, height = height)
   }
 }
+updateInitialMessage <- shiny::div(
+  class = "update-status update-status-info",
+  shiny::icon("circle-info"),
+  "Click Update content to load results."
+)
 updateMessage <- shiny::div(
-  style = "font-size: 8pt; color: var(--bs-danger);",
-  shiny::icon("circle-exclamation"),
-  "Filters have changed please consider to use the update content button!"
+  class = "update-status update-status-warning",
+  shiny::icon("triangle-exclamation"),
+  "Filters changed. Update to refresh results."
 )

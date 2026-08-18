@@ -31,24 +31,33 @@ createSummaryServer <- function(summary, data) {
 }
 createServer <- function(panelDetails, data, updateButtons) {
   if (updateButtons & length(panelDetails) > 0) {
-    updateButtonsStart <- paste0(
-      "# update buttons ----\nupdateButtons <- shiny::reactiveValues(\n",
-      paste0(names(panelDetails), " = FALSE", collapse = ",\n"),
+    renderStateStart <- paste0(
+      "# render state ----\nrenderState <- shiny::reactiveValues(\n",
+      paste0(names(panelDetails), ' = "initial"', collapse = ",\n"),
       "\n)\n"
     )
   } else {
-    updateButtonsStart <- character()
+    renderStateStart <- character()
   }
   c(
     downloadRawDataServer(data),
-    updateButtonsStart,
+    renderStateStart,
     purrr::imap_chr(panelDetails, \(x, nm) {
       if (identical(x$server, "survival")) {
-        return(writeSurvivalServer(x = x, nm = nm, data = data, updateButtons = updateButtons))
+        return(writeSurvivalServer(
+          x = x,
+          nm = nm,
+          data = data,
+          updateButtons = updateButtons
+        ))
       }
       c("",
         paste0("# ", nm, " -----"),
-        writeUpdateDataMessage(nm = nm, filters = x$filters, updateButtons = updateButtons),
+        writeUpdateDataMessage(
+          nm = nm,
+          filters = x$filters,
+          updateButtons = updateButtons
+        ),
         writeFilterData(x = x, nm = nm, data = data, updateButtons = updateButtons),
         writeContentServer(content = x$content, data = data)
       ) |>
@@ -74,7 +83,13 @@ downloadRawDataServer <- function(data) {
 writeUpdateDataMessage <- function(nm, filters, updateButtons) {
   if (length(filters) == 0 || !updateButtons) return(character())
   inputs <- c(
-    paste0("shiny::observe({updateButtons$", nm, " <- TRUE}) |>"),
+    paste0(
+      "shiny::observe({\n",
+      "  if (renderState$", nm, " == \"rendered\") {\n",
+      "    renderState$", nm, " <- \"stale\"\n",
+      "  }\n",
+      "}) |>"
+    ),
     "shiny::bindEvent(",
     c(paste0("input$", nm, "_", names(filters)), "ignoreInit = TRUE") |>
       paste0(collapse = ",\n"),
@@ -82,17 +97,19 @@ writeUpdateDataMessage <- function(nm, filters, updateButtons) {
   ) |>
     paste0(collapse = "\n")
   update <- paste0(
-  "shiny::observeEvent(updateButtons$", nm, ", {
-  if (updateButtons$", nm, " == TRUE) {
-    output$update_message_", nm, " <- shiny::renderUI(updateMessage) # defined in functions.R
-  } else {
-    output$update_message_", nm, " <- shiny::renderUI(NULL)
-  }
-  })\n"
+    "output$update_message_", nm, " <- shiny::renderUI({\n",
+    "  switch(\n",
+    "    renderState$", nm, ",\n",
+    "    initial = updateInitialMessage,\n",
+    "    stale = updateMessage,\n",
+    "    rendered = NULL\n",
+    "  )\n",
+    "})\n"
   )
   silence <- paste0(
-    "shiny::observeEvent(input$update_", nm, ", {updateButtons$", nm,
-    " <- FALSE})"
+    "shiny::observeEvent(input$update_", nm, ", {\n",
+    "  renderState$", nm, " <- \"rendered\"\n",
+    "}, ignoreInit = TRUE)"
   )
   paste0(
     "## update message if filter is changed\n", inputs, "\n",  update, silence,
@@ -128,7 +145,8 @@ writeFilterData <- function(x, nm, data, updateButtons) {
   if (updateButtons) {
     x <- paste0(
       "## get ", nm, " data\n", x$filter_function,
-      " <- shiny::eventReactive(input$update_", nm, ", {\n", filtersText, "\n})"
+      " <- shiny::eventReactive(input$update_", nm, ", {\n", filtersText,
+      "\n}, ignoreInit = TRUE)"
     )
   } else {
     x <- paste0(
