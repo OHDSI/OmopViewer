@@ -15,6 +15,7 @@ test_that("panel data does not render on startup", {
   expect_true(grepl('renderState <- shiny::reactiveValues', server, fixed = TRUE))
   expect_true(grepl('renderState$test <- "stale"', server, fixed = TRUE))
   expect_true(grepl('renderState$test <- "rendered"', server, fixed = TRUE))
+  expect_true(grepl('switch(\n    renderState$test', server, fixed = TRUE))
   expect_true(grepl("eventReactive(input$update_test", server, fixed = TRUE))
   expect_true(grepl("ignoreInit = TRUE", server, fixed = TRUE))
 })

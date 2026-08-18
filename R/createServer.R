@@ -87,8 +87,6 @@ writeUpdateDataMessage <- function(nm, filters, updateButtons) {
       "shiny::observe({\n",
       "  if (renderState$", nm, " == \"rendered\") {\n",
       "    renderState$", nm, " <- \"stale\"\n",
-      "    output$update_message_", nm,
-      " <- shiny::renderUI(updateMessage)\n",
       "  }\n",
       "}) |>"
     ),
@@ -99,13 +97,18 @@ writeUpdateDataMessage <- function(nm, filters, updateButtons) {
   ) |>
     paste0(collapse = "\n")
   update <- paste0(
-    "output$update_message_", nm,
-    " <- shiny::renderUI(updateInitialMessage)\n"
+    "output$update_message_", nm, " <- shiny::renderUI({\n",
+    "  switch(\n",
+    "    renderState$", nm, ",\n",
+    "    initial = updateInitialMessage,\n",
+    "    stale = updateMessage,\n",
+    "    rendered = NULL\n",
+    "  )\n",
+    "})\n"
   )
   silence <- paste0(
     "shiny::observeEvent(input$update_", nm, ", {\n",
     "  renderState$", nm, " <- \"rendered\"\n",
-    "  output$update_message_", nm, " <- shiny::renderUI(NULL)\n",
     "}, ignoreInit = TRUE)"
   )
   paste0(
