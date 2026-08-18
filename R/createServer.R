@@ -31,23 +31,25 @@ createSummaryServer <- function(summary, data) {
 }
 createServer <- function(panelDetails, data, updateButtons) {
   if (updateButtons & length(panelDetails) > 0) {
-    updateButtonsStart <- paste0(
-      "# update buttons ----\nupdateButtons <- shiny::reactiveValues(\n",
-      paste0(names(panelDetails), " = FALSE", collapse = ",\n"),
-      "\n)\n",
-      "hasRendered <- shiny::reactiveValues(\n",
-      paste0(names(panelDetails), " = FALSE", collapse = ",\n"),
+    renderStateStart <- paste0(
+      "# render state ----\nrenderState <- shiny::reactiveValues(\n",
+      paste0(names(panelDetails), ' = "initial"', collapse = ",\n"),
       "\n)\n"
     )
   } else {
-    updateButtonsStart <- character()
+    renderStateStart <- character()
   }
   c(
     downloadRawDataServer(data),
-    updateButtonsStart,
+    renderStateStart,
     purrr::imap_chr(panelDetails, \(x, nm) {
       if (identical(x$server, "survival")) {
-        return(writeSurvivalServer(x = x, nm = nm, data = data, updateButtons = updateButtons))
+        return(writeSurvivalServer(
+          x = x,
+          nm = nm,
+          data = data,
+          updateButtons = updateButtons
+        ))
       }
       c("",
         paste0("# ", nm, " -----"),
@@ -83,7 +85,11 @@ writeUpdateDataMessage <- function(nm, filters, updateButtons) {
   inputs <- c(
     paste0(
       "shiny::observe({\n",
-      "  if (hasRendered$", nm, ") updateButtons$", nm, " <- TRUE\n",
+      "  if (renderState$", nm, " == \"rendered\") {\n",
+      "    renderState$", nm, " <- \"stale\"\n",
+      "    output$update_message_", nm,
+      " <- shiny::renderUI(updateMessage)\n",
+      "  }\n",
       "}) |>"
     ),
     "shiny::bindEvent(",
@@ -93,19 +99,12 @@ writeUpdateDataMessage <- function(nm, filters, updateButtons) {
   ) |>
     paste0(collapse = "\n")
   update <- paste0(
-  "output$update_message_", nm, " <- shiny::renderUI(updateInitialMessage)\n",
-  "shiny::observeEvent(updateButtons$", nm, ", {\n
-  if (updateButtons$", nm, " == TRUE) {
-    output$update_message_", nm, " <- shiny::renderUI(updateMessage) # defined in functions.R
-  } else {
-    output$update_message_", nm, " <- shiny::renderUI(NULL)
-  }
-  }, ignoreInit = TRUE)\n"
+    "output$update_message_", nm,
+    " <- shiny::renderUI(updateInitialMessage)\n"
   )
   silence <- paste0(
     "shiny::observeEvent(input$update_", nm, ", {\n",
-    "  hasRendered$", nm, " <- TRUE\n",
-    "  updateButtons$", nm, " <- FALSE\n",
+    "  renderState$", nm, " <- \"rendered\"\n",
     "  output$update_message_", nm, " <- shiny::renderUI(NULL)\n",
     "}, ignoreInit = TRUE)"
   )
