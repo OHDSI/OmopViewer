@@ -329,3 +329,45 @@ test_that("survival panel creates custom static app", {
 
   unlink(file.path(tdir, "shiny"), recursive = TRUE)
 })
+
+test_that("prevalence table merges outcome count into the (possibly rounded-to-zero) percentage", {
+  # prevalence rounds to 0.00 at 2 decimals, but there were 3 real cases -
+  # the exact bug from issue #387
+  result <- dplyr::tibble(
+    result_id = 1L, cdm_name = "cdm1",
+    group_name = "denominator_cohort_name &&& outcome_cohort_name",
+    group_level = "denominator &&& rare_outcome",
+    strata_name = "overall", strata_level = "overall",
+    variable_name = "Outcome", variable_level = NA_character_,
+    estimate_name = c(
+      "denominator_count", "outcome_count", "prevalence",
+      "prevalence_95CI_lower", "prevalence_95CI_upper"
+    ),
+    estimate_type = c("integer", "integer", "numeric", "numeric", "numeric"),
+    estimate_value = c("200000", "3", "0.000015", "0.000003", "0.000044"),
+    additional_name = "overall", additional_level = "overall"
+  ) |>
+    omopgenerics::newSummarisedResult(settings = dplyr::tibble(
+      result_id = 1L, result_type = "prevalence",
+      package_name = "IncidencePrevalence", package_version = "1.0.0"
+    ))
+
+  # tablePrevalence() builds the table unmodified first (denominator_count
+  # etc. stay correct), the outcome count is merged into the Prevalence
+  # column afterwards via gt::cols_merge() - matching data-raw/panels.R
+  tbl <- IncidencePrevalence::tablePrevalence(
+    result, header = "estimate_name", groupColumn = character(), hide = character(),
+    settingsColumn = character()
+  )
+  nm <- names(tbl[["_data"]])
+  prevCol <- nm[grepl("Prevalence \\[95% CI\\]$", nm)]
+  outcomeCol <- nm[grepl("Outcome \\(N\\)$", nm)]
+  tbl <- tbl |> gt::cols_merge(columns = c(prevCol, outcomeCol), pattern = "{1} (N={2})")
+
+  html <- gt::as_raw_html(tbl)
+  expect_true(grepl("(N=3)", html, fixed = TRUE))
+  # denominator_count must stay untouched - an earlier approach (pre-merging
+  # estimates before calling tablePrevalence()) silently corrupted it to "NA"
+  expect_true(grepl("200,000", html, fixed = TRUE))
+  expect_false(grepl(">NA<", html, fixed = TRUE))
+})

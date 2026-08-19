@@ -324,13 +324,20 @@ prevalencePanel <- list(
       title = "Table Prevalence",
       output_type = "gt",
       reactive = "res <- <filtered_data>
-      res |>
+      tbl <- res |>
       IncidencePrevalence::tablePrevalence(
       header = input$header,
       groupColumn = input$group_column,
       hide = input$hide,
       settingsColumn = omopgenerics::settingsColumns(res)
-      )",
+      )
+      nm <- names(tbl[['_data']])
+      prevCol <- nm[grepl('Prevalence \\\\[95% CI\\\\]$', nm)]
+      outcomeCol <- nm[grepl('Outcome \\\\(N\\\\)$', nm)]
+      if (length(prevCol) == 1 && length(outcomeCol) == 1) {
+      tbl <- tbl |> gt::cols_merge(columns = c(prevCol, outcomeCol), pattern = '{1} (N={2})')
+      }
+      tbl",
       render = "<reactive_data>",
       filters = rankTableButton(
         none = c(
