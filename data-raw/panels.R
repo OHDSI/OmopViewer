@@ -2202,12 +2202,15 @@ lscPanel <- list(
       } else {
       sr <- input$smd_reference
       }
-      <filtered_data> |>
+      rt <- <filtered_data> |>
       CohortCharacteristics::tableLargeScaleCharacteristics(
       compareBy = cb,
       hide = input$hide,
       smdReference = sr
-      )",
+      )
+      rt$x$tag$attribs$searchable <- TRUE
+      rt$x$tag$attribs$filterable <- TRUE
+      rt",
       render = "<reactive_data>",
       observe = "shiny::observeEvent(input$compare_by,{
         opts <- values[[paste0('<panel>_', input$compare_by)]]
