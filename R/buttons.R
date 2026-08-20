@@ -31,7 +31,7 @@ writeButton <- function(x) {
     x$label <- cast(x$label)
     x$choices <- cast(x$choices)
     x$selected <- cast(x$selected)
-    x$options = 'list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3")'
+    x$options = 'list(`actions-box` = TRUE, size = 10, `selected-text-format` = "count > 3", `live-search` = TRUE)'
     if (rlang::is_installed("shinyWidgets")) {
       args <- names(formals(shinyWidgets::pickerInput))
     } else {
