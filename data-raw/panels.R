@@ -659,8 +659,8 @@ cohortCountPanel <- list(
       render = "<reactive_data>",
       filters = rankTableButton(
         none = c("<strata>", "variable_name", "estimate_name"),
-        groupColumn = "cdm_name",
-        header = "cohort_name",
+        groupColumn = "cohort_name",
+        header = "cdm_name",
         hide = c("variable_level", "table_name")
       ),
       download = downloadGtTable("table_count")
