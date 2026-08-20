@@ -432,6 +432,10 @@ getSelected <- function(choices) {
       return(vals[[1]])
     }
 
+    if ("overall" %in% vals) {
+      return("overall")
+    }
+
     vals
   })
 }
