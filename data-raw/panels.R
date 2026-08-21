@@ -339,11 +339,11 @@ prevalencePanel <- list(
       visOmopResults::visOmopTable(
         result = res,
         estimateName = formatEstimateName,
-        header = input$prevalence_table_header,
-        groupColumn = input$prevalence_table_group_column,
+        header = input$header,
+        groupColumn = input$group_column,
         settingsColumn = omopgenerics::settingsColumns(res),
         rename = c('Database name' = 'cdm_name'),
-        hide = c(input$prevalence_table_hide, 'variable_name', 'variable_level')
+        hide = c(input$hide, 'variable_name', 'variable_level')
       )",
       render = "<reactive_data>",
       filters = rankTableButton(
