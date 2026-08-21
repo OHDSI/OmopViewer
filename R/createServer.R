@@ -164,10 +164,19 @@ writeContentServer <- function(content, data) {
     paste0(collapse = "\n")
 }
 writeOutputServer <- function(content) {
+  render <- content$render
+  if (identical(content$output_type, "ui")) {
+    render <- paste0(
+      "tryCatch({\n", render, "\n}, error = function(e) {\n",
+      'if (inherits(e, "shiny.silent.error")) stop(e)\n',
+      'shiny::div(class = "alert alert-danger", shiny::icon("triangle-exclamation"), conditionMessage(e))',
+      "\n})"
+    )
+  }
   paste0(
     content$reactive_function, " <- shiny::reactive({\n", content$reactive, "\n})\n",
     "output$", content$output_id, " <- ", renderFunction(content$output_type),
-    "({\n", content$render, "\n})"
+    "({\n", render, "\n})"
   )
 }
 outputFunction <- function(outputType) {
