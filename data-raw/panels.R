@@ -323,13 +323,27 @@ prevalencePanel <- list(
     table = list(
       title = "Table Prevalence",
       output_type = "gt",
-      reactive = "res <- <filtered_data>
-      res |>
-      IncidencePrevalence::tablePrevalence(
-      header = input$header,
-      groupColumn = input$group_column,
-      hide = input$hide,
-      settingsColumn = omopgenerics::settingsColumns(res)
+      reactive = "res <- <filtered_data> |>
+      dplyr::mutate(estimate_value = dplyr::if_else(
+        estimate_name %in% c('prevalence', 'prevalence_95CI_lower', 'prevalence_95CI_upper'),
+        as.character(100*suppressWarnings(as.numeric(estimate_value))),
+        estimate_value
+      ))
+
+      formatEstimateName <- c(
+        'Denominator (N)' = '<denominator_count>',
+        'Outcome (N)' = '<outcome_count>',
+        'Prevalence [95% CI] (%)' = '<prevalence>% (<prevalence_95CI_lower>% - <prevalence_95CI_upper>%)'
+      )
+
+      visOmopResults::visOmopTable(
+        result = res,
+        estimateName = formatEstimateName,
+        header = input$header,
+        groupColumn = input$group_column,
+        settingsColumn = omopgenerics::settingsColumns(res),
+        rename = c('Database name' = 'cdm_name'),
+        hide = c(input$hide, 'variable_name', 'variable_level')
       )",
       render = "<reactive_data>",
       filters = rankTableButton(
