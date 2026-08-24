@@ -226,6 +226,15 @@ stickyStyle <- function() {
     }
     .update-status-warning {
       color: var(--bs-warning-text-emphasis, var(--bs-warning));
+    }
+    .shiny-output-error-validation {
+      display: block;
+      padding: 0.75rem 1rem;
+      margin-bottom: 1rem;
+      border: 1px solid var(--bs-warning-border-subtle);
+      border-radius: var(--bs-border-radius);
+      background-color: var(--bs-warning-bg-subtle);
+      color: var(--bs-warning-text-emphasis);
     }\"
   ))"
 }
