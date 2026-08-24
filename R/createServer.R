@@ -165,11 +165,12 @@ writeContentServer <- function(content, data) {
 }
 writeOutputServer <- function(content) {
   render <- content$render
+  # show a friendly message instead of crashing on invalid filter/plot combinations
   if (identical(content$output_type, "ui")) {
     render <- paste0(
       "tryCatch({\n", render, "\n}, error = function(e) {\n",
       'if (inherits(e, "shiny.silent.error")) stop(e)\n',
-      'shiny::div(class = "alert alert-danger", shiny::icon("triangle-exclamation"), conditionMessage(e))',
+      'shiny::div(class = "alert alert-danger text-white d-flex align-items-start gap-2", shiny::icon("triangle-exclamation", class = "mt-1"), shiny::div(style = "white-space: pre-wrap;", conditionMessage(e)))',
       "\n})"
     )
   }
