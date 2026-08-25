@@ -18,8 +18,9 @@
           ""
         ),
         theme = bslib::bs_theme(brand = TRUE),
-        shiny::tags$style(HTML(
-          ".sticky-top-btn {
+        header = shiny::tagList(
+          shiny::tags$style(HTML(
+            ".sticky-top-btn {
             position: sticky;
             top: 0;
             z-index: 20;
@@ -42,7 +43,8 @@
           .update-status-warning {
             color: var(--bs-warning-text-emphasis, var(--bs-warning));
           }"
-        )),
+          ))
+        ),
         bslib::nav_panel(
           title = "Background",
           icon = shiny::icon("book-atlas"),
@@ -117,8 +119,9 @@
           ""
         ),
         theme = bslib::bs_theme(brand = TRUE),
-        shiny::tags$style(HTML(
-          ".sticky-top-btn {
+        header = shiny::tagList(
+          shiny::tags$style(HTML(
+            ".sticky-top-btn {
             position: sticky;
             top: 0;
             z-index: 20;
@@ -141,7 +144,8 @@
           .update-status-warning {
             color: var(--bs-warning-text-emphasis, var(--bs-warning));
           }"
-        )),
+          ))
+        ),
         bslib::nav_panel(
           title = "Background",
           icon = shiny::icon("book-atlas"),
@@ -243,8 +247,9 @@
           "example"
         ),
         theme = bslib::bs_theme(brand = TRUE),
-        shiny::tags$style(HTML(
-          ".sticky-top-btn {
+        header = shiny::tagList(
+          shiny::tags$style(HTML(
+            ".sticky-top-btn {
             position: sticky;
             top: 0;
             z-index: 20;
@@ -267,7 +272,8 @@
           .update-status-warning {
             color: var(--bs-warning-text-emphasis, var(--bs-warning));
           }"
-        )),
+          ))
+        ),
         bslib::nav_panel(
           title = "Background",
           icon = shiny::icon("book-atlas"),
