@@ -1967,7 +1967,7 @@ dusPanel <- list(
     "estimate_name",
     "settings"
   ),
-  exclude_filters = c("cohort_table_name", "ingredient"),
+  exclude_filters = c("cohort_table_name"),
   filters = list(cdm_name = cdmFilter),
   content = list(
     table = list(
