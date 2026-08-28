@@ -682,7 +682,9 @@ cohortCountPanel <- list(
     plot = list(
       title = "Plot Counts",
       output_type = "ui",
-      reactive = "<filtered_data> |>
+      reactive = "res <- <filtered_data>
+      shiny::validate(shiny::need(nrow(res) > 0, 'No data available for the selected filters. Please adjust your selections.'))
+      res |>
       CohortCharacteristics::plotCohortCount(
       facet = input$facet,
       colour = input$colour
