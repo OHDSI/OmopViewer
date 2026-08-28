@@ -1595,7 +1595,6 @@ cohortCodeUsePanel <- list(
       output_type = "gt",
       reactive = "<filtered_data> |>
       CodelistGenerator::tableCohortCodeUse(
-      timing = TRUE,
       header = input$header,
       groupColumn = input$group_column,
       hide = input$hide
@@ -1611,7 +1610,7 @@ cohortCodeUsePanel <- list(
         ),
         groupColumn = character(),
         header = c("cdm_name", "estimate_name"),
-        hide = character()
+        hide = "timing"
       ),
       download = downloadGtTable("table_cohort_code_use")
     )
@@ -1967,6 +1966,7 @@ dusPanel <- list(
     "estimate_name",
     "settings"
   ),
+  exclude_filters = c("cohort_table_name"),
   filters = list(cdm_name = cdmFilter),
   content = list(
     table = list(
