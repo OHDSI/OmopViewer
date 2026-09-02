@@ -13,7 +13,7 @@ uiStatic <- function(logo,
 
   # updateButtons = TRUE add the desiredStyle
   if (updateButtons == TRUE) {
-    style <- stickyStyle()
+    style <- paste0("header = shiny::tagList(\n", stickyStyle(), "\n)")
   } else {
     style <- NULL
   }
