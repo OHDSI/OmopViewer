@@ -18,31 +18,7 @@
           ""
         ),
         theme = bslib::bs_theme(brand = TRUE),
-        shiny::tags$style(HTML(
-          ".sticky-top-btn {
-            position: sticky;
-            top: 0;
-            z-index: 20;
-            background: var(--bs-body-bg);
-          }
-          .update-card {
-            border-color: var(--bs-border-color);
-          }
-          .update-status {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.5rem;
-            margin-top: 0.75rem;
-            font-size: 0.875rem;
-            line-height: 1.35;
-          }
-          .update-status-info {
-            color: var(--bs-info-text-emphasis, var(--bs-info));
-          }
-          .update-status-warning {
-            color: var(--bs-warning-text-emphasis, var(--bs-warning));
-          }"
-        )),
+        header = shiny::tagList(shiny::tags$link(rel = "stylesheet", href = "style.css")),
         bslib::nav_panel(
           title = "Background",
           icon = shiny::icon("book-atlas"),
@@ -82,8 +58,7 @@
               class = "logo-img",
               alt = "Logo",
               height = "auto",
-              width = "30%",
-              style = "float:right"
+              width = "30%"
             ),
             "This shiny app was generated with ",
             shiny::a(
@@ -117,31 +92,7 @@
           ""
         ),
         theme = bslib::bs_theme(brand = TRUE),
-        shiny::tags$style(HTML(
-          ".sticky-top-btn {
-            position: sticky;
-            top: 0;
-            z-index: 20;
-            background: var(--bs-body-bg);
-          }
-          .update-card {
-            border-color: var(--bs-border-color);
-          }
-          .update-status {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.5rem;
-            margin-top: 0.75rem;
-            font-size: 0.875rem;
-            line-height: 1.35;
-          }
-          .update-status-info {
-            color: var(--bs-info-text-emphasis, var(--bs-info));
-          }
-          .update-status-warning {
-            color: var(--bs-warning-text-emphasis, var(--bs-warning));
-          }"
-        )),
+        header = shiny::tagList(shiny::tags$link(rel = "stylesheet", href = "style.css")),
         bslib::nav_panel(
           title = "Background",
           icon = shiny::icon("book-atlas"),
@@ -181,8 +132,7 @@
               class = "logo-img",
               alt = "Logo",
               height = "auto",
-              width = "30%",
-              style = "float:right"
+              width = "30%"
             ),
             "This shiny app was generated with ",
             shiny::a(
@@ -243,31 +193,7 @@
           "example"
         ),
         theme = bslib::bs_theme(brand = TRUE),
-        shiny::tags$style(HTML(
-          ".sticky-top-btn {
-            position: sticky;
-            top: 0;
-            z-index: 20;
-            background: var(--bs-body-bg);
-          }
-          .update-card {
-            border-color: var(--bs-border-color);
-          }
-          .update-status {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.5rem;
-            margin-top: 0.75rem;
-            font-size: 0.875rem;
-            line-height: 1.35;
-          }
-          .update-status-info {
-            color: var(--bs-info-text-emphasis, var(--bs-info));
-          }
-          .update-status-warning {
-            color: var(--bs-warning-text-emphasis, var(--bs-warning));
-          }"
-        )),
+        header = shiny::tagList(shiny::tags$link(rel = "stylesheet", href = "style.css")),
         bslib::nav_panel(
           title = "Background",
           icon = shiny::icon("book-atlas"),
@@ -307,8 +233,7 @@
               class = "logo-img",
               alt = "Logo",
               height = "auto",
-              width = "30%",
-              style = "float:right"
+              width = "30%"
             ),
             "This shiny app was generated with ",
             shiny::a(

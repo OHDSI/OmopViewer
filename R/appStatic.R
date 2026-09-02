@@ -89,6 +89,9 @@ exportStaticApp <- function(result,
   # copy the logos to the shiny folder
   logo <- copyLogos(logo, directory)
 
+  # copy the stylesheet to the shiny folder
+  copyStyle(directory)
+
   # background
   background <- validateBackground(background, logo)
 
@@ -165,6 +168,16 @@ messageShiny <- function() {
     "# Be careful editing this file",
     ""
   )
+}
+copyStyle <- function(directory) {
+  # Create 'www' directory if it doesn't exist
+  dir.create(file.path(directory, "www"), showWarnings = FALSE)
+
+  style <- system.file("css", "style.css", package = "OmopViewer")
+  to <- file.path(directory, "www", "style.css")
+  file.copy(from = style, to = to, overwrite = TRUE)
+
+  return(invisible())
 }
 copyLogos <- function(logo, directory) {
   # Create 'www' directory if it doesn't exist
