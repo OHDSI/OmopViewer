@@ -170,7 +170,7 @@ writeOutputServer <- function(content) {
     render <- paste0(
       "tryCatch({\n", render, "\n}, error = function(e) {\n",
       'if (inherits(e, "shiny.silent.error")) stop(e)\n',
-      'shiny::div(class = "alert alert-danger text-white d-flex align-items-start gap-2", shiny::icon("triangle-exclamation", class = "mt-1"), shiny::div(style = "white-space: pre-wrap;", conditionMessage(e)))',
+      'shiny::div(class = "alert alert-danger text-white d-flex align-items-start gap-2", shiny::icon("triangle-exclamation", class = "mt-1"), shiny::div(class = "error-message", conditionMessage(e)))',
       "\n})"
     )
   }
