@@ -91,7 +91,7 @@ exportStaticApp(result = result, directory = dir)
 #> ✔ Data processed: 3 panels idenfied: `summarise_omop_snapshot`,
 #>   `summarise_characteristics`, and `incidence`.
 #> ℹ Creating `shiny` from provided data
-#> ✔ Shiny created in: /tmp/RtmpIYIwi4/shiny
+#> ✔ Shiny created in: /tmp/RtmpB3z9Sg/shiny
 ```
 
 Note that by default if executed in an interactive environment like *R
@@ -121,6 +121,7 @@ cat(list.files(path = here::here(dir, "shiny"), recursive = TRUE), sep = "\n")
 #> ui.R
 #> www/hds_logo.svg
 #> www/ohdsi_logo.svg
+#> www/style.css
 ```
 
 - `background.R` is only generated if background argument is set to
