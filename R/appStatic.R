@@ -65,8 +65,9 @@ exportStaticApp <- function(result,
   omopgenerics::assertCharacter(theme, length = 1, null = TRUE)
   omopgenerics::assertLogical(updateButtons, length = 1)
   omopgenerics::assertLogical(includeOneChoiceFilters, length = 1)
+  themeName <- theme
   theme <- validateTheme(theme = theme)
-  logo <- validateLogo(logo = logo, theme = theme)
+  logo <- validateLogo(logo = logo, theme = theme, themeName = themeName)
   template <- validateTemplate(template = template, theme = theme)
   panelDetails <- validatePanelDetails(panelDetails, result, includeOneChoiceFilters)
   panelStructure <- validatePanelStructure(panelStructure, names(panelDetails))
