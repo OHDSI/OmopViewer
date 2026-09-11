@@ -8,8 +8,7 @@ createAbout <- function(logo) {
         class = "logo-img",
         alt = "Logo",
         height = "auto",
-        width = "30%",
-        style = "float:right"
+        width = "30%"
       ),
       "This shiny app was generated with ",
       shiny::a(
