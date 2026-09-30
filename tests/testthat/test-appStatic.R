@@ -33,7 +33,7 @@ test_that("logo", {
   unlink(file.path(tdir, "shiny"), recursive = TRUE)
 
   # test keywords
-  for (key in logoKeywords) {
+  for (key in logoKeywords()) {
     expect_identical(basename(logoPath(key)), paste0(key, "_logo.svg"))
     expect_no_error(exportStaticApp(
       result = omopgenerics::emptySummarisedResult(),
@@ -60,8 +60,19 @@ test_that("logo", {
   dir.create(tdir, showWarnings = FALSE)
   expect_no_error(theme <- validateTheme("darwin"))
   expect_no_error(logo <- validateLogo(logo = NULL, theme = theme))
-  expect_identical(copyLogos(logo = logo, directory = tdir), "logo.png")
-  expect_true("www/logo.png" %in% list.files(tdir, recursive = TRUE))
+  expect_identical(logo, "darwin")
+  expect_identical(copyLogos(logo = logo, directory = tdir), "darwin_logo.svg")
+  expect_true("www/darwin_logo.svg" %in% list.files(tdir, recursive = TRUE))
+
+  # The copied filename must be passed through to the app header.
+  unlink(tdir, recursive = TRUE)
+  expect_no_error(exportStaticApp(
+    result = omopgenerics::emptySummarisedResult(),
+    directory = tdir,
+    theme = "darwin"
+  ))
+  ui <- paste(readLines(file.path(tdir, "shiny", "ui.R")), collapse = "\n")
+  expect_true(grepl('src = "darwin_logo.svg"', ui, fixed = TRUE))
   unlink(tdir, recursive = TRUE)
 })
 

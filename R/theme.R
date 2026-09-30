@@ -62,8 +62,10 @@ getThemes <- function() {
     purrr::map(\(x) bslib::bs_theme(brand = validateTheme(x)))
 }
 
-validateLogo <- function(logo, theme, themeName = NULL, call = parent.frame()) {
-  if (is.null(logo) && identical(themeName, "darwin")) {
+validateLogo <- function(logo, theme, call = parent.frame()) {
+  if (is.null(logo) &&
+      packageVersion("visOmopResults") < "1.5.1" &&
+      basename(theme$path) == "darwin.yml") {
     logo <- "darwin"
   } else if (is.null(logo) & "logo" %in% names(theme)) {
     logo <- theme$logo$path
