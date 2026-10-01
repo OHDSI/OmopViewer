@@ -77,15 +77,6 @@ rscignore <- c(
 ) |>
   paste0(collapse = "\n")
 
-# logos ----
-# TO ADD NEW LOGOS YOU HAVE TO ADD THEM IN `inst/logos/`
-# FOLLOW THIS NAMING: '{keyword}_logo.svg'
-# NOTE IT IS NOT CASE SENSITIVE
-logoKeywords <- list.files(path = system.file("logos", package = "OmopViewer")) |>
-  stringr::str_to_lower() |>
-  purrr::keep(\(x) stringr::str_ends(string = x, pattern = "_logo.svg")) |>
-  stringr::str_replace_all(pattern = "_logo.svg$", replacement = "")
-
 # background keywords ----
 # IT HAS TO BE EDITED HERE AND IN `functions.R`!!
 backgroundKeywords <- dplyr::tribble(
@@ -179,7 +170,7 @@ requireExtrafont()
 
 # add internal data ----
 usethis::use_data(
-  omopViewerProj, omopViewerGlobal, omopViewerPreprocess, logoKeywords,
+  omopViewerProj, omopViewerGlobal, omopViewerPreprocess,
   backgroundKeywords, panelStructureDefaults, rscignore, reportTemplate,
   omopViewerReadme,
   overwrite = TRUE, internal = TRUE

@@ -4,7 +4,8 @@
 #' @param result A summarised_result object.
 #' @param directory Directory to create the shiny.
 #' @param logo Name of a logo or path to a logo. If NULL no logo is obtained
-#' from theme.
+#' from theme. The package has some internal predefined logos:
+#' `r glue::glue_collapse(logoKeywords(), sep = ", ", last = ", and ")`.
 #' @param title title of the shiny
 #' @param background Whether to include a background panel. Background panel
 #' content will be controlled from the generated background.md file.
@@ -65,6 +66,7 @@ exportStaticApp <- function(result,
   omopgenerics::assertCharacter(theme, length = 1, null = TRUE)
   omopgenerics::assertLogical(updateButtons, length = 1)
   omopgenerics::assertLogical(includeOneChoiceFilters, length = 1)
+
   theme <- validateTheme(theme = theme)
   logo <- validateLogo(logo = logo, theme = theme)
   template <- validateTemplate(template = template, theme = theme)
@@ -237,12 +239,17 @@ downloadLogo <- function(url, directory) {
 }
 logoPath <- function(logo) {
   lowLogo <- stringr::str_to_lower(logo)
-  # add more logoKeywords in data-raw/internalData
-  if (lowLogo %in% logoKeywords) {
+  if (lowLogo %in% logoKeywords()) {
     system.file(file.path("logos", paste0(lowLogo, "_logo.svg")), package = "OmopViewer")
   } else {
     logo
   }
+}
+logoKeywords <- function() {
+  list.files(path = system.file("logos", package = "OmopViewer")) |>
+    stringr::str_to_lower() |>
+    purrr::keep(\(x) stringr::str_ends(string = x, pattern = "_logo.svg")) |>
+    stringr::str_replace_all(pattern = "_logo.svg$", replacement = "")
 }
 formatTit <- function(x) {
   x |>
