@@ -64,7 +64,7 @@ getThemes <- function() {
 
 validateLogo <- function(logo, theme, call = parent.frame()) {
   if (is.null(logo) &&
-      packageVersion("visOmopResults") < "1.5.1" &&
+      utils::packageVersion("visOmopResults") < "1.5.1" &&
       basename(theme$path) == "darwin.yml") {
     logo <- "darwin"
   } else if (is.null(logo) & "logo" %in% names(theme)) {

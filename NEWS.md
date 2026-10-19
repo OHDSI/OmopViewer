@@ -1,3 +1,23 @@
+
+# OmopViewer 0.8.0
+
+* shiny.fluent removal by @Foluwa in https://github.com/OHDSI/OmopViewer/pull/371
+* Add hexsticker by @martaalcalde in https://github.com/OHDSI/OmopViewer/pull/398
+* survival tab updates by @KimLopezGuell in https://github.com/OHDSI/OmopViewer/pull/397
+* I updated package logo to fix website issue by @Foluwa in https://github.com/OHDSI/OmopViewer/pull/402
+* I added height as parameter by @Foluwa in https://github.com/OHDSI/OmopViewer/pull/400
+* When updateButtons = TRUE, the shiny panels are not rendered by default by @catalamarti in https://github.com/OHDSI/OmopViewer/pull/405
+* Update the searchable and filterable table by @Foluwa in https://github.com/OHDSI/OmopViewer/pull/407
+* Move CDM to the header in Cohort Count table by @Foluwa in https://github.com/OHDSI/OmopViewer/pull/410
+* Add live search filter by @Foluwa in https://github.com/OHDSI/OmopViewer/pull/409
+* Adding overall cohort count filter by @Foluwa in https://github.com/OHDSI/OmopViewer/pull/404
+* change tablePrevalence by @catalamarti in https://github.com/OHDSI/OmopViewer/pull/412
+* catch plot render errors instead of crashing the page by @Foluwa in https://github.com/OHDSI/OmopViewer/pull/413
+* fix crash in cohort code use table by @Foluwa in https://github.com/OHDSI/OmopViewer/pull/419
+* Added cohort table and ingredients to exclude by @Foluwa in https://github.com/OHDSI/OmopViewer/pull/415
+* Consolidate scattered CSS into a single stylesheet by @Foluwa in https://github.com/OHDSI/OmopViewer/pull/422
+* Add darwin logo and fix navbar header warning by @Foluwa in https://github.com/OHDSI/OmopViewer/pull/418
+
 # OmopViewer 0.7.0
 
 * logo can be specified in brand.yml by @catalamarti in https://github.com/OHDSI/OmopViewer/pull/348
