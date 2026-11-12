@@ -27,7 +27,8 @@ exportStaticApp(
 \item{directory}{Directory to create the shiny.}
 
 \item{logo}{Name of a logo or path to a logo. If NULL no logo is obtained
-from theme.}
+from theme. The package has some internal predefined logos:
+darwin, hds, and ohdsi.}
 
 \item{title}{title of the shiny}
 
