@@ -33,7 +33,7 @@ illustration:
 # Inspect the structure of the sample data
 summary(omopViewerResults)
 #> A summarised_result object with 76784 rows, 121 different result_id, 1 and 1
-#> different cdm names, and 57 settings.
+#> different cdm names, and 59 settings.
 #> CDM names: synthea-covid19-200k and mock database.
 #> Settings: result_type, package_name, package_version, group, strata,
 #> additional, min_cell_count, analysis, analysis_censor_cohort_name,
@@ -91,7 +91,7 @@ exportStaticApp(result = result, directory = dir)
 #> ✔ Data processed: 3 panels idenfied: `summarise_omop_snapshot`,
 #>   `summarise_characteristics`, and `incidence`.
 #> ℹ Creating `shiny` from provided data
-#> ✔ Shiny created in: /tmp/Rtmpd3I3Dq/shiny
+#> ✔ Shiny created in: /tmp/RtmpjmoxOY/shiny
 ```
 
 Note that by default if executed in an interactive environment like *R

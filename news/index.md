@@ -1,5 +1,54 @@
 # Changelog
 
+## OmopViewer 0.8.0
+
+CRAN release: 2026-10-20
+
+- shiny.fluent removal by [@Foluwa](https://github.com/Foluwa) in
+  <https://github.com/OHDSI/OmopViewer/pull/371>
+- Add hexsticker by [@martaalcalde](https://github.com/martaalcalde) in
+  <https://github.com/OHDSI/OmopViewer/pull/398>
+- survival tab updates by
+  [@KimLopezGuell](https://github.com/KimLopezGuell) in
+  <https://github.com/OHDSI/OmopViewer/pull/397>
+- I updated package logo to fix website issue by
+  [@Foluwa](https://github.com/Foluwa) in
+  <https://github.com/OHDSI/OmopViewer/pull/402>
+- I added height as parameter by [@Foluwa](https://github.com/Foluwa) in
+  <https://github.com/OHDSI/OmopViewer/pull/400>
+- When updateButtons = TRUE, the shiny panels are not rendered by
+  default by [@catalamarti](https://github.com/catalamarti) in
+  <https://github.com/OHDSI/OmopViewer/pull/405>
+- Update the searchable and filterable table by
+  [@Foluwa](https://github.com/Foluwa) in
+  <https://github.com/OHDSI/OmopViewer/pull/407>
+- Move CDM to the header in Cohort Count table by
+  [@Foluwa](https://github.com/Foluwa) in
+  <https://github.com/OHDSI/OmopViewer/pull/410>
+- Add live search filter by [@Foluwa](https://github.com/Foluwa) in
+  <https://github.com/OHDSI/OmopViewer/pull/409>
+- Adding overall cohort count filter by
+  [@Foluwa](https://github.com/Foluwa) in
+  <https://github.com/OHDSI/OmopViewer/pull/404>
+- change tablePrevalence by
+  [@catalamarti](https://github.com/catalamarti) in
+  <https://github.com/OHDSI/OmopViewer/pull/412>
+- catch plot render errors instead of crashing the page by
+  [@Foluwa](https://github.com/Foluwa) in
+  <https://github.com/OHDSI/OmopViewer/pull/413>
+- fix crash in cohort code use table by
+  [@Foluwa](https://github.com/Foluwa) in
+  <https://github.com/OHDSI/OmopViewer/pull/419>
+- Added cohort table and ingredients to exclude by
+  [@Foluwa](https://github.com/Foluwa) in
+  <https://github.com/OHDSI/OmopViewer/pull/415>
+- Consolidate scattered CSS into a single stylesheet by
+  [@Foluwa](https://github.com/Foluwa) in
+  <https://github.com/OHDSI/OmopViewer/pull/422>
+- Add darwin logo and fix navbar header warning by
+  [@Foluwa](https://github.com/Foluwa) in
+  <https://github.com/OHDSI/OmopViewer/pull/418>
+
 ## OmopViewer 0.7.0
 
 CRAN release: 2026-02-09

@@ -19,6 +19,9 @@ Useful links:
 
 Authors:
 
+- Martí Català <marti.catalasabate@ndorms.ox.ac.uk>
+  ([ORCID](https://orcid.org/0000-0003-3308-9905))
+
 - Yuchen Guo <yuchen.guo@ndorms.ox.ac.uk>
   ([ORCID](https://orcid.org/0000-0002-0847-4855))
 

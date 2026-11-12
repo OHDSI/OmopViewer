@@ -36,7 +36,8 @@ exportStaticApp(
 - logo:
 
   Name of a logo or path to a logo. If NULL no logo is obtained from
-  theme.
+  theme. The package has some internal predefined logos: darwin, hds,
+  and ohdsi.
 
 - title:
 
@@ -109,5 +110,5 @@ exportStaticApp(
 #> ℹ Processing data
 #> ! No panels identified, generated shiny will be empty.
 #> ℹ Creating `shiny` from provided data
-#> ✔ Shiny created in: /tmp/Rtmpy8ssR9/shiny
+#> ✔ Shiny created in: /tmp/RtmpDUi3vs/shiny
 ```
