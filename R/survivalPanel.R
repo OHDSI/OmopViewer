@@ -386,7 +386,12 @@ survivalServerCore <- function(nm, data, updateButtons) {
                                 useReason = FALSE,
                                 useFollowUpSettings = TRUE) {
       applied <- appliedSurvivalInputs()
-      shiny::req(applied)
+      shiny::validate(
+        shiny::need(
+          !is.null(applied),
+          "Please choose your filters and click Update content."
+        )
+      )
 
       result <- <data>[["<nm>"]] |>
         dplyr::filter(
