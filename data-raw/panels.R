@@ -157,7 +157,7 @@ incidencePanel <- list(
     "variable_name",
     "estimate_name"
   ),
-  exclude_filters = c("denominator_cohort_name", "incidence_end_date"),
+  exclude_filters = c("denominator_cohort_name", "incidence_end_date", "analysis_censor_cohort_name"),
   filters = list(cdm_name = cdmFilter),
   content = list(
     table = list(
@@ -483,7 +483,7 @@ incidenceAttritionPanel <- list(
   icon = "layer-group",
   data = list(result_type = "incidence_attrition"),
   automatic_filters = c("outcome_cohort_name", "strata", "settings", "variable_name"),
-  exclude_filters = "reason",
+  exclude_filters = c("reason", "analysis_censor_cohort_name"),
   filters = list(cdm_name = cdmFilter),
   content = list(
     table = list(
